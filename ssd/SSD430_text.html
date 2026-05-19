@@ -1,0 +1,760 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>SSD 430</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="361d24e8-7d86-80c8-b6d5-eabd861e895a" class="page sans"><header><h1 class="page-title" dir="auto">SSD 430</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80af-b0d0-c7880550413b" class=""><mark class="highlight-yellow">*黃色字體：視覺建議</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80f3-88a1-e8494179e886" class=""><mark class="highlight-red">*紅色字體：中文解釋</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8047-bc51-dfc37037c9e5" class=""><mark class="highlight-blue">*Hashtag：For SEO</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8052-ac0e-ce2b853ce80b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8058-bb2b-c7c2aac683fe" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-806f-8e8c-dc131b23dec8" class="">Fastest · Strongest · Smarter · <strong>Safest</strong><br/>Everything before this was just waiting.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c5-8740-e7a81b59e1de" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80f4-b65d-c5f351ea8d37" class="">The SSD 420 runs on PCIe Gen4 — the interface that changes what storage means.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80e7-8931-d4f46fc2bc69" class="">2x faster than Gen3. 10x faster than SATA.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8053-b397-d2d96cde222c" class=""><strong>Same M.2 2280 slot. A completely different world.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8030-a97b-c84639c64159" class=""><mark class="highlight-blue"><code>#Simorchip</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#PCIe Gen4 x4</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#NVMe 1.4</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#7200MB/s</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#3D NAND</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#M.2 2280</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#8-Channel</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#DRAM Cache</code></mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8029-bc73-dfe6acbe3934" class=""><mark class="highlight-blue"><code>#SSD</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#430</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#Thunderous Descent</code></mark><mark class="highlight-blue">  </mark><mark class="highlight-blue"><code>#512GB</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#1TB</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#2TB</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#4TB</code></mark><mark class="highlight-blue"> </mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80c3-bf36-ea02cab80163"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-80e1-a94f-e41a61b57c4e" class="">Thunderous Descent <mark class="highlight-red">雷霆隕</mark></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80eb-81fd-c4b5f640dd2b" class=""><strong>Not a step forward. A descent from above.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805f-8f22-dd7ad83965e6" class=""><strong>The SSD 430 doesn&#x27;t arrive — it lands.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b0-b278-ee53f9a00187" class=""><mark class="highlight-red">不是向前一步。是從高處俯衝而下</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c7-991b-e4c42d772b5f" class=""><mark class="highlight-red">在其他人還在等待的時候，SSD 430 已經完成了</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8060-9d63-c2e98c75464b" class=""><strong>Every line on the SSD 430 carries the weight of thunder.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80e2-a16b-d10807f655ca" class=""><strong>This is not movement. This is impact.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-800d-a77d-ca4ac48c1833" class=""><mark class="highlight-red">每一道幾何刻線，都是雷霆墜下的軌跡。</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8095-a2c5-d38e6100ec37" class=""><mark class="highlight-red">這不是速度的展示，是終點的宣告</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8017-bac3-d046cb0c854d" class=""><mark class="highlight-yellow">視覺：SSD 430 正面特寫，黃色幾何線條局部放大，標示 Thunderous Descent 設計語言名稱</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8070-ac64-daa3110d51c1" class=""><mark class="highlight-yellow">對比 SSD 420 Lightning Strike — 430 的線條更粗重、更有衝擊感</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-806c-8775-ec750ee6fed4"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-80c2-adbc-e5bc48389500" class="">Why NVMe SSD 430?</h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8010-9478-f31374dc46a2" class="">Why choose the fastest?</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ed-b144-ec1ee5e70fab" class=""><mark class="highlight-red">為什麼現在升級 PCIe Gen4？</mark></p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-800e-a77b-eaf7e8a6b4f9" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-807b-90bb-f651b3dbfed2"><th id="TXy|" class="simple-table-header-color simple-table-header" style="width:105px">Read Speed</th><th id="Pn&lt;F" class="simple-table-header-color simple-table-header" style="width:149.6750030517578px">Up to 7,200 MB/s</th><th id="Pu|K" class="simple-table-header-color simple-table-header" style="width:474.5375061035156px">13× faster than SATA SSD — and 41% faster than the SSD 420. The gap doesn&#x27;t close.</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80bc-b706-c61ebe67d4ad"><td id="TXy|" class="" style="width:105px">Write Speed</td><td id="Pn&lt;F" class="" style="width:149.6750030517578px">Up to 6,400 MB/s</td><td id="Pu|K" class="" style="width:474.5375061035156px">4K exports, large archive transfers, heavy render outputs — done before you move to the next task.</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80e2-aa34-f60fd8435454"><td id="TXy|" class="" style="width:105px"><strong>Controller</strong></td><td id="Pn&lt;F" class="" style="width:149.6750030517578px"><strong>8-Channel</strong></td><td id="Pu|K" class="" style="width:474.5375061035156px">Eight simultaneous data pathways. Maximum throughput sustained — not just at peak, but across every workload.</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80a2-8796-e33c755b46cc"><td id="TXy|" class="" style="width:105px"><strong>Cache</strong></td><td id="Pn&lt;F" class="" style="width:149.6750030517578px"><strong>DRAM On-board</strong></td><td id="Pu|K" class="" style="width:474.5375061035156px">Dedicated DRAM buffer stores address mapping for instant data lookup. Consistent low latency at all times.</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8054-afc5-d2fc8dabfa9f"><td id="TXy|" class="" style="width:105px"><strong>Reliability</strong></td><td id="Pn&lt;F" class="" style="width:149.6750030517578px"><strong>1,500,000 hrs MTBF</strong></td><td id="Pu|K" class="" style="width:474.5375061035156px">Over 171 years of rated reliability. The fastest drive that also lasts the longest.</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-809b-bd2b-cf4ff26fb0f0"><td id="TXy|" class="" style="width:105px">Warranty</td><td id="Pn&lt;F" class="" style="width:149.6750030517578px">3 Year</td><td id="Pu|K" class="" style="width:474.5375061035156px">Three-year limited warranty. Buy with confidence, use without worry.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80ec-a7be-e0ec19d8bd7e" class="bulleted-list"><li style="list-style-type:disc">Benchmarked against SATA SSD at 550 MB/s</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8066-93df-d37d28125c4e" class=""><mark class="highlight-red">數據以 SATA SSD 為比較基準</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8073-9539-f069189c43fc" class=""><strong>Your system is ready.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805e-9d14-fa6ae924b380" class=""><strong>Your storage should match it.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80fb-83b8-d53db1b1d331" class=""><mark class="highlight-red">你的系統早已準備好了</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8028-b21f-e2d9a860079a" class=""><mark class="highlight-red">現在，讓儲存跟上它</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-8051-9149-d62f48064f56"/></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-801e-aa9e-dd9f4b487c0d" class="">01-Fastest</p></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-803f-b33b-eb561016a1c2" class=""><strong>Fastest</strong></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80fb-85d8-cd97b9cd5d4c" class="">13× faster than SATA · 41% faster than SSD 420</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ad-bfc7-f7ad6e32c50f" class="">The SSD 430 doesn&#x27;t just beat the previous generation.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ec-bc25-d6fd74774b2a" class="">It makes every drive that came before look like it&#x27;s still thinking.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8092-9059-d2173f806666" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8036-9496-ec2af1fd8e14" class=""><strong>7,200 MB/s read. 6,400 MB/s write. Nothing waits.</strong></p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-8044-9241-d728275183b8" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80f4-a11f-cf9f98c5ef4b"><th id="&gt;LKh" class="simple-table-header-color simple-table-header" style="width:165.5px"><strong>SATA SSD</strong></th><th id="|??a" class="simple-table-header-color simple-table-header"><strong>SSD 430</strong></th><th id="mVws" class="simple-table-header-color simple-table-header">SSD 420</th><th id="rW[R" class="simple-table-header-color simple-table-header"><strong>SATA SSD</strong></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8045-8a7a-ffa4dea5c944"><td id="&gt;LKh" class="" style="width:165.5px"><strong>Sequential Read</strong></td><td id="|??a" class="">7,200 MB/s</td><td id="mVws" class="">5,100 MB/s</td><td id="rW[R" class="">550 MB/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-801f-bea6-effd715c6012"><td id="&gt;LKh" class="" style="width:165.5px"><strong>Sequential Write</strong></td><td id="|??a" class="">6,400 MB/s</td><td id="mVws" class="">4,500 MB/s</td><td id="rW[R" class="">520 MB/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80b2-871c-f76dc2177d65"><td id="&gt;LKh" class="" style="width:165.5px"><strong>OS Boot Time</strong></td><td id="|??a" class="">~4s</td><td id="mVws" class="">~5s</td><td id="rW[R" class="">~28s</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80e0-b556-e90de9b1487e"><td id="&gt;LKh" class="" style="width:165.5px"><strong>50GB File Transfer</strong></td><td id="|??a" class="">~7s</td><td id="mVws" class="">~10s</td><td id="rW[R" class="">~91s</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80af-8420-fd13661187c2" class="">SSD 430: &quot;Instant&quot; is an understatement.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8091-9966-d93bcc2154ff" class=""><mark class="highlight-red">SSD430說：說我瞬間也太保守了吧</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-801c-b2f9-fc69f99c40e6" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8024-9e50-e95d2ee4af78" class="">視覺：三段水平速度長條圖</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c1-bb81-cf42b52c2890" class="">SSD 430 7,200 MB/s → SSD 420 5,100 MB/s → SATA SSD 550 MB/s</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-803b-9ed4-f930e80093bc" class="">SSD 430 那條用亮電黃 #ffe44d 壓制其他兩段</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80de-8fcf-c2b41f5aff11" class="">右側 stat badge：7,200 MB/s READ SPEED / ×13 VS SATA SSD / 41% FASTER THAN SSD 420</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ce-8078-fcbe5138ddcf" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80cf-9d25-e05467e714a0" class=""><mark class="highlight-yellow">Stat badge</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80e4-8dbc-d5cd353ff052" class=""><mark class="highlight-yellow"><strong>7,200</strong></mark><mark class="highlight-yellow">MB/s Read Speed</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8011-b7f1-f6aaf08b97e8" class=""><mark class="highlight-yellow"><strong>x13</strong></mark><mark class="highlight-yellow">vs SATA SSD</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80dd-b122-eb2930766c47" class=""><mark class="highlight-yellow"><strong>41%</strong></mark><mark class="highlight-yellow">Faster than SSD 420</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8061-b528-e821a3a3152e" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80e8-b2e4-cc49f3b92b5a"/></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8081-b3f0-ff5ad9c7534d" class="">02-Strongest</p></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-80c6-b3bd-e4416ff4e993" class="">Strongest</h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8045-b916-eb6e5abdaaf7" class="">Built to outlast every task it&#x27;s given.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ef-b4b5-f723ee7ae307" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8001-a7a2-ce6c21a13b3d" class="">1,500,000 hours. 3,000 TBW on the 4TB model.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-800c-a1e4-ef398f490ce8" class=""><strong>The fastest drive in its class. Also the most enduring.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80e4-a9b3-f225ba6721a0" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8060-820f-f7f9e60ab07c" class="">
+</p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8076-b039-eea5095a620e" class="bulleted-list"><li style="list-style-type:disc"><strong>8-Channel Controller — Parallel Throughput Architecture</strong> — Eight simultaneous data channels reading and writing at once. This is what 7,200 MB/s actually requires — and the SSD 430 delivers it sustained, not just at burst.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-809f-b4ca-e2d39c945977" class=""><mark class="highlight-yellow">視覺：8 通道並行架構示意圖 — 8 條資料流同時進出，對比 4 通道競品</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-808d-843e-e9fb9f6b2ba9" class=""><mark class="highlight-yellow">強調：持續吞吐量，不只是峰值</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-803b-aa51-d4ba1bfe9f6f" class="bulleted-list"><li style="list-style-type:disc"><strong>DRAM Cache — On-board Dedicated Buffer</strong> — A dedicated DRAM chip stores the full address mapping table. Every data request finds its target instantly — no guessing, no extra latency. DRAM-less SSDs slow down under sustained workloads. The SSD 430 doesn&#x27;t.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-807e-a099-e1dc2e850b92" class=""><mark class="highlight-yellow">視覺：DRAM Cache 示意圖 — 有無 DRAM 的延遲對比曲線</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-802e-989d-fcb2831e7904" class=""><mark class="highlight-yellow">有 DRAM：延遲線平直 / 無 DRAM：延遲線隨工作量升高波動</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8094-8dc9-d7947a051294" class="bulleted-list"><li style="list-style-type:disc"><strong>High-quality 3D NAND Flash + SLC Caching</strong> — SLC cache delivers outstanding burst read/write performance. 3D NAND stacking provides higher density and better endurance under sustained load.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ae-9215-c3dea14e288b" class=""><mark class="highlight-yellow">視覺：3D NAND 垂直堆疊截面示意圖 + SLC cache 工作原理</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8064-8f9d-d84992f750f5" class="bulleted-list"><li style="list-style-type:disc"><strong>Up to 4TB capacity</strong> — 512GB / 1TB / 2TB / 4TB. The 1TB is the performance sweet spot. The 4TB holds your entire creative pipeline — a decade of work, on one drive.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8073-bd87-ed8d27287535" class=""><mark class="highlight-yellow">視覺：四個容量 badge 排列，1TB 標示「Best Performance」，4TB 標示「Max Capacity」，兩個以亮電黃強調</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80ef-af12-dfaca2b7d9ba" class="bulleted-list"><li style="list-style-type:disc"><strong>Up to 3,000 TBW endurance</strong> — Writing 200GB per day: over 41 years before wear becomes a concern. The drive outlasts every project you&#x27;ll ever put on it.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8006-8449-f77d2e6b49de" class=""><mark class="highlight-yellow">視覺：TBW 四容量對比 — 375 / 750 / 1,500 / 3,000 TBW</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-803e-8595-fb3ceb7b65b9" class="bulleted-list"><li style="list-style-type:disc"><strong>Shock-resistant and drop-proof design</strong> — No moving parts. No mechanical failure. The SSD 430 survives conditions that would destroy a hard drive.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-802c-b44f-d919559017bf" class=""><mark class="highlight-yellow">視覺：1,500,000 大字動態計時呈現，底下標記 Hours of rated reliability</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8083-b287-ebeb6dbb4c76" class=""><mark class="highlight-yellow">「Start it today. Still running in 2195 Year.」</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8024-b2d8-df9ec695c1c9" class=""><mark class="highlight-yellow">今天安裝，可以運行到 2195 Year</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8085-bc23-fffbe515e5ff" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-809c-8e56-efcea8d9c90d" class=""><strong>* MTBF is a statistical estimate. Individual results may vary.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b5-94ae-ccb5aaeac1a1" class=""><mark class="highlight-yellow">stat badge</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c1-949d-f8ccdd354124" class=""><mark class="highlight-yellow"><strong>1.5M</strong></mark><mark class="highlight-yellow">MTBF Hours</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-806d-823a-e95e58eeee75" class=""><mark class="highlight-yellow"><strong>4TB</strong></mark><mark class="highlight-yellow">Max Capacity</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80f8-b9df-c0ed140595ba" class=""><mark class="highlight-yellow"><strong>3,000</strong></mark><mark class="highlight-yellow">Max TBW</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-803b-9fd5-e65609e6a9dc" class=""><mark class="highlight-yellow">8-CH controller</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80c6-a623-dce0c77ce394"/></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8009-b24c-eba23110c33c" class="">03-Smarter</p></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-8038-959b-e7daa1123bed" class="">Smarter</h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80fb-b50f-ea76b983838d" class="">The fastest drive is also the most intelligent</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-804e-bce9-f09ffa89351b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-806f-9114-fa090567a564" class="">DRAM Cache. 8-Channel Controller. SLC Caching.<br/>The intelligence that makes 7,200 MB/s not just possible — but sustainable.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-803c-ab01-c61788559d52" class=""><strong>It’s more consistent than your daily Starbucks order. No bitter surprises, just pure speed.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8089-a339-c197b29435f1" class=""><mark class="highlight-red">DRAM 快取、8 通道控制器、SLC 快取技術<br/>這份智慧讓 7,200 MB/s 不只是可能，而是常態</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b9-aa52-c167ccfc1ca9" class=""><mark class="highlight-red"><strong>比你每天星巴克喝到的那杯咖啡還穩——不苦澀，只有順</strong></mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-803c-97da-d8f61fd9a0b8" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805c-8bc1-d239500eb3d2" class="">
+</p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8058-a7e9-c55408826c11" class="bulleted-list"><li style="list-style-type:disc"><strong>LDPC Error Correction (Low-Density Parity Check)</strong> — Hardware-level error detection and correction on every read and write. Data integrity maintained automatically, without any performance cost.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80cf-b7ea-cf46b49dfddc" class=""><mark class="highlight-yellow">視覺：LDPC 錯誤偵測修正流程圖 — 錯誤位元紅色標示 → 修正後綠色</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-809a-804b-d70d7ccc0c90" class="bulleted-list"><li style="list-style-type:disc"><strong>Dynamic Thermal Throttling</strong> — A graphene composite layer applied at substrate level conducts heat away from NAND cells faster than conventional materials — this is why SSD 430 stays stable at 54°C under sustained load. Not by slowing down. By staying cool.<br/><mark class="highlight-yellow">視覺：熱成像對比 — SSD 430 均勻低溫（54°C）vs 競品熱點集中（78°C+）</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80ff-8c12-f372026cf01b" class="bulleted-list"><li style="list-style-type:disc"><strong>NVMe Sets task distribution + PLM Predictable Latency Mode</strong> — Workloads distributed intelligently across NAND cells and channels. Lower latency, more consistent response under the heaviest mixed read/write loads.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-809c-bc18-dd7fc700622d" class=""><mark class="highlight-yellow">視覺：8 通道任務均衡分配示意圖</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80f1-8766-d141e9964cc9" class="bulleted-list"><li style="list-style-type:disc"><strong>Garbage Collection + TRIM</strong> — Runs in the background, clearing space you didn&#x27;t know you needed. Writes stay fast years from now.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8014-b7a7-e52ddd8a3625" class=""><mark class="highlight-yellow">視覺：TRIM + GC 工作流程圖</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8025-9311-daef3aee28c0" class="bulleted-list"><li style="list-style-type:disc"><strong>Early Move</strong> — Detects aging cells before they fail. Moves data proactively. Predictive data protection, not reactive.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8000-936a-fc4cc56f16ed" class=""><mark class="highlight-yellow">視覺：Early Move 預測性資料搬移流程示意</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-801e-914b-d0f9311f902c" class="bulleted-list"><li style="list-style-type:disc"><strong>Wear Leveling</strong> — Writes spread evenly across all cells across all 8 channels. Every cell works equally. Every cell lasts equally.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8005-841f-f083d340ddc1" class=""><mark class="highlight-yellow">視覺：磨損均衡分佈示意，各區塊顏色深淺代表使用程度，8 通道版本更均勻</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8085-a6f9-e6c04e01b7b2" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8047-b899-e739646a3f58" class=""><em>The fastest drive</em></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8015-a755-fa825aa89064" class=""><em>is also the one that thinks ahead.</em></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8088-8732-ccb000a17b0a" class=""><mark class="highlight-yellow">視覺：六個技術圖示兩行三列 LDPC / Dynamic Thermal / NVMe Sets / TRIM+GC / Early Move / Wear Leveling 每個圖示搭配一行說明文字</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-8094-bdd2-f16544e96546"/></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c9-8ad1-ff1896d4454d" class="">04- <strong>Safest</strong></p></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-80a0-a94e-e8ca74754969" class=""><strong>Safest</strong></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80f2-a9a7-cc4c28bf9c31" class="">Multi-layer protection. Not a single bit lost.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-807b-83d1-daec56a1846d" class="">Every render you spent 12 hours on.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-801b-b4b4-f1cdec11495f" class="">Every RAW file from a shoot you can&#x27;t repeat.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8037-b988-f2d6e84076df" class="">Every project file that represents months of work.</p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80dd-9f78-ddbf90b55e75" class="bulleted-list"><li style="list-style-type:disc"><strong>Power Loss Protection (PLP)</strong> — When power is suddenly interrupted, PLP commits all in-flight data to NAND before shutdown. No corruption. No lost files. No half-written transfers.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-804a-9bd4-c5c28e22c97b" class=""><mark class="highlight-yellow">視覺：斷電情境對比 — 一般 SSD 資料遺失 vs SSD 430 PLP 資料完整保留</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80ac-9dc2-cb293f1dd3f0" class="bulleted-list"><li style="list-style-type:disc"><strong>LDPC Error Correction</strong> — Detects and fixes data errors before you ever notice. Every read, every time.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8074-9350-f2c1fce8a26a" class="bulleted-list"><li style="list-style-type:disc"><strong>Bad Block Management</strong> — Failing memory cells are isolated and bypassed automatically. The drive routes around problems before they become your problem.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8006-b6c4-f9544df604c1" class=""><mark class="highlight-yellow">視覺：壞塊隔離示意圖</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80ea-909f-d37cd45c1328" class="bulleted-list"><li style="list-style-type:disc"><strong>Wear Leveling</strong> — Workload spread evenly across every cell across all 8 channels. Nothing wears out first.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-808b-85da-e9f527790803" class="">You don&#x27;t have to think about data protection.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8037-8f2b-ef7a3e155980" class=""><strong>The SSD 430 already is.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80de-bc62-d2852ba00605" class="">Because the work inside this drive matters more than the drive itself.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8055-b499-e0308d000eb7" class=""><mark class="highlight-yellow">視覺：四個防護機制環繞產品圖 — PLP / LDPC / Bad Block Mgmt / Wear Leveling</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805f-9221-f22b40328380" class=""><mark class="highlight-yellow">衛星環繞圖，四個機制圍繞保護產品（對應 SSD 430 產品圖）</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80c8-8c0f-ee9211c83014"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-80b7-91fd-e6a96412a5bf" class=""><strong>One Size. Every System.</strong></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8000-b474-e90c91bac9e6" class="">80 x 20 x 3.77 mm — Plug it in. That&#x27;s the upgrade.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80bf-b8e2-ddc80fcbbf57" class=""><strong>Computing</strong></p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-801f-ab28-ed5eebe063d8" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8029-83a4-e49c317eadcf"><td id="Sefc" class=""><strong>Ultrabook</strong></td><td id="ELUK" class="">Thin &amp; light laptops</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-808f-8b64-c3ec2c325b6e"><td id="Sefc" class=""><strong>Desktop PC</strong></td><td id="ELUK" class="">ATX / mITX motherboards</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-807f-950b-f8cd267e25db"><td id="Sefc" class=""><strong>Gaming Laptop</strong></td><td id="ELUK" class="">High-refresh gaming rigs</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8046-a1cc-c08785542b9f"><td id="Sefc" class=""><strong>Mini PC</strong></td><td id="ELUK" class="">NUC, Beelink, Minisforum</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80c3-80e8-fc745beac698"><td id="Sefc" class=""><strong>Workstation</strong></td><td id="ELUK" class="">Creative &amp; enterprise builds</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-802b-83fc-c261056e07b8" class=""><strong>Console &amp; Gaming</strong></p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-80fe-87fb-c576a1e4a44b" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8068-b43a-e4fe7f500c32"><td id="[jEQ" class=""><strong>Gaming Desktop</strong></td><td id=";?DR" class="">ROG, MSI, Alienware builds</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8005-8a94-ca4dac8e7e43" class=""><strong>Professional &amp; Security</strong></p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-80ba-b6b0-fd59fa838a16" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8015-ae1a-c19d4a42876c"><td id="l:^r" class=""><strong>NVR / DVR</strong></td><td id="&gt;VVi" class="">24/7 surveillance recorders</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80db-aae9-f80f7f8b5c9e"><td id="l:^r" class=""><strong>NAS Server</strong></td><td id="&gt;VVi" class="">QNAP, Synology M.2 cache</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8027-82ba-e54aae595463"><td id="l:^r" class=""><strong>Industrial PC</strong></td><td id="&gt;VVi" class="">Fanless embedded systems</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-806b-a458-e9c5a08a4c3c"><td id="l:^r" class=""><strong>Workstation Server</strong></td><td id="&gt;VVi" class="">Rack &amp; tower server builds</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80be-8a63-e10a1978776c" class=""><strong>Compatible with</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-803a-837a-f966855c307e" class="">Windows 11 / 10 · Linux · macOS (via adapter) · SteamOS · FreeBSD</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8029-84cf-dae15b28d218" class="">Plug &amp; Play — No drivers needed</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80d9-835f-d57c0ffec7f0" class=""><mark class="highlight-yellow">視覺：三大類裝置圖示排列，底部 OS 相容 badge 列</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80de-a408-ff597094324b"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-8084-adcb-c6ea7e7a4808" class="">Packaging Design</h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80bf-8bb9-c08423cffd7a" class="">What&#x27;s in the box</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c4-b1bc-e43fa3b3da6f" class=""><mark class="highlight-yellow">視覺：包裝掛卡正面大圖 [ Hang_pack_SSD_M_2_Pcle_Gen4_430_4TB.png ]</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-808b-a4d1-f9447446fef6" class=""><mark class="highlight-yellow">黑底 + 黃色幾何 + SSD 430 大字 + 4TB / 7200 MB/s 規格清晰標示</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8014-add1-c774bb14399b" class="bulleted-list"><li style="list-style-type:disc"><strong>Retail Hang Pack</strong> — Euro-slot hang hole for standard retail shelf display. Ready for store or e-commerce fulfilment.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80d6-8d27-dae76f8dc074" class="bulleted-list"><li style="list-style-type:disc"><strong>Anti-Static Protection</strong> — Diamond-textured anti-static black card shields the drive from electrostatic discharge during transit and handling.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-805a-a868-d045cb52057e" class="bulleted-list"><li style="list-style-type:disc"><strong>Drive-Visible Window</strong> — Physical SSD exposed through packaging. Verify the product before purchase — no guessing required.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8057-8ed2-de42ef3b681e" class="bulleted-list"><li style="list-style-type:disc"><strong>Full Spec on Pack</strong> — Model number, capacity, and speed clearly printed. No opening needed to confirm the right SKU.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80bf-8d6e-fdcf4919caa0" class="bulleted-list"><li style="list-style-type:disc"><strong>Global Certifications</strong> — CE · RoHS · FCC · REACH — compliant for EU, US, and international markets.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-808e-8c01-de019e3c3c3f" class=""><mark class="highlight-yellow">視覺：包裝外觀圖 + 五個包裝特點 callout 標示，與 SSD 420 / SSD 330 同樣設計版面邏輯</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-8043-bf03-eb2f8b00bf58"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-80ba-a6a0-f16255dfe141" class=""><strong>3 Years</strong></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8028-8483-dc60d0ffb9fd" class="">Limited Warranty</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8066-86c3-f56dd24726b8" class=""><em>Our confidence in the SSD 430 is written in three words.Three. Year. Warranty.</em></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-8083-ab6f-d9c09be381ee"/></div><div style="display:contents" dir="auto"><h1 id="361d24e8-7d86-8070-96e3-cb44064def13" class=""><strong>SPECIFICATIONS</strong></h1></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ab-8c42-f8a9fcb649a1" class="">Engineered for supreme speed, endurance, reliability, and multi-platform compatibility.</p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-80fe-85bb-ecd572b12ef9" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8021-a809-f9dd94f9033d"><td id="rAOV" class=""><strong>Model</strong></td><td id="YCpz" class="">Simorchip SSD 430</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-805f-bc97-c558727e0103"><td id="rAOV" class=""><strong>Interface</strong></td><td id="YCpz" class="">PCIe Gen4 x4 NVMe 1.4</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-808e-b878-ed97af9cc8da"><td id="rAOV" class=""><strong>Controller</strong></td><td id="YCpz" class="">8-Channel</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-808e-899e-c358cdda483b"><td id="rAOV" class=""><strong>Cache</strong></td><td id="YCpz" class="">DRAM On-board</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8078-a203-cfbc8adc15d3"><td id="rAOV" class=""><strong>Form Factor</strong></td><td id="YCpz" class="">M.2 2280</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80a9-b3fe-ce0bdb308dc6"><td id="rAOV" class=""><strong>Flash Type</strong></td><td id="YCpz" class="">3D NAND (SLC Caching)</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80c1-860d-ee5c9b8936c4"><td id="rAOV" class=""><strong>Capacity</strong></td><td id="YCpz" class="">512GB / 1TB / 2TB / 4TB</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-803e-ba15-c84fd2136554"><td id="rAOV" class=""><strong>MTBF</strong></td><td id="YCpz" class="">1,500,000 Hours</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80ac-9e94-d544f34389e1"><td id="rAOV" class=""><strong>Voltage</strong></td><td id="YCpz" class="">3.3V ± 5%</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8047-b310-dfe75b6fd7fa"><td id="rAOV" class=""><strong>Dimensions</strong></td><td id="YCpz" class="">80 × 20 × 3.77 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8029-b74c-cac09e46153e"><td id="rAOV" class=""><strong>Operating Temp</strong></td><td id="YCpz" class="">0°C ~ 70°C (32°F ~ 158°F)</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80e3-b9f3-ce8b2081679e"><td id="rAOV" class=""><strong>Certifications</strong></td><td id="YCpz" class="">RoHS / REACH / CE / FCC</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8008-b11e-c3f59b8afc2f"><td id="rAOV" class=""><strong>Warranty</strong></td><td id="YCpz" class="">3-Year Limited Warranty</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c5-bc27-fba60b5c5af0" class="">Performance</p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-8029-81f0-e223a2a3b61a" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-805a-91e7-d9dd152cb599"><th id="\d}I" class="simple-table-header-color simple-table-header"><strong>Capacity</strong></th><th id="`KA]" class="simple-table-header-color simple-table-header"><strong>Sequential Read</strong></th><th id="L]kq" class="simple-table-header-color simple-table-header"><strong>Sequential Write</strong></th><th id="jNvd" class="simple-table-header-color simple-table-header"><strong>TBW</strong></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8019-930b-f3a7e8964883"><td id="\d}I" class=""><strong>512GB</strong></td><td id="`KA]" class="">6,500 MB/s</td><td id="L]kq" class="">3,000 MB/s </td><td id="jNvd" class="">375 TBW</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8048-8578-f3fdb8ba8e90"><td id="\d}I" class=""><strong>1TB</strong></td><td id="`KA]" class="">7,000 MB/s</td><td id="L]kq" class="">6,200 MB/s</td><td id="jNvd" class="">750 TBW</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80df-a5fb-dde7dbb3f75f"><td id="\d}I" class=""><strong>2TB</strong></td><td id="`KA]" class="">7,200 MB/s</td><td id="L]kq" class="">6,400 MB/s</td><td id="jNvd" class="">1,500 TBW</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-803b-98f9-d6ceb090e604"><td id="\d}I" class=""><strong>4TB</strong></td><td id="`KA]" class="">7,200 MB/s</td><td id="L]kq" class="">6,400 MB/s</td><td id="jNvd" class="">3,000 TBW</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80f0-9d4f-fab23e92c02b" class="bulleted-list"><li style="list-style-type:disc">All data secured from Simorchip&#x27;s internal labs under specific testing conditions. Accurate data may vary depending on the operating environment.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80b4-8819-d1e523bf2221" class="bulleted-list"><li style="list-style-type:disc">Warranty based on period or TBW, whichever comes first.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8056-9be2-d2edec6796f2" class="bulleted-list"><li style="list-style-type:disc">512GB: Read 6,500 MB/s / Write 3,000 MB/s · 1TB: Read 7,000 MB/s / Write 6,200 MB/s · 2TB/4TB: Read 7,200 MB/s / Write 6,400 MB/s</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-809f-8e51-f878b143892b" class=""><mark class="highlight-yellow">視覺：就規格表，記得底下放規格表下載，然後瀏覽其他產品按鈕</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80b3-ae8f-f36c30fc2438"/></div><div style="display:contents" dir="auto"><h1 id="361d24e8-7d86-80d1-aaca-ebc5f5c4d3e7" class="">底部標語</h1></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b2-a724-c56f75d192be" class=""><strong>Simorchip SSD 430</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80f1-910f-fcb232a95de2" class=""><strong>Fastest. Strongest. </strong>Smarter<strong>. Safest.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80e7-a3ff-e0979d9cd1a7" class="">Everything before this was just waiting.</p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80fb-9447-ee77c3e1c64c"/></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8065-82bc-da47d70e15be" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8024-b8ac-fbe1b04bd885" class=""><strong>SSD 430 內部備忘</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-806e-bf85-d6b5cab5e487" class="">· 設計語言：Thunderous Descent — 黑底黃色幾何，比 420 更粗重的線條，雷霆落地感</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-803d-bd42-eaed361c5aa8" class="">· 頁面背景：#071020 科技藍 / Accent：#ffe44d 亮電黃（比 420 的 #c8960a 更亮更白）</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-802a-a6e2-f951b5be3650" class="">· Hero 宣言：Everything before this was just waiting.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8090-9f66-d7a30711e8d3" class="">· 標語：Fastest. Strongest. Smarter. Safest.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80d1-9f29-d80efab6ab1a" class="">· 章節：Fastest / Strongest / Smarter / Safest</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-801f-8a86-d577c8b96f86" class="">· 430 獨有技術：8-Channel Controller / DRAM Cache / SLC Caching — 這三個是 420 沒有的，需要明確視覺呈現</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ed-866b-e824748a7073" class="">· 速度各容量不同（見規格表），512GB 讀寫均低於 1TB 以上</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805d-92dd-cf1354de4cf8" class="">· 比較對象：直接跟 SSD 420 做對比（41% faster），而非只跟 Gen3 / SATA 比</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8090-933c-fb2b894306c9" class="">· 規格表需新增 Controller 和 Cache 兩個欄位（420 沒有）</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8084-816d-f46edebebd8c" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
