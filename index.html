@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip — Product Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f8f7f5;--bg2:#f0ede8;
+  --ink:#0a0908;--mute:#5a5550;--label:#9a9590;
+  --red:#c8200e;--border:rgba(10,9,8,.1);--line:rgba(10,9,8,.07);
+  --f:"Inter",-apple-system,sans-serif;--fm:"DM Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--f);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;}
+header{background:var(--ink);padding:0 40px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.h-logo{font-family:var(--fm);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:rgba(248,247,245,.7);}
+.h-logo em{color:var(--red);font-style:normal;}
+.h-tag{font-family:var(--fm);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(248,247,245,.25);}
+.hero{padding:48px 40px 32px;border-bottom:1px solid var(--border);}
+.hero-title{font-size:26px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px;}
+.hero-sub{font-size:14px;font-weight:300;color:var(--mute);line-height:1.7;max-width:560px;}
+.hero-meta{display:flex;gap:20px;margin-top:16px;flex-wrap:wrap;}
+.hm{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);display:flex;align-items:center;gap:6px;}
+.hm-dot{width:6px;height:6px;border-radius:50%;}
+.search-wrap{padding:18px 40px;border-bottom:1px solid var(--border);background:var(--bg2);}
+.search-inner{position:relative;max-width:400px;}
+.search-inner input{width:100%;padding:9px 14px 9px 34px;font-family:var(--fm);font-size:11px;letter-spacing:.04em;background:var(--bg);border:1px solid var(--border);color:var(--ink);outline:none;transition:border-color .2s;}
+.search-inner input:focus{border-color:var(--ink);}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--label);font-size:13px;pointer-events:none;}
+.search-inner input::placeholder{color:var(--label);}
+.main{display:grid;grid-template-columns:196px 1fr;min-height:calc(100vh - 52px - 116px - 56px);}
+.sidebar{border-right:1px solid var(--border);padding:24px 0;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;}
+.sb-section{margin-bottom:4px;}
+.sb-title{font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--label);padding:10px 20px 6px;display:block;}
+.sb-link{display:flex;align-items:center;gap:8px;padding:7px 20px;font-size:12px;font-weight:400;color:var(--mute);cursor:pointer;transition:background .15s,color .15s;text-decoration:none;border:none;background:none;width:100%;text-align:left;}
+.sb-link:hover{background:var(--bg2);color:var(--ink);}
+.sb-link.active{background:rgba(200,32,14,.06);color:var(--red);font-weight:500;}
+.sb-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.content{padding:28px 40px;}
+.section-block{margin-bottom:44px;}
+.section-block:last-child{margin-bottom:0;}
+.section-heading{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--label);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;}
+.section-heading span{display:inline-block;width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.filter-row{display:flex;gap:6px;margin-bottom:22px;flex-wrap:wrap;}
+.pill{font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--border);cursor:pointer;transition:all .2s;background:var(--bg);color:var(--mute);}
+.pill:hover{border-color:var(--ink);color:var(--ink);}
+.pill.on{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;}
+.card{border:1px solid var(--border);background:var(--bg);padding:16px 18px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:7px;transition:border-color .2s,background .2s;}
+.card:hover{border-color:var(--ink);background:var(--bg2);}
+.card-cat{font-family:var(--fm);font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);}
+.card-name{font-size:14px;font-weight:600;letter-spacing:-.01em;}
+.card-desc{font-size:12px;font-weight:300;color:var(--mute);line-height:1.5;}
+.card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:2px;}
+.card-type{font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--border);}
+.card-arrow{font-size:13px;color:var(--label);transition:transform .2s;}
+.card:hover .card-arrow{transform:translateX(4px);color:var(--ink);}
+.card.preview .card-type{border-color:rgba(200,32,14,.3);color:var(--red);}
+.card.text .card-type{border-color:rgba(10,9,8,.15);color:var(--mute);}
+.status-bar{background:var(--ink);padding:10px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;bottom:0;}
+.status-txt{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(248,247,245,.25);}
+.status-count{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(248,247,245,.45);}
+@media(max-width:768px){.main{grid-template-columns:1fr;}.sidebar{display:none;}header,.hero,.search-wrap,.content,.status-bar{padding-left:20px;padding-right:20px;}.card-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.card-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-logo">Simor<em>chip</em> &nbsp;·&nbsp; Docs</div>
+  <div class="h-tag">Internal Review · v1.0</div>
+</header>
+
+<div class="hero">
+  <div class="hero-title">Product Copywriting Review</div>
+  <div class="hero-sub">所有產品預覽頁和文案頁的內部審閱入口。點擊任何卡片即可開啟對應檔案。</div>
+  <div class="hero-meta">
+    <div class="hm"><div class="hm-dot" style="background:var(--red);"></div>Preview — 視覺預覽版</div>
+    <div class="hm"><div class="hm-dot" style="background:rgba(10,9,8,.2);"></div>Text — Notion 文案版</div>
+  </div>
+</div>
+
+<div class="search-wrap">
+  <div class="search-inner">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="search" placeholder="Search products...">
+  </div>
+</div>
+
+<div class="main">
+  <nav class="sidebar">
+    <div class="sb-section">
+      <span class="sb-title">SSD · M.2 2280</span>
+      <button class="sb-link" onclick="jumpTo('ssd-320pro')"><span class="sb-dot" style="background:#c8200e;"></span>SSD 320 PRO</button>
+      <button class="sb-link" onclick="jumpTo('ssd-330')"><span class="sb-dot" style="background:#c8200e;"></span>SSD 330</button>
+      <button class="sb-link" onclick="jumpTo('ssd-420')"><span class="sb-dot" style="background:#c8960a;"></span>SSD 420</button>
+      <button class="sb-link" onclick="jumpTo('ssd-430')"><span class="sb-dot" style="background:#ffe44d;"></span>SSD 430</button>
+    </div>
+    <div class="sb-section">
+      <span class="sb-title">SSD · M.2 2230 / 2242</span>
+      <button class="sb-link" onclick="jumpTo('m2-2230')"><span class="sb-dot" style="background:#2563eb;"></span>M.2 2230</button>
+      <button class="sb-link" onclick="jumpTo('m2-2242')"><span class="sb-dot" style="background:#6366f1;"></span>M.2 2242</button>
+    </div>
+    <div class="sb-section">
+      <span class="sb-title">SSD · 2.5" SATA</span>
+      <button class="sb-link" onclick="jumpTo('ssd-120')"><span class="sb-dot" style="background:#cc2222;"></span>SSD 120</button>
+    </div>
+    <div class="sb-section">
+      <span class="sb-title">DRAM · Precision</span>
+      <button class="sb-link" onclick="jumpTo('ddr3')"><span class="sb-dot" style="background:#1e3a5f;"></span>DDR3</button>
+      <button class="sb-link" onclick="jumpTo('ddr4-p')"><span class="sb-dot" style="background:#1a4a2a;"></span>DDR4</button>
+      <button class="sb-link" onclick="jumpTo('ddr5-p')"><span class="sb-dot" style="background:#4a1a7a;"></span>DDR5</button>
+    </div>
+    <div class="sb-section">
+      <span class="sb-title">DRAM · Performance</span>
+      <button class="sb-link" onclick="jumpTo('nx1')"><span class="sb-dot" style="background:#555;"></span>DDR4 NX1</button>
+      <button class="sb-link" onclick="jumpTo('cx1')"><span class="sb-dot" style="background:#c8922a;"></span>DDR4 CX1</button>
+      <button class="sb-link" onclick="jumpTo('ex1')"><span class="sb-dot" style="background:#c8200e;"></span>DDR5 EX1</button>
+      <button class="sb-link" onclick="jumpTo('rx1')"><span class="sb-dot" style="background:#c8922a;"></span>DDR5 RX1</button>
+    </div>
+  </nav>
+
+  <div class="content" id="content">
+    <div class="filter-row">
+      <div class="pill on" onclick="filterAll(this)">All</div>
+      <div class="pill" onclick="filterType('preview',this)">Preview only</div>
+      <div class="pill" onclick="filterType('text',this)">Text only</div>
+    </div>
+
+    <!-- SSD 320 PRO -->
+    <div class="section-block" id="ssd-320pro">
+      <div class="section-heading"><span style="background:#c8200e;"></span>SSD 320 PRO — M.2 2280 PCIe Gen3x4</div>
+      <div class="card-grid">
+        <a class="card preview" href="ssd/SSD320PRO_preview.html" data-name="SSD 320 PRO">
+          <div class="card-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div>
+          <div class="card-name">SSD 320 PRO</div>
+          <div class="card-desc">Faster than you expect.</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+        <a class="card text" href="ssd/SSD320PRO_text.html" data-name="SSD 320 PRO Text">
+          <div class="card-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div>
+          <div class="card-name">SSD 320 PRO Text</div>
+          <div class="card-desc">文案 · Notion-ready copywriting</div>
+          <div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- SSD 330 -->
+    <div class="section-block" id="ssd-330">
+      <div class="section-heading"><span style="background:#c8200e;"></span>SSD 330 — M.2 2280 PCIe Gen3x4</div>
+      <div class="card-grid">
+        <a class="card preview" href="ssd/SSD330_preview.html" data-name="SSD 330">
+          <div class="card-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div>
+          <div class="card-name">SSD 330</div>
+          <div class="card-desc">Drop it. Trust it.</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+        <a class="card text" href="ssd/SSD330_text.html" data-name="SSD 330 Text">
+          <div class="card-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div>
+          <div class="card-name">SSD 330 Text</div>
+          <div class="card-desc">文案 · Notion-ready copywriting</div>
+          <div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- SSD 420 -->
+    <div class="section-block" id="ssd-420">
+      <div class="section-heading"><span style="background:#c8960a;"></span>SSD 420 — M.2 2280 PCIe Gen4x4</div>
+      <div class="card-grid">
+        <a class="card preview" href="ssd/SSD420_preview.html" data-name="SSD 420">
+          <div class="card-cat">PCIe Gen4x4 · M.2 2280 · NVMe</div>
+          <div class="card-name">SSD 420</div>
+          <div class="card-desc">Lightning Strike · Gen4 begins here.</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+        <a class="card text" href="ssd/SSD420_text.html" data-name="SSD 420 Text">
+          <div class="card-cat">PCIe Gen4x4 · M.2 2280 · NVMe</div>
+          <div class="card-name">SSD 420 Text</div>
+          <div class="card-desc">文案 · Notion-ready copywriting</div>
+          <div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- SSD 430 -->
+    <div class="section-block" id="ssd-430">
+      <div class="section-heading"><span style="background:#ffe44d;"></span>SSD 430 — M.2 2280 PCIe Gen4x4 Flagship</div>
+      <div class="card-grid">
+        <a class="card preview" href="ssd/SSD430_preview.html" data-name="SSD 430">
+          <div class="card-cat">PCIe Gen4x4 · M.2 2280 · Flagship</div>
+          <div class="card-name">SSD 430</div>
+          <div class="card-desc">Thunderous Descent 雷霆隕 · 7,200 MB/s · 3,000 TBW</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+        <a class="card text" href="ssd/SSD430_text.html" data-name="SSD 430 Text">
+          <div class="card-cat">PCIe Gen4x4 · M.2 2280 · Flagship</div>
+          <div class="card-name">SSD 430 Text</div>
+          <div class="card-desc">文案 · Notion-ready copywriting</div>
+          <div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- M.2 2230 -->
+    <div class="section-block" id="m2-2230">
+      <div class="section-heading"><span style="background:#2563eb;"></span>M.2 2230 — GEN3x4 &amp; GEN4x4 合併頁</div>
+      <div class="card-grid">
+        <a class="card preview" href="ssd/M2_2230_prview.html" data-name="M.2 2230">
+          <div class="card-cat">PCIe Gen3x4 &amp; Gen4x4 · M.2 2230</div>
+          <div class="card-name">M.2 2230</div>
+          <div class="card-desc">GEN3x4 + GEN4x4 · Compact Core + Swift Core</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+        <a class="card text" href="ssd/M2_2230_2242_text.html" data-name="M.2 2230 2242 Text">
+          <div class="card-cat">M.2 2230 &amp; 2242 共用文案</div>
+          <div class="card-name">M.2 2230 &amp; 2242 Text</div>
+          <div class="card-desc">文案 · GEN3x4 / GEN4x4 / 2242 合併文案</div>
+          <div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- M.2 2242 -->
+    <div class="section-block" id="m2-2242">
+      <div class="section-heading"><span style="background:#6366f1;"></span>M.2 2242 — GEN3x4</div>
+      <div class="card-grid">
+        <a class="card preview" href="ssd/M2_2242_prview.html" data-name="M.2 2242">
+          <div class="card-cat">PCIe Gen3x4 · M.2 2242</div>
+          <div class="card-name">M.2 2242 GEN3x4</div>
+          <div class="card-desc">Solid Core 固芯 · 3,200 MB/s all capacities</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- SSD 120 -->
+    <div class="section-block" id="ssd-120">
+      <div class="section-heading"><span style="background:#cc2222;"></span>SSD 120 — 2.5" SATA III</div>
+      <div class="card-grid">
+        <a class="card preview" href="ssd/SSD120_preview.html" data-name="SSD 120">
+          <div class="card-cat">SATA III 6Gb/s · 2.5"</div>
+          <div class="card-name">SSD 120</div>
+          <div class="card-desc">Void Edge 虛刃 · Every device deserves this.</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+        <a class="card text" href="ssd/SSD120_text.html" data-name="SSD 120 Text">
+          <div class="card-cat">SATA III 6Gb/s · 2.5"</div>
+          <div class="card-name">SSD 120 Text</div>
+          <div class="card-desc">文案 · Void Edge 虛刃</div>
+          <div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- DDR3 Precision -->
+    <div class="section-block" id="ddr3">
+      <div class="section-heading"><span style="background:#1e3a5f;"></span>DDR3 — Precision Series</div>
+      <div class="card-grid">
+        <a class="card preview" href="dram/DDR3_prview.html" data-name="DDR3 Precision">
+          <div class="card-cat">DDR3L · 1600 Mbps · 1.35V · 8GB</div>
+          <div class="card-name">DDR3 Precision</div>
+          <div class="card-desc">U-DIMM + SO-DIMM 合併預覽</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+        <a class="card text" href="dram/DDR345_text.html" data-name="DDR345 Text">
+          <div class="card-cat">DDR3 &amp; DDR4 &amp; DDR5 共用文案</div>
+          <div class="card-name">DDR3 / DDR4 / DDR5 Text</div>
+          <div class="card-desc">文案 · Precision Series 三代合併文案</div>
+          <div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- DDR4 Precision -->
+    <div class="section-block" id="ddr4-p">
+      <div class="section-heading"><span style="background:#1a4a2a;"></span>DDR4 — Precision Series</div>
+      <div class="card-grid">
+        <a class="card preview" href="dram/DDR4_prview.html" data-name="DDR4 Precision">
+          <div class="card-cat">DDR4 · 3200 Mbps · 1.2V · 16 / 32GB</div>
+          <div class="card-name">DDR4 Precision</div>
+          <div class="card-desc">U-DIMM + SO-DIMM 合併預覽</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- DDR5 Precision -->
+    <div class="section-block" id="ddr5-p">
+      <div class="section-heading"><span style="background:#4a1a7a;"></span>DDR5 — Precision Series</div>
+      <div class="card-grid">
+        <a class="card preview" href="dram/DDR5_prview.html" data-name="DDR5 Precision">
+          <div class="card-cat">DDR5 · 5600 Mbps · 1.1V · 32GB · On-Die ECC</div>
+          <div class="card-name">DDR5 Precision</div>
+          <div class="card-desc">U-DIMM + SO-DIMM 合併預覽</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- DDR4 NX1 -->
+    <div class="section-block" id="nx1">
+      <div class="section-heading"><span style="background:#555;"></span>DDR4 NX1 — Performance Series</div>
+      <div class="card-grid">
+        <a class="card preview" href="dram/DDR4NX1_preview.html" data-name="DDR4 NX1">
+          <div class="card-cat">DDR4 · Shadow Edge · No RGB</div>
+          <div class="card-name">DDR4 NX1</div>
+          <div class="card-desc">Silent. Certain. Lifetime.</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+        <a class="card text" href="dram/DDR4NX1_text.html" data-name="DDR4 NX1 Text">
+          <div class="card-cat">DDR4 · Shadow Edge · No RGB</div>
+          <div class="card-name">DDR4 NX1 Text</div>
+          <div class="card-desc">文案 · Shadow Edge 設計語言</div>
+          <div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- DDR4 CX1 -->
+    <div class="section-block" id="cx1">
+      <div class="section-heading"><span style="background:#c8922a;"></span>DDR4 CX1 — Performance Series</div>
+      <div class="card-grid">
+        <a class="card preview" href="dram/DDR4CX1_preview.html" data-name="DDR4 CX1">
+          <div class="card-cat">DDR4 · Storm White · Full RGB</div>
+          <div class="card-name">DDR4 CX1</div>
+          <div class="card-desc">Light is just the beginning.</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+        <a class="card text" href="dram/DDR4CX1_text.html" data-name="DDR4 CX1 Text">
+          <div class="card-cat">DDR4 · Storm White · Full RGB</div>
+          <div class="card-name">DDR4 CX1 Text</div>
+          <div class="card-desc">文案 · Storm White 設計語言</div>
+          <div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- DDR5 EX1 -->
+    <div class="section-block" id="ex1">
+      <div class="section-heading"><span style="background:#c8200e;"></span>DDR5 EX1 — Performance Series</div>
+      <div class="card-grid">
+        <a class="card preview" href="dram/DDR5EX1_preview.html" data-name="DDR5 EX1">
+          <div class="card-cat">DDR5 · Blaze Blade · War Red · 1.35V</div>
+          <div class="card-name">DDR5 EX1</div>
+          <div class="card-desc">54°C Graphene cooled · It dominates.</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+        <a class="card text" href="dram/DDR5EX1_text.html" data-name="DDR5 EX1 Text">
+          <div class="card-cat">DDR5 · Blaze Blade · War Red</div>
+          <div class="card-name">DDR5 EX1 Text</div>
+          <div class="card-desc">文案 · Blaze Blade 設計語言</div>
+          <div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- DDR5 RX1 -->
+    <div class="section-block" id="rx1">
+      <div class="section-heading"><span style="background:#c8922a;"></span>DDR5 RX1 — Performance Series</div>
+      <div class="card-grid">
+        <a class="card preview" href="dram/DDR5RX1_preview.html" data-name="DDR5 RX1">
+          <div class="card-cat">DDR5 · Precision White · 3µm Hard Gold</div>
+          <div class="card-name">DDR5 RX1</div>
+          <div class="card-desc">On-Die ECC · You reign. Every core.</div>
+          <div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div>
+        </a>
+        <a class="card text" href="dram/DDR5RX1_text.html" data-name="DDR5 RX1 Text">
+          <div class="card-cat">DDR5 · Precision White · 3µm Hard Gold</div>
+          <div class="card-name">DDR5 RX1 Text</div>
+          <div class="card-desc">文案 · Precision White 設計語言</div>
+          <div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="status-bar">
+  <div class="status-txt">Simorchip Product Docs · Internal Review · © 2026</div>
+  <div class="status-count" id="count">Showing all files</div>
+</div>
+
+<script>
+function jumpTo(id){
+  const el=document.getElementById(id);
+  if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}
+  document.querySelectorAll('.sb-link').forEach(l=>l.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+document.getElementById('search').addEventListener('input',function(){
+  const q=this.value.toLowerCase();
+  let shown=0;
+  document.querySelectorAll('.card').forEach(c=>{
+    const name=(c.dataset.name||'').toLowerCase();
+    const show=!q||name.includes(q);
+    c.style.display=show?'':'none';
+    if(show)shown++;
+  });
+  document.getElementById('count').textContent=q?`${shown} result${shown!==1?'s':''} for "${this.value}"`:'Showing all files';
+});
+function filterAll(el){
+  document.querySelectorAll('.card').forEach(c=>c.style.display='');
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('count').textContent='Showing all files';
+}
+function filterType(type,el){
+  let shown=0;
+  document.querySelectorAll('.card').forEach(c=>{
+    const show=c.classList.contains(type);
+    c.style.display=show?'':'none';
+    if(show)shown++;
+  });
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('count').textContent=`${shown} ${type} files`;
+}
+</script>
+</body>
+</html>
