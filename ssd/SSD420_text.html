@@ -1,1295 +1,760 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simorchip SSD 420 — Faster. Stronger. Smart. Safer.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg:#071020; --bg2:#0d1628; --bg3:#111e35;
-  --gold:#c8960a; --gold-dim:rgba(200,150,10,.15); --gold-glow:rgba(200,150,10,.07);
-  --white:#f0f0f0; --ink:#071020;
-  --mute:#cccccc; --label:#8a9aaa;
-  --border:rgba(255,255,255,.09); --line:rgba(255,255,255,.08);
-  --ff-d:'Bebas Neue',sans-serif;
-  --ff-b:'DM Sans',sans-serif;
-  --ff-m:'DM Mono',monospace;
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>SSD 420</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:var(--ff-b);background:var(--bg);color:var(--white);overflow-x:hidden;cursor:none;}
-
-/* GRAIN */
-.grain{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.12;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-  background-size:160px 160px;mix-blend-mode:overlay;}
-
-/* LIGHTNING BG — subtle electric arc pattern */
-.lightning-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;opacity:.4;}
-.lightning-bg::before{content:'';position:absolute;top:-20%;right:8%;width:1px;height:140%;
-  background:linear-gradient(180deg,transparent 0%,var(--gold) 35%,rgba(200,150,10,.3) 50%,var(--gold) 65%,transparent 100%);
-  clip-path:polygon(0 0,100% 5%,80% 48%,100% 52%,60% 100%,70% 55%,40% 50%,60% 0);
-  animation:lbolt 6s ease-in-out infinite;}
-.lightning-bg::after{content:'';position:absolute;top:10%;right:18%;width:1px;height:80%;
-  background:linear-gradient(180deg,transparent,rgba(200,150,10,.2),transparent);
-  animation:lbolt 6s ease-in-out infinite 1.5s;}
-@keyframes lbolt{0%,100%{opacity:.1;}50%{opacity:.6;}}
-
-/* CURSOR */
-#cur{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .18s,height .18s;}
-#cur-ring{position:fixed;width:42px;height:42px;border:1px solid rgba(200,150,10,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s;}
-#spot{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(200,150,10,.05) 0%,transparent 65%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:20px 5%;transition:background .3s,border-bottom .3s;}
-nav.scrolled{background:rgba(7,16,32,.95);backdrop-filter:blur(14px);border-bottom:.5px solid var(--border);}
-.nav-brand{font-family:var(--ff-m);font-size:11px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:var(--white);opacity:.35;}
-.nav-pills{display:flex;gap:6px;}
-.nav-pill{font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.1em;color:var(--label);border:.5px solid var(--border);padding:5px 10px;cursor:pointer;transition:color .2s,border-color .2s,background .2s;}
-.nav-pill:hover,.nav-pill.on{color:var(--white);border-color:var(--gold);background:var(--gold-dim);}
-
-/* SHARED */
-section{position:relative;width:100%;overflow:hidden;}
-.full{min-height:100vh;}
-.gold-line{height:2px;background:var(--gold);width:0;transition:width 1.1s ease;}
-.gold-line.on{width:44px;}
-/* scroll reveal — upward from slight offset */
-.fi{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease;}
-.fi.vis{opacity:1;transform:none;}
-.fi-d1{transition-delay:.12s;}.fi-d2{transition-delay:.24s;}.fi-d3{transition-delay:.36s;}.fi-d4{transition-delay:.48s;}
-.tag{font-family:var(--ff-m);font-size:11px;font-weight:400;letter-spacing:.07em;color:var(--label);border:.5px solid var(--border);padding:5px 12px;display:inline-block;}
-.tag::before{content:'#';color:var(--gold);margin-right:2px;}
-/* stat badge */
-.stat-badge{display:inline-flex;flex-direction:column;align-items:flex-start;border:.5px solid var(--border);padding:20px 24px;background:rgba(255,255,255,.03);transition:border-color .22s,background .22s;}
-.stat-badge:hover{border-color:var(--gold);background:var(--gold-dim);}
-.stat-badge .num{font-family:var(--ff-d);font-size:clamp(28px,4.5vw,58px);letter-spacing:.02em;color:var(--white);line-height:1;}
-.stat-badge .lbl{font-size:11px;font-weight:400;letter-spacing:.1em;color:var(--mute);margin-top:5px;text-transform:uppercase;font-family:var(--ff-m);}
-.img-ph{background:linear-gradient(135deg,var(--bg3),var(--bg2));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:.5px solid var(--border);}
-.img-ph::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(91deg,transparent,transparent 14px,rgba(255,255,255,.012) 14px,rgba(255,255,255,.012) 15px);}
-.img-ph span{font-family:var(--ff-m);font-size:9px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.2);position:relative;z-index:1;text-align:center;line-height:2.2;padding:0 18px;}
-
-/* BULLET LIST */
-.bullet-list{list-style:none;margin-top:28px;}
-.bullet-list li{padding:18px 0;border-bottom:.5px solid var(--line);font-size:15px;font-weight:400;line-height:1.75;color:var(--mute);display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;}
-.bullet-list li:last-child{border-bottom:none;}
-.bullet-list li .bi{width:32px;height:32px;border:.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
-.bullet-list li .bi svg{width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:1.5;}
-.bullet-list strong{font-weight:600;color:var(--white);}
-
-/* SEC WRAP */
-.sec-wrap{padding:100px 6% 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto;}
-.sec-wrap.rev{direction:rtl;}.sec-wrap.rev>*{direction:ltr;}
-.sh-num{font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.22em;color:var(--label);margin-bottom:14px;text-transform:uppercase;}
-.sh-title{font-family:var(--ff-d);font-size:clamp(68px,9.5vw,124px);letter-spacing:.02em;color:var(--white);line-height:.88;margin-bottom:8px;}
-.sh-sub{font-family:var(--ff-m);font-size:12px;font-weight:400;letter-spacing:.1em;color:var(--label);text-transform:uppercase;margin-bottom:28px;}
-.sh-intro{font-size:16px;font-weight:400;color:var(--mute);line-height:1.8;margin-bottom:24px;}
-.btn{font-family:var(--ff-b);font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:14px 30px;background:transparent;cursor:pointer;transition:background .22s,color .22s,border-color .22s;}
-.btn-gold{border:1px solid var(--gold);color:var(--gold);}.btn-gold:hover{background:var(--gold);color:var(--ink);}
-.btn-ghost{border:1px solid var(--border);color:var(--label);}.btn-ghost:hover{background:var(--white);color:var(--ink);border-color:var(--white);}
-
-/* ── HERO ── */
-#s00{background:var(--bg);display:flex;align-items:center;padding-top:80px;min-height:100vh;}
-.hero-glow{position:absolute;inset:0;pointer-events:none;z-index:0;}
-.hero-glow::before{content:'';position:absolute;top:10%;right:5%;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(200,150,10,.07) 0%,transparent 65%);animation:glowPulse 5s ease-in-out infinite;}
-@keyframes glowPulse{0%,100%{opacity:.5;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
-
-.h-right{position:absolute;right:0;top:0;bottom:0;width:52%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(24px);transition:opacity 1.4s ease .2s,transform 1.4s ease .2s;}
-.h-right.on{opacity:1;transform:translateX(0);}
-
-/* SSD 420 module illustration */
-.ssd-wrap{width:88%;max-width:520px;position:relative;}
-.ssd-wrap::before{content:'';position:absolute;inset:-50px;z-index:-1;background:radial-gradient(ellipse 70% 40% at 50% 50%,rgba(200,150,10,.1) 0%,transparent 70%);}
-@keyframes glint{0%{left:-40%;opacity:0;}8%{opacity:1;}92%{opacity:.6;}100%{left:140%;opacity:0;}}
-.ssd-body{width:100%;aspect-ratio:5.2/1;background:linear-gradient(128deg,#1a1a18 0%,#0f0f0e 100%);position:relative;overflow:hidden;border:.5px solid rgba(255,255,255,.08);box-shadow:0 28px 80px rgba(0,0,0,.9),0 0 50px rgba(200,150,10,.07);}
-/* glint */
-.ssd-body::after{content:'';position:absolute;top:0;left:-40%;width:16%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),rgba(255,255,255,.14),rgba(255,255,255,.08),transparent);animation:glint 5s ease-in-out infinite 2s;pointer-events:none;z-index:10;}
-/* Lightning Strike geometry — gold lines */
-.ssd-geo1{position:absolute;top:0;right:0;bottom:0;width:20%;background:var(--gold);clip-path:polygon(15% 0,100% 0,100% 100%,0 100%);opacity:.75;}
-.ssd-geo2{position:absolute;top:0;right:16%;bottom:0;width:10%;background:var(--gold);clip-path:polygon(30% 0,100% 0,70% 100%,0 100%);opacity:.5;}
-.ssd-geo3{position:absolute;top:0;right:24%;bottom:0;width:6%;background:var(--gold);clip-path:polygon(40% 0,100% 0,60% 100%,0 100%);opacity:.3;}
-/* corner marks */
-.ssd-corner{position:absolute;width:14px;height:14px;border-color:var(--gold);border-style:solid;opacity:.6;}
-.ssd-tl{top:4px;left:4px;border-width:1.5px 0 0 1.5px;}
-.ssd-tr{top:4px;right:4px;border-width:1.5px 1.5px 0 0;}
-.ssd-bl{bottom:4px;left:4px;border-width:0 0 1.5px 1.5px;}
-.ssd-br{bottom:4px;right:4px;border-width:0 1.5px 1.5px 0;}
-.ssd-brand{position:absolute;top:50%;left:10px;transform:translateY(-50%);}
-.ssd-brand-name{font-family:var(--ff-d);font-size:18px;letter-spacing:.08em;color:rgba(255,255,255,.85);display:block;line-height:1;}
-.ssd-brand-sub{font-family:var(--ff-m);font-size:7px;font-weight:400;letter-spacing:.2em;color:rgba(255,255,255,.3);text-transform:uppercase;display:block;margin-top:2px;}
-.ssd-chip-row{position:absolute;top:20%;left:120px;display:flex;gap:4px;}
-.ssd-chip{width:20px;height:16px;background:rgba(255,255,255,.06);border:.5px solid rgba(255,255,255,.1);}
-.ssd-pins{position:absolute;bottom:0;left:0;right:25%;height:7px;background:repeating-linear-gradient(90deg,#c8922a 0,#c8922a 1.5px,transparent 1.5px,transparent 4px);opacity:.4;}
-
-.h-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,var(--bg) 0%,var(--bg) 20%,rgba(7,16,32,.5) 44%,transparent 64%);}
-.h-left{position:relative;z-index:3;padding:0 0 0 6%;flex:1;max-width:580px;}
-.h-eye{font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:var(--label);margin-bottom:28px;opacity:0;transition:opacity .5s ease;}
-.h-eye.on{opacity:1;}
-.h-hl{line-height:.9;margin-bottom:28px;opacity:0;transition:opacity .4s ease;}
-.h-hl.on{opacity:1;}
-.hl-ln{display:block;font-family:var(--ff-d);font-size:clamp(60px,8.8vw,108px);letter-spacing:.01em;opacity:0;transform:translateY(14px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
-.hl-ln.in{opacity:1;transform:translateY(0);}
-.hl-wh{color:var(--white);}
-.hl-gold{color:var(--gold);}
-.h-deck{font-size:16px;font-weight:400;line-height:1.85;color:var(--mute);max-width:380px;margin-top:22px;opacity:0;transition:opacity .7s ease;}
-.h-deck.on{opacity:1;}
-.h-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:22px;opacity:0;transition:opacity .5s ease;}
-.h-tags.on{opacity:1;}
-.scr-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;transition:opacity .5s;z-index:4;}
-.scr-hint.on{opacity:1;}
-.scr-ln{width:1.5px;height:30px;background:var(--border);position:relative;overflow:hidden;}
-.scr-ln::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--gold);animation:scrdn 1.3s ease infinite 2.5s;}
-@keyframes scrdn{0%{top:-100%}100%{top:100%}}
-.scr-lb{font-family:var(--ff-m);font-size:9px;font-weight:400;letter-spacing:.16em;color:var(--label);text-transform:uppercase;}
-
-/* ── S01 LIGHTNING STRIKE + WHY ── */
-#s01{background:var(--bg2);padding:100px 6%;}
-#s01::before,#s03::before,#s05::before,#s07::before{
-  content:'';display:block;width:100%;height:1px;
-  background:linear-gradient(90deg,transparent 0%,var(--gold) 20%,rgba(200,150,10,.25) 60%,transparent 100%);
-  position:absolute;top:0;left:0;
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
 }
-.s01-in{max-width:1080px;margin:0 auto;}
-.bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
-.bl-eye{font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
-.bl-title{font-family:var(--ff-d);font-size:clamp(46px,6.5vw,78px);letter-spacing:.02em;color:var(--white);line-height:1;margin-bottom:20px;}
-.bl-body{font-size:16px;font-weight:400;line-height:1.9;color:var(--mute);margin-bottom:24px;}
-.bl-quote{font-size:14px;font-weight:500;letter-spacing:.04em;color:var(--gold);padding:16px 0;border-top:.5px solid rgba(200,150,10,.25);border-bottom:.5px solid rgba(200,150,10,.25);font-style:italic;}
-.bl-img{width:100%;aspect-ratio:4/3;border:.5px solid var(--border);}
-/* why table */
-.why-wrap{margin-top:80px;padding-top:72px;border-top:.5px solid var(--line);}
-.why-title{font-family:var(--ff-d);font-size:clamp(42px,5.8vw,68px);letter-spacing:.02em;color:var(--white);margin-bottom:12px;}
-.why-sub{font-size:15px;font-weight:400;color:var(--mute);margin-bottom:40px;}
-.why-tbl{width:100%;border-collapse:collapse;}
-.why-tbl tr{border-bottom:.5px solid var(--line);}
-.why-tbl td{padding:20px 0;vertical-align:top;}
-.why-tbl .wl{font-family:var(--ff-m);font-size:12px;font-weight:400;letter-spacing:.1em;color:var(--label);text-transform:uppercase;width:26%;}
-.why-tbl .wv{font-family:var(--ff-d);font-size:clamp(22px,3.2vw,38px);letter-spacing:.02em;color:var(--white);width:24%;}
-.why-tbl .wv.accent{color:var(--gold);}
-.why-tbl .wd{font-size:14px;font-weight:400;color:var(--mute);padding-left:24px;line-height:1.7;}
-.why-fn{font-family:var(--ff-m);font-size:10px;font-weight:400;color:var(--label);margin-top:20px;letter-spacing:.06em;}
-.why-close{font-size:16px;font-weight:400;color:var(--mute);margin-top:32px;font-style:italic;}
 
-/* ── S02 FASTER ── */
-#s02{background:var(--bg);}
-/* speed bars */
-.speed-bars{display:flex;flex-direction:column;gap:0;margin:28px 0 20px;}
-.sp-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:.5px solid var(--line);}
-.sp-row:last-child{border-bottom:none;}
-.sp-label{font-family:var(--ff-m);font-size:11px;font-weight:400;color:var(--label);width:100px;flex-shrink:0;text-transform:uppercase;}
-.sp-track{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;position:relative;}
-.sp-fill{height:100%;border-radius:2px;position:absolute;left:0;top:0;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
-.sp-fill.sata{background:rgba(138,154,170,.4);}
-.sp-fill.gen3{background:rgba(138,154,170,.65);}
-.sp-fill.gen4{background:var(--gold);}
-.sp-val{font-family:var(--ff-d);font-size:16px;font-weight:700;color:var(--white);width:120px;text-align:right;flex-shrink:0;}
-.sp-val.gold{color:var(--gold);}
-.speed-note{font-family:var(--ff-m);font-size:10px;font-weight:400;color:var(--label);margin-top:12px;}
-/* compare table */
-.cmp-tbl{width:100%;border-collapse:collapse;margin:24px 0;}
-.cmp-tbl th{font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--label);text-align:left;padding:0 0 12px;border-bottom:.5px solid var(--line);}
-.cmp-tbl th:not(:first-child){text-align:center;}
-.cmp-tbl td{font-size:14px;font-weight:400;color:var(--mute);padding:14px 0;border-bottom:.5px solid var(--line);}
-.cmp-tbl td:not(:first-child){text-align:center;}
-.cmp-tbl td.best{color:var(--white);font-weight:600;}
-.cmp-tbl td.gold-val{color:var(--gold);font-weight:600;}
-.cmp-tbl tr:last-child td{border-bottom:none;}
-
-/* ── S03 STRONGER ── */
-#s03{background:var(--bg2);}
-/* MTBF countdown display */
-.mtbf-display{margin:28px 0 16px;display:flex;flex-direction:column;gap:4px;}
-.mtbf-number{font-family:var(--ff-d);font-size:clamp(36px,5.5vw,72px);letter-spacing:.04em;color:var(--gold);line-height:1;}
-.mtbf-label{font-family:var(--ff-m);font-size:11px;font-weight:400;letter-spacing:.2em;color:var(--label);text-transform:uppercase;}
-.mtbf-line{font-family:var(--ff-m);font-size:12px;font-weight:400;color:var(--mute);margin-top:8px;}
-.twitch-text{font-family:var(--ff-d);font-size:clamp(22px,3vw,36px);color:var(--gold);letter-spacing:.04em;}
-/* capacity badges */
-.cap-badges{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0;}
-.cap-badge{border:.5px solid var(--border);padding:12px 18px;text-align:center;min-width:70px;}
-.cap-badge .cn{font-family:var(--ff-d);font-size:clamp(20px,2.8vw,32px);letter-spacing:.02em;color:var(--white);line-height:1;}
-.cap-badge .cl{font-family:var(--ff-m);font-size:9px;font-weight:400;letter-spacing:.1em;color:var(--label);margin-top:4px;text-transform:uppercase;}
-.cap-badge.best{border-color:var(--gold);background:var(--gold-dim);}
-.cap-badge.best .cn{color:var(--gold);}
-.cap-badge.max{border-color:rgba(200,150,10,.4);}
-/* TBW bars */
-.tbw-viz{display:flex;gap:8px;align-items:flex-end;height:80px;margin:20px 0;}
-.tbw-col{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;}
-.tbw-bar{width:100%;background:rgba(255,255,255,.06);position:relative;}
-.tbw-bar::after{content:'';position:absolute;bottom:0;left:0;right:0;background:var(--gold);transform:scaleY(0);transform-origin:bottom;transition:transform 1.2s cubic-bezier(.16,1,.3,1);}
-.tbw-bar.on::after{transform:scaleY(1);}
-.tbw-val{font-family:var(--ff-m);font-size:9px;font-weight:400;color:var(--label);text-align:center;}
-
-/* ── S04 SMART ── */
-#s04{background:var(--bg);}
-.tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px;}
-.tech-card{border:.5px solid var(--border);padding:22px 18px;background:rgba(255,255,255,.02);transition:border-color .22s,background .22s;}
-.tech-card:hover{border-color:var(--gold);background:var(--gold-dim);}
-.tech-card .ti{font-size:22px;margin-bottom:12px;}
-.tech-card .tt{font-size:14px;font-weight:600;color:var(--white);margin-bottom:6px;letter-spacing:.02em;}
-.tech-card .td{font-size:13px;font-weight:400;color:var(--mute);line-height:1.65;}
-.tech-blockquote{font-size:18px;font-weight:400;color:var(--mute);font-style:italic;border-left:3px solid var(--gold);padding:14px 22px;margin:28px 0 0;line-height:1.7;}
-
-/* ── S05 SAFER ── */
-#s05{background:var(--bg2);}
-/* satellite orbit viz */
-.orbit-viz{position:relative;width:280px;height:280px;margin:0 auto;}
-.orbit-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5;}
-.orbit-center-inner{width:80px;height:80px;background:var(--bg3);border:.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--ff-d);font-size:13px;letter-spacing:.08em;color:var(--gold);text-align:center;line-height:1.3;}
-.orbit-ring{position:absolute;top:50%;left:50%;border:.5px dashed rgba(200,150,10,.2);border-radius:50%;transform:translate(-50%,-50%);}
-.orbit-ring1{width:180px;height:180px;animation:orbitSpin 12s linear infinite;}
-.orbit-ring2{width:260px;height:260px;animation:orbitSpin 18s linear infinite reverse;}
-@keyframes orbitSpin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
-.orbit-sat{position:absolute;width:52px;height:52px;border:.5px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;border-radius:2px;}
-.orbit-sat .os{font-size:12px;}
-.orbit-sat .ol{font-family:var(--ff-m);font-size:7px;font-weight:400;color:var(--label);letter-spacing:.06em;text-align:center;line-height:1.3;}
-/* position satellites */
-.sat-plp,.sat-ldpc,.sat-bbm,.sat-wl{position:absolute;top:50%;left:50%;}
-/* 2195 year display */
-.year-display{margin:32px 0 12px;padding:20px 24px;border:.5px solid rgba(200,150,10,.3);background:var(--gold-dim);}
-.year-num{font-family:var(--ff-d);font-size:clamp(32px,5vw,64px);letter-spacing:.06em;color:var(--gold);line-height:1;}
-.year-sub{font-size:13px;font-weight:400;color:var(--mute);margin-top:6px;font-family:var(--ff-m);letter-spacing:.06em;}
-.year-cn{font-size:14px;font-weight:400;color:var(--label);margin-top:4px;}
-
-/* ── S06 ONE SIZE ── */
-#s06{background:var(--bg);padding:100px 6%;}
-.compat-in{max-width:1080px;margin:0 auto;}
-.compat-title{font-family:var(--ff-d);font-size:clamp(42px,6vw,76px);letter-spacing:.02em;color:var(--white);margin-bottom:8px;}
-.compat-sub{font-size:15px;font-weight:400;color:var(--mute);margin-bottom:48px;}
-.compat-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-.compat-cat{border:.5px solid var(--border);padding:24px;}
-.compat-cat-title{font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;padding-bottom:12px;border-bottom:.5px solid var(--line);}
-.compat-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:.5px solid var(--line);font-size:14px;font-weight:400;}
-.compat-row:last-child{border-bottom:none;}
-.compat-row .cr-name{color:var(--white);}
-.compat-row .cr-desc{color:var(--label);font-size:12px;font-weight:400;text-align:right;max-width:52%;}
-.os-bar{margin-top:32px;padding:18px 20px;border:.5px solid var(--border);background:rgba(255,255,255,.02);display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
-.os-label{font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--label);margin-right:8px;}
-.os-pill{font-family:var(--ff-m);font-size:11px;font-weight:400;color:var(--mute);border:.5px solid var(--border);padding:4px 10px;}
-.plug-note{font-family:var(--ff-m);font-size:11px;font-weight:400;color:var(--gold);margin-top:12px;letter-spacing:.06em;}
-
-/* ── S07 PACKAGING ── */
-#s07{background:var(--bg2);padding:100px 6%;}
-.pkg-in{max-width:1100px;margin:0 auto;}
-.pkg-sec-lbl{font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:10px;}
-.pkg-layout{display:grid;grid-template-columns:260px 1fr;gap:64px;align-items:start;}
-/* card */
-.pkg-card{width:240px;background:var(--bg3);border:.5px solid var(--border);border-radius:4px;padding:0 0 14px;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(200,150,10,.05);}
-.pkg-hang{display:flex;justify-content:center;padding:12px 0 8px;background:#060e1a;border-bottom:.5px solid var(--border);}
-.pkg-hang-hole{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg);}
-.pkg-slash-bg{position:absolute;top:44px;left:0;right:0;bottom:0;z-index:0;opacity:.04;
-  background-image:repeating-linear-gradient(135deg,rgba(200,150,10,.8) 0,rgba(200,150,10,.8) 1px,transparent 0,transparent 50%);background-size:16px 16px;}
-.pkg-gold-bar{position:relative;z-index:1;height:4px;background:var(--gold);}
-.pkg-content{position:relative;z-index:2;padding:14px 16px 8px;}
-.pkg-card-brand{font-family:var(--ff-b);font-size:10px;font-weight:400;letter-spacing:.2em;color:var(--label);text-transform:uppercase;margin-bottom:2px;}
-.pkg-card-model{font-family:var(--ff-d);font-size:40px;letter-spacing:-.01em;color:var(--white);line-height:1;margin-bottom:2px;}
-.pkg-card-spec{font-family:var(--ff-b);font-size:10px;font-weight:400;color:var(--label);letter-spacing:.04em;margin-bottom:10px;}
-.pkg-cap-row{display:flex;align-items:center;gap:14px;padding:8px 0;border-top:.5px solid var(--line);}
-.pkg-cap{font-family:var(--ff-d);font-size:30px;color:var(--white);line-height:1;}
-.pkg-speed-info{font-family:var(--ff-b);font-size:10px;font-weight:400;letter-spacing:.06em;color:var(--label);line-height:1.5;text-transform:uppercase;}
-.pkg-speed-info strong{font-family:var(--ff-d);font-size:22px;color:var(--gold);display:block;}
-/* ssd in card */
-.pkg-ssd{position:relative;z-index:2;margin:0 10px 10px;height:44px;background:linear-gradient(135deg,#1a1a18,#0f0f0e);border:.5px solid rgba(255,255,255,.06);overflow:hidden;display:flex;align-items:center;}
-.pkg-ssd-geo{position:absolute;top:0;right:0;bottom:0;width:18%;background:var(--gold);opacity:.7;clip-path:polygon(20% 0,100% 0,100% 100%,0 100%);}
-.pkg-ssd-name{font-family:var(--ff-d);font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.7);padding:0 8px;}
-.pkg-ssd-pins{position:absolute;bottom:0;left:3px;right:25%;height:4px;background:repeating-linear-gradient(90deg,#c8922a 0,#c8922a 1.5px,transparent 1.5px,transparent 4px);opacity:.35;}
-.pkg-certs{position:relative;z-index:2;display:flex;justify-content:center;gap:5px;padding:8px 10px 0;border-top:.5px solid var(--line);margin:0 10px;}
-.pkg-cert{font-family:var(--ff-m);font-size:8px;font-weight:400;letter-spacing:.06em;color:var(--label);border:.5px solid var(--border);padding:2px 5px;}
-/* feature list */
-.pkg-features{display:flex;flex-direction:column;}
-.pkg-feat-title{font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:20px;}
-.pkg-feat-list{display:flex;flex-direction:column;gap:0;}
-.pkg-feat-item{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:.5px solid var(--line);}
-.pkg-feat-item:last-child{border-bottom:none;}
-.pkg-feat-icon{font-size:17px;flex-shrink:0;padding-top:1px;}
-.pkg-feat-name{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--white);margin-bottom:4px;}
-.pkg-feat-desc{font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.65;}
-
-/* ── WARRANTY ── */
-#s08{background:var(--bg);padding:60px 6%;}
-.warr-in{max-width:700px;margin:0 auto;text-align:center;}
-.warr-num{font-family:var(--ff-d);font-size:clamp(60px,10vw,120px);letter-spacing:.06em;color:var(--gold);line-height:1;}
-.warr-label{font-family:var(--ff-m);font-size:12px;font-weight:400;letter-spacing:.3em;text-transform:uppercase;color:var(--label);margin-top:4px;}
-.warr-quote{font-size:16px;font-weight:400;color:var(--mute);margin-top:24px;font-style:italic;line-height:1.8;}
-
-/* ── S09 SPECS ── */
-#s09{background:var(--bg2);padding:100px 6% 80px;}
-.spec-in{max-width:900px;margin:0 auto;}
-.spec-title{font-family:var(--ff-d);font-size:clamp(44px,5.5vw,66px);letter-spacing:.02em;color:var(--white);margin-bottom:12px;}
-.spec-intro{font-size:15px;font-weight:400;color:var(--mute);margin-bottom:48px;max-width:540px;line-height:1.85;}
-.spec-tbl{width:100%;border-collapse:collapse;}
-.spec-tbl tr{border-bottom:.5px solid var(--line);}
-.spec-tbl td{padding:16px 0;font-size:14px;font-weight:400;vertical-align:top;}
-.spec-tbl td:first-child{color:var(--label);width:40%;font-family:var(--ff-m);font-size:12px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;border-left:2px solid transparent;transition:border-color .2s;padding-left:2px;}
-.spec-tbl tr:hover td:first-child{border-left-color:var(--gold);}
-.spec-tbl td:last-child{color:var(--white);}
-.perf-lbl{font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin:48px 0 16px;}
-.perf-tbl{width:100%;border-collapse:collapse;}
-.perf-tbl th{font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--label);text-align:left;padding:0 0 12px;border-bottom:.5px solid var(--line);}
-.perf-tbl td{font-size:14px;font-weight:400;color:var(--white);padding:14px 0;border-bottom:.5px solid var(--line);font-family:var(--ff-m);}
-.perf-tbl td.warn{color:var(--label);}
-.spec-disc{font-family:var(--ff-m);font-size:10px;font-weight:400;color:var(--label);line-height:1.7;margin-top:16px;}
-.spec-ctas{display:flex;gap:12px;margin-top:48px;flex-wrap:wrap;}
-.spec-foot{margin-top:48px;padding-top:20px;border-top:.5px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;}
-
-/* FOOTER */
-.site-foot{background:#040b18;padding:80px 6% 60px;text-align:center;border-top:.5px solid var(--border);}
-.site-foot-hl{font-family:var(--ff-d);font-size:clamp(26px,3.8vw,46px);letter-spacing:.06em;color:rgba(255,255,255,.65);display:flex;flex-wrap:wrap;justify-content:center;gap:0 22px;}
-.site-foot-tagline{margin-top:48px;padding-top:40px;border-top:.5px solid rgba(200,150,10,.15);}
-.site-foot-t1{font-family:var(--ff-d);font-size:clamp(28px,4.2vw,52px);letter-spacing:.08em;color:rgba(255,255,255,.45);display:block;line-height:1;}
-.site-foot-t2{font-family:var(--ff-d);font-size:clamp(28px,4.2vw,52px);letter-spacing:.08em;color:var(--gold);display:block;line-height:1;margin-top:4px;}
-.site-foot-sub{font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.2em;color:rgba(255,255,255,.18);margin-top:28px;text-transform:uppercase;}
-
-@media(max-width:900px){
-  .sec-wrap,.bl-grid,.compat-cats,.pkg-layout{grid-template-columns:1fr;gap:48px;}
-  .sec-wrap.rev{direction:ltr;}
-  .h-right{opacity:.1!important;transform:none!important;width:100%;}
-  .h-fade{background:rgba(7,16,32,.85);}
-  .tech-grid{grid-template-columns:1fr 1fr;}
+html,
+body {
+	margin: 0;
+	padding: 0;
 }
-@media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring{display:none;}}
-</style>
-</head>
-<body>
-<div class="grain"></div>
-<div class="lightning-bg"></div>
-<div id="cur"></div><div id="cur-ring"></div><div id="spot"></div>
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
 
-<nav id="nav">
-  <div class="nav-brand">Simorchip</div>
-  <div class="nav-pills" id="navPills">
-    <div class="nav-pill on" onclick="goTo('s00')">Hero</div>
-    <div class="nav-pill" onclick="goTo('s02')">Faster</div>
-    <div class="nav-pill" onclick="goTo('s03')">Stronger</div>
-    <div class="nav-pill" onclick="goTo('s04')">Smart</div>
-    <div class="nav-pill" onclick="goTo('s05')">Safer</div>
-    <div class="nav-pill" onclick="goTo('s06')">Compat.</div>
-    <div class="nav-pill" onclick="goTo('s07')">Packaging</div>
-    <div class="nav-pill" onclick="goTo('s09')">Specs</div>
-  </div>
-</nav>
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
 
-<!-- ═══ HERO ═══ -->
-<section id="s00" class="full">
-  <div class="hero-glow"></div>
-  <div class="h-right" id="hRight">
-    <div class="ssd-wrap">
-      <div class="ssd-body">
-        <div class="ssd-geo1"></div><div class="ssd-geo2"></div><div class="ssd-geo3"></div>
-        <div class="ssd-corner ssd-tl"></div><div class="ssd-corner ssd-tr"></div>
-        <div class="ssd-corner ssd-bl"></div><div class="ssd-corner ssd-br"></div>
-        <div class="ssd-brand">
-          <span class="ssd-brand-name">SSD 420</span>
-          <span class="ssd-brand-sub">PCIe NVMe M.2 GEN 4x4</span>
-        </div>
-        <div class="ssd-chip-row"><div class="ssd-chip"></div><div class="ssd-chip"></div><div class="ssd-chip"></div></div>
-        <div class="ssd-pins"></div>
-      </div>
-    </div>
-  </div>
-  <div class="h-fade"></div>
-  <div class="h-left">
-    <div class="h-eye" id="hEye">Simorchip · PCIe Gen4 NVMe · M.2 2280</div>
-    <div class="h-hl" id="hHL">
-      <span class="hl-ln hl-wh" id="hl0">This is where</span>
-      <span class="hl-ln hl-wh" id="hl1">Gen4</span>
-      <span class="hl-ln hl-gold" id="hl2">begins.</span>
-    </div>
-    <div class="gold-line" id="hLine" style="margin-top:24px;"></div>
-    <div class="h-deck" id="hDeck">
-      PCIe Gen4 x4. NVMe 1.4.<br>
-      2× faster than Gen3. 10× faster than SATA.<br>
-      Same M.2 2280 slot. A completely different world.
-    </div>
-    <div class="h-tags" id="hTags">
-      <span class="tag">PCIe Gen4 x4</span>
-      <span class="tag">NVMe 1.4</span>
-      <span class="tag">5100 MB/s</span>
-      <span class="tag">Up to 4TB</span>
-      <span class="tag">Lightning Strike</span>
-    </div>
-  </div>
-  <div class="scr-hint" id="scrHint">
-    <div class="scr-ln"></div>
-    <div class="scr-lb">Scroll</div>
-  </div>
-</section>
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
 
-<!-- ═══ S01 LIGHTNING STRIKE + WHY ═══ -->
-<section id="s01">
-  <div class="s01-in">
-    <div class="bl-grid fi">
-      <div>
-        <div class="bl-eye">Design Language</div>
-        <div class="bl-title">Lightning<br>Strike</div>
-        <div class="bl-body">
-          Not designed to be noticed.<br>
-          Designed to move faster than anything that came before it.<br><br>
-          不是為了引人注目而設計。是為了在每一次讀寫之間，讓速度本身成為唯一語言。
-        </div>
-        <div class="bl-quote">Every cut has a reason.<br>This is not decoration. This is direction.</div>
-      </div>
-      <div class="bl-img img-ph fi fi-d1">
-        <span>[ LIGHTNING STRIKE CLOSE-UP ]<br>Yellow geometric lines · Matte black surface<br>Corner arc marks detail<br>M_2_SSD420_Front.png ]</span>
-      </div>
-    </div>
-    <div class="why-wrap fi">
-      <div class="why-title fi">Why PCIe Gen4 NVMe?</div>
-      <div class="why-sub fi fi-d1">Why upgrade to PCIe Gen4 now? — 為什麼現在升級 PCIe Gen4？</div>
-      <table class="why-tbl fi fi-d2">
-        <tr><td class="wl">Read Speed</td><td class="wv accent">5,100<span style="font-size:.45em;letter-spacing:.06em;"> MB/s</span></td><td class="wd">10× faster than SATA SSD — boot, load, transfer. Everything, instantly.</td></tr>
-        <tr><td class="wl">Write Speed</td><td class="wv">4,500<span style="font-size:.45em;letter-spacing:.06em;"> MB/s</span></td><td class="wd">Large file exports and transfers, done before you look away.</td></tr>
-        <tr><td class="wl">Interface</td><td class="wv">Gen4<span style="font-size:.45em;letter-spacing:.06em;"> x4</span></td><td class="wd">2× the bandwidth of Gen3. Lower latency, instant response across every workload.</td></tr>
-        <tr><td class="wl">Reliability</td><td class="wv accent" style="font-size:clamp(16px,2vw,24px);padding-top:8px;">1,500,000<span style="font-size:.5em;"> hrs</span></td><td class="wd">Over 171 years of rated reliability. Buy it once. It will outlast the machine.</td></tr>
-        <tr><td class="wl">Protection</td><td class="wv" style="font-size:clamp(14px,1.8vw,20px);padding-top:8px;">LDPC + PLP</td><td class="wd">Multi-layer data protection — auto error correction, power loss immunity.</td></tr>
-        <tr><td class="wl">Warranty</td><td class="wv">3<span style="font-size:.5em;letter-spacing:.06em;"> Year</span></td><td class="wd">Three-year limited warranty. Buy with confidence, use without worry.</td></tr>
-      </table>
-      <div class="why-fn fi fi-d3">* Benchmarked against SATA SSD at 550 MB/s · 數據以 SATA SSD 為比較基準</div>
-      <div class="why-close fi fi-d3"><em>Not because your old storage is broken.<br>Because your workflow has already outgrown it.</em><br><br>不是因為你的儲存空間壞了。是因為你的工作負載，早已超過它能給你的一切。</div>
-    </div>
-  </div>
-</section>
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
 
-<!-- ═══ S02 FASTER ═══ -->
-<section id="s02">
-  <div class="sec-wrap">
-    <div class="fi">
-      <div class="sh-num">01 — Faster</div>
-      <div class="sh-title">Faster</div>
-      <div class="sh-sub">10× SATA · 2× Gen3</div>
-      <div class="gold-line on"></div>
-      <div class="sh-intro">
-        Your old storage was the bottleneck. Now it's gone.<br>
-        While SATA tops out at 550 MB/s, the SSD 420 1TB hits up to <strong style="color:var(--white);">5,100 MB/s read / 4,500 MB/s write.</strong>
-      </div>
-      <div class="speed-bars" id="speedBars">
-        <div class="sp-row">
-          <span class="sp-label">SSD 420</span>
-          <div class="sp-track"><div class="sp-fill gen4" id="sb-420" data-w="100"></div></div>
-          <span class="sp-val gold">5,100 MB/s</span>
-        </div>
-        <div class="sp-row">
-          <span class="sp-label">PCIe Gen3</span>
-          <div class="sp-track"><div class="sp-fill gen3" id="sb-gen3" data-w="65"></div></div>
-          <span class="sp-val">3,300 MB/s</span>
-        </div>
-        <div class="sp-row">
-          <span class="sp-label">SATA SSD</span>
-          <div class="sp-track"><div class="sp-fill sata" id="sb-sata" data-w="11"></div></div>
-          <span class="sp-val">550 MB/s</span>
-        </div>
-      </div>
-      <div class="speed-note">* Benchmarked against SATA SSD at 550 MB/s</div>
-      <table class="cmp-tbl fi fi-d2" style="margin-top:20px;">
-        <tr>
-          <th></th>
-          <th style="color:var(--gold);">SSD 420 1TB</th>
-          <th>PCIe Gen3</th>
-          <th>SATA SSD</th>
-        </tr>
-        <tr>
-          <td>Sequential Read</td>
-          <td class="gold-val">5,100 MB/s</td>
-          <td class="best">3,300 MB/s</td>
-          <td>550 MB/s</td>
-        </tr>
-        <tr>
-          <td>Sequential Write</td>
-          <td class="gold-val">4,500 MB/s</td>
-          <td class="best">2,600 MB/s</td>
-          <td>520 MB/s</td>
-        </tr>
-        <tr>
-          <td>OS Boot Time</td>
-          <td class="gold-val">~5s</td>
-          <td class="best">~12s</td>
-          <td>~28s</td>
-        </tr>
-        <tr>
-          <td>50GB File Transfer</td>
-          <td class="gold-val">~10s</td>
-          <td class="best">~15s</td>
-          <td>~91s</td>
-        </tr>
-      </table>
-      <p style="font-size:13px;font-weight:400;color:var(--label);font-style:italic;margin-top:8px;">* 數據為模擬情境，實際結果因系統配置而異</p>
-      <p style="font-size:15px;font-weight:400;color:var(--mute);margin-top:16px;">Your 10GB transfer is done. Just enough time to reach for your coffee.</p>
-    </div>
-    <div class="fi fi-d2" style="display:flex;flex-direction:column;gap:14px;">
-      <div class="img-ph" style="width:100%;height:200px;"><span>[ 5100 MB/s SPEED VISUAL ]</span></div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <div class="stat-badge"><div class="num" style="color:var(--gold);">5,100</div><div class="lbl">MB/s Read Speed</div></div>
-        <div class="stat-badge"><div class="num">×10</div><div class="lbl">vs SATA SSD</div></div>
-        <div class="stat-badge"><div class="num">×2</div><div class="lbl">vs PCIe Gen3</div></div>
-      </div>
-    </div>
-  </div>
-</section>
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
 
-<!-- ═══ S03 STRONGER ═══ -->
-<section id="s03">
-  <div class="sec-wrap rev">
-    <div class="fi">
-      <div class="sh-num">02 — Stronger</div>
-      <div class="sh-title">Stronger</div>
-      <div class="sh-sub">Built to outlast the tasks it handles.</div>
-      <div class="gold-line on"></div>
-      <div class="sh-intro">
-        1,500,000 hours.<br>
-        Speed is the start. Making it last is what makes it strong.
-      </div>
-      <ul class="bullet-list">
-        <li>
-          <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-          <div><strong>High-quality 3D NAND Flash</strong> — Vertically stacked memory cells. Higher density, lower power, better endurance than planar NAND.</div>
-        </li>
-        <li>
-          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-          <div><strong>Up to 4TB capacity</strong> — 512GB / 1TB / 2TB / 4TB. The 1TB hits the sweet spot. Need more? The 4TB fits everything — library, games, and active projects on one drive.</div>
-        </li>
-        <li>
-          <div class="bi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
-          <div><strong>Up to 2,400 TBW endurance</strong> — Writing 200GB per day, that's over 32 years of continuous use.</div>
-        </li>
-        <li>
-          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
-          <div><strong>Shock-resistant and drop-proof design</strong> — No moving parts. No mechanical failure. Survives what a hard drive can't.</div>
-        </li>
-      </ul>
-      <div class="cap-badges fi fi-d2">
-        <div class="cap-badge"><div class="cn">512</div><div class="cl">GB</div></div>
-        <div class="cap-badge best"><div class="cn">1TB</div><div class="cl">Best Value</div></div>
-        <div class="cap-badge"><div class="cn">2TB</div><div class="cl">TB</div></div>
-        <div class="cap-badge max"><div class="cn">4TB</div><div class="cl">Max</div></div>
-      </div>
-    </div>
-    <div class="fi fi-d2" style="display:flex;flex-direction:column;gap:16px;align-items:center;">
-      <div class="mtbf-display">
-        <div class="mtbf-number" id="mtbfNum">0</div>
-        <div class="mtbf-label">Hours of rated reliability</div>
-        <div class="mtbf-line">Start it today. Still running in <span class="twitch-text">2195 Year.</span></div>
-        <p style="font-size:12px;font-weight:400;color:var(--label);margin-top:8px;font-family:var(--ff-m);">今天安裝，可以運行到 2195 Year</p>
-      </div>
-      <div class="tbw-viz" id="tbwViz">
-        <div class="tbw-col">
-          <div class="tbw-bar" style="height:25%;" id="tbw1"><div style="position:absolute;bottom:100%;left:0;right:0;text-align:center;font-family:var(--ff-m);font-size:9px;font-weight:400;color:var(--label);padding-bottom:4px;">300</div></div>
-          <div class="tbw-val">512GB</div>
-        </div>
-        <div class="tbw-col">
-          <div class="tbw-bar" style="height:50%;" id="tbw2"><div style="position:absolute;bottom:100%;left:0;right:0;text-align:center;font-family:var(--ff-m);font-size:9px;font-weight:400;color:var(--label);padding-bottom:4px;">600</div></div>
-          <div class="tbw-val" style="color:var(--gold);">1TB</div>
-        </div>
-        <div class="tbw-col">
-          <div class="tbw-bar" style="height:75%;" id="tbw3"><div style="position:absolute;bottom:100%;left:0;right:0;text-align:center;font-family:var(--ff-m);font-size:9px;font-weight:400;color:var(--label);padding-bottom:4px;">1,200</div></div>
-          <div class="tbw-val">2TB</div>
-        </div>
-        <div class="tbw-col">
-          <div class="tbw-bar" style="height:100%;" id="tbw4"><div style="position:absolute;bottom:100%;left:0;right:0;text-align:center;font-family:var(--ff-m);font-size:9px;font-weight:400;color:var(--gold);padding-bottom:4px;">2,400</div></div>
-          <div class="tbw-val">4TB</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <div class="stat-badge"><div class="num" style="font-size:clamp(18px,2.8vw,36px);">1.5M</div><div class="lbl">MTBF Hours</div></div>
-        <div class="stat-badge"><div class="num" style="color:var(--gold);">4TB</div><div class="lbl">Max Capacity</div></div>
-        <div class="stat-badge"><div class="num">2,400</div><div class="lbl">Max TBW</div></div>
-      </div>
-      <p style="font-size:11px;font-weight:400;color:var(--label);font-family:var(--ff-m);">* MTBF is a statistical estimate. Individual results may vary.<br>MTBF 為統計預期值，不代表單一產品之保證使用年限</p>
-    </div>
-  </div>
-</section>
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
 
-<!-- ═══ S04 SMART ═══ -->
-<section id="s04">
-  <div style="padding:100px 6% 80px;max-width:1200px;margin:0 auto;">
-    <div class="fi" style="text-align:center;margin-bottom:64px;">
-      <div class="sh-num" style="text-align:center;">03 — Smart</div>
-      <div class="sh-title" style="font-size:clamp(68px,9.5vw,124px);text-align:center;">Smart</div>
-      <div style="font-family:var(--ff-m);font-size:12px;font-weight:400;letter-spacing:.1em;color:var(--label);text-transform:uppercase;margin:8px 0 20px;">The best tool is the one you never have to think about.</div>
-      <div class="gold-line on" style="margin:0 auto;"></div>
-      <p style="font-size:16px;font-weight:400;color:var(--mute);margin-top:20px;line-height:1.8;">
-        You don't need to optimize it. You don't need to clean it.<br>
-        You don't need to worry about it getting slower over time.<br>
-        <em style="color:var(--label);">最好的工具，是你不需要一直管它。</em>
-      </p>
-    </div>
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
 
-    <!-- LDPC + Thermal row -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
 
-      <!-- LDPC flow viz -->
-      <div class="fi tech-card" style="padding:28px 24px;">
-        <div class="tt" style="font-size:15px;margin-bottom:16px;">🔍 LDPC Error Correction</div>
-        <div class="td" style="margin-bottom:18px;">Hardware-level error detection and correction on every read and write. Data integrity maintained automatically, without any performance cost.</div>
-        <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
-          <!-- data blocks -->
-          <rect x="4" y="20" width="28" height="40" fill="rgba(200,150,10,.15)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="2"/>
-          <text x="18" y="44" font-size="9" fill="#c8960a" text-anchor="middle" font-family="monospace">1010</text>
-          <rect x="38" y="20" width="28" height="40" fill="rgba(200,150,10,.15)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="2"/>
-          <text x="52" y="44" font-size="9" fill="#c8960a" text-anchor="middle" font-family="monospace">1101</text>
-          <!-- error block -->
-          <rect x="72" y="20" width="28" height="40" fill="rgba(220,60,60,.2)" stroke="rgba(220,60,60,.6)" stroke-width="1.5" rx="2"/>
-          <text x="86" y="39" font-size="9" fill="#e06060" text-anchor="middle" font-family="monospace">1X01</text>
-          <text x="86" y="52" font-size="7" fill="#e06060" text-anchor="middle" font-family="monospace">ERR</text>
-          <rect x="106" y="20" width="28" height="40" fill="rgba(200,150,10,.15)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="2"/>
-          <text x="120" y="44" font-size="9" fill="#c8960a" text-anchor="middle" font-family="monospace">0110</text>
-          <!-- arrow -->
-          <path d="M142 40 L166 40" stroke="rgba(200,150,10,.5)" stroke-width="1.5" marker-end="url(#arrowG)"/>
-          <defs><marker id="arrowG" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(200,150,10,.7)"/></marker></defs>
-          <!-- LDPC box -->
-          <rect x="170" y="16" width="52" height="48" fill="rgba(200,150,10,.1)" stroke="var(--gold)" stroke-width="1" rx="3"/>
-          <text x="196" y="37" font-size="8" fill="#c8960a" text-anchor="middle" font-family="monospace" font-weight="600">LDPC</text>
-          <text x="196" y="50" font-size="7" fill="rgba(200,150,10,.6)" text-anchor="middle" font-family="monospace">CHECK</text>
-          <!-- arrow -->
-          <path d="M226 40 L250 40" stroke="rgba(80,200,80,.5)" stroke-width="1.5" marker-end="url(#arrowGr)"/>
-          <defs><marker id="arrowGr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(80,200,80,.7)"/></marker></defs>
-          <!-- fixed block -->
-          <rect x="254" y="20" width="28" height="40" fill="rgba(60,180,60,.15)" stroke="rgba(60,180,60,.5)" stroke-width="1.5" rx="2"/>
-          <text x="268" y="39" font-size="9" fill="#60c060" text-anchor="middle" font-family="monospace">1101</text>
-          <text x="268" y="52" font-size="7" fill="#60c060" text-anchor="middle" font-family="monospace">FIXED</text>
-          <!-- labels -->
-          <text x="160" y="12" font-size="7" fill="rgba(255,255,255,.3)" text-anchor="middle" font-family="monospace">Data Stream</text>
-          <text x="296" y="12" font-size="7" fill="#60c060" text-anchor="middle" font-family="monospace">Corrected</text>
-        </svg>
-      </div>
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
 
-      <!-- Thermal heatmap canvas -->
-      <div class="fi fi-d1 tech-card" style="padding:28px 24px;">
-        <div class="tt" style="font-size:15px;margin-bottom:6px;">🌡️ Dynamic Thermal Throttling</div>
-        <div class="td" style="margin-bottom:14px;">A graphene composite layer applied at substrate level conducts heat away from NAND cells faster than conventional materials — this is why SSD 420 stays stable at 54°C under sustained load. Not by slowing down. By staying cool.</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <div>
-            <div style="font-family:var(--ff-m);font-size:9px;font-weight:400;color:var(--gold);letter-spacing:.1em;text-align:center;margin-bottom:6px;text-transform:uppercase;">SSD 420</div>
-            <canvas id="thermalGood" width="140" height="70" style="width:100%;border:.5px solid var(--border);border-radius:2px;"></canvas>
-            <div style="font-family:var(--ff-m);font-size:9px;font-weight:400;color:var(--gold);text-align:center;margin-top:4px;">≤ 54°C · Stable</div>
-          </div>
-          <div>
-            <div style="font-family:var(--ff-m);font-size:9px;font-weight:400;color:#e06060;letter-spacing:.1em;text-align:center;margin-bottom:6px;text-transform:uppercase;">Competitor</div>
-            <canvas id="thermalBad" width="140" height="70" style="width:100%;border:.5px solid rgba(220,60,60,.3);border-radius:2px;"></canvas>
-            <div style="font-family:var(--ff-m);font-size:9px;font-weight:400;color:#e06060;text-align:center;margin-top:4px;">78°C+ · Throttling</div>
-          </div>
-        </div>
-      </div>
-    </div>
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
 
-    <!-- NVMe Sets + Wear Leveling row -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
 
-      <!-- NVMe Sets distribution -->
-      <div class="fi tech-card" style="padding:28px 24px;">
-        <div class="tt" style="font-size:15px;margin-bottom:6px;">⚡ NVMe Sets + PLM</div>
-        <div class="td" style="margin-bottom:14px;">Workloads distributed intelligently across NAND cells. Lower latency, more consistent response under mixed read/write loads.</div>
-        <svg viewBox="0 0 280 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
-          <!-- controller -->
-          <rect x="4" y="28" width="52" height="34" fill="rgba(200,150,10,.12)" stroke="var(--gold)" stroke-width="1" rx="3"/>
-          <text x="30" y="43" font-size="8" fill="#c8960a" text-anchor="middle" font-family="monospace" font-weight="600">NVMe</text>
-          <text x="30" y="55" font-size="7" fill="rgba(200,150,10,.6)" text-anchor="middle" font-family="monospace">CTRL</text>
-          <!-- distribution lines -->
-          <line x1="56" y1="35" x2="90" y2="20" stroke="rgba(200,150,10,.4)" stroke-width="1"/>
-          <line x1="56" y1="45" x2="90" y2="45" stroke="rgba(200,150,10,.4)" stroke-width="1"/>
-          <line x1="56" y1="55" x2="90" y2="70" stroke="rgba(200,150,10,.4)" stroke-width="1"/>
-          <!-- NAND cells -->
-          <rect x="90" y="10" width="34" height="20" fill="rgba(200,150,10,.1)" stroke="rgba(200,150,10,.35)" stroke-width="1" rx="2"/>
-          <text x="107" y="23" font-size="7" fill="#c8960a" text-anchor="middle" font-family="monospace">CH 1</text>
-          <rect x="90" y="35" width="34" height="20" fill="rgba(200,150,10,.1)" stroke="rgba(200,150,10,.35)" stroke-width="1" rx="2"/>
-          <text x="107" y="48" font-size="7" fill="#c8960a" text-anchor="middle" font-family="monospace">CH 2</text>
-          <rect x="90" y="60" width="34" height="20" fill="rgba(200,150,10,.1)" stroke="rgba(200,150,10,.35)" stroke-width="1" rx="2"/>
-          <text x="107" y="73" font-size="7" fill="#c8960a" text-anchor="middle" font-family="monospace">CH 3</text>
-          <!-- result -->
-          <path d="M130 45 L158 45" stroke="rgba(200,150,10,.4)" stroke-width="1.5" marker-end="url(#arrowG2)"/>
-          <defs><marker id="arrowG2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(200,150,10,.6)"/></marker></defs>
-          <rect x="162" y="28" width="58" height="34" fill="rgba(200,150,10,.08)" stroke="rgba(200,150,10,.3)" stroke-width="1" rx="3"/>
-          <text x="191" y="42" font-size="8" fill="#cccccc" text-anchor="middle" font-family="monospace">Low</text>
-          <text x="191" y="54" font-size="8" fill="#cccccc" text-anchor="middle" font-family="monospace">Latency</text>
-          <text x="232" y="40" font-size="20" fill="rgba(200,150,10,.5)" text-anchor="middle">↓</text>
-          <text x="232" y="56" font-size="7" fill="rgba(200,150,10,.5)" text-anchor="middle" font-family="monospace">PLM</text>
-        </svg>
-      </div>
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
 
-      <!-- Wear Leveling heatmap -->
-      <div class="fi fi-d1 tech-card" style="padding:28px 24px;">
-        <div class="tt" style="font-size:15px;margin-bottom:6px;">⚖️ Wear Leveling</div>
-        <div class="td" style="margin-bottom:14px;">Writes spread evenly across all cells. Every cell works equally. Every cell lasts equally.</div>
-        <canvas id="wearCanvas" width="240" height="70" style="width:100%;border:.5px solid var(--border);border-radius:2px;"></canvas>
-        <div style="display:flex;gap:14px;margin-top:8px;font-family:var(--ff-m);font-size:9px;font-weight:400;color:var(--label);">
-          <span>■ <span style="color:#4a9eff;">Low wear</span></span>
-          <span>■ <span style="color:#c8960a;">Med wear</span></span>
-          <span>■ <span style="color:#e06060;">High wear</span></span>
-        </div>
-      </div>
-    </div>
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
 
-    <!-- TRIM/GC + Early Move row -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px;">
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
 
-      <!-- TRIM + GC flow -->
-      <div class="fi tech-card" style="padding:28px 24px;">
-        <div class="tt" style="font-size:15px;margin-bottom:6px;">🗑️ Garbage Collection + TRIM</div>
-        <div class="td" style="margin-bottom:14px;">Runs in the background, clearing space you didn't know you needed. Writes stay fast years from now.</div>
-        <svg viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
-          <!-- before state -->
-          <text x="50" y="12" font-size="7" fill="rgba(255,255,255,.3)" text-anchor="middle" font-family="monospace">Before TRIM</text>
-          <rect x="4" y="18" width="14" height="48" fill="rgba(200,150,10,.5)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="1"/>
-          <rect x="20" y="18" width="14" height="48" fill="rgba(100,100,100,.3)" stroke="rgba(100,100,100,.3)" stroke-width="1" rx="1"/>
-          <text x="27" y="46" font-size="6" fill="rgba(255,255,255,.2)" text-anchor="middle" font-family="monospace">DEL</text>
-          <rect x="36" y="18" width="14" height="48" fill="rgba(200,150,10,.5)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="1"/>
-          <rect x="52" y="18" width="14" height="48" fill="rgba(100,100,100,.3)" stroke="rgba(100,100,100,.3)" stroke-width="1" rx="1"/>
-          <text x="59" y="46" font-size="6" fill="rgba(255,255,255,.2)" text-anchor="middle" font-family="monospace">DEL</text>
-          <rect x="68" y="18" width="14" height="48" fill="rgba(200,150,10,.5)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="1"/>
-          <rect x="84" y="18" width="14" height="48" fill="rgba(100,100,100,.3)" stroke="rgba(100,100,100,.3)" stroke-width="1" rx="1"/>
-          <text x="91" y="46" font-size="6" fill="rgba(255,255,255,.2)" text-anchor="middle" font-family="monospace">DEL</text>
-          <!-- arrow -->
-          <path d="M108 42 L136 42" stroke="rgba(200,150,10,.5)" stroke-width="1.5" marker-end="url(#arrowG3)"/>
-          <defs><marker id="arrowG3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(200,150,10,.6)"/></marker></defs>
-          <text x="122" y="36" font-size="7" fill="rgba(200,150,10,.5)" text-anchor="middle" font-family="monospace">GC</text>
-          <!-- after state -->
-          <text x="196" y="12" font-size="7" fill="rgba(80,200,80,.5)" text-anchor="middle" font-family="monospace">After TRIM</text>
-          <rect x="144" y="18" width="14" height="48" fill="rgba(200,150,10,.5)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="1"/>
-          <rect x="160" y="18" width="14" height="48" fill="rgba(200,150,10,.5)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="1"/>
-          <rect x="176" y="18" width="14" height="48" fill="rgba(200,150,10,.5)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="1"/>
-          <rect x="192" y="18" width="14" height="48" fill="rgba(60,180,60,.15)" stroke="rgba(60,180,60,.3)" stroke-width="1" rx="1"/>
-          <text x="199" y="46" font-size="6" fill="rgba(60,180,60,.5)" text-anchor="middle" font-family="monospace">FREE</text>
-          <rect x="208" y="18" width="14" height="48" fill="rgba(60,180,60,.15)" stroke="rgba(60,180,60,.3)" stroke-width="1" rx="1"/>
-          <text x="215" y="46" font-size="6" fill="rgba(60,180,60,.5)" text-anchor="middle" font-family="monospace">FREE</text>
-          <rect x="224" y="18" width="14" height="48" fill="rgba(60,180,60,.15)" stroke="rgba(60,180,60,.3)" stroke-width="1" rx="1"/>
-          <text x="231" y="46" font-size="6" fill="rgba(60,180,60,.5)" text-anchor="middle" font-family="monospace">FREE</text>
-          <!-- speed label -->
-          <text x="260" y="38" font-size="9" fill="#60c060" text-anchor="middle" font-family="monospace" font-weight="600">FAST</text>
-          <text x="260" y="50" font-size="7" fill="rgba(60,180,60,.5)" text-anchor="middle" font-family="monospace">WRITE</text>
-        </svg>
-      </div>
+mark {
+	background-color: transparent;
+}
 
-      <!-- Early Move -->
-      <div class="fi fi-d1 tech-card" style="padding:28px 24px;">
-        <div class="tt" style="font-size:15px;margin-bottom:6px;">🔮 Early Move</div>
-        <div class="td" style="margin-bottom:14px;">Detects aging cells before they fail. Moves data proactively. Predictive data protection, not reactive.</div>
-        <svg viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
-          <!-- NAND cells with aging -->
-          <rect x="4" y="20" width="22" height="40" fill="rgba(200,150,10,.4)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="2"/>
-          <text x="15" y="44" font-size="7" fill="#c8960a" text-anchor="middle" font-family="monospace">OK</text>
-          <rect x="30" y="20" width="22" height="40" fill="rgba(200,150,10,.4)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="2"/>
-          <text x="41" y="44" font-size="7" fill="#c8960a" text-anchor="middle" font-family="monospace">OK</text>
-          <!-- aging cell -->
-          <rect x="56" y="20" width="22" height="40" fill="rgba(220,150,30,.35)" stroke="rgba(255,180,0,.7)" stroke-width="1.5" stroke-dasharray="3,2" rx="2"/>
-          <text x="67" y="38" font-size="7" fill="#ffb800" text-anchor="middle" font-family="monospace">AGE</text>
-          <text x="67" y="50" font-size="6" fill="rgba(255,184,0,.6)" text-anchor="middle" font-family="monospace">WARN</text>
-          <rect x="82" y="20" width="22" height="40" fill="rgba(200,150,10,.4)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="2"/>
-          <text x="93" y="44" font-size="7" fill="#c8960a" text-anchor="middle" font-family="monospace">OK</text>
-          <!-- arrow -->
-          <path d="M112 40 L138 40" stroke="rgba(200,150,10,.5)" stroke-width="1.5" marker-end="url(#arrowG4)"/>
-          <defs><marker id="arrowG4" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(200,150,10,.6)"/></marker></defs>
-          <text x="125" y="34" font-size="7" fill="rgba(200,150,10,.5)" text-anchor="middle" font-family="monospace">MOVE</text>
-          <!-- safe destination -->
-          <rect x="142" y="20" width="22" height="40" fill="rgba(200,150,10,.4)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="2"/>
-          <text x="153" y="44" font-size="7" fill="#c8960a" text-anchor="middle" font-family="monospace">OK</text>
-          <rect x="168" y="20" width="22" height="40" fill="rgba(60,180,60,.25)" stroke="rgba(60,180,60,.5)" stroke-width="1.5" rx="2"/>
-          <text x="179" y="38" font-size="7" fill="#60c060" text-anchor="middle" font-family="monospace">NEW</text>
-          <text x="179" y="50" font-size="6" fill="rgba(60,180,60,.6)" text-anchor="middle" font-family="monospace">SAFE</text>
-          <rect x="194" y="20" width="22" height="40" fill="rgba(200,150,10,.4)" stroke="rgba(200,150,10,.4)" stroke-width="1" rx="2"/>
-          <text x="205" y="44" font-size="7" fill="#c8960a" text-anchor="middle" font-family="monospace">OK</text>
-          <!-- old cell now empty -->
-          <rect x="220" y="20" width="22" height="40" fill="rgba(100,100,100,.1)" stroke="rgba(100,100,100,.25)" stroke-width="1" stroke-dasharray="3,2" rx="2"/>
-          <text x="231" y="44" font-size="6" fill="rgba(255,255,255,.2)" text-anchor="middle" font-family="monospace">EMPTY</text>
-          <!-- labels -->
-          <text x="67" y="12" font-size="7" fill="rgba(255,180,0,.7)" text-anchor="middle" font-family="monospace">⚠ Predicted</text>
-          <text x="179" y="12" font-size="7" fill="#60c060" text-anchor="middle" font-family="monospace">✓ Moved safe</text>
-        </svg>
-      </div>
-    </div>
+.indented {
+	padding-left: 1.5em;
+}
 
-    <!-- blockquote -->
-    <div class="fi tech-blockquote" style="text-align:center;border-left:none;border-top:1px solid rgba(200,150,10,.2);border-bottom:1px solid rgba(200,150,10,.2);padding:20px;margin:0;">
-      The smartest tool<br>is the one you forget exists.
-    </div>
-  </div>
-</section>
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
 
-<!-- ═══ S05 SAFER ═══ -->
-<section id="s05">
-  <div class="sec-wrap rev">
-    <div class="fi fi-d1" style="display:flex;flex-direction:column;gap:18px;">
+img {
+	max-width: 100%;
+}
 
-      <!-- Orbit viz -->
-      <div class="orbit-viz" style="margin:0 auto;">
-        <div class="orbit-ring orbit-ring1"></div>
-        <div class="orbit-ring orbit-ring2"></div>
-        <div class="orbit-center"><div class="orbit-center-inner">SSD<br>420</div></div>
-        <div class="orbit-sat sat-plp"><div class="os">🛡️</div><div class="ol">PLP</div></div>
-        <div class="orbit-sat sat-ldpc"><div class="os">🔍</div><div class="ol">LDPC</div></div>
-        <div class="orbit-sat sat-bbm"><div class="os">🚫</div><div class="ol">Bad Block<br>Mgmt</div></div>
-        <div class="orbit-sat sat-wl"><div class="os">⚖️</div><div class="ol">Wear<br>Leveling</div></div>
-      </div>
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
 
-      <!-- PLP comparison -->
-      <div style="border:.5px solid var(--border);padding:16px;background:rgba(255,255,255,.02);">
-        <div style="font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--label);margin-bottom:12px;">Power Loss Protection</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <div>
-            <div style="font-family:var(--ff-m);font-size:9px;color:#e06060;text-align:center;margin-bottom:5px;text-transform:uppercase;">Without PLP</div>
-            <svg viewBox="0 0 120 56" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
-              <rect x="4" y="8" width="16" height="38" fill="rgba(200,150,10,.4)" stroke="rgba(200,150,10,.3)" stroke-width="1" rx="1"/>
-              <rect x="24" y="8" width="16" height="38" fill="rgba(200,150,10,.4)" stroke="rgba(200,150,10,.3)" stroke-width="1" rx="1"/>
-              <rect x="44" y="8" width="16" height="38" fill="rgba(220,60,60,.25)" stroke="rgba(220,60,60,.5)" stroke-width="1.5" stroke-dasharray="3,2" rx="1"/>
-              <text x="52" y="30" font-size="8" fill="#e06060" text-anchor="middle">✗</text>
-              <text x="52" y="42" font-size="5.5" fill="#e06060" text-anchor="middle">LOST</text>
-              <rect x="64" y="8" width="16" height="38" fill="rgba(220,60,60,.25)" stroke="rgba(220,60,60,.5)" stroke-width="1.5" stroke-dasharray="3,2" rx="1"/>
-              <text x="72" y="30" font-size="8" fill="#e06060" text-anchor="middle">✗</text>
-              <text x="72" y="42" font-size="5.5" fill="#e06060" text-anchor="middle">LOST</text>
-              <text x="100" y="30" font-size="20" fill="#ffb800" text-anchor="middle">⚡</text>
-            </svg>
-          </div>
-          <div>
-            <div style="font-family:var(--ff-m);font-size:9px;color:var(--gold);text-align:center;margin-bottom:5px;text-transform:uppercase;">SSD 420 PLP</div>
-            <svg viewBox="0 0 120 56" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
-              <rect x="4" y="8" width="16" height="38" fill="rgba(200,150,10,.4)" stroke="rgba(200,150,10,.3)" stroke-width="1" rx="1"/>
-              <rect x="24" y="8" width="16" height="38" fill="rgba(200,150,10,.4)" stroke="rgba(200,150,10,.3)" stroke-width="1" rx="1"/>
-              <rect x="44" y="8" width="16" height="38" fill="rgba(60,180,60,.2)" stroke="rgba(60,180,60,.5)" stroke-width="1.5" rx="1"/>
-              <text x="52" y="30" font-size="8" fill="#60c060" text-anchor="middle">✓</text>
-              <text x="52" y="42" font-size="5.5" fill="#60c060" text-anchor="middle">SAFE</text>
-              <rect x="64" y="8" width="16" height="38" fill="rgba(60,180,60,.2)" stroke="rgba(60,180,60,.5)" stroke-width="1.5" rx="1"/>
-              <text x="72" y="30" font-size="8" fill="#60c060" text-anchor="middle">✓</text>
-              <text x="72" y="42" font-size="5.5" fill="#60c060" text-anchor="middle">SAFE</text>
-              <text x="100" y="30" font-size="20" fill="#ffb800" text-anchor="middle">⚡</text>
-              <text x="52" y="7" font-size="8" fill="rgba(60,180,60,.7)" text-anchor="middle">🛡</text>
-              <text x="72" y="7" font-size="8" fill="rgba(60,180,60,.7)" text-anchor="middle">🛡</text>
-            </svg>
-          </div>
-        </div>
-      </div>
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
 
-      <!-- Bad Block isolation -->
-      <div style="border:.5px solid var(--border);padding:16px;background:rgba(255,255,255,.02);">
-        <div style="font-family:var(--ff-m);font-size:10px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--label);margin-bottom:10px;">Bad Block Management — Auto Bypass</div>
-        <svg viewBox="0 0 260 52" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
-          <rect x="4" y="6" width="22" height="38" fill="rgba(200,150,10,.35)" stroke="rgba(200,150,10,.35)" stroke-width="1" rx="2"/>
-          <text x="15" y="29" font-size="7" fill="#c8960a" text-anchor="middle" font-family="monospace">OK</text>
-          <rect x="30" y="6" width="22" height="38" fill="rgba(200,150,10,.35)" stroke="rgba(200,150,10,.35)" stroke-width="1" rx="2"/>
-          <text x="41" y="29" font-size="7" fill="#c8960a" text-anchor="middle" font-family="monospace">OK</text>
-          <rect x="56" y="6" width="22" height="38" fill="rgba(80,80,80,.15)" stroke="rgba(150,150,150,.25)" stroke-width="1" stroke-dasharray="3,2" rx="2"/>
-          <line x1="56" y1="6" x2="78" y2="44" stroke="rgba(220,60,60,.45)" stroke-width="1.5"/>
-          <line x1="78" y1="6" x2="56" y2="44" stroke="rgba(220,60,60,.45)" stroke-width="1.5"/>
-          <text x="67" y="5" font-size="6.5" fill="#e06060" text-anchor="middle" font-family="monospace">BAD</text>
-          <rect x="82" y="6" width="22" height="38" fill="rgba(200,150,10,.35)" stroke="rgba(200,150,10,.35)" stroke-width="1" rx="2"/>
-          <text x="93" y="29" font-size="7" fill="#c8960a" text-anchor="middle" font-family="monospace">OK</text>
-          <path d="M67 2 Q120 -8 120 25" stroke="rgba(60,180,60,.45)" stroke-width="1.5" fill="none" stroke-dasharray="4,3"/>
-          <text x="105" y="6" font-size="6.5" fill="rgba(60,180,60,.6)" text-anchor="middle" font-family="monospace">Bypass →</text>
-          <rect x="108" y="6" width="22" height="38" fill="rgba(200,150,10,.35)" stroke="rgba(200,150,10,.35)" stroke-width="1" rx="2"/>
-          <text x="119" y="29" font-size="7" fill="#c8960a" text-anchor="middle" font-family="monospace">OK</text>
-          <rect x="134" y="6" width="22" height="38" fill="rgba(60,180,60,.18)" stroke="rgba(60,180,60,.45)" stroke-width="1.5" rx="2"/>
-          <text x="145" y="24" font-size="7" fill="#60c060" text-anchor="middle" font-family="monospace">NEW</text>
-          <text x="145" y="36" font-size="5.5" fill="rgba(60,180,60,.6)" text-anchor="middle" font-family="monospace">SPARE</text>
-          <text x="200" y="20" font-size="9" fill="#60c060" text-anchor="middle" font-family="monospace" font-weight="600">Auto</text>
-          <text x="200" y="33" font-size="9" fill="#60c060" text-anchor="middle" font-family="monospace" font-weight="600">managed</text>
-        </svg>
-      </div>
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
 
-      <!-- stat badges -->
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <div class="stat-badge"><div class="num" style="color:var(--gold);font-size:clamp(16px,2.6vw,32px);">PLP</div><div class="lbl">Power Loss Protection</div></div>
-        <div class="stat-badge"><div class="num" style="font-size:clamp(16px,2.6vw,32px);">LDPC</div><div class="lbl">Error Correction</div></div>
-        <div class="stat-badge"><div class="num" style="font-size:clamp(14px,1.8vw,26px);">4-Layer</div><div class="lbl">Data Protection</div></div>
-      </div>
-    </div>
-    <div class="fi">
-      <div class="sh-num">04 — Safer</div>
-      <div class="sh-title">Safer</div>
-      <div class="sh-sub">Multi-layer protection. Not a single bit lost.</div>
-      <div class="gold-line on"></div>
-      <div class="sh-intro">
-        Every file you care about.<br>
-        Every render you can't recreate.<br>
-        Every project you can't afford to lose.
-      </div>
-      <ul class="bullet-list">
-        <li>
-          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
-          <div><strong>Power Loss Protection (PLP)</strong> — When power is suddenly interrupted, PLP commits all in-flight data to NAND before shutdown. No corruption. No lost files. No half-written transfers.</div>
-        </li>
-        <li>
-          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-          <div><strong>LDPC Error Correction</strong> — Detects and fixes data errors before you ever notice. Every read, every time.</div>
-        </li>
-        <li>
-          <div class="bi"><svg viewBox="0 0 24 24"><path d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg></div>
-          <div><strong>Bad Block Management</strong> — Failing memory cells are isolated and bypassed automatically. The drive routes around problems before they become your problem.</div>
-        </li>
-        <li>
-          <div class="bi"><svg viewBox="0 0 24 24"><path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg></div>
-          <div><strong>Wear Leveling</strong> — Workload spread evenly across every cell. Nothing wears out first.</div>
-        </li>
-      </ul>
-      <p style="font-size:16px;font-weight:400;color:var(--mute);margin-top:20px;">You don't have to think about data protection.<br><strong style="color:var(--white);">The SSD 420 already is.</strong></p>
-      <p style="font-size:15px;font-weight:400;color:var(--label);margin-top:8px;font-style:italic;">Because some things can't be lost twice.</p>
-      <p style="font-size:12px;font-weight:400;color:var(--label);font-family:var(--ff-m);margin-top:12px;">* MTBF is a statistical estimate. · MTBF 為統計預期值，不代表單一產品之保證使用年限</p>
-    </div>
-  </div>
-</section>
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
 
-<!-- ═══ S06 ONE SIZE EVERY SYSTEM ═══ -->
-<section id="s06">
-  <div class="compat-in">
-    <div class="compat-title fi">One Size.<br>Every System.</div>
-    <div class="compat-sub fi fi-d1">80 × 20 × 3.77 mm — Plug it in. That's the upgrade.</div>
-    <div class="compat-cats fi fi-d2">
-      <div class="compat-cat">
-        <div class="compat-cat-title">Computing</div>
-        <div class="compat-row"><span class="cr-name">Ultrabook</span><span class="cr-desc">Thin &amp; light laptops</span></div>
-        <div class="compat-row"><span class="cr-name">Desktop PC</span><span class="cr-desc">ATX / mITX motherboards</span></div>
-        <div class="compat-row"><span class="cr-name">Gaming Laptop</span><span class="cr-desc">High-refresh gaming rigs</span></div>
-        <div class="compat-row"><span class="cr-name">Mini PC</span><span class="cr-desc">NUC, Beelink, Minisforum</span></div>
-        <div class="compat-row"><span class="cr-name">Workstation</span><span class="cr-desc">Creative &amp; enterprise</span></div>
-      </div>
-      <div class="compat-cat">
-        <div class="compat-cat-title">Console &amp; Gaming</div>
-                        <div class="compat-row"><span class="cr-name">Gaming Desktop</span><span class="cr-desc">ROG, MSI, Alienware</span></div>
-      </div>
-      <div class="compat-cat">
-        <div class="compat-cat-title">Professional &amp; Security</div>
-        <div class="compat-row"><span class="cr-name">NVR / DVR</span><span class="cr-desc">24/7 surveillance</span></div>
-        <div class="compat-row"><span class="cr-name">NAS Server</span><span class="cr-desc">QNAP, Synology M.2 cache</span></div>
-        <div class="compat-row"><span class="cr-name">Industrial PC</span><span class="cr-desc">Fanless embedded systems</span></div>
-        <div class="compat-row"><span class="cr-name">Workstation Server</span><span class="cr-desc">Rack &amp; tower builds</span></div>
-      </div>
-    </div>
-    <div class="os-bar fi fi-d3">
-      <span class="os-label">Compatible with</span>
-      <span class="os-pill">Windows 11 / 10</span>
-      <span class="os-pill">Linux</span>
-      <span class="os-pill">macOS (via adapter)</span>
-      <span class="os-pill">SteamOS</span>
-      <span class="os-pill">FreeBSD</span>
-    </div>
-    
-  </div>
-</section>
+@page {
+	margin: 1in;
+}
 
-<!-- ═══ S07 PACKAGING ═══ -->
-<section id="s07">
-  <div class="pkg-in">
-    <div class="pkg-sec-lbl fi">Packaging Design</div>
-    <div class="pkg-layout">
-      <div class="fi">
-        <div class="pkg-card">
-          <div class="pkg-hang"><div class="pkg-hang-hole"></div></div>
-          <div class="pkg-slash-bg"></div>
-          <div class="pkg-gold-bar"></div>
-          <div class="pkg-content">
-            <div class="pkg-card-brand">Simorchip</div>
-            <div class="pkg-card-model">SSD 420</div>
-            <div class="pkg-card-spec">M.2 PCIe GEN 4x4 NVMe</div>
-            <div class="pkg-cap-row">
-              <span class="pkg-cap">4<span style="font-size:.5em;">TB</span></span>
-              <span class="pkg-speed-info">UP TO<br><strong>5100</strong> MB/s</span>
-            </div>
-          </div>
-          <div class="pkg-ssd">
-            <div class="pkg-ssd-geo"></div>
-            <div class="pkg-ssd-name">SSD 420</div>
-            <div class="pkg-ssd-pins"></div>
-          </div>
-          <div class="pkg-certs">
-            <span class="pkg-cert">CE</span>
-            <span class="pkg-cert">RoHS</span>
-            <span class="pkg-cert">FCC</span>
-            <span class="pkg-cert">REACH</span>
-          </div>
-        </div>
-      </div>
-      <div class="fi fi-d2">
-        <div class="pkg-features">
-          <div class="pkg-feat-title">What's in the box</div>
-          <div class="pkg-feat-list">
-            <div class="pkg-feat-item"><div class="pkg-feat-icon">🏪</div><div><div class="pkg-feat-name">Retail Hang Pack</div><div class="pkg-feat-desc">Euro-slot hang hole for standard retail shelf display. Ready for store or e-commerce fulfilment.</div></div></div>
-            <div class="pkg-feat-item"><div class="pkg-feat-icon">⚡</div><div><div class="pkg-feat-name">Anti-Static Protection</div><div class="pkg-feat-desc">Diamond-textured anti-static black card shields the drive from electrostatic discharge during transit and handling.</div></div></div>
-            <div class="pkg-feat-item"><div class="pkg-feat-icon">👁️</div><div><div class="pkg-feat-name">Drive-Visible Window</div><div class="pkg-feat-desc">Physical SSD exposed through packaging. Verify the product before purchase — no guessing required.</div></div></div>
-            <div class="pkg-feat-item"><div class="pkg-feat-icon">📋</div><div><div class="pkg-feat-name">Full Spec on Pack</div><div class="pkg-feat-desc">Model number, capacity, and speed clearly printed. No opening needed to confirm the right SKU.</div></div></div>
-            <div class="pkg-feat-item"><div class="pkg-feat-icon">✅</div><div><div class="pkg-feat-name">Global Certifications</div><div class="pkg-feat-desc">CE · RoHS · FCC · REACH — compliant for EU, US, and international markets.</div></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+.collection-content-wrapper {
+	overflow-x: auto;
+}
 
-<!-- ═══ S08 WARRANTY ═══ -->
-<section id="s08">
-  <div class="warr-in fi">
-    <div class="warr-num">3</div>
-    <div class="warr-label">Years · Limited Warranty</div>
-    <div class="warr-quote">Our confidence in the SSD 420 is written in three words.<br><strong style="color:var(--white);">Three. Year. Warranty.</strong></div>
-  </div>
-</section>
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
 
-<!-- ═══ S09 SPECS ═══ -->
-<section id="s09">
-  <div class="spec-in">
-    <div class="spec-title fi">Specifications</div>
-    <div class="spec-intro fi fi-d1">A cost-effective solution engineered for optimum speed, endurance, reliability, and multi-platform compatibility.</div>
-    <table class="spec-tbl fi fi-d2">
-      <tr><td>Model</td><td>Simorchip SSD 420</td></tr>
-      <tr><td>Interface</td><td>PCIe Gen4 x4 NVMe 1.4</td></tr>
-      <tr><td>Form Factor</td><td>M.2 2280</td></tr>
-      <tr><td>Flash Type</td><td>3D NAND</td></tr>
-      <tr><td>Capacity</td><td>512GB / 1TB / 2TB / 4TB</td></tr>
-      <tr><td>MTBF</td><td>1,500,000 Hours</td></tr>
-      <tr><td>Voltage</td><td>3.3V ± 5%</td></tr>
-      <tr><td>Dimensions</td><td>80 × 20 × 3.77 mm</td></tr>
-      <tr><td>Operating Temp</td><td>0°C ~ 70°C (32°F ~ 158°F)</td></tr>
-      <tr><td>Certifications</td><td>RoHS / REACH / CE / FCC</td></tr>
-      <tr><td>Warranty</td><td>3-Year Limited Warranty</td></tr>
-    </table>
-    <div class="perf-lbl fi">Performance</div>
-    <table class="perf-tbl fi">
-      <thead><tr><th>Capacity</th><th>Sequential Read</th><th>Sequential Write</th><th>TBW</th></tr></thead>
-      <tbody>
-        <tr><td>512GB</td><td>5,100 MB/s</td><td class="warn">2,700 MB/s ⚠</td><td>300 TBW</td></tr>
-        <tr><td>1TB</td><td>5,100 MB/s</td><td>4,500 MB/s</td><td>600 TBW</td></tr>
-        <tr><td>2TB</td><td>5,100 MB/s</td><td>4,500 MB/s</td><td>1,200 TBW</td></tr>
-        <tr><td>4TB</td><td>5,100 MB/s</td><td>4,500 MB/s</td><td>2,400 TBW</td></tr>
-      </tbody>
-    </table>
-    <div class="spec-disc fi">
-      * All data secured from Simorchip's internal labs under specific testing conditions. Accurate data may vary depending on the operating environment.<br>
-      * Warranty based on period or TBW, whichever comes first.<br>
-      ⚠ 512GB sequential write speed is 2,700 MB/s. All other capacities achieve 4,500 MB/s write speed.
-    </div>
-    <div class="spec-ctas fi">
-      <button class="btn btn-gold">Download Spec Sheet</button>
-      <button class="btn btn-ghost">Explore More Products</button>
-    </div>
-    <div class="spec-foot fi">
-      <span class="tag" style="font-size:10px;">© 2026 Simorchip Technology</span>
-      <span class="tag" style="font-size:10px;">SSD 420 · PCIe Gen4 NVMe M.2 2280</span>
-    </div>
-  </div>
-</section>
+.collection-content {
+	font-size: 0.875rem;
+}
 
-<div class="site-foot">
-  <div class="site-foot-hl">
-    <span>Simorchip SSD 420</span>
-    <span style="color:rgba(255,255,255,.9);">Faster.</span>
-    <span style="color:rgba(255,255,255,.9);">Stronger.</span>
-    <span style="color:rgba(255,255,255,.9);">Smart.</span>
-    <span style="color:rgba(255,255,255,.9);">Safer.</span>
-  </div>
-  <div class="site-foot-tagline">
-    <span class="site-foot-t1">This is where</span>
-    <span class="site-foot-t2">Gen4 begins.</span>
-  </div>
-  <div class="site-foot-sub">© 2026 Simorchip Technology · PCIe Gen4 NVMe M.2 2280</div>
-</div>
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
 
-<script>
-/* CURSOR */
-const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring'),spot=document.getElementById('spot');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';spot.style.left=mx+'px';spot.style.top=my+'px';});
-(function lr(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(lr);})();
-document.querySelectorAll('button,.btn,.nav-pill').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';ring.style.width='52px';ring.style.height='52px';});
-  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='42px';ring.style.height='42px';});
-});
+.column-list {
+	display: flex;
+	gap: 46px;
+}
 
-/* NAV */
-const navEl=document.getElementById('nav');
-window.addEventListener('scroll',()=>navEl.classList.toggle('scrolled',window.scrollY>60));
-function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
-const secIds=['s00','s01','s02','s03','s04','s05','s06','s07','s08','s09'];
-const navPillEls=document.querySelectorAll('.nav-pill');
-const navObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){const idx=secIds.indexOf(e.target.id);navPillEls.forEach(p=>p.classList.remove('on'));if(navPillEls[idx])navPillEls[idx].classList.add('on');}});
-},{threshold:.4});
-secIds.forEach(id=>{const el=document.getElementById(id);if(el)navObs.observe(el);});
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
 
-/* SCROLL REVEAL */
-const fiObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.1});
-document.querySelectorAll('.fi').forEach(el=>fiObs.observe(el));
+.column > *:first-child {
+	margin-top: 0;
+}
 
-/* GOLD LINES */
-document.querySelectorAll('.gold-line').forEach(el=>{
-  new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});},{threshold:.5}).observe(el);
-});
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
 
-/* HERO */
-document.fonts.ready.then(()=>{
-  function cls(id,d=0){setTimeout(()=>document.getElementById(id)?.classList.add('on'),d);}
-  cls('hRight',0);cls('hEye',300);cls('hHL',500);
-  setTimeout(()=>['hl0','hl1','hl2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('in'),i*300)),540);
-  setTimeout(()=>document.getElementById('hLine')?.classList.add('on'),1300);
-  cls('hDeck',1600);cls('hTags',1900);cls('scrHint',2300);
-});
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
 
-/* SPEED BARS */
-(function(){
-  const sb=document.getElementById('speedBars');if(!sb)return;
-  const obs=new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting){
-      ['sb-420','sb-gen3','sb-sata'].forEach((id,i)=>{
-        setTimeout(()=>{
-          const el=document.getElementById(id);
-          if(el)el.style.width=el.dataset.w+'%';
-        },i*200);
-      });
-      obs.disconnect();
-    }
-  },{threshold:.4});
-  obs.observe(sb);
-})();
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
 
-/* MTBF COUNTER */
-(function(){
-  const el=document.getElementById('mtbfNum');if(!el)return;
-  let started=false;
-  new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting&&!started){
-      started=true;
-      const target=1500000,dur=2200,start=performance.now();
-      function step(now){
-        const t=Math.min((now-start)/dur,1);
-        const ease=1-Math.pow(1-t,4);
-        el.textContent=Math.round(ease*target).toLocaleString();
-        if(t<1)requestAnimationFrame(step);
-        else el.textContent='1,500,000';
-      }
-      requestAnimationFrame(step);
-    }
-  },{threshold:.5}).observe(el);
-})();
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
 
-/* TBW BARS */
-(function(){
-  const viz=document.getElementById('tbwViz');if(!viz)return;
-  const obs=new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting){
-      ['tbw1','tbw2','tbw3','tbw4'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('on'),i*180));
-      obs.disconnect();
-    }
-  },{threshold:.4});
-  obs.observe(viz);
-})();
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
 
-/* THERMAL CANVAS — heatmap simulation */
-(function(){
-  function drawThermal(canvasId, isHot){
-    const c=document.getElementById(canvasId);if(!c)return;
-    const ctx=c.getContext('2d');
-    const W=c.width,H=c.height,pw=6;
-    function tempColor(t){
-      if(t<.25){return `rgb(${Math.round(26+t*4*60)},${Math.round(95+t*4*100)},${Math.round(168-t*4*40)})`;}
-      else if(t<.5){const tt=(t-.25)*4;return `rgb(${Math.round(86+tt*120)},${Math.round(195+tt*40)},${Math.round(128-tt*90)})`;}
-      else if(t<.75){const tt=(t-.5)*4;return `rgb(${Math.round(206+tt*40)},${Math.round(235-tt*100)},${Math.round(38-tt*20)})`;}
-      else{const tt=(t-.75)*4;return `rgb(${Math.round(246-tt*30)},${Math.round(135-tt*100)},${Math.round(18-tt*10)})`;}
-    }
-    for(let y=0;y<H;y+=pw){
-      for(let x=0;x<W;x+=pw){
-        const nx=x/W,ny=y/H;
-        let heat;
-        if(isHot){
-          /* competitor — hot spot in centre-right */
-          const dx=nx-.65,dy=ny-.4;
-          heat=0.55+0.42*(1-Math.sqrt(dx*dx*4+dy*dy*6));
-          heat+=(Math.random()-.5)*.14;
-          heat=Math.max(.15,Math.min(1,heat));
-        }else{
-          /* SSD 420 — uniform cool, slight gradient */
-          heat=0.14+0.12*(1-Math.abs(nx-.5)*1.4-Math.abs(ny-.5)*1.2);
-          heat+=(Math.random()-.5)*.06;
-          heat=Math.max(.05,Math.min(.32,heat));
-        }
-        ctx.fillStyle=tempColor(heat);
-        ctx.fillRect(x,y,pw,pw);
-      }
-    }
-    /* temperature label overlay */
-    ctx.fillStyle='rgba(0,0,0,.45)';
-    ctx.fillRect(0,H-16,W,16);
-    ctx.font=`500 10px 'DM Mono',monospace`;
-    ctx.textAlign='center';
-    ctx.fillStyle=isHot?'#ff8888':'#c8960a';
-    ctx.fillText(isHot?'Peak: 78°C+':'Stable: ≤ 54°C',W/2,H-5);
-  }
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
 
-  const wrap=document.getElementById('thermalGood')?.closest('.tech-card');
-  if(!wrap)return;
-  const obs=new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting){
-      drawThermal('thermalGood',false);
-      drawThermal('thermalBad',true);
-      obs.disconnect();
-    }
-  },{threshold:.3});
-  obs.observe(wrap);
-})();
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
 
-/* WEAR LEVELING CANVAS — cell usage grid */
-(function(){
-  const c=document.getElementById('wearCanvas');if(!c)return;
-  const ctx=c.getContext('2d');
-  const W=c.width,H=c.height;
-  const cols=20,rows=4,pw=Math.floor(W/cols)-1,ph=Math.floor(H/rows)-1;
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
 
-  const obs=new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting){
-      ctx.clearRect(0,0,W,H);
-      for(let r=0;r<rows;r++){
-        for(let col=0;col<cols;col++){
-          /* wear leveling = even distribution, slight random variance */
-          const base=0.35+Math.random()*.35;
-          const t=base;
-          let color;
-          if(t<0.45)color=`rgba(74,158,255,${0.3+t*.7})`;      /* blue — low wear */
-          else if(t<0.65)color=`rgba(200,150,10,${0.4+t*.5})`; /* gold — med wear */
-          else color=`rgba(200,80,60,${0.4+t*.5})`;             /* red — high wear */
-          const x=col*(pw+1)+1,y=r*(ph+1)+1;
-          ctx.fillStyle=color;
-          ctx.fillRect(x,y,pw,ph);
-          /* thin border */
-          ctx.strokeStyle='rgba(0,0,0,.3)';ctx.lineWidth=.5;
-          ctx.strokeRect(x,y,pw,ph);
-        }
-      }
-      obs.disconnect();
-    }
-  },{threshold:.3});
-  obs.observe(c);
-})();
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
 
-/* SATELLITE ORBIT — JS RAF so satellites actually revolve around centre */
-(function(){
-  const orbitEl=document.querySelector('.orbit-viz');if(!orbitEl)return;
-  const sats=[
-    {id:'sat-plp',angle:0,radius:90},
-    {id:'sat-ldpc',angle:Math.PI,radius:90},
-    {id:'sat-bbm',angle:Math.PI/2,radius:128},
-    {id:'sat-wl',angle:3*Math.PI/2,radius:128},
-  ];
-  const speeds=[0.008,0.008,0.005,0.005];
-  /* remove the static CSS positioning classes and use JS instead */
-  sats.forEach(s=>{
-    const el=orbitEl.querySelector('.'+s.id);
-    if(!el)return;
-    el.style.position='absolute';
-    el.style.top='50%';el.style.left='50%';
-    el.style.transform='translate(-50%,-50%)';
-  });
-  /* hide static CSS rings — we keep them as decorative */
-  let started=false;
-  const obs=new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting&&!started){
-      started=true;
-      (function tick(){
-        sats.forEach((s,i)=>{
-          s.angle+=speeds[i];
-          const x=Math.cos(s.angle)*s.radius;
-          const y=Math.sin(s.angle)*s.radius;
-          const el=orbitEl.querySelector('.'+s.id);
-          if(el)el.style.transform=`translate(calc(-50% + ${x}px),calc(-50% + ${y}px))`;
-        });
-        requestAnimationFrame(tick);
-      })();
-    }
-  },{threshold:.3});
-  obs.observe(orbitEl);
-})();
-</script>
-</body>
-</html>
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="360d24e8-7d86-80bd-bba6-f9e7bec01cd3" class="page sans"><header><h1 class="page-title" dir="auto">SSD 420</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="360d24e8-7d86-81f7-bbe7-c3296bf193fb" class=""><mark class="highlight-yellow">*黃色字體：視覺建議</mark></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-81ca-8698-ce2a09442a8f" class=""><mark class="highlight-red">*紅色字體：中文解釋</mark></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-813f-984b-ce94cb63e90c" class=""><mark class="highlight-blue">*Hashtag：For SEO</mark></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-80a2-b8a7-c7cfe97ffdf1" class="">
+</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8018-b4d1-d2681d806224" class="">
+</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-81f7-be74-d2ee6af8261c" class=""><em><strong>Faster. Stronger. Smart. Safer.</strong></em><br/><em>This is where Gen4 begins</em></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-802b-a371-f317ef42a472" class="">
+</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-803a-80c0-cf7d88bf2ee8" class="">The SSD 420 runs on PCIe Gen4 — the interface that changes what storage means.</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-809f-afaf-daf9ff2d11a1" class="">2x faster than Gen3. 10x faster than SATA.</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8061-846b-c6553033cab8" class=""><strong>Same M.2 2280 slot. A completely different world.</strong></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8117-a56c-ca4175eb202f" class=""><mark class="highlight-blue"><code>#Simorchip</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#PCIe Gen4 x4</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#NVMe 1.4</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#5100MB/s</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#3D NAND</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#M.2 2280</code></mark></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-81f3-ab19-c014153c342f" class=""><mark class="highlight-blue"><code>#SSD</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#420</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#Lightning Strike</code></mark><mark class="highlight-blue">  </mark><mark class="highlight-blue"><code>#512GB</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#1TB</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#2TB</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#4TB</code></mark><mark class="highlight-blue"> </mark></p></div><div style="display:contents" dir="auto"><hr id="360d24e8-7d86-8174-a0ab-cd8394480949"/></div><div style="display:contents" dir="auto"><h2 id="360d24e8-7d86-813c-88ed-eb8062216f17" class="">Lightning Strike <mark class="highlight-red">閃電擊</mark></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80e6-b386-ccb7b95ad69f" class=""><strong>Not designed to be noticed.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-806c-bbfb-e3306a5fa0f9" class=""><strong>Designed to move faster than anything that came before it.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8099-9148-c24fcf1fcc9e" class=""><mark class="highlight-red">不是為了引人注目而設計</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80fa-9a69-e82ae2bd3808" class=""><mark class="highlight-red">是為了在每一次讀寫之間，讓速度本身成為唯一語言</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805f-b49c-cd3494517ec3" class=""><strong>Every geometric line on the SSD 420 traces the path of a lightning strike.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-809b-b5b9-c6ad422e1953" class=""><strong>This is not decoration. This is direction.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80e3-a90c-e4676641190c" class=""><mark class="highlight-red">每一道黃色刻線，都是電弧劃過的軌跡</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80a4-a07c-d9c36cc69190" class=""><mark class="highlight-red">這不是裝飾，是速度的視覺語言</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c8-8fc0-e763d4b210b9" class=""><mark class="highlight-yellow">視覺：SSD 420 正面特寫，黃色幾何線條局部放大，標示 Lightning Strike 設計語言名稱 左側文字，右側產品圖</mark></p></div><div style="display:contents" dir="auto"><hr id="360d24e8-7d86-81ec-89d8-de3fc8e9d96c"/></div><div style="display:contents" dir="auto"><h2 id="360d24e8-7d86-81f0-b1e6-c637b919d4c0" class="">Why NVMe SSD 420</h2></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8135-9ced-d8d19d4dd90c" class="">Why upgrade to PCIe Gen4 now? </p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-814c-84fa-e69587e95ec1" class=""><mark class="highlight-red">為什麼現在升級 PCIe Gen4？</mark></p></div><div style="display:contents" dir="ltr"><table id="360d24e8-7d86-8116-86f6-c10fb01e5e28" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="360d24e8-7d86-811b-978e-d1fea3cd7076"><th id="TXy|" class="simple-table-header-color simple-table-header" style="width:105px">Read Speed</th><th id="Pn&lt;F" class="simple-table-header-color simple-table-header" style="width:149.6750030517578px">Up to 5100 MB/s</th><th id="Pu|K" class="simple-table-header-color simple-table-header" style="width:474.5375061035156px">10x faster than SATA SSD — boot, load, transfer. Everything, instantly.</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="360d24e8-7d86-8160-9d90-e2cff32265f3"><td id="TXy|" class="" style="width:105px">Write Speed</td><td id="Pn&lt;F" class="" style="width:149.6750030517578px">Up to 4500 MB/s</td><td id="Pu|K" class="" style="width:474.5375061035156px">Large file exports and transfers, done before you look away.</td></tr></div><div style="display:contents" dir="ltr"><tr id="360d24e8-7d86-812b-8676-f2922002d920"><td id="TXy|" class="" style="width:105px">Interface</td><td id="Pn&lt;F" class="" style="width:149.6750030517578px">PCIe Gen4 x 4</td><td id="Pu|K" class="" style="width:474.5375061035156px">2x the bandwidth of Gen3. Lower latency, instant response across every workload.</td></tr></div><div style="display:contents" dir="ltr"><tr id="360d24e8-7d86-8168-be00-d798a5712ac4"><td id="TXy|" class="" style="width:105px">Reliability</td><td id="Pn&lt;F" class="" style="width:149.6750030517578px">1,500,000 hrs</td><td id="Pu|K" class="" style="width:474.5375061035156px">Over 171 years of rated reliability. Buy it once. It will outlast the machine.</td></tr></div><div style="display:contents" dir="ltr"><tr id="360d24e8-7d86-81e2-ab3d-d3daa9900471"><td id="TXy|" class="" style="width:105px">Protection</td><td id="Pn&lt;F" class="" style="width:149.6750030517578px">LDPC + Power Shield</td><td id="Pu|K" class="" style="width:474.5375061035156px">Multi-layer data protection — auto error correction, power loss immunity.</td></tr></div><div style="display:contents" dir="ltr"><tr id="360d24e8-7d86-812e-82b0-cd936e4cd903"><td id="TXy|" class="" style="width:105px">Warranty</td><td id="Pn&lt;F" class="" style="width:149.6750030517578px">3 Year</td><td id="Pu|K" class="" style="width:474.5375061035156px">Three-year limited warranty. Buy with confidence, use without worry.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="360d24e8-7d86-81d1-8647-f9460b65260e" class="bulleted-list"><li style="list-style-type:disc">Benchmarked against SATA SSD at 550 MB/s</li></ul></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-810f-bc15-def7196cddc3" class=""><mark class="highlight-red">數據以 SATA SSD 為比較基準</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80d5-a97f-c02854111b28" class=""><strong>Not because your old storage is broken.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8035-bf20-e55e19b8c79c" class=""><strong>Because your workflow has already outgrown it.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b3-9bf7-c77de453079c" class=""><mark class="highlight-red">不是因為你的儲存空間壞了</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8040-831b-f3095a879857" class=""><mark class="highlight-red">是因為你的工作負載，早已超過它能給你的一切</mark></p></div><div style="display:contents" dir="auto"><hr id="360d24e8-7d86-8144-90c0-e57658fc7bff"/></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8179-a94f-c5a8521e2e51" class="">01-<strong>Faster</strong></p></div><div style="display:contents" dir="auto"><h2 id="360d24e8-7d86-8172-9205-ff57219dd06a" class=""><strong>Faster</strong></h2></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-81a1-8b27-e6ba0008071a" class="">10x faster than SATA · 2x faster than Gen3</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-818b-925c-c17b9a10d638" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8020-9beb-e339e06618d3" class="">Your old storage was the bottleneck. Now it&#x27;s gone.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c3-9f06-fec8408c09b9" class="">While SATA tops out at 550 MB/s, the SSD 420 1TB hits up to <strong>5,100 MB/s read / 4,500 MB/s write.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8083-9402-f178c61b033b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-807d-af39-fbc856101c7f" class=""><strong>Your massive projects load in the blink of an eye.</strong></p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-8039-878c-f091561cdd5c" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80a1-9752-c333a62880e9"><th id="&gt;LKh" class="simple-table-header-color simple-table-header" style="width:165.5px"><strong>SATA SSD</strong></th><th id="|??a" class="simple-table-header-color simple-table-header"><strong>SSD 420 1TB</strong></th><th id="mVws" class="simple-table-header-color simple-table-header"><strong>PCIe Gen3</strong></th><th id="rW[R" class="simple-table-header-color simple-table-header"><strong>SATA SSD</strong></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8067-8920-ebd53d881fde"><td id="&gt;LKh" class="" style="width:165.5px"><strong>Sequential Read</strong></td><td id="|??a" class="">5,100 MB/s</td><td id="mVws" class="">3,300 MB/s</td><td id="rW[R" class="">550 MB/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8045-8dcb-e6be053ed971"><td id="&gt;LKh" class="" style="width:165.5px"><strong>Sequential Write</strong></td><td id="|??a" class="">4,500 MB/s</td><td id="mVws" class="">2,600 MB/s</td><td id="rW[R" class="">520 MB/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80fb-ae23-dc308636291d"><td id="&gt;LKh" class="" style="width:165.5px"><strong>OS Boot Time</strong></td><td id="|??a" class="">~5s</td><td id="mVws" class="">~12s</td><td id="rW[R" class="">~28s</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8011-9be7-f08aa5e35e49"><td id="&gt;LKh" class="" style="width:165.5px"><strong>50GB File Transfer</strong></td><td id="|??a" class="">~10s</td><td id="mVws" class="">~15s</td><td id="rW[R" class="">~91s</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8150-a8e9-edffec225d80" class="">Your 10GB transfer is done. Just enough time to reach for your coffee.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-807f-831b-e907b0f4c208" class=""><mark class="highlight-yellow">視覺：三段水平速度長條圖 SSD 420 5,100 MB/s SSD 420  → PCIe Gen3 3,300 MB/s → SATA SSD 550 MB/s</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80e1-86f2-fb839d394da8" class=""><mark class="highlight-yellow"> 420 那條用深金黃 #c8960a 壓制其他兩段 右側 stat badge：5,100 MB/s READ SPEED / x10 VS SATA SSD</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c5-8048-ef37de49a1d8" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-809b-a0a1-fe6c52ea8209" class=""><mark class="highlight-yellow">stat badge</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c8-80ac-e5bf61f960cb" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80cd-b235-c6a65f37db3c" class=""><mark class="highlight-yellow"><strong>5,100</strong></mark><mark class="highlight-yellow">MB/s Read Speed</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8094-bebb-ca2d6adf2138" class=""><mark class="highlight-yellow"><strong>x10</strong></mark><mark class="highlight-yellow">vs SATA SSD</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-806e-9b98-d7da3f3c0da4" class=""><mark class="highlight-yellow"><strong>x2</strong></mark><mark class="highlight-yellow">vs PCIe Gen3</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-809b-b180-e8cc8f7d9bc2" class="">
+</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-81b9-9908-d4faea8d9648" class="">
+</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8175-b556-eec6bafe4585" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="360d24e8-7d86-8129-8af1-c08cc03d4a50"/></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8166-8a7e-cbb5c4c83b4d" class="">02-<strong>Stronger</strong></p></div><div style="display:contents" dir="auto"><h2 id="360d24e8-7d86-814c-8b7b-e35347920aea" class=""><strong>Stronger</strong></h2></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-81a4-afc6-dba607886ba9" class="">Built to outlast the tasks it handles.</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-812d-83f2-f52d766aa099" class="">-</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8176-a7cf-c9041d457289" class="">1,500,000 hours.</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8104-bd66-d15ae6992dba" class="">Speed is the start. Making it last is what makes it strong.</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8108-9c18-f54b77550f41" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8058-91fe-d39d64e8e474" class="">That&#x27;s how long the SSD 420 is rated to run without failure.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80bc-aaf9-d0c28aae1e84" class=""><strong>If you started today, it would still be running long after everything else in your system has been replaced.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80f0-866c-e620c0bb3a01" class="">
+</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8129-9cc0-ffa80fe06198" class=""><strong>High-quality 3D NAND Flash</strong> — Vertically stacked memory cells. Higher density, lower power consumption, better endurance than planar NAND.<br/><mark class="highlight-yellow">視覺：3D NAND 垂直堆疊截面示意圖</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-802a-95be-dd6607868cf4" class=""><br/><strong>Up to 4TB capacity</strong> — 512GB / 1TB / 2TB / 4TB. The 1TB hits the sweet spot of speed, value, and endurance for most workflows. Need more? The 4TB fits everything — your entire creative library, game collection, and active project files, all on one drive.<br/><mark class="highlight-yellow">視覺：四個容量 badge 排列，1TB 標示「Best Value」，4TB 標示「Max Capacity」，兩個以深金黃強調</mark><br/></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8001-9a5c-cf1a19868361" class=""><strong>Up to 2,400 TBW endurance</strong> — Writing 200GB per day, that&#x27;s over 32 years of continuous use before wear becomes a concern.<br/><mark class="highlight-yellow">視覺：TBW 四容量對比 — 300 / 600 / 1,200 / 2,400 TBW</mark><br/></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-808c-8aad-cbd1193239b6" class=""><strong>Shock-resistant and drop-proof design</strong> — No moving parts. No mechanical failure. The SSD 420 survives what a hard drive can&#x27;t.</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-81aa-ad3e-f073992c4baf" class=""><mark class="highlight-yellow">視覺：1,500,000 大字動態計時呈現，底下標記 Hours of rated reliability 「Start it today. Still running in 2195.」</mark></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-81a8-b6aa-d413bda647ae" class=""><strong>* MTBF is a statistical estimate. Individual results may vary. MTBF</strong></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8167-b5fc-cc5b28d4f4d5" class=""><mark class="highlight-yellow">stat badge</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80df-90fc-fdd2cf68366d" class=""><mark class="highlight-yellow"><strong>1.5M</strong></mark><mark class="highlight-yellow">MTBF Hours</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8046-b164-f4d2cf0b4afd" class=""><mark class="highlight-yellow"><strong>4TB</strong></mark><mark class="highlight-yellow">Max Capacity</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80fb-b48f-d299e26bba02" class=""><mark class="highlight-yellow"><strong>2,400</strong></mark><mark class="highlight-yellow">Max TBW</mark></p></div><div style="display:contents" dir="auto"><hr id="360d24e8-7d86-81a4-9681-c3a06971d016"/></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80d5-b17e-ccd6e51e9590" class="">03-<strong>Smart</strong></p></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-80a4-a341-fc1b4b7a1df8" class=""><strong>Smart</strong></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ef-9687-e3a390a2db39" class="">The best tool is the one you never have to think about. </p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c4-b790-ce3a52e800f3" class="">You don&#x27;t need to optimize it.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80d1-9fc8-d008a43666fa" class="">You don&#x27;t need to clean it.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80be-b762-ff30d167f337" class="">You don&#x27;t need to worry about it getting slower over time.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8099-98e7-ea1dd69c3eab" class="">
+</p></div><div style="display:contents" dir="auto"><ul id="360d24e8-7d86-8131-b303-f35ebd69a44f" class="bulleted-list"><li style="list-style-type:disc"><strong>LDPC Error Correction</strong> — Hardware-level error detection and correction on every read and write. Data integrity maintained automatically, without any performance cost.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80e1-8850-cdaab100839f" class=""><mark class="highlight-yellow">視覺：LDPC 錯誤偵測修正流程圖 — 錯誤位元紅色標示 → 修正後綠色</mark></p></div><div style="display:contents" dir="auto"><ul id="360d24e8-7d86-817f-bec1-d9562cac34af" class="bulleted-list"><li style="list-style-type:disc"><strong>Dynamic Thermal Throttling</strong> — Reads temperature in real time, adjusts automatically. Prevents thermal shutdown while maintaining peak performance under sustained load.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8018-bea8-c47a4b29e07a" class=""><mark class="highlight-yellow">視覺：熱成像對比 — SSD 420 均勻低溫 vs 競品熱點集中</mark></p></div><div style="display:contents" dir="auto"><ul id="360d24e8-7d86-81a6-87de-e996c0acbc8e" class="bulleted-list"><li style="list-style-type:disc"><strong>NVMe Sets task distribution + PLM Predictable Latency Mode</strong> — Workloads distributed intelligently across NAND cells. Lower latency, more consistent response under mixed read/write loads.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8075-a173-f46959e3cbac" class=""><mark class="highlight-yellow">視覺：任務均衡分配示意圖</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80f4-9cc6-c2550d75bcc0" class="bulleted-list"><li style="list-style-type:disc"><strong>Garbage Collection + TRIM</strong> — Runs in the background, clearing space you didn&#x27;t know you needed. Writes stay fast years from now.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ee-88d6-e804c9563851" class=""><mark class="highlight-yellow">視覺：TRIM + GC 工作流程圖</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8006-ac5d-db984df2d69f" class="bulleted-list"><li style="list-style-type:disc"><strong>Early Move</strong> — Detects aging cells before they fail. Moves data proactively. Predictive data protection, not reactive.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-806a-a451-fbe57cd3eda9" class=""><mark class="highlight-yellow">視覺：Early Move 預測性資料搬移流程示意</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80f0-8c48-e32a55a9812e" class="bulleted-list"><li style="list-style-type:disc"><strong>Wear Leveling</strong> — Writes spread evenly across all cells. Every cell works equally. Every cell lasts equally.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ed-a588-ce772d5d1a7e" class=""><mark class="highlight-yellow">視覺：磨損均衡分佈示意，各區塊顏色深淺代表使用程度</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8079-afb0-fd5993b30d16" class=""><em>The smartest tool</em></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8085-8795-fa0ccb6f7910" class=""><em>is the one you forget exists.</em></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8008-8f15-ccb7b6be2f36" class=""><mark class="highlight-yellow">視覺：六個技術圖示兩行三列 LDPC / Dynamic Thermal / NVMe Sets / TRIM+GC / Early Move / Wear Leveling 每個圖示搭配一行說明文字</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80ea-9eed-f886ed01addb"/></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80fd-be34-f36daf7c1bb5" class="">04-<strong>Safer</strong></p></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-8003-b897-d199506c7112" class=""><strong>Safer</strong></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8003-b9f1-f55f0618f03d" class="">Multi-layer protection. Not a single bit lost.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-807a-8c28-caff4f73fbf4" class="">Every file you care about.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8060-8f65-da6919a85981" class="">Every render you can&#x27;t recreate.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-808d-ad51-e6eec96261cc" class="">Every project you can&#x27;t afford to lose.</p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8040-8b38-ecd78045be33" class="bulleted-list"><li style="list-style-type:disc"><strong>Power Loss Protection (PLP)</strong> — When power is suddenly interrupted, PLP commits all in-flight data to NAND before shutdown. No corruption. No lost files. No half-written transfers.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-801a-bd50-efc450eb9a8c" class=""><mark class="highlight-yellow">視覺：斷電情境對比 — 一般 SSD 資料遺失 vs SSD 420 PLP 資料完整保留</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80dd-9ba4-c2becd76a485" class="bulleted-list"><li style="list-style-type:disc"><strong>LDPC Error Correction</strong> — Detects and fixes data errors before you ever notice. Every read, every time.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-807a-a6bb-e8f7a1dc460e" class="bulleted-list"><li style="list-style-type:disc"><strong>Bad Block Management</strong> — Failing memory cells are isolated and bypassed automatically. The drive routes around problems before they become your problem.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8095-928d-d7bc2f8d4d0d" class=""><mark class="highlight-yellow">視覺：壞塊隔離示意圖</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8027-afac-da8f1e688a8d" class="bulleted-list"><li style="list-style-type:disc"><strong>Wear Leveling</strong> — Workload spread evenly across every cell. Nothing wears out first.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8061-aad8-da38f4e085c8" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ea-8bbb-f714244c4d3f" class="">You don&#x27;t have to think about data protection.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8040-9eec-d65406bab1ce" class=""><strong>The SSD 420 already is.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80db-af10-f2409f48aa0a" class="">Because some things can&#x27;t be lost twice.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-807a-86ab-c9aa6ec429cf" class=""><mark class="highlight-yellow">視覺：四個就像太陽系星球防護機制產品圖(主星球) — PLP / LDPC / Bad Block Mgmt / Wear Leveling 衛星環繞圖，四個機制圍繞保護產品</mark></p></div><div style="display:contents" dir="auto"><hr id="360d24e8-7d86-8175-a49d-f21755d48831"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-8065-8010-f0c5f33c2e42" class=""><strong>One Size. Every System.</strong></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8017-94b2-ca45f0a9a98b" class="">80 x 20 x 3.77 mm — Plug it in. That&#x27;s the upgrade.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ad-8ebc-fd14010af576" class=""><strong>Computing</strong></p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-807a-8d94-db902b2a0a24" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80fa-bc62-e69e9324cbf5"><td id="Sefc" class=""><strong>Ultrabook</strong></td><td id="ELUK" class="">Thin &amp; light laptops</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-806e-8980-e38ecc0d2485"><td id="Sefc" class=""><strong>Desktop PC</strong></td><td id="ELUK" class="">ATX / mITX motherboards</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-804d-9f7f-fa0521b0a5ed"><td id="Sefc" class=""><strong>Gaming Laptop</strong></td><td id="ELUK" class="">High-refresh gaming rigs</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80f8-9614-c67966b8ccc6"><td id="Sefc" class=""><strong>Mini PC</strong></td><td id="ELUK" class="">NUC, Beelink, Minisforum</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80bd-9902-cd0eb08a61e9"><td id="Sefc" class=""><strong>Workstation</strong></td><td id="ELUK" class="">Creative &amp; enterprise builds</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8022-9ec8-e42cb94799aa" class=""><strong>Console &amp; Gaming</strong></p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-80c4-8834-e7aa7f89d0f0" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8021-b081-ede983d1bce7"><td id="[jEQ" class=""><strong>PlayStation 5</strong></td><td id=";?DR" class="">M.2 expansion slot compatible</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80ac-b52f-de6eb3995b74"><td id="[jEQ" class=""><strong>Steam Deck</strong></td><td id=";?DR" class="">Direct M.2 2280 upgrade</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8099-8056-dcef7549e8f8"><td id="[jEQ" class=""><strong>Gaming Desktop</strong></td><td id=";?DR" class="">ROG, MSI, Alienware builds</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80af-82c0-cebde1c6be65" class=""><strong>Professional &amp; Security</strong></p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-8052-8342-fea7b3a82b5f" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-809c-960c-cea3eab0ee5e"><td id="l:^r" class=""><strong>NVR / DVR</strong></td><td id="&gt;VVi" class="">24/7 surveillance recorders</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80f9-a0f6-dba7aaa703ea"><td id="l:^r" class=""><strong>NAS Server</strong></td><td id="&gt;VVi" class="">QNAP, Synology M.2 cache</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8064-a2e9-f1c450203740"><td id="l:^r" class=""><strong>Industrial PC</strong></td><td id="&gt;VVi" class="">Fanless embedded systems</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8031-89e8-fc9f1d2dd6f9"><td id="l:^r" class=""><strong>Workstation Server</strong></td><td id="&gt;VVi" class="">Rack &amp; tower server builds</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ba-aa9e-ce24c891c130" class=""><strong>Compatible with</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8027-af32-e1369f7116ea" class="">Windows 11 / 10 · Linux · macOS (via adapter) · SteamOS · FreeBSD</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8017-b035-fd7854f1dd48" class="">Plug &amp; Play — No drivers needed</p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80c2-89a8-c90f3e637372"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-80e3-b3c6-da51b26fc602" class="">Packaging Design</h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80dc-aa34-f7b44ebd4ddc" class="">What&#x27;s in the box</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805c-91ed-f698e6493b6b" class=""><mark class="highlight-yellow">視覺：包裝掛卡正面大圖 [ Hang_pack_SSD_M_2_Pcle_Gen4_420_4TB.png ] 黑底 + 黃色幾何 + SSD 420 大字 + 4TB / 5100 MB/s 規格清晰標示</mark></p></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80f3-b26c-c27dfd78c5f7" class="bulleted-list"><li style="list-style-type:disc"><strong>Retail Hang Pack</strong> — Euro-slot hang hole for standard retail shelf display. Ready for store or e-commerce fulfilment.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80a6-a042-d83b53ffac31" class="bulleted-list"><li style="list-style-type:disc"><strong>Anti-Static Protection</strong> — Diamond-textured anti-static black card shields the drive from electrostatic discharge during transit and handling.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80d5-8da8-da66723d6a67" class="bulleted-list"><li style="list-style-type:disc"><strong>Drive-Visible Window</strong> — Physical SSD exposed through packaging. Verify the product before purchase — no guessing required.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-801e-9ced-e728a2a4d3b2" class="bulleted-list"><li style="list-style-type:disc"><strong>Full Spec on Pack</strong> — Model number, capacity, and speed clearly printed. No opening needed to confirm the right SKU.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80ea-b7d6-faadf714cd17" class="bulleted-list"><li style="list-style-type:disc"><strong>Global Certifications</strong> — CE · RoHS · FCC · REACH — compliant for EU, US, and international markets.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8060-8c11-d779d4216c66" class=""><mark class="highlight-yellow">視覺：包裝外觀圖 + 五個包裝特點 callout 標示，與 SSD 330 同樣設計版面邏輯</mark></p></div><div style="display:contents" dir="auto"><hr id="360d24e8-7d86-819d-a266-f535b7e3de9a"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-80d3-b265-c7f9a3cf6421" class=""><strong>3 Years</strong></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c9-80d4-c574d346dce8" class="">Limited Warranty</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8000-9456-e097248e08f7" class=""><em>Our confidence in the SSD 420 is written in three words.Three. Year. Warranty.</em></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-8032-a951-cced288568ac"/></div><div style="display:contents" dir="auto"><h1 id="360d24e8-7d86-8118-a126-de035a2b3c92" class=""><strong>SPECIFICATIONS</strong></h1></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8031-b9dc-cb1714bd411b" class="">A cost-effective solution engineered for optimum speed, endurance, reliability, and multi-platform compatibility.</p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-8053-8c8a-ce58b2dbc490" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-806d-a6d7-e0b6575f288a"><td id="V@[m" class=""><strong>Model</strong></td><td id="VMpf" class="">Simorchip SSD 420</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80d2-8398-fbc5fdd44c12"><td id="V@[m" class=""><strong>Interface</strong></td><td id="VMpf" class="">PCIe Gen4 x4 NVMe 1.4</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8019-9748-e5adbac79097"><td id="V@[m" class=""><strong>Form Factor</strong></td><td id="VMpf" class="">M.2 2280</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8044-ba74-c7ccc35a5322"><td id="V@[m" class=""><strong>Flash Type</strong></td><td id="VMpf" class="">3D NAND</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8058-98ef-c99bcf32db23"><td id="V@[m" class=""><strong>Capacity</strong></td><td id="VMpf" class="">512GB / 1TB / 2TB / 4TB</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8098-9571-e3fae8c90ae3"><td id="V@[m" class=""><strong>MTBF</strong></td><td id="VMpf" class="">1,500,000 Hours</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80cf-8e3a-e8a6ced8ae80"><td id="V@[m" class=""><strong>Voltage</strong></td><td id="VMpf" class="">3.3V ± 5%</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8069-a7e8-fc3a331fae5d"><td id="V@[m" class=""><strong>Dimensions</strong></td><td id="VMpf" class="">80 x 20 x 3.77 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8057-8926-c3ff272dbce1"><td id="V@[m" class=""><strong>Operating Temp</strong></td><td id="VMpf" class="">0°C ~ 70°C (32°F ~ 158°F)</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8042-8760-c92b826b1a7a"><td id="V@[m" class=""><strong>Certifications</strong></td><td id="VMpf" class="">RoHS / REACH / CE / FCC</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80fe-95b1-eca747430c2a"><td id="V@[m" class=""><strong>Warranty</strong></td><td id="VMpf" class="">3-Year Limited Warranty</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b0-bdd7-e8eb94e35517" class="">Performance</p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-80e4-9e5d-e6d3ddc0ffe6" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-806e-9c81-dc320dcea351"><th id="v]UK" class="simple-table-header-color simple-table-header"><strong>Capacity</strong></th><th id="bnU]" class="simple-table-header-color simple-table-header"><strong>Sequential Read</strong></th><th id="O:@=" class="simple-table-header-color simple-table-header"><strong>Sequential Write</strong></th><th id="tIbt" class="simple-table-header-color simple-table-header"><strong>TBW</strong></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-800a-b4a7-cc65781df32f"><td id="v]UK" class=""><strong>512GB</strong></td><td id="bnU]" class="">5,100 MB/s</td><td id="O:@=" class="">2,700 MB/s ⚠</td><td id="tIbt" class="">300 TBW</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8029-bc1c-fd22d1bc7c68"><td id="v]UK" class=""><strong>1TB</strong></td><td id="bnU]" class="">5,100 MB/s</td><td id="O:@=" class="">4,500 MB/s</td><td id="tIbt" class="">600 TBW</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-808e-8c8a-dc6e1b5c046b"><td id="v]UK" class=""><strong>2TB</strong></td><td id="bnU]" class="">5,100 MB/s</td><td id="O:@=" class="">4,500 MB/s</td><td id="tIbt" class="">1,200 TBW</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8055-b2c7-f0fc72730a8b"><td id="v]UK" class=""><strong>4TB</strong></td><td id="bnU]" class="">5,100 MB/s</td><td id="O:@=" class="">4,500 MB/s</td><td id="tIbt" class="">2,400 TBW</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-80fa-99df-fc534f3e0c06" class="bulleted-list"><li style="list-style-type:disc">All data secured from Simorchip&#x27;s internal labs under specific testing conditions. Accurate data may vary depending on the operating environment.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8000-87d7-da3213c68b84" class="bulleted-list"><li style="list-style-type:disc">Warranty based on period or TBW, whichever comes first.</li></ul></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-807a-9e76-e98112786867" class="bulleted-list"><li style="list-style-type:disc">⚠ 512GB sequential write speed is 2,700 MB/s. All other capacities achieve 4,500 MB/s write speed.</li></ul></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8102-a434-ed43af9b0d61" class=""><mark class="highlight-yellow">視覺：就規格表，記得底下放規格表下載，然後瀏覽其他產品按鈕</mark></p></div><div style="display:contents" dir="auto"><hr id="360d24e8-7d86-81ff-af5b-d9cb1ce74a29"/></div><div style="display:contents" dir="auto"><h1 id="360d24e8-7d86-8136-b4e0-e6c39cb1aad2" class="">底部標語</h1></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-809e-90be-f29084fa31be" class=""><strong>Simorchip SSD 420</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8005-84e3-cfc17ea07eea" class=""><strong>Faster. Stronger. Smarter. Safer.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805c-bad0-d8ac8da43ead" class="">This is where Gen4 begins.</p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-8014-96f4-f3973b7bdc1d"/></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8009-966f-c0ad132df25b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c3-ab71-d1cd289b8e9d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ce-ae3e-da6ba088d5f4" class=""><strong>SSD 420 內部備忘</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8058-a1d2-e966d12ce3c1" class="">· 設計語言：Lightning Strike — 黑底黃色幾何電弧線條</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-809b-b76b-c0425245b59c" class="">· 頁面背景：#071020 科技藍 / Accent：#c8960a 深金黃</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b2-b981-e3c1c1cd4e8e" class="">· Hero 宣言：This is where Gen4 begins.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8062-b32c-dc835ccfb8c9" class="">· 標語：Faster. Stronger. Smarter. Safer.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80a0-9b47-ef21ac2f74c2" class="">· 512GB 寫入速度 2,700 MB/s，其他容量 4,500 MB/s — 規格表旁需標注</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-803e-a797-d31dfb5e6125" class="">· SSD 430 對應：Thunderous Descent / #ffe44d 亮電黃 / Fastest. Strongest. Smartest. Safest. / Everything before this was just waiting.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8063-aa16-f31909c93dc5" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
