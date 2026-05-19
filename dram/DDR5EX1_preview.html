@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip DDR5 EX1 — Harder. Fiercer. Faster. Stronger.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,300&family=DM+Mono:wght@300;400&family=Cormorant+Garamond:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0a0a; --surface:#121212; --surface2:#1a1a1a;
+  --red:#c0200c; --red-dim:rgba(192,32,12,.18); --red-glow:rgba(192,32,12,.08);
+  --white:#f0f0f0; --ink:#0a0a0a;
+  --mute:#cccccc; --label:#8a9aaa; --border:rgba(255,255,255,.11); --line:rgba(255,255,255,.09);
+  --ff-d:'Bebas Neue',sans-serif;
+  --ff-b:'DM Sans',sans-serif;
+  --ff-m:'DM Mono',monospace;
+  --ff-s:'Cormorant Garamond',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff-b);background:var(--bg);color:var(--white);overflow-x:hidden;cursor:none;}
+
+/* GRAIN */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.18;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  background-size:160px 160px;mix-blend-mode:overlay;}
+
+/* CURSOR */
+#cur{position:fixed;width:9px;height:9px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .18s,height .18s,background .2s,border-radius .2s;}
+#cur-ring{position:fixed;width:40px;height:40px;border:1px solid rgba(192,32,12,.32);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .2s;}
+#spot{position:fixed;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(192,32,12,.05) 0%,transparent 65%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);transition:opacity .4s;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:20px 5%;transition:background .3s,border-bottom .3s;}
+nav.scrolled{background:rgba(10,10,10,.92);backdrop-filter:blur(12px);border-bottom:.5px solid var(--border);}
+.nav-brand{font-family:var(--ff-m);font-size:10px;font-weight:300;letter-spacing:.26em;text-transform:uppercase;color:var(--white);opacity:.3;}
+.nav-pills{display:flex;gap:6px;}
+.nav-pill{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.1em;color:var(--label);border:.5px solid var(--border);padding:4px 9px;cursor:pointer;transition:color .2s,border-color .2s,background .2s;}
+.nav-pill:hover,.nav-pill.on{color:var(--white);border-color:var(--red);background:rgba(192,32,12,.12);}
+
+/* SHARED */
+section{position:relative;width:100%;overflow:hidden;}
+.full{min-height:100vh;}
+.red-line{height:1.5px;background:var(--red);width:0;transition:width 1s ease;}
+.red-line.on{width:40px;}
+.fi{opacity:0;transform:translateX(-28px) skewX(-2deg);transition:opacity .7s ease,transform .7s ease;}
+.fi.vis{opacity:1;transform:none;}
+.fi-d1{transition-delay:.1s;}.fi-d2{transition-delay:.2s;}.fi-d3{transition-delay:.3s;}
+.tag{font-family:var(--ff-m);font-size:10px;font-weight:300;letter-spacing:.07em;color:var(--label);border:.5px solid var(--border);padding:4px 11px;display:inline-block;}
+.tag::before{content:'#';color:var(--red);margin-right:2px;}
+.stat-badge{display:inline-flex;flex-direction:column;align-items:flex-start;border:.5px solid var(--border);padding:18px 22px;background:rgba(255,255,255,.03);transition:border-color .22s,background .22s;}
+.stat-badge:hover{border-color:var(--red);background:rgba(192,32,12,.06);}
+.stat-badge .num{font-family:var(--ff-d);font-size:clamp(26px,4.2vw,54px);letter-spacing:.02em;color:var(--white);line-height:1;}
+.stat-badge .lbl{font-size:10px;font-weight:400;letter-spacing:.1em;color:var(--mute);margin-top:4px;text-transform:uppercase;font-family:var(--ff-m);}
+.img-ph{background:linear-gradient(135deg,#1a1a1a,#0f0f0f);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:.5px solid var(--border);}
+.img-ph::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(91deg,transparent,transparent 12px,rgba(255,255,255,.015) 12px,rgba(255,255,255,.015) 13px);}
+.img-ph span{font-family:var(--ff-m);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.15);position:relative;z-index:1;text-align:center;line-height:2;padding:0 16px;}
+
+/* BULLET LIST */
+.bullet-list{list-style:none;margin-top:28px;}
+.bullet-list li{padding:16px 0;border-bottom:.5px solid var(--line);font-size:15px;font-weight:400;line-height:1.75;color:var(--mute);display:grid;grid-template-columns:28px 1fr;gap:14px;align-items:start;}
+.bullet-list li:last-child{border-bottom:none;}
+.bullet-list li .bi{width:28px;height:28px;border:.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.bullet-list li .bi svg{width:14px;height:14px;stroke:var(--red);fill:none;stroke-width:1.5;}
+.bullet-list strong{font-weight:500;color:var(--white);}
+.bullet-list .bn{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:rgba(255,255,255,.2);margin-top:4px;display:block;}
+
+/* SEC WRAP */
+.sec-wrap{padding:100px 6% 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto;}
+.sec-wrap.rev{direction:rtl;}.sec-wrap.rev>*{direction:ltr;}
+.sh-num{font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;color:var(--label);margin-bottom:14px;text-transform:uppercase;}
+.sh-title{font-family:var(--ff-d);font-size:clamp(64px,9vw,120px);letter-spacing:.02em;color:var(--white);line-height:.88;margin-bottom:8px;}
+.sh-sub{font-family:var(--ff-m);font-size:11px;font-weight:300;letter-spacing:.1em;color:var(--label);text-transform:uppercase;margin-bottom:28px;}
+.btn{font-family:var(--ff-b);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;padding:13px 28px;background:transparent;cursor:pointer;transition:background .22s,color .22s,border-color .22s;}
+.btn-light{border:1px solid var(--white);color:var(--white);}.btn-light:hover{background:var(--white);color:var(--ink);}
+.btn-ghost{border:1px solid var(--border);color:var(--label);}.btn-ghost:hover{background:var(--white);color:var(--ink);border-color:var(--white);}
+
+/* ── HERO ── */
+#s00{background:var(--bg);display:flex;align-items:center;padding-top:80px;min-height:100vh;}
+.h-right{position:absolute;right:0;top:0;bottom:0;width:52%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(32px);transition:opacity 1.4s ease .2s,transform 1.4s ease .2s;}
+.h-right.on{opacity:1;transform:translateX(0);}
+
+/* EX1 MODULE illustration */
+.ex1-module-wrap{width:86%;max-width:520px;position:relative;}
+.ex1-module-wrap::before{content:'';position:absolute;inset:-60px;z-index:-1;background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(192,32,12,.12) 0%,transparent 70%);}
+.ex1-body{width:100%;aspect-ratio:4.2/1;background:linear-gradient(128deg,#1a1a1a 0%,#0f0f0f 100%);position:relative;overflow:hidden;border:.5px solid rgba(255,255,255,.06);box-shadow:0 32px 80px rgba(0,0,0,.8),0 0 60px rgba(192,32,12,.08);transform:rotate(-4deg) translateY(-8px);}
+/* Blaze Blade geometry */
+.ex1-slash1{position:absolute;top:0;left:15%;bottom:0;width:48%;background:linear-gradient(135deg,rgba(192,32,12,.22),rgba(192,32,12,.05));clip-path:polygon(0 0,75% 0,55% 100%,0 100%);}
+.ex1-slash2{position:absolute;top:0;left:40%;bottom:0;width:30%;background:rgba(192,32,12,.08);clip-path:polygon(20% 0,100% 0,80% 100%,0 100%);}
+.ex1-red1{position:absolute;top:20%;left:18%;width:22%;height:60%;background:var(--red);clip-path:polygon(15% 0,100% 0,85% 100%,0 100%);opacity:.85;}
+.ex1-red2{position:absolute;top:25%;right:22%;width:14%;height:50%;background:var(--red);clip-path:polygon(20% 0,100% 0,80% 100%,0 100%);opacity:.7;}
+.ex1-brand{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+.ex1-brand-sub{font-family:var(--ff-m);font-size:6px;letter-spacing:.3em;color:rgba(255,255,255,.3);text-transform:uppercase;display:block;margin-bottom:3px;}
+.ex1-brand-name{font-family:var(--ff-d);font-size:22px;letter-spacing:.12em;color:rgba(255,255,255,.92);display:block;line-height:1;}
+.ex1-pins{position:absolute;bottom:0;left:6px;right:6px;height:10px;background:repeating-linear-gradient(90deg,#c8922a 0,#c8922a 2px,transparent 2px,transparent 6px);opacity:.35;}
+/* red glow edge */
+.ex1-glow-edge{position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 10%,var(--red) 35%,var(--red) 65%,transparent 90%);opacity:.6;}
+
+.h-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,var(--bg) 0%,var(--bg) 22%,rgba(10,10,10,.55) 46%,transparent 66%);}
+.h-left{position:relative;z-index:3;padding:0 0 0 6%;flex:1;max-width:580px;}
+.h-eye{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.26em;text-transform:uppercase;color:var(--label);margin-bottom:28px;opacity:0;transition:opacity .5s ease;}
+.h-eye.on{opacity:1;}
+.h-hl{line-height:.9;margin-bottom:28px;opacity:0;transition:opacity .4s ease;}
+.h-hl.on{opacity:1;}
+.hl-ln{display:block;font-family:var(--ff-d);font-size:clamp(58px,8.5vw,102px);letter-spacing:.01em;opacity:0;transform:translateY(12px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
+.hl-ln.in{opacity:1;transform:translateY(0);}
+.hl-wh{color:var(--white);}
+.hl-red{color:var(--red);}
+.h-sub{font-size:15px;font-weight:400;line-height:1.9;color:var(--mute);max-width:340px;margin-top:20px;opacity:0;transition:opacity .7s ease;}
+.h-sub.on{opacity:1;}
+.h-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:20px;opacity:0;transition:opacity .5s ease;}
+.h-tags.on{opacity:1;}
+.scr-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0;transition:opacity .5s;z-index:4;}
+.scr-hint.on{opacity:1;}
+.scr-ln{width:1.5px;height:28px;background:var(--border);position:relative;overflow:hidden;}
+.scr-ln::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--red);animation:scrdn 1.2s ease infinite 2.5s;}
+@keyframes scrdn{0%{top:-100%}100%{top:100%}}
+.scr-lb{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;color:var(--label);text-transform:uppercase;}
+
+/* HERO BG — diagonal slash pulse */
+.hero-slash-bg{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+.hero-slash-bg::before{
+  content:'';position:absolute;top:-20%;left:-10%;width:55%;height:140%;
+  background:linear-gradient(135deg,transparent 0%,rgba(192,32,12,.028) 40%,rgba(192,32,12,.055) 50%,rgba(192,32,12,.028) 60%,transparent 100%);
+  animation:heroSlashPulse 4s ease-in-out infinite;
+}
+.hero-slash-bg::after{
+  content:'';position:absolute;top:-20%;right:-5%;width:40%;height:140%;
+  background:linear-gradient(135deg,transparent 0%,rgba(192,32,12,.018) 45%,rgba(192,32,12,.038) 55%,transparent 100%);
+  animation:heroSlashPulse 4s ease-in-out infinite .8s;
+}
+@keyframes heroSlashPulse{
+  0%,100%{opacity:.5;transform:translateX(0);}
+  50%{opacity:1;transform:translateX(18px);}
+}
+
+/* MODULE glint sweep */
+@keyframes glint{
+  0%{left:-40%;opacity:0;}
+  8%{opacity:1;}
+  92%{opacity:.7;}
+  100%{left:140%;opacity:0;}
+}
+.ex1-body::after{
+  content:'';position:absolute;top:0;left:-40%;width:18%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),rgba(255,255,255,.13),rgba(255,255,255,.07),transparent);
+  animation:glint 4.5s ease-in-out infinite 1.8s;
+  pointer-events:none;
+}
+
+/* ── S01 DESIGN LANGUAGE + WHY ── */
+#s01{background:var(--surface);padding:100px 6%;}
+/* Slash divider between sections */
+#s01::before,#s03::before,#s05::before,#s07::before{
+  content:'';display:block;width:100%;height:1px;
+  background:linear-gradient(90deg,transparent 0%,var(--red) 20%,rgba(192,32,12,.3) 60%,transparent 100%);
+  position:absolute;top:0;left:0;
+}
+.s01-in{max-width:1080px;margin:0 auto;}
+.bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.bl-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--red);margin-bottom:16px;}
+.bl-title{font-family:var(--ff-d);font-size:clamp(44px,6vw,72px);letter-spacing:.02em;color:var(--white);line-height:1;margin-bottom:20px;}
+.bl-body{font-size:16px;font-weight:400;line-height:1.9;color:var(--mute);margin-bottom:24px;}
+.bl-quote{font-size:12px;font-weight:400;letter-spacing:.04em;color:var(--red);padding:14px 0;border-top:.5px solid var(--border);border-bottom:.5px solid var(--border);font-style:italic;}
+.bl-img{width:100%;aspect-ratio:4/3;border:.5px solid var(--border);}
+.why-wrap{margin-top:80px;padding-top:72px;border-top:.5px solid var(--line);}
+.why-title{font-family:var(--ff-d);font-size:clamp(40px,5.5vw,64px);letter-spacing:.02em;color:var(--white);margin-bottom:12px;}
+.why-sub{font-size:15px;font-weight:400;color:var(--mute);margin-bottom:48px;}
+.why-tbl{width:100%;border-collapse:collapse;}
+.why-tbl tr{border-bottom:.5px solid var(--line);}
+.why-tbl td{padding:18px 0;vertical-align:top;}
+.why-tbl .wl{font-family:var(--ff-m);font-size:11px;font-weight:300;letter-spacing:.1em;color:var(--label);text-transform:uppercase;width:28%;}
+.why-tbl .wv{font-family:var(--ff-d);font-size:clamp(22px,3vw,36px);letter-spacing:.02em;color:var(--white);width:22%;}
+.why-tbl .wv.accent{color:var(--red);}
+.why-tbl .wd{font-size:14px;font-weight:400;color:var(--mute);padding-left:24px;line-height:1.7;}
+.why-fn{font-family:var(--ff-m);font-size:9px;color:var(--label);margin-top:20px;letter-spacing:.06em;}
+.why-close{font-size:16px;font-weight:400;color:var(--mute);margin-top:32px;font-style:italic;}
+
+/* ── S02 HARDER ── */
+#s02{background:var(--bg);}
+
+/* ── S03 FIERCER ── */
+#s03{background:var(--surface);}
+.fiercer-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;padding:100px 6% 80px;align-items:center;max-width:1200px;margin:0 auto;}
+.fiercer-imgs{display:grid;grid-template-rows:1fr auto;gap:12px;height:480px;}
+.fiercer-img-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fiercer-badges{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;}
+/* voltage arrow viz */
+.volt-viz{margin:28px 0 20px;display:flex;align-items:center;gap:0;}
+.volt-bar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;}
+.volt-bar{width:70%;height:2px;background:var(--border);position:relative;transition:background 1s ease;}
+.volt-bar.prev{background:var(--label);}
+.volt-bar.ex1{background:var(--surface2);}
+.volt-bar.ex1.lit{background:var(--red);}
+.volt-val{font-family:var(--ff-d);font-size:clamp(22px,3vw,36px);letter-spacing:.02em;transition:color .8s ease;}
+.volt-val.prev{color:var(--label);}
+.volt-val.ex1{color:var(--surface2);}
+.volt-val.ex1.lit{color:var(--red);}
+.volt-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--label);text-transform:uppercase;}
+.volt-arrow{font-size:22px;color:var(--red);align-self:center;padding:0 16px;flex-shrink:0;opacity:.5;}
+
+/* ── S04 FASTER ── */
+#s04{background:var(--bg);}
+.pipe-viz{display:flex;align-items:flex-end;gap:16px;margin:36px 0 28px;height:200px;}
+.pipe-item{display:flex;flex-direction:column;align-items:flex-start;gap:8px;flex:1;height:100%;justify-content:flex-end;}
+.pipe-bar{width:100%;background:var(--surface2);position:relative;}
+.pipe-bar::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:var(--label);transform-origin:bottom;transform:scaleY(0);transition:transform 1.2s cubic-bezier(.16,1,.3,1);}
+.pipe-bar.on::after{transform:scaleY(1);}
+.pb-ddr3{height:30%;}.pb-ddr4{height:55%;}
+.pb-ex1{height:100%;}.pb-ex1::after{background:var(--red);}
+.pipe-val{font-family:var(--ff-d);font-size:clamp(16px,2.2vw,26px);letter-spacing:.02em;color:var(--white);}
+.pipe-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--label);text-transform:uppercase;line-height:1.5;}
+.game-loader{margin-top:28px;background:var(--surface);border:.5px solid var(--border);padding:20px 22px;}
+.gl-title{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin-bottom:16px;}
+.gl-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.gl-row:last-of-type{margin-bottom:0;}
+.gl-lbl{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.1em;color:var(--label);width:48px;flex-shrink:0;text-transform:uppercase;}
+.gl-bar{flex:1;height:5px;background:var(--surface2);border-radius:2px;overflow:hidden;position:relative;}
+.gl-fill{height:100%;border-radius:2px;position:absolute;left:0;top:0;width:0;}
+.gl-ddr4{background:var(--label);}
+.gl-ex1{background:var(--red);}
+.gl-time{font-family:var(--ff-d);font-size:12px;font-weight:700;letter-spacing:.02em;width:52px;text-align:right;flex-shrink:0;}
+.gl-cap{font-family:var(--ff-m);font-size:9px;color:var(--label);margin-top:12px;letter-spacing:.06em;}
+.ctx-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px;}
+.ctx-card{border:.5px solid var(--border);padding:20px 18px;background:rgba(255,255,255,.02);}
+.ctx-card .ci{font-size:20px;margin-bottom:10px;}
+.ctx-card .ct{font-size:12px;font-weight:500;letter-spacing:.04em;margin-bottom:6px;color:var(--white);}
+.ctx-card .cb{font-size:13px;font-weight:400;color:var(--mute);line-height:1.7;}
+
+/* ── S05 STRONGER ── */
+#s05{background:var(--surface);}
+.radar-wrap{position:relative;display:inline-block;}
+.radar-wrap::before{
+  content:'';position:absolute;inset:-1px;
+  border:.5px solid rgba(192,32,12,.2);
+  pointer-events:none;
+}
+.radar-wrap::after{
+  content:'';position:absolute;inset:-20px;z-index:-1;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(192,32,12,.07) 0%,transparent 70%);
+}
+
+/* ── S06 PACKAGING ── */
+#s06{background:var(--bg);padding:100px 6%;}
+.pkg-in{max-width:1100px;margin:0 auto;}
+.pkg-sec-lbl{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:10px;}
+.pkg-layout{display:grid;grid-template-columns:280px 1fr;gap:60px;align-items:start;}
+/* EX1 box card */
+.pkg-card{width:240px;background:var(--surface);border:.5px solid var(--border);border-radius:4px;padding:0 0 14px;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(192,32,12,.06);}
+.pkg-hang{display:flex;justify-content:center;padding:12px 0 8px;background:#0f0f0f;border-bottom:.5px solid var(--border);}
+.pkg-hang-hole{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg);}
+/* slash texture bg */
+.pkg-slash-bg{position:absolute;top:44px;left:0;right:0;bottom:0;z-index:0;opacity:.06;
+  background-image:repeating-linear-gradient(135deg,rgba(192,32,12,.8) 0,rgba(192,32,12,.8) 1px,transparent 0,transparent 50%);background-size:18px 18px;}
+/* red accent bar */
+.pkg-red-bar{position:relative;z-index:1;height:5px;background:var(--red);display:flex;align-items:center;padding:0 10px;overflow:hidden;}
+.pkg-red-bar::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0,transparent 8px,rgba(255,255,255,.15) 8px,rgba(255,255,255,.15) 12px);}
+.pkg-content{position:relative;z-index:2;padding:14px 16px 8px;}
+.pkg-card-brand{font-family:var(--ff-b);font-size:10px;font-weight:300;letter-spacing:.2em;color:var(--mute);text-transform:uppercase;margin-bottom:2px;}
+.pkg-card-model{font-family:var(--ff-d);font-weight:700;font-size:38px;letter-spacing:-.01em;color:var(--white);line-height:1;margin-bottom:2px;font-style:italic;}
+.pkg-card-spec{font-family:var(--ff-b);font-size:9px;font-weight:300;color:var(--label);letter-spacing:.04em;margin-bottom:10px;}
+.pkg-cap-row{display:flex;align-items:center;gap:16px;padding:8px 0;border-top:.5px solid var(--line);}
+.pkg-cap{font-family:var(--ff-d);font-weight:700;font-size:28px;color:var(--white);line-height:1;}
+.pkg-speed-info{font-family:var(--ff-b);font-size:9px;font-weight:300;letter-spacing:.06em;color:var(--label);line-height:1.5;text-transform:uppercase;}
+.pkg-speed-info strong{font-family:var(--ff-d);font-size:20px;font-weight:700;color:var(--white);display:block;}
+/* EX1 module in card */
+.pkg-chip{position:relative;z-index:2;margin:0 12px 10px;height:48px;background:linear-gradient(135deg,#1a1a1a,#0f0f0f);border:.5px solid rgba(255,255,255,.06);display:flex;align-items:center;overflow:hidden;}
+.pkg-chip-red1{position:absolute;top:0;left:15%;bottom:0;width:40%;background:rgba(192,32,12,.5);clip-path:polygon(0 0,80% 0,60% 100%,0 100%);}
+.pkg-chip-red2{position:absolute;top:15%;right:18%;width:18%;height:70%;background:var(--red);clip-path:polygon(20% 0,100% 0,80% 100%,0 100%);opacity:.8;}
+.pkg-chip-glow{position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 10%,var(--red) 35%,var(--red) 65%,transparent 90%);opacity:.5;}
+.pkg-chip-body{position:absolute;right:10px;top:50%;transform:translateY(-50%);text-align:right;}
+.pkg-chip-label{font-family:var(--ff-d);font-size:13px;font-weight:700;color:var(--white);display:block;letter-spacing:.06em;}
+.pkg-chip-sub{font-family:var(--ff-b);font-size:7px;font-weight:300;color:var(--label);letter-spacing:.06em;}
+.pkg-chip-pins{position:absolute;bottom:0;left:3px;right:3px;height:5px;background:repeating-linear-gradient(90deg,#c8922a 0,#c8922a 1.5px,transparent 1.5px,transparent 4px);opacity:.35;}
+.pkg-certs{position:relative;z-index:2;display:flex;justify-content:center;gap:5px;padding:8px 12px 0;border-top:.5px solid var(--line);margin:0 12px;}
+.pkg-cert{font-family:var(--ff-m);font-size:7px;font-weight:300;letter-spacing:.08em;color:var(--label);border:.5px solid var(--border);padding:2px 5px;}
+/* feature list */
+.pkg-features{display:flex;flex-direction:column;}
+.pkg-feat-title{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:20px;}
+.pkg-feat-list{display:flex;flex-direction:column;gap:0;}
+.pkg-feat-item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:.5px solid var(--line);}
+.pkg-feat-item:last-child{border-bottom:none;}
+.pkg-feat-icon{font-size:16px;flex-shrink:0;padding-top:1px;}
+.pkg-feat-name{font-family:var(--ff-b);font-size:13px;font-weight:500;color:var(--white);margin-bottom:3px;}
+.pkg-feat-desc{font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.7;}
+
+/* ── S07 SPECS ── */
+#s07{background:var(--surface);padding:100px 6% 80px;}
+.spec-in{max-width:900px;margin:0 auto;}
+.spec-title{font-family:var(--ff-d);font-size:clamp(40px,5vw,60px);letter-spacing:.02em;color:var(--white);margin-bottom:12px;}
+.spec-intro{font-size:14px;font-weight:400;color:var(--mute);margin-bottom:48px;max-width:520px;line-height:1.9;}
+.spec-tbl{width:100%;border-collapse:collapse;}
+.spec-tbl tr{border-bottom:.5px solid var(--line);}
+.spec-tbl td{padding:16px 0;font-size:14px;vertical-align:top;font-weight:400;}
+.spec-tbl td:first-child{color:var(--label);font-weight:300;width:40%;font-family:var(--ff-m);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border-left:1.5px solid transparent;}
+.spec-tbl tr:hover td:first-child{border-left-color:var(--red);}
+.spec-tbl td:last-child{color:var(--white);font-weight:400;}
+.cfg-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin:52px 0 18px;}
+.cfg-tbl{width:100%;border-collapse:collapse;}
+.cfg-tbl th{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:var(--label);text-align:left;padding:0 0 12px;border-bottom:.5px solid var(--line);}
+.cfg-tbl td{font-size:12px;font-weight:300;color:var(--white);padding:12px 0;border-bottom:.5px solid var(--line);font-family:var(--ff-m);}
+.spec-disc{font-family:var(--ff-m);font-size:9px;color:var(--label);line-height:1.6;margin-top:14px;}
+.spec-ctas{display:flex;gap:12px;margin-top:48px;flex-wrap:wrap;}
+.spec-foot{margin-top:56px;padding-top:24px;border-top:.5px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;}
+
+/* FOOTER */
+.site-foot{background:#000;padding:80px 6% 60px;text-align:center;border-top:.5px solid var(--border);}
+.site-foot-hl{font-family:var(--ff-d);font-size:clamp(28px,4vw,48px);letter-spacing:.06em;color:rgba(255,255,255,.9);display:flex;flex-wrap:wrap;justify-content:center;gap:0 24px;}
+.site-foot-hl span:nth-child(2){color:var(--red);}
+.site-foot-tagline{margin-top:48px;padding-top:40px;border-top:.5px solid rgba(192,32,12,.2);}
+.site-foot-t1{font-family:var(--ff-d);font-size:clamp(32px,4.5vw,56px);letter-spacing:.08em;color:rgba(255,255,255,.55);display:block;line-height:1;}
+.site-foot-t2{font-family:var(--ff-d);font-size:clamp(32px,4.5vw,56px);letter-spacing:.08em;color:var(--red);display:block;line-height:1;margin-top:4px;}
+.site-foot-sub{font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;color:rgba(255,255,255,.18);margin-top:28px;text-transform:uppercase;}
+
+@media(max-width:768px){
+  .sec-wrap,.bl-grid,.fiercer-grid,.pkg-layout{grid-template-columns:1fr;gap:48px;}
+  .sec-wrap.rev{direction:ltr;}
+  .h-right{opacity:.12!important;transform:none!important;width:100%;}
+  .h-fade{background:rgba(10,10,10,.8);}
+  .ctx-cards{grid-template-columns:1fr;}
+}
+@media(pointer:coarse){
+  body{cursor:auto;}
+  #cur,#cur-ring{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div id="cur"></div><div id="cur-ring"></div><div id="spot"></div>
+
+<nav id="nav">
+  <div class="nav-brand">Simorchip</div>
+  <div class="nav-pills" id="navPills">
+    <div class="nav-pill on" onclick="goTo('s00')">Hero</div>
+    <div class="nav-pill" onclick="goTo('s02')">Harder</div>
+    <div class="nav-pill" onclick="goTo('s03')">Fiercer</div>
+    <div class="nav-pill" onclick="goTo('s04')">Faster</div>
+    <div class="nav-pill" onclick="goTo('s05')">Stronger</div>
+    <div class="nav-pill" onclick="goTo('s06')">Packaging</div>
+    <div class="nav-pill" onclick="goTo('s07')">Specs</div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="s00" class="full">
+  <div class="hero-slash-bg"></div>
+  <div class="h-right" id="hRight">
+    <div class="ex1-module-wrap">
+      <div class="ex1-body">
+        <div class="ex1-slash1"></div>
+        <div class="ex1-slash2"></div>
+        <div class="ex1-red1"></div>
+        <div class="ex1-red2"></div>
+        <div class="ex1-brand">
+          <span class="ex1-brand-sub">Simorchip</span>
+          <span class="ex1-brand-name">EX1</span>
+        </div>
+        <div class="ex1-pins"></div>
+        <div class="ex1-glow-edge"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="h-fade"></div>
+
+  <div class="h-left">
+    <div class="h-eye" id="hEye">Simorchip DDR5 Professional Series EX1</div>
+    <div class="h-hl" id="hHL">
+      <span class="hl-ln hl-wh" id="hl0">It doesn't</span>
+      <span class="hl-ln hl-wh" id="hl1">compete.</span>
+      <span class="hl-ln hl-red" id="hl2">It dominates.</span>
+    </div>
+    <div class="red-line" id="hLine" style="margin-top:24px;"></div>
+    <div class="h-sub" id="hSub">The EX1 was built to dominate — not decorate.<br>Black armor. Red geometry.<br> A heatspreader that looks exactly as fast as it is.</div>
+    <div class="h-tags" id="hTags">
+      <span class="tag">DDR5</span>
+      <span class="tag">6000MT/s</span>
+      <span class="tag">XMP 3.0</span>
+      <span class="tag">AMD EXPO</span>
+      <span class="tag">EX1</span>
+      <span class="tag">SIMORCHIP</span>
+      <span class="tag">16GB</span>
+      <span class="tag">32GB</span>
+    </div>
+  </div>
+
+  <div class="scr-hint" id="scrHint">
+    <div class="scr-ln"></div>
+    <div class="scr-lb">Scroll</div>
+  </div>
+</section>
+
+<!-- ═══ S01 BLAZE BLADE + WHY DDR5 ═══ -->
+<section id="s01">
+  <div class="s01-in">
+    <div class="bl-grid fi">
+      <div>
+        <div class="bl-eye">Design Language</div>
+        <div class="bl-title">Blaze<br>Blade</div>
+        <div class="bl-body">Diagonal slashes cut through matte black alloy. Red geometric panels push through the surface like heat lines under pressure. The EX1 doesn't sit inside your build — it takes over.</div>
+        <div class="bl-quote">Every cut has a reason.<br>This is not decoration. This is aggression.</div>
+      </div>
+      <div class="bl-img img-ph fi fi-d1">
+        <span>[ BLAZE BLADE CLOSE-UP ]<br>Heatspreader geometry detail<br>Red accent panels · Matte black surface<br>D5_Heatsink_EX1_Front_view.png ]</span>
+      </div>
+    </div>
+    <div class="why-wrap fi">
+      <div class="why-title fi">Why DDR5?</div>
+      <div class="why-sub fi fi-d1">Why upgrade to DDR5 now?</div>
+      <table class="why-tbl fi fi-d2">
+        <tr><td class="wl">Bandwidth</td><td class="wv accent">+275%</td><td class="wd">48 GB/s — multiple times the previous generation</td></tr>
+        <tr><td class="wl">Frequency</td><td class="wv">6000<span style="font-size:.5em;letter-spacing:.06em;"> MT/s</span></td><td class="wd">DDR5 base spec starts at 4800MT/s — EX1 runs 25% above baseline</td></tr>
+        <tr><td class="wl">Bank Channels</td><td class="wv accent">×4</td><td class="wd">Massive parallel processing gains for multitasking and compute</td></tr>
+        <tr><td class="wl">Power Saving</td><td class="wv">7.4<span style="font-size:.5em;">%</span></td><td class="wd">1.35V vs previous gen 1.5V</td></tr>
+        <tr><td class="wl">On-die ECC</td><td class="wv" style="font-size:clamp(15px,2vw,20px);letter-spacing:.04em;padding-top:8px;">Built-in</td><td class="wd">Previous generation lacks this feature</td></tr>
+        <tr><td class="wl">PMIC Power</td><td class="wv" style="font-size:clamp(15px,2vw,20px);letter-spacing:.04em;padding-top:8px;">Built-in</td><td class="wd">Memory manages its own power — no longer dependent on motherboard supply</td></tr>
+      </table>
+      <div class="why-fn fi fi-d3">* Data benchmarked against previous generation products</div>
+      <div class="why-close fi fi-d3"><em>Not because your old memory is bad. Because the EX1 runs where it couldn't even follow.</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S02 HARDER ═══ -->
+<section id="s02">
+  <div class="sec-wrap">
+    <div class="fi">
+      <div class="sh-num">01 — Harder</div>
+      <div class="sh-title">Harder</div>
+      <div class="sh-sub">288pin · 3µm Hard Gold · Built for Battle</div>
+      <div class="red-line on"></div>
+      <ul class="bullet-list">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+          <div><strong>3µm Hard Gold Plating · 288-pin Connector</strong> — Industry-leading plating thickness. 10,000+ insertion cycles without wear. Anti-oxidation, anti-corrosion, shorter signal path, more stable contact.
+            <span class="bn">▸ Visual: 288Pin + DDR4/DDR5 keying notch comparison + cross-section (3µm gold layer + nickel base)</span>
+            <span class="bn">▸ Note: Standard consumer grade 0.5–1µm; 3µm is industrial-grade standard</span>
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div>Built-in <strong>On-die ECC Real-time Error Correction</strong> — your previous-gen memory didn't have this. Data integrity enforced at the chip level, before errors can ever reach your system.
+            <span class="bn">▸ Visual: 8bit+1bit (red) → 128bit+8bit correction flow diagram</span>
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div>Premium-grade memory chips — <strong>7×24 continuous high-load stable operation.</strong> Render farms. Gaming marathons. All-night compiles. The EX1 doesn't ask for a break.
+            <span class="bn">▸ Visual: 7×24 + ∞ infinity symbol</span>
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg></div>
+          <div><strong>Simorchip Lifetime Warranty</strong> — Our confidence in the EX1 is backed by four words.
+            <span class="bn">▸ Visual: Lifetime warranty badge — red border, Blaze Blade language</span>
+          </div>
+        </li>
+      </ul>
+      <div style="display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;">
+        <div class="stat-badge"><div class="num">288</div><div class="lbl">High-Density Pins</div></div>
+        <div class="stat-badge"><div class="num">7×24</div><div class="lbl">Day / Hours</div></div>
+        <div class="stat-badge"><div class="num" style="color:var(--red);">∞</div><div class="lbl">Lifetime Warranty</div></div>
+        <div class="stat-badge"><div class="num" style="font-size:clamp(19px,3vw,38px);">3µm</div><div class="lbl">Industrial-Grade Standard</div></div>
+      </div>
+    </div>
+    <div class="fi fi-d2">
+      <div class="img-ph" style="width:100%;height:100%;min-height:500px;">
+        <span>[ HARDER IMAGE ]<br><br>① 3µm connector cross-section close-up<br>② DDR4 vs DDR5 keying notch comparison<br>③ ECC error correction flow diagram<br>④ Lifetime warranty badge</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S03 FIERCER ═══ -->
+<section id="s03">
+  <div class="fiercer-grid">
+    <div class="fi fi-d1">
+      <div class="fiercer-imgs">
+        <div class="img-ph" style="width:100%;height:100%;">
+          <span>[ FIERCER — MAIN ]<br>Heatspreader full shot<br>D5_Heatsink_EX1_Front_view.png<br>Red geometry close-up callout]</span>
+        </div>
+        <div class="fiercer-img-row">
+          <div class="img-ph" style="height:130px;">
+            <span>[ Thermal imaging comparison ]<br>EX1 cool blue vs competitor red hotspot</span>
+          </div>
+          <div class="img-ph" style="height:130px;">
+            <span>[ Chassis 3-way comparison ]<br>EX1 center dominant</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fi">
+      <div class="sh-num">02 — Fiercer</div>
+      <div class="sh-title">Fiercer</div>
+      <div class="sh-sub">Blaze Blade Armor · Zero Throttle</div>
+      <div class="red-line on"></div>
+      <ul class="bullet-list">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+          <div><strong>Matte Black Aluminum Alloy · Blaze Blade Geometry</strong> — Precision-machined angular cuts channel airflow while suppressing hotspots. Larger surface area. More aggressive heat path.
+            <span class="bn">▸ Visual: heatspreader cross-section + geometry line callout vs competitor flat spreader</span>
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div>Sustained high-load operation — <strong>no thermal throttle, no frequency drop.</strong> The EX1 locks in at rated speed and stays there. Hour one. Hour twenty-four.
+            <span class="bn">▸ Visual: thermal imaging — EX1 uniform cool blue | competitor red hotspot</span>
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div><strong>Red Geometric Accent Panels</strong> — cut through matte black like fire through armor. The centerpiece of any build. The thing everyone asks about.
+            <span class="bn">▸ Visual: 3-chassis comparison — EX1 dominant center, competitors dim on either side</span>
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div><strong>1.35V Ultra-Low Voltage</strong> — 7.4% more power-efficient than the previous generation. Less heat generated at source. The EX1 runs harder while running leaner.
+            <span class="bn">▸ Visual: voltage comparison arrow 1.5V → 1.35V ▸ Note: vs previous gen DDR4 1.5V</span>
+          </div>
+        </li>
+      </ul>
+      <!-- voltage viz -->
+      <div class="volt-viz">
+        <div class="volt-bar-wrap">
+          <div class="volt-val prev">1.5V</div>
+          <div class="volt-bar prev" style="width:60%;"></div>
+          <div class="volt-lbl">Prev Gen</div>
+        </div>
+        <div class="volt-arrow">→</div>
+        <div class="volt-bar-wrap">
+          <div class="volt-val ex1">1.35V</div>
+          <div class="volt-bar ex1" style="width:60%;"></div>
+          <div class="volt-lbl">EX1</div>
+        </div>
+      </div>
+      <div class="fiercer-badges">
+        <div class="stat-badge"><div class="num" style="color:var(--red);">7.4%</div><div class="lbl">Power Saving vs Prev Gen</div></div>
+        <div class="stat-badge"><div class="num" style="font-size:clamp(19px,3vw,38px);">1.35V</div><div class="lbl">Low-Voltage Design</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S04 FASTER ═══ -->
+<section id="s04">
+  <div class="sec-wrap">
+    <div class="fi">
+      <div class="sh-num">03 — Faster</div>
+      <div class="sh-title">Faster</div>
+      <div class="sh-sub">6000MT/s · 275% Faster Than Previous Gen</div>
+      <div class="red-line on"></div>
+      <div class="pipe-viz" id="pipeViz">
+        <div class="pipe-item">
+          <div class="pipe-val">12.8</div>
+          <div class="pipe-bar pb-ddr3" id="pb0"></div>
+          <div class="pipe-lbl">Prev Gen<br>GB/s</div>
+        </div>
+        <div class="pipe-item">
+          <div class="pipe-val">25.6</div>
+          <div class="pipe-bar pb-ddr4" id="pb1"></div>
+          <div class="pipe-lbl">DDR4<br>GB/s</div>
+        </div>
+        <div class="pipe-item">
+          <div class="pipe-val" style="color:var(--red);">48</div>
+          <div class="pipe-bar pb-ex1" id="pb2"></div>
+          <div class="pipe-lbl" style="color:var(--red);">EX1<br>GB/s</div>
+        </div>
+      </div>
+      <ul class="bullet-list">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+          <div>25% faster than DDR5 base spec, <strong>up to 275% faster than previous gen.</strong> Every transfer. Every frame. Every compile. The gap is not close.
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div>Bandwidth 48 GB/s, <strong>+275% improvement</strong> — 4K editing without a buffer frame. AAA game loads that feel instant. 20 open tabs, none of them waiting.
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg></div>
+          <div>Processing channels <strong>×4 (8 → 32)</strong> — four times the parallel bandwidth. The EX1 doesn't queue your tasks. It runs them all at once.
+          </div>
+        </li>
+      </ul>
+      <div class="ctx-cards fi fi-d3">
+        <div class="ctx-card"><div class="ci">🎬</div><div class="ct">4K Editing</div><div class="cb">Timeline renders without a single buffer frame</div></div>
+        <div class="ctx-card"><div class="ci">🎮</div><div class="ct">AAA Gaming</div><div class="cb">Load times don't exist anymore</div></div>
+        <div class="ctx-card"><div class="ci">⚡</div><div class="ct">Multitasking</div><div class="cb">20 tabs open — all running, none waiting</div></div>
+      </div>
+    </div>
+    <div class="fi fi-d2" style="display:flex;flex-direction:column;gap:12px;">
+      <div class="img-ph" style="width:100%;height:220px;"><span>[ 6000MT/s SPEED VISUAL ]</span></div>
+      <div class="game-loader" id="gameLoader">
+        <div class="gl-title">Game Loading Comparison</div>
+        <div class="gl-row">
+          <span class="gl-lbl">DDR4</span>
+          <div class="gl-bar"><div class="gl-fill gl-ddr4" id="barDDR4"></div></div>
+          <span class="gl-time" id="timeDDR4" style="color:var(--label);">0%</span>
+        </div>
+        <div class="gl-row">
+          <span class="gl-lbl" style="color:var(--red);">EX1</span>
+          <div class="gl-bar"><div class="gl-fill gl-ex1" id="barEX1"></div></div>
+          <span class="gl-time" id="timeEX1" style="color:var(--red);">0%</span>
+        </div>
+        <div class="gl-cap">* Simulated comparison — EX1 finishes before DDR4 reaches halfway</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S05 STRONGER ═══ -->
+<section id="s05">
+  <div class="sec-wrap rev">
+    <div class="fi">
+      <div class="sh-num">04 — Stronger</div>
+      <div class="sh-title">Stronger</div>
+      <div class="sh-sub">PMIC Stable Power · One-Click OC with XMP / EXPO</div>
+      <div class="red-line on"></div>
+      <ul class="bullet-list">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
+          <div>Dual chip architecture — more memory die for <strong>more stable and error-free data computation.</strong> More density. More headroom. More resilience under pressure.
+            <span class="bn">▸ Visual: 2× dual-chip density diagram</span>
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div>Built-in <strong>PMIC</strong> — for the first time, your memory manages its own power supply. Stable output at every load level. No dependency on motherboard voltage rails.
+            <span class="bn">▸ Visual: PMIC chip position callout</span>
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M16 12h6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24"/></svg></div>
+          <div>Supports <strong>Intel XMP 3.0 / AMD EXPO</strong> — one BIOS switch. No spreadsheets. No manual timing tables. One click.
+            <span class="bn">▸ Visual: Intel + AMD dual logos</span>
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div><strong>No weak points. No ceiling.</strong> — Speed · Thermal · Stability · Compatibility · Power · Durability. Every axis at maximum. The EX1 doesn't have a soft spot.
+            <span class="bn">▸ Visual: hexagonal radar chart — EX1 full, DDR4 small & dim · Axes: Speed / Thermal / Stability / Compat. / Power / Durability</span>
+          </div>
+        </li>
+      </ul>
+      <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+        <div class="stat-badge"><div class="num" style="color:var(--red);font-size:clamp(20px,3vw,40px);">XMP</div><div class="lbl">3.0 / AMD EXPO</div></div>
+        <div class="stat-badge"><div class="num" style="font-size:clamp(20px,3vw,40px);">PMIC</div><div class="lbl">Built-in Power Mgmt</div></div>
+      </div>
+    </div>
+    <div class="fi fi-d2" style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+      <div class="radar-wrap">
+        <canvas id="radarCanvas" width="360" height="360"></canvas>
+      </div>
+      <div class="img-ph" style="width:100%;height:120px;"><span>[ PMIC callout + Intel AMD logos ]</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S06 PACKAGING ═══ -->
+<section id="s06">
+  <div class="pkg-in">
+    <div class="pkg-sec-lbl fi">Packaging Design</div>
+    <div class="pkg-layout">
+      <div class="fi">
+        <div class="pkg-card">
+          <div class="pkg-hang"><div class="pkg-hang-hole"></div></div>
+          <div class="pkg-slash-bg"></div>
+          <div class="pkg-red-bar"></div>
+          <div class="pkg-content">
+            <div class="pkg-card-brand">Simorchip</div>
+            <div class="pkg-card-model">EX1</div>
+            <div class="pkg-card-spec">Professional Series · DDR5</div>
+            <div class="pkg-cap-row">
+              <span class="pkg-cap">16<span style="font-size:.5em;">GB</span></span>
+              <span class="pkg-speed-info">DDR5<br><strong>6000</strong> <span style="font-size:.7em;">MT/s</span></span>
+            </div>
+          </div>
+          <div class="pkg-chip">
+            <div class="pkg-chip-red1"></div>
+            <div class="pkg-chip-red2"></div>
+            <div class="pkg-chip-glow"></div>
+            <div class="pkg-chip-body">
+              <span class="pkg-chip-label">EX1</span>
+              <span class="pkg-chip-sub">DDR5 · 16GB</span>
+            </div>
+            <div class="pkg-chip-pins"></div>
+          </div>
+          <div class="pkg-certs">
+            <span class="pkg-cert">CE</span>
+            <span class="pkg-cert">RoHS</span>
+            <span class="pkg-cert">FCC</span>
+            <span class="pkg-cert">REACH</span>
+          </div>
+        </div>
+      </div>
+      <div class="pkg-features fi fi-d2">
+        <div class="pkg-feat-title">Packaging Design</div>
+        <div class="pkg-feat-list">
+          <div class="pkg-feat-item">
+            <div class="pkg-feat-icon">📦</div>
+            <div>
+              <div class="pkg-feat-name">Product Information Window</div>
+              <div class="pkg-feat-desc">The module sticker is visible on the packaging. Model number, serial number, certifications — everything confirmed before the box is opened.</div>
+            </div>
+          </div>
+          <div class="pkg-feat-item">
+            <div class="pkg-feat-icon">🔥</div>
+            <div>
+              <div class="pkg-feat-name">Blaze Blade Design Language</div>
+              <div class="pkg-feat-desc">Black and red geometric identity on both module and box. The same visual language from the shelf to the slot.</div>
+            </div>
+          </div>
+          <div class="pkg-feat-item">
+            <div class="pkg-feat-icon">🔢</div>
+            <div>
+              <div class="pkg-feat-name">Kit &amp; Single Options</div>
+              <div class="pkg-feat-desc">16GB single or 32GB dual-channel kit (16GB×2). Matched pair. Optimal dual-channel performance. Ready to run.</div>
+            </div>
+          </div>
+          <div class="pkg-feat-item">
+            <div class="pkg-feat-icon">✅</div>
+            <div>
+              <div class="pkg-feat-name">Global Certifications</div>
+              <div class="pkg-feat-desc">RoHS · REACH · CE · FCC — certified for EU, US, and Asia-Pacific markets.</div>
+            </div>
+          </div>
+          <div class="pkg-feat-item">
+            <div class="pkg-feat-icon">🛡️</div>
+            <div>
+              <div class="pkg-feat-name">Lifetime Warranty Included</div>
+              <div class="pkg-feat-desc">Every EX1 ships with Simorchip's Limited Lifetime Warranty. Our confidence in this product doesn't expire.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S07 SPECS ═══ -->
+<section id="s07">
+  <div class="spec-in">
+    <div class="spec-title fi">Specifications</div>
+    <div class="spec-intro fi fi-d1">Engineered for optimum speed, endurance, reliability, and multi-platform compatibility.</div>
+    <table class="spec-tbl fi fi-d2">
+      <tr><td>Speed</td><td>6000 MT/s</td></tr>
+      <tr><td>Capacity</td><td>16GB / 32GB</td></tr>
+      <tr><td>CAS Latency</td><td>CL32 / CL38</td></tr>
+      <tr><td>Voltage</td><td>1.35V</td></tr>
+      <tr><td>Pin Count</td><td>288 pin (3µm Hard Gold)</td></tr>
+      <tr><td>Module Type</td><td>DDR5 U-DIMM</td></tr>
+      <tr><td>Dimensions</td><td>133.35 × 31.75 × 8.5 mm</td></tr>
+      <tr><td>Operating Temp</td><td>0°C ~ 85°C (32°F ~ 176°F)</td></tr>
+      <tr><td>Platform</td><td>Intel XMP 3.0 / AMD EXPO</td></tr>
+      <tr><td>Certifications</td><td>RoHS / REACH / CE / FCC</td></tr>
+      <tr><td>Warranty</td><td>Limited Lifetime Warranty</td></tr>
+    </table>
+    <div class="spec-disc fi fi-d2">* All data secured from Simorchip's internal labs under specific testing conditions. Accurate data may vary depending on the operating environment.</div>
+    <div class="cfg-lbl fi">Product Configuration — DDR5-6000 U-DIMM</div>
+    <table class="cfg-tbl fi">
+      <thead><tr><th>Capacity</th><th>Component</th><th>Rank</th><th>Model Name</th></tr></thead>
+      <tbody>
+        <tr><td>16GB</td><td>(2Gx8)×8C</td><td>1Rx8</td><td>CR6000XEX1-16G (XMP)</td></tr>
+        <tr><td>32GB</td><td>(2Gx8)×16C</td><td>2Rx8</td><td>CR6000XEX1-32G (XMP)</td></tr>
+      </tbody>
+    </table>
+    <div class="spec-ctas fi">
+      <button class="btn btn-light">Download Spec Sheet</button>
+      <button class="btn btn-ghost">Explore More Products</button>
+    </div>
+    <div class="spec-foot fi">
+      <span class="tag" style="font-size:9px;">© 2025 Simorchip Technology</span>
+      <span class="tag" style="font-size:9px;">DDR5 Professional Series EX1</span>
+    </div>
+  </div>
+</section>
+
+<div class="site-foot">
+  <div class="site-foot-hl">
+    <span>Simorchip DDR5 EX1</span>
+    <span>Harder.</span>
+    <span style="color:rgba(255,255,255,.9);">Fiercer.</span>
+    <span style="color:rgba(255,255,255,.9);">Faster.</span>
+    <span style="color:rgba(255,255,255,.9);">Stronger.</span>
+  </div>
+  <div class="site-foot-tagline">
+    <span class="site-foot-t1">This is not decoration.</span>
+    <span class="site-foot-t2">This is aggression.</span>
+  </div>
+  <div class="site-foot-sub">© 2025 Simorchip Technology · DDR5 Professional Series EX1</div>
+</div>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring'),spot=document.getElementById('spot');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';spot.style.left=mx+'px';spot.style.top=my+'px';});
+(function lr(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(lr);})();
+document.querySelectorAll('button,.btn,.nav-pill').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';ring.style.width='50px';ring.style.height='50px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='9px';cur.style.height='9px';ring.style.width='40px';ring.style.height='40px';});
+});
+
+/* NAV — scroll state + active section */
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('scrolled',window.scrollY>60));
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+const secIds=['s00','s01','s02','s03','s04','s05','s06','s07'];
+const navPillEls=document.querySelectorAll('.nav-pill');
+const navSecObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){const idx=secIds.indexOf(e.target.id);navPillEls.forEach(p=>p.classList.remove('on'));if(navPillEls[idx])navPillEls[idx].classList.add('on');}});
+},{threshold:.4});
+secIds.forEach(id=>{const el=document.getElementById(id);if(el)navSecObs.observe(el);});
+
+/* SCROLL REVEAL */
+const fiObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.1});
+document.querySelectorAll('.fi').forEach(el=>fiObs.observe(el));
+
+/* RED LINES */
+document.querySelectorAll('.red-line').forEach(el=>{
+  new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});},{threshold:.5}).observe(el);
+});
+
+/* HERO */
+document.fonts.ready.then(()=>{
+  function cls(id,d=0){setTimeout(()=>document.getElementById(id)?.classList.add('on'),d);}
+  cls('hRight',0);cls('hEye',280);cls('hHL',480);
+  setTimeout(()=>['hl0','hl1','hl2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('in'),i*280)),520);
+  setTimeout(()=>document.getElementById('hLine')?.classList.add('on'),1200);
+  cls('hSub',1500);cls('hTags',1800);cls('scrHint',2200);
+});
+
+/* PIPE VIZ */
+(function(){
+  const pv=document.getElementById('pipeViz');if(!pv)return;
+  new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting)['pb0','pb1','pb2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('on'),i*200));
+  },{threshold:.4}).observe(pv);
+})();
+
+/* VOLT VIZ — number count + line light-up */
+(function(){
+  const viz=document.querySelector('.volt-viz');if(!viz)return;
+  const valEl=viz.querySelector('.volt-val.ex1');
+  const barEl=viz.querySelector('.volt-bar.ex1');
+  let triggered=false;
+  new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting&&!triggered){
+      triggered=true;
+      setTimeout(()=>{
+        barEl?.classList.add('lit');
+        valEl?.classList.add('lit');
+        /* count 1.50 → 1.35 over 900ms */
+        if(!valEl)return;
+        const start=performance.now(),dur=900,from=1.50,to=1.35;
+        function step(now){
+          const t=Math.min((now-start)/dur,1);
+          const ease=1-Math.pow(1-t,3);
+          const v=(from+(to-from)*ease).toFixed(2);
+          valEl.textContent=v+'V';
+          if(t<1)requestAnimationFrame(step);
+          else valEl.textContent='1.35V';
+        }
+        requestAnimationFrame(step);
+      },400);
+    }
+  },{threshold:.5}).observe(viz);
+})();
+
+/* GAME LOADER */
+(function(){
+  const loader=document.getElementById('gameLoader');if(!loader)return;
+  const bD=document.getElementById('barDDR4'),bE=document.getElementById('barEX1');
+  const tD=document.getElementById('timeDDR4'),tE=document.getElementById('timeEX1');
+  const CYCLE=6000,EX1_END=0.30,D4_END=0.90,HOLD=800;
+  function easeOut3(t){return 1-Math.pow(1-t,3);}
+  function easeIn2(t){return Math.pow(t,1.8);}
+  let t0=null,running=false;
+  function tick(now){
+    if(!t0)t0=now;
+    const phase=((now-t0)%(CYCLE+HOLD))/CYCLE;
+    const ex1p=phase<=EX1_END?easeOut3(phase/EX1_END):1;
+    let d4p;
+    if(phase<=D4_END){const t=phase/D4_END;d4p=t<0.35?easeIn2(t/0.35)*0.18:0.18+(t-0.35)/0.65*0.82;}
+    else d4p=1;
+    const ep=Math.min(Math.round(ex1p*100),100),dp=Math.min(Math.round(d4p*100),100);
+    bE.style.width=ep+'%';bD.style.width=dp+'%';
+    tE.textContent=ep===100?'✓ Done':ep+'%';
+    tD.textContent=dp===100?'✓ Done':dp+'%';
+    tE.style.color='var(--red)';
+    tD.style.color=dp===100?'var(--white)':'var(--label)';
+    requestAnimationFrame(tick);
+  }
+  new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting&&!running){running=true;requestAnimationFrame(tick);}
+  },{threshold:.4}).observe(loader);
+})();
+
+/* RADAR */
+(function(){
+  const cv=document.getElementById('radarCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height,cx=W/2,cy=H/2,R=130,sides=6;
+  const FONT_LABEL=`300 9.5px 'DM Mono',monospace`;
+  const FONT_LEGEND=`300 9px 'DM Mono',monospace`;
+  const labels=['Speed','Thermal','Stability','Compat.','Power','Durability'];
+  const ex1=[.97,.90,.95,.98,.94,.96],old=[.28,.24,.26,.30,.22,.36];
+  function hexPt(a,r){return[cx+r*Math.cos(a-Math.PI/2),cy+r*Math.sin(a-Math.PI/2)];}
+  let prog=0,started=false;
+  new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&!started){started=true;anim();}},{threshold:.4}).observe(cv);
+  function anim(){
+    const t=setInterval(()=>{
+      prog=Math.min(prog+.022,1);ctx.clearRect(0,0,W,H);
+      const e=1-Math.pow(1-prog,3);
+      /* grid */
+      for(let r=1;r<=5;r++){const fr=R*(r/5);ctx.beginPath();for(let i=0;i<sides;i++){const[x,y]=hexPt(i*Math.PI*2/sides,fr);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.closePath();ctx.strokeStyle=`rgba(192,32,12,${.04+r*.016})`;ctx.lineWidth=.5;ctx.stroke();}
+      for(let i=0;i<sides;i++){const[x,y]=hexPt(i*Math.PI*2/sides,R);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.strokeStyle='rgba(192,32,12,.07)';ctx.lineWidth=.5;ctx.stroke();}
+      /* old */
+      ctx.beginPath();for(let i=0;i<sides;i++){const v=old[i]*e;const[x,y]=hexPt(i*Math.PI*2/sides,R*v);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.closePath();ctx.fillStyle='rgba(80,80,80,.06)';ctx.fill();ctx.strokeStyle='rgba(120,120,120,.18)';ctx.lineWidth=.8;ctx.stroke();
+      /* ex1 */
+      ctx.beginPath();for(let i=0;i<sides;i++){const v=ex1[i]*e;const[x,y]=hexPt(i*Math.PI*2/sides,R*v);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.closePath();ctx.fillStyle='rgba(192,32,12,.14)';ctx.fill();ctx.strokeStyle=`rgba(192,32,12,${.75*e})`;ctx.lineWidth=1.5;ctx.stroke();
+      for(let i=0;i<sides;i++){const v=ex1[i]*e;const[x,y]=hexPt(i*Math.PI*2/sides,R*v);ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fillStyle=`rgba(192,32,12,${.9*e})`;ctx.fill();}
+      /* labels */
+      if(e>.5){const lp=(e-.5)/.5;ctx.font=FONT_LABEL;ctx.textAlign='center';ctx.fillStyle=`rgba(170,170,170,${lp*.9})`;for(let i=0;i<sides;i++){const[x,y]=hexPt(i*Math.PI*2/sides,R*1.22);ctx.fillText(labels[i],x,y+4);}}
+      /* legend */
+      if(e>.8){const lp=(e-.8)/.2;ctx.textAlign='left';ctx.font=FONT_LEGEND;ctx.fillStyle=`rgba(192,32,12,${lp*.8})`;ctx.fillRect(14,H-44,10,2);ctx.fillText('EX1',28,H-38);ctx.fillStyle=`rgba(120,120,120,${lp*.6})`;ctx.fillRect(14,H-28,10,2);ctx.fillText('Prev Gen',28,H-22);}
+      if(prog>=1)clearInterval(t);
+    },16);
+  }
+})();
+</script>
+</body>
+</html>

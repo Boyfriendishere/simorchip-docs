@@ -1,0 +1,757 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>EX1</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="35ed24e8-7d86-800c-bb4b-c5c67ee85b08" class="page sans"><header><h1 class="page-title" dir="auto">EX1</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-813c-a635-e2528f1b5bb4" class=""><mark class="highlight-yellow">*黃色字體：視覺建議(不一定要接受，你行Nissan)</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-817e-b83e-c2a230990e50" class=""><mark class="highlight-red">*紅色字體：中文解釋</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8191-b80e-e80b98a4ed08" class=""><mark class="highlight-blue">*Hashtag：For SEO</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8147-aee3-ea17a307975a" class="">
+</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81fb-bbf3-dc4f8f8fa132" class="">
+</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-811c-a6d0-fa3ffaf91969" class="">Simorchip DDR5 EX1</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8125-b282-e8a7e9eb0121" class=""><em><strong>Harder. Fiercer. Faster. Stronger.</strong></em><br/></p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-8003-b183-e26d682b2a35" class="">It doesn&#x27;t<br/>compete.<br/>It dominates.</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-811a-bd4d-ca9694ea35ba" class="">The EX1 was built to dominate — not decorate. Black armor. Red geometry. A heatspreader that looks exactly as fast as it is.</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-819f-a310-cc8b401eaa3b" class=""><mark class="highlight-blue"><code>#DDR5</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#6000MT/s</code></mark><mark class="highlight-blue">  </mark><mark class="highlight-blue"><code>#XMP 3.0</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#AMD EXPO</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#EX1</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#SIMORCHIP</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#16GB</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#32GB</code></mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-80e1-a2d0-e7c9eeb23d14" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="35ed24e8-7d86-8151-9aa6-d616d2f413b1" class=""><strong>Blaze Blade</strong> <mark class="highlight-red">烈焰之刃(中二)</mark></h2></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8131-85ba-cf714442302a" class="">Look at it.<br/>Diagonal slashes cut through matte black alloy. Red geometric panels push through the surface like heat lines under pressure. The EX1 doesn&#x27;t sit inside your build — it takes over.</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-80d6-9d2e-d1aac65f67ff" class=""><br/><mark class="highlight-red">斜切線條俐落貫穿消光黑合金表面，紅色幾何飾板猶如壓力下的熾熱脈絡，透殼綻放。EX1 拒絕平庸嵌入，它將全面接管你的視覺重心</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8018-a1d3-e8bdad8d9be9" class="">
+</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81dc-bfb3-edbdb11dd19a" class="">Every cut has a reason. This is not decoration. This is aggression.</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-80d8-8472-d4541358d6f7" class=""><mark class="highlight-red">每道切痕，皆出於必然。這不是裝飾，這是侵略</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-80cc-8762-c77c34e23be2" class=""><mark class="highlight-yellow">視覺：散熱片特寫，標示切割幾何線條（鋒刃線）紅色幾何塊做放大標示，武器設計語言中間 EX1 Logo 放大 + &quot;Blaze Blade&quot; 設計語言標籤</mark></p></div><div style="display:contents" dir="auto"><h2 id="35ed24e8-7d86-816d-904d-f396033b74d0" class="">Why DDR5</h2></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8108-accf-f6678f7d17af" class="">Why upgrade to DDR5 now?</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81d5-8b63-d75e449b9c5c" class=""><mark class="highlight-red">為什麼現在升級 DDR5？</mark></p></div><div style="display:contents" dir="ltr"><table id="35ed24e8-7d86-8199-b41c-e41cab66e617" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="35ed24e8-7d86-8187-b9d1-edf28acc6ee5"><td id="|lke" class="" style="width:132.66250610351562px">Bandwidth</td><td id="^AxM" class="" style="width:106.66250610351562px">+275%</td><td id="~VmG" class="" style="width:522.6625061035156px">48 GB/s — multiple times the previous generation</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ed24e8-7d86-81f5-abd8-f1fe7c5598d8"><td id="|lke" class="" style="width:132.66250610351562px">Frequency</td><td id="^AxM" class="" style="width:106.66250610351562px">6000MT/s</td><td id="~VmG" class="" style="width:522.6625061035156px">DDR5 base spec starts at 4800MT/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ed24e8-7d86-816c-a3d1-e8da8df3a3ba"><td id="|lke" class="" style="width:132.66250610351562px">Bank Channels</td><td id="^AxM" class="" style="width:106.66250610351562px">X4</td><td id="~VmG" class="" style="width:522.6625061035156px">Massive multitasking throughput gains</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ed24e8-7d86-8111-9a4b-d234c95a39fc"><td id="|lke" class="" style="width:132.66250610351562px">Power Saving</td><td id="^AxM" class="" style="width:106.66250610351562px">7.4%</td><td id="~VmG" class="" style="width:522.6625061035156px">1.35V vs previous gen 1.5V</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ed24e8-7d86-81e0-bc4c-e5715acd121a"><td id="|lke" class="" style="width:132.66250610351562px">On-die ECC </td><td id="^AxM" class="" style="width:106.66250610351562px">Built-in</td><td id="~VmG" class="" style="width:522.6625061035156px">Previous generation lacks this feature</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ed24e8-7d86-81c1-a8c0-e7c5e8b02059"><td id="|lke" class="" style="width:132.66250610351562px">PMIC Power</td><td id="^AxM" class="" style="width:106.66250610351562px">Built-in</td><td id="~VmG" class="" style="width:522.6625061035156px">Memory manages its own power — no longer dependent on motherboard supply</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-816e-b100-fdb9467944f0" class="">* Data benchmarked against previous generation products</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-810b-85b7-e5adaba20034" class=""><mark class="highlight-red">*數據以前世代產品為比較基準</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81a5-89d2-cd4e52de86ea" class="">Not because your old memory is bad. Because the EX1 runs where it couldn&#x27;t even follow.</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-80e2-9498-d272b17988a6" class=""><mark class="highlight-red">不是舊的不好。而是 EX1 所奔馳的境界，難以超越</mark></p></div><div style="display:contents" dir="auto"><hr id="35ed24e8-7d86-8179-9088-d52ed18393c8"/></div><div style="display:contents" dir="auto"><h2 id="35ed24e8-7d86-812d-9a3d-efe477a36112" class="">Harder</h2></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-818e-85ca-c2f3cd9ca38b" class="">288-pin · 3µm Hard Gold · Professional Series · Built for Battle</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8034-a058-f8554ef742e9" class="">The EX1 is built to the same standard as the most demanding hardware on earth.</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-802a-bcc8-f08b1e630253" class=""><strong>If it can survive that, it can survive anything you throw at it.</strong></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-8105-8996-e6ab5890ca52" class="bulleted-list"><li style="list-style-type:disc"><strong>3µm Hard Gold Plating · 288-pin Connector</strong> — Industry-leading plating thickness. 10,000+ insertion cycles without wear. Anti-oxidation, anti-corrosion, shorter signal path, more stable contact.</li></ul></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8150-82a1-c944ac861fd4" class="">*Standard consumer grade is typically 0.5–1µm; 3µm is industrial-grade standard</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8172-8ea4-cf72fea2b30e" class=""><mark class="highlight-yellow">視覺：288Pin 大字放大 + DDR4/DDR5 防呆缺口對比 + 金手指斷面放大示意（標示 3µm 鍍金層 + 鎳底層）</mark></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-8172-840e-ea4c3195151c" class="bulleted-list"><li style="list-style-type:disc">Built-in <strong>On-die ECC Real-time Error Correction</strong> — your previous-gen memory didn&#x27;t have this.Data integrity enforced at the chip level, before errors can ever reach your system.</li></ul></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81f7-9026-f53270048f29" class=""><mark class="highlight-yellow">視覺：8bit+1bit (紅) → 128bit+8bit (綠) </mark></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-8048-9a58-c44976dd2fa5" class="bulleted-list"><li style="list-style-type:disc">Premium-grade memory chips — <strong>7×24 continuous high-load stable operation.</strong> Render farms. Gaming marathons. All-night compiles. The EX1 doesn&#x27;t ask for a break.</li></ul></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8189-9caf-d0446576b8e5" class=""><mark class="highlight-yellow">視覺：7×24</mark></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-81dd-b5c5-e40418c487b3" class="bulleted-list"><li style="list-style-type:disc"><strong>Simorchip Lifetime Warranty</strong> — Our confidence in the EX1 is backed by four words</li></ul></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-814f-9020-d095da7f8f92" class=""><mark class="highlight-yellow">視覺： 終身保固</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81c4-9469-caac43726c88" class=""><mark class="highlight-yellow">視覺：四個 stat badge 並排，數字大字呈現</mark></p></div><div style="display:contents" dir="auto"><hr id="35ed24e8-7d86-8112-be7f-fa1e702d8a98"/></div><div style="display:contents" dir="auto"><h2 id="35ed24e8-7d86-812a-b661-f8832b079d79" class="">Fiercer</h2></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-818c-ab64-fdc9d728f8bb" class="">Blaze Blade Armor · Precision Heat Control · No Throttle.</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8079-9a90-ec8439d122eb" class="">
+</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8083-83a9-f9ec44eb0910" class="">The first thing people notice about a build is the memory.</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-809f-9ef6-ce34aed8f924" class=""><strong>Make sure they can&#x27;t look away.</strong></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8038-b9b7-d5eae611ea16" class="">
+</p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-80ff-ba30-ce77c9533bea" class="bulleted-list"><li style="list-style-type:disc"><strong>Matte Black Aluminum Alloy Heatspreader · Blaze Blade Geometry</strong> — Precision-machined angular cuts channel airflow while suppressing hotspots. Larger surface area. More aggressive heat path. Engineered to run fast and stay cool, simultaneously.</li></ul></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-801b-921b-e16a08533100" class=""><mark class="highlight-red">消光黑鋁合金散熱翼板 · 熾刃幾何構造</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-80d2-b8a5-fdc617ea3c29" class=""><mark class="highlight-red">精準銑削的銳利角度，是導流氣流、鎮壓熱點的關鍵。擴張散熱面積，打造最具侵略性的排熱路徑。讓極致速度與冷酷溫控，在此一體同構</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8166-9f60-d78a9fdbbf42" class=""><mark class="highlight-yellow">視覺：散熱片截面放大圖 + 幾何鋒刃線標示 ，亦可對比競品平板散熱片，強調鋁合金材質 + Blaze Blade 切割工藝</mark></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-814b-875a-dc94feda5319" class="bulleted-list"><li style="list-style-type:disc">Sustained high-load operation — <strong>no thermal throttle, no frequency drop.</strong> The EX1 locks in at rated speed and stays there. Hour one. Hour twenty-four.</li></ul></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8152-9e75-e9e3b28d375b" class=""><mark class="highlight-yellow">視覺：畫面中心一道斜對角切線將畫面一分為二熱成像圖，上半部EX1 藍綠色幾何硬邊緣，下半部對比他牌記憶體紅橘色亂流高溫感覺。從畫面中心左下有兩條溫度曲線，對比兩邊熱度隨時間溫控，EX1幾乎包持54度左右，他排則持續高溫(至少70度以上)進行對比</mark></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-8119-83b2-d5f5d3a29d70" class="bulleted-list"><li style="list-style-type:disc"><strong>Red Geometric Accent Panels</strong> — cut through matte black like fire through armor. The centerpiece of any build. The thing everyone asks about.</li></ul></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8114-a421-ff66d1b79a5e" class=""><mark class="highlight-yellow">視覺：三機箱對比 — EX1 居中鮮明，兩側競品黑色平板散熱片黯然失色</mark></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-81a4-b635-ce5394638655" class="bulleted-list"><li style="list-style-type:disc"><strong>1.35V Low-Voltage Design</strong> — 7.4% more power-efficient than the previous generation. Lower heat, longer lifespan, quieter system.</li></ul></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81ee-958c-e3b0b833ba95" class=""><mark class="highlight-yellow">視覺：1.5V 沒電電池 vs 1.35V 還有電電池</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-815a-85d0-efb859cc45a0" class=""><mark class="highlight-yellow">視覺：stat badge，7.4% &amp; 熱成像圖</mark></p></div><div style="display:contents" dir="auto"><hr id="35ed24e8-7d86-81ea-9207-e63207e933be"/></div><div style="display:contents" dir="auto"><h2 id="35ed24e8-7d86-817b-9d48-e196a46429c0" class="">Faster</h2></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-80e2-be55-ed65dade7437" class="">6000MT/s · 275% Faster Than Previous Gen · 48 GB/s Bandwidth</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8087-bf78-d82ccb782191" class="">
+</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8049-819b-d0f2692b36e2" class=""><strong>The EX1 makes DDR4 look like it&#x27;s standing still.</strong></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-80a7-8da0-cc47af08fa1f" class="">
+</p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-81d7-90d3-ddf1512e8bbf" class="bulleted-list"><li style="list-style-type:disc">25% faster than DDR5 base spec, <strong>up to 275% faster than previous gen</strong></li></ul></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-812c-a5ba-fabea482d0f8" class=""><mark class="highlight-yellow">視覺：水管圖三段式：DDR3 細管 12.8 GB/s → DDR4 中管 25.6 GB/s → EX1 粗管 48 GB/s</mark></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-8156-b6bb-fc55fec0a67d" class="bulleted-list"><li style="list-style-type:disc">Bandwidth 48 GB/s, <strong>+275% improvement</strong> — 4K editing, AAA gaming, 20 open tabs — all stable</li></ul></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8154-a239-f0f5aa233b9c" class=""><mark class="highlight-yellow">視覺：載入條對比</mark></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-81ee-8626-ef6909a5d147" class="bulleted-list"><li style="list-style-type:disc">Processing channels <strong>×4 (8 → 32)</strong> — four times the parallel task capacity. Zero lag, instant response.</li></ul></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81e0-a28b-ea40b9a007b9" class=""><mark class="highlight-yellow">視覺：8 條細線 vs 32 條線</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81b6-b197-fb2e45f51b2f" class="">
+</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-815e-b6ce-f160b510ef3b" class=""><mark class="highlight-yellow">視覺：stat badge</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81fa-b91b-f263b041952f" class=""><mark class="highlight-yellow"><strong>4K Editing</strong></mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81ca-8045-f8a52bcb2921" class=""><mark class="highlight-yellow">Timeline renders without buffering</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-816a-b652-f5ecf9b3508d" class=""><mark class="highlight-yellow"><strong>AAA Gaming</strong></mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-819a-aa44-f2ed9ebeb3f6" class=""><mark class="highlight-yellow">Load times dramatically reduced</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81b8-bc7c-f96cf05d7c9c" class=""><mark class="highlight-yellow"><strong>Multitasking</strong></mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8125-b80a-ddbf6f61b93f" class=""><mark class="highlight-yellow">20 tabs open — all stable</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-809c-9557-daa1935f472a" class="">
+</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8094-9550-e93ae03e150d" class=""><mark class="highlight-yellow">視覺：Game Loading Comparison 動態長條圖（DDR4 vs EX1）</mark></p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8060-ab1b-cac2024d6abf" class=""><mark class="highlight-yellow">EX1 衝完 100% 時 DDR4 還在 30% 左右</mark></p></div><div style="display:contents" dir="auto"><hr id="35ed24e8-7d86-81f5-9397-ffb713ffca86"/></div><div style="display:contents" dir="auto"><h2 id="35ed24e8-7d86-81d1-8f4b-c52bd11434df" class="">Stronger</h2></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8118-9888-f52b2b31d1e2" class="">PMIC Stable Power · One-Click OC with XMP / EXPO</p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-808c-b4a2-f90f61b591d7" class="">Speed is nothing without the foundation to hold it.</p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-8095-8235-c2fc9b49a34a" class=""><strong>The EX1 is built from the ground up to never give ground.</strong></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-8178-9982-efd11f1830b7" class="bulleted-list"><li style="list-style-type:disc">Dual chip architecture — more memory die for <strong>more stable and error-free data computation.</strong> More density. More headroom. More resilience under pressure.</li></ul></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-804a-9cc4-f4a2a75f599b" class=""><mark class="highlight-yellow">視覺：2× 雙晶片密度示意圖</mark></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-81d7-8e2d-e323a8b1d39e" class="bulleted-list"><li style="list-style-type:disc">Built-in <strong>PMIC</strong> — for the first time, your memory manages its own power supply. No dependency on motherboard voltage rails. Stable output at every load level.</li></ul></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-80dc-8a4c-fc216ed2c3a5" class=""><mark class="highlight-yellow">視覺：PMIC 晶片位置 callout 標示圖</mark></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-812b-a151-d651da3a00ef" class="bulleted-list"><li style="list-style-type:disc">Supports <strong>Intel XMP 3.0 / AMD EXPO</strong> — one BIOS switch to push the EX1 to its ceiling. No spreadsheets. No manual timing tables. One click.</li></ul></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-8096-936d-e17f011a3984" class=""><mark class="highlight-yellow">視覺：Intel + AMD LOGO</mark></p></div><div style="display:contents" dir="auto"><ul id="35ed24e8-7d86-81a3-a3d3-c1a4a7bfb06d" class="bulleted-list"><li style="list-style-type:disc"><strong>No weak points. No ceiling.</strong> — Speed · Thermal · Stability · Compatibility · Power · Durability. Every axis at maximum. The EX1 doesn&#x27;t have a soft spot.</li></ul></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-80f7-a826-fae9b762a4b7" class=""><mark class="highlight-yellow">視覺：六邊形雷達圖，EX1 頂點全滿，動態展開</mark></p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-800b-aa99-cae88867dbbd" class=""><mark class="highlight-yellow">DDR4 對比雷達圖縮小黯淡</mark></p></div><div style="display:contents" dir="auto"><ul id="35fd24e8-7d86-803c-93e2-e08d2721b91b" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">軸：Speed · Thermal · Stability · Compat. · Power · Durability（無 ARGB 軸）</mark></li></ul></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-816e-ba16-c2c28bf33301" class=""><mark class="highlight-yellow">視覺：stat badge</mark></p></div><div style="display:contents" dir="auto"><hr id="35ed24e8-7d86-811c-a289-dc6cf88e03bc"/></div><div style="display:contents" dir="auto"><h2 id="35ed24e8-7d86-8169-a2dd-f6d2da8bbeae" class="">Packaging Design</h2></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8115-8990-e1201b4891fe" class="">What’s in the box</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-811b-917e-fc7a6726bb02" class="">
+</p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-80a3-aebd-ecfabe20f147" class="">The packaging doesn&#x27;t try to sell you on what&#x27;s inside.</p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-8028-bdbb-f5a884dfd525" class=""><em>It already looks like it won.</em></p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-80f8-a155-d628a5a7b9d2" class="">Matte black. Diagonal slash in burning red-orange. An arrow that doesn&#x27;t point — <strong>it charges.</strong></p></div><div style="display:contents" dir="auto"><ul id="35fd24e8-7d86-80d4-a4db-e121e3afc1e1" class="bulleted-list"><li style="list-style-type:disc"><strong>Product Information Window</strong> — The module sticker is visible on the packaging. Model number, serial number, certifications — everything confirmed before the box is opened.</li></ul></div><div style="display:contents" dir="auto"><ul id="35fd24e8-7d86-80ea-a256-e5c58796030b" class="bulleted-list"><li style="list-style-type:disc"><strong>Blaze Blade Design Language</strong> — Black and red geometric identity on both module and box. The same visual language from the shelf to the slot.</li></ul></div><div style="display:contents" dir="auto"><ul id="35fd24e8-7d86-80f7-b8ed-db9994ec40d5" class="bulleted-list"><li style="list-style-type:disc"><strong>Kit &amp; Single Options</strong> — 16GB single or 32GB dual-channel kit (16GB×2). Matched pair. Optimal dual-channel performance. Ready to run.</li></ul></div><div style="display:contents" dir="auto"><ul id="35fd24e8-7d86-80c4-998a-db543e9fdb98" class="bulleted-list"><li style="list-style-type:disc"><strong>Global Certifications</strong> — RoHS · REACH · CE · FCC. Certified for EU, US, and Asia-Pacific markets.</li></ul></div><div style="display:contents" dir="auto"><ul id="35fd24e8-7d86-80b4-9db0-df31cba89f91" class="bulleted-list"><li style="list-style-type:disc"><strong>Lifetime Warranty Included</strong> — Every EX1 ships with Simorchip&#x27;s Limited Lifetime Warranty. Our confidence in this product doesn&#x27;t expire.</li></ul></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-80c6-b47e-e97535f83e6c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-80ca-9b16-ed78e01b2c4a" class=""><mark class="highlight-yellow">視覺：包裝盒正面大圖 </mark></p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-80a6-82b2-f5f2fb664c39" class=""><mark class="highlight-yellow">黑底橘紅箭頭衝刺設計語言，左側 Professional Series + EX1 Logo</mark></p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-80a9-876a-cbf521059b01" class=""><mark class="highlight-yellow">右下角 16GB | 6000 MHz 規格標示</mark></p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-80d4-a99a-ccf493bc611a" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="35ed24e8-7d86-81e0-a68c-c2684a6ae776"/></div><div style="display:contents" dir="auto"><h1 id="35ed24e8-7d86-81c6-906e-f7da2cbe38c1" class=""><strong>SPECIFICATIONS</strong></h1></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-80e3-8c11-e0c663fe959d" class="">Engineered for optimum speed, endurance, reliability, and multi-platform compatibility.</p></div><div style="display:contents" dir="ltr"><table id="35fd24e8-7d86-80e1-9cf4-e2fd1f758a94" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-80fd-9070-df9d03a13e9c"><td id="q_bi" class=""><strong>Speed</strong></td><td id="SB_i" class="">6000 MT/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-80b1-b46c-dc625e81790c"><td id="q_bi" class=""><strong>Capacity</strong></td><td id="SB_i" class="">16GB / 32GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-806a-a28d-c2903a66df81"><td id="q_bi" class=""><strong>CAS Latency</strong></td><td id="SB_i" class="">CL32 / CL38</td></tr></div><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-80a7-aea3-ec1b990e647f"><td id="q_bi" class=""><strong>Voltage</strong></td><td id="SB_i" class="">1.35V</td></tr></div><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-80a4-a1b4-d05523ebda68"><td id="q_bi" class=""><strong>Pin Count</strong></td><td id="SB_i" class="">288 pin (3µm Hard Gold)</td></tr></div><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-800e-95ba-fdb45d2c28a9"><td id="q_bi" class=""><strong>Module Type</strong></td><td id="SB_i" class="">DDR5 U-DIMM</td></tr></div><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-803b-b39b-c94f9c856a5a"><td id="q_bi" class=""><strong>Dimensions</strong></td><td id="SB_i" class="">133.35 × 31.75 × 8.5 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-808c-b4e3-e770332b9e5d"><td id="q_bi" class=""><strong>Operating Temp</strong></td><td id="SB_i" class="">0°C ~ 85°C (32°F ~ 176°F)</td></tr></div><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-80ed-bfa1-da68194bae81"><td id="q_bi" class=""><strong>Platform</strong></td><td id="SB_i" class="">Intel XMP 3.0 / AMD EXPO</td></tr></div><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-802f-8a8f-fe662c001a29"><td id="q_bi" class=""><strong>Certifications</strong></td><td id="SB_i" class="">RoHS / REACH / CE / FCC</td></tr></div><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-80b9-86bf-ce3ad4309d33"><td id="q_bi" class=""><strong>Warranty</strong></td><td id="SB_i" class="">Limited Lifetime Warranty</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="35fd24e8-7d86-801c-b3d0-e4c82cb87fbd" class="bulleted-list"><li style="list-style-type:disc">All data secured from Simorchip&#x27;s internal labs under specific testing conditions. Accurate data may vary depending on the operating environment.</li></ul></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-8063-8133-fe40044eafa1" class="">Product Configuration — DDR5-6000 U-DIMM</p></div><div style="display:contents" dir="ltr"><table id="35fd24e8-7d86-802f-9c11-da0c419fcdb8" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-8043-8300-de71d9f299a5"><th id="VJnD" class="simple-table-header-color simple-table-header"><strong>Capacity</strong></th><th id="Tu@O" class="simple-table-header-color simple-table-header"><strong>Component</strong></th><th id="tWvT" class="simple-table-header-color simple-table-header"><strong>Rank</strong></th><th id="HXij" class="simple-table-header-color simple-table-header"><strong>Model Name</strong></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-805f-a925-dc5f1739626b"><td id="VJnD" class=""><strong>16GB</strong></td><td id="Tu@O" class="">(2Gx8)×8C</td><td id="tWvT" class="">1Rx8</td><td id="HXij" class="">CR6000XEX1-16G (XMP)</td></tr></div><div style="display:contents" dir="ltr"><tr id="35fd24e8-7d86-80a5-bf6f-f73442198f6c"><td id="VJnD" class=""><strong>32GB</strong></td><td id="Tu@O" class="">(2Gx8)×16C</td><td id="tWvT" class="">2Rx8</td><td id="HXij" class="">CR6000XEX1-32G (XMP)</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-81b8-b1c9-c792f27df731" class=""><mark class="highlight-yellow">視覺：就規格表，記得底下放規格表下載，然後瀏覽其他產品按鈕</mark></p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-8049-8b7c-fe00503d77db" class=""><strong>Simorchip DDR5 EX1</strong></p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-800b-b89a-d1b033a5efd8" class=""><strong>Harder．Fiercer．Faster．Stronger</strong></p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-80c3-8d03-cad80044d1ec" class="">This is not decoration.</p></div><div style="display:contents" dir="auto"><p id="35fd24e8-7d86-8040-9c65-e2505d89f473" class="">This is aggression.</p></div><div style="display:contents" dir="auto"><p id="35ed24e8-7d86-8116-b552-ea1483d0add2" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

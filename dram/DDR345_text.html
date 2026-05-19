@@ -1,0 +1,765 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>普條</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="361d24e8-7d86-80ba-8ff6-d6233c457345" class="page sans"><header><h1 class="page-title" dir="auto">普條</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80f4-a32c-c03bcdfdcbb7" class="">Precision Series</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8072-aa22-c0ce85c1939d" class="">系列命名</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-808a-831a-f72808e6410b"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8075-b6cd-ed58d450d972" class="">Simorchip · Precision Series</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80be-b45a-f69920585cde" class="">Precision Series<br/>DDR3</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8015-828b-c46bb07a927a" class="">1600 Mbps · 1.35V (DDR3L) · Up to 12.8 GB/s bandwidth</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8002-8cae-f9e866d145e8" class="">ETT Verified · Lifetime Warranty</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80c2-8dab-d66dd36680fa" class=""><code>#DDR3</code> <code>#1600</code> <code>#U-DIMM</code> <code>#SO-DIMM</code> <code>#Lifetime Warranty</code></p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-807a-b4f9-e305c41ad496"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8046-99d3-d10605b05c75" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8020-ab7c-d294e3f95d93" class="">WHY DDR3?</p></div><div style="display:contents" dir="ltr"><table id="364d24e8-7d86-8071-80e7-f7365ef2e138" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8016-b231-d7d9ed355d03"><td id="zczO" class="">Bandwidth</td><td id="LeJJ" class="" style="width:149px">12.8 GB/s</td><td id="k~VY" class="" style="width:459px">Up to 12.8 GB/s — significantly faster than DDR2. Meaningful improvement across every workload.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8046-98f4-cbea364472d8"><td id="zczO" class="">Voltage</td><td id="LeJJ" class="" style="width:149px">1.35V (DDR3L)</td><td id="k~VY" class="" style="width:459px">DDR3L low-voltage — cooler operation, lower power. Backward compatible with 1.5V DDR3 slots.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80dd-bd76-efb8dbbcc0aa"><td id="zczO" class="">Speed</td><td id="LeJJ" class="" style="width:149px">1600 Mbps Mbps</td><td id="k~VY" class="" style="width:459px">1600 Mbps supported. 1600 Mbps — the highest DDR3 speed, for maximum DDR3 bandwidth.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8092-a9ba-e42095486947"><td id="zczO" class="">Compatibility</td><td id="LeJJ" class="" style="width:149px">JEDEC</td><td id="k~VY" class="" style="width:459px">JEDEC and RoHS compliant. ETT-verified original factory chips with full high/low temperature environmental screening.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80e4-9189-f44b9041cf9f"><td id="zczO" class="">Warranty</td><td id="LeJJ" class="" style="width:149px">Lifetime</td><td id="k~VY" class="" style="width:459px">Lifetime limited warranty across the entire Simorchip memory lineup. Buy once, covered for life.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-8037-9fbc-fccdb7d61bb0" class="bulleted-list"><li style="list-style-type:disc">DDR3L 1.35V is backward compatible with standard DDR3 1.5V slots.</li></ul></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-806f-9472-d9cf91fe56ff" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-8065-a7b9-c57652ce85ea"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80fd-b756-ef29fc118c23" class="">01 — Performance</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8045-a5f7-cbbda05cbedd" class="">DDR3</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80fd-99f7-ff425bcb178a" class="">1600 Mbps · Up to 12.8 GB/s</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-809e-a64e-c4c327dc3375" class="">Up to 12.8 GB/s of memory bandwidth.ETT-verified chips. Low-voltage DDR3L for cooler operation.</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80e0-bae1-c34368aebf93" class="">Select Form Factor</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80b6-9e5c-d3930aeb214b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-806d-8aa8-e619e335d2cf" class="">U-DIMM · 240-pin · Desktop</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8054-96ee-cf304ca25539" class="">DDR3 U-DIMM — Desktop / Workstation · 8GB<br/>Intel LGA 1155/1150 (3rd/4th Gen Core) · AMD AM3/AM3+ · DDR3L-compatible desktop motherboards</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8001-ad7b-d914cfc86f95" class="">SO-DIMM · 204-pin · Laptop</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80fd-ac75-d39ccae0d128" class="">DDR3 SO-DIMM — Laptop / Mini PC · 8GB<br/>Intel 3rd/4th Gen laptop platforms · AMD AM3 notebooks · NUC (DDR3L) · Mini PC systems</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-808e-93e0-f1a5c81d9625" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8098-96cf-c520c89efbcd" class="">Bandwidth by Generation</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80c9-b822-edc088622b25" class="">DDR3-1600</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8007-85ef-c501db011039" class=""><strong>12.8 GB/s</strong></p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80ab-8b62-ef493d10a5f1" class="">DDR2-8006.4 GB/sDDR1-4003.2 GB/s</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80e6-a462-c6ac0194f988" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8021-9cf8-da277ac59f1f" class="">Star badge</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80ec-92d3-cd9becb7ce66" class="">12.8GB/s Bandwidth<br/>1600Mbps Speed</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-80b8-b54b-db0c82c4fe90"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8032-900b-f8f08e018c17" class="">02 — Reliability</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80ac-8f9f-f8a8c8f97061" class="">Solid</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-806d-bddb-f0ab7102a73b" class="">JEDEC · ETT Verified · Lifetime Warranty</p></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-80e1-bee9-f26e984b8e9f" class="bulleted-list"><li style="list-style-type:disc"><strong>ETT-verified original factory chips</strong> — Effective Tested certification with high and low-temperature environmental screening before assembly. Only chips that pass every threshold make it into the module.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-800d-9e19-fb36059b47c4" class="bulleted-list"><li style="list-style-type:disc"><strong>JEDEC &amp; RoHS compliant</strong> — Designed to JEDEC DDR3 standards. Compatible with all DDR3-compliant desktop and laptop platforms.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-8001-8dc7-ee7f98101f75" class="bulleted-list"><li style="list-style-type:disc"><strong>Multi-platform real-machine testing</strong> — Tested across multiple platforms and OS versions before leaving the factory.</li></ul></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8000-92cf-cef727affec1" class="">Lifetime<br/>Limited Warranty</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80e3-82a2-fbe134e04ff0" class="">Global Standards<br/>JEDEC<br/>RoHS<br/>ETT<br/>CE<br/>FCC</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-803f-81b1-f236b6d3b7ad" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8026-a6c6-dadaeb947ea6" class="">OS Support</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80c6-8edc-d42724707fc7" class="">Windows 11 / 10 · LinuxmacOS (compatible systems)Plug &amp; Play — no drivers required</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80d9-a0f5-d1b1a3941fc7" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-8068-ac2f-e200698791a0"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80cd-b85b-d8bbfffc9218" class="">03 — Specifications</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8092-9f60-d794b32392d0" class="">Full Specs</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8071-81c1-f615bd4b750b" class="">DDR3 U-DIMM — Desktop / Workstation</p></div><div style="display:contents" dir="ltr"><table id="364d24e8-7d86-807f-bf7a-f452c1bb1ebb" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80fe-965b-e03d1eab50f1"><td id="Fe=D" class="">Model</td><td id="JhuU" class="">Simorchip DDR3 U-DIMM</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8093-8547-e022d8c2eaaf"><td id="Fe=D" class="">Series</td><td id="JhuU" class="">Precision Series</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-806d-a3d9-fd2f3b47670d"><td id="Fe=D" class="">Form Factor</td><td id="JhuU" class="">U-DIMM · 240-pin</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-807e-9fb5-ea793ebc9904"><td id="Fe=D" class="">Speed</td><td id="JhuU" class="">1600 Mbps</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8041-9563-e186a8d33d94"><td id="Fe=D" class="">Bandwidth</td><td id="JhuU" class="">Up to 12.8 GB/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80bd-beeb-cdb7fa30fadd"><td id="Fe=D" class="">Voltage</td><td id="JhuU" class="">1.35V (DDR3L)</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8083-81b7-f04d4b6f982c"><td id="Fe=D" class="">Capacity</td><td id="JhuU" class="">8GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80ee-b963-fe284bbec672"><td id="Fe=D" class="">ECC</td><td id="JhuU" class="">Non-ECC</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-802f-a3e4-ff065985b04b"><td id="Fe=D" class="">Dimensions</td><td id="JhuU" class="">133.35 × 30 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80e1-b403-dbd281d1f5d7"><td id="Fe=D" class="">Standard</td><td id="JhuU" class="">JEDEC · RoHS · ETT Verified</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8041-b809-ff2cd17a6a7b"><td id="Fe=D" class="">Warranty</td><td id="JhuU" class="">Lifetime Limited Warranty</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80a1-9aae-da1f2b205626" class="">DDR3 SO-DIMM — Laptop / Mini PC</p></div><div style="display:contents" dir="ltr"><table id="364d24e8-7d86-8055-b797-dd4e2d2ebf51" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-800e-b572-c9c5cdb2f708"><td id="n]Xl" class="">Model</td><td id="ortY" class="">Simorchip DDR3 SO-DIMM</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8089-b69b-cb0a4524a003"><td id="n]Xl" class="">Series</td><td id="ortY" class="">Precision Series</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80e3-9a04-df3d217214f2"><td id="n]Xl" class="">Form Factor</td><td id="ortY" class="">SO-DIMM · 204-pin</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8061-a2d6-e84f0310d4a7"><td id="n]Xl" class="">Speed</td><td id="ortY" class="">1600 Mbps</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-800e-957c-f07664d54443"><td id="n]Xl" class="">Bandwidth</td><td id="ortY" class="">Up to 12.8 GB/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8067-be05-f1dfb066cad0"><td id="n]Xl" class="">Voltage</td><td id="ortY" class="">1.35V (DDR3L)</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80e1-bf2c-ff1b5c2cbcec"><td id="n]Xl" class="">Capacity</td><td id="ortY" class="">8GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80c0-990d-c92d564962d1"><td id="n]Xl" class="">ECC</td><td id="ortY" class="">Non-ECC</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80c1-adeb-ca44ceb9d607"><td id="n]Xl" class="">Dimensions</td><td id="ortY" class="">67.6 × 30 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80c7-b71d-c4d5cfbe5c9d"><td id="n]Xl" class="">Standard</td><td id="ortY" class="">JEDEC · RoHS · ETT Verified</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8013-9c2f-fba3f329a4eb"><td id="n]Xl" class="">Warranty</td><td id="ortY" class="">Lifetime Limited Warranty</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-80c1-b3a3-eb63577f792f" class="bulleted-list"><li style="list-style-type:disc">All data from Simorchip internal labs. Actual performance may vary depending on system configuration.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-801c-a1e8-cac88a7b2945" class="bulleted-list"><li style="list-style-type:disc">DDR3L 1.35V is backward compatible with standard DDR3 1.5V slots.</li></ul></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-805a-9a82-c5bc6aaeda9b" class=""><strong>Download DatasheetView Precision Series</strong></p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8095-a873-e44b2e7a12f6" class="">SimorchipDDR3Precision Series</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8085-90f3-d8d3f143894b" class="">U-DIMM · SO-DIMM · 1600 Mbps · Lifetime Warranty</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80f4-95de-cee6b67138d1" class="">© 2026 Simorchip Technology · DDR3 · 1.35V (DDR3L) · ETT Verified</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-80fe-8835-dcbf73706d6f"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80ba-af3b-df11f3d8a8a9" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80a6-be67-c888578a3d8c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80da-8ac3-fc812c653fa7" class="">Simorchip · Precision Series</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80f7-b25a-e8609ad132d3" class="">Precision Series<br/>DDR4</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80f4-9f77-f960150489e8" class="">2666 / 3200 Mbps · 1.2V · Up to 25.6 GB/s bandwidth</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80b4-a794-ce0ef6427d78" class="">ETT Verified · Lifetime Warranty</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8016-ba31-d5cd215e4589" class=""><code>#DDR4</code> <code>#2666</code> <code>#U-DIMM</code> <code>#SO-DIMM</code> <code>#Lifetime Warranty</code></p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-80d8-941b-cf273bccd043"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80bc-88dd-c4940431b447" class="">WHY DDR3?</p></div><div style="display:contents" dir="ltr"><table id="364d24e8-7d86-8016-af4b-cb50d7db0a21" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8026-b4e2-c4b62b014c1f"><td id="lVca" class="">Bandwidth</td><td id="OmKr" class="">25.6 GB/s</td><td id="&gt;jA&gt;" class="" style="width:548px">Up to 25.6 GB/s — double DDR3-1600. Meaningful improvement across every workload.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80ea-95a2-c3dc0a490433"><td id="lVca" class="">Voltage</td><td id="OmKr" class="">1.2V</td><td id="&gt;jA&gt;" class="" style="width:548px">20% lower than DDR3&#x27;s 1.5V. Runs cooler, draws less power.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80ac-b9ca-fe38ec5e2711"><td id="lVca" class="">Speed</td><td id="OmKr" class="">2666 Mbps</td><td id="&gt;jA&gt;" class="" style="width:548px">2666 / 3200 Mbps supported. 3200 Mbps is the mainstream sweet spot for DDR4.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8087-878d-e06fdfc962a0"><td id="lVca" class="">Compatibility</td><td id="OmKr" class="">JEDEC</td><td id="&gt;jA&gt;" class="" style="width:548px">JEDEC and RoHS compliant. ETT-verified original factory chips with full high/low temperature environmental screening.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80bc-a3db-c7395583c374"><td id="lVca" class="">Warranty</td><td id="OmKr" class="">Lifetime</td><td id="&gt;jA&gt;" class="" style="width:548px">Lifetime limited warranty across the entire Simorchip memory lineup. Buy once, covered for life.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-80cd-8acc-f62e92b4f80f" class="bulleted-list"><li style="list-style-type:disc">DDR4 is NOT compatible with DDR3 or DDR5 slots.</li></ul></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80b1-a5a2-dadd029ec7fe" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-808a-aebf-d020f6c933d3"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-808b-b81b-fb07d4afbc92" class="">01 — Performance</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8034-95d6-c69581a907b6" class="">DDR4</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80db-87d3-e64f23b7e157" class="">2666 / 3200 Mbps · Up to 25.6 GB/s</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8031-ad67-cd87f3e7bf2c" class="">Up to 25.6 GB/s of memory bandwidth.20% lower power than DDR3. Double the bandwidth.</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8025-9d06-f701dd55537b" class="">Select Form Factor</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8014-8fe4-f2da7c8a11d0" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-802d-a954-ee910f34607d" class="">U-DIMM · 288-pin · Desktop</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80db-a2d1-e87fd82eb05c" class="">DDR4 U-DIMM — Desktop / Workstation · 32GB<br/>Intel LGA 1200/1700 (10th–13th Gen Core) · AMD AM4/AM5 · DDR4-compatible desktop motherboards</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8083-afbb-f398c1e4e90d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80e3-8145-e86efaeaf131" class="">SO-DIMM · 260-pin · Laptop</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-800a-9be1-d66d0a645598" class="">DDR4 SO-DIMM — Laptop / Mini PC · 16GB<br/>Intel Tiger Lake / Alder Lake laptops · AMD Ryzen Mobile (Zen 2/3) · NUC DDR4 · Mini PC</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80b9-8fd9-ff00ef7a3484" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8072-9768-cbf4e1a13763" class="">Bandwidth by Generation</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8037-874c-da82a1c8a429" class="">DDR4-3200 <strong>25.6 GB/s</strong></p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80c6-8082-ce6085abdbc7" class="">DDR3-1600 12.8 GB/s</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-805c-b79b-f28bbec158a6" class="">DDR2-800 6.4 GB/s</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80a7-b4c6-e2b8615e360a" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8073-8811-fb107ddc101b" class="">star badge</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80ef-9929-f267a628334c" class="">25.6GB/s Bandwidth<br/>3200Mbps Speed</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-80a2-99d6-d3143f03b55e"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80a2-9758-c5f9586fe4ba" class="">02 — Reliability</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80fc-850c-cf4753874eff" class="">Solid</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80b5-b064-c400e0e859a2" class="">JEDEC · ETT Verified · Lifetime Warranty</p></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-8052-bddb-f57dfe4ae068" class="bulleted-list"><li style="list-style-type:disc"><strong>ETT-verified original factory chips</strong> — Effective Tested certification with high and low-temperature environmental screening before assembly. Only chips that pass every threshold make it into the module.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-8040-bc69-c995d85a3944" class="bulleted-list"><li style="list-style-type:disc"><strong>JEDEC &amp; RoHS compliant</strong> — Designed to JEDEC DDR4 standards. Compatible with all DDR4-compliant desktop and laptop platforms.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-8069-80d0-c06f5da530ee" class="bulleted-list"><li style="list-style-type:disc"><strong>Multi-platform real-machine testing</strong> — Tested across multiple platforms and OS versions before leaving the factory.</li></ul></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8096-8a56-ef2359309687" class="">Lifetime<br/>Limited Warranty</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80c9-80a2-e6a422073e28" class="">Global Standards<br/>JEDEC<br/>RoHS<br/>ETT<br/>CE<br/>FCC</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8021-8d8f-c73dc87bf348" class="">OS Support</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8000-a6dd-f42635c485ab" class="">Windows 11 / 10 · LinuxmacOS (compatible systems)Plug &amp; Play — no drivers required</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-8042-975d-d3b9aa1fe461"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80b2-986d-ff6b9e4a97da" class="">03 — Specifications</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80a1-a10e-c4d605b123d1" class="">Full Specs</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80de-92a0-f550e0bc2260" class="">DDR4 U-DIMM — Desktop / Workstation</p></div><div style="display:contents" dir="ltr"><table id="364d24e8-7d86-801d-970c-f9c26a77604f" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80fb-ab45-f72f8d6e3fcb"><td id="LkGM" class="">Model</td><td id="BM=h" class="">Simorchip DDR4 U-DIMM</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-804e-9401-cce9cf634a9d"><td id="LkGM" class="">Series</td><td id="BM=h" class="">Precision Series</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8090-a4c3-d8e105fbd837"><td id="LkGM" class="">Form Factor</td><td id="BM=h" class="">U-DIMM · 288-pin</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80b1-a1a5-d05f35c51930"><td id="LkGM" class="">Speed</td><td id="BM=h" class="">2666 / 3200 Mbps</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8097-9a55-f63956cff018"><td id="LkGM" class="">Bandwidth</td><td id="BM=h" class="">Up to 25.6 GB/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80b2-a14d-fe1c455b6fd7"><td id="LkGM" class="">Voltage</td><td id="BM=h" class="">1.2V</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80b3-9134-d2f272cfed63"><td id="LkGM" class="">Capacity</td><td id="BM=h" class="">32GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8023-8f88-e7d7bb024004"><td id="LkGM" class="">ECC</td><td id="BM=h" class="">Non-ECC</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8017-a8b7-e34e67e311f8"><td id="LkGM" class="">Dimensions</td><td id="BM=h" class="">133.35 × 30 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80de-bae2-f1d09722235a"><td id="LkGM" class="">Standard</td><td id="BM=h" class="">JEDEC · RoHS · ETT Verified</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8092-9ea8-ca56c5de55f5"><td id="LkGM" class="">Warranty</td><td id="BM=h" class="">Lifetime Limited Warranty</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8064-a2a4-d403498b1a19" class="">DDR4 SO-DIMM — Laptop / Mini PC</p></div><div style="display:contents" dir="ltr"><table id="364d24e8-7d86-8073-a9f3-f1eadb032e0e" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8098-8b16-edf04c4ac7ed"><td id="EcSx" class="">Model</td><td id="}{]w" class="">Simorchip DDR4 SO-DIMM</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-804e-b662-d06774c94663"><td id="EcSx" class="">Series</td><td id="}{]w" class="">Precision Series</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-801c-8369-e2256db39adb"><td id="EcSx" class="">Form Factor</td><td id="}{]w" class="">SO-DIMM · 260-pin</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80d1-828e-d5b15fa929d6"><td id="EcSx" class="">Speed</td><td id="}{]w" class="">2666 / 3200 Mbps</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80d1-a0f2-c85b9389536f"><td id="EcSx" class="">Bandwidth</td><td id="}{]w" class="">Up to 25.6 GB/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80e9-bb17-d1f24a49fcae"><td id="EcSx" class="">Voltage</td><td id="}{]w" class="">1.2V</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8074-84f7-fb19a924e1cd"><td id="EcSx" class="">Capacity</td><td id="}{]w" class="">16GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80f8-af46-eeffc4617588"><td id="EcSx" class="">ECC</td><td id="}{]w" class="">Non-ECC</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80bb-abd0-d1d15847dcf8"><td id="EcSx" class="">Dimensions</td><td id="}{]w" class="">69.6 × 30 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8028-86b7-f04e60822701"><td id="EcSx" class="">Standard</td><td id="}{]w" class="">JEDEC · RoHS · ETT Verified</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-809d-a5b9-cb95c242dbbc"><td id="EcSx" class="">Warranty</td><td id="}{]w" class="">Lifetime Limited Warranty</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-8007-8776-f37e3526bdc3" class="bulleted-list"><li style="list-style-type:disc">All data from Simorchip internal labs. Actual performance may vary depending on system configuration.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-80a6-8251-e7608d00d6bc" class="bulleted-list"><li style="list-style-type:disc">DDR4 is NOT compatible with DDR3 or DDR5 slots.</li></ul></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8077-ad81-ddb1a50c2b4f" class=""><strong>Download DatasheetView Precision Series</strong></p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80a7-8332-e50a5bf3c165" class="">SimorchipDDR4Precision Series</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8093-ac1a-e4ac9a107e0a" class="">U-DIMM · SO-DIMM · 2666 / 3200 Mbps · Lifetime Warranty</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8077-9928-c256552b1e61" class="">© 2026 Simorchip Technology · DDR4 · 1.2V · ETT Verified</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80fb-bfdb-dca6990b80b8" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8061-925c-d47fb524b5be" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-806d-adae-dd5f8fd60b18" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-809c-9811-f9c143bdef53"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80ef-85de-d5adbc5f70d7" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8020-8feb-f9d870db5d58" class="">Simorchip · Precision Series</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-806e-b784-cc01183cd1c8" class="">Precision Series<br/>DDR5</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80f6-9b15-f099b72fdc14" class="">4800 / 5600 Mbps · 1.1V · Up to 44.8 GB/s bandwidth</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80e7-bfba-f5b643de7e2c" class="">On-Die ECC · PMIC · ETT Verified · Lifetime Warranty</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8026-a1bb-ebafc81cef8b" class=""><code>#DDR5</code> <code>#4800</code> <code>#U-DIMM</code> <code>#SO-DIMM</code> <code>#On-Die ECC</code> <code>#PMIC</code> <code>#Lifetime Warranty</code></p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80dd-b7d0-d8b79653e943" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-80da-824e-d2fda70b453f"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80a7-b8d8-f155b99ebb95" class="">DDR5 Exclusive Technologies</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80af-9bb7-ca0ed57e11b7" class=""><strong>On-Die ECC</strong></p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-804b-8e71-ef583d8394a2" class="">ECC built directly into each chip. Corrects bit errors automatically — no CPU involvement. Always on, zero overhead.</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8024-a7e7-cc1e720b3838" class=""><strong>PMIC</strong></p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80ea-988d-c9d99fafb1df" class="">Dedicated Power Management IC on the module. Stable 1.1V delivery — 8% more efficient than DDR4.</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8095-a5c5-e86e4f590cc6" class=""><strong>Dual 32-bit Channels</strong></p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-808a-9a64-d5f022719b18" class="">Two independent 32-bit channels replace DDR4&#x27;s single 64-bit. More bank groups, higher parallelism.</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8081-98de-e4771f2f7959" class="">WHY DDR5?</p></div><div style="display:contents" dir="ltr"><table id="364d24e8-7d86-806e-82c4-ec36085a0082" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80af-9587-f44751eb30d6"><td id="fVtJ" class="">Bandwidth</td><td id="_Yo}" class="">44.8 GB/s</td><td id="ZE`J" class="" style="width:547px">Up to 44.8 GB/s — 50% above DDR4-3200. Meaningful improvement across every workload.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-800a-96cf-f6e4445a10fd"><td id="fVtJ" class="">Voltage</td><td id="_Yo}" class="">1.1V</td><td id="ZE`J" class="" style="width:547px">8% lower than DDR4&#x27;s 1.2V. PMIC on the module ensures stable, efficient power delivery.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-802f-a85a-e1b5612dde15"><td id="fVtJ" class="">Speed</td><td id="_Yo}" class="">4800 Mbps</td><td id="ZE`J" class="" style="width:547px">4800 / 5600 Mbps supported. DDR5-5600 for maximum bandwidth; DDR5-4800 for broader platform compatibility.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80be-807d-f728ac63a2d5"><td id="fVtJ" class="">On-Die ECC</td><td id="_Yo}" class="">Built-in</td><td id="ZE`J" class="" style="width:547px">ECC integrated into every chip. Always active, no CPU overhead. Corrects bit errors automatically — better data accuracy every read.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8002-8b65-f79eeb9301fa"><td id="fVtJ" class="">PMIC</td><td id="_Yo}" class="">On-module</td><td id="ZE`J" class="" style="width:547px">Dedicated Power Management IC on the DDR5 module. Stable 1.1V delivery — more efficient and precise than motherboard-side power management.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8028-9e70-e6ac7f8240b8"><td id="fVtJ" class="">Compatibility</td><td id="_Yo}" class="">JEDEC</td><td id="ZE`J" class="" style="width:547px">JEDEC and RoHS compliant. ETT-verified original factory chips with full high/low temperature environmental screening.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-807f-bad3-fd1592d095b0"><td id="fVtJ" class="">Warranty</td><td id="_Yo}" class="">Lifetime</td><td id="ZE`J" class="" style="width:547px">Lifetime limited warranty across the entire Simorchip memory lineup. Buy once, covered for life.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-803c-9a4d-da1ea3bcc281" class="bulleted-list"><li style="list-style-type:disc">DDR5 is NOT compatible with DDR4 or DDR3 slots. Different notch position prevents incorrect installation.</li></ul></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-80d7-995f-f61fa6057b17"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8094-a244-f151674c1211" class="">DDR5</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80ab-b600-e0bcd8c9ad88" class="">4800 / 5600 Mbps · Up to 44.8 GB/s</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8001-af16-d7fadbb8ef28" class="">Up to 44.8 GB/s of memory bandwidth.On-Die ECC built into every chip. PMIC for stable 1.1V power.</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80a4-8f67-fb96f5e8f26e" class="">Select Form Factor</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8028-a74e-c1a0a39b35de" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8056-a7a9-f93804257722" class="">U-DIMM · 288-pin · Desktop</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8020-98b2-d1e33f0558e6" class="">DDR5 U-DIMM — Desktop / Workstation · 32GB<br/>Intel LGA 1700/1851 (12th–14th Gen / Core Ultra) · AMD AM5 · DDR5-compatible motherboards</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80b9-8837-e6230a721e1c" class="">SO-DIMM · 262-pin · Laptop</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8092-b246-fceea8b4eb13" class="">DDR5 SO-DIMM — Laptop / Mini PC · 32GB<br/>Intel Meteor Lake / Lunar Lake laptops · AMD Ryzen AI / 7000/9000 Mobile · NUC DDR5 · Mini PC</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8031-9f31-c723c43b126c" class="">Bandwidth by Generation</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80af-89ca-d7c388a0c908" class="">DDR5-5600 <strong>44.8 GB/s</strong></p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8017-b0e7-fa822d737a0f" class="">DDR4-3200 25.6 GB/s</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8054-9109-f243a26d6a4b" class="">DDR3-1600 12.8 GB/s</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80cc-bddb-d33794782935" class="">DDR2-800 6.4 GB/s</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80be-aa43-c84d7a92afe7" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8072-a4e3-d51b5e5273ae" class="">star badge</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-809f-bdd5-cb9ac3e2a0e7" class="">44.8GB/s Bandwidth<br/>5600Mbps Speed</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-8047-9b33-d213aee6db02"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8034-a7cf-fe323c2b6d12" class="">02 — Reliability</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-807e-adf3-c026bc2ee912" class="">Solid</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80ef-a696-d1ab2d519199" class="">JEDEC · ETT Verified · Lifetime Warranty</p></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-8070-be81-ceb503c38c80" class="bulleted-list"><li style="list-style-type:disc"><strong>On-Die ECC — always active</strong> — ECC built into every DDR5 chip. Corrects bit errors automatically, no CPU overhead. Better accuracy, better stability — every read, every time.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-8096-bc69-f792c72c6492" class="bulleted-list"><li style="list-style-type:disc"><strong>PMIC — stable power on module</strong> — Power Management IC on the DDR5 module. Stable 1.1V delivery, more precise than motherboard-side power management.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-80eb-b690-fe17b359bc12" class="bulleted-list"><li style="list-style-type:disc"><strong>ETT-verified original factory chips</strong> — Effective Tested certification with high and low-temperature environmental screening before assembly. Only chips that pass every threshold make it into the module.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-80e6-afb5-c30e26febf5f" class="bulleted-list"><li style="list-style-type:disc"><strong>JEDEC &amp; RoHS compliant</strong> — Designed to JEDEC DDR5 standards. Compatible with all DDR5-compliant desktop and laptop platforms.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-801b-8f18-d5eb311d86ca" class="bulleted-list"><li style="list-style-type:disc"><strong>Multi-platform real-machine testing</strong> — Tested across multiple platforms and OS versions before leaving the factory.</li></ul></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80ea-863b-fd0ded481cd9" class="">Lifetime<br/>Limited Warranty</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8086-bcda-d2020f1e0a34" class="">Global Standards<br/>JEDEC<br/>RoHS<br/>ETT<br/>CE<br/>FCC</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80c8-b907-d968531e7b4a" class="">OS Support</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80f0-b39a-fab9172ff6d8" class="">Windows 11 / 10 · LinuxmacOS (compatible systems)Plug &amp; Play — no drivers required</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-80ad-8bb4-d43afdea86a6"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80fb-8e50-f3059a8427ac" class="">03 — Specifications</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8032-b88e-de3384402f2e" class="">Full Specs</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8031-9a5c-e704f91d09b6" class="">DDR5 U-DIMM — Desktop / Workstation</p></div><div style="display:contents" dir="ltr"><table id="364d24e8-7d86-806a-8241-f7914c59f357" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80a6-a88d-c76818bb5040"><td id="g;Gw" class="">Model</td><td id="_BF}" class="">Simorchip DDR5 U-DIMM</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-803f-a71c-d7b96536e96b"><td id="g;Gw" class="">Series</td><td id="_BF}" class="">Precision Series</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80b0-a0d1-c8378b9713fa"><td id="g;Gw" class="">Form Factor</td><td id="_BF}" class="">U-DIMM · 288-pin</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-802a-aaf2-d799f4f64bfd"><td id="g;Gw" class="">Speed</td><td id="_BF}" class="">4800 / 5600 Mbps</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80ac-8be8-faa424f83f38"><td id="g;Gw" class="">Bandwidth</td><td id="_BF}" class="">Up to 44.8 GB/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8063-a177-e8af474f49bb"><td id="g;Gw" class="">Voltage</td><td id="_BF}" class="">1.1V</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8004-adcf-cd65a751145e"><td id="g;Gw" class="">Capacity</td><td id="_BF}" class="">32GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8098-accf-eb900e5c0248"><td id="g;Gw" class="">ECC</td><td id="_BF}" class="">On-Die ECC (per chip, always active)</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80c3-8f08-de67f991c2dd"><td id="g;Gw" class="">Power Management</td><td id="_BF}" class="">PMIC (on-module)</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80ed-b7c0-d815d183ddd2"><td id="g;Gw" class="">Channel Architecture</td><td id="_BF}" class="">Dual independent 32-bit</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80e8-997d-e96cc4d8438e"><td id="g;Gw" class="">Dimensions</td><td id="_BF}" class="">133.35 × 30 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-805f-8ecc-fc049a5a57ed"><td id="g;Gw" class="">Standard</td><td id="_BF}" class="">JEDEC · RoHS · ETT Verified</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80c7-b69e-f8c88aad6726"><td id="g;Gw" class="">Warranty</td><td id="_BF}" class="">Lifetime Limited Warranty</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8038-8698-c0e75ca3f8fc" class="">DDR5 SO-DIMM — Laptop / Mini PC</p></div><div style="display:contents" dir="ltr"><table id="364d24e8-7d86-809f-b2bc-c0947606a67c" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-805a-b6dd-c77633132783"><td id="A]\`" class="">Model</td><td id="WL?|" class="">Simorchip DDR5 SO-DIMM</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80e9-97c2-ea9ed33c3909"><td id="A]\`" class="">Series</td><td id="WL?|" class="">Precision Series</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80dd-996f-da5b4eaa5349"><td id="A]\`" class="">Form Factor</td><td id="WL?|" class="">SO-DIMM · 262-pin</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-800c-897a-c06475a10973"><td id="A]\`" class="">Speed</td><td id="WL?|" class="">4800 / 5600 Mbps</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80ec-99f6-f3ee66823035"><td id="A]\`" class="">Bandwidth</td><td id="WL?|" class="">Up to 44.8 GB/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8048-bc81-e1569f95071a"><td id="A]\`" class="">Voltage</td><td id="WL?|" class="">1.1V</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8017-adb7-e33324b611a5"><td id="A]\`" class="">Capacity</td><td id="WL?|" class="">32GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8064-927b-d29b7595d13a"><td id="A]\`" class="">ECC</td><td id="WL?|" class="">On-Die ECC (per chip, always active)</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80d2-b9fd-e955911044bb"><td id="A]\`" class="">Power Management</td><td id="WL?|" class="">PMIC (on-module)</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8046-9ff3-d42b6a1f0757"><td id="A]\`" class="">Channel Architecture</td><td id="WL?|" class="">Dual independent 32-bit</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-808c-b8f4-f32d0aa66c90"><td id="A]\`" class="">Dimensions</td><td id="WL?|" class="">69.6 × 30 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-804c-b906-f9c465441276"><td id="A]\`" class="">Standard</td><td id="WL?|" class="">JEDEC · RoHS · ETT Verified</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80e2-bc62-c6c70945e951"><td id="A]\`" class="">Warranty</td><td id="WL?|" class="">Lifetime Limited Warranty</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-80f5-866f-dcfc8c08c506" class="bulleted-list"><li style="list-style-type:disc">All data from Simorchip internal labs. Actual performance may vary depending on system configuration.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-80c3-8436-cd1428335153" class="bulleted-list"><li style="list-style-type:disc">DDR5 is NOT compatible with DDR4 or DDR3 slots. Different notch position prevents incorrect installation.</li></ul></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8028-98a1-c1ed501c6837" class=""><strong>Download DatasheetView Precision Series</strong></p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80a3-b2c3-ffc675143da3" class="">SimorchipDDR5Precision Series</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80f7-ae65-da35d6bffb10" class="">U-DIMM · SO-DIMM · 4800 / 5600 Mbps · Lifetime Warranty</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8081-9298-c6db18dfcdfc" class="">© 2026 Simorchip Technology · DDR5 · 1.1V · ETT Verified</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-805d-afbf-ce48ab2eb4f9" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

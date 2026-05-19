@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip DDR5 — Precision Series</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f0f8;--bg2:#e8e4f4;
+  --acc:#4a1a7a;--acc-l:#7a3aaa;--acc-dim:rgba(74,26,122,.1);
+  --ink:#12101e;--mute:#2d2840;--label:#6e6880;
+  --surface:#fff;--border:rgba(18,16,30,.1);--line:rgba(18,16,30,.07);
+  --ff-d:'Bebas Neue',sans-serif;--ff-b:'DM Sans',sans-serif;--ff-m:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff-b);background:var(--bg);color:var(--ink);overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:16px 5%;transition:background .3s,border-bottom .3s;}
+nav.sc{background:#f2f0f8f2;backdrop-filter:blur(14px);border-bottom:.5px solid var(--border);}
+.nb{display:flex;flex-direction:column;gap:1px;}
+.nb-s{font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#7a3aaa;}
+.nb-b{font-family:var(--ff-m);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);opacity:.38;}
+.np{display:flex;gap:5px;}
+.np a{font-family:var(--ff-m);font-size:10px;letter-spacing:.08em;color:var(--label);border:.5px solid var(--border);padding:5px 10px;cursor:pointer;text-decoration:none;transition:all .2s;}
+.np a:hover,.np a.on{color:#fff;border-color:#4a1a7a;background:#4a1a7a;}
+
+/* LAYOUT */
+section{position:relative;width:100%;overflow:hidden;}
+.wrap{max-width:1060px;margin:0 auto;padding:0 6%;}
+.fi{opacity:0;transform:translateY(10px);transition:opacity .7s ease,transform .7s ease;}
+.fi.vis{opacity:1;transform:none;}
+.fd1{transition-delay:.1s;}.fd2{transition-delay:.2s;}
+.al{height:1.5px;background:#7a3aaa;width:0;transition:width 1s ease;}
+.al.on{width:40px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start;}
+
+/* TYPE */
+.sn{font-family:var(--ff-m);font-size:10px;letter-spacing:.2em;color:var(--label);margin-bottom:10px;text-transform:uppercase;}
+.sh{font-family:var(--ff-d);font-size:clamp(48px,7vw,90px);letter-spacing:.02em;color:var(--ink);line-height:.9;margin-bottom:6px;}
+.ss{font-family:var(--ff-m);font-size:11px;letter-spacing:.09em;color:var(--label);text-transform:uppercase;margin-bottom:18px;}
+.sb{font-size:15px;color:var(--mute);line-height:1.8;}
+
+/* BADGE */
+.brow{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;}
+.bd{display:inline-flex;flex-direction:column;border:.5px solid var(--border);padding:13px 17px;background:var(--surface);}
+.bd .n{font-family:var(--ff-d);font-size:clamp(18px,3vw,38px);letter-spacing:.02em;color:var(--ink);line-height:1;}
+.bd .n.a{color:#7a3aaa;}
+.bd .l{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--label);margin-top:3px;text-transform:uppercase;}
+
+/* TAG */
+.tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.06em;color:var(--label);border:.5px solid var(--border);padding:4px 9px;display:inline-block;background:rgba(18,16,30,.03);}
+.tag::before{content:'#';color:#7a3aaa;margin-right:2px;opacity:.75;}
+
+/* BULLET */
+.bl{list-style:none;margin-top:14px;}
+.bl li{padding:12px 0;border-bottom:.5px solid var(--line);font-size:14px;line-height:1.7;color:var(--mute);display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;}
+.bl li:last-child{border-bottom:none;}
+.bl .d{width:22px;height:22px;border:.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:10px;}
+.bl strong{font-weight:600;color:var(--ink);}
+
+/* DIVIDERS */
+.sec-div{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#4a1a7a 20%,rgba(74,26,122,.1) 60%,transparent);}
+
+/* HERO */
+#s00{background:#f2f0f8;min-height:100vh;padding-top:76px;}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;min-height:calc(100vh - 76px);max-width:1060px;margin:0 auto;padding:0 6%;}
+.series-pill{display:inline-flex;align-items:center;border:.5px solid #4a1a7a;padding:5px 12px;margin-bottom:16px;opacity:0;transition:opacity .5s ease .1s;}
+.series-pill.on{opacity:1;}
+.series-pill span{font-family:var(--ff-m);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#7a3aaa;}
+.he{font-family:var(--ff-m);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:16px;opacity:0;transition:opacity .5s ease;}
+.he.on{opacity:1;}
+.hh{margin-bottom:14px;opacity:0;transition:opacity .4s ease;}
+.hh.on{opacity:1;}
+.hl{display:block;font-family:var(--ff-d);letter-spacing:.01em;opacity:0;transform:translateY(8px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
+.hl.in{opacity:1;transform:none;}
+.hl-sm{font-size:clamp(22px,3vw,38px);color:var(--label);}
+.hl-lg{font-size:clamp(48px,7.5vw,88px);color:var(--ink);line-height:.9;}
+.hd{font-size:14px;line-height:1.85;color:var(--mute);margin-top:14px;opacity:0;transition:opacity .7s ease;}
+.hd.on{opacity:1;}
+.ht{display:flex;gap:5px;flex-wrap:wrap;margin-top:13px;opacity:0;transition:opacity .5s ease;}
+.ht.on{opacity:1;}
+
+/* DIMM SIDE */
+.dimm-side{opacity:0;transform:translateX(14px);transition:opacity 1.2s ease .2s,transform 1.2s ease .2s;}
+.dimm-side.on{opacity:1;transform:none;}
+.dimm-block{margin-bottom:20px;}
+.dimm-block:last-child{margin-bottom:0;}
+.dimm-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
+.dimm-meta .dm-name{font-family:var(--ff-m);font-size:9px;letter-spacing:.13em;text-transform:uppercase;}
+.dimm-meta .dm-size{font-family:var(--ff-m);font-size:9px;color:var(--label);opacity:.6;}
+.dimm-separator{height:.5px;background:var(--line);margin:18px 0;}
+
+/* WHY TABLE */
+.wt{width:100%;border-collapse:collapse;}
+.wt tr{border-bottom:.5px solid var(--line);}
+.wt td{padding:14px 0;vertical-align:top;}
+.wt .wl{font-family:var(--ff-m);font-size:10px;letter-spacing:.09em;color:var(--label);text-transform:uppercase;width:20%;}
+.wt .wv{font-family:var(--ff-d);font-size:clamp(14px,2vw,22px);letter-spacing:.02em;color:var(--ink);width:28%;}
+.wt .wv.a{color:#7a3aaa;}
+.wt .wd{font-size:13px;color:var(--mute);padding-left:14px;line-height:1.6;}
+
+/* TABS */
+.tab-row{display:flex;border:.5px solid var(--border);overflow:hidden;margin-bottom:16px;}
+.tab{flex:1;padding:10px 14px;font-family:var(--ff-m);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--label);cursor:pointer;text-align:center;border-right:.5px solid var(--border);transition:all .2s;}
+.tab:last-child{border-right:none;}
+.tab.on{background:#4a1a7a;color:#fff;}
+.tp{display:none;}.tp.on{display:block;}
+.tp-inner{padding:14px 16px;background:var(--surface);border:.5px solid var(--border);}
+.tp-inner .th{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);margin-bottom:5px;}
+.tp-inner .tv{font-size:13px;color:var(--mute);line-height:1.7;}
+
+/* SPEC TABLE */
+.stbl{width:100%;border-collapse:collapse;}
+.stbl tr{border-bottom:.5px solid var(--line);}
+.stbl td{padding:11px 0;font-size:13px;vertical-align:top;}
+.stbl td:first-child{color:var(--label);width:44%;font-family:var(--ff-m);font-size:10px;letter-spacing:.06em;text-transform:uppercase;border-left:2px solid transparent;transition:border-color .2s;padding-left:2px;}
+.stbl tr:hover td:first-child{border-left-color:#7a3aaa;}
+.stbl td:last-child{color:var(--ink);}
+.stbl-label{font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;}
+
+/* LIFETIME */
+.lifetime{display:inline-flex;flex-direction:column;border:.5px solid #7a3aaa;padding:16px 22px;background:rgba(74,26,122,.1);text-align:center;}
+.lifetime .ln{font-family:var(--ff-d);font-size:clamp(24px,3.5vw,44px);letter-spacing:.04em;color:#7a3aaa;line-height:1;}
+.lifetime .ll{font-family:var(--ff-m);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#4a1a7a;margin-top:4px;opacity:.8;}
+
+/* BTN */
+.btn{font-family:var(--ff-b);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:11px 22px;background:transparent;cursor:pointer;transition:all .2s;}
+.ba{border:1px solid #4a1a7a;color:#4a1a7a;}.ba:hover{background:#4a1a7a;color:#fff;}
+.bg{border:1px solid var(--border);color:var(--label);}.bg:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+/* FOOTER */
+.foot{background:var(--ink);padding:52px 6% 40px;text-align:center;}
+.fn{font-family:var(--ff-d);font-size:clamp(20px,3.2vw,40px);letter-spacing:.06em;color:rgba(255,255,255,.5);display:flex;flex-wrap:wrap;justify-content:center;gap:0 14px;}
+.fa{font-family:var(--ff-m);font-size:10px;letter-spacing:.2em;color:#7a3aaa;display:block;margin-top:10px;text-transform:uppercase;}
+.fs{font-family:var(--ff-m);font-size:10px;letter-spacing:.18em;color:rgba(255,255,255,.18);margin-top:14px;text-transform:uppercase;}
+
+@media(max-width:860px){
+  .hero-grid,.g2{grid-template-columns:1fr;gap:32px;}
+  .dimm-side{order:-1;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nb"><span class="nb-s">Precision Series</span><span class="nb-b">Simorchip</span></div>
+  <div class="np">
+    <a class="on" onclick="goTo('s00')">Hero</a>
+    <a onclick="goTo('s01')">Why DDR5</a>
+    <a onclick="goTo('s15')">DDR5 Tech</a>
+    <a onclick="goTo('s02')">Performance</a>
+    <a onclick="goTo('s03')">Reliability</a>
+    <a onclick="goTo('s04')">Specs</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="s00">
+  <div class="hero-grid">
+    <div>
+      <div class="series-pill" id="sp"><span>Simorchip · Precision Series</span></div>
+      <div class="he" id="he">DDR5 · 4800 / 5600 Mbps · 1.1V · Up to 44.8 GB/s</div>
+      <div class="hh" id="hh">
+        <span class="hl hl-sm" id="hl0">Precision Series</span>
+        <span class="hl hl-lg" id="hl1">DDR5</span>
+      </div>
+      <div class="al" id="hal" style="margin-top:14px;"></div>
+      <div class="hd" id="hd">4800 / 5600 Mbps · 1.1V · Up to 44.8 GB/s bandwidth<br>On-Die ECC · PMIC · ETT Verified · Lifetime Warranty</div>
+      <div class="ht" id="ht">
+        <span class="tag">DDR5</span>
+        <span class="tag">4800</span>
+        <span class="tag">U-DIMM</span>
+        <span class="tag">SO-DIMM</span>
+        <span class="tag">On-Die ECC</span><span class="tag">PMIC</span>
+        <span class="tag">Lifetime Warranty</span>
+      </div>
+    </div>
+    <div class="dimm-side" id="ds">
+      <!-- U-DIMM -->
+      <div class="dimm-block">
+        <div class="dimm-meta">
+          <span class="dm-name" style="color:#7a3aaa;">U-DIMM · 288-pin</span>
+          <span class="dm-size">133.35 × 30 mm</span>
+        </div>
+        <div style="filter:drop-shadow(0 8px 24px rgba(0,0,0,.16));"><svg viewBox="0 0 480 82" width="100%" style="max-width:480px;display:block;" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="10" width="480" height="62" rx="2" fill="#0e0818" stroke="rgba(255,255,255,.07)" stroke-width=".7"/>
+  <rect x="20" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="27" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="34" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="41" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="48" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="55" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="62" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="69" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="76" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="83" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="90" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="97" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="104" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="111" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="118" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="125" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="132" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="139" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="146" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="153" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="160" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="167" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="174" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="181" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="188" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="195" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="202" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="209" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="216" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="223" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="230" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="237" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="244" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="251" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="258" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="265" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="272" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="279" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="286" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="293" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="300" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="307" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="314" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="321" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="328" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="335" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="342" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="349" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="356" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="363" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="370" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="377" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="384" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="391" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="398" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="405" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="412" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="419" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="426" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="433" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="20" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="27" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="34" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="41" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="48" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="55" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="62" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="69" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="76" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="83" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="90" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="97" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="104" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="111" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="118" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="125" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="132" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="139" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="146" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="153" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="160" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="167" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="174" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="181" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="188" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="195" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="202" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="209" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="216" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="223" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="230" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="237" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="244" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="251" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="258" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="265" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="272" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="279" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="286" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="293" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="300" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="307" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="314" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="321" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="328" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="335" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="342" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="349" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="356" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="363" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="370" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="377" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="384" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="391" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="398" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="405" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="412" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="419" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="426" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="433" y="72" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/>
+  <rect x="240" y="70" width="7" height="12" rx="1" fill="#f2f0f8"/>
+  <rect x="40" y="16" width="39" height="50" rx="2" fill="#1a2535" stroke="rgba(255,255,255,.08)" stroke-width=".7"/><rect x="83" y="16" width="39" height="50" rx="2" fill="#1a2535" stroke="rgba(255,255,255,.08)" stroke-width=".7"/><rect x="126" y="16" width="39" height="50" rx="2" fill="#1a2535" stroke="rgba(255,255,255,.08)" stroke-width=".7"/><rect x="169" y="16" width="39" height="50" rx="2" fill="#1a2535" stroke="rgba(255,255,255,.08)" stroke-width=".7"/><rect x="212" y="16" width="39" height="50" rx="2" fill="#1a2535" stroke="rgba(255,255,255,.08)" stroke-width=".7"/><rect x="255" y="16" width="39" height="50" rx="2" fill="#1a2535" stroke="rgba(255,255,255,.08)" stroke-width=".7"/><rect x="298" y="16" width="39" height="50" rx="2" fill="#1a2535" stroke="rgba(255,255,255,.08)" stroke-width=".7"/><rect x="341" y="16" width="39" height="50" rx="2" fill="#1a2535" stroke="rgba(255,255,255,.08)" stroke-width=".7"/><rect x="412" y="16" width="46" height="50" rx="2" fill="#2a1040" stroke="rgba(160,80,220,.3)" stroke-width=".8"/><text x="435" y="44" font-size="5.5" fill="rgba(160,80,220,.65)" text-anchor="middle" font-family="monospace">PMIC</text>
+  <rect x="0" y="10" width="480" height="2" fill="#4a1a7a" opacity=".8"/>
+  <text x="240" y="44" font-size="7.5" fill="rgba(255,255,255,.16)" text-anchor="middle" font-family="monospace">DDR5 U-DIMM · 288-pin · 32GB</text>
+</svg></div>
+      </div>
+      <div class="dimm-separator"></div>
+      <!-- SO-DIMM — visually shorter -->
+      <div class="dimm-block">
+        <div class="dimm-meta">
+          <span class="dm-name" style="color:var(--label);">SO-DIMM · 262-pin</span>
+          <span class="dm-size">69.6 × 30 mm</span>
+        </div>
+        <div style="width:63%;filter:drop-shadow(0 6px 18px rgba(0,0,0,.13));"><svg viewBox="0 0 300 66" width="100%" style="max-width:300px;display:block;" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="10" width="300" height="46" rx="2" fill="#0e0818" stroke="rgba(255,255,255,.07)" stroke-width=".7"/>
+  <rect x="20" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="25" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="30" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="35" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="40" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="45" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="50" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="55" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="60" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="65" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="70" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="75" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="80" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="85" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="90" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="95" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="100" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="105" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="110" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="115" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="120" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="125" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="130" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="135" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="140" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="145" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="150" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="155" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="160" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="165" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="170" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="175" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="180" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="185" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="190" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="195" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="200" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="205" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="210" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="215" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="220" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="225" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="230" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="235" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="240" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="245" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="250" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="255" y="0" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="20" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="25" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="30" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="35" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="40" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="45" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="50" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="55" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="60" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="65" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="70" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="75" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="80" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="85" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="90" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="95" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="100" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="105" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="110" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="115" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="120" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="125" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="130" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="135" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="140" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="145" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="150" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="155" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="160" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="165" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="170" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="175" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="180" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="185" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="190" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="195" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="200" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="205" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="210" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="215" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="220" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="225" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="230" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="235" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="240" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="245" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="250" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/><rect x="255" y="56" width="2.5" height="10" fill="rgba(200,155,20,.75)" rx=".4"/>
+  <rect x="148" y="54" width="7" height="12" rx="1" fill="#f2f0f8"/>
+  <rect x="40" y="14" width="41" height="38" rx="2" fill="#1a2535" stroke="rgba(255,255,255,.08)" stroke-width=".7"/><rect x="85" y="14" width="41" height="38" rx="2" fill="#1a2535" stroke="rgba(255,255,255,.08)" stroke-width=".7"/><rect x="130" y="14" width="41" height="38" rx="2" fill="#1a2535" stroke="rgba(255,255,255,.08)" stroke-width=".7"/><rect x="175" y="14" width="41" height="38" rx="2" fill="#1a2535" stroke="rgba(255,255,255,.08)" stroke-width=".7"/><rect x="248" y="14" width="36" height="38" rx="2" fill="#2a1040" stroke="rgba(160,80,220,.3)" stroke-width=".8"/><text x="266" y="36" font-size="5" fill="rgba(160,80,220,.6)" text-anchor="middle" font-family="monospace">PMIC</text>
+  <rect x="0" y="10" width="300" height="2" fill="#4a1a7a" opacity=".8"/>
+  <text x="150" y="36" font-size="7.5" fill="rgba(255,255,255,.16)" text-anchor="middle" font-family="monospace">DDR5 SO-DIMM · 262-pin · 32GB</text>
+</svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DDR5 EXCLUSIVE (DDR5 only) ── -->
+<div style="background:var(--bg2);padding:80px 6%;">
+  <div class="wrap fi">
+    <div style="font-family:var(--ff-m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin-bottom:16px;">DDR5 Exclusive Technologies</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div style="border:.5px solid var(--border);padding:18px 16px;background:var(--surface);">
+        <div style="font-size:20px;margin-bottom:10px;">🧠</div>
+        <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:5px;">On-Die ECC</div>
+        <div style="font-size:12px;color:var(--mute);line-height:1.6;">ECC built directly into each chip. Corrects bit errors automatically — no CPU involvement. Always on, zero overhead.</div>
+      </div>
+      <div style="border:.5px solid var(--border);padding:18px 16px;background:var(--surface);">
+        <div style="font-size:20px;margin-bottom:10px;">⚡</div>
+        <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:5px;">PMIC</div>
+        <div style="font-size:12px;color:var(--mute);line-height:1.6;">Dedicated Power Management IC on the module. Stable 1.1V delivery — 8% more efficient than DDR4.</div>
+      </div>
+      <div style="border:.5px solid var(--border);padding:18px 16px;background:var(--surface);">
+        <div style="font-size:20px;margin-bottom:10px;">🔀</div>
+        <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:5px;">Dual 32-bit Channels</div>
+        <div style="font-size:12px;color:var(--mute);line-height:1.6;">Two independent 32-bit channels replace DDR4's single 64-bit. More bank groups, higher parallelism.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── WHY ── -->
+<section id="s01" style="background:var(--bg2);padding:80px 6%;">
+  <div class="sec-div"></div>
+  <div class="wrap">
+    <div class="fi">
+      <div class="sn">Why DDR5?</div>
+      <div class="sh" style="font-size:clamp(36px,5vw,60px);">WHY DDR5?</div>
+    </div>
+    <table class="wt fi fd1" style="margin-top:28px;">
+      <tr><td class="wl">Bandwidth</td><td class="wv a">44.8<span style="font-size:.5em;"> GB/s</span></td><td class="wd">Up to 44.8 GB/s — 50% above DDR4-3200. Meaningful improvement across every workload.</td></tr>
+      <tr><td class="wl">Voltage</td><td class="wv">1.1V</td><td class="wd">8% lower than DDR4's 1.2V. PMIC on the module ensures stable, efficient power delivery.</td></tr>
+      <tr><td class="wl">Speed</td><td class="wv">4800<span style="font-size:.5em;"> Mbps</span></td><td class="wd">4800 / 5600 Mbps supported. DDR5-5600 for maximum bandwidth; DDR5-4800 for broader platform compatibility.</td></tr>
+      <tr><td class="wl">On-Die ECC</td><td class="wv">Built-in</td><td class="wd">ECC integrated into every chip. Always active, no CPU overhead. Corrects bit errors automatically — better data accuracy every read.</td></tr><tr><td class="wl">PMIC</td><td class="wv">On-module</td><td class="wd">Dedicated Power Management IC on the DDR5 module. Stable 1.1V delivery — more efficient and precise than motherboard-side power management.</td></tr>
+      <tr><td class="wl">Compatibility</td><td class="wv" style="font-size:clamp(12px,1.5vw,17px);padding-top:6px;">JEDEC</td><td class="wd">JEDEC and RoHS compliant. ETT-verified original factory chips with full high/low temperature environmental screening.</td></tr>
+      <tr><td class="wl">Warranty</td><td class="wv a">Lifetime</td><td class="wd">Lifetime limited warranty across the entire Simorchip memory lineup. Buy once, covered for life.</td></tr>
+    </table>
+    <p class="fi fd2" style="font-family:var(--ff-m);font-size:10px;color:var(--label);margin-top:12px;">* DDR5 is NOT compatible with DDR4 or DDR3 slots. Different notch position prevents incorrect installation.</p>
+  </div>
+</section>
+
+<!-- ── PERFORMANCE ── -->
+<section id="s02" style="background:var(--bg);padding:80px 6%;">
+  <div class="sec-div"></div>
+  <div class="wrap">
+    <div class="sn fi">01 — Performance</div>
+    <div class="sh fi">DDR5</div>
+    <div class="ss fi">4800 / 5600 Mbps · Up to 44.8 GB/s</div>
+    <div class="al fi on"></div>
+    <div class="g2 fi fd1" style="margin-top:28px;">
+      <div>
+        <div class="sb">Up to 44.8 GB/s of memory bandwidth.<br>On-Die ECC built into every chip. PMIC for stable 1.1V power.</div>
+        <div style="margin-top:22px;">
+          <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);margin-bottom:10px;">Select Form Factor</div>
+          <div class="tab-row">
+            <div class="tab on" onclick="switchTab('u')">U-DIMM · 288-pin · Desktop</div>
+            <div class="tab" onclick="switchTab('so')">SO-DIMM · 262-pin · Laptop</div>
+          </div>
+          <div class="tp on" id="tp-u">
+            <div class="tp-inner">
+              <div class="th">DDR5 U-DIMM — Desktop / Workstation · 32GB</div>
+              <div class="tv">Intel LGA 1700/1851 (12th–14th Gen / Core Ultra) · AMD AM5 · DDR5-compatible motherboards</div>
+            </div>
+          </div>
+          <div class="tp" id="tp-so">
+            <div class="tp-inner">
+              <div class="th">DDR5 SO-DIMM — Laptop / Mini PC · 32GB</div>
+              <div class="tv">Intel Meteor Lake / Lunar Lake laptops · AMD Ryzen AI / 7000/9000 Mobile · NUC DDR5 · Mini PC</div>
+            </div>
+          </div>
+        </div>
+        <div class="brow">
+          <div class="bd"><div class="n a">44.8</div><div class="l">GB/s Bandwidth</div></div>
+          <div class="bd"><div class="n">5600</div><div class="l">Mbps Speed</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);margin-bottom:12px;">Bandwidth by Generation</div>
+        <div id="bars"><div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:.5px solid var(--line);">
+          <span style="font-family:var(--ff-m);font-size:10px;color:var(--label);width:80px;flex-shrink:0;">DDR5-5600</span>
+          <div style="flex:1;height:5px;background:rgba(18,16,30,.08);border-radius:2px;overflow:hidden;">
+            <div class="bar" data-w="100" style="height:100%;width:0;background:#7a3aaa;border-radius:2px;transition:width 1.2s cubic-bezier(.16,1,.3,1);"></div>
+          </div>
+          <span style="font-family:var(--ff-d);font-size:13px;width:80px;text-align:right;color:#7a3aaa;font-weight:600;">44.8 GB/s</span>
+        </div><div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:.5px solid var(--line);">
+          <span style="font-family:var(--ff-m);font-size:10px;color:var(--label);width:80px;flex-shrink:0;">DDR4-3200</span>
+          <div style="flex:1;height:5px;background:rgba(18,16,30,.08);border-radius:2px;overflow:hidden;">
+            <div class="bar" data-w="57" style="height:100%;width:0;background:rgba(18,16,30,.2);border-radius:2px;transition:width 1.2s cubic-bezier(.16,1,.3,1);"></div>
+          </div>
+          <span style="font-family:var(--ff-d);font-size:13px;width:80px;text-align:right;">25.6 GB/s</span>
+        </div><div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:.5px solid var(--line);">
+          <span style="font-family:var(--ff-m);font-size:10px;color:var(--label);width:80px;flex-shrink:0;">DDR3-1600</span>
+          <div style="flex:1;height:5px;background:rgba(18,16,30,.08);border-radius:2px;overflow:hidden;">
+            <div class="bar" data-w="29" style="height:100%;width:0;background:rgba(18,16,30,.1);border-radius:2px;transition:width 1.2s cubic-bezier(.16,1,.3,1);"></div>
+          </div>
+          <span style="font-family:var(--ff-d);font-size:13px;width:80px;text-align:right;">12.8 GB/s</span>
+        </div><div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:.5px solid var(--line);">
+          <span style="font-family:var(--ff-m);font-size:10px;color:var(--label);width:80px;flex-shrink:0;">DDR2-800</span>
+          <div style="flex:1;height:5px;background:rgba(18,16,30,.08);border-radius:2px;overflow:hidden;">
+            <div class="bar" data-w="14" style="height:100%;width:0;background:rgba(18,16,30,.1);border-radius:2px;transition:width 1.2s cubic-bezier(.16,1,.3,1);"></div>
+          </div>
+          <span style="font-family:var(--ff-d);font-size:13px;width:80px;text-align:right;">6.4 GB/s</span>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RELIABILITY ── -->
+<section id="s03" style="padding:80px 6%;">
+  <div class="sec-div"></div>
+  <div class="wrap">
+    <div class="sn fi">02 — Reliability</div>
+    <div class="sh fi">Solid</div>
+    <div class="ss fi">JEDEC · ETT Verified · Lifetime Warranty</div>
+    <div class="al fi on"></div>
+    <div class="g2 fi fd1" style="margin-top:28px;">
+      <div>
+        <ul class="bl">
+          <li><div class="d">🧠</div><div><strong>On-Die ECC — always active</strong> — ECC built into every DDR5 chip. Corrects bit errors automatically, no CPU overhead. Better accuracy, better stability — every read, every time.</div></li><li><div class="d">⚡</div><div><strong>PMIC — stable power on module</strong> — Power Management IC on the DDR5 module. Stable 1.1V delivery, more precise than motherboard-side power management.</div></li>
+          <li><div class="d">🔬</div><div><strong>ETT-verified original factory chips</strong> — Effective Tested certification with high and low-temperature environmental screening before assembly. Only chips that pass every threshold make it into the module.</div></li>
+          <li><div class="d">✅</div><div><strong>JEDEC &amp; RoHS compliant</strong> — Designed to JEDEC DDR5 standards. Compatible with all DDR5-compliant desktop and laptop platforms.</div></li>
+          <li><div class="d">🖥️</div><div><strong>Multi-platform real-machine testing</strong> — Tested across multiple platforms and OS versions before leaving the factory.</div></li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="lifetime"><div class="ln">Lifetime</div><div class="ll">Limited Warranty</div></div>
+        <div style="padding:14px 16px;border:.5px solid var(--border);background:var(--surface);">
+          <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);margin-bottom:6px;">Global Standards</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">
+            <span style="font-family:var(--ff-m);font-size:11px;color:var(--mute);border:.5px solid var(--border);padding:3px 8px;">JEDEC</span><span style="font-family:var(--ff-m);font-size:11px;color:var(--mute);border:.5px solid var(--border);padding:3px 8px;">RoHS</span><span style="font-family:var(--ff-m);font-size:11px;color:var(--mute);border:.5px solid var(--border);padding:3px 8px;">ETT</span><span style="font-family:var(--ff-m);font-size:11px;color:var(--mute);border:.5px solid var(--border);padding:3px 8px;">CE</span><span style="font-family:var(--ff-m);font-size:11px;color:var(--mute);border:.5px solid var(--border);padding:3px 8px;">FCC</span>
+          </div>
+        </div>
+        <div style="padding:14px 16px;border:.5px solid var(--border);background:var(--surface);">
+          <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);margin-bottom:6px;">OS Support</div>
+          <div style="font-size:13px;color:var(--mute);line-height:1.7;">Windows 11 / 10 · Linux<br>macOS (compatible systems)<br>Plug &amp; Play — no drivers required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SPECS ── -->
+<section id="s04" style="background:var(--bg2);padding:80px 6%;">
+  <div class="sec-div"></div>
+  <div class="wrap">
+    <div class="sn fi">03 — Specifications</div>
+    <div class="sh fi">Full Specs</div>
+    <div class="al fi on"></div>
+    <div class="g2 fi fd1" style="margin-top:28px;">
+      <div>
+        <div class="stbl-label" style="color:#7a3aaa;">DDR5 U-DIMM — Desktop / Workstation</div>
+        <table class="stbl">
+          <tr><td>Model</td><td>Simorchip DDR5 U-DIMM</td></tr>
+          <tr><td>Series</td><td>Precision Series</td></tr>
+          <tr><td>Form Factor</td><td>U-DIMM · 288-pin</td></tr>
+          <tr><td>Speed</td><td>4800 / 5600 Mbps</td></tr>
+          <tr><td>Bandwidth</td><td>Up to 44.8 GB/s</td></tr>
+          <tr><td>Voltage</td><td>1.1V</td></tr>
+          <tr><td>Capacity</td><td>32GB</td></tr>
+          <tr><td>ECC</td><td>On-Die ECC (per chip, always active)</td></tr><tr><td>Power Management</td><td>PMIC (on-module)</td></tr><tr><td>Channel Architecture</td><td>Dual independent 32-bit</td></tr>
+          <tr><td>Dimensions</td><td>133.35 × 30 mm</td></tr>
+          <tr><td>Standard</td><td>JEDEC · RoHS · ETT Verified</td></tr>
+          <tr><td>Warranty</td><td>Lifetime Limited Warranty</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="stbl-label" style="color:var(--label);">DDR5 SO-DIMM — Laptop / Mini PC</div>
+        <table class="stbl">
+          <tr><td>Model</td><td>Simorchip DDR5 SO-DIMM</td></tr>
+          <tr><td>Series</td><td>Precision Series</td></tr>
+          <tr><td>Form Factor</td><td>SO-DIMM · 262-pin</td></tr>
+          <tr><td>Speed</td><td>4800 / 5600 Mbps</td></tr>
+          <tr><td>Bandwidth</td><td>Up to 44.8 GB/s</td></tr>
+          <tr><td>Voltage</td><td>1.1V</td></tr>
+          <tr><td>Capacity</td><td>32GB</td></tr>
+          <tr><td>ECC</td><td>On-Die ECC (per chip, always active)</td></tr><tr><td>Power Management</td><td>PMIC (on-module)</td></tr><tr><td>Channel Architecture</td><td>Dual independent 32-bit</td></tr>
+          <tr><td>Dimensions</td><td>69.6 × 30 mm</td></tr>
+          <tr><td>Standard</td><td>JEDEC · RoHS · ETT Verified</td></tr>
+          <tr><td>Warranty</td><td>Lifetime Limited Warranty</td></tr>
+        </table>
+      </div>
+    </div>
+    <p class="fi fd2" style="font-family:var(--ff-m);font-size:10px;color:var(--label);line-height:1.6;margin-top:14px;">
+      * All data from Simorchip internal labs. Actual performance may vary depending on system configuration.<br>
+      * DDR5 is NOT compatible with DDR4 or DDR3 slots. Different notch position prevents incorrect installation.
+    </p>
+    <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;" class="fi fd2">
+      <button class="btn ba">Download Datasheet</button>
+      <button class="btn bg">View Precision Series</button>
+    </div>
+  </div>
+</section>
+
+<div class="foot">
+  <div class="fn"><span>Simorchip</span><span>DDR5</span><span>Precision Series</span></div>
+  <span class="fa">U-DIMM · SO-DIMM · 4800 / 5600 Mbps · Lifetime Warranty</span>
+  <div class="fs">© 2026 Simorchip Technology · DDR5 · 1.1V · ETT Verified</div>
+</div>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('sc', scrollY > 50));
+function goTo(id) { document.getElementById(id)?.scrollIntoView({behavior:'smooth'}); }
+
+// nav highlight
+const sids = ['s00','s01','s02','s03','s04'];
+const pills = document.querySelectorAll('.np a');
+sids.forEach(id => {
+  const el = document.getElementById(id); if (!el) return;
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const i = sids.indexOf(id);
+        pills.forEach(p => p.classList.remove('on'));
+        if (pills[i]) pills[i].classList.add('on');
+      }
+    });
+  }, {threshold: 0.4}).observe(el);
+});
+
+// scroll reveal
+const fo = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, {threshold: 0.1});
+document.querySelectorAll('.fi').forEach(el => fo.observe(el));
+
+// accent lines
+document.querySelectorAll('.al').forEach(el => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+  }, {threshold: 0.5}).observe(el);
+});
+
+// hero entrance
+document.fonts.ready.then(() => {
+  function cls(id, d = 0) { setTimeout(() => document.getElementById(id)?.classList.add('on'), d); }
+  cls('sp', 0); cls('ds', 0); cls('he', 280); cls('hh', 460);
+  setTimeout(() => {
+    ['hl0','hl1'].forEach((id, i) => setTimeout(() => document.getElementById(id)?.classList.add('in'), i * 220));
+  }, 500);
+  setTimeout(() => document.getElementById('hal')?.classList.add('on'), 1100);
+  cls('hd', 1400); cls('ht', 1700);
+});
+
+// bandwidth bars
+(function() {
+  const g = document.getElementById('bars'); if (!g) return;
+  let done = false;
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !done) {
+      done = true;
+      g.querySelectorAll('.bar').forEach(el => { el.style.width = el.dataset.w + '%'; });
+    }
+  }, {threshold: 0.4}).observe(g);
+})();
+
+// tab switcher
+function switchTab(t) {
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('on'));
+  document.querySelectorAll('.tp').forEach(el => el.classList.remove('on'));
+  const idx = t === 'u' ? 0 : 1;
+  document.querySelectorAll('.tab')[idx]?.classList.add('on');
+  document.getElementById('tp-' + t)?.classList.add('on');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip M.2 2230 — Core Series</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0f4f8;--bg2:#e4eaf2;
+  --g3:#2563eb;--g3l:#6090f8;--g3d:rgba(37,99,235,.1);
+  --g4:#0ea5e9;--g4l:#38bdf8;--g4d:rgba(14,165,233,.1);
+  --ink:#0f172a;--mute:#334155;--label:#64748b;
+  --surface:#fff;--border:rgba(15,23,42,.1);--line:rgba(15,23,42,.07);
+  --f:"Inter",-apple-system,sans-serif;--fm:"DM Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--f);background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:56px;transition:background .3s,border-bottom .3s;}
+nav.sc{background:rgba(240,244,248,.95);backdrop-filter:blur(14px);border-bottom:.5px solid var(--border);}
+.nb{display:flex;flex-direction:column;gap:1px;}
+.nb-s{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--g3l);}
+.nb-b{font-family:var(--fm);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);opacity:.38;}
+.np{display:flex;gap:5px;}
+.np a{font-family:var(--fm);font-size:10px;letter-spacing:.08em;color:var(--label);border:.5px solid var(--border);padding:5px 10px;cursor:pointer;text-decoration:none;transition:all .2s;}
+.np a:hover,.np a.on{color:#fff;border-color:var(--g3);background:var(--g3);}
+
+section{position:relative;width:100%;overflow:hidden;}
+.wrap{max-width:1060px;margin:0 auto;padding:0 6%;}
+.fi{opacity:0;transform:translateY(10px);transition:opacity .7s ease,transform .7s ease;}
+.fi.vis{opacity:1;transform:none;}
+.fd1{transition-delay:.1s;}.fd2{transition-delay:.2s;}
+.al{height:1.5px;width:0;transition:width 1s ease;}
+.al.on{width:40px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start;}
+.sn{font-family:var(--fm);font-size:10px;letter-spacing:.2em;color:var(--label);margin-bottom:10px;text-transform:uppercase;}
+.sh{font-size:clamp(44px,6.5vw,84px);font-weight:600;letter-spacing:-.03em;color:var(--ink);line-height:.9;margin-bottom:6px;}
+.ss{font-family:var(--fm);font-size:11px;letter-spacing:.09em;color:var(--label);text-transform:uppercase;margin-bottom:18px;}
+.sec-div{position:absolute;top:0;left:0;right:0;height:1px;}
+
+/* HERO */
+#s00{background:var(--bg);min-height:100vh;padding-top:56px;}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;min-height:calc(100vh - 56px);max-width:1060px;margin:0 auto;padding:0 6%;}
+.sp{display:inline-flex;align-items:center;border:.5px solid var(--g3);padding:5px 12px;margin-bottom:16px;opacity:0;transition:opacity .5s ease .1s;}
+.sp.on{opacity:1;}
+.sp span{font-family:var(--fm);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--g3l);}
+.he{font-family:var(--fm);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:16px;opacity:0;transition:opacity .5s ease;}
+.he.on{opacity:1;}
+.hh{margin-bottom:14px;opacity:0;transition:opacity .4s ease;}
+.hh.on{opacity:1;}
+.hl{display:block;opacity:0;transform:translateY(8px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
+.hl.in{opacity:1;transform:none;}
+.hl-sm{font-size:clamp(16px,2.2vw,28px);font-weight:300;color:var(--label);letter-spacing:-.01em;}
+.hl-lg{font-size:clamp(52px,7.5vw,90px);font-weight:600;letter-spacing:-.04em;color:var(--ink);line-height:.88;}
+.hd{font-size:14px;font-weight:300;line-height:1.85;color:var(--mute);margin-top:14px;opacity:0;transition:opacity .7s ease;}
+.hd.on{opacity:1;}
+.ht{display:flex;gap:5px;flex-wrap:wrap;margin-top:13px;opacity:0;transition:opacity .5s ease;}
+.ht.on{opacity:1;}
+.tag{font-family:var(--fm);font-size:10px;letter-spacing:.06em;color:var(--label);border:.5px solid var(--border);padding:4px 9px;display:inline-block;background:rgba(15,23,42,.03);}
+.tag::before{content:"#";margin-right:2px;opacity:.7;}
+.tag.t3::before{color:var(--g3l);}
+.tag.t4::before{color:var(--g4l);}
+
+/* PCB SIDE — both boards stacked */
+.pcb-side{opacity:0;transform:translateX(14px);transition:opacity 1.2s ease .2s,transform 1.2s ease .2s;}
+.pcb-side.on{opacity:1;transform:none;}
+.pcb-block{margin-bottom:20px;}
+.pcb-block:last-child{margin-bottom:0;}
+.pcb-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.pcb-meta-name{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;}
+.pcb-meta-dim{font-family:var(--fm);font-size:9px;color:var(--label);opacity:.55;}
+.pcb-sep{height:.5px;background:var(--line);margin:18px 0;}
+
+/* COMPARE TABLE */
+.cmp{width:100%;border-collapse:collapse;margin-top:20px;}
+.cmp thead th{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:400;padding:0 0 12px;border-bottom:.5px solid var(--line);text-align:left;}
+.cmp thead .h3{color:var(--g3l);}
+.cmp thead .h4{color:var(--g4l);}
+.cmp tbody tr{border-bottom:.5px solid var(--line);}
+.cmp tbody tr:last-child{border-bottom:none;}
+.cmp td{padding:13px 0;font-size:13px;vertical-align:top;}
+.cmp td:first-child{font-family:var(--fm);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--label);width:24%;}
+.cmp .v3{color:var(--ink);width:38%;font-weight:500;}
+.cmp .v4{color:var(--ink);width:38%;font-weight:500;}
+.cmp .v3.hi{color:var(--g3l);}
+.cmp .v4.hi{color:var(--g4l);}
+
+/* VARIANT TABS */
+.vtab{display:flex;border:.5px solid var(--border);overflow:hidden;margin-bottom:0;}
+.vt{flex:1;padding:11px 14px;font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .2s;color:var(--label);}
+.vt:first-child{border-right:.5px solid var(--border);}
+.vt.on3{background:var(--g3);color:#fff;}
+.vt.on4{background:var(--g4);color:#fff;}
+.vp{display:none;}.vp.on{display:block;}
+
+/* SPEED BARS */
+.sr{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:.5px solid var(--line);}
+.sr:last-child{border-bottom:none;}
+.sl{font-family:var(--fm);font-size:10px;color:var(--label);width:68px;flex-shrink:0;}
+.st{flex:1;height:5px;background:rgba(15,23,42,.08);border-radius:2px;overflow:hidden;}
+.sf{height:100%;border-radius:2px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+.sf3{background:var(--g3l);}
+.sf4{background:var(--g4l);}
+.sv{font-family:var(--fm);font-size:11px;width:86px;text-align:right;flex-shrink:0;font-weight:500;}
+.sv3{color:var(--g3l);}
+.sv4{color:var(--g4l);}
+
+/* HIGHLIGHT BOXES */
+.hlb{border:.5px solid;padding:14px 18px;margin-top:14px;}
+.hlb3{border-color:var(--g3);background:var(--g3d);}
+.hlb4{border-color:var(--g4);background:var(--g4d);}
+.hlb-lbl{font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;}
+.hlb-lbl3{color:var(--g3l);}
+.hlb-lbl4{color:var(--g4l);}
+.hlb-txt{font-size:13px;font-weight:500;color:var(--ink);line-height:1.6;}
+
+/* BADGES */
+.brow{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.bd{display:inline-flex;flex-direction:column;border:.5px solid var(--border);padding:12px 16px;background:var(--surface);}
+.bd .n{font-size:clamp(18px,2.8vw,36px);font-weight:600;letter-spacing:-.02em;color:var(--ink);line-height:1;}
+.bd .l{font-family:var(--fm);font-size:9px;letter-spacing:.1em;color:var(--label);margin-top:3px;text-transform:uppercase;}
+
+/* COMPAT */
+.cg{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:14px;}
+.cc{border:.5px solid var(--border);background:var(--surface);padding:11px 7px;text-align:center;transition:border-color .2s;}
+.cc:hover{border-color:var(--g3);}
+.cc .ci{font-size:17px;margin-bottom:4px;display:block;}
+.cc .cn{font-family:var(--fm);font-size:8px;letter-spacing:.06em;text-transform:uppercase;color:var(--label);line-height:1.4;}
+
+/* SPEC TABLE */
+.stbl{width:100%;border-collapse:collapse;}
+.stbl tr{border-bottom:.5px solid var(--line);}
+.stbl td{padding:11px 0;font-size:13px;vertical-align:top;}
+.stbl td:first-child{color:var(--label);width:40%;font-family:var(--fm);font-size:10px;letter-spacing:.06em;text-transform:uppercase;border-left:2px solid transparent;transition:border-color .2s;padding-left:2px;}
+.stbl td:last-child{color:var(--ink);}
+
+.btn{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:11px 22px;background:transparent;cursor:pointer;transition:all .2s;}
+.ba3{border:1px solid var(--g3);color:var(--g3);}.ba3:hover{background:var(--g3);color:#fff;}
+.ba4{border:1px solid var(--g4);color:var(--g4);}.ba4:hover{background:var(--g4);color:#fff;}
+.bg{border:1px solid var(--border);color:var(--label);}.bg:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+.foot{background:var(--ink);padding:48px 6% 36px;text-align:center;}
+.fn{font-size:clamp(18px,3vw,38px);font-weight:600;letter-spacing:-.02em;color:rgba(255,255,255,.5);display:flex;flex-wrap:wrap;justify-content:center;gap:0 14px;}
+.fa{font-family:var(--fm);font-size:10px;letter-spacing:.2em;color:var(--g3l);display:block;margin-top:10px;text-transform:uppercase;}
+.fs{font-family:var(--fm);font-size:9px;letter-spacing:.16em;color:rgba(255,255,255,.18);margin-top:14px;text-transform:uppercase;}
+
+@media(max-width:860px){
+  .hero-grid,.g2{grid-template-columns:1fr;gap:32px;}
+  .pcb-side{order:-1;}
+  .cg{grid-template-columns:repeat(3,1fr);}
+  .cmp{font-size:12px;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nb"><span class="nb-s">Core Series</span><span class="nb-b">Simorchip</span></div>
+  <div class="np">
+    <a class="on" onclick="goTo('s00')">Hero</a>
+    <a onclick="goTo('s01')">GEN3 vs GEN4</a>
+    <a onclick="goTo('s02')">Performance</a>
+    <a onclick="goTo('s03')">Reliability</a>
+    <a onclick="goTo('s04')">Specs</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="s00">
+  <div class="hero-grid">
+    <div>
+      <div class="sp" id="sp"><span>Simorchip · Core Series</span></div>
+      <div class="he" id="he">M.2 2230 · PCIe Gen3x4 &amp; Gen4x4 · 30 × 22 mm</div>
+      <div class="hh" id="hh">
+        <span class="hl hl-sm" id="hl0">Core Series</span>
+        <span class="hl hl-lg" id="hl1">2230</span>
+      </div>
+      <div class="al" id="hal" style="margin-top:14px;background:var(--g3);"></div>
+      <div class="hd" id="hd">30mm. Fits where others don't.<br>Two speed tiers. Same form factor. Your call.</div>
+      <div class="ht" id="ht">
+        <span class="tag t3">2230 GEN3x4</span>
+        <span class="tag t4">2230 GEN4x4</span>
+        <span class="tag t3">3,300 MB/s</span>
+        <span class="tag t4">7,000 MB/s</span>
+        <span class="tag t3">1,500,000 hr MTBF</span>
+      </div>
+    </div>
+    <!-- Both PCBs stacked -->
+    <div class="pcb-side" id="ps">
+      <div class="pcb-block">
+        <div class="pcb-meta">
+          <span class="pcb-meta-name" style="color:var(--g3l);">GEN3x4 · PCIe Gen3x4</span>
+          <span class="pcb-meta-dim">30mm</span>
+        </div><svg viewBox="0 0 310 150" width="100%" style="max-width:380px;display:block;filter:drop-shadow(0 14px 36px rgba(0,0,0,.25)) drop-shadow(0 4px 10px rgba(0,0,0,.15));" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="18" width="310" height="114" rx="4" fill="#111" stroke="rgba(255,255,255,.07)" stroke-width=".8"/>
+  <rect x="2.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="5.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="8.4" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="11.600000000000001" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="14.8" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="18.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="21.200000000000003" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="24.400000000000002" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="27.6" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="30.8" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="34.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="37.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="40.400000000000006" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="43.6" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="46.800000000000004" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="50.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="53.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="56.400000000000006" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="59.6" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="62.800000000000004" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="66.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="69.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="2.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="5.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="8.4" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="11.600000000000001" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="14.8" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="18.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="21.200000000000003" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="24.400000000000002" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="27.6" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="30.8" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="34.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="37.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="40.400000000000006" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="43.6" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="46.800000000000004" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="50.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="53.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="56.400000000000006" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="59.6" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="62.800000000000004" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="66.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="69.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/>
+  <rect x="72" y="18" width="7" height="114" rx="0" fill="#111"/>
+  <circle cx="298" cy="75" r="5" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="1"/>
+  <circle cx="298" cy="75" r="2" fill="#111"/>
+  <rect x="80" y="23" width="200" height="104" rx="3" fill="#fff"/>
+  <rect x="80" y="23" width="200" height="30" rx="3" fill="#111"/>
+  <rect x="80" y="41" width="200" height="12" fill="#111"/>
+  <text x="152" y="36" font-size="10" fill="white" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" letter-spacing="1">Simorchip</text>
+  <text x="143" y="47" font-size="7" fill="white" text-anchor="middle" font-family="Arial,sans-serif">M.2 NVMe</text>
+  <rect x="162" y="40" width="20" height="8" rx="1.5" fill="white"/>
+  <text x="172" y="46.5" font-size="6" fill="#111" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700">SSD</text>
+  <text x="86" y="70" font-size="7.5" fill="#111" font-family="Arial,sans-serif" font-weight="700">M.2 2230</text>
+  <text x="86" y="81" font-size="7.5" fill="#111" font-family="Arial,sans-serif" font-weight="700">PCIe Gen 3x4</text>
+  <text x="272" y="80" font-size="15" fill="#111" text-anchor="end" font-family="Arial,sans-serif" font-weight="700">2TB</text>
+  <rect x="82.0" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="84.3" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="86.6" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="88.9" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="91.2" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="93.5" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="95.8" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="98.1" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="100.4" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="102.7" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="105.0" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="107.3" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="109.6" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="111.9" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="114.19999999999999" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="116.5" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="118.8" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="121.1" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="123.4" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="125.69999999999999" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="128.0" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="130.3" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="132.6" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="134.9" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="137.2" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="139.5" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="141.8" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="144.1" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="146.39999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="148.7" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="151.0" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="153.3" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="155.6" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="157.89999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="160.2" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="162.5" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="164.8" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="167.1" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="169.39999999999998" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="171.7" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="174.0" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="176.3" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="178.6" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="180.89999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="183.2" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="185.5" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="187.8" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="190.1" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="192.39999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="194.7" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="197.0" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="199.3" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="201.6" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="203.89999999999998" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="206.2" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="208.5" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="210.79999999999998" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="213.1" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="215.39999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="217.7" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="220.0" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="222.29999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="224.6" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="226.89999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="229.2" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="231.5" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="233.79999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="236.1" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="238.39999999999998" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="240.7" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="243.0" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="245.29999999999998" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="247.6" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="249.89999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/>
+  <text x="86" y="122" font-size="6" fill="#333" font-family="Arial,sans-serif">Model: SMC002TM23310</text>
+  <text x="86" y="131" font-size="5.5" fill="#888" font-family="Arial,sans-serif">CE RoHS FCC REACH</text>
+  <rect x="0" y="18" width="310" height="2" fill="#2563eb" opacity=".8" rx="1"/>
+</svg>
+      </div>
+      <div class="pcb-sep"></div>
+      <div class="pcb-block" style="width:70%;">
+        <div class="pcb-meta">
+          <span class="pcb-meta-name" style="color:var(--g4l);">GEN4x4 · PCIe Gen4x4</span>
+          <span class="pcb-meta-dim">30mm</span>
+        </div><svg viewBox="0 0 310 150" width="100%" style="max-width:380px;display:block;filter:drop-shadow(0 14px 36px rgba(0,0,0,.25)) drop-shadow(0 4px 10px rgba(0,0,0,.15));" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="18" width="310" height="114" rx="4" fill="#111" stroke="rgba(255,255,255,.07)" stroke-width=".8"/>
+  <rect x="2.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="5.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="8.4" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="11.600000000000001" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="14.8" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="18.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="21.200000000000003" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="24.400000000000002" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="27.6" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="30.8" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="34.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="37.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="40.400000000000006" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="43.6" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="46.800000000000004" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="50.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="53.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="56.400000000000006" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="59.6" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="62.800000000000004" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="66.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="69.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="2.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="5.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="8.4" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="11.600000000000001" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="14.8" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="18.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="21.200000000000003" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="24.400000000000002" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="27.6" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="30.8" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="34.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="37.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="40.400000000000006" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="43.6" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="46.800000000000004" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="50.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="53.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="56.400000000000006" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="59.6" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="62.800000000000004" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="66.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="69.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/>
+  <rect x="72" y="18" width="7" height="114" rx="0" fill="#111"/>
+  <circle cx="298" cy="75" r="5" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="1"/>
+  <circle cx="298" cy="75" r="2" fill="#111"/>
+  <rect x="80" y="23" width="200" height="104" rx="3" fill="#fff"/>
+  <rect x="80" y="23" width="200" height="30" rx="3" fill="#111"/>
+  <rect x="80" y="41" width="200" height="12" fill="#111"/>
+  <text x="152" y="36" font-size="10" fill="white" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" letter-spacing="1">Simorchip</text>
+  <text x="143" y="47" font-size="7" fill="white" text-anchor="middle" font-family="Arial,sans-serif">M.2 NVMe</text>
+  <rect x="162" y="40" width="20" height="8" rx="1.5" fill="white"/>
+  <text x="172" y="46.5" font-size="6" fill="#111" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700">SSD</text>
+  <text x="86" y="70" font-size="7.5" fill="#111" font-family="Arial,sans-serif" font-weight="700">M.2 2230</text>
+  <text x="86" y="81" font-size="7.5" fill="#111" font-family="Arial,sans-serif" font-weight="700">PCIe Gen 4x4</text>
+  <text x="272" y="80" font-size="15" fill="#111" text-anchor="end" font-family="Arial,sans-serif" font-weight="700">2TB</text>
+  <rect x="82.0" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="84.3" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="86.6" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="88.9" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="91.2" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="93.5" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="95.8" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="98.1" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="100.4" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="102.7" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="105.0" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="107.3" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="109.6" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="111.9" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="114.19999999999999" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="116.5" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="118.8" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="121.1" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="123.4" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="125.69999999999999" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="128.0" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="130.3" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="132.6" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="134.9" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="137.2" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="139.5" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="141.8" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="144.1" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="146.39999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="148.7" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="151.0" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="153.3" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="155.6" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="157.89999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="160.2" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="162.5" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="164.8" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="167.1" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="169.39999999999998" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="171.7" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="174.0" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="176.3" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="178.6" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="180.89999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="183.2" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="185.5" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="187.8" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="190.1" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="192.39999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="194.7" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="197.0" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="199.3" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="201.6" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="203.89999999999998" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="206.2" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="208.5" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="210.79999999999998" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="213.1" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="215.39999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="217.7" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="220.0" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="222.29999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="224.6" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="226.89999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="229.2" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="231.5" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="233.79999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="236.1" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="238.39999999999998" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="240.7" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="243.0" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="245.29999999999998" y="98" width="0.7" height="11" fill="#111" rx=".1"/><rect x="247.6" y="98" width="1.4" height="11" fill="#111" rx=".1"/><rect x="249.89999999999998" y="98" width="1.4" height="11" fill="#111" rx=".1"/>
+  <text x="86" y="122" font-size="6" fill="#333" font-family="Arial,sans-serif">Model: SMC002TM23410</text>
+  <text x="86" y="131" font-size="5.5" fill="#888" font-family="Arial,sans-serif">CE RoHS FCC REACH</text>
+  <rect x="0" y="18" width="310" height="2" fill="#0ea5e9" opacity=".8" rx="1"/>
+</svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GEN3 vs GEN4 -->
+<section id="s01" style="background:var(--bg2);padding:80px 6%;">
+  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--g3) 20%,var(--g3d) 60%,transparent);"></div>
+  <div class="wrap">
+    <div class="fi">
+      <div class="sn">Same 30mm. Two speed tiers.</div>
+      <div class="sh" style="font-size:clamp(28px,4vw,50px);">GEN3x4 vs GEN4x4</div>
+      <div style="font-size:14px;font-weight:300;color:var(--mute);margin-bottom:28px;">30mm identical size. Gen3 widely compatible. Gen4 breaking limits.</div>
+    </div>
+    <table class="cmp fi fd1">
+      <thead>
+        <tr><th></th><th class="h3">2230 GEN3x4</th><th class="h4">2230 GEN4x4</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Interface</td><td class="v3">PCIe Gen3x4 NVMe</td><td class="v4">PCIe Gen4x4 NVMe</td></tr>
+        <tr><td>Max Read</td><td class="v3 hi">3,300 MB/s</td><td class="v4 hi">7,000 MB/s (2TB)</td></tr>
+        <tr><td>Max Write</td><td class="v3 hi">3,000 MB/s</td><td class="v4 hi">6,500 MB/s (2TB)</td></tr>
+        <tr><td>Capacities</td><td class="v3">256GB / 512GB / 1TB / 2TB</td><td class="v4">512GB / 1TB / 2TB</td></tr>
+        <tr><td>MTBF</td><td class="v3">1,500,000 hr</td><td class="v4">1,500,000 hr</td></tr>
+        <tr><td>Warranty</td><td class="v3">3-Year</td><td class="v4">3-Year</td></tr>
+        <tr><td>Best for</td><td class="v3">Wide compatibility · Low power · Gen3 platforms</td><td class="v4">Max throughput · Gen4 platforms</td></tr>
+      </tbody>
+    </table>
+    <div class="hlb hlb4 fi fd2">
+      <div class="hlb-lbl hlb-lbl4">🏆 GEN4x4 2TB Standout</div>
+      <div class="hlb-txt">2TB: 7,000 MB/s read / 6,500 MB/s write. Most M.2 2230 Gen4 products reach 5,000–5,500 MB/s. Significantly above market at this form factor.</div>
+    </div>
+    <div class="hlb hlb3 fi fd2" style="margin-top:10px;">
+      <div class="hlb-lbl hlb-lbl3">⚠ GEN3x4 256GB Note</div>
+      <div class="hlb-txt">256GB write is 1,200 MB/s. 512GB and above achieve 2,400–3,000 MB/s. Select 512GB+ for sustained write-intensive workloads.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PERFORMANCE -->
+<section id="s02" style="background:var(--bg);padding:80px 6%;">
+  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--g3) 20%,var(--g3d) 60%,transparent);"></div>
+  <div class="wrap">
+    <div class="sn fi">01 — Performance</div>
+    <div class="sh fi">Fast</div>
+    <div class="al fi on" style="background:var(--g3);"></div>
+    <!-- Variant tab switcher -->
+    <div class="vtab fi fd1" style="margin-top:24px;">
+      <div class="vt on3" id="vt3" onclick="switchV('3')">GEN3x4 · Up to 3,300 MB/s</div>
+      <div class="vt" id="vt4" onclick="switchV('4')">GEN4x4 · Up to 7,000 MB/s</div>
+    </div>
+    <!-- GEN3 panel -->
+    <div class="vp on" id="vp3">
+      <div class="g2 fi" style="margin-top:24px;">
+        <div>
+          <div style="font-size:15px;font-weight:300;color:var(--mute);line-height:1.8;margin-bottom:16px;">PCIe Gen3x4 NVMe — widest platform compatibility.<br>1TB and 2TB deliver full Gen3 read and write throughput.</div>
+          <div class="brow">
+            <div class="bd"><div class="n" style="color:var(--g3l);">3,300</div><div class="l">MB/s Max Read</div></div>
+            <div class="bd"><div class="n">3,000</div><div class="l">MB/s Max Write</div></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);margin-bottom:12px;">Sequential Read — GEN3x4</div>
+          <div id="b3">
+            <div class="sr"><span class="sl">256GB</span><div class="st"><div class="sf sf3" data-w="91"></div></div><span class="sv sv3">3,000 MB/s</span></div>
+            <div class="sr"><span class="sl">512GB</span><div class="st"><div class="sf sf3" data-w="97"></div></div><span class="sv sv3">3,200 MB/s</span></div>
+            <div class="sr"><span class="sl">1TB</span><div class="st"><div class="sf sf3" data-w="97"></div></div><span class="sv sv3">3,200 MB/s</span></div>
+            <div class="sr"><span class="sl">2TB</span><div class="st"><div class="sf sf3" data-w="100"></div></div><span class="sv sv3">3,300 MB/s</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- GEN4 panel -->
+    <div class="vp" id="vp4">
+      <div class="g2 fi" style="margin-top:24px;">
+        <div>
+          <div style="font-size:15px;font-weight:300;color:var(--mute);line-height:1.8;margin-bottom:16px;">PCIe Gen4x4 NVMe — highest performance in M.2 2230.<br>2TB model: 7,000 MB/s read, above typical market.</div>
+          <div class="brow">
+            <div class="bd"><div class="n" style="color:var(--g4l);">7,000</div><div class="l">MB/s Read · 2TB</div></div>
+            <div class="bd"><div class="n" style="color:var(--g4l);">6,500</div><div class="l">MB/s Write · 2TB</div></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);margin-bottom:12px;">Sequential Read — GEN4x4</div>
+          <div id="b4">
+            <div class="sr"><span class="sl">512GB</span><div class="st"><div class="sf sf4" data-w="74"></div></div><span class="sv sv4">5,200 MB/s</span></div>
+            <div class="sr"><span class="sl">1TB</span><div class="st"><div class="sf sf4" data-w="74"></div></div><span class="sv sv4">5,200 MB/s</span></div>
+            <div class="sr"><span class="sl">2TB ★</span><div class="st"><div class="sf sf4" data-w="100"></div></div><span class="sv sv4">7,000 MB/s</span></div>
+          </div>
+          <p style="font-family:var(--fm);font-size:9px;color:var(--label);margin-top:8px;">★ Significantly above typical M.2 2230 Gen4 market</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELIABILITY -->
+<section id="s03" style="padding:80px 6%;">
+  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--g3) 20%,var(--g3d) 60%,transparent);"></div>
+  <div class="wrap">
+    <div class="sn fi">02 — Reliability</div>
+    <div class="sh fi">Solid</div>
+    <div class="ss fi">1,500,000 hr MTBF · 3-Year Warranty · Both variants</div>
+    <div class="al fi on" style="background:var(--g3);"></div>
+    <div class="g2 fi fd1" style="margin-top:28px;">
+      <div>
+        <ul style="list-style:none;margin-top:14px;">
+          <li style="padding:12px 0;border-bottom:.5px solid var(--line);font-size:14px;line-height:1.7;color:var(--mute);display:grid;grid-template-columns:22px 1fr;gap:10px;"><div style="width:22px;height:22px;border:.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:10px;">🔁</div><div><strong style="font-weight:600;color:var(--ink);">1,500,000-hour MTBF</strong> — 171 years of rated reliability. Same industrial-grade standard across both GEN3x4 and GEN4x4.</div></li>
+          <li style="padding:12px 0;border-bottom:.5px solid var(--line);font-size:14px;line-height:1.7;color:var(--mute);display:grid;grid-template-columns:22px 1fr;gap:10px;"><div style="width:22px;height:22px;border:.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:10px;">🔬</div><div><strong style="font-weight:600;color:var(--ink);">Stringent component screening</strong> — Main control chips and NAND flash particles individually verified before assembly.</div></li>
+          <li style="padding:12px 0;font-size:14px;line-height:1.7;color:var(--mute);display:grid;grid-template-columns:22px 1fr;gap:10px;"><div style="width:22px;height:22px;border:.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:10px;">✅</div><div><strong style="font-weight:600;color:var(--ink);">RoHS / CE / FCC / REACH</strong> — Compliant for EU, US, and international markets.</div></li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="border:.5px solid var(--g3l);padding:18px 22px;background:var(--g3d);text-align:center;">
+          <div id="mc" style="font-size:clamp(22px,3.5vw,42px);font-weight:600;letter-spacing:-.02em;color:var(--g3l);line-height:1;">0</div>
+          <div style="font-family:var(--fm);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--g3);margin-top:4px;opacity:.8;">Hours MTBF</div>
+        </div>
+        <div style="font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);margin-bottom:8px;">Compatible Platforms</div>
+        <div class="cg" id="cg">
+          <div class="cc"><span class="ci">🎮</span><span class="cn">Steam Deck</span></div>
+          <div class="cc"><span class="ci">💻</span><span class="cn">Ultrabook</span></div>
+          <div class="cc"><span class="ci">📱</span><span class="cn">Surface Pro</span></div>
+          <div class="cc"><span class="ci">🖥️</span><span class="cn">Mini PC</span></div>
+          <div class="cc"><span class="ci">🏭</span><span class="cn">Industrial</span></div>
+          <div class="cc"><span class="ci">🗄️</span><span class="cn">NAS Cache</span></div>
+          <div class="cc"><span class="ci">⚙️</span><span class="cn">Embedded</span></div>
+          <div class="cc"><span class="ci">🔧</span><span class="cn">Workstation</span></div>
+        </div>
+        <div style="padding:12px 14px;border:.5px solid var(--border);background:var(--surface);">
+          <div style="font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);margin-bottom:5px;">OS Support</div>
+          <div style="font-size:13px;font-weight:300;color:var(--mute);">Windows 11 / 10 · Linux · SteamOS · macOS (adapter) · FreeBSD</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECS -->
+<section id="s04" style="background:var(--bg2);padding:80px 6%;">
+  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--g3) 20%,var(--g3d) 60%,transparent);"></div>
+  <div class="wrap">
+    <div class="sn fi">03 — Specifications</div>
+    <div class="sh fi">Full Specs</div>
+    <div class="al fi on" style="background:var(--g3);"></div>
+    <div class="g2 fi fd1" style="margin-top:28px;">
+      <!-- GEN3 -->
+      <div>
+        <div style="font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--g3l);margin-bottom:10px;">GEN3x4</div>
+        <table class="stbl">
+          <tr><td>Model</td><td>Simorchip M.2 2230 GEN3x4</td></tr>
+          <tr><td>Interface</td><td>PCIe Gen3x4 NVMe</td></tr>
+          <tr><td>Capacity</td><td>256GB / 512GB / 1TB / 2TB</td></tr>
+          <tr><td>Form Factor</td><td>M.2 2230 · 30 × 22 × 3.77 mm</td></tr>
+          <tr><td>MTBF</td><td>1,500,000 Hours</td></tr>
+          <tr><td>Warranty</td><td>3-Year Limited</td></tr>
+        </table>
+        <div style="font-family:var(--fm);font-size:9px;color:var(--label);margin-top:10px;line-height:1.7;">256GB: 3,000 / 1,200 MB/s ⚠<br>512GB: 3,200 / 2,400 MB/s<br>1TB: 3,200 / 3,000 MB/s<br>2TB: 3,300 / 3,000 MB/s</div>
+        <div style="margin-top:16px;display:flex;gap:8px;">
+          <button class="btn ba3">GEN3x4 Datasheet</button>
+        </div>
+      </div>
+      <!-- GEN4 -->
+      <div>
+        <div style="font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--g4l);margin-bottom:10px;">GEN4x4</div>
+        <table class="stbl">
+          <tr><td>Model</td><td>Simorchip M.2 2230 GEN4x4</td></tr>
+          <tr><td>Interface</td><td>PCIe Gen4x4 NVMe</td></tr>
+          <tr><td>Capacity</td><td>512GB / 1TB / 2TB</td></tr>
+          <tr><td>Form Factor</td><td>M.2 2230 · 30 × 22 × 3.77 mm</td></tr>
+          <tr><td>MTBF</td><td>1,500,000 Hours</td></tr>
+          <tr><td>Warranty</td><td>3-Year Limited</td></tr>
+        </table>
+        <div style="font-family:var(--fm);font-size:9px;color:var(--label);margin-top:10px;line-height:1.7;">512GB: 5,200 / 2,700 MB/s ⚠<br>1TB: 5,200 / 4,500 MB/s<br>2TB ★: 7,000 / 6,500 MB/s</div>
+        <div style="margin-top:16px;display:flex;gap:8px;">
+          <button class="btn ba4">GEN4x4 Datasheet</button>
+          <button class="btn bg">Core Series</button>
+        </div>
+      </div>
+    </div>
+    <p class="fi fd2" style="font-family:var(--fm);font-size:9px;color:var(--label);line-height:1.6;margin-top:14px;">
+      * All speeds in MB/s · ⚠ Low-capacity write reflects NAND configuration at 2230 form factor<br>
+      ★ GEN4x4 2TB performance significantly above typical M.2 2230 Gen4 market benchmarks
+    </p>
+  </div>
+</section>
+
+<div class="foot">
+  <div class="fn"><span>Simorchip</span><span>M.2 2230</span><span>Core Series</span></div>
+  <span class="fa">GEN3x4 · GEN4x4 · Compact Core · Swift Core</span>
+  <div class="fs">© 2026 Simorchip Technology · M.2 2230 · PCIe Gen3x4 &amp; Gen4x4 · 3-Year Warranty</div>
+</div>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>50));
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+const sids=['s00','s01','s02','s03','s04'],pills=document.querySelectorAll('.np a');
+sids.forEach(id=>{const el=document.getElementById(id);if(!el)return;
+  new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const i=sids.indexOf(id);pills.forEach(p=>p.classList.remove('on'));if(pills[i])pills[i].classList.add('on');}});},{threshold:.4}).observe(el);
+});
+const fo=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.1});
+document.querySelectorAll('.fi').forEach(el=>fo.observe(el));
+document.querySelectorAll('.al').forEach(el=>new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});},{threshold:.5}).observe(el));
+document.fonts.ready.then(()=>{
+  function c(id,d=0){setTimeout(()=>document.getElementById(id)?.classList.add('on'),d);}
+  c('sp',0);c('ps',0);c('he',280);c('hh',460);
+  setTimeout(()=>['hl0','hl1'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('in'),i*200)),500);
+  setTimeout(()=>document.getElementById('hal')?.classList.add('on'),1100);
+  c('hd',1400);c('ht',1700);
+});
+// bar trigger
+function triggerBars(id){const g=document.getElementById(id);if(g)g.querySelectorAll('.sf').forEach(el=>{el.style.width=el.dataset.w+'%';});}
+(function(){['b3','b4'].forEach(id=>{const g=document.getElementById(id);if(!g)return;
+  let d=false;new IntersectionObserver(es=>{if(es[0].isIntersecting&&!d){d=true;triggerBars(id);}},{threshold:.4}).observe(g);
+});})();
+// MTBF counter
+(function(){const el=document.getElementById('mc');if(!el)return;let d=false;
+  new IntersectionObserver(es=>{if(es[0].isIntersecting&&!d){d=true;const t=1500000,dur=1600,s=performance.now();
+    (function f(now){const p=Math.min((now-s)/dur,1),v=1-Math.pow(1-p,3);el.textContent=Math.round(v*t).toLocaleString();if(p<1)requestAnimationFrame(f);else el.textContent='1,500,000';})(performance.now());}
+  },{threshold:.5}).observe(el);
+})();
+// compat stagger
+(function(){const g=document.getElementById('cg');if(!g)return;
+  new IntersectionObserver(es=>{if(es[0].isIntersecting){g.querySelectorAll('.cc').forEach((el,i)=>{
+    el.style.cssText+=';opacity:0;transform:translateY(7px);transition:opacity .4s ease '+(i*.05)+'s,transform .4s ease '+(i*.05)+'s';
+    setTimeout(()=>{el.style.opacity='1';el.style.transform='none';},50);});}
+  },{threshold:.3}).observe(g);
+})();
+// variant tab switcher
+function switchV(v){
+  document.querySelectorAll('.vt').forEach(el=>{el.classList.remove('on3','on4');});
+  document.querySelectorAll('.vp').forEach(el=>el.classList.remove('on'));
+  if(v==='3'){document.getElementById('vt3').classList.add('on3');}
+  else{document.getElementById('vt4').classList.add('on4');}
+  document.getElementById('vp'+v).classList.add('on');
+}
+</script>
+</body>
+</html>

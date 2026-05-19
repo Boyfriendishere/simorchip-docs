@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip SSD 330 — Faster. Stronger. Safer. Smarter.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Barlow:wght@100;200;300;400;500&family=Barlow+Condensed:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════
+   DESIGN TOKENS — Dark Luxury
+═══════════════════════════════════ */
+:root {
+  --void: #000000;
+  --deep: #080808;
+  --charcoal: #0f0f0f;
+  --graphite: #1a1a1a;
+  --steel: #2a2a2a;
+  --mist: #3d3d3d;
+  --silver: #8a8a8a;
+  --light: #c8c8c8;
+  --white: #f0f0f0;
+  --orange: #e8621a;
+  --orange-dim: rgba(232,98,26,.15);
+  --orange-glow: rgba(232,98,26,.06);
+  --ff-disp: 'Barlow Condensed', sans-serif;
+  --ff-body: 'Barlow', sans-serif;
+  --ff-serif: 'Cormorant Garamond', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--ff-body);
+  background: var(--void);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ═══ CURSOR ═══ */
+#cur {
+  position: fixed; width: 6px; height: 6px;
+  background: var(--orange); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .18s, height .18s, opacity .2s;
+}
+#cur-ring {
+  position: fixed; width: 32px; height: 32px;
+  border: .5px solid rgba(232,98,26,.4); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%);
+}
+#cur-trail {
+  position: fixed; width: 2px; height: 2px;
+  background: var(--orange); border-radius: 50%;
+  pointer-events: none; z-index: 9997;
+  transform: translate(-50%,-50%);
+  opacity: .4;
+  transition: transform .4s ease;
+}
+
+/* ═══ NAV ═══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 5%;
+  border-bottom: .5px solid transparent;
+  transition: border-color .4s, background .4s;
+}
+nav.scrolled {
+  border-bottom-color: rgba(255,255,255,.06);
+  background: rgba(0,0,0,.8);
+  backdrop-filter: blur(12px);
+}
+.nav-brand {
+  font-family: var(--ff-disp); font-size: 11px; font-weight: 300;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+}
+.nav-links { display: flex; gap: 32px; }
+.nav-link {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  cursor: pointer; transition: color .2s;
+  padding: 4px 0;
+}
+.nav-link:hover, .nav-link.on { color: var(--orange); }
+
+/* ═══ SHARED ═══ */
+section { position: relative; width: 100%; overflow: hidden; }
+
+.section-label {
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: rgba(255,255,255,.2);
+}
+
+/* ORANGE ACCENT LINE */
+.o-line { height: .5px; background: var(--orange); width: 0; transition: width 1.2s cubic-bezier(.16,1,.3,1); }
+.o-line.on { width: 48px; }
+
+/* SCROLL REVEAL */
+.sr { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s ease; }
+.sr.vis { opacity: 1; transform: translateY(0); }
+.sr-d1 { transition-delay: .12s; }
+.sr-d2 { transition-delay: .24s; }
+.sr-d3 { transition-delay: .36s; }
+.sr-d4 { transition-delay: .48s; }
+.sr-slow { transition-duration: 1.4s; }
+
+/* IMAGE PLACEHOLDER */
+.iph {
+  background: var(--graphite);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.iph::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    135deg, transparent, transparent 20px,
+    rgba(255,255,255,.012) 20px, rgba(255,255,255,.012) 21px
+  );
+}
+/* SSD product image */
+.ssd-ph {
+  position: relative;
+  width: 100%;
+}
+.ssd-body {
+  width: 100%; aspect-ratio: 4/1;
+  background: linear-gradient(180deg, #1a1a1a 0%, #111 50%, #0d0d0d 100%);
+  position: relative; overflow: hidden;
+  border: .5px solid rgba(255,255,255,.06);
+}
+.ssd-orange-line-top {
+  position: absolute; top: 22%; left: 0; right: 0; height: 1.5px;
+  background: linear-gradient(90deg, transparent 5%, var(--orange) 20%, var(--orange) 60%, transparent 90%);
+  opacity: .85;
+}
+.ssd-orange-line-bot {
+  position: absolute; bottom: 25%; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 2%, var(--orange) 15%, transparent 50%);
+  opacity: .6;
+}
+.ssd-label {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.ssd-label .brand {
+  font-family: var(--ff-disp); font-size: clamp(14px, 3vw, 22px);
+  font-weight: 300; letter-spacing: .24em; color: rgba(255,255,255,.9);
+  text-transform: uppercase;
+}
+.ssd-label .model {
+  font-family: var(--ff-disp); font-size: clamp(18px, 4.5vw, 36px);
+  font-weight: 700; letter-spacing: .08em; color: var(--white);
+}
+.ssd-gold-pins {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 18px;
+  background: repeating-linear-gradient(0deg, #b8960a 0, #b8960a 3px, transparent 3px, transparent 6px);
+  opacity: .5;
+}
+.ssd-corner-tag {
+  position: absolute; bottom: 6px; right: 12px;
+  font-family: var(--ff-body); font-size: 8px; letter-spacing: .18em;
+  color: rgba(255,255,255,.18); text-transform: uppercase;
+}
+/* diagonal chrome accent */
+.ssd-chrome {
+  position: absolute; bottom: 0; right: 0;
+  width: 60px; height: 60px;
+  background: linear-gradient(135deg, transparent 50%, rgba(180,180,180,.15) 50%);
+}
+
+/* ═══════════════════════════════════
+   S00 — HERO
+═══════════════════════════════════ */
+#s00 {
+  min-height: 100vh;
+  background: var(--void);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 5% 80px;
+}
+
+/* atmospheric background */
+.hero-atm {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 60%, rgba(232,98,26,.04) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 50% 100%, rgba(232,98,26,.06) 0%, transparent 60%);
+}
+
+/* grain texture overlay */
+.grain {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: .28;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  mix-blend-mode: overlay;
+}
+
+.hero-eyebrow {
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .32em; text-transform: uppercase;
+  color: rgba(255,255,255,.25); margin-bottom: 40px;
+  opacity: 0; animation: fadeUp .8s ease .3s forwards;
+}
+
+.hero-title {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0; line-height: .88; margin-bottom: 60px;
+}
+.hero-word {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(72px, 14vw, 160px);
+  letter-spacing: -.01em;
+  color: rgba(255,255,255,.18);
+  opacity: 0;
+  transform: translateY(30px);
+  display: block;
+  transition: color .5s ease, transform .5s cubic-bezier(.16,1,.3,1), text-shadow .5s ease;
+  transform-origin: left center;
+}
+.hero-word:nth-child(1) { animation: fadeUp .7s cubic-bezier(.16,1,.3,1) .5s forwards; }
+.hero-word:nth-child(2) { animation: fadeUp .7s cubic-bezier(.16,1,.3,1) .65s forwards; }
+.hero-word:nth-child(3) { animation: fadeUp .7s cubic-bezier(.16,1,.3,1) .8s forwards; }
+.hero-word:nth-child(4) { animation: fadeUp .7s cubic-bezier(.16,1,.3,1) .95s forwards; }
+.hero-word.hw-active {
+  color: #ffffff;
+  transform: scale(1.07) translateX(6px);
+  text-shadow: 0 0 80px rgba(232,98,26,.35), 0 0 160px rgba(232,98,26,.12);
+}
+
+.hero-sub {
+  font-family: var(--ff-body); font-size: 13px; font-weight: 300;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.3); margin-bottom: 60px;
+  opacity: 0; animation: fadeUp .6s ease 1.3s forwards;
+}
+
+/* SSD in hero */
+.hero-ssd {
+  width: 100%; max-width: 700px; margin: 0 auto 60px;
+  opacity: 0; animation: fadeUp 1s ease 1.1s forwards;
+  position: relative;
+}
+.hero-ssd::before {
+  content: '';
+  position: absolute; inset: -40px; z-index: -1;
+  background: radial-gradient(ellipse 80% 50% at 50% 50%, rgba(232,98,26,.08) 0%, transparent 70%);
+}
+
+.hero-tags {
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp .6s ease 1.5s forwards;
+}
+.htag {
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .12em; color: rgba(255,255,255,.3);
+  border: .5px solid rgba(255,255,255,.1);
+  padding: 5px 12px; text-transform: uppercase;
+  transition: color .2s, border-color .2s;
+}
+.htag:hover { color: var(--orange); border-color: rgba(232,98,26,.4); }
+
+.scroll-ind {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  opacity: 0; animation: fadeUp .6s ease 2s forwards;
+}
+.scroll-ln {
+  width: .5px; height: 36px; background: rgba(255,255,255,.15);
+  position: relative; overflow: hidden;
+}
+.scroll-ln::after {
+  content: ''; position: absolute; top: -100%; left: 0;
+  width: 100%; height: 100%;
+  background: var(--orange);
+  animation: scr 2s ease infinite 2.5s;
+}
+@keyframes scr { 0%{top:-100%}100%{top:100%} }
+.scroll-txt { font-family: var(--ff-body); font-size: 8px; letter-spacing: .2em; color: rgba(255,255,255,.2); text-transform: uppercase; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════
+   S01 — BLAZE BLACK + WHY
+═══════════════════════════════════ */
+#s01 { background: var(--void); padding: 120px 5%; }
+.s01-inner { max-width: 1100px; margin: 0 auto; }
+
+.blaze-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center; margin-bottom: 120px;
+}
+
+.bb-eyebrow {
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 20px;
+}
+.bb-title {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(48px, 7vw, 88px); letter-spacing: -.01em;
+  color: var(--white); line-height: .9; margin-bottom: 32px;
+}
+.bb-body {
+  font-family: var(--ff-body); font-size: 14px; font-weight: 300;
+  line-height: 1.9; color: rgba(255,255,255,.65);
+  margin-bottom: 24px;
+}
+.bb-craft {
+  font-family: var(--ff-serif); font-size: 15px; font-weight: 300;
+  font-style: italic; color: rgba(255,255,255,.65);
+  padding: 16px 0; border-top: .5px solid rgba(255,255,255,.1);
+  border-bottom: .5px solid rgba(255,255,255,.1);
+}
+.bb-craft span { color: var(--white); font-style: normal; }
+
+.bb-img { width: 100%; position: relative; }
+.bb-ssd-wrap {
+  width: 100%; padding: 40px 0;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.bb-ssd-wrap::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(232,98,26,.07) 0%, transparent 70%);
+}
+.bb-ssd-full { width: 100%; max-width: 460px; }
+
+/* WHY table */
+.why-section { border-top: .5px solid rgba(255,255,255,.08); padding-top: 80px; }
+.why-title {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(40px, 5.5vw, 64px); letter-spacing: -.01em;
+  color: var(--white); margin-bottom: 8px;
+}
+.why-sub {
+  font-family: var(--ff-body); font-size: 13px; font-weight: 300;
+  letter-spacing: .1em; color: rgba(255,255,255,.55);
+  margin-bottom: 48px; text-transform: uppercase;
+}
+
+.why-tbl { width: 100%; border-collapse: collapse; }
+.why-tbl tr { border-bottom: .5px solid rgba(255,255,255,.06); }
+.why-tbl tr:hover td { background: rgba(255,255,255,.018); }
+.why-tbl td { padding: 20px 0; vertical-align: middle; }
+.why-tbl .wl {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(255,255,255,.5); width: 26%;
+}
+.why-tbl .wv {
+  font-family: var(--ff-disp); font-weight: 600;
+  font-size: clamp(20px, 2.8vw, 32px); letter-spacing: .01em;
+  color: var(--white); width: 28%;
+}
+.why-tbl .wv.orange { color: var(--orange); }
+.why-tbl .wd {
+  font-family: var(--ff-body); font-size: 13px; font-weight: 300;
+  color: rgba(255,255,255,.65); line-height: 1.5;
+  padding-left: 24px;
+}
+.why-fn { font-size: 9px; color: rgba(255,255,255,.35); font-family: var(--ff-body); letter-spacing: .08em; margin-top: 18px; }
+.why-closer {
+  font-family: var(--ff-serif); font-size: 16px; font-weight: 300;
+  font-style: italic; color: rgba(255,255,255,.6);
+  margin-top: 36px; line-height: 1.8;
+}
+.why-closer span { color: var(--white); font-style: normal; }
+
+/* ═══════════════════════════════════
+   SECTION STRUCTURE
+═══════════════════════════════════ */
+.sec-wrap {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+  padding: 120px 5%;
+}
+.sec-wrap.reverse { direction: rtl; }
+.sec-wrap.reverse > * { direction: ltr; }
+
+.sec-num {
+  font-family: var(--ff-body); font-size: 9px; font-weight: 200;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: rgba(255,255,255,.4); margin-bottom: 14px;
+}
+.sec-title {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(64px, 10vw, 120px);
+  letter-spacing: -.02em; line-height: .82;
+  color: var(--white); margin-bottom: 6px;
+}
+.sec-sub {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.55); margin-bottom: 28px;
+}
+.sec-hero-line {
+  font-family: var(--ff-disp); font-weight: 600;
+  font-size: clamp(16px, 2.2vw, 22px);
+  letter-spacing: .02em; color: var(--orange);
+  margin-bottom: 16px;
+}
+.sec-intro {
+  font-family: var(--ff-body); font-size: 14px; font-weight: 300;
+  line-height: 1.9; color: rgba(255,255,255,.7);
+  margin-bottom: 36px;
+}
+.sec-intro em { color: var(--white); font-style: normal; font-weight: 400; }
+
+.bullet-list { list-style: none; }
+.bullet-list li {
+  padding: 14px 0; border-bottom: .5px solid rgba(255,255,255,.08);
+  font-family: var(--ff-body); font-size: 13px; font-weight: 300;
+  line-height: 1.7; color: rgba(255,255,255,.75);
+  display: flex; flex-direction: row; align-items: flex-start; gap: 12px;
+}
+.bullet-list li:last-child { border-bottom: none; }
+.bullet-list li::before {
+  content: '—'; color: var(--orange);
+  font-size: 11px; line-height: 1.7;
+  flex: 0 0 auto;
+}
+.bullet-list li .bl-text {
+  flex: 1; min-width: 0;
+}
+.bullet-list li strong { color: var(--white); font-weight: 500; }
+.bullet-list li .b-note {
+  font-size: 10px; letter-spacing: .06em;
+  color: rgba(255,255,255,.3); margin-top: 4px; display: block;
+}
+
+/* STAT BADGE */
+.stat-badge {
+  display: inline-flex; flex-direction: column; align-items: flex-start;
+  border: .5px solid rgba(255,255,255,.1);
+  padding: 20px 24px; background: rgba(255,255,255,.02);
+  backdrop-filter: blur(8px);
+}
+.stat-badge .sn {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(40px, 6vw, 72px);
+  letter-spacing: -.01em; color: var(--white); line-height: 1;
+}
+.stat-badge .sn.orange { color: var(--orange); }
+.stat-badge .sl {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.55); margin-top: 4px;
+}
+
+/* ═══════════════════════════════════
+   S02 — FASTER
+═══════════════════════════════════ */
+#s02 { background: var(--deep); }
+
+.speed-bars {
+  display: flex; align-items: flex-end; gap: 16px;
+  margin: 36px 0; height: 220px;
+}
+.sb-item { display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 8px; flex: 1; }
+.sb-bar {
+  width: 100%; background: var(--graphite);
+  position: relative; overflow: hidden;
+  transform-origin: bottom;
+}
+.sb-bar::after {
+  content: ''; position: absolute; inset: 0;
+  background: var(--steel);
+  transform: scaleY(0); transform-origin: bottom;
+  transition: transform 1.2s cubic-bezier(.16,1,.3,1);
+}
+.sb-bar.on::after { transform: scaleY(1); }
+.sb-bar-hdd { height: 40px; }
+.sb-bar-sata { height: 80px; }
+.sb-bar-rx { height: 220px; background: rgba(232,98,26,.15); }
+.sb-bar-rx::after { background: var(--orange); opacity: .7; }
+.sb-val {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(14px, 2.2vw, 22px); letter-spacing: .01em;
+  color: rgba(255,255,255,.7);
+}
+.sb-val.highlight { color: var(--orange); }
+.sb-lbl {
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+}
+
+.ctx-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 32px; }
+.ctx-c {
+  border: .5px solid rgba(255,255,255,.07);
+  padding: 18px 16px; background: rgba(255,255,255,.02);
+  transition: border-color .25s, background .25s;
+}
+.ctx-c:hover { border-color: rgba(232,98,26,.3); background: rgba(232,98,26,.03); }
+.ctx-c .ci { font-size: 16px; margin-bottom: 8px; }
+.ctx-c .ct { font-family: var(--ff-disp); font-size: 13px; font-weight: 600; letter-spacing: .04em; color: var(--white); margin-bottom: 5px; }
+.ctx-c .cb { font-family: var(--ff-body); font-size: 11px; font-weight: 300; color: rgba(255,255,255,.6); line-height: 1.5; }
+
+/* ═══════════════════════════════════
+   S03 — STRONGER (1,500,000)
+═══════════════════════════════════ */
+#s03 { background: var(--void); }
+
+.mtbf-display {
+  text-align: center; padding: 60px 0;
+  position: relative;
+}
+.mtbf-display::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(232,98,26,.04) 0%, transparent 70%);
+}
+.mtbf-num {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(56px, 11vw, 130px);
+  letter-spacing: -.02em; color: var(--white);
+  line-height: 1;
+  position: relative;
+}
+.mtbf-unit {
+  font-family: var(--ff-body); font-size: 11px; font-weight: 300;
+  letter-spacing: .24em; text-transform: uppercase;
+  color: rgba(255,255,255,.5); margin-top: 12px;
+}
+.mtbf-ghost {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(14px, 2vw, 20px); letter-spacing: .04em;
+  color: var(--orange); margin-top: 20px;
+  display: block;
+}
+
+/* ═══════════════════════════════════
+   S04 — SAFER
+═══════════════════════════════════ */
+#s04 { background: var(--deep); }
+
+.vault-viz {
+  width: 100%; aspect-ratio: 1/1;
+  max-width: 400px; margin: 0 auto;
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.vault-center {
+  width: 80px; height: 36px;
+  background: var(--graphite);
+  border: .5px solid rgba(255,255,255,.15);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 2;
+}
+.vault-center span {
+  font-family: var(--ff-disp); font-size: 9px; font-weight: 600;
+  letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.6);
+}
+.vault-wall {
+  position: absolute;
+  border: .5px solid rgba(232,98,26,.0);
+  transition: border-color .5s ease;
+}
+.vault-wall.on { border-color: rgba(232,98,26,.2); }
+.vault-w1 { inset: 20%; }
+.vault-w2 { inset: 10%; }
+.vault-w3 { inset: 0%; }
+.vault-label {
+  position: absolute;
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.0);
+  transition: color .5s ease;
+}
+.vault-label.on { color: rgba(232,98,26,.6); }
+.vault-label.vl-top { top: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+.vault-label.vl-right { right: -80px; top: 50%; transform: translateY(-50%); }
+.vault-label.vl-bottom { bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+.vault-label.vl-left { left: -80px; top: 50%; transform: translateY(-50%); text-align: right; }
+
+/* threat elements around the vault */
+.threat {
+  position: absolute;
+  font-family: var(--ff-body); font-size: 9px; font-weight: 200;
+  letter-spacing: .1em; color: rgba(255,255,255,.1);
+  text-transform: uppercase;
+}
+.threat-1 { top: 6%; left: 12%; }
+.threat-2 { top: 12%; right: 8%; }
+.threat-3 { bottom: 10%; left: 8%; }
+.threat-4 { bottom: 6%; right: 14%; }
+
+/* ═══════════════════════════════════
+   S05 — SMARTER
+═══════════════════════════════════ */
+#s05 { background: var(--void); }
+
+.orbit-viz {
+  width: 100%; aspect-ratio: 1/1;
+  max-width: 380px; margin: 0 auto;
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.orbit-center {
+  width: 90px; height: 40px;
+  background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+  border: .5px solid rgba(232,98,26,.3);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 3; position: relative;
+}
+.orbit-center span {
+  font-family: var(--ff-disp); font-size: 10px; font-weight: 600;
+  letter-spacing: .14em; color: var(--orange);
+}
+.orbit-ring {
+  position: absolute; border-radius: 50%;
+  border: .5px solid rgba(255,255,255,.06);
+  pointer-events: none;
+  animation: spin 20s linear infinite;
+}
+.orbit-ring-1 { width: 60%; height: 60%; animation-duration: 18s; }
+.orbit-ring-2 { width: 80%; height: 80%; animation-duration: 26s; animation-direction: reverse; }
+.orbit-ring-3 { width: 96%; height: 96%; animation-duration: 36s; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.orbit-node {
+  position: absolute; width: 56px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.orbit-node .on-icon {
+  width: 28px; height: 28px;
+  border: .5px solid rgba(232,98,26,.3);
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(232,98,26,.04);
+  font-size: 11px;
+}
+.orbit-node .on-label {
+  font-family: var(--ff-body); font-size: 8px; font-weight: 300;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+}
+/* Position the 4 nodes */
+.orbit-node:nth-child(1) { top: 4%; left: 50%; transform: translateX(-50%); }
+.orbit-node:nth-child(2) { top: 50%; right: 0%; transform: translateY(-50%); }
+.orbit-node:nth-child(3) { bottom: 4%; left: 50%; transform: translateX(-50%); }
+.orbit-node:nth-child(4) { top: 50%; left: 0%; transform: translateY(-50%); }
+
+/* ═══════════════════════════════════
+   S06 — M.2 COMPATIBILITY
+═══════════════════════════════════ */
+#s06 {
+  background: var(--deep);
+  padding: 120px 5%;
+}
+.s06-inner { max-width: 1100px; margin: 0 auto; }
+.s06-title {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(48px, 7vw, 80px); letter-spacing: -.01em;
+  color: var(--white); margin-bottom: 4px;
+}
+.s06-sub {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  letter-spacing: .22em; color: rgba(255,255,255,.28);
+  text-transform: uppercase; margin-bottom: 60px;
+}
+
+.compat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 40px; }
+.compat-grid-wide { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.compat-category { margin-bottom: 32px; }
+.compat-cat-label {
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(255,255,255,.35); margin-bottom: 10px;
+  padding-bottom: 8px; border-bottom: .5px solid rgba(255,255,255,.06);
+}
+.compat-item {
+  border: .5px solid rgba(255,255,255,.08);
+  padding: 28px 20px 20px;
+  background: rgba(255,255,255,.02);
+  position: relative; overflow: hidden;
+  transition: border-color .25s, background .25s;
+}
+.compat-item:hover { border-color: rgba(232,98,26,.25); background: rgba(232,98,26,.03); }
+.compat-item.compat-highlight {
+  border-color: rgba(232,98,26,.2);
+  background: rgba(232,98,26,.04);
+}
+.compat-item.compat-highlight:hover { border-color: rgba(232,98,26,.5); background: rgba(232,98,26,.07); }
+.compat-item::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 1.5px; background: var(--orange); transform: scaleX(0);
+  transform-origin: left; transition: transform .4s ease;
+}
+.compat-item:hover::before { transform: scaleX(1); }
+.compat-icon { font-size: 20px; margin-bottom: 12px; }
+.compat-label { font-family: var(--ff-disp); font-size: 13px; font-weight: 600; letter-spacing: .06em; color: var(--white); margin-bottom: 6px; }
+.compat-desc { font-family: var(--ff-body); font-size: 10px; font-weight: 300; color: rgba(255,255,255,.5); line-height: 1.5; }
+
+/* OS STRIP */
+.os-strip {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  padding: 20px 24px; margin-bottom: 24px;
+  border: .5px solid rgba(255,255,255,.07);
+  background: rgba(255,255,255,.02);
+}
+.os-label {
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.3); white-space: nowrap; flex-shrink: 0;
+}
+.os-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.os-tag {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  letter-spacing: .1em; color: rgba(255,255,255,.6);
+  border: .5px solid rgba(255,255,255,.12);
+  padding: 4px 10px; background: rgba(255,255,255,.03);
+}
+
+.warranty-block {
+  border: .5px solid rgba(232,98,26,.2);
+  padding: 36px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(232,98,26,.03);
+  margin-top: 16px;
+}
+.wb-left .wb-title {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(36px, 5vw, 56px); letter-spacing: -.01em;
+  color: var(--orange); line-height: 1;
+}
+.wb-left .wb-sub {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.35); margin-top: 4px;
+}
+.wb-right {
+  font-family: var(--ff-serif); font-size: 15px; font-weight: 300;
+  font-style: italic; color: rgba(255,255,255,.4);
+  max-width: 360px; line-height: 1.7; text-align: right;
+}
+.wb-right span { color: var(--white); font-style: normal; }
+
+/* ═══════════════════════════════════
+   STRONGER — FEATURE CARDS + FOOTER
+═══════════════════════════════════ */
+.strength-cards {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+  margin-top: 28px;
+}
+.strength-card {
+  border: .5px solid rgba(255,255,255,.08);
+  padding: 22px 18px;
+  background: rgba(255,255,255,.02);
+  display: flex; flex-direction: column; gap: 4px;
+  transition: border-color .25s, background .25s;
+}
+.strength-card:hover { border-color: rgba(232,98,26,.3); background: rgba(232,98,26,.03); }
+.sc-thermal { border-color: rgba(232,98,26,.15); background: rgba(232,98,26,.03); }
+.sc-icon { font-size: 20px; margin-bottom: 6px; }
+.sc-num {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(28px, 3.5vw, 44px); letter-spacing: -.01em;
+  color: var(--white); line-height: 1;
+}
+.sc-thermal .sc-num { color: var(--orange); }
+.sc-unit {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.45); margin-bottom: 8px;
+}
+.sc-desc {
+  font-family: var(--ff-body); font-size: 11px; font-weight: 300;
+  color: rgba(255,255,255,.55); line-height: 1.6;
+}
+.sc-disc {
+  font-size: 9px; color: rgba(255,255,255,.25); display: block; margin-top: 6px;
+  letter-spacing: .04em;
+}
+
+.stronger-footer {
+  border-top: .5px solid rgba(255,255,255,.06);
+  padding: 80px 5%;
+  text-align: center;
+  background: var(--void);
+  position: relative;
+  overflow: hidden;
+}
+.stronger-footer::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(232,98,26,.05) 0%, transparent 70%);
+}
+.sf-inner { position: relative; max-width: 900px; margin: 0 auto; }
+.sf-quote {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(36px, 6vw, 80px);
+  letter-spacing: -.02em; line-height: 1.05;
+  color: rgba(255,255,255,.25);
+}
+.sf-quote span { color: var(--white); }
+.sf-note {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  letter-spacing: .1em; color: rgba(255,255,255,.2);
+  margin-top: 20px;
+}
+
+/* ═══════════════════════════════════
+   SAFER — SHIELD VIZ
+═══════════════════════════════════ */
+.shield-viz {
+  width: 100%; aspect-ratio: 1/1;
+  max-width: 420px; margin: 0 auto;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.sv-core {
+  position: relative; z-index: 10;
+  width: 90px; height: 90px; border-radius: 50%;
+  background: radial-gradient(circle, #1a1a1a 0%, #0a0a0a 100%);
+  border: 1px solid rgba(255,255,255,.15);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 4px;
+}
+.sv-core-icon { font-size: 22px; }
+.sv-core-label {
+  font-family: var(--ff-body); font-size: 8px; font-weight: 300;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+}
+.sv-core-pulse {
+  position: absolute; inset: -8px; border-radius: 50%;
+  border: .5px solid rgba(255,255,255,.08);
+  animation: svPulse 2.5s ease-out infinite;
+}
+@keyframes svPulse {
+  0% { transform: scale(1); opacity: .5; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Rotating shield rings */
+.sv-layer {
+  position: absolute; border-radius: 50%;
+  border: .5px solid rgba(255,255,255,.0);
+  transition: border-color .6s ease;
+}
+.sv-layer.sv-on { border-color: rgba(232,98,26,.3); }
+.sv-l1 { width: 44%; height: 44%; }
+.sv-l2 { width: 62%; height: 62%; }
+.sv-l3 { width: 78%; height: 78%; }
+.sv-l4 { width: 94%; height: 94%; }
+
+/* Segment arcs on each ring */
+.sv-l1.sv-on { border-color: transparent; border-top-color: rgba(232,98,26,.6); border-right-color: rgba(232,98,26,.3); animation: svSpin1 8s linear infinite; }
+.sv-l2.sv-on { border-color: transparent; border-bottom-color: rgba(232,98,26,.5); border-left-color: rgba(232,98,26,.25); animation: svSpin2 12s linear infinite; }
+.sv-l3.sv-on { border-color: transparent; border-top-color: rgba(232,98,26,.4); border-left-color: rgba(232,98,26,.2); animation: svSpin3 16s linear infinite; }
+.sv-l4.sv-on { border-color: transparent; border-bottom-color: rgba(232,98,26,.35); border-right-color: rgba(232,98,26,.15); animation: svSpin4 22s linear infinite; }
+@keyframes svSpin1 { to { transform: rotate(360deg); } }
+@keyframes svSpin2 { to { transform: rotate(-360deg); } }
+@keyframes svSpin3 { to { transform: rotate(360deg); } }
+@keyframes svSpin4 { to { transform: rotate(-360deg); } }
+
+/* Layer labels */
+.sv-layer-label {
+  position: absolute;
+  font-family: var(--ff-body); font-size: 8.5px; font-weight: 300;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.0); transition: color .6s ease;
+  white-space: nowrap;
+}
+.sv-l1.sv-on .sv-layer-label,
+.sv-l2.sv-on .sv-layer-label,
+.sv-l3.sv-on .sv-layer-label,
+.sv-l4.sv-on .sv-layer-label { color: rgba(232,98,26,.75); }
+.sv-ll-top { top: -18px; left: 50%; transform: translateX(-50%); }
+.sv-ll-right { right: -90px; top: 50%; transform: translateY(-50%); }
+.sv-ll-bottom { bottom: -18px; left: 50%; transform: translateX(-50%); }
+.sv-ll-left { left: -92px; top: 50%; transform: translateY(-50%); }
+
+/* Threat nodes */
+.sv-threat {
+  position: absolute;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.sv-threat span:first-child { font-size: 14px; }
+.sv-threat-label {
+  font-family: var(--ff-body); font-size: 8px; font-weight: 200;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(255,255,255,.2); white-space: nowrap;
+}
+.sv-t1 { top: 2%; left: 50%; transform: translateX(-50%); }
+.sv-t2 { right: 0%; top: 25%; }
+.sv-t3 { bottom: 2%; left: 50%; transform: translateX(-50%); }
+.sv-t4 { left: 0%; top: 25%; }
+
+/* Deflect flash */
+.sv-flash {
+  position: absolute; width: 20px; height: 20px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,98,26,.8) 0%, transparent 70%);
+  opacity: 0; pointer-events: none;
+}
+.sv-f1 { top: 22%; left: 50%; transform: translateX(-50%); }
+.sv-f2 { right: 14%; top: 28%; }
+.sv-f3 { bottom: 22%; left: 50%; transform: translateX(-50%); }
+.sv-f4 { left: 14%; top: 28%; }
+@keyframes svFlash { 0%{opacity:0;transform:scale(.5) translateX(-50%)} 30%{opacity:1;transform:scale(1.4) translateX(-36%)} 100%{opacity:0;transform:scale(.8) translateX(-50%)} }
+@keyframes svFlashR { 0%{opacity:0;transform:scale(.5)} 30%{opacity:1;transform:scale(1.4)} 100%{opacity:0;transform:scale(.8)} }
+.sv-f1.sv-flash-on { animation: svFlash .6s ease-out forwards; }
+.sv-f2.sv-flash-on,.sv-f3.sv-flash-on,.sv-f4.sv-flash-on { animation: svFlashR .6s ease-out forwards; }
+
+/* ═══════════════════════════════════
+   PACKAGING SECTION
+═══════════════════════════════════ */
+.pkg-section {
+  margin: 40px 0 28px;
+}
+.pkg-layout {
+  display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: start;
+}
+.pkg-visual { display: flex; justify-content: center; }
+.pkg-card {
+  width: 240px;
+  background: #111;
+  border: .5px solid rgba(255,255,255,.12);
+  border-radius: 8px;
+  padding: 0 0 16px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6);
+}
+.pkg-hang {
+  display: flex; justify-content: center; padding: 12px 0 8px;
+  background: #1a1a1a; border-bottom: .5px solid rgba(255,255,255,.06);
+}
+.pkg-hang-hole {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.2);
+  background: #000;
+}
+/* Diamond bg */
+.pkg-diamond-bg {
+  position: absolute; top: 44px; left: 0; right: 0; bottom: 0; z-index: 0;
+  opacity: .12;
+  background-image: repeating-linear-gradient(
+    45deg, rgba(255,255,255,.3) 0, rgba(255,255,255,.3) 1px, transparent 0, transparent 50%
+  );
+  background-size: 16px 16px;
+}
+.pkg-red-bar {
+  position: relative; z-index: 1;
+  height: 5px; margin: 0;
+  background: #c0181a;
+  display: flex; align-items: center; padding: 0 10px;
+  overflow: hidden;
+}
+.pkg-red-dashes {
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    90deg, transparent 0, transparent 8px, rgba(255,100,100,.4) 8px, rgba(255,100,100,.4) 12px
+  );
+}
+.pkg-content {
+  position: relative; z-index: 2;
+  padding: 14px 16px 8px;
+}
+.pkg-brand {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  letter-spacing: .2em; color: rgba(255,255,255,.6);
+  text-transform: uppercase; margin-bottom: 2px;
+}
+.pkg-model-name {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: 42px; letter-spacing: -.01em;
+  color: var(--white); line-height: 1; margin-bottom: 2px;
+  text-shadow: 0 2px 12px rgba(0,0,0,.6);
+}
+.pkg-spec-line {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  color: rgba(255,255,255,.5); letter-spacing: .04em;
+  margin-bottom: 10px;
+}
+.pkg-cap-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 8px 0; border-top: .5px solid rgba(255,255,255,.08);
+}
+.pkg-cap {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: 30px; color: var(--white); line-height: 1;
+}
+.pkg-speed {
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .06em; color: rgba(255,255,255,.7); line-height: 1.5;
+  text-transform: uppercase;
+}
+.pkg-speed strong {
+  font-family: var(--ff-disp); font-size: 22px; font-weight: 700;
+  color: var(--white); display: block;
+}
+/* SSD chip illustration */
+.pkg-ssd-chip {
+  position: relative; z-index: 2;
+  margin: 0 12px 10px;
+  height: 52px;
+  background: linear-gradient(180deg, #1c1c1c 0%, #111 100%);
+  border: .5px solid rgba(255,255,255,.12);
+  display: flex; align-items: center; overflow: hidden;
+}
+.pkg-chip-pins {
+  width: 14px; flex-shrink: 0; height: 100%;
+  background: repeating-linear-gradient(0deg, #b8960a 0, #b8960a 3px, transparent 3px, transparent 6px);
+  opacity: .6;
+}
+.pkg-chip-body {
+  flex: 1; padding: 0 10px;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.pkg-chip-label {
+  font-family: var(--ff-disp); font-size: 15px; font-weight: 700;
+  color: var(--white); letter-spacing: .04em;
+}
+.pkg-chip-sub {
+  font-family: var(--ff-body); font-size: 8px; font-weight: 300;
+  color: rgba(255,255,255,.4); letter-spacing: .06em;
+}
+.pkg-chip-led {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange); margin-right: 12px;
+  box-shadow: 0 0 8px rgba(232,98,26,.6);
+  animation: ledBlink 2s ease-in-out infinite;
+}
+@keyframes ledBlink { 0%,100%{opacity:1} 50%{opacity:.3} }
+.pkg-certs {
+  position: relative; z-index: 2;
+  display: flex; justify-content: center; gap: 6px; padding: 8px 12px 0;
+  border-top: .5px solid rgba(255,255,255,.06); margin: 0 12px;
+}
+.pkg-cert {
+  font-family: var(--ff-body); font-size: 8px; font-weight: 300;
+  letter-spacing: .1em; color: rgba(255,255,255,.35);
+  border: .5px solid rgba(255,255,255,.12);
+  padding: 2px 6px;
+}
+
+/* Feature list */
+.pkg-features { display: flex; flex-direction: column; }
+.pkg-feat-title {
+  font-family: var(--ff-disp); font-size: 13px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.4); margin-bottom: 16px;
+}
+.pkg-feat-list { display: flex; flex-direction: column; gap: 0; }
+.pkg-feat-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 14px 0; border-bottom: .5px solid rgba(255,255,255,.05);
+}
+.pkg-feat-item:last-child { border-bottom: none; }
+.pkg-feat-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
+.pkg-feat-name {
+  font-family: var(--ff-body); font-size: 12px; font-weight: 400;
+  color: var(--white); margin-bottom: 3px;
+}
+.pkg-feat-desc {
+  font-family: var(--ff-body); font-size: 11px; font-weight: 300;
+  color: rgba(255,255,255,.5); line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .pkg-layout { grid-template-columns: 1fr; }
+  .strength-cards { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════
+   S07 — SPECIFICATIONS
+═══════════════════════════════════ */
+#s07 { background: var(--void); padding: 120px 5%; }
+.spec-inner { max-width: 900px; margin: 0 auto; }
+.spec-title {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(44px, 6vw, 72px); letter-spacing: -.01em;
+  color: var(--white); margin-bottom: 10px;
+}
+.spec-intro {
+  font-family: var(--ff-body); font-size: 13px; font-weight: 300;
+  color: rgba(255,255,255,.3); margin-bottom: 48px;
+  max-width: 480px; line-height: 1.8;
+}
+
+/* perf table */
+.perf-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 48px; }
+.perf-card {
+  border: .5px solid rgba(255,255,255,.07);
+  padding: 16px 12px; background: rgba(255,255,255,.02);
+  text-align: center;
+}
+.perf-cap {
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: 18px; letter-spacing: .02em; color: var(--white);
+  margin-bottom: 8px;
+}
+.perf-read {
+  font-family: var(--ff-disp); font-size: 13px; font-weight: 600;
+  color: var(--orange); letter-spacing: .02em;
+}
+.perf-write {
+  font-family: var(--ff-disp); font-size: 12px; font-weight: 300;
+  color: rgba(255,255,255,.35); margin-top: 2px;
+}
+.perf-lbl {
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.2); margin-top: 6px;
+}
+
+.spec-tbl { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+.spec-tbl tr { border-bottom: .5px solid rgba(255,255,255,.05); }
+.spec-tbl tr:hover td { background: rgba(255,255,255,.015); }
+.spec-tbl td { padding: 14px 0; font-size: 12px; vertical-align: top; }
+.spec-tbl td:first-child {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(255,255,255,.25); width: 38%;
+}
+.spec-tbl td:last-child {
+  font-family: var(--ff-body); font-weight: 300;
+  color: rgba(255,255,255,.7);
+}
+.spec-disc {
+  font-family: var(--ff-body); font-size: 9px;
+  color: rgba(255,255,255,.15); line-height: 1.6; margin-top: 14px;
+  letter-spacing: .04em;
+}
+.spec-ctas { display: flex; gap: 12px; margin-top: 48px; flex-wrap: wrap; }
+.sbtn {
+  font-family: var(--ff-body); font-size: 10px; font-weight: 300;
+  letter-spacing: .18em; text-transform: uppercase;
+  padding: 13px 28px; background: transparent; cursor: pointer;
+  transition: background .22s, color .22s, border-color .22s;
+}
+.sbtn-primary { border: .5px solid var(--orange); color: var(--orange); }
+.sbtn-primary:hover { background: var(--orange); color: var(--void); }
+.sbtn-ghost { border: .5px solid rgba(255,255,255,.15); color: rgba(255,255,255,.35); }
+.sbtn-ghost:hover { border-color: rgba(255,255,255,.4); color: var(--white); }
+
+
+
+/* ═══════════════════════════════════
+   BOOT TIME VISUAL
+═══════════════════════════════════ */
+.faster-list .b-visual {
+  margin-top: 14px;
+  padding: 16px 18px;
+  background: rgba(255,255,255,.025);
+  border: .5px solid rgba(255,255,255,.07);
+  border-radius: 2px;
+}
+.bv-row {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+}
+.bv-row:last-of-type { margin-bottom: 0; }
+.bv-label {
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.35); width: 52px; flex-shrink: 0;
+}
+.bv-bar {
+  flex: 1; height: 6px;
+  background: rgba(255,255,255,.06); border-radius: 1px; overflow: hidden;
+}
+.bv-fill {
+  height: 100%; width: 0; border-radius: 1px;
+  transition: width 1.6s cubic-bezier(.16,1,.3,1);
+}
+.bv-hdd { background: rgba(255,255,255,.25); }
+.bv-ssd330 { background: var(--orange); }
+.bv-fill.bv-on.bv-hdd { width: 100%; }
+.bv-fill.bv-on.bv-ssd330 { width: 13.3%; }
+.bv-time {
+  font-family: var(--ff-disp); font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,.4); width: 28px; text-align: right; flex-shrink: 0;
+}
+.bv-caption {
+  font-family: var(--ff-body); font-size: 9px; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.18);
+  margin-top: 10px; text-align: right;
+}
+
+/* ═══════════════════════════════════
+   THERMAL HEATMAP COMPARE
+═══════════════════════════════════ */
+.thermal-compare {
+  width: 100%; max-width: 440px; margin: 0 auto;
+}
+.tc-label-row {
+  display: flex; justify-content: space-around; margin-bottom: 12px;
+}
+.tc-brand-label {
+  font-family: var(--ff-disp); font-size: 13px; font-weight: 600;
+  letter-spacing: .06em; color: rgba(255,255,255,.45);
+  text-transform: uppercase;
+}
+.tc-maps {
+  display: flex; gap: 12px;
+}
+.tc-map {
+  flex: 1; position: relative; border-radius: 2px; overflow: hidden;
+  border: .5px solid rgba(255,255,255,.08);
+}
+.tc-map canvas { display: block; width: 100%; }
+.tc-temp-badge {
+  position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+  border: .5px solid rgba(255,255,255,.2);
+  background: rgba(0,0,0,.5); backdrop-filter: blur(4px);
+  padding: 4px 10px; white-space: nowrap;
+}
+.tc-scale {
+  margin-top: 14px;
+}
+.tc-scale-bar {
+  height: 4px;
+  background: linear-gradient(90deg, #1a5fa8 0%, #48b8d0 20%, #8ae678 45%, #f5c842 65%, #f07030 80%, #d01010 100%);
+  border-radius: 2px;
+}
+.tc-scale-labels {
+  display: flex; justify-content: space-between; margin-top: 5px;
+  font-family: var(--ff-body); font-size: 9px; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.25);
+}
+.tc-caption {
+  font-family: var(--ff-body); font-size: 11px; font-weight: 300;
+  color: rgba(255,255,255,.3); line-height: 1.6; margin-top: 16px;
+  text-align: center;
+}
+
+
+
+/* GRID/FLEX children can shrink correctly */
+.sec-wrap > *,
+.blaze-grid > *,
+.ctx-cards > *,
+.compat-grid > *,
+.perf-cards > * {
+  min-width: 0;
+}
+
+/* Prevent ugly English word breaking */
+.bb-body,
+.bb-craft,
+.sec-intro,
+.bullet-list li,
+.wd,
+.cb,
+.compat-desc,
+.spec-intro,
+.spec-tbl td:last-child,
+.wb-right,
+.why-closer {
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+/* Ensure long English sentences wrap naturally */
+.bullet-list li,
+.sec-intro,
+.bb-body,
+.bb-craft,
+.wd {
+  line-break: auto;
+  white-space: normal;
+}
+
+/* Fix table compression on smaller widths */
+.why-tbl,
+.spec-tbl {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.why-tbl .wd,
+.spec-tbl td:last-child {
+  width: auto;
+}
+
+/* Prevent ultra narrow text columns */
+@media (max-width: 980px) {
+  .sec-wrap,
+  .blaze-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .why-tbl td {
+    display: block;
+    width: 100% !important;
+    padding: 10px 0;
+  }
+
+  .why-tbl tr {
+    display: block;
+    padding: 18px 0;
+  }
+
+  .why-tbl .wd {
+    padding-left: 0;
+  }
+
+  .perf-cards {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .compat-grid, .compat-grid-wide {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .perf-cards,
+  .compat-grid,
+  .ctx-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    line-height: .95;
+  }
+
+  .hero-word {
+    font-size: clamp(52px,18vw,96px);
+  }
+}
+
+/* Mobile: hide custom cursor, restore system cursor */
+@media (pointer: coarse) {
+  body { cursor: auto; }
+  #cur, #cur-ring, #cur-trail { display: none; }
+}
+
+
+/* ═══════════════════════════════════
+   FOOTER
+═══════════════════════════════════ */
+.site-foot {
+  background: var(--void);
+  border-top: .5px solid rgba(255,255,255,.06);
+  padding: 80px 5%; text-align: center;
+}
+.foot-brand {
+  font-family: var(--ff-body); font-size: 9px; font-weight: 300;
+  letter-spacing: .32em; color: rgba(255,255,255,.18);
+  text-transform: uppercase; margin-bottom: 28px;
+}
+.foot-hl {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 0 24px;
+  font-family: var(--ff-disp); font-weight: 700;
+  font-size: clamp(24px, 4vw, 48px); letter-spacing: -.01em;
+}
+.foot-hl span { color: rgba(255,255,255,.15); transition: color .3s; }
+.foot-hl span:hover { color: var(--orange); }
+.foot-hl span:first-child { color: var(--white); }
+.foot-sub {
+  font-family: var(--ff-serif); font-size: 14px; font-weight: 300;
+  font-style: italic; color: rgba(255,255,255,.2);
+  margin-top: 20px;
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div id="cur-trail"></div>
+
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-brand">Simorchip</div>
+  <div class="nav-links">
+    <div class="nav-link on" onclick="goTo('s00')">SSD 330</div>
+    <div class="nav-link" onclick="goTo('s02')">Faster</div>
+    <div class="nav-link" onclick="goTo('s03')">Stronger</div>
+    <div class="nav-link" onclick="goTo('s04')">Safer</div>
+    <div class="nav-link" onclick="goTo('s05')">Smarter</div>
+    <div class="nav-link" onclick="goTo('s07')">Specs</div>
+  </div>
+</nav>
+
+<!-- ══ S00 HERO ══ -->
+<section id="s00">
+  <div class="hero-atm"></div>
+  <div class="hero-eyebrow">Simorchip — PCIe Gen3 x4 NVMe SSD</div>
+  <div class="hero-ssd">
+    <div class="ssd-ph">
+      <div class="ssd-body" style="aspect-ratio:5/1;">
+        <div class="ssd-orange-line-top"></div>
+        <div class="ssd-orange-line-bot"></div>
+        <div class="ssd-gold-pins"></div>
+        <div class="ssd-chrome"></div>
+        <div class="ssd-label">
+          <span class="brand">Simorchip</span>
+          <span class="model">SSD 330</span>
+        </div>
+        <div class="ssd-corner-tag">M.2 2280 · PCIe Gen3 x4</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-title">
+    <span class="hero-word">Faster.</span>
+    <span class="hero-word">Stronger.</span>
+    <span class="hero-word">Safer.</span>
+    <span class="hero-word">Smarter.</span>
+  </div>
+  <div class="hero-sub">Your system was never this fast.</div>
+  <div class="hero-tags">
+    <span class="htag">Simorchip</span>
+    <span class="htag">PCIe Gen3 x4</span>
+    <span class="htag">NVMe 1.3</span>
+    <span class="htag">3300 MB/s</span>
+    <span class="htag">3D NAND</span>
+    <span class="htag">M.2 2280</span>
+    <span class="htag">Blaze Black</span>
+  </div>
+  <div class="scroll-ind">
+    <div class="scroll-ln"></div>
+    <div class="scroll-txt">Scroll</div>
+  </div>
+</section>
+
+<!-- ══ S01 BLAZE BLACK + WHY ══ -->
+<section id="s01" style="padding:0;">
+  <div class="s01-inner" style="padding:120px 5%;">
+    <!-- Blaze Black -->
+    <div class="blaze-grid sr">
+      <div>
+        <div class="bb-eyebrow">Design Language</div>
+        <div class="bb-title">Blaze<br>Black</div>
+        <div class="bb-body">
+          Not designed to stand out.<br>
+          Designed to be the most reliable performance core at the heart of your system.
+        </div>
+        <div class="bb-craft">
+          Not built to be seen. <span>Built to be ahead.</span><br>
+          Every line has a reason. This is not decoration. <span>This is direction.</span>
+        </div>
+      </div>
+      <div class="bb-img sr sr-d2">
+        <div class="bb-ssd-wrap">
+          <div class="bb-ssd-full">
+            <div class="ssd-body" style="aspect-ratio:5/1;">
+              <div class="ssd-orange-line-top"></div>
+              <div class="ssd-orange-line-bot"></div>
+              <div class="ssd-gold-pins"></div>
+              <div class="ssd-chrome"></div>
+              <div class="ssd-label">
+                <span class="brand">Simorchip</span>
+                <span class="model">SSD 330</span>
+              </div>
+              <div class="ssd-corner-tag">Blaze Black</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why NVMe -->
+    <div class="why-section sr">
+      <div class="why-title sr">Why NVMe?</div>
+      <div class="why-sub sr sr-d1">Why upgrade to PCIe NVMe now?</div>
+      <table class="why-tbl sr sr-d2">
+        <tr>
+          <td class="wl">Read Speed</td>
+          <td class="wv orange"><span style="font-size:.55em;font-weight:400;letter-spacing:.06em;display:block;margin-bottom:2px;">Up to</span>3300 <span style="font-size:.45em;letter-spacing:.08em;">MB/s</span></td>
+          <td class="wd">6× faster than SATA SSD — boot, load, transfer. Everything, instantly.</td>
+        </tr>
+        <tr>
+          <td class="wl">Write Speed</td>
+          <td class="wv"><span style="font-size:.55em;font-weight:400;letter-spacing:.06em;display:block;margin-bottom:2px;">Up to</span>2800 <span style="font-size:.45em;letter-spacing:.08em;">MB/s</span></td>
+          <td class="wd">Large file transfers, done faster. 10GB moves without waiting.</td>
+        </tr>
+        <tr>
+          <td class="wl">Interface</td>
+          <td class="wv orange">PCIe<br><span style="font-size:.55em;">Gen3 ×4</span></td>
+          <td class="wd">Far greater bandwidth than SATA. 4× the lanes, lower latency, instant response.</td>
+        </tr>
+        <tr>
+          <td class="wl">Reliability</td>
+          <td class="wv">1,500,000 <span style="font-size:.38em;letter-spacing:.06em;">hrs</span></td>
+          <td class="wd">1.5 million hours MTBF — 5× the reliability of traditional storage.</td>
+        </tr>
+        <tr>
+          <td class="wl">Protection</td>
+          <td class="wv" style="font-size:clamp(13px,1.8vw,18px);letter-spacing:.04em;padding-top:8px;">LDPC<br>+ Power Shield</td>
+          <td class="wd">Multi-layer data protection — auto error correction, power loss immunity.</td>
+        </tr>
+        <tr>
+          <td class="wl">Warranty</td>
+          <td class="wv orange">3 <span style="font-size:.45em;letter-spacing:.08em;">Years</span></td>
+          <td class="wd">Three-year limited warranty. Buy with confidence, use without worry.</td>
+        </tr>
+      </table>
+      <div class="why-fn sr sr-d3">* Benchmarked against SATA SSD at 550 MB/s</div>
+      <div class="why-closer sr sr-d3">
+        Not because your old storage is broken.<br>
+        <span>Because your system has been waiting for this.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S02 FASTER ══ -->
+<section id="s02">
+  <div class="sec-wrap">
+    <div class="sr">
+      <div class="sec-num">01 — Faster</div>
+      <div class="sec-title">Faster</div>
+      <div class="sec-sub">6× Faster than SATA SSD.</div>
+      <div class="o-line on"></div>
+      <div class="sec-intro" style="margin-top:24px;">
+        Your SATA SSD was already fast. <em>This is in another category.</em><br><br>
+        While SATA tops out at 550MB/s,<br>
+        the SSD 330 hits <em>3,300MB/s</em>.
+      </div>
+      <ul class="bullet-list faster-list">
+        <li><span class="bl-text">
+          Your game map finishes loading <strong>before your opponent even gets in</strong>
+          <div class="b-visual">
+            <div class="bv-row">
+              <span class="bv-label">SATA SSD</span>
+              <div class="bv-bar"><div class="bv-fill bv-hdd"></div></div>
+              <span class="bv-time bv-t-hdd">36s</span>
+            </div>
+            <div class="bv-row">
+              <span class="bv-label" style="color:var(--orange);">SSD 330</span>
+              <div class="bv-bar"><div class="bv-fill bv-ssd330"></div></div>
+              <span class="bv-time" style="color:var(--orange);">6s</span>
+            </div>
+            <div class="bv-caption">Load time comparison</div>
+          </div>
+        </span></li>
+        <li><span class="bl-text">
+          Your 4K timeline scrubs <strong>like it's nothing</strong>
+        </span></li>
+        <li><span class="bl-text">
+          10GB file transfer — <strong>done before you finish reading this</strong>
+        </span></li>
+      </ul>
+      <div style="display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;">
+        <div class="stat-badge sr sr-d2">
+          <div class="sn orange">3300</div>
+          <div class="sl">MB/s Read Speed</div>
+        </div>
+        <div class="stat-badge sr sr-d3">
+          <div class="sn">×6</div>
+          <div class="sl">vs SATA SSD</div>
+        </div>
+      </div>
+      <div style="margin-top:16px;font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.35);font-family:var(--ff-body);">* vs SATA SSD at 550 MB/s</div>
+    </div>
+    <div class="sr sr-d2">
+      <!-- Speed bar chart -->
+      <div class="speed-bars" id="sbars">
+        <div class="sb-item">
+          <div class="sb-val">150</div>
+          <div class="sb-bar sb-bar-hdd" id="sb0"></div>
+          <div class="sb-lbl">HDD<br>MB/s</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-val">550</div>
+          <div class="sb-bar sb-bar-sata" id="sb1"></div>
+          <div class="sb-lbl" style="color:rgba(255,255,255,.6);">SATA SSD<br>MB/s</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-val highlight">3300</div>
+          <div class="sb-bar sb-bar-rx" id="sb2"></div>
+          <div class="sb-lbl" style="color:var(--orange);">SSD 330<br>MB/s</div>
+        </div>
+      </div>
+      <!-- Context cards -->
+      <div class="ctx-cards">
+        <div class="ctx-c">
+          <div class="ci">🎮</div>
+          <div class="ct">Gaming</div>
+          <div class="cb">In the game before opponents even see the lobby</div>
+        </div>
+        <div class="ctx-c">
+          <div class="ci">🎬</div>
+          <div class="ct">4K Edit</div>
+          <div class="cb">Timeline scrubs without a single buffer frame</div>
+        </div>
+        <div class="ctx-c">
+          <div class="ci">⚡</div>
+          <div class="ct">Transfer</div>
+          <div class="cb">10GB files move in seconds, not minutes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S03 STRONGER ══ -->
+<section id="s03">
+  <div class="sec-wrap reverse">
+    <div class="sr">
+      <div class="sec-num">02 — Stronger</div>
+      <div class="sec-title">Stronger</div>
+      <div class="sec-sub">Built to outlast the machine it's inside.</div>
+      <div class="o-line on"></div>
+      <div class="sec-intro" style="margin-top:24px;">
+        Speed is only the beginning.<br>
+        <em>Lasting speed</em> is the real strength.
+      </div>
+      <!-- Three feature cards -->
+      <div class="strength-cards">
+        <div class="strength-card">
+          <div class="sc-icon">🎮</div>
+          <div class="sc-num">400+</div>
+          <div class="sc-unit">AAA Game Installs</div>
+          <div class="sc-desc">1,200 TBW endurance on the 2TB model. Install, delete, reinstall. It won't flinch.</div>
+        </div>
+        <div class="strength-card">
+          <div class="sc-icon">🎬</div>
+          <div class="sc-num">2,400</div>
+          <div class="sc-unit">Hours of 4K Footage</div>
+          <div class="sc-desc">Write all day, every day. The SSD 330 keeps up without slowing down.</div>
+        </div>
+        <div class="strength-card sc-thermal">
+          <div class="sc-icon">🌡️</div>
+          <div class="sc-num">54°C</div>
+          <div class="sc-unit">Stable Under Load</div>
+          <div class="sc-desc">Graphene thermal layer conducts heat at substrate level. Cool by design, not by chance.<br><span class="sc-disc">* Under typical operating conditions. Actual temperature may vary by system configuration.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="sr sr-d2">
+      <div class="mtbf-display">
+        <div class="mtbf-num" id="mtbfCounter">0</div>
+        <div class="mtbf-unit">Hours of rated reliability</div>
+      </div>
+    </div>
+  </div>
+  <!-- Full-width ending quote -->
+  <div class="stronger-footer sr">
+    <div class="sf-inner">
+      <div class="sf-quote">Start it today.<br><span>Still running in 2195 Year.</span></div>
+      <div class="sf-note">* MTBF is a statistical estimate. Individual results may vary.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S04 SAFER ══ -->
+<section id="s04">
+  <div class="sec-wrap">
+    <div class="sr">
+      <div class="sec-num">03 — Safer</div>
+      <div class="sec-title">Safer</div>
+      <div class="sec-sub">The SSD 330 protects them automatically.</div>
+      <div class="o-line on"></div>
+      <div class="sec-intro" style="margin-top:24px;">
+        <em>Every file you care about.</em><br>
+        Every photo you can't recreate.<br>
+        Every document you can't afford to lose.
+      </div>
+      <ul class="bullet-list">
+        <li><span class="bl-text">
+          <strong>LDPC Error Correction</strong> — detects and fixes data errors before you ever notice
+        </span></li>
+        <li><span class="bl-text">
+          <strong>Abnormal Power Loss Data Integrity Protection</strong> — sudden blackout? Your data stays exactly where you left it
+        </span></li>
+        <li><span class="bl-text">
+          <strong>Bad Block Management</strong> — failing cells isolated and bypassed, automatically
+        </span></li>
+        <li><span class="bl-text">
+          <strong>Wear Leveling</strong> — workload spread evenly, so nothing wears out first
+        </span></li>
+      </ul>
+      <div style="margin-top:32px;font-family:var(--ff-serif);font-size:16px;font-weight:300;font-style:italic;color:rgba(255,255,255,.35);line-height:1.7;">
+        You don't have to think about data protection.<br>
+        <span style="color:var(--white);font-style:normal;">The SSD 330 already is.</span><br>
+        <br>
+        Because some things can't be lost twice.
+      </div>
+    </div>
+    <div class="sr sr-d2">
+      <div class="shield-viz" id="shieldViz">
+        <!-- Central data core -->
+        <div class="sv-core">
+          <div class="sv-core-icon">📁</div>
+          <div class="sv-core-label">Your Data</div>
+          <div class="sv-core-pulse"></div>
+        </div>
+        <!-- Four shield layers, each with a label -->
+        <div class="sv-layer sv-l1" id="svL1">
+          <div class="sv-layer-label sv-ll-top">LDPC Error Correction</div>
+        </div>
+        <div class="sv-layer sv-l2" id="svL2">
+          <div class="sv-layer-label sv-ll-right">Power Loss Protection</div>
+        </div>
+        <div class="sv-layer sv-l3" id="svL3">
+          <div class="sv-layer-label sv-ll-bottom">Bad Block Management</div>
+        </div>
+        <div class="sv-layer sv-l4" id="svL4">
+          <div class="sv-layer-label sv-ll-left">Wear Leveling</div>
+        </div>
+        <!-- Threat particles -->
+        <div class="sv-threat sv-t1"><span>⚡</span><span class="sv-threat-label">Power Surge</span></div>
+        <div class="sv-threat sv-t2"><span>🔴</span><span class="sv-threat-label">Data Error</span></div>
+        <div class="sv-threat sv-t3"><span>💥</span><span class="sv-threat-label">Block Failure</span></div>
+        <div class="sv-threat sv-t4"><span>⏳</span><span class="sv-threat-label">Cell Wear</span></div>
+        <!-- Deflect flashes -->
+        <div class="sv-flash sv-f1" id="svF1"></div>
+        <div class="sv-flash sv-f2" id="svF2"></div>
+        <div class="sv-flash sv-f3" id="svF3"></div>
+        <div class="sv-flash sv-f4" id="svF4"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S05 SMARTER ══ -->
+<section id="s05">
+  <div class="sec-wrap reverse">
+    <div class="sr">
+      <div class="sec-num">04 — Smarter</div>
+      <div class="sec-title">Smarter</div>
+      <div class="sec-sub">The best tool is the one you never have to think about.</div>
+      <div class="o-line on"></div>
+      <div class="sec-intro" style="margin-top:24px;">
+        You don't need to optimize it.<br>
+        You don't need to clean it.<br>
+        You don't need to worry about it <em>getting slower over time.</em>
+      </div>
+      <ul class="bullet-list">
+        <li><span class="bl-text">
+          <strong>Dynamic Thermal Throttling</strong> — reads heat, adjusts automatically, prevents overheating while maintaining peak performance
+        </span></li>
+        <li><span class="bl-text">
+          <strong>Garbage Collection</strong> — runs in the background, clearing space you didn't know you needed
+        </span></li>
+        <li><span class="bl-text">
+          <strong>TRIM</strong> — tells the drive exactly what's free, so writes stay fast years from now
+        </span></li>
+        <li><span class="bl-text">
+          <strong>Early Move</strong> — detects aging cells before they fail, moves data proactively
+        </span></li>
+      </ul>
+      <div style="margin-top:32px;font-family:var(--ff-serif);font-size:16px;font-weight:300;font-style:italic;color:rgba(255,255,255,.35);line-height:1.7;">
+        The smartest tool<br>
+        <span style="color:var(--white);font-style:normal;">is the one you forget exists.</span>
+      </div>
+    </div>
+    <div class="sr sr-d2">
+      <div class="thermal-compare">
+        <div class="tc-label-row">
+          <span class="tc-brand-label">Competitor SSD</span>
+          <span class="tc-brand-label" style="color:var(--orange);">SSD 330</span>
+        </div>
+        <div class="tc-maps">
+          <!-- Competitor heatmap -->
+          <div class="tc-map tc-hot">
+            <canvas id="thermalHot" width="200" height="120"></canvas>
+            <div class="tc-temp-badge tc-temp-hot">High Temp</div>
+          </div>
+          <!-- SSD 330 heatmap -->
+          <div class="tc-map tc-cool">
+            <canvas id="thermalCool" width="200" height="120"></canvas>
+            <div class="tc-temp-badge tc-temp-cool" style="color:var(--orange);border-color:rgba(232,98,26,.4);">Cooler</div>
+          </div>
+        </div>
+        <div class="tc-scale">
+          <div class="tc-scale-bar"></div>
+          <div class="tc-scale-labels">
+            <span>Cool</span>
+            <span>Warm</span>
+            <span>Hot</span>
+          </div>
+        </div>
+        <div class="tc-caption">Dynamic Thermal Throttling keeps SSD 330 cooler under load — maintaining performance, extending lifespan.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S06 COMPATIBILITY ══ -->
+<section id="s06">
+  <div class="s06-inner">
+    <div class="section-label sr">Form Factor · M.2 2280</div>
+    <div class="s06-title sr">One Size.<br>Every System.</div>
+    <div class="s06-sub sr">80mm × 22mm × 3.77mm — Plug it in. That's the upgrade.</div>
+
+    <!-- Category: Computing -->
+    <div class="compat-category sr">
+      <div class="compat-cat-label">Computing</div>
+      <div class="compat-grid-wide">
+        <div class="compat-item">
+          <div class="compat-icon">💻</div>
+          <div class="compat-label">Ultrabook</div>
+          <div class="compat-desc">Thin & light laptops</div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">🖥️</div>
+          <div class="compat-label">Desktop PC</div>
+          <div class="compat-desc">ATX / mITX motherboards</div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">🎮</div>
+          <div class="compat-label">Gaming Laptop</div>
+          <div class="compat-desc">High-refresh gaming rigs</div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">🖱️</div>
+          <div class="compat-label">Mini PC</div>
+          <div class="compat-desc">NUC, Beelink, Minisforum</div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">⚙️</div>
+          <div class="compat-label">Workstation</div>
+          <div class="compat-desc">Creative & enterprise</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: Console & Gaming -->
+    <div class="compat-category sr sr-d1">
+      <div class="compat-cat-label" style="color:var(--orange);">Console & Gaming</div>
+      <div class="compat-grid-wide">
+        <div class="compat-item compat-highlight">
+          <div class="compat-icon">🎮</div>
+          <div class="compat-label">PlayStation 5</div>
+          <div class="compat-desc">M.2 expansion slot compatible</div>
+        </div>
+        <div class="compat-item compat-highlight">
+          <div class="compat-icon">🕹️</div>
+          <div class="compat-label">Xbox Series X|S</div>
+          <div class="compat-desc">Seagate expansion via adapter</div>
+        </div>
+        <div class="compat-item compat-highlight">
+          <div class="compat-icon">🎯</div>
+          <div class="compat-label">Steam Deck</div>
+          <div class="compat-desc">Direct M.2 2280 upgrade</div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">🏆</div>
+          <div class="compat-label">Gaming Desktop</div>
+          <div class="compat-desc">ROG, MSI, Alienware builds</div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">📺</div>
+          <div class="compat-label">Gaming Monitor PC</div>
+          <div class="compat-desc">All-in-one gaming displays</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: Professional & Security -->
+    <div class="compat-category sr sr-d2">
+      <div class="compat-cat-label">Professional & Security</div>
+      <div class="compat-grid-wide">
+        <div class="compat-item">
+          <div class="compat-icon">📹</div>
+          <div class="compat-label">NVR / DVR</div>
+          <div class="compat-desc">24/7 surveillance recorders</div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">🔭</div>
+          <div class="compat-label">Security Camera NVR</div>
+          <div class="compat-desc">IP camera storage systems</div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">🖧</div>
+          <div class="compat-label">NAS Server</div>
+          <div class="compat-desc">QNAP, Synology M.2 cache</div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">🏭</div>
+          <div class="compat-label">Industrial PC</div>
+          <div class="compat-desc">Fanless embedded systems</div>
+        </div>
+        <div class="compat-item">
+          <div class="compat-icon">🖨️</div>
+          <div class="compat-label">Workstation Server</div>
+          <div class="compat-desc">Rack & tower server builds</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OS compatibility strip -->
+    <div class="os-strip sr sr-d3">
+      <div class="os-label">Compatible with</div>
+      <div class="os-tags">
+        <span class="os-tag">Windows 11 / 10</span>
+        <span class="os-tag">Linux</span>
+        <span class="os-tag">macOS (via adapter)</span>
+        <span class="os-tag">SteamOS</span>
+        <span class="os-tag">FreeBSD</span>
+        <span class="os-tag">Plug & Play — No drivers needed</span>
+      </div>
+    </div>
+
+    <!-- Packaging Design -->
+    <div class="pkg-section sr">
+      <div class="compat-cat-label" style="margin-bottom:20px;">Packaging Design</div>
+      <div class="pkg-layout">
+
+        <!-- Left: pack visual -->
+        <div class="pkg-visual">
+          <div class="pkg-card">
+            <!-- Hang hole -->
+            <div class="pkg-hang">
+              <div class="pkg-hang-hole"></div>
+            </div>
+            <!-- Diamond texture background -->
+            <div class="pkg-diamond-bg"></div>
+            <!-- Red accent bar -->
+            <div class="pkg-red-bar">
+              <div class="pkg-red-dashes"></div>
+            </div>
+            <!-- Pack content -->
+            <div class="pkg-content">
+              <div class="pkg-brand">Simorchip</div>
+              <div class="pkg-model-name">SSD330</div>
+              <div class="pkg-spec-line">M.2 PCIe GEN 3x4 NVMe</div>
+              <div class="pkg-cap-row">
+                <span class="pkg-cap">2<span style="font-size:.5em;">TB</span></span>
+                <span class="pkg-speed">UP TO<br><strong>3300</strong> <span style="font-size:.6em;">MB/s</span></span>
+              </div>
+            </div>
+            <!-- SSD chip illustration -->
+            <div class="pkg-ssd-chip">
+              <div class="pkg-chip-pins"></div>
+              <div class="pkg-chip-body">
+                <span class="pkg-chip-label">SSD330</span>
+                <span class="pkg-chip-sub">2TB · PCIe Gen3x4</span>
+              </div>
+              <div class="pkg-chip-led"></div>
+            </div>
+            <!-- Cert badges row -->
+            <div class="pkg-certs">
+              <span class="pkg-cert">CE</span>
+              <span class="pkg-cert">RoHS</span>
+              <span class="pkg-cert">FCC</span>
+              <span class="pkg-cert">REACH</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: feature callouts -->
+        <div class="pkg-features">
+          <div class="pkg-feat-title">What's in the box</div>
+
+          <div class="pkg-feat-list">
+            <div class="pkg-feat-item">
+              <div class="pkg-feat-icon">🔩</div>
+              <div class="pkg-feat-body">
+                <div class="pkg-feat-name">Retail Hang Pack</div>
+                <div class="pkg-feat-desc">Euro-slot hang hole for standard retail shelf display — ready for store or e-commerce fulfilment</div>
+              </div>
+            </div>
+            <div class="pkg-feat-item">
+              <div class="pkg-feat-icon">🛡️</div>
+              <div class="pkg-feat-body">
+                <div class="pkg-feat-name">Anti-Static Protection</div>
+                <div class="pkg-feat-desc">Diamond-textured anti-static black card shields the drive from electrostatic discharge during transit and handling</div>
+              </div>
+            </div>
+            <div class="pkg-feat-item">
+              <div class="pkg-feat-icon">🔍</div>
+              <div class="pkg-feat-body">
+                <div class="pkg-feat-name">Drive-Visible Window</div>
+                <div class="pkg-feat-desc">Physical SSD exposed through packaging — verify the product before purchase, no guessing required</div>
+              </div>
+            </div>
+            <div class="pkg-feat-item">
+              <div class="pkg-feat-icon">📋</div>
+              <div class="pkg-feat-body">
+                <div class="pkg-feat-name">Full Spec on Pack</div>
+                <div class="pkg-feat-desc">Model number, serial number, barcode and capacity clearly printed — no opening needed to confirm the right SKU</div>
+              </div>
+            </div>
+            <div class="pkg-feat-item">
+              <div class="pkg-feat-icon">✅</div>
+              <div class="pkg-feat-body">
+                <div class="pkg-feat-name">Global Certifications</div>
+                <div class="pkg-feat-desc">CE · RoHS · FCC · REACH — compliant for sale in EU, US, and international markets</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="warranty-block sr">
+      <div class="wb-left">
+        <div class="wb-title">3 Years</div>
+        <div class="wb-sub">Limited Warranty</div>
+      </div>
+      <div class="wb-right">
+        Our confidence in the SSD 330 is written in three words.<br>
+        <span>Three. Year. Warranty.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S07 SPECS ══ -->
+<section id="s07">
+  <div class="spec-inner">
+    <div class="section-label sr">Technical Specifications</div>
+    <div class="spec-title sr">SSD 330<br>Specifications</div>
+    <div class="spec-intro sr">A cost-effective solution engineered for optimum speed, endurance, reliability, and multi-platform compatibility.</div>
+
+    <!-- Performance Cards -->
+    <div class="perf-cards sr">
+      <div class="perf-card">
+        <div class="perf-cap">128GB</div>
+        <div class="perf-read">1800 MB/s</div>
+        <div class="perf-write">1500 MB/s</div>
+        <div class="perf-lbl">Read / Write</div>
+      </div>
+      <div class="perf-card">
+        <div class="perf-cap">256GB</div>
+        <div class="perf-read">3200 MB/s</div>
+        <div class="perf-write">1300 MB/s</div>
+        <div class="perf-lbl">Read / Write</div>
+      </div>
+      <div class="perf-card">
+        <div class="perf-cap">512GB</div>
+        <div class="perf-read">3200 MB/s</div>
+        <div class="perf-write">2500 MB/s</div>
+        <div class="perf-lbl">Read / Write</div>
+      </div>
+      <div class="perf-card" style="border-color:rgba(232,98,26,.2);">
+        <div class="perf-cap">1TB</div>
+        <div class="perf-read">3200 MB/s</div>
+        <div class="perf-write">2600 MB/s</div>
+        <div class="perf-lbl">Read / Write</div>
+      </div>
+      <div class="perf-card" style="border-color:rgba(232,98,26,.3);background:rgba(232,98,26,.04);">
+        <div class="perf-cap" style="color:var(--orange);">2TB</div>
+        <div class="perf-read">3300 MB/s</div>
+        <div class="perf-write">2800 MB/s</div>
+        <div class="perf-lbl">Read / Write</div>
+      </div>
+    </div>
+
+    <table class="spec-tbl sr">
+      <tr><td>Model</td><td>Simorchip SSD 330</td></tr>
+      <tr><td>Interface</td><td>PCIe Gen3 x4 NVMe 1.3</td></tr>
+      <tr><td>Form Factor</td><td>M.2 2280</td></tr>
+      <tr><td>Flash Type</td><td>3D NAND</td></tr>
+      <tr><td>Capacity</td><td>128GB / 256GB / 512GB / 1TB / 2TB</td></tr>
+      <tr><td>TBW</td><td>75 / 150 / 300 / 600 / 1200 TBW</td></tr>
+      <tr><td>MTBF</td><td>1,500,000 Hours</td></tr>
+      <tr><td>Voltage</td><td>3.3V ± 5%</td></tr>
+      <tr><td>Dimensions</td><td>80 × 22 × 3.77 mm</td></tr>
+      <tr><td>Operating Temp</td><td>0°C ~ 70°C (32°F ~ 158°F)</td></tr>
+      <tr><td>Certifications</td><td>RoHS / REACH / CE / FCC</td></tr>
+      <tr><td>Warranty</td><td>3-Year Limited Warranty</td></tr>
+    </table>
+    <div class="spec-disc sr">*All data secured from Simorchip's internal labs under specific testing conditions. Accurate data may vary depending on the operating environment.<br>*Warranty based on period or TBW, whichever comes first.</div>
+    <div class="spec-ctas sr">
+      <button class="sbtn sbtn-primary">Download Spec Sheet</button>
+      <button class="sbtn sbtn-ghost">Explore More Products</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="site-foot">
+  <div class="foot-brand">Simorchip Technology</div>
+  <div class="foot-hl">
+    <span>SSD 330</span>
+    <span>Faster.</span>
+    <span>Stronger.</span>
+    <span>Safer.</span>
+    <span>Smarter.</span>
+  </div>
+  <div class="foot-sub">Your system deserves better.</div>
+</div>
+
+<script>
+/* ── HERO WORD CYCLING ── */
+(function(){
+  const words = document.querySelectorAll('.hero-word');
+  let cur = 0;
+  function activate(i){
+    words.forEach((w,j)=>{ w.classList.toggle('hw-active', j===i); });
+  }
+  // Start cycling after hero loads
+  setTimeout(()=>{
+    activate(0);
+    setInterval(()=>{ cur=(cur+1)%words.length; activate(cur); }, 1400);
+  }, 1600);
+})();
+
+/* ── SHIELD VIZ ── */
+(function(){
+  const viz = document.getElementById('shieldViz');
+  if(!viz) return;
+  let activated = false;
+  const obs = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting && !activated){
+      activated = true;
+      ['svL4','svL3','svL2','svL1'].forEach((id,i)=>{
+        setTimeout(()=>{ document.getElementById(id)?.classList.add('sv-on'); }, i*280);
+      });
+      const flashes = ['svF1','svF2','svF3','svF4'];
+      let fi = 0;
+      setInterval(()=>{
+        const el = document.getElementById(flashes[fi % flashes.length]);
+        if(el){ el.classList.remove('sv-flash-on'); void el.offsetWidth; el.classList.add('sv-flash-on'); }
+        fi++;
+      }, 1100);
+      obs.disconnect();
+    }
+  },{threshold:.3});
+  obs.observe(viz);
+})();
+
+/* ── STRONGER FOOTER REVEAL ── */
+(function(){
+  const sf = document.querySelector('.stronger-footer');
+  if(!sf) return;
+  new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){ sf.classList.add('vis'); }
+  },{threshold:.2}).observe(sf);
+})();
+
+/* ── MTBF COUNTER ── */
+(function(){
+  const el = document.getElementById('mtbfCounter');
+  if(!el) return;
+  let started = false;
+  const obs = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting && !started){
+      started = true;
+      const target = 1500000;
+      const duration = 2000;
+      const start = performance.now();
+      function step(now){
+        const t = Math.min((now-start)/duration, 1);
+        const ease = 1 - Math.pow(1-t, 4);
+        const val = Math.round(ease * target);
+        el.textContent = val.toLocaleString();
+        if(t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      obs.disconnect();
+    }
+  },{threshold:.4});
+  obs.observe(el);
+})();
+
+/* ── BOOT TIME BARS ── */
+(function(){
+  const bvFills = document.querySelectorAll('.bv-fill');
+  if(!bvFills.length) return;
+  const obs = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){
+      bvFills.forEach(f=>f.classList.add('bv-on'));
+      obs.disconnect();
+    }
+  },{threshold:.4});
+  const container = document.querySelector('.b-visual');
+  if(container) obs.observe(container);
+})();
+
+/* ── THERMAL CANVAS ── */
+(function(){
+  function drawThermal(canvasId, isHot){
+    const c = document.getElementById(canvasId);
+    if(!c) return;
+    const ctx = c.getContext('2d');
+    const w = c.width, h = c.height;
+
+    // Color stops: cool(blue) → warm(green/yellow) → hot(red)
+    function tempColor(t){ // t 0..1
+      if(t < .25){
+        const r = Math.round(26 + t*4*60);
+        const g = Math.round(95 + t*4*100);
+        const b = Math.round(168 - t*4*40);
+        return `rgb(${r},${g},${b})`;
+      } else if(t < .5){
+        const tt=(t-.25)*4;
+        return `rgb(${Math.round(86+tt*120)},${Math.round(195+tt*40)},${Math.round(128-tt*90)})`;
+      } else if(t < .75){
+        const tt=(t-.5)*4;
+        return `rgb(${Math.round(206+tt*40)},${Math.round(235-tt*100)},${Math.round(38-tt*20)})`;
+      } else {
+        const tt=(t-.75)*4;
+        return `rgb(${Math.round(246-tt*30)},${Math.round(135-tt*100)},${Math.round(18-tt*10)})`;
+      }
+    }
+
+    // Generate heat map with noise
+    const pw = 8;
+    // Base heat pattern: PCB-like shape
+    for(let y=0; y<h; y+=pw){
+      for(let x=0; x<w; x+=pw){
+        const nx = x/w, ny = y/h;
+        let heat;
+        if(isHot){
+          // Competitor: hot center, high overall
+          const cx = Math.abs(nx - .5)*2, cy = Math.abs(ny - .45)*2;
+          heat = 0.55 + 0.45*(1 - Math.sqrt(cx*cx+cy*cy)*.7);
+          heat += (Math.random()-.5)*.12;
+          // Hot spots
+          if(Math.abs(nx-.35)<.12 && Math.abs(ny-.4)<.15) heat = Math.min(1, heat+.25);
+          if(Math.abs(nx-.65)<.1 && Math.abs(ny-.5)<.1) heat = Math.min(1, heat+.2);
+        } else {
+          // SSD330: cooler, more uniform
+          const cx = Math.abs(nx-.5)*2, cy = Math.abs(ny-.45)*2;
+          heat = 0.18 + 0.28*(1 - Math.sqrt(cx*cx+cy*cy)*.6);
+          heat += (Math.random()-.5)*.08;
+        }
+        heat = Math.max(0, Math.min(1, heat));
+        ctx.fillStyle = tempColor(heat);
+        ctx.fillRect(x, y, pw, pw);
+      }
+    }
+  }
+
+  const obs = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){
+      drawThermal('thermalHot', true);
+      drawThermal('thermalCool', false);
+      obs.disconnect();
+    }
+  },{threshold:.3});
+  const tc = document.querySelector('.thermal-compare');
+  if(tc) obs.observe(tc);
+})();
+
+
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring'),trail=document.getElementById('cur-trail');
+let mx=0,my=0,rx=0,ry=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+(function lr(){
+  rx+=(mx-rx)*.1;ry+=(my-ry)*.1;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  tx+=(mx-tx)*.06;ty+=(my-ty)*.06;
+  trail.style.left=tx+'px';trail.style.top=ty+'px';
+  requestAnimationFrame(lr);
+})();
+document.querySelectorAll('button,.sbtn,.nav-link,.htag,.compat-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='14px';cur.style.height='14px';ring.style.width='44px';ring.style.height='44px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='6px';cur.style.height='6px';ring.style.width='32px';ring.style.height='32px';});
+});
+
+/* ── NAV ── */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{ nav.classList.toggle('scrolled',window.scrollY>60); });
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+
+/* ── SCROLL REVEAL ── */
+const srEls=document.querySelectorAll('.sr');
+const srObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:.1});
+srEls.forEach(el=>srObs.observe(el));
+
+/* ── ORANGE LINES ── */
+document.querySelectorAll('.o-line').forEach(el=>{
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});
+  },{threshold:.5}).observe(el);
+});
+
+/* ── SPEED BARS ── */
+const sbarObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    ['sb0','sb1','sb2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('on'),i*200));
+    sbarObs.disconnect();
+  }
+},{threshold:.4});
+const sb=document.getElementById('sbars');
+if(sb)sbarObs.observe(sb);
+
+/* ── VAULT WALLS ── */
+const vaultObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    document.querySelectorAll('.vault-wall').forEach((el,i)=>setTimeout(()=>el.classList.add('on'),i*200));
+    document.querySelectorAll('.vault-label').forEach((el,i)=>setTimeout(()=>el.classList.add('on'),400+i*150));
+    vaultObs.disconnect();
+  }
+},{threshold:.4});
+const vv=document.getElementById('vaultViz');
+if(vv)vaultObs.observe(vv);
+
+/* ── NAV ACTIVE STATE ── */
+const secIds=['s00','s01','s02','s03','s04','s05','s06','s07'];
+const navLinks=document.querySelectorAll('.nav-link');
+const secObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id=e.target.id;
+      navLinks.forEach(l=>l.classList.remove('on'));
+      const idx=secIds.indexOf(id);
+      if(navLinks[idx])navLinks[idx].classList.add('on');
+    }
+  });
+},{threshold:.4});
+secIds.forEach(id=>{const el=document.getElementById(id);if(el)secObs.observe(el);});
+</script>
+</body>
+</html>

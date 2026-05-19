@@ -1,0 +1,755 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>M.2</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="361d24e8-7d86-80ef-bfb3-d5d80ff72408" class="page sans"><header><h1 class="page-title" dir="auto">M.2</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="364d24e8-7d86-800d-b144-d8fc6efb468a" class="">Simorchip · Core Series</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80af-b13b-eff27966b32a" class="">Core Series<br/>2242<br/>GEN3x4</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8027-a030-e2e06519167d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-802f-9462-ffc1a4234192" class="">42mm. The right size for everything in between.</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80df-bb50-c9cf4c696302" class="">PCIe Gen3x4 NVMe · Write consistency above market at every capacity.</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80e1-b481-c61c2e839bed" class=""><code>#M.2 2242</code> <code>#PCIe Gen3x4</code> <code>#NVMe</code> <code>#Up to 2TB</code> <code>#1,500,000 Hr</code> <code>#3-Year Warranty</code></p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-802f-8e5b-d0c5f32fd018"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80c3-ac54-e7f4a4668f95" class="">Why M.2 2242 GEN3x4?<br/>Solid Core<br/>42mm. Not a compromise. A considered choice.</p></div><div style="display:contents" dir="ltr"><table id="364d24e8-7d86-8075-ab31-c54156666c18" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8093-b1f9-dc3d0fd071fd"><td id="&gt;gw_" class="">Form Factor</td><td id="vflv" class="">2242</td><td id="zMlM" class="" style="width:502px">42mm — fits industrial motherboards, NAS enclosures, and systems where 2280 is too long and 2230 too short. When the spec sheet says 2242, there is no substitute.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80c6-a606-fbc4632b3518"><td id="&gt;gw_" class="">Write Consistency</td><td id="vflv" class="">3,000+ MB/s</td><td id="zMlM" class="" style="width:502px">512GB and above all exceed 3,000 MB/s write. Most Gen3 2242 competitors drop to 1,500–2,000 MB/s at 512GB. Simorchip 2242 stays consistent across every capacity.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8052-9f29-e375b1953487"><td id="&gt;gw_" class="">Read Speed</td><td id="vflv" class="">3,200 MB/s</td><td id="zMlM" class="" style="width:502px">Flat 3,200 MB/s read across all four capacities — 256GB through 2TB. No trade-off by capacity.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8092-a607-d1cfd9b78512"><td id="&gt;gw_" class="">MTBF</td><td id="vflv" class="">1.5M hr</td><td id="zMlM" class="" style="width:502px">1,500,000 hours rated reliability. Industrial-grade endurance for embedded systems, NAS, and continuous-operation environments.</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-800d-9402-d7c45e82426b"><td id="&gt;gw_" class="">Warranty</td><td id="vflv" class="">3yr</td><td id="zMlM" class="" style="width:502px">3-year limited warranty. Professional after-sales service backed with confidence.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80e8-b9b2-de1590b56bae" class="">📊 Write Consistency Advantage</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-806e-b2fe-f0cd4fe95a82" class=""><strong>512GB / 1TB / 2TB all achieve 3,000+ MB/s write — above typical Gen3 2242 market benchmarks. Most competitors drop significantly at lower capacities.</strong></p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-800c-8f8c-d59189de46cb" class="">*Benchmarked under Simorchip internal lab conditions</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-80c6-bfd2-ec4cc079c28a"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80bf-a2bf-df2931a8e182" class="">01 — Performance</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8043-b05c-f5e22109a501" class="">Fast</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80de-a384-f508db361ab7" class="">PCIe Gen3x4 · Consistent across all capacities</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8057-9d92-cdb07cfc4c20" class="">PCIe Gen3x4 NVMe — 3,200 MB/s read flat across all capacities.Write consistency above typical market Gen3 2242 from 512GB upward.</p></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-8082-9d10-e492d17d9609" class="bulleted-list"><li style="list-style-type:disc"><strong>3,200 MB/s read — all capacities</strong> — Same peak read whether 256GB or 2TB. No capacity penalty on read throughput.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-80ea-b2cc-ddc6bc62f852" class="bulleted-list"><li style="list-style-type:disc"><strong>3,000+ MB/s write from 512GB</strong> — Unusually consistent for Gen3 2242. The larger PCB accommodates higher NAND density — enabling sustained write at every major capacity.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-80e6-88d7-c59ae1629384" class="bulleted-list"><li style="list-style-type:disc"><strong>Stringent component screening</strong> — Main control chips and NAND flash particles individually verified before assembly.</li></ul></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-802b-bbff-fde2cfe6c554" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8020-9d05-fd1c43b07987" class="">Sequential Read by Capacity<br/>256GB 3,200 MB/s<br/>512GB 3,200 MB/s<br/>1TB 3,200 MB/s<br/>2TB 3,200 MB/s<br/>Sequential Write by Capacity<br/>256GB 2,700 MB/s<br/>512GB ★ 3,000 MB/s<br/>1TB ★ 3,000 MB/s<br/>2TB ★ 3,100 MB/s<br/>★ Above typical Gen3 2242 market performance</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-805c-b035-dc7ae2c2de77" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80f8-b8e6-eece0314d660" class="">Star badge</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8064-9083-d3612cc709bd" class="">3,200 MB/s Read · All caps.<br/>3,100 MB/s Write · 2TB<br/>1,500 Max TBW</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-8041-91fc-dcb754057772"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80f3-9126-ff30bda20d10" class="">02 — Reliability</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8030-99d9-c5c09e21ece7" class="">Solid</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80d4-b81e-fd63534b3565" class="">1,500,000 hr MTBF · 3-Year Warranty</p></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-803f-8923-fd5a1af47f50" class="bulleted-list"><li style="list-style-type:disc"><strong>1,500,000-hour MTBF</strong> — Over 171 years of rated reliability. Industrial-grade endurance designed for continuous-operation environments.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-800b-81a7-e9a53cee69d1" class="bulleted-list"><li style="list-style-type:disc"><strong>Stringent component screening</strong> — Main control chips and NAND flash particles individually verified before assembly.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-8082-a1c4-db9458e7e331" class="bulleted-list"><li style="list-style-type:disc"><strong>RoHS / CE / FCC / REACH certified</strong> — Compliant for EU, US, and international markets.</li></ul></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-8059-ac17-c050a69e3e7f" class="bulleted-list"><li style="list-style-type:disc"><strong>Multi-platform compatible</strong> — Industrial PC · NAS Server · NVR / DVR · Laptop · Desktop · Workstation · Mini PC.</li></ul></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-805d-ac7e-d529e2a9b7e0" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80a1-a895-e370f80e42b3" class="">1,500,000 Hours MTBF</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80e9-955d-dd15ebe967a3" class="">1,500 Max TBW · 2TB</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8083-8e6f-ce5a904a869c" class="">Certifications</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80d6-a557-ffb70b5fc444" class="">RoHS CE FCC REACH</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80a7-a98b-e4c9b329be5e" class="">OS Support</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8081-b0a9-c9466156d711" class="">Windows 11 / 10 · LinuxSteamOS · FreeBSDPlug &amp; Play — no drivers</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-802a-b88f-ddeac599b996" class="">
+</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80a4-b021-e6425b68a060" class="">Compatible Platforms</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80c0-98ec-d3fd929ef8c0" class="">Industrial PC<br/>NAS Server<br/>Laptop<br/>Desktop<br/>NVR / DVR<br/>Embedded<br/>Workstation<br/>Mini PC</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-805e-bc86-f94939fba7f1"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-809a-949e-c06ac9dc41fd" class="">03 — Specifications</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8069-97a7-c606b0cafed1" class="">Full Specs</p></div><div style="display:contents" dir="ltr"><table id="364d24e8-7d86-8073-9cc0-c1da1fbfef06" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8063-938f-d4b82cf634a3"><td id="}@`R" class="">Model</td><td id="vtH;" class="">Simorchip M.2 2242 GEN3x4</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-806e-a5b3-f885d5f408f9"><td id="}@`R" class="">Series</td><td id="vtH;" class="">Core Series</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80cc-985a-efe0093139e5"><td id="}@`R" class="">Interface</td><td id="vtH;" class="">PCIe Gen3x4 NVMe</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80ef-abc4-c4211fe414ea"><td id="}@`R" class="">Form Factor</td><td id="vtH;" class="">M.2 2242 · 42 × 22 × 3.77 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8079-970b-e8c1a294f5a6"><td id="}@`R" class="">Flash Type</td><td id="vtH;" class="">3D NAND</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8098-877f-d00f44ea5cbe"><td id="}@`R" class="">Capacity</td><td id="vtH;" class="">256GB / 512GB / 1TB / 2TB</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-801c-8601-d0986a43dc52"><td id="}@`R" class="">MTBF</td><td id="vtH;" class="">1,500,000 Hours</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8073-90a2-eec048bf18fe"><td id="}@`R" class="">Voltage</td><td id="vtH;" class="">3.3V ± 5%</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-807c-a6b0-d245ff87beb7"><td id="}@`R" class="">Operating Temp</td><td id="vtH;" class="">0°C ~ 70°C</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8015-90d8-cc002046ea91"><td id="}@`R" class="">Certifications</td><td id="vtH;" class="">RoHS / CE / FCC / REACH</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80a8-b1d8-ed0684fd7c8c"><td id="}@`R" class="">Warranty</td><td id="vtH;" class="">3-Year Limited Warranty</td></tr></div></tbody></table></div><div style="display:contents" dir="ltr"><table id="364d24e8-7d86-8062-98cf-c981b71eec68" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-804a-afc3-f13b9835f321"><td id="yLQ&lt;" class="">256GB · Read / Write</td><td id="zxrN" class="">3,200 / 2,700 MB/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8071-aebd-c20f18d1a11f"><td id="yLQ&lt;" class="">512GB · Read / Write</td><td id="zxrN" class="">3,200 / 3,000 MB/s ★</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80a7-ac59-eb777643a423"><td id="yLQ&lt;" class="">1TB · Read / Write</td><td id="zxrN" class="">3,200 / 3,000 MB/s ★</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8060-abc8-eae09aa3c187"><td id="yLQ&lt;" class="">2TB · Read / Write</td><td id="zxrN" class="">3,200 / 3,100 MB/s ★</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-8091-8919-e28426daad7a"><td id="yLQ&lt;" class="">256GB TBW</td><td id="zxrN" class="">185 TBW</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80cd-9955-f357772b130d"><td id="yLQ&lt;" class="">512GB TBW</td><td id="zxrN" class="">375 TBW</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80b1-b65f-d3dec72e1f36"><td id="yLQ&lt;" class="">1TB TBW</td><td id="zxrN" class="">750 TBW</td></tr></div><div style="display:contents" dir="ltr"><tr id="364d24e8-7d86-80a4-8b23-efb0373906be"><td id="yLQ&lt;" class="">2TB TBW</td><td id="zxrN" class="">1,500 TBW</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80e7-b100-c257b16b22a1" class="">★ Above typical Gen3 2242 market write performance</p></div><div style="display:contents" dir="auto"><ul id="364d24e8-7d86-8036-b2b3-edbef57e798c" class="bulleted-list"><li style="list-style-type:disc">All data from Simorchip internal labs. Results may vary.</li></ul></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-800e-bed5-cfcfe0ceda20" class=""><strong>Download DatasheetExplore Core Series</strong></p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8018-a471-f838c3cb3f5c" class="">SimorchipM.2 2242GEN3x4</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-809e-903b-e347bf639384" class="">Core Series · Solid Core</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8001-a9e7-e4a8753311ab" class="">© 2026 Simorchip Technology · PCIe Gen3x4 NVMe · 3-Year Warranty</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80de-951f-cb07b3576e3d" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="364d24e8-7d86-8002-9e2a-f23319049abf"/></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8037-8206-c7e37962b7c1" class="">Simorchip · Core Series</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-8041-901b-c3683da26b03" class="">Core Series<br/>2240<br/>GEN3x4 &amp; GEN4x4</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80a8-8e5a-c7fc053d91a7" class="">30mm. Fits where others don&#x27;t.</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80e7-8ea6-caf15ee4f86a" class="">Two speed tiers. One form factor. Your call.</p></div><div style="display:contents" dir="auto"><p id="364d24e8-7d86-80d3-a4c6-ed31b6200157" class=""><code>#2230 GEN3x4</code> <code>#2230 Gen4x4</code> <code>#3,300 MB/s</code> <code>#7,000 MB/s</code> <code>#1,500,000 Hr MTBF</code></p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8090-8c8b-e350baf8f13e" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="365d24e8-7d86-80cd-96a1-e43337070ec4"/></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80ae-875e-fc36da5b0fa1" class=""><strong>Choose your speed.</strong></p></div><div style="display:contents" dir="ltr"><table id="365d24e8-7d86-8036-a642-d4605cac5a1b" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-8052-9755-e2fce4fac897"><th id="=Ez|" class="simple-table-header-color simple-table-header"></th><th id="rMWk" class="simple-table-header-color simple-table-header">2230 GEN3x4</th><th id="c|yy" class="simple-table-header-color simple-table-header">2230 GEN4x4</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-8051-88bc-f676c12499f5"><td id="=Ez|" class="">Interface</td><td id="rMWk" class="">PCIe Gen3x4 NVMe</td><td id="c|yy" class="">PCIe Gen4x4 NVMe</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-804e-9848-f46428611eda"><td id="=Ez|" class="">Max Read</td><td id="rMWk" class=""><strong>3,300 MB/s</strong></td><td id="c|yy" class=""><strong>7,000 MB/s (2TB)</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-8096-88c4-e4c5e05a5250"><td id="=Ez|" class="">Max Write</td><td id="rMWk" class=""><strong>3,000 MB/s</strong></td><td id="c|yy" class=""><strong>6,500 MB/s (2TB)</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-8012-bc91-e1a68580d7e2"><td id="=Ez|" class="">Capacity</td><td id="rMWk" class="">256GB / 512GB / 1TB / 2TB</td><td id="c|yy" class="">512GB / 1TB / 2TB</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-80a3-b7a7-e4d37296d5f7"><td id="=Ez|" class="">MTBF</td><td id="rMWk" class="">1,500,000 hr</td><td id="c|yy" class="">1,500,000 hr</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-8081-9552-fd5091560740"><td id="=Ez|" class="">Warranty</td><td id="rMWk" class="">3-Year</td><td id="c|yy" class="">3-Year</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-80d9-90ab-c59b52faf702"><td id="=Ez|" class="">Best for</td><td id="rMWk" class="">Wide compatibility · Low power · Gen3 platforms</td><td id="c|yy" class="">Maximum throughput · Gen4 platforms</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8046-818f-c5faaa5aa17c" class=""><strong>7,000 MB/s read / 6,500 MB/s write — well above typical M.2 2230 Gen4 market performance (usually 5,000–5,500 MB/s). Exceptional for a 30mm module.</strong></p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80bc-b876-cca608e0dd7c" class=""><strong>256GB write speed is 1,200 MB/s. 512GB and above achieve 2,400–3,000 MB/s. Select 512GB or above for sustained write-intensive workloads.</strong></p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8091-aec0-cc4e4845a6fd" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="365d24e8-7d86-80f0-9362-d821158ee90d"/></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80aa-b822-fb81a8d65331" class="">01 — Performance</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80b9-95dc-dae66b83bdd7" class="">Fast</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80b9-a512-c9ed05111360" class="">GEN3x4 · 3,300 MB/s</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8093-b422-d3d140dcd712" class="">PCIe Gen3x4 NVMe — widest platform compatibility.1TB and 2TB deliver full Gen3 read and write throughput.</p></div><div style="display:contents" dir="auto"><ul id="365d24e8-7d86-806b-b1b9-c2a91ab7b871" class="bulleted-list"><li style="list-style-type:disc"><strong>Up to 3,300 MB/s read</strong> — 2TB model achieves peak Gen3 throughput. 1TB and 2TB both reach full 3,000 MB/s write.</li></ul></div><div style="display:contents" dir="auto"><ul id="365d24e8-7d86-8051-bdbc-e21163f029bd" class="bulleted-list"><li style="list-style-type:disc"><strong>Lower power — Gen3 platform compatible</strong> — Works across the widest range of systems, including those without PCIe Gen4 support.</li></ul></div><div style="display:contents" dir="auto"><ul id="365d24e8-7d86-806e-b3be-d03f98969e78" class="bulleted-list"><li style="list-style-type:disc"><strong>Steam Deck · Surface Pro · Ultra-thin notebooks</strong> — The only NVMe size that physically fits these systems.</li></ul></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8012-9d8e-c50e73af71da" class="">3,300 MB/s Max Read<br/>3,000 MB/s Max Write</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80ad-95f8-fd4b64ad0df0" class="">Sequential Read — GEN3x4<br/>256GB 3,000 MB/s<br/>512GB 3,200 MB/s<br/>1TB 3,200 MB/s<br/>2TB 3,300 MB/s</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80d6-a7de-ca4ab926af9b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-802c-b41a-cfa774f44ad2" class="">GEN4x4 · 7,000 MB/s</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80ac-9f91-f8aa7b7d4bdf" class="">PCIe Gen4x4 NVMe — the highest performance in M.2 2230.The 2TB model achieves 7,000 MB/s read — above typical market performance at this form factor.</p></div><div style="display:contents" dir="auto"><ul id="365d24e8-7d86-8060-bc62-f0fcffaae347" class="bulleted-list"><li style="list-style-type:disc"><strong>7,000 MB/s read — 2TB model</strong> — Most M.2 2230 Gen4 products reach 5,000–5,500 MB/s at 2TB. Simorchid 2230 GEN4x4 delivers significantly higher throughput.</li></ul></div><div style="display:contents" dir="auto"><ul id="365d24e8-7d86-80dc-bbd2-c90a9815b667" class="bulleted-list"><li style="list-style-type:disc"><strong>6,500 MB/s write — 2TB model</strong> — Sustained write throughput at a level rarely seen in 30mm NVMe modules.</li></ul></div><div style="display:contents" dir="auto"><ul id="365d24e8-7d86-80f9-99cf-dec9c2800c15" class="bulleted-list"><li style="list-style-type:disc"><strong>Steam Deck OLED · Gen4 ultrabooks · Latest Mini PCs</strong> — Unlock full Gen4 bandwidth in the smallest M.2 footprint.</li></ul></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8016-a96c-c91f946c8c00" class="">7,000 MB/s Read · 2TB</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8071-a4f8-dfac0b475046" class="">6,500 MB/s Write · 2TB</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8050-9000-d5c70fa454fa" class="">
+</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8032-a250-c05588db0de3" class="">Sequential Read — GEN4x4<br/>512GB 5,200 MB/s<br/>1TB 5,200 MB/s<br/>2TB ★ 7,000 MB/s<br/>★ Significantly above typical M.2 2230 Gen4 market performance</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80c0-ab76-ee3a831aef61" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="365d24e8-7d86-8098-964c-d6bf83310c69"/></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8008-9f26-f952d814c26d" class="">02 — Reliability</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8075-9ab4-f8d67fbb0e29" class=""><strong>Solid</strong></p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-803d-a2eb-e5f81459458f" class="">1,500,000 hr MTBF · 3-Year Warranty · Both variants</p></div><div style="display:contents" dir="auto"><ul id="365d24e8-7d86-80d5-aa90-e88511c0a0c9" class="bulleted-list"><li style="list-style-type:disc"><strong>1,500,000-hour MTBF</strong> — 171 years of rated reliability. Same industrial-grade standard across both GEN3x4 and GEN4x4.</li></ul></div><div style="display:contents" dir="auto"><ul id="365d24e8-7d86-80af-a935-fc658e0fdc3c" class="bulleted-list"><li style="list-style-type:disc"><strong>Stringent component screening</strong> — Main control chips and NAND flash particles individually verified before assembly.</li></ul></div><div style="display:contents" dir="auto"><ul id="365d24e8-7d86-8060-886b-e623dc33415b" class="bulleted-list"><li style="list-style-type:disc"><strong>RoHS / CE / FCC / REACH</strong> — Compliant for EU, US, and international markets.</li></ul></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80c1-b5a9-fec51f54139d" class=""><strong>1,500,000 </strong>Hours MTBF</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80f7-8830-ea5e04c81675" class="">Compatible Platforms</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-801f-9740-ce76ac55a90b" class=""><br/>Steam Deck<br/>Ultrabook<br/>Surface Pro<br/>Mini PC<br/>Industrial<br/>NAS Cache<br/>Embedded<br/>Workstation</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80e6-9c52-c8231c95248d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80f0-8af2-cf80036a4218" class="">OS Support<br/>Windows 11 / 10 · Linux · SteamOS · macOS (adapter) · FreeBSD</p></div><div style="display:contents" dir="auto"><hr id="365d24e8-7d86-8099-8433-f473e7d19b15"/></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80e9-a20d-d7114558545b" class="">03 — Specifications</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80e5-b10b-d73fe6b6bdbf" class=""><strong>Full Specs</strong></p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80ea-bcbd-e5c6b58a5c33" class="">GEN3x4</p></div><div style="display:contents" dir="ltr"><table id="365d24e8-7d86-805c-a52b-e516f51539a3" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-80e1-b772-ece71543b147"><td id="fdxZ" class="">Model</td><td id="Ovh;" class="">Simorchip M.2 2230 GEN3x4</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-80fd-a25f-c56bf69d9c32"><td id="fdxZ" class="">Interface</td><td id="Ovh;" class="">PCIe Gen3x4 NVMe</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-8010-81bc-f8b11f613c18"><td id="fdxZ" class="">Capacity</td><td id="Ovh;" class="">256GB / 512GB / 1TB / 2TB</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-80a2-a3c0-d35dfbec64f3"><td id="fdxZ" class="">Form Factor</td><td id="Ovh;" class="">M.2 2230 · 30 × 22 × 3.77 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-802b-88c4-e8c9ecf9953a"><td id="fdxZ" class="">MTBF</td><td id="Ovh;" class="">1,500,000 Hours</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-80e6-b3c2-eb0833458bfd"><td id="fdxZ" class="">Warranty</td><td id="Ovh;" class="">3-Year Limited</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-802b-a758-d82bdd7dd66b" class="">256GB: 3,000 / 1,200 MB/s ⚠512GB: 3,200 / 2,400 MB/s1TB: 3,200 / 3,000 MB/s2TB: 3,300 / 3,000 MB/s</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8034-80ed-e6ec68c01983" class=""><strong>GEN3x4 Datasheet</strong></p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-806c-9457-e2a23d7ebf8a" class="">GEN4x4</p></div><div style="display:contents" dir="ltr"><table id="365d24e8-7d86-8099-bdc8-cec0c2242c93" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-80c4-9896-cff04756c2b3"><td id="GliR" class="">Model</td><td id="uIP?" class="">Simorchip M.2 2230 GEN4x4</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-80e1-9fa6-dc4bd648775f"><td id="GliR" class="">Interface</td><td id="uIP?" class="">PCIe Gen4x4 NVMe</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-8088-ba5f-fc57641262ff"><td id="GliR" class="">Capacity</td><td id="uIP?" class="">512GB / 1TB / 2TB</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-8080-aadb-c9fe7349d94e"><td id="GliR" class="">Form Factor</td><td id="uIP?" class="">M.2 2230 · 30 × 22 × 3.77 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-80c8-8f72-f64fe33333bf"><td id="GliR" class="">MTBF</td><td id="uIP?" class="">1,500,000 Hours</td></tr></div><div style="display:contents" dir="ltr"><tr id="365d24e8-7d86-80ae-8bd9-da4bd7a7e68e"><td id="GliR" class="">Warranty</td><td id="uIP?" class="">3-Year Limited</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8042-9863-c3c4f1dfaa3e" class="">512GB: 5,200 / 2,700 MB/s ⚠1TB: 5,200 / 4,500 MB/s2TB ★: 7,000 / 6,500 MB/s</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80da-ba5d-d9315910c947" class=""><strong>GEN4x4 DatasheetCore Series</strong></p></div><div style="display:contents" dir="auto"><ul id="365d24e8-7d86-809e-acb1-e447e0eaba92" class="bulleted-list"><li style="list-style-type:disc">All speeds in MB/s · ⚠ Low-capacity write reflects NAND configuration at 2230 form factor</li></ul></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80e0-83a7-ecd8bef20a5c" class="">★ GEN4x4 2TB performance significantly above typical M.2 2230 Gen4 market benchmarks</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80cc-8df3-c036af25f4e7" class=""><strong>SimorchipM.2 2230Core Series</strong></p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-8028-8715-fa6e642f990f" class="">GEN3x4 · GEN4x4 · Compact Core · Swift Core</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80de-b2a1-d97a57918a87" class="">© 2026 Simorchip Technology · M.2 2230 · PCIe Gen3x4 &amp; Gen4x4 · 3-Year Warranty</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

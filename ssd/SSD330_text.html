@@ -1,0 +1,746 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>SSD 330</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="358d24e8-7d86-80c1-922b-fe0bef1dd337" class="page sans"><header><h1 class="page-title" dir="auto">SSD 330</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80e0-ba8c-cc8537778697" class=""><mark class="highlight-yellow">*黃色字體：視覺建議</mark></p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8026-8dd9-c9abfde9cc96" class=""><mark class="highlight-red">*紅色字體：中文解釋</mark></p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8052-862b-ce0ba024e961" class=""><mark class="highlight-blue">*Hashtag：For SEO</mark></p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8030-8fdc-c747e83d911e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-80e9-8ce4-cd4ac7bbf0f5" class="">Faster. Stronger. Safer. Smarter.<br/>Your system was never this fast.</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8072-ad5e-ff49cd1f40ae" class=""><mark class="highlight-blue"><code>#Simorchip</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#PCIe Gen3 x4</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#NVMe 1.3</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#3300MB/s</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#3D NAND</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#M.2 2280</code></mark></p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-807b-b2c8-f9ddfe50c6c9" class=""><mark class="highlight-blue"><code>#SSD</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#330</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#Blaze Black</code></mark><mark class="highlight-blue">  </mark><mark class="highlight-blue"><code>#128GB</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#256GB</code></mark><mark class="highlight-blue">  </mark><mark class="highlight-blue"><code>#512GB</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#1TB</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#2TB</code></mark></p></div><div style="display:contents" dir="auto"><hr id="359d24e8-7d86-8001-8b16-ef22a5294ecb"/></div><div style="display:contents" dir="auto"><h2 id="359d24e8-7d86-807e-aa67-cca592245a24" class="">Blaze Black <mark class="highlight-red">火焰黑</mark></h2></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-80ce-9ce1-c500ebf2e670" class=""><mark class="highlight-red">不是為了張揚而設計。<br/>是為了在系統最深處，成為最可靠的性能核心。</mark></p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8062-9183-e1adf2d6bbd7" class="">Not designed to stand out.<br/>Designed to be the most reliable performance core at the heart of your system.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-806c-8825-d7032cbdaf7c" class="">Blaze Black</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8081-ae10-fe11fb612640" class="">Not built to be seen. Built to be ahead.</p></div><div style="display:contents" dir="auto"><h2 id="359d24e8-7d86-80b5-b85e-f789305a38ff" class="">Every line exists for performance — not decoration, but craft.</h2></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-805f-8288-f13b33ab96d7" class=""><mark class="highlight-red">俐落線條每一刻都為效能存在，這不是裝飾是工藝。</mark></p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8030-a7dd-e5ea0ab60496" class="">Every line on the SSD 330 has a reason.<br/>This is not decoration.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8040-b63e-f6c175f242f9" class="">This is direction.</p></div><div style="display:contents" dir="auto"><hr id="359d24e8-7d86-80f0-90e9-dd930ea693a8"/></div><div style="display:contents" dir="auto"><h2 id="359d24e8-7d86-80a5-b252-ecca855d0875" class="">Why NVMe SSD 330</h2></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80b9-a9eb-c7d3caaedce6" class="">Why upgrade to PCIe NVMe now?</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-801b-82be-e35f7c7bf1aa" class=""><mark class="highlight-red">為什麼現在升級 PCIe NVMe？</mark></p></div><div style="display:contents" dir="ltr"><table id="359d24e8-7d86-80b1-a068-f7babeb837ff" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="359d24e8-7d86-8058-a0b6-e9537b2788f8"><th id="TXy|" class="simple-table-header-color simple-table-header">Read Speed</th><th id="Pn&lt;F" class="simple-table-header-color simple-table-header">Up to 3300 MB/s</th><th id="Pu|K" class="simple-table-header-color simple-table-header" style="width:281.5375061035156px">6× faster than SATA SSD</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="359d24e8-7d86-80d3-a48c-c769c0b859bf"><td id="TXy|" class="">Write Speed</td><td id="Pn&lt;F" class="">Up to 2800 MB/s</td><td id="Pu|K" class="" style="width:281.5375061035156px">Large file transfers, done faster</td></tr></div><div style="display:contents" dir="ltr"><tr id="359d24e8-7d86-802b-8830-c1602c2572f8"><td id="TXy|" class="">Interface</td><td id="Pn&lt;F" class="">PCIe Gen3 x 4</td><td id="Pu|K" class="" style="width:281.5375061035156px">Far greater bandwidth, lower latency</td></tr></div><div style="display:contents" dir="ltr"><tr id="359d24e8-7d86-8001-8e29-fb10e6696323"><td id="TXy|" class="">MTBF</td><td id="Pn&lt;F" class="">1,500,000 hrs</td><td id="Pu|K" class="" style="width:281.5375061035156px">5× the reliability of traditional storage</td></tr></div><div style="display:contents" dir="ltr"><tr id="359d24e8-7d86-803d-bfa1-c9d79b5a3cac"><td id="TXy|" class="">Data Protection</td><td id="Pn&lt;F" class="">LDPC + Power Shield</td><td id="Pu|K" class="" style="width:281.5375061035156px">Multi-layer data protection</td></tr></div><div style="display:contents" dir="ltr"><tr id="359d24e8-7d86-80fa-9fa6-e10a73181edd"><td id="TXy|" class="">Warranty</td><td id="Pn&lt;F" class="">3 Year</td><td id="Pu|K" class="" style="width:281.5375061035156px">Three-year warranty, peace of mind</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="35ad24e8-7d86-8067-8632-e6a9ff2446f4" class="bulleted-list"><li style="list-style-type:disc">Benchmarked against SATA SSD at 550 MB/s</li></ul></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-803e-961f-d86958db5db4" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">數據以 SATA SSD 為比較基準</mark></li></ul></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8030-ba75-caf287ac6eb7" class="">Not because your storage isn&#x27;t enough.<br/>Because you deserve something stronger, more stable, and more secure.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8030-81c4-eec56932db47" class=""><mark class="highlight-red">不是因為儲存不夠用</mark></p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8075-a3da-d64ef9b6e542" class=""><mark class="highlight-red">是因為你值得更強、更穩、更安心</mark></p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8083-b217-ce521b9eccad" class="">Not because your old storage is broken.<br/>Because your system has been waiting for this.</p></div><div style="display:contents" dir="auto"><hr id="359d24e8-7d86-8005-a405-efe7ccb91766"/></div><div style="display:contents" dir="auto"><h2 id="35ad24e8-7d86-80cb-91d7-fc7697116776" class="">Faster · Speed Unleashed · System Reborn</h2></div><div style="display:contents" dir="auto"><h2 id="359d24e8-7d86-80e6-96c8-e103ff4dc0db" class=""><mark class="highlight-red">Faster・速度解放・系統重生</mark></h2></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8068-ae10-cec921313f4f" class="">Faster・6× Faster than SATA SSD.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-80cf-899d-ea6470905dd2" class="">Your SATA SSD was already fast.<br/>This is in another category.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8068-b54f-f5f506c6d278" class="">While SATA tops out at 550MB/s,<br/>the SSD 330 hits 3,300MB/s.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8064-a7a0-c7ba18b72f3f" class="">Your game map finishes loading before your opponent even gets in.<br/>Your 4K timeline scrubs like it&#x27;s nothing.<br/>Your 10GB file transfer finishes before you finish reading this sentence.</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-801c-87a5-ec4cdc27b712" class=""><mark class="highlight-red">在你讀完這句話，你的 10GB 檔案傳輸就已經完成了</mark></p></div><div style="display:contents" dir="ltr"><table id="359d24e8-7d86-8086-9821-c7fba45a2595" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="359d24e8-7d86-8087-bb98-d9aa514026e0"><th id="&lt;mo=" class="simple-table-header-color simple-table-header"></th><th id=";TVq" class="simple-table-header-color simple-table-header">SATA SSD</th><th id="qyIZ" class="simple-table-header-color simple-table-header">SSD 330</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="359d24e8-7d86-80ae-8076-dfb7a5f7ee94"><td id="&lt;mo=" class="">Load time</td><td id=";TVq" class="">36s</td><td id="qyIZ" class="">6s</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8017-b39a-cf8a8a4a4ef8" class="">Up to 3,300 MB/s Read   |   2,800 MB/s Write<br/>PCIe Gen3 x4 NVMe — 6× the bandwidth of SATA.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8033-bfd2-e888fb901b29" class="">The bottleneck is gone.<br/>You just got faster.</p></div><div style="display:contents" dir="auto"><ul id="35ad24e8-7d86-808f-a6e4-c65eb11438a1" class="bulleted-list"><li style="list-style-type:disc">Compared against SATA SSD at 550 MB/s</li></ul></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-802b-8561-dbcc34917af6" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">與 SATA SSD 550 MB/s 相比</mark></li></ul></div><div style="display:contents" dir="auto"><hr id="359d24e8-7d86-806d-8736-f68d0679c7bb"/></div><div style="display:contents" dir="auto"><h2 id="35ad24e8-7d86-80fa-879a-ce17e762b920" class="">Stronger · Built to Last · Long-Term Endurance</h2></div><div style="display:contents" dir="auto"><h2 id="359d24e8-7d86-8041-b481-ee5b5116a6ae" class=""><mark class="highlight-red">Stronger・更強架構・長效耐用</mark></h2></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8038-a88b-e28ea778723a" class="">Stronger・Built to outlast the machine it&#x27;s inside.</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80cf-9f85-f0c5a4da90fc" class="">Speed is only the beginning.<br/>Lasting speed is the real strength.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-80d9-8b31-c79ddb12fd56" class=""><mark class="highlight-red">速度只是開始。<br/>讓速度長久，才是真正的實力。</mark></p></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-809a-9df5-e054cf9f9321" class="bulleted-list"><li style="list-style-type:disc">1,500,000 hours Hours of rated reliabilty.</li></ul></div><div style="display:contents" dir="auto"><ul id="35ad24e8-7d86-80a4-9972-c78cb0f68007" class="bulleted-list"><li style="list-style-type:disc">400+AAA Game Installs</li></ul></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8031-aeb2-f060a5962d1d" class="">1,200 TBW endurance on the 2TB model. Install, delete, reinstall. It won&#x27;t flinch.</p></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-8048-8ec2-f73f2c01507a" class="bulleted-list"><li style="list-style-type:disc">2,400 Hours of 4K Footage</li></ul></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80d9-bea5-f21cd7d6689c" class="">Write all day, every day. The SSD 330 keeps up without slowing down.</p></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-8028-8bf8-ceae0b2b93ad" class="bulleted-list"><li style="list-style-type:disc">54°C Stable Under Load</li></ul></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8054-9815-e34c7f397f63" class="">Graphene thermal layer conducts heat at substrate level. Cool by design, not by chance.</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80a4-a214-e64381937ded" class="">* Under typical operating conditions. Actual temperature may vary by system configuration.</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-800e-b006-d1aa9c07b776" class=""><mark class="highlight-yellow">視覺：1,500,000 大字動態計時呈現，底下標記 Hours of rated reliability</mark></p></div><div style="display:contents" dir="auto"><h1 id="35ad24e8-7d86-8038-a714-e263c7643175" class=""><strong>Start it today.</strong></h1></div><div style="display:contents" dir="auto"><h1 id="35ad24e8-7d86-804a-8540-df59007e37fa" class=""><strong>Still running in 2195 Year.</strong></h1></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8078-9ab2-ed139455831c" class=""><mark class="highlight-red">今天安裝，可以運行到2195年</mark></p></div><div style="display:contents" dir="auto"><ul id="35ad24e8-7d86-80f8-bafe-f316a4323871" class="bulleted-list"><li style="list-style-type:disc">MTBF is a statistical estimate. Individual results may vary.</li></ul></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-807c-b2a7-d532d4e72d88" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">MTBF 為統計預期值，不代表單一產品之保證使用年限</mark></li></ul></div><div style="display:contents" dir="auto"><hr id="359d24e8-7d86-804d-a627-eed107a0c9d2"/></div><div style="display:contents" dir="auto"><h2 id="35ad24e8-7d86-80ae-a8f0-c92c4ec60b89" class="">Safer · Multi-Layer Protection · Not a Single Bit Lost</h2></div><div style="display:contents" dir="auto"><h2 id="359d24e8-7d86-8075-8d94-cf8c7e035758" class=""><mark class="highlight-red">Safer・多重防護・資料不掉一個位元</mark></h2></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-800e-bee7-e83f23c81d26" class="">Safer・The SSD 330 protects them automatically.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8081-bf71-d38850f10dc9" class="">Every file you care about.<br/>Every photo you can&#x27;t recreate.<br/>Every document you can&#x27;t afford to lose.</p></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-80bb-a66d-e1de6ec4f187" class="bulleted-list"><li style="list-style-type:disc"><strong>LDPC Error Correction</strong> — detects and fixes data errors before you ever notice.</li></ul></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-8077-b2d9-e62a51bf3998" class="bulleted-list"><li style="list-style-type:disc"><strong>Abnormal Power Loss Data Integrity Protection</strong> — sudden blackout? Your data stays exactly where you left it.</li></ul></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-80f3-9eb2-cfa115df3126" class="bulleted-list"><li style="list-style-type:disc"><strong>Bad Block Management</strong> — failing memory cells are isolated and bypassed, automatically.</li></ul></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-8005-8ecd-fdf812deff57" class="bulleted-list"><li style="list-style-type:disc"><strong>Wear Leveling</strong> — workload is spread evenly across every cell, so nothing wears out first.</li></ul></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-808b-a3ad-ce34ae81c856" class="">You don&#x27;t have to think about data protection.<br/>The SSD 330 already is.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-80ea-af6e-def8dd365c38" class="">Because some things can&#x27;t be lost twice.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8073-af32-c4a6a29a1121" class=""><mark class="highlight-yellow">視覺：雷達圖或稱衛星環繞圖，四個防護機制像旋轉跳躍我不停歇防護你的資料。</mark></p></div><div style="display:contents" dir="auto"><hr id="359d24e8-7d86-808b-bcac-fa865aed0a88"/></div><div style="display:contents" dir="auto"><h2 id="35ad24e8-7d86-80c6-87ac-c99482ff0271" class="">Smarter · Intelligent Management · Always Optimized</h2></div><div style="display:contents" dir="auto"><h2 id="359d24e8-7d86-80da-b6ac-ef0a32575b92" class=""><mark class="highlight-red">Smarter・智慧管理・自動最佳化</mark></h2></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80af-89e4-c5666b951bf1" class="">Smarter · The best tool is the one you never have to think about.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8072-af20-ea8022e0ab29" class=""><mark class="highlight-red">Smarter・最好的工具，是你不需要一直管它。</mark></p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-801f-9f17-cc0c6fff82c7" class="">You don&#x27;t need to optimize it.<br/>You don&#x27;t need to clean it.<br/>You don&#x27;t need to worry about it getting slower over time.</p></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-80b1-b349-eb8b9504276c" class="bulleted-list"><li style="list-style-type:disc"><strong>Dynamic Thermal Throttling</strong> — reads heat, adjusts automatically, prevents overheating while maintaining peak performance.</li></ul></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-80f3-9740-e733232205e9" class="bulleted-list"><li style="list-style-type:disc"><strong>Garbage Collection</strong> — runs in the background, clearing space you didn&#x27;t know you needed.</li></ul></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-8092-bf51-da064aa7cacc" class="bulleted-list"><li style="list-style-type:disc"><strong>TRIM</strong> — tells the drive exactly what&#x27;s free, so writes stay fast years from now.</li></ul></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-80ec-8137-c7161ea7af65" class="bulleted-list"><li style="list-style-type:disc"><strong>Early Move</strong> — detects aging cells before they fail, moves data proactively.</li></ul></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8043-95f4-cfebec034f76" class="">The smartest tool<br/>is the one you forget exists.</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-802f-a60f-f13047231164" class=""><mark class="highlight-yellow">視覺：熱成像圖對比它牌，我們的好棒棒就好了。</mark></p></div><div style="display:contents" dir="auto"><hr id="359d24e8-7d86-80db-bd0f-e84087e0e9e5"/></div><div style="display:contents" dir="auto"><h2 id="359d24e8-7d86-80a9-a55c-e285c92a901d" class="">One Size.Every System</h2></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8008-8696-fd290a827f1a" class="">80mm × 22mm × 3.77mm — Plug it in. That&#x27;s the upgrade.</p></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-800f-ae01-d9f0d7c8ba09" class="bulleted-list"><li style="list-style-type:disc">Computing</li></ul></div><div style="display:contents" dir="ltr"><table id="35ad24e8-7d86-80fb-9358-f03571cf3f3e" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-8049-8907-cad585355a5f"><td id="Kka\" class="" style="width:239.66666666666666px">Ultrabook</td><td id="sdzl" class="" style="width:239.66666666666666px">Thin &amp; light laptops</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-8097-82d8-eaf54ffbf9e3"><td id="Kka\" class="" style="width:239.66666666666666px">Desktop PC</td><td id="sdzl" class="" style="width:239.66666666666666px">ATX / mlTX motherboards</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-80ae-a1b0-ff3de49d7bad"><td id="Kka\" class="" style="width:239.66666666666666px">Gaming Laptop</td><td id="sdzl" class="" style="width:239.66666666666666px">High-refresh gaming rigs</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-805d-9b10-c0ad36aaa758"><td id="Kka\" class="" style="width:239.66666666666666px">Mini PC</td><td id="sdzl" class="" style="width:239.66666666666666px">NUC, Beelink Minisforum</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-800b-afa2-d5851ef07451"><td id="Kka\" class="" style="width:239.66666666666666px">Workstation</td><td id="sdzl" class="" style="width:239.66666666666666px">Creative &amp; enterprise</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="35ad24e8-7d86-8013-bbed-e0db2c4893a8" class="bulleted-list"><li style="list-style-type:disc">Console &amp; Gaming</li></ul></div><div style="display:contents" dir="ltr"><table id="35ad24e8-7d86-807f-8772-c38ebae63469" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-80a2-8c53-f355f6e3492b"><td id="Kka\" class="" style="width:239.66666666666666px">PlayStation 5</td><td id="sdzl" class="" style="width:239.66666666666666px">M.2 expansion slot compatible</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-8003-b1ff-cde1a9bfa168"><td id="Kka\" class="" style="width:239.66666666666666px">Xbox Series X|S</td><td id="sdzl" class="" style="width:239.66666666666666px">Seagate expansion via adapter</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-8049-bb78-c587287e6a5d"><td id="Kka\" class="" style="width:239.66666666666666px">Steam Deck</td><td id="sdzl" class="" style="width:239.66666666666666px">Direct M.2 2280 upgrade</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-8031-ae7c-f7a2920cb358"><td id="Kka\" class="" style="width:239.66666666666666px">Gaming Desktop</td><td id="sdzl" class="" style="width:239.66666666666666px">ROG, MSI, Alienware builds</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-8096-b657-e1842f223ea3"><td id="Kka\" class="" style="width:239.66666666666666px">Gaming Monitor PC</td><td id="sdzl" class="" style="width:239.66666666666666px">All-in-one gaming displays</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="35ad24e8-7d86-80a9-a688-ecad45fe57c7" class="bulleted-list"><li style="list-style-type:disc">Professional &amp; Security</li></ul></div><div style="display:contents" dir="ltr"><table id="35ad24e8-7d86-8081-baa0-c3636139d8a0" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-8040-9273-fc825a60ce12"><td id="Kka\" class="" style="width:239.66666666666666px">NVR / DVR</td><td id="sdzl" class="" style="width:239.66666666666666px">24/7 surveillance recorders</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-80e1-a3be-f10da3cef814"><td id="Kka\" class="" style="width:239.66666666666666px">Security Camera NVR</td><td id="sdzl" class="" style="width:239.66666666666666px">IP camera storage systems</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-8036-9e5f-fe000f69c97d"><td id="Kka\" class="" style="width:239.66666666666666px">NAS Server</td><td id="sdzl" class="" style="width:239.66666666666666px">QNAP, Synology M.2 cache</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-8092-8ca5-f967661e453b"><td id="Kka\" class="" style="width:239.66666666666666px">Industrial PC</td><td id="sdzl" class="" style="width:239.66666666666666px">Fanless embedded systems</td></tr></div><div style="display:contents" dir="ltr"><tr id="35ad24e8-7d86-802a-9607-ec8b6720971b"><td id="Kka\" class="" style="width:239.66666666666666px">Workstation Server</td><td id="sdzl" class="" style="width:239.66666666666666px">Rack &amp; tower server builds</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80b9-bbe7-d8b158ac8d96" class="">Compatible with</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80db-bf12-c37c924ae5cb" class="">Windows 11 / 10<br/>Linux<br/>macOS (via adapter)<br/>SteamOS<br/>FreeBSD<br/>Plug &amp; Play — No drivers needed</p></div><div style="display:contents" dir="auto"><hr id="359d24e8-7d86-80b1-80e2-d71281159d8e"/></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80ba-bc2d-c37213ff386b" class="">Packaging Design</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8060-af2a-fd9e1111dfd7" class=""><strong>What&#x27;s in the box</strong></p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80db-a960-ce1bda3c3f58" class="">Retail Hang Pack</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-805f-a652-ecfbb035d0b6" class="">Euro-slot hang hole for standard retail shelf display — ready for store or e-commerce fulfilment</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-801d-80a7-e6bf86bafb72" class="">Anti-Static Protection</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-801e-a7df-f984cb102bdd" class="">Diamond-textured anti-static black card shields the drive from electrostatic discharge during transit and handling</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-803d-b0c4-f59e75eb5367" class="">Drive-Visible Window</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-808a-b2a2-c7bdd79399e6" class="">Physical SSD exposed through packaging — verify the product before purchase, no guessing required</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8092-9fd7-fb09a2b96bbb" class="">Full Spec on Pack</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80e9-887b-e3b250737a54" class="">Model number, serial number, barcode and capacity clearly printed — no opening needed to confirm the right SKU</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80f0-a664-f2be369783c2" class="">Global Certifications</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-80be-b8aa-cb6495cc6f66" class="">CE · RoHS · FCC · REACH — compliant for sale in EU, US, and international markets</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8023-8036-e7ed4b6631ee" class=""><mark class="highlight-yellow">視覺：包裝外觀放上就好</mark></p></div><div style="display:contents" dir="auto"><hr id="35ad24e8-7d86-80d6-9388-f4f60c470cb6"/></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8025-9a86-eae5790faa9a" class=""><strong>3 Years</strong></p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8041-af85-ee2a325c57bb" class="">Limited Warranty</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8031-97f6-d319e1bc932b" class=""><em>Our confidence in the SSD 330 is written in three words.Three. Year. Warranty.</em></p></div><div style="display:contents" dir="auto"><hr id="35ad24e8-7d86-8086-a145-cc230d4fa26a"/></div><div style="display:contents" dir="auto"><h1 id="359d24e8-7d86-8051-970e-d892aefa7858" class="">SPECIFICATIONS</h1></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8076-a10c-e32794c2f32d" class="">A cost-effective solution engineered for optimum speed, endurance, reliability, and multi-platform compatibility.</p></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-8046-a704-d2531bfcab9e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-802f-913a-dcb04df9ccc9" class="">Model          Simorchip SSD 330<br/>Interface      PCIe Gen3 x4 NVMe 1.3<br/>Form Factor    M.2 2280<br/>Flash Type     3D NAND<br/>Capacity       128GB / 256GB / 512GB / 1TB / 2TB</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8069-8ee2-e31249041a9a" class="">Performance<br/>128GB          Read 1800 / Write 1500 MB/s<br/>256GB          Read 3200 / Write 1300 MB/s<br/>512GB          Read 3200 / Write 2500 MB/s<br/>1TB            Read 3200 / Write 2600 MB/s<br/>2TB            Read 3300 / Write 2800 MB/s</p></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-80e7-b3e3-d7593f982318" class="">TBW            75 / 150 / 300 / 600 / 1200 TBW<br/>MTBF           1,500,000 Hours<br/>Voltage        3.3V ± 5%<br/>Dimensions     80 × 22 × 3.77 mm<br/>Operating Temp 0°C ~ 70°C<br/>Certifications RoHS / REACH / CE / FCC<br/>Warranty       3-Year Limited Warranty</p></div><div style="display:contents" dir="auto"><ul id="359d24e8-7d86-806b-90f5-ffac76e00416" class="bulleted-list"><li style="list-style-type:disc">All data secured from Simorchip&#x27;s internal labs under specific testing conditions. Accurate data may vary depending on the operating environment.<br/>*Warranty based on period or TBW, whichever comes first.</li></ul></div><div style="display:contents" dir="auto"><p id="35ad24e8-7d86-802c-9e86-f964c279640b" class=""><mark class="highlight-yellow">視覺：就規格表，記得底下放規格表下載，然後瀏覽其他產品按鈕</mark></p></div><div style="display:contents" dir="auto"><hr id="359d24e8-7d86-80a5-bf35-c056e5c7a4a4"/></div><div style="display:contents" dir="auto"><h1 id="359d24e8-7d86-80b9-94f5-ca821fbe0d47" class="">底部標語</h1></div><div style="display:contents" dir="auto"><p id="359d24e8-7d86-8089-91e9-d61e5c6b8db7" class="">Simorchip SSD 330<br/>Faster. Stronger. Safer. Smarter.<br/>Your system deserves better.</p></div><div style="display:contents" dir="auto"><p id="358d24e8-7d86-80db-aeaf-e626ff05b151" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

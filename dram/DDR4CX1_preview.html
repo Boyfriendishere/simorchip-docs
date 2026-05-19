@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip DDR4 RGB CX1 — Harder. Alive. Faster. Stronger.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0c12; --surface:#10131c; --surface2:#181c28;
+  --white:#f0f0f0; --ink:#0a0c12;
+  --mute:#cccccc; --label:#8a9aaa; --border:rgba(255,255,255,.09); --line:rgba(255,255,255,.08);
+  /* RGB accent — cycling via animation */
+  --rgb-1:#ff4455; --rgb-2:#ffaa00; --rgb-3:#44ff88; --rgb-4:#44aaff; --rgb-5:#aa44ff;
+  --acc:#ffffff; --acc-dim:rgba(255,255,255,.1);
+  --ff-d:'Bebas Neue',sans-serif;
+  --ff-b:'DM Sans',sans-serif;
+  --ff-m:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff-b);background:var(--bg);color:var(--white);overflow-x:hidden;cursor:none;}
+
+/* GRAIN */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.12;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  background-size:160px 160px;mix-blend-mode:overlay;}
+
+/* RGB CURSOR */
+@keyframes cursorRgb{0%{background:var(--rgb-1);}20%{background:var(--rgb-2);}40%{background:var(--rgb-3);}60%{background:var(--rgb-4);}80%{background:var(--rgb-5);}100%{background:var(--rgb-1);}}
+@keyframes ringRgb{0%{border-color:rgba(255,68,85,.35);}20%{border-color:rgba(255,170,0,.35);}40%{border-color:rgba(68,255,136,.35);}60%{border-color:rgba(68,170,255,.35);}80%{border-color:rgba(170,68,255,.35);}100%{border-color:rgba(255,68,85,.35);}}
+#cur{position:fixed;width:9px;height:9px;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);animation:cursorRgb 3s linear infinite;transition:width .18s,height .18s;}
+#cur-ring{position:fixed;width:40px;height:40px;border:1px solid;border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);animation:ringRgb 3s linear infinite;transition:width .25s,height .25s;}
+#spot{position:fixed;width:600px;height:600px;border-radius:50%;pointer-events:none;z-index:0;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(68,170,255,.04) 0%,transparent 65%);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:20px 5%;transition:background .3s,border-bottom .3s;}
+nav.scrolled{background:rgba(10,12,18,.94);backdrop-filter:blur(12px);border-bottom:.5px solid var(--border);}
+.nav-brand{font-family:var(--ff-m);font-size:10px;font-weight:300;letter-spacing:.26em;text-transform:uppercase;color:var(--white);opacity:.28;}
+.nav-pills{display:flex;gap:6px;}
+@keyframes pillRgb{0%,100%{border-color:rgba(255,68,85,.5);background:rgba(255,68,85,.1);}33%{border-color:rgba(68,255,136,.5);background:rgba(68,255,136,.1);}66%{border-color:rgba(68,170,255,.5);background:rgba(68,170,255,.1);}}
+.nav-pill{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.1em;color:var(--label);border:.5px solid var(--border);padding:4px 9px;cursor:pointer;transition:color .2s;}
+.nav-pill:hover,.nav-pill.on{color:var(--white);animation:pillRgb 3s linear infinite;}
+
+/* SHARED */
+section{position:relative;width:100%;overflow:hidden;}
+.full{min-height:100vh;}
+/* RGB accent line */
+@keyframes rgbLine{0%{background:var(--rgb-1);}25%{background:var(--rgb-2);}50%{background:var(--rgb-3);}75%{background:var(--rgb-4);}100%{background:var(--rgb-1);}}
+.rgb-line{height:2px;width:0;max-width:100%;transition:width 1.1s ease;animation:rgbLine 4s linear infinite;}
+.rgb-line.on{width:40px;}
+/* scroll reveal — upward float */
+.fi{opacity:0;transform:translateY(14px);transition:opacity .75s ease,transform .75s ease;}
+.fi.vis{opacity:1;transform:none;}
+.fi-d1{transition-delay:.1s;}.fi-d2{transition-delay:.2s;}.fi-d3{transition-delay:.3s;}
+.tag{font-family:var(--ff-m);font-size:10px;font-weight:300;letter-spacing:.07em;color:var(--label);border:.5px solid var(--border);padding:4px 11px;display:inline-block;}
+.tag::before{content:'#';margin-right:2px;animation:cursorRgb 3s linear infinite;}
+/* stat badge */
+.stat-badge{display:inline-flex;flex-direction:column;align-items:flex-start;border:.5px solid var(--border);padding:18px 22px;background:rgba(255,255,255,.02);transition:border-color .3s,background .3s;}
+.stat-badge:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.04);}
+.stat-badge .num{font-family:var(--ff-d);font-size:clamp(26px,4.2vw,54px);letter-spacing:.02em;color:var(--white);line-height:1;}
+.stat-badge .lbl{font-size:10px;font-weight:400;letter-spacing:.1em;color:var(--mute);margin-top:4px;text-transform:uppercase;font-family:var(--ff-m);}
+.img-ph{background:linear-gradient(135deg,#181c28,#10131c);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:.5px solid var(--border);}
+.img-ph::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(91deg,transparent,transparent 12px,rgba(255,255,255,.008) 12px,rgba(255,255,255,.008) 13px);}
+.img-ph span{font-family:var(--ff-m);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.12);position:relative;z-index:1;text-align:center;line-height:2;padding:0 16px;}
+/* bullet list */
+.bullet-list{list-style:none;margin-top:28px;}
+.bullet-list li{padding:16px 0;border-bottom:.5px solid var(--line);font-size:15px;font-weight:400;line-height:1.75;color:var(--mute);display:grid;grid-template-columns:28px 1fr;gap:14px;align-items:start;}
+.bullet-list li:last-child{border-bottom:none;}
+.bullet-list li .bi{width:28px;height:28px;border:.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.bullet-list li .bi svg{width:14px;height:14px;stroke:var(--mute);fill:none;stroke-width:1.5;}
+.bullet-list strong{font-weight:500;color:var(--white);}
+.bullet-list .bn{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:rgba(255,255,255,.15);margin-top:4px;display:block;}
+/* sec wrap */
+.sec-wrap{padding:100px 6% 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto;}
+.sec-wrap.rev{direction:rtl;}.sec-wrap.rev>*{direction:ltr;}
+.sh-num{font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;color:var(--label);margin-bottom:14px;text-transform:uppercase;}
+.sh-title{font-family:var(--ff-d);font-size:clamp(64px,9vw,120px);letter-spacing:.02em;color:var(--white);line-height:.88;margin-bottom:8px;}
+.sh-sub{font-family:var(--ff-m);font-size:11px;font-weight:300;letter-spacing:.1em;color:var(--label);text-transform:uppercase;margin-bottom:28px;}
+.btn{font-family:var(--ff-b);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;padding:13px 28px;background:transparent;cursor:pointer;transition:background .22s,color .22s,border-color .22s;}
+.btn-light{border:1px solid var(--white);color:var(--white);}.btn-light:hover{background:var(--white);color:var(--ink);}
+.btn-ghost{border:1px solid var(--border);color:var(--label);}.btn-ghost:hover{background:var(--white);color:var(--ink);border-color:var(--white);}
+
+/* ── HERO ── */
+#s00{background:var(--bg);display:flex;align-items:center;padding-top:80px;min-height:100vh;}
+/* RGB ambient glow BG */
+.hero-rgb-bg{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+@keyframes ambientShift{0%{opacity:.6;transform:translateX(0) scale(1);}50%{opacity:1;transform:translateX(30px) scale(1.05);}100%{opacity:.6;transform:translateX(0) scale(1);}}
+.hero-rgb-bg::before{content:'';position:absolute;top:10%;right:5%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(68,170,255,.06) 0%,rgba(170,68,255,.04) 40%,transparent 70%);animation:ambientShift 6s ease-in-out infinite;}
+.hero-rgb-bg::after{content:'';position:absolute;bottom:15%;right:15%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,68,85,.05) 0%,transparent 70%);animation:ambientShift 6s ease-in-out infinite 2s;}
+
+.h-right{position:absolute;right:0;top:0;bottom:0;width:52%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(24px);transition:opacity 1.4s ease .2s,transform 1.4s ease .2s;}
+.h-right.on{opacity:1;transform:translateX(0);}
+
+/* CX1 MODULE — white heatspreader + black geometry + RGB top bar */
+.cx1-module-wrap{width:86%;max-width:520px;position:relative;}
+.cx1-module-wrap::before{content:'';position:absolute;inset:-60px;z-index:-1;background:radial-gradient(ellipse 70% 50% at 50% 40%,rgba(68,170,255,.08) 0%,transparent 70%);}
+@keyframes glint{0%{left:-40%;opacity:0;}8%{opacity:1;}92%{opacity:.6;}100%{left:140%;opacity:0;}}
+.cx1-body{width:100%;aspect-ratio:4.2/1;background:linear-gradient(128deg,#e8e8e8 0%,#f5f5f5 100%);position:relative;overflow:hidden;border:.5px solid rgba(255,255,255,.2);box-shadow:0 32px 80px rgba(0,0,0,.9),0 0 60px rgba(68,170,255,.08);transform:rotate(-2deg) translateY(-6px);}
+/* glint */
+.cx1-body::after{content:'';position:absolute;top:0;left:-40%;width:18%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),rgba(255,255,255,.55),rgba(255,255,255,.35),transparent);animation:glint 4.5s ease-in-out infinite 1.8s;pointer-events:none;z-index:10;}
+/* RGB top bar */
+@keyframes rgbBar{0%{background:linear-gradient(90deg,#ff4455,#ff8800,#ffee00,#44ff88,#44aaff,#aa44ff,#ff4455);}100%{background:linear-gradient(90deg,#ff4455,#ff8800,#ffee00,#44ff88,#44aaff,#aa44ff,#ff4455);background-position:200%;}}
+@keyframes rgbBarMove{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
+.cx1-rgb-bar{position:absolute;top:0;left:0;right:0;height:5px;z-index:9;background:linear-gradient(90deg,#ff4455,#ff8800,#ffee00,#44ff88,#44aaff,#aa44ff,#ff4455);background-size:200%;animation:rgbBarMove 2.5s linear infinite;box-shadow:0 0 12px 2px rgba(120,180,255,.4),0 0 20px 4px rgba(255,100,200,.2);}
+/* RGB bar glow spill above module */
+.cx1-rgb-glow{position:absolute;top:-10px;left:0;right:0;height:20px;z-index:8;background:linear-gradient(90deg,rgba(255,68,85,.3),rgba(255,170,0,.3),rgba(68,255,136,.3),rgba(68,170,255,.3),rgba(170,68,255,.3));filter:blur(8px);background-size:200%;animation:rgbBarMove 2.5s linear infinite;}
+/* Storm White geometry — black slashes */
+.cx1-slash1{position:absolute;top:0;left:5%;bottom:0;width:55%;background:rgba(0,0,0,.08);clip-path:polygon(0 0,75% 0,55% 100%,0 100%);}
+.cx1-slash2{position:absolute;top:0;left:35%;bottom:0;width:30%;background:rgba(0,0,0,.06);clip-path:polygon(20% 0,100% 0,75% 100%,0 100%);}
+.cx1-cut1{position:absolute;top:18%;left:12%;width:3px;height:65%;background:rgba(0,0,0,.25);transform:skewX(-8deg);}
+.cx1-cut2{position:absolute;top:12%;left:22%;width:2px;height:75%;background:rgba(0,0,0,.18);transform:skewX(-8deg);}
+.cx1-cut3{position:absolute;top:25%;right:28%;width:2px;height:50%;background:rgba(0,0,0,.15);transform:skewX(-8deg);}
+.cx1-brand{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;margin-top:4px;}
+.cx1-brand-sub{font-family:var(--ff-b);font-size:7px;font-weight:700;letter-spacing:.25em;color:rgba(0,0,0,.55);text-transform:uppercase;display:block;margin-bottom:2px;}
+.cx1-brand-name{font-family:var(--ff-b);font-size:14px;font-weight:900;letter-spacing:.08em;color:rgba(0,0,0,.75);display:block;line-height:1;}
+.cx1-pins{position:absolute;bottom:0;left:6px;right:6px;height:10px;background:repeating-linear-gradient(90deg,#c8922a 0,#c8922a 2px,transparent 2px,transparent 6px);opacity:.4;}
+
+.h-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,var(--bg) 0%,var(--bg) 20%,rgba(10,12,18,.5) 44%,transparent 64%);}
+.h-left{position:relative;z-index:3;padding:0 0 0 6%;flex:1;max-width:580px;}
+.h-eye{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.26em;text-transform:uppercase;color:var(--label);margin-bottom:28px;opacity:0;transition:opacity .5s ease;}
+.h-eye.on{opacity:1;}
+.h-hl{line-height:.9;margin-bottom:28px;opacity:0;transition:opacity .4s ease;}
+.h-hl.on{opacity:1;}
+.hl-ln{display:block;font-family:var(--ff-d);font-size:clamp(58px,8.5vw,102px);letter-spacing:.01em;opacity:0;transform:translateY(12px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
+.hl-ln.in{opacity:1;transform:translateY(0);}
+.hl-wh{color:var(--white);}
+@keyframes rgbText{0%{color:#ff4455;}25%{color:#44ff88;}50%{color:#44aaff;}75%{color:#aa44ff;}100%{color:#ff4455;}}
+@keyframes rgbGradientFlow{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
+.hl-rgb{
+  background:linear-gradient(90deg,#ff4455,#ff8800,#ffee00,#44ff88,#44aaff,#aa44ff,#ff4455);
+  background-size:200%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:rgbGradientFlow 2.5s linear infinite;
+}
+.h-sub{font-size:15px;font-weight:400;line-height:1.9;color:var(--mute);max-width:340px;margin-top:20px;opacity:0;transition:opacity .7s ease;}
+.h-sub.on{opacity:1;}
+.h-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:20px;opacity:0;transition:opacity .5s ease;}
+.h-tags.on{opacity:1;}
+.scr-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0;transition:opacity .5s;z-index:4;}
+.scr-hint.on{opacity:1;}
+.scr-ln{width:1.5px;height:28px;background:var(--border);position:relative;overflow:hidden;}
+.scr-ln::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;animation:scrdn 1.3s ease infinite 2.5s,cursorRgb 3s linear infinite;}
+@keyframes scrdn{0%{top:-100%}100%{top:100%}}
+.scr-lb{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;color:var(--label);text-transform:uppercase;}
+
+/* ── S01 DESIGN LANGUAGE + WHY ── */
+#s01{background:var(--surface);padding:100px 6%;}
+/* RGB section dividers */
+#s01::before,#s03::before,#s05::before,#s07::before{
+  content:'';display:block;width:100%;height:1px;
+  background:linear-gradient(90deg,transparent 0%,rgba(68,170,255,.3) 15%,rgba(170,68,255,.3) 40%,rgba(68,255,136,.2) 65%,transparent 100%);
+  position:absolute;top:0;left:0;
+}
+.s01-in{max-width:1080px;margin:0 auto;}
+.bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.bl-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--mute);margin-bottom:16px;animation:rgbText 4s linear infinite;}
+.bl-title{font-family:var(--ff-d);font-size:clamp(44px,6vw,72px);letter-spacing:.02em;color:var(--white);line-height:1;margin-bottom:20px;}
+.bl-body{font-size:16px;font-weight:400;line-height:1.9;color:var(--mute);margin-bottom:24px;}
+.bl-quote{font-size:12px;font-weight:400;letter-spacing:.04em;color:var(--mute);padding:14px 0;border-top:.5px solid rgba(255,255,255,.1);border-bottom:.5px solid rgba(255,255,255,.1);font-style:italic;animation:rgbText 4s linear infinite;}
+.bl-img{width:100%;aspect-ratio:4/3;border:.5px solid var(--border);}
+.why-wrap{margin-top:80px;padding-top:72px;border-top:.5px solid var(--line);}
+.why-title{font-family:var(--ff-d);font-size:clamp(40px,5.5vw,64px);letter-spacing:.02em;color:var(--white);margin-bottom:12px;}
+.why-sub{font-size:15px;font-weight:400;color:var(--mute);margin-bottom:48px;}
+.why-tbl{width:100%;border-collapse:collapse;}
+.why-tbl tr{border-bottom:.5px solid var(--line);}
+.why-tbl td{padding:18px 0;vertical-align:top;}
+.why-tbl .wl{font-family:var(--ff-m);font-size:11px;font-weight:300;letter-spacing:.1em;color:var(--label);text-transform:uppercase;width:28%;}
+.why-tbl .wv{font-family:var(--ff-d);font-size:clamp(22px,3vw,36px);letter-spacing:.02em;color:var(--white);width:22%;}
+.why-tbl .wv.accent{animation:rgbText 4s linear infinite;}
+.why-tbl .wd{font-size:14px;font-weight:400;color:var(--mute);padding-left:24px;line-height:1.7;}
+.why-fn{font-family:var(--ff-m);font-size:10px;color:var(--label);margin-top:20px;letter-spacing:.06em;}
+.why-close{font-size:16px;font-weight:400;color:var(--mute);margin-top:32px;font-style:italic;}
+
+/* ── S02 HARDER ── */
+#s02{background:var(--bg);}
+
+/* ── S03 ALIVE ── */
+#s03{background:var(--surface);}
+.alive-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;padding:100px 6% 80px;align-items:center;max-width:1200px;margin:0 auto;}
+.alive-imgs{display:grid;grid-template-rows:1fr auto;gap:12px;height:480px;}
+.alive-img-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.alive-badges{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;}
+/* RGB mode swatches */
+.rgb-modes{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0;}
+.rgb-mode{padding:5px 12px;font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;text-transform:uppercase;border:.5px solid var(--border);color:var(--mute);}
+.rgb-mode.r{border-color:rgba(255,68,85,.4);color:#ff8899;}
+.rgb-mode.g{border-color:rgba(68,255,136,.4);color:#88ffaa;}
+.rgb-mode.b{border-color:rgba(68,170,255,.4);color:#88ccff;}
+.rgb-mode.p{border-color:rgba(170,68,255,.4);color:#cc88ff;}
+/* sync logos row */
+.sync-logos{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+.sync-logo{font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;color:var(--label);border:.5px solid var(--border);padding:4px 10px;}
+
+/* ── S04 FASTER ── */
+#s04{background:var(--bg);}
+.pipe-viz{display:flex;align-items:flex-end;gap:16px;margin:36px 0 28px;height:200px;}
+.pipe-item{display:flex;flex-direction:column;align-items:flex-start;gap:8px;flex:1;height:100%;justify-content:flex-end;}
+.pipe-bar{width:100%;background:var(--surface2);position:relative;}
+.pipe-bar::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:var(--label);transform-origin:bottom;transform:scaleY(0);transition:transform 1.2s cubic-bezier(.16,1,.3,1);}
+.pipe-bar.on::after{transform:scaleY(1);}
+.pb-ddr2{height:22%;}.pb-ddr3{height:44%;}
+@keyframes barRgb{0%{background:linear-gradient(180deg,#ff4455,#aa44ff);}50%{background:linear-gradient(180deg,#44aaff,#44ff88);}100%{background:linear-gradient(180deg,#ff4455,#aa44ff);}}
+.pb-cx1{height:100%;}.pb-cx1.on::after{animation:barRgb 3s linear infinite;}
+.pipe-val{font-family:var(--ff-d);font-size:clamp(16px,2.2vw,26px);letter-spacing:.02em;color:var(--white);}
+.pipe-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--label);text-transform:uppercase;line-height:1.5;}
+.game-loader{margin-top:28px;background:var(--surface);border:.5px solid var(--border);padding:20px 22px;}
+.gl-title{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin-bottom:16px;}
+.gl-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.gl-row:last-of-type{margin-bottom:0;}
+.gl-lbl{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.1em;color:var(--label);width:48px;flex-shrink:0;text-transform:uppercase;}
+.gl-bar{flex:1;height:5px;background:var(--surface2);border-radius:2px;overflow:hidden;position:relative;}
+.gl-fill{height:100%;border-radius:2px;position:absolute;left:0;top:0;width:0;}
+.gl-ddr3{background:var(--label);}
+@keyframes glFillRgb{0%{background:linear-gradient(90deg,#ff4455,#ff8800,#ffee00,#44ff88,#44aaff,#aa44ff);}100%{background:linear-gradient(90deg,#ff4455,#ff8800,#ffee00,#44ff88,#44aaff,#aa44ff);}}
+.gl-cx1{background:linear-gradient(90deg,#ff4455,#44aaff,#aa44ff);background-size:200%;}
+.gl-time{font-family:var(--ff-d);font-size:12px;font-weight:700;letter-spacing:.02em;width:52px;text-align:right;flex-shrink:0;}
+.gl-cap{font-family:var(--ff-m);font-size:9px;color:var(--label);margin-top:12px;letter-spacing:.06em;}
+.ctx-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px;}
+.ctx-card{border:.5px solid var(--border);padding:20px 18px;background:rgba(255,255,255,.015);}
+.ctx-card .ci{font-size:20px;margin-bottom:10px;}
+.ctx-card .ct{font-size:12px;font-weight:500;letter-spacing:.04em;margin-bottom:6px;color:var(--white);}
+.ctx-card .cb{font-size:13px;font-weight:400;color:var(--mute);line-height:1.7;}
+
+/* ── S05 STRONGER ── */
+#s05{background:var(--surface);}
+.radar-wrap{position:relative;display:inline-block;}
+.radar-wrap::before{content:'';position:absolute;inset:-1px;border:.5px solid rgba(68,170,255,.2);pointer-events:none;}
+.radar-wrap::after{content:'';position:absolute;inset:-20px;z-index:-1;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(68,100,255,.06) 0%,transparent 70%);}
+
+/* ── S06 PACKAGING ── */
+#s06{background:var(--bg);padding:100px 6%;}
+.pkg-in{max-width:1100px;margin:0 auto;}
+.pkg-sec-lbl{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:10px;}
+.pkg-layout{display:grid;grid-template-columns:280px 1fr;gap:60px;align-items:start;}
+.pkg-card{width:240px;background:var(--surface);border:.5px solid var(--border);border-radius:4px;padding:0 0 14px;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(68,150,255,.04);}
+.pkg-hang{display:flex;justify-content:center;padding:12px 0 8px;background:#090b11;border-bottom:.5px solid var(--border);}
+.pkg-hang-hole{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg);}
+.pkg-slash-bg{position:absolute;top:44px;left:0;right:0;bottom:0;z-index:0;opacity:.025;
+  background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.8) 0,rgba(255,255,255,.8) 1px,transparent 0,transparent 50%);background-size:18px 18px;}
+/* RGB accent bar */
+.pkg-rgb-bar{position:relative;z-index:1;height:4px;background:linear-gradient(90deg,#ff4455,#ff8800,#ffee00,#44ff88,#44aaff,#aa44ff);background-size:200%;animation:rgbBarMove 2.5s linear infinite;}
+.pkg-content{position:relative;z-index:2;padding:14px 16px 8px;}
+.pkg-card-brand{font-family:var(--ff-b);font-size:10px;font-weight:300;letter-spacing:.2em;color:var(--mute);text-transform:uppercase;margin-bottom:2px;}
+.pkg-card-model{font-family:var(--ff-d);font-weight:700;font-size:38px;letter-spacing:-.01em;color:var(--white);line-height:1;margin-bottom:2px;font-style:italic;}
+.pkg-card-spec{font-family:var(--ff-b);font-size:9px;font-weight:300;color:var(--label);letter-spacing:.04em;margin-bottom:10px;}
+.pkg-cap-row{display:flex;align-items:center;gap:16px;padding:8px 0;border-top:.5px solid var(--line);}
+.pkg-cap{font-family:var(--ff-d);font-weight:700;font-size:28px;color:var(--white);line-height:1;}
+.pkg-speed-info{font-family:var(--ff-b);font-size:9px;font-weight:300;letter-spacing:.06em;color:var(--label);line-height:1.5;text-transform:uppercase;}
+.pkg-speed-info strong{font-family:var(--ff-d);font-size:20px;font-weight:700;color:var(--white);display:block;}
+/* CX1 module card — white spreader */
+.pkg-chip{position:relative;z-index:2;margin:0 12px 10px;height:52px;background:linear-gradient(135deg,#e0e0e0,#f0f0f0);border:.5px solid rgba(255,255,255,.3);display:flex;align-items:center;overflow:hidden;}
+.pkg-chip-rgb{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ff4455,#ff8800,#ffee00,#44ff88,#44aaff,#aa44ff);background-size:200%;animation:rgbBarMove 2.5s linear infinite;}
+.pkg-chip-slash1{position:absolute;top:0;left:8%;bottom:0;width:50%;background:rgba(0,0,0,.07);clip-path:polygon(0 0,75% 0,55% 100%,0 100%);}
+.pkg-chip-slash2{position:absolute;top:0;left:32%;bottom:0;width:30%;background:rgba(0,0,0,.05);clip-path:polygon(20% 0,100% 0,75% 100%,0 100%);}
+.pkg-chip-body{position:absolute;right:10px;top:55%;transform:translateY(-50%);text-align:right;}
+.pkg-chip-label{font-family:var(--ff-b);font-size:11px;font-weight:900;color:rgba(0,0,0,.7);display:block;letter-spacing:.06em;}
+.pkg-chip-sub{font-family:var(--ff-b);font-size:7px;font-weight:400;color:rgba(0,0,0,.4);letter-spacing:.06em;}
+.pkg-chip-pins{position:absolute;bottom:0;left:3px;right:3px;height:5px;background:repeating-linear-gradient(90deg,#c8922a 0,#c8922a 1.5px,transparent 1.5px,transparent 4px);opacity:.4;}
+.pkg-certs{position:relative;z-index:2;display:flex;justify-content:center;gap:5px;padding:8px 12px 0;border-top:.5px solid var(--line);margin:0 12px;}
+.pkg-cert{font-family:var(--ff-m);font-size:7px;font-weight:300;letter-spacing:.08em;color:var(--label);border:.5px solid var(--border);padding:2px 5px;}
+.pkg-features{display:flex;flex-direction:column;}
+.pkg-feat-title{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:20px;}
+.pkg-feat-list{display:flex;flex-direction:column;gap:0;}
+.pkg-feat-item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:.5px solid var(--line);}
+.pkg-feat-item:last-child{border-bottom:none;}
+.pkg-feat-icon{font-size:16px;flex-shrink:0;padding-top:1px;}
+.pkg-feat-name{font-family:var(--ff-b);font-size:13px;font-weight:500;color:var(--white);margin-bottom:3px;}
+.pkg-feat-desc{font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.7;}
+
+/* ── S07 SPECS ── */
+#s07{background:var(--surface);padding:100px 6% 80px;}
+.spec-in{max-width:900px;margin:0 auto;}
+.spec-title{font-family:var(--ff-d);font-size:clamp(40px,5vw,60px);letter-spacing:.02em;color:var(--white);margin-bottom:12px;}
+.spec-intro{font-size:14px;font-weight:400;color:var(--mute);margin-bottom:48px;max-width:520px;line-height:1.9;}
+.spec-tbl{width:100%;border-collapse:collapse;}
+.spec-tbl tr{border-bottom:.5px solid var(--line);}
+.spec-tbl td{padding:16px 0;font-size:14px;vertical-align:top;font-weight:400;}
+.spec-tbl td:first-child{color:var(--label);font-weight:300;width:40%;font-family:var(--ff-m);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border-left:1.5px solid transparent;transition:border-color .2s;}
+.spec-tbl tr:hover td:first-child{border-left-color:rgba(68,170,255,.6);}
+.spec-tbl td:last-child{color:var(--white);font-weight:400;}
+.cfg-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin:52px 0 18px;}
+.cfg-tbl{width:100%;border-collapse:collapse;}
+.cfg-tbl th{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:var(--label);text-align:left;padding:0 0 12px;border-bottom:.5px solid var(--line);}
+.cfg-tbl td{font-size:12px;font-weight:300;color:var(--white);padding:12px 0;border-bottom:.5px solid var(--line);font-family:var(--ff-m);}
+.spec-disc{font-family:var(--ff-m);font-size:9px;color:var(--label);line-height:1.6;margin-top:14px;}
+.spec-ctas{display:flex;gap:12px;margin-top:48px;flex-wrap:wrap;}
+.spec-foot{margin-top:56px;padding-top:24px;border-top:.5px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;}
+
+/* FOOTER */
+.site-foot{background:#060810;padding:80px 6% 60px;text-align:center;border-top:.5px solid var(--border);}
+.site-foot-hl{font-family:var(--ff-d);font-size:clamp(28px,4vw,48px);letter-spacing:.06em;color:rgba(255,255,255,.7);display:flex;flex-wrap:wrap;justify-content:center;gap:0 24px;}
+.site-foot-tagline{margin-top:48px;padding-top:40px;border-top:.5px solid rgba(68,170,255,.12);}
+.site-foot-t1{font-family:var(--ff-d);font-size:clamp(28px,4vw,50px);letter-spacing:.08em;color:rgba(255,255,255,.45);display:block;line-height:1;}
+.site-foot-t2{font-family:var(--ff-d);font-size:clamp(28px,4vw,50px);letter-spacing:.08em;display:block;line-height:1;margin-top:4px;background:linear-gradient(90deg,#ff4455,#ff8800,#ffee00,#44ff88,#44aaff,#aa44ff,#ff4455);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rgbGradientFlow 2.5s linear infinite;}
+.site-foot-sub{font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;color:rgba(255,255,255,.15);margin-top:28px;text-transform:uppercase;}
+
+@media(max-width:768px){
+  .sec-wrap,.bl-grid,.alive-grid,.pkg-layout{grid-template-columns:1fr;gap:48px;}
+  .sec-wrap.rev{direction:ltr;}
+  .h-right{opacity:.1!important;transform:none!important;width:100%;}
+  .h-fade{background:rgba(10,12,18,.82);}
+  .ctx-cards{grid-template-columns:1fr;}
+}
+@media(pointer:coarse){
+  body{cursor:auto;}
+  #cur,#cur-ring{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div id="cur"></div><div id="cur-ring"></div><div id="spot"></div>
+
+<nav id="nav">
+  <div class="nav-brand">Simorchip</div>
+  <div class="nav-pills" id="navPills">
+    <div class="nav-pill on" onclick="goTo('s00')">Hero</div>
+    <div class="nav-pill" onclick="goTo('s02')">Harder</div>
+    <div class="nav-pill" onclick="goTo('s03')">Alive</div>
+    <div class="nav-pill" onclick="goTo('s04')">Faster</div>
+    <div class="nav-pill" onclick="goTo('s05')">Stronger</div>
+    <div class="nav-pill" onclick="goTo('s06')">Packaging</div>
+    <div class="nav-pill" onclick="goTo('s07')">Specs</div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="s00" class="full">
+  <div class="hero-rgb-bg"></div>
+  <div class="h-right" id="hRight">
+    <div class="cx1-module-wrap">
+      <div class="cx1-body">
+        <div class="cx1-rgb-glow"></div>
+        <div class="cx1-rgb-bar"></div>
+        <div class="cx1-slash1"></div>
+        <div class="cx1-slash2"></div>
+        <div class="cx1-cut1"></div>
+        <div class="cx1-cut2"></div>
+        <div class="cx1-cut3"></div>
+        <div class="cx1-brand">
+          <span class="cx1-brand-sub">Simorchip</span>
+          <span class="cx1-brand-name">CX-1</span>
+        </div>
+        <div class="cx1-pins"></div>
+      </div>
+    </div>
+  </div>
+  <div class="h-fade"></div>
+  <div class="h-left">
+    <div class="h-eye" id="hEye">Simorchip DDR4 RGB Gaming Series CX1</div>
+    <div class="h-hl" id="hHL">
+      <span class="hl-ln hl-wh" id="hl0">Your build</span>
+      <span class="hl-ln hl-wh" id="hl1">deserves to</span>
+      <span class="hl-ln hl-rgb" id="hl2">be seen.</span>
+    </div>
+    <div class="rgb-line" id="hLine" style="margin-top:24px;"></div>
+    <div class="h-sub" id="hSub">Performance that runs hard.<br>Lighting that runs wild.</div>
+    <div class="h-tags" id="hTags">
+      <span class="tag">DDR4</span>
+      <span class="tag">RGB</span>
+      <span class="tag">3200 / 3600MT/s</span>
+      <span class="tag">XMP</span>
+      <span class="tag">CX1</span>
+      <span class="tag">SIMORCHIP</span>
+      <span class="tag">8GB</span>
+      <span class="tag">16GB</span>
+      <span class="tag">32GB</span>
+    </div>
+  </div>
+  <div class="scr-hint" id="scrHint">
+    <div class="scr-ln"></div>
+    <div class="scr-lb">Scroll</div>
+  </div>
+</section>
+
+<!-- ═══ S01 STORM WHITE + WHY DDR4 ═══ -->
+<section id="s01">
+  <div class="s01-in">
+    <div class="bl-grid fi">
+      <div>
+        <div class="bl-eye">Design Language</div>
+        <div class="bl-title">Storm<br>White</div>
+        <div class="bl-body">Clean white aluminum. Black diagonal slashes cutting across the surface. And above it all — a full-spectrum RGB strip that lights up the moment you power on. The CX1 doesn't blend into your build. It becomes the centerpiece.</div>
+        <div class="bl-quote">Speed you can feel.<br>Light you can't ignore.</div>
+      </div>
+      <div class="bl-img img-ph fi fi-d1">
+        <span>[ STORM WHITE CLOSE-UP ]<br>White heatspreader + black geometry<br>Top RGB bar glow detail<br>D4_CX1_RGB_Side_view.png ]</span>
+      </div>
+    </div>
+    <div class="why-wrap fi">
+      <div class="why-title fi">Why DDR4?</div>
+      <div class="why-sub fi fi-d1">Still the most widely supported platform. Still the smart choice.</div>
+      <table class="why-tbl fi fi-d2">
+        <tr><td class="wl">Bandwidth</td><td class="wv">25.6<span style="font-size:.5em;"> GB/s</span></td><td class="wd">Enough throughput for gaming, streaming, and content creation without bottlenecking</td></tr>
+        <tr><td class="wl">Frequency</td><td class="wv accent">3600<span style="font-size:.5em;"> MT/s</span></td><td class="wd">XMP-ready — one BIOS switch, full rated speed, no manual tuning</td></tr>
+        <tr><td class="wl">Voltage</td><td class="wv">1.35V</td><td class="wd">Low-voltage design — less heat, more headroom for both performance and RGB together</td></tr>
+        <tr><td class="wl">Compatibility</td><td class="wv" style="font-size:clamp(14px,1.8vw,18px);padding-top:8px;">Universal</td><td class="wd">Fully supported across Intel and AMD DDR4 platforms</td></tr>
+        <tr><td class="wl">Capacity</td><td class="wv accent">32GB</td><td class="wd">Single module up to 32GB — run games, stream, and edit simultaneously</td></tr>
+      </table>
+      <div class="why-fn fi fi-d3">* Data benchmarked against previous generation DDR3 products</div>
+      <div class="why-close fi fi-d3"><em>The platform your system trusts. The speed your games demand.</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S02 HARDER ═══ -->
+<section id="s02">
+  <div class="sec-wrap">
+    <div class="fi">
+      <div class="sh-num">01 — Harder</div>
+      <div class="sh-title">Harder</div>
+      <div class="sh-sub">288-pin · 3µm Hard Gold · Built to Last</div>
+      <div class="rgb-line on"></div>
+      <ul class="bullet-list">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+          <div><strong>3µm Hard Gold Plating · 288-pin Connector</strong> — Industry-leading plating thickness. 10,000+ insertion cycles without wear. Anti-oxidation, anti-corrosion, stable contact every time.
+            <span class="bn">▸ Visual: 288Pin + cross-section (3µm gold layer + nickel base)</span>
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div>Premium-grade memory chips — <strong>7×24 continuous high-load stable operation.</strong> All-night gaming. Marathon streams. The CX1 keeps up, keeps cool, keeps glowing.
+            <span class="bn">▸ Visual: 7×24 + ∞ symbol</span>
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+          <div><strong>White Aluminum Alloy Heatspreader</strong> — Effective heat dissipation. White surface reflects and amplifies RGB, so every lighting mode looks its best.
+            <span class="bn">▸ Visual: white vs dark spreader RGB comparison — same brightness, CX1 more vivid</span>
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg></div>
+          <div><strong>Simorchip Lifetime Warranty</strong> — The hardware and the lighting. Both covered, forever.
+          </div>
+        </li>
+      </ul>
+      <div style="display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;">
+        <div class="stat-badge"><div class="num">288</div><div class="lbl">High-Density Pins</div></div>
+        <div class="stat-badge"><div class="num">7×24</div><div class="lbl">Day / Hours</div></div>
+        <div class="stat-badge"><div class="num">∞</div><div class="lbl">Lifetime Warranty</div></div>
+        <div class="stat-badge"><div class="num" style="font-size:clamp(19px,3vw,38px);">3µm</div><div class="lbl">Industrial-Grade Standard</div></div>
+      </div>
+    </div>
+    <div class="fi fi-d2">
+      <div class="img-ph" style="width:100%;height:100%;min-height:500px;">
+        <span>[ HARDER IMAGE ]<br><br>① 3µm connector cross-section close-up<br>② DDR4 keying notch detail<br>③ 7×24 stability visual<br>④ Lifetime warranty badge</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S03 ALIVE ═══ -->
+<section id="s03">
+  <div class="alive-grid">
+    <div class="fi fi-d1">
+      <div class="alive-imgs">
+        <div class="img-ph" style="width:100%;height:100%;">
+          <span>[ ALIVE — MAIN ]<br>CX1 top RGB bar glow full shot<br>D4_CX1_RGB_Front_Top_Glow.png<br>Dark background, full RGB strip visible ]</span>
+        </div>
+        <div class="alive-img-row">
+          <div class="img-ph" style="height:130px;">
+            <span>[ Side view 45° ]<br>D4_CX1_RGB_Side_view.png</span>
+          </div>
+          <div class="img-ph" style="height:130px;">
+            <span>[ 4 sync software logos ]<br>ASUS / MSI / Gigabyte / ASRock</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fi">
+      <div class="sh-num">02 — Alive</div>
+      <div class="sh-title">Alive</div>
+      <div class="sh-sub">Full-Spectrum RGB · 7 Modes · Sync-Ready</div>
+      <div class="rgb-line on"></div>
+      <ul class="bullet-list">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+          <div><strong>Full-Spectrum RGB Strip — Top-mounted, full coverage</strong> — A continuous light bar running the full length of the module. No dead spots. No dim zones. Pure, even light from edge to edge.
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+          <div><strong>7 Lighting Modes</strong> — Static · Breathing · Color Cycle · Rainbow · Comet · Flash · Wave. Pick a mood. Change it anytime.
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M16 12h6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24"/></svg></div>
+          <div><strong>4-Ecosystem RGB Sync</strong> — ASUS Aura Sync · MSI Mystic Light · Gigabyte RGB Fusion · ASRock Polychrome. One software, your entire build in sync.
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div><strong>White canvas = brighter RGB</strong> — Most RGB memory uses dark spreaders that absorb light. The CX1's white surface reflects and amplifies every color. Same power, more impact.
+          </div>
+        </li>
+      </ul>
+      <div class="rgb-modes">
+        <div class="rgb-mode" style="border-color:rgba(255,68,85,.5);color:#ff8899;">Static</div>
+        <div class="rgb-mode" style="border-color:rgba(100,180,255,.5);color:#88ccff;">Breathing</div>
+        <div class="rgb-mode" style="border-color:rgba(255,170,0,.5);color:#ffcc66;">Color Cycle</div>
+        <div class="rgb-mode" style="border-color:rgba(68,255,136,.5);color:#88ffaa;">Rainbow</div>
+        <div class="rgb-mode" style="border-color:rgba(200,100,255,.5);color:#dd88ff;">Comet</div>
+        <div class="rgb-mode" style="border-color:rgba(255,220,50,.5);color:#ffee88;">Flash</div>
+        <div class="rgb-mode" style="border-color:rgba(68,220,255,.5);color:#88eeff;">Wave</div>
+      </div>
+      <div class="sync-logos">
+        <div class="sync-logo">ASUS Aura Sync</div>
+        <div class="sync-logo">MSI Mystic Light</div>
+        <div class="sync-logo">Gigabyte RGB Fusion</div>
+        <div class="sync-logo">ASRock Polychrome</div>
+      </div>
+      <div class="alive-badges" style="margin-top:20px;">
+        <div class="stat-badge"><div class="num">7</div><div class="lbl">Lighting Modes</div></div>
+        <div class="stat-badge"><div class="num" style="font-size:clamp(18px,3vw,36px);">FULL</div><div class="lbl">Spectrum RGB</div></div>
+        <div class="stat-badge"><div class="num" style="font-size:clamp(14px,2vw,28px);">4 SYNC</div><div class="lbl">Ecosystems</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S04 FASTER ═══ -->
+<section id="s04">
+  <div class="sec-wrap">
+    <div class="fi">
+      <div class="sh-num">03 — Faster</div>
+      <div class="sh-title">Faster</div>
+      <div class="sh-sub">3200 / 3600MT/s · XMP One-Click OC</div>
+      <div class="rgb-line on"></div>
+      <div class="pipe-viz" id="pipeViz">
+        <div class="pipe-item">
+          <div class="pipe-val" style="color:var(--label);">6.4</div>
+          <div class="pipe-bar pb-ddr2" id="pb0"></div>
+          <div class="pipe-lbl">DDR2<br>GB/s</div>
+        </div>
+        <div class="pipe-item">
+          <div class="pipe-val">12.8</div>
+          <div class="pipe-bar pb-ddr3" id="pb1"></div>
+          <div class="pipe-lbl">DDR3<br>GB/s</div>
+        </div>
+        <div class="pipe-item">
+          <div class="pipe-val" style="animation:rgbText 3s linear infinite;">28.8</div>
+          <div class="pipe-bar pb-cx1" id="pb2"></div>
+          <div class="pipe-lbl" style="animation:rgbText 3s linear infinite;">CX1 XMP<br>GB/s</div>
+        </div>
+      </div>
+      <ul class="bullet-list">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+          <div>Up to <strong>3600MT/s with XMP</strong> — one BIOS switch. No guesswork. Faster frames, faster loads.
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div><strong>Up to 28.8 GB/s bandwidth with XMP</strong> — games load before the screen fades. Streams don't stutter. Edits render clean.
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg></div>
+          <div><strong>Dual-channel Kit matched pair</strong> — double the bandwidth, double the RGB, one synchronized build.
+          </div>
+        </li>
+      </ul>
+      <div class="ctx-cards fi fi-d3">
+        <div class="ctx-card"><div class="ci">🎮</div><div class="ct">Gaming</div><div class="cb">Faster loads, smoother frames — and a light show while you wait</div></div>
+        <div class="ctx-card"><div class="ci">📡</div><div class="ct">Streaming</div><div class="cb">Capture, encode, and stream without dropped frames</div></div>
+        <div class="ctx-card"><div class="ci">⚡</div><div class="ct">Multitasking</div><div class="cb">Game, chat, browse — all at once, all in sync</div></div>
+      </div>
+    </div>
+    <div class="fi fi-d2" style="display:flex;flex-direction:column;gap:12px;">
+      <div class="img-ph" style="width:100%;height:220px;"><span>[ 3600MT/s XMP SPEED VISUAL ]</span></div>
+      <div class="game-loader" id="gameLoader">
+        <div class="gl-title">Game Loading Comparison</div>
+        <div class="gl-row">
+          <span class="gl-lbl">DDR3</span>
+          <div class="gl-bar"><div class="gl-fill gl-ddr3" id="barDDR3"></div></div>
+          <span class="gl-time" id="timeDDR3" style="color:var(--label);">0%</span>
+        </div>
+        <div class="gl-row">
+          <span class="gl-lbl" style="animation:rgbText 3s linear infinite;">CX1</span>
+          <div class="gl-bar"><div class="gl-fill gl-cx1" id="barCX1"></div></div>
+          <span class="gl-time" id="timeCX1">0%</span>
+        </div>
+        <div class="gl-cap">* Simulated comparison — CX1 XMP finishes before DDR3 reaches halfway</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S05 STRONGER ═══ -->
+<section id="s05">
+  <div class="sec-wrap rev">
+    <div class="fi">
+      <div class="sh-num">04 — Stronger</div>
+      <div class="sh-title">Stronger</div>
+      <div class="sh-sub">XMP Ready · Dual-Channel Kit · Full-Spectrum Performer</div>
+      <div class="rgb-line on"></div>
+      <ul class="bullet-list">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M16 12h6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24"/></svg></div>
+          <div><strong>Intel XMP / AMD OC Profile</strong> — Rated speed at one click. Tested at XMP before leaving the factory.
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
+          <div><strong>Dual-channel Kit optimized</strong> — Same batch, same timing, same RGB binning. Synchronized light from day one.
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div><strong>Stringent multi-stage QC</strong> — Every module stress-tested at XMP speed, then RGB-validated before shipping.
+          </div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div><strong>No weak points, no trade-offs</strong> — Speed · Thermal · Stability · Compatibility · RGB · Durability. Every axis covered.
+            <span class="bn">▸ Visual: 6-axis radar — CX1 full, DDR3 dim · RGB axis with rainbow gradient label</span>
+          </div>
+        </li>
+      </ul>
+      <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+        <div class="stat-badge"><div class="num" style="font-size:clamp(20px,3vw,40px);">XMP</div><div class="lbl">One-Click OC</div></div>
+        <div class="stat-badge"><div class="num" style="font-size:clamp(20px,3vw,40px);">2×</div><div class="lbl">Dual-Channel Kit</div></div>
+      </div>
+    </div>
+    <div class="fi fi-d2" style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+      <div class="radar-wrap">
+        <canvas id="radarCanvas" width="360" height="360"></canvas>
+      </div>
+      <div class="img-ph" style="width:100%;height:120px;"><span>[ Intel XMP + AMD OC + 4 sync logos ]</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S06 PACKAGING ═══ -->
+<section id="s06">
+  <div class="pkg-in">
+    <div class="pkg-sec-lbl fi">Packaging Design</div>
+    <div class="pkg-layout">
+      <div class="fi">
+        <div class="pkg-card">
+          <div class="pkg-hang"><div class="pkg-hang-hole"></div></div>
+          <div class="pkg-slash-bg"></div>
+          <div class="pkg-rgb-bar"></div>
+          <div class="pkg-content">
+            <div class="pkg-card-brand">Simorchip</div>
+            <div class="pkg-card-model">CX1</div>
+            <div class="pkg-card-spec">RGB Gaming Series · DDR4</div>
+            <div class="pkg-cap-row">
+              <span class="pkg-cap">8<span style="font-size:.5em;">GB</span></span>
+              <span class="pkg-speed-info">DDR4<br><strong>3200</strong> <span style="font-size:.7em;">MT/s</span></span>
+            </div>
+          </div>
+          <div class="pkg-chip">
+            <div class="pkg-chip-rgb"></div>
+            <div class="pkg-chip-slash1"></div>
+            <div class="pkg-chip-slash2"></div>
+            <div class="pkg-chip-glow" style="position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 10%,rgba(0,0,0,.15) 35%,rgba(0,0,0,.15) 65%,transparent 90%);"></div>
+            <div class="pkg-chip-body">
+              <span class="pkg-chip-label">CX-1</span>
+              <span class="pkg-chip-sub">DDR4 · 8GB · RGB</span>
+            </div>
+            <div class="pkg-chip-pins"></div>
+          </div>
+          <div class="pkg-certs">
+            <span class="pkg-cert">CE</span>
+            <span class="pkg-cert">RoHS</span>
+            <span class="pkg-cert">FCC</span>
+            <span class="pkg-cert">REACH</span>
+          </div>
+        </div>
+      </div>
+      <div class="pkg-features fi fi-d2">
+        <div class="pkg-feat-title">Packaging Design</div>
+        <div class="pkg-feat-list">
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">📦</div><div><div class="pkg-feat-name">Product Window</div><div class="pkg-feat-desc">The actual CX1 module is visible through the packaging window. You see the white heatspreader and black geometry before you even open the box.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">🌈</div><div><div class="pkg-feat-name">Storm White Design Language</div><div class="pkg-feat-desc">Black and white geometric identity on both module and box. The RGB badge on the packaging matches the strip on the module.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">🔢</div><div><div class="pkg-feat-name">Single &amp; Kit Options</div><div class="pkg-feat-desc">Available as single modules (8GB / 16GB / 32GB) or matched dual-channel kits. Same batch — same timings, same RGB binning.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">✅</div><div><div class="pkg-feat-name">Global Certifications</div><div class="pkg-feat-desc">RoHS · REACH · CE · FCC — certified for EU, US, and Asia-Pacific markets.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">🛡️</div><div><div class="pkg-feat-name">Lifetime Warranty Included</div><div class="pkg-feat-desc">Every CX1 ships with Simorchip's Limited Lifetime Warranty. The hardware and the lighting. Both covered, forever.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S07 SPECS ═══ -->
+<section id="s07">
+  <div class="spec-in">
+    <div class="spec-title fi">Specifications</div>
+    <div class="spec-intro fi fi-d1">Engineered for optimum speed, endurance, reliability, and multi-platform compatibility.</div>
+    <table class="spec-tbl fi fi-d2">
+      <tr><td>Speed</td><td>3200 / 3600 MT/s</td></tr>
+      <tr><td>Capacity</td><td>8GB / 16GB / 32GB</td></tr>
+      <tr><td>CAS Latency</td><td>CL16 / CL18</td></tr>
+      <tr><td>Voltage</td><td>1.35V</td></tr>
+      <tr><td>Pin Count</td><td>288 pin (3µm Hard Gold)</td></tr>
+      <tr><td>Module Type</td><td>DDR4 U-DIMM</td></tr>
+      <tr><td>Dimensions</td><td>133.35 × 31.75 × 8.25 mm</td></tr>
+      <tr><td>Operating Temp</td><td>0°C ~ 85°C (32°F ~ 176°F)</td></tr>
+      <tr><td>Lighting</td><td>Full-Spectrum RGB (7 Modes)</td></tr>
+      <tr><td>RGB Sync</td><td>ASUS Aura Sync / MSI Mystic Light / Gigabyte RGB Fusion / ASRock Polychrome</td></tr>
+      <tr><td>Platform</td><td>Intel XMP / AMD OC Profile</td></tr>
+      <tr><td>Certifications</td><td>RoHS / REACH / CE / FCC</td></tr>
+      <tr><td>Warranty</td><td>Limited Lifetime Warranty</td></tr>
+    </table>
+    <div class="spec-disc fi fi-d2">* All data secured from Simorchip's internal labs under specific testing conditions. Accurate data may vary depending on the operating environment.</div>
+    <div class="cfg-lbl fi">Product Configuration — DDR4-3200 U-DIMM</div>
+    <table class="cfg-tbl fi">
+      <thead><tr><th>Capacity</th><th>Component</th><th>Rank</th><th>Model Name</th></tr></thead>
+      <tbody>
+        <tr><td>8GB</td><td>(1Gx8)×8C</td><td>1Rx8</td><td>CR3200XCX1-8G (XMP)</td></tr>
+        <tr><td>16GB</td><td>(1Gx8)×16C</td><td>2Rx8</td><td>CR3200XCX1-16G (XMP)</td></tr>
+        <tr><td>32GB</td><td>(2Gx8)×16C</td><td>2Rx8</td><td>CR3200XCX1-32G (XMP)</td></tr>
+      </tbody>
+    </table>
+    <div class="cfg-lbl fi">Product Configuration — DDR4-3600 U-DIMM</div>
+    <table class="cfg-tbl fi">
+      <thead><tr><th>Capacity</th><th>Component</th><th>Rank</th><th>Model Name</th></tr></thead>
+      <tbody>
+        <tr><td>8GB</td><td>(1Gx8)×8C</td><td>1Rx8</td><td>CR3600XCX1-8G (XMP)</td></tr>
+        <tr><td>16GB</td><td>(1Gx8)×16C</td><td>2Rx8</td><td>CR3600XCX1-16G (XMP)</td></tr>
+        <tr><td>32GB</td><td>(2Gx8)×16C</td><td>2Rx8</td><td>CR3600XCX1-32G (XMP)</td></tr>
+      </tbody>
+    </table>
+    <div class="spec-ctas fi">
+      <button class="btn btn-light">Download Spec Sheet</button>
+      <button class="btn btn-ghost">Explore More Products</button>
+    </div>
+    <div class="spec-foot fi">
+      <span class="tag" style="font-size:9px;">© 2025 Simorchip Technology</span>
+      <span class="tag" style="font-size:9px;">DDR4 RGB Gaming Series CX1</span>
+    </div>
+  </div>
+</section>
+
+<div class="site-foot">
+  <div class="site-foot-hl">
+    <span>Simorchip DDR4 CX1</span>
+    <span style="color:rgba(255,255,255,.9);">Harder.</span>
+    <span style="color:rgba(255,255,255,.9);">Alive.</span>
+    <span style="color:rgba(255,255,255,.9);">Faster.</span>
+    <span style="color:rgba(255,255,255,.9);">Stronger.</span>
+  </div>
+  <div class="site-foot-tagline">
+    <span class="site-foot-t1">Speed you can feel.</span>
+    <span class="site-foot-t2">Light you can't ignore.</span>
+  </div>
+  <div class="site-foot-sub">© 2025 Simorchip Technology · DDR4 RGB Gaming Series CX1</div>
+</div>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring'),spot=document.getElementById('spot');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';spot.style.left=mx+'px';spot.style.top=my+'px';});
+(function lr(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(lr);})();
+document.querySelectorAll('button,.btn,.nav-pill').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';ring.style.width='50px';ring.style.height='50px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='9px';cur.style.height='9px';ring.style.width='40px';ring.style.height='40px';});
+});
+
+/* NAV */
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('scrolled',window.scrollY>60));
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+const secIds=['s00','s01','s02','s03','s04','s05','s06','s07'];
+const navPillEls=document.querySelectorAll('.nav-pill');
+const navSecObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){const idx=secIds.indexOf(e.target.id);navPillEls.forEach(p=>p.classList.remove('on'));if(navPillEls[idx])navPillEls[idx].classList.add('on');}});
+},{threshold:.4});
+secIds.forEach(id=>{const el=document.getElementById(id);if(el)navSecObs.observe(el);});
+
+/* SCROLL REVEAL */
+const fiObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.1});
+document.querySelectorAll('.fi').forEach(el=>fiObs.observe(el));
+
+/* RGB LINES */
+document.querySelectorAll('.rgb-line').forEach(el=>{
+  new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});},{threshold:.5}).observe(el);
+});
+
+/* HERO */
+document.fonts.ready.then(()=>{
+  function cls(id,d=0){setTimeout(()=>document.getElementById(id)?.classList.add('on'),d);}
+  cls('hRight',0);cls('hEye',280);cls('hHL',480);
+  setTimeout(()=>['hl0','hl1','hl2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('in'),i*280)),520);
+  setTimeout(()=>document.getElementById('hLine')?.classList.add('on'),1200);
+  cls('hSub',1500);cls('hTags',1800);cls('scrHint',2200);
+});
+
+/* PIPE VIZ */
+(function(){
+  const pv=document.getElementById('pipeViz');if(!pv)return;
+  new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting)['pb0','pb1','pb2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('on'),i*220));
+  },{threshold:.4}).observe(pv);
+})();
+
+/* GAME LOADER */
+(function(){
+  const loader=document.getElementById('gameLoader');if(!loader)return;
+  const bD=document.getElementById('barDDR3'),bC=document.getElementById('barCX1');
+  const tD=document.getElementById('timeDDR3'),tC=document.getElementById('timeCX1');
+  const CYCLE=6000,CX1_END=0.30,D3_END=0.90,HOLD=800;
+  function easeOut3(t){return 1-Math.pow(1-t,3);}
+  function easeIn2(t){return Math.pow(t,1.8);}
+  let t0=null,running=false;
+  function tick(now){
+    if(!t0)t0=now;
+    const phase=((now-t0)%(CYCLE+HOLD))/CYCLE;
+    const cx1p=phase<=CX1_END?easeOut3(phase/CX1_END):1;
+    let d3p;if(phase<=D3_END){const t=phase/D3_END;d3p=t<0.35?easeIn2(t/0.35)*0.18:0.18+(t-0.35)/0.65*0.82;}else d3p=1;
+    const cp=Math.min(Math.round(cx1p*100),100),dp=Math.min(Math.round(d3p*100),100);
+    bC.style.width=cp+'%';bD.style.width=dp+'%';
+    tC.textContent=cp===100?'✓ Done':cp+'%';tD.textContent=dp===100?'✓ Done':dp+'%';
+    tD.style.color=dp===100?'var(--white)':'var(--label)';
+    tC.style.animation='rgbText 3s linear infinite';
+    requestAnimationFrame(tick);
+  }
+  new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&!running){running=true;requestAnimationFrame(tick);}},{threshold:.4}).observe(loader);
+})();
+
+/* RADAR — 6 axes, RGB axis with colour */
+(function(){
+  const cv=document.getElementById('radarCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height,cx=W/2,cy=H/2,R=130,sides=6;
+  const FONT_LABEL=`300 9.5px 'DM Mono',monospace`;
+  const FONT_LEGEND=`300 9px 'DM Mono',monospace`;
+  const labels=['Speed','Thermal','Stability','Compat.','RGB','Durability'];
+  const cx1=[.94,.88,.95,.97,.99,.94],old=[.32,.28,.30,.38,.0,.34];
+  function pt(a,r){return[cx+r*Math.cos(a-Math.PI/2),cy+r*Math.sin(a-Math.PI/2)];}
+  let prog=0,started=false,hue=0;
+  new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&!started){started=true;anim();}},{threshold:.4}).observe(cv);
+  function drawRadar(){
+    hue=(hue+.6)%360;ctx.clearRect(0,0,W,H);
+    const e=1-Math.pow(1-prog,3);
+    for(let r=1;r<=5;r++){const fr=R*(r/5);ctx.beginPath();for(let i=0;i<sides;i++){const[x,y]=pt(i*Math.PI*2/sides,fr);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.closePath();ctx.strokeStyle=`rgba(255,255,255,${.025+r*.01})`;ctx.lineWidth=.5;ctx.stroke();}
+    for(let i=0;i<sides;i++){const[x,y]=pt(i*Math.PI*2/sides,R);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.strokeStyle=i===4?`hsla(${hue},80%,60%,.2)`:'rgba(255,255,255,.04)';ctx.lineWidth=.5;ctx.stroke();}
+    ctx.beginPath();for(let i=0;i<sides;i++){const v=old[i]*e;const[x,y]=pt(i*Math.PI*2/sides,R*v);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.closePath();ctx.fillStyle=`rgba(210,100,20,${.07*e})`;ctx.fill();ctx.strokeStyle=`rgba(210,100,20,${.4*e})`;ctx.lineWidth=.8;ctx.stroke();
+    ctx.beginPath();for(let i=0;i<sides;i++){const v=cx1[i]*e;const[x,y]=pt(i*Math.PI*2/sides,R*v);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.closePath();ctx.fillStyle=`rgba(68,170,255,${.08*e})`;ctx.fill();ctx.strokeStyle=`rgba(180,200,255,${.65*e})`;ctx.lineWidth=1.5;ctx.stroke();
+    for(let i=0;i<sides;i++){const v=cx1[i]*e;const[x,y]=pt(i*Math.PI*2/sides,R*v);ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fillStyle=i===4?`hsla(${hue},90%,65%,${.95*e})`:`rgba(180,210,255,${.85*e})`;ctx.fill();}
+    if(e>.5){const lp=(e-.5)/.5;ctx.font=FONT_LABEL;ctx.textAlign='center';for(let i=0;i<sides;i++){const[x,y]=pt(i*Math.PI*2/sides,R*1.22);ctx.fillStyle=i===4?`hsla(${hue},80%,70%,${lp*.95})`:`rgba(170,170,170,${lp*.85})`;ctx.fillText(labels[i],x,y+4);}}
+    if(e>.8){const lp=(e-.8)/.2;ctx.textAlign='left';ctx.font=FONT_LEGEND;ctx.fillStyle=`rgba(180,210,255,${lp*.75})`;ctx.fillRect(14,H-44,10,2);ctx.fillText('CX1',28,H-38);ctx.fillStyle=`rgba(210,100,20,${lp*.65})`;ctx.fillRect(14,H-28,10,2);ctx.fillText('Prev Gen',28,H-22);}
+    requestAnimationFrame(drawRadar);
+  }
+  function anim(){
+    function step(){prog=Math.min(prog+.022,1);if(prog<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+    drawRadar();
+  }
+})();
+</script>
+</body>
+</html>
