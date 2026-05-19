@@ -67,12 +67,6 @@ section{position:relative;width:100%;overflow:hidden;}
 /* PCB SIDE — both boards stacked */
 .pcb-side{opacity:0;transform:translateX(14px);transition:opacity 1.2s ease .2s,transform 1.2s ease .2s;}
 .pcb-side.on{opacity:1;transform:none;}
-.pcb-block{margin-bottom:20px;}
-.pcb-block:last-child{margin-bottom:0;}
-.pcb-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.pcb-meta-name{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;}
-.pcb-meta-dim{font-family:var(--fm);font-size:9px;color:var(--label);opacity:.55;}
-.pcb-sep{height:.5px;background:var(--line);margin:18px 0;}
 
 /* COMPARE TABLE */
 .cmp{width:100%;border-collapse:collapse;margin-top:20px;}
@@ -190,14 +184,17 @@ section{position:relative;width:100%;overflow:hidden;}
     </div>
     <!-- Both PCBs stacked -->
     <div class="pcb-side" id="ps">
-      <div class="pcb-block">
-        <div class="pcb-meta">
-          <span class="pcb-meta-name" style="color:var(--g3l);">GEN3x4 · PCIe Gen3x4</span>
-          <span class="pcb-meta-dim">30mm</span>
-        </div><svg viewBox="0 0 310 150" width="100%" style="max-width:380px;display:block;filter:drop-shadow(0 14px 36px rgba(0,0,0,.25)) drop-shadow(0 4px 10px rgba(0,0,0,.15));" xmlns="http://www.w3.org/2000/svg">
+      <div style="position:relative;min-height:360px;">
+        <!-- GEN3x4 — upper left, 72% width -->
+        <div style="position:absolute;top:0;left:0;width:72%;z-index:1;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--g3l);">GEN3x4 · PCIe Gen3x4</span>
+            <span style="font-family:var(--fm);font-size:9px;color:var(--label);opacity:.55;">30mm</span>
+          </div>
+          <svg viewBox="0 0 310 150" width="100%" style="display:block;filter:drop-shadow(0 14px 36px rgba(0,0,0,.25)) drop-shadow(0 4px 10px rgba(0,0,0,.15));" xmlns="http://www.w3.org/2000/svg">
   <rect x="0" y="18" width="310" height="114" rx="4" fill="#111" stroke="rgba(255,255,255,.07)" stroke-width=".8"/>
   <rect x="2.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="5.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="8.4" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="11.600000000000001" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="14.8" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="18.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="21.200000000000003" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="24.400000000000002" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="27.6" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="30.8" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="34.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="37.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="40.400000000000006" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="43.6" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="46.800000000000004" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="50.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="53.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="56.400000000000006" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="59.6" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="62.800000000000004" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="66.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="69.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="2.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="5.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="8.4" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="11.600000000000001" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="14.8" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="18.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="21.200000000000003" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="24.400000000000002" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="27.6" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="30.8" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="34.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="37.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="40.400000000000006" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="43.6" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="46.800000000000004" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="50.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="53.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="56.400000000000006" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="59.6" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="62.800000000000004" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="66.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="69.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/>
-  <rect x="72" y="18" width="7" height="114" rx="0" fill="#111"/>
+  <rect x="72" y="18" width="7" height="114" fill="#111"/>
   <circle cx="298" cy="75" r="5" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="1"/>
   <circle cx="298" cy="75" r="2" fill="#111"/>
   <rect x="80" y="23" width="200" height="104" rx="3" fill="#fff"/>
@@ -215,16 +212,18 @@ section{position:relative;width:100%;overflow:hidden;}
   <text x="86" y="131" font-size="5.5" fill="#888" font-family="Arial,sans-serif">CE RoHS FCC REACH</text>
   <rect x="0" y="18" width="310" height="2" fill="#2563eb" opacity=".8" rx="1"/>
 </svg>
-      </div>
-      <div class="pcb-sep"></div>
-      <div class="pcb-block" style="width:70%;">
-        <div class="pcb-meta">
-          <span class="pcb-meta-name" style="color:var(--g4l);">GEN4x4 · PCIe Gen4x4</span>
-          <span class="pcb-meta-dim">30mm</span>
-        </div><svg viewBox="0 0 310 150" width="100%" style="max-width:380px;display:block;filter:drop-shadow(0 14px 36px rgba(0,0,0,.25)) drop-shadow(0 4px 10px rgba(0,0,0,.15));" xmlns="http://www.w3.org/2000/svg">
+          <div style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--g3l);margin-top:6px;opacity:.75;">3,300 MB/s · Wide Compatibility</div>
+        </div>
+        <!-- GEN4x4 — lower right, 88% width, shifted down+right -->
+        <div style="position:absolute;bottom:0;right:0;width:88%;z-index:2;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--g4l);">GEN4x4 · PCIe Gen4x4</span>
+            <span style="font-family:var(--fm);font-size:9px;color:var(--label);opacity:.55;">30mm</span>
+          </div>
+          <svg viewBox="0 0 310 150" width="100%" style="display:block;filter:drop-shadow(0 14px 36px rgba(0,0,0,.25)) drop-shadow(0 4px 10px rgba(0,0,0,.15));" xmlns="http://www.w3.org/2000/svg">
   <rect x="0" y="18" width="310" height="114" rx="4" fill="#111" stroke="rgba(255,255,255,.07)" stroke-width=".8"/>
   <rect x="2.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="5.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="8.4" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="11.600000000000001" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="14.8" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="18.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="21.200000000000003" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="24.400000000000002" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="27.6" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="30.8" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="34.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="37.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="40.400000000000006" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="43.6" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="46.800000000000004" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="50.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="53.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="56.400000000000006" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="59.6" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="62.800000000000004" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="66.0" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="69.2" y="0" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="2.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="5.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="8.4" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="11.600000000000001" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="14.8" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="18.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="21.200000000000003" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="24.400000000000002" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="27.6" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="30.8" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="34.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="37.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="40.400000000000006" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="43.6" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="46.800000000000004" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="50.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="53.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="56.400000000000006" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="59.6" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="62.800000000000004" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="66.0" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/><rect x="69.2" y="140" width="2" height="10" fill="rgba(200,165,40,.9)" rx=".3"/>
-  <rect x="72" y="18" width="7" height="114" rx="0" fill="#111"/>
+  <rect x="72" y="18" width="7" height="114" fill="#111"/>
   <circle cx="298" cy="75" r="5" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="1"/>
   <circle cx="298" cy="75" r="2" fill="#111"/>
   <rect x="80" y="23" width="200" height="104" rx="3" fill="#fff"/>
@@ -242,9 +241,10 @@ section{position:relative;width:100%;overflow:hidden;}
   <text x="86" y="131" font-size="5.5" fill="#888" font-family="Arial,sans-serif">CE RoHS FCC REACH</text>
   <rect x="0" y="18" width="310" height="2" fill="#0ea5e9" opacity=".8" rx="1"/>
 </svg>
+          <div style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--g4l);margin-top:6px;opacity:.75;">7,000 MB/s · Above Market</div>
+        </div>
       </div>
-    </div>
-  </div>
+    </div>  </div>
 </section>
 
 <!-- GEN3 vs GEN4 -->
