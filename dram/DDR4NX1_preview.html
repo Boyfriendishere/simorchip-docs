@@ -10,7 +10,7 @@
 :root {
   --bg:#0f0f0f; --surface:#181818; --surface2:#222222;
   --white:#f0f0f0; --silver:#c8c8c8; --ink:#0f0f0f;
-  --mute:#cccccc; --label:#8a9aaa; --border:rgba(255,255,255,.09); --line:rgba(255,255,255,.08);
+  --mute:#aaaaaa; --label:#666666; --border:rgba(255,255,255,.07); --line:rgba(255,255,255,.06);
   /* accent is white/silver — no colour */
   --acc:rgba(255,255,255,.85); --acc-dim:rgba(255,255,255,.12); --acc-glow:rgba(255,255,255,.04);
   --ff-d:'Bebas Neue',sans-serif;
@@ -62,14 +62,14 @@ section{position:relative;width:100%;overflow:hidden;}
 .stat-badge{display:inline-flex;flex-direction:column;align-items:flex-start;border:.5px solid var(--border);padding:18px 22px;background:rgba(255,255,255,.02);transition:border-color .22s,background .22s;}
 .stat-badge:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.05);}
 .stat-badge .num{font-family:var(--ff-d);font-size:clamp(26px,4.2vw,54px);letter-spacing:.02em;color:var(--white);line-height:1;}
-.stat-badge .lbl{font-size:10px;font-weight:400;letter-spacing:.1em;color:var(--mute);margin-top:4px;text-transform:uppercase;font-family:var(--ff-m);}
+.stat-badge .lbl{font-size:9px;font-weight:300;letter-spacing:.12em;color:var(--mute);margin-top:4px;text-transform:uppercase;font-family:var(--ff-m);}
 .img-ph{background:linear-gradient(135deg,#1e1e1e,#141414);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:.5px solid var(--border);}
 .img-ph::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(91deg,transparent,transparent 12px,rgba(255,255,255,.01) 12px,rgba(255,255,255,.01) 13px);}
 .img-ph span{font-family:var(--ff-m);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.12);position:relative;z-index:1;text-align:center;line-height:2;padding:0 16px;}
 
 /* BULLET LIST */
 .bullet-list{list-style:none;margin-top:28px;}
-.bullet-list li{padding:16px 0;border-bottom:.5px solid var(--line);font-size:15px;font-weight:400;line-height:1.75;color:var(--mute);display:grid;grid-template-columns:28px 1fr;gap:14px;align-items:start;}
+.bullet-list li{padding:16px 0;border-bottom:.5px solid var(--line);font-size:14px;font-weight:300;line-height:1.7;color:var(--mute);display:grid;grid-template-columns:28px 1fr;gap:14px;align-items:start;}
 .bullet-list li:last-child{border-bottom:none;}
 .bullet-list li .bi{width:28px;height:28px;border:.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
 .bullet-list li .bi svg{width:14px;height:14px;stroke:var(--mute);fill:none;stroke-width:1.5;}
@@ -134,7 +134,7 @@ section{position:relative;width:100%;overflow:hidden;}
 .hl-ln.in{opacity:1;transform:translateY(0);}
 .hl-wh{color:var(--white);}
 .hl-dim{color:var(--mute);}
-.h-sub{font-size:15px;font-weight:400;line-height:1.9;color:var(--mute);max-width:340px;margin-top:20px;opacity:0;transition:opacity .7s ease;}
+.h-sub{font-size:13px;font-weight:300;line-height:1.9;color:var(--mute);max-width:340px;margin-top:20px;opacity:0;transition:opacity .7s ease;}
 .h-sub.on{opacity:1;}
 .h-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:20px;opacity:0;transition:opacity .5s ease;}
 .h-tags.on{opacity:1;}
@@ -157,21 +157,21 @@ section{position:relative;width:100%;overflow:hidden;}
 .bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
 .bl-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--silver);margin-bottom:16px;}
 .bl-title{font-family:var(--ff-d);font-size:clamp(44px,6vw,72px);letter-spacing:.02em;color:var(--white);line-height:1;margin-bottom:20px;}
-.bl-body{font-size:16px;font-weight:400;line-height:1.9;color:var(--mute);margin-bottom:24px;}
+.bl-body{font-size:15px;font-weight:300;line-height:1.9;color:var(--mute);margin-bottom:24px;}
 .bl-quote{font-size:12px;font-weight:400;letter-spacing:.04em;color:var(--silver);padding:14px 0;border-top:.5px solid rgba(255,255,255,.12);border-bottom:.5px solid rgba(255,255,255,.12);font-style:italic;}
 .bl-img{width:100%;aspect-ratio:4/3;border:.5px solid var(--border);}
 .why-wrap{margin-top:80px;padding-top:72px;border-top:.5px solid var(--line);}
 .why-title{font-family:var(--ff-d);font-size:clamp(40px,5.5vw,64px);letter-spacing:.02em;color:var(--white);margin-bottom:12px;}
-.why-sub{font-size:15px;font-weight:400;color:var(--mute);margin-bottom:48px;}
+.why-sub{font-size:14px;font-weight:300;color:var(--mute);margin-bottom:48px;}
 .why-tbl{width:100%;border-collapse:collapse;}
 .why-tbl tr{border-bottom:.5px solid var(--line);}
 .why-tbl td{padding:18px 0;vertical-align:top;}
 .why-tbl .wl{font-family:var(--ff-m);font-size:11px;font-weight:300;letter-spacing:.1em;color:var(--label);text-transform:uppercase;width:28%;}
 .why-tbl .wv{font-family:var(--ff-d);font-size:clamp(22px,3vw,36px);letter-spacing:.02em;color:var(--white);width:22%;}
 .why-tbl .wv.accent{color:var(--silver);}
-.why-tbl .wd{font-size:14px;font-weight:400;color:var(--mute);padding-left:24px;line-height:1.7;}
+.why-tbl .wd{font-size:13px;font-weight:300;color:var(--mute);padding-left:24px;line-height:1.6;}
 .why-fn{font-family:var(--ff-m);font-size:9px;color:var(--label);margin-top:20px;letter-spacing:.06em;}
-.why-close{font-size:16px;font-weight:400;color:var(--mute);margin-top:32px;font-style:italic;}
+.why-close{font-size:15px;font-weight:300;color:var(--mute);margin-top:32px;font-style:italic;}
 
 /* ── S02 HARDER ── */
 #s02{background:var(--bg);}
@@ -222,7 +222,7 @@ section{position:relative;width:100%;overflow:hidden;}
 .ctx-card{border:.5px solid var(--border);padding:20px 18px;background:rgba(255,255,255,.015);}
 .ctx-card .ci{font-size:20px;margin-bottom:10px;}
 .ctx-card .ct{font-size:12px;font-weight:500;letter-spacing:.04em;margin-bottom:6px;color:var(--white);}
-.ctx-card .cb{font-size:13px;font-weight:400;color:var(--mute);line-height:1.7;}
+.ctx-card .cb{font-size:12px;font-weight:300;color:var(--mute);line-height:1.6;}
 
 /* ── S05 STRONGER ── */
 #s05{background:var(--surface);}
@@ -267,16 +267,16 @@ section{position:relative;width:100%;overflow:hidden;}
 .pkg-feat-item:last-child{border-bottom:none;}
 .pkg-feat-icon{font-size:16px;flex-shrink:0;padding-top:1px;}
 .pkg-feat-name{font-family:var(--ff-b);font-size:13px;font-weight:500;color:var(--white);margin-bottom:3px;}
-.pkg-feat-desc{font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.7;}
+.pkg-feat-desc{font-family:var(--ff-b);font-size:12px;font-weight:300;color:var(--mute);line-height:1.6;}
 
 /* ── S07 SPECS ── */
 #s07{background:var(--surface);padding:100px 6% 80px;}
 .spec-in{max-width:900px;margin:0 auto;}
 .spec-title{font-family:var(--ff-d);font-size:clamp(40px,5vw,60px);letter-spacing:.02em;color:var(--white);margin-bottom:12px;}
-.spec-intro{font-size:14px;font-weight:400;color:var(--mute);margin-bottom:48px;max-width:520px;line-height:1.9;}
+.spec-intro{font-size:13px;font-weight:300;color:var(--mute);margin-bottom:48px;max-width:520px;line-height:1.8;}
 .spec-tbl{width:100%;border-collapse:collapse;}
 .spec-tbl tr{border-bottom:.5px solid var(--line);}
-.spec-tbl td{padding:16px 0;font-size:14px;vertical-align:top;font-weight:400;}
+.spec-tbl td{padding:16px 0;font-size:13px;vertical-align:top;}
 .spec-tbl td:first-child{color:var(--label);font-weight:300;width:40%;font-family:var(--ff-m);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border-left:1.5px solid transparent;transition:border-color .2s;}
 .spec-tbl tr:hover td:first-child{border-left-color:var(--silver);}
 .spec-tbl td:last-child{color:var(--white);font-weight:400;}
@@ -393,9 +393,9 @@ section{position:relative;width:100%;overflow:hidden;}
       <div class="why-sub fi fi-d1">Still the most widely supported platform. Still the smart choice.</div>
       <table class="why-tbl fi fi-d2">
         <tr><td class="wl">Bandwidth</td><td class="wv">25.6<span style="font-size:.5em;letter-spacing:.06em;"> GB/s</span></td><td class="wd">Enough throughput for gaming, 4K editing, and heavy multitasking without bottlenecking</td></tr>
-        <tr><td class="wl">Frequency</td><td class="wv accent">3600<span style="font-size:.5em;letter-spacing:.06em;"> MT/s</span></td><td class="wd">XMP-ready — one BIOS switch to unlock full rated speed, no manual tuning</td></tr>
+        <tr><td class="wl">Frequency</td><td class="wv accent">3600<span style="font-size:.5em;letter-spacing:.06em;"> MT/s</span></td><td class="wd">Intel XMP 2.0 Ready — Enable with one click in the BIOS on Intel platforms to unlock full rated speed. AMD DDR4 platforms will run at default JEDEC standard speeds.</td></tr>
         <tr><td class="wl">Voltage</td><td class="wv">1.35V</td><td class="wd">Low-voltage design — less heat at source, more stable long-term operation</td></tr>
-        <tr><td class="wl">Compatibility</td><td class="wv" style="font-size:clamp(14px,1.8vw,18px);padding-top:8px;">Universal</td><td class="wd">Fully supported across Intel and AMD DDR4 platforms</td></tr>
+        <tr><td class="wl">Compatibility</td><td class="wv" style="font-size:clamp(14px,1.8vw,18px);padding-top:8px;">Universal</td><td class="wd">Fully compatible with both Intel and AMD DDR4 platforms</td></tr>
         <tr><td class="wl">Capacity</td><td class="wv accent">32GB</td><td class="wd">Single module up to 32GB — run your entire workflow in memory, not in wait</td></tr>
       </table>
       <div class="why-fn fi fi-d3">* Data benchmarked against previous generation DDR3 products</div>
@@ -498,8 +498,8 @@ section{position:relative;width:100%;overflow:hidden;}
         </li>
         <li>
           <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M16 12h6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24"/></svg></div>
-          <div><strong>Intel &amp; AMD DDR4 platform compatible</strong> — No compatibility surprises. Drop it in, boot up, run.
-            <span class="bn">▸ Visual: Intel + AMD dual logos</span>
+          <div><strong>Broad Platform Compatibility</strong> — Fully compatible with both Intel and AMD DDR4 platforms. Please note XMP 2.0 overclocking is an Intel specification; AMD platforms will run at default JEDEC standard speeds.
+            <span class="bn">▸ Visual: Highlight Intel XMP 2.0 activation; secondary note for AMD default JEDEC speed.</span>
           </div>
         </li>
       </ul>
@@ -598,13 +598,13 @@ section{position:relative;width:100%;overflow:hidden;}
     <div class="fi">
       <div class="sh-num">04 — Stronger</div>
       <div class="sh-title">Stronger</div>
-      <div class="sh-sub">XMP Ready · Dual-Channel Kit · Full-Spectrum Reliability</div>
+      <div class="sh-sub">Intel XMP 2.0 · Dual-Channel Kit · Full-Spectrum Reliability</div>
       <div class="white-line on"></div>
       <ul class="bullet-list">
         <li>
           <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M16 12h6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24"/></svg></div>
-          <div><strong>Intel XMP / AMD OC Profile Support</strong> — Rated speed at one click. Tested and validated at XMP frequencies before leaving the factory.
-            <span class="bn">▸ Visual: Intel XMP badge + BIOS OC screen reference</span>
+          <div><strong>Intel XMP 2.0 Ready</strong> — Rated speed at one click. Tested and validated at XMP 2.0 frequencies before leaving the factory. DDR4 XMP is an Intel specification — AMD DDR4 platforms run at JEDEC standard speeds.
+            <span class="bn">▸ Visual: Intel XMP 2.0 badge + BIOS OC screen reference</span>
           </div>
         </li>
         <li>
@@ -635,7 +635,7 @@ section{position:relative;width:100%;overflow:hidden;}
       <div class="radar-wrap">
         <canvas id="radarCanvas" width="360" height="360"></canvas>
       </div>
-      <div class="img-ph" style="width:100%;height:120px;"><span>[ Intel XMP + AMD OC logos ]</span></div>
+      <div class="img-ph" style="width:100%;height:120px;"><span>[ Intel XMP 2.0 badge ]</span></div>
     </div>
   </div>
 </section>
@@ -705,7 +705,7 @@ section{position:relative;width:100%;overflow:hidden;}
       <tr><td>Module Type</td><td>DDR4 U-DIMM</td></tr>
       <tr><td>Dimensions</td><td>133.35 × 31.25 × 8.5 mm</td></tr>
       <tr><td>Operating Temp</td><td>0°C ~ 85°C (32°F ~ 176°F)</td></tr>
-      <tr><td>Platform</td><td>Intel XMP / AMD OC Profile</td></tr>
+      <tr><td>Platform</td><td>Intel XMP 2.0 Ready — Enable with one click in the BIOS on Intel platforms to unlock full rated speed. AMD DDR4 platforms will run at default JEDEC standard speeds.</td></tr>
       <tr><td>Certifications</td><td>RoHS / REACH / CE / FCC</td></tr>
       <tr><td>Warranty</td><td>Limited Lifetime Warranty</td></tr>
     </table>
@@ -728,12 +728,13 @@ section{position:relative;width:100%;overflow:hidden;}
         <tr><td>32GB</td><td>(2Gx8)×16C</td><td>2Rx8</td><td>CR3600XNX1-32G (XMP)</td></tr>
       </tbody>
     </table>
+    <div style="font-size:11px; color:var(--label); margin-top:12px; font-family:var(--ff-m); line-height:1.5;">* The "(XMP)" suffix in the model name indicates that the profile is verified for Intel XMP 2.0. On AMD platforms, the system will boot at default JEDEC speeds.</div>
     <div class="spec-ctas fi">
       <button class="btn btn-light">Download Spec Sheet</button>
       <button class="btn btn-ghost">Explore More Products</button>
     </div>
     <div class="spec-foot fi">
-      <span class="tag" style="font-size:9px;">© 2025 Simorchip Technology</span>
+      <span class="tag" style="font-size:9px;">© 2026 Simorchip Technology</span>
       <span class="tag" style="font-size:9px;">DDR4 Heatsink Series NX1</span>
     </div>
   </div>
@@ -751,7 +752,7 @@ section{position:relative;width:100%;overflow:hidden;}
     <span class="site-foot-t1">No RGB. No performance theater.</span>
     <span class="site-foot-t2">Just the work, done right.</span>
   </div>
-  <div class="site-foot-sub">© 2025 Simorchip Technology · DDR4 Heatsink Series NX1</div>
+  <div class="site-foot-sub">© 2026 Simorchip Technology · DDR4 Heatsink Series NX1</div>
 </div>
 
 <script>
