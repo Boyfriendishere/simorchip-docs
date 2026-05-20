@@ -460,14 +460,14 @@ section{position:relative;width:100%;overflow:hidden;}
     <div class="fi fi-d1">
       <div class="solid-imgs">
         <div class="img-ph" style="width:100%;height:100%;">
-          <span>[ SOLID — MAIN ]<br>Heatspreader full shot<br>NX1 Front View<br>White geometry callout]</span>
+          <span>[ SOLID — MAIN ]<br>Heatspreader full shot<br>NX1 Front View<br>White geometry callout</span>
         </div>
         <div class="solid-img-row">
           <div class="img-ph" style="height:130px;">
-            <span>[ Thermal stability curve ]<br>NX1 flat vs competitor drift</span>
+            <span>[ High-stakes execution curve ]<br>NX1 flat white line vs competitor drifting grey</span>
           </div>
           <div class="img-ph" style="height:130px;">
-            <span>[ 1.35V voltage comparison ]<br>DDR3 1.5V → NX1 1.35V</span>
+            <span>[ Oscilloscope signal simulation ]<br>1.35V clean waveform vs noisy competitor</span>
           </div>
         </div>
       </div>
@@ -475,25 +475,28 @@ section{position:relative;width:100%;overflow:hidden;}
     <div class="fi">
       <div class="sh-num">02 — Solid</div>
       <div class="sh-title">Solid</div>
-      <div class="sh-sub">Shadow Edge Armor · Zero Throttle · 1.35V</div>
+      <div class="sh-sub">Shadow Edge Armor · Zero Throttle · 1.35V High-Yield Signal</div>
       <div class="white-line on"></div>
+      <p style="font-size:15px;font-weight:300;color:var(--mute);line-height:1.8;margin-bottom:6px;">Speed means nothing if it can't hold.</p>
+      <p style="font-size:15px;font-weight:500;color:var(--white);line-height:1.8;margin-bottom:6px;">The NX1 is built to run at rated speed, not just hit it once and back off.</p>
+      <p style="font-family:var(--ff-s);font-size:17px;font-style:italic;color:var(--silver);line-height:1.8;margin-bottom:24px;">You'll need a coffee break. The NX1 won't.<br><span style="font-size:13px;opacity:.65;">你需要休息一下。NX1 不用。</span></p>
       <ul class="bullet-list">
         <li>
           <div class="bi"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-          <div><strong>Matte Black Aluminum Heatspreader · Shadow Edge Geometry</strong> — Full-coverage aluminum construction draws heat away efficiently. Designed for sustained load — not just benchmark runs.
-            <span class="bn">▸ Visual: heatspreader cross-section + geometry line callout vs bare module</span>
+          <div><strong>Matte Black Aluminum Heatspreader · Shadow Edge Geometry</strong> — Heavy-duty aluminum armor engineered for sustained thermal dissipation. It doesn't just cool — it prevents heat saturation from degrading your memory ICs during back-to-back rendering sessions or extended competitive gaming.
+            <span class="bn">▸ Visual: 極端熱壓力動畫 — 紅色熱量從記憶體 IC 快速擴散，撞上啞光黑色鎧甲後被擊散</span>
           </div>
         </li>
         <li>
           <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-          <div>Stable operation under prolonged load — <strong>no thermal throttle, no frequency drift.</strong> Session one and session one hundred run at the same speed.
-            <span class="bn">▸ Visual: long-run frequency stability curve — NX1 flat white line vs competitor drifting grey</span>
+          <div>Stable operation under prolonged load — <strong>Zero frequency drift. Zero signal degradation.</strong> Built to maintain a flat performance line under sustained, high-load conditions — ensuring your 100th hour of execution is just as flawless as your first.
+            <span class="bn">▸ Visual: 高壓執行曲線圖 — NX1 維持不動搖的白色平直線，競品頻率線在灰色中下墜抖動</span>
           </div>
         </li>
         <li>
           <div class="bi"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <div><strong>1.35V Low-Voltage Design</strong> — Less heat generated at the chip level. Cooler operating temperature means longer lifespan and more overclocking headroom.
-            <span class="bn">▸ Visual: DDR3 1.5V → NX1 1.35V voltage drop arrow</span>
+          <div><strong>1.35V High-Yield Signal</strong> — Factory-binned high-grade ICs, selected for XMP performance. Operating at 1.35V delivers the signal voltage margin needed to sustain tight XMP timings cleanly — without thermal degradation compromising your long-run stability.
+            <span class="bn">▸ Visual: 示波器數據模擬 — 訊號波形在 1.35V 下收斂為銳利穩定的波形，對比雜訊下不規則的競品波形</span>
           </div>
         </li>
         <li>
@@ -503,22 +506,34 @@ section{position:relative;width:100%;overflow:hidden;}
           </div>
         </li>
       </ul>
-      <div class="volt-viz">
-        <div class="volt-bar-wrap">
-          <div class="volt-val prev">1.5V</div>
-          <div class="volt-bar prev"></div>
-          <div class="volt-lbl">DDR3</div>
+      <!-- BADGES -->
+      <div class="solid-badges" style="margin-top:28px;gap:10px;">
+        <!-- Badge 1: 1.35V XMP Sweet Spot -->
+        <div class="stat-badge" style="background:#1a1a1a;border-color:rgba(255,255,255,.2);position:relative;overflow:hidden;min-width:100px;">
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(255,255,255,.06) 0%,transparent 70%);pointer-events:none;"></div>
+          <div class="num" style="font-size:clamp(22px,3.5vw,42px);color:var(--white);text-shadow:0 0 20px rgba(255,255,255,.3);">1.35V</div>
+          <div class="lbl">XMP Sweet Spot</div>
+          <div style="font-family:var(--ff-m);font-size:8px;color:var(--label);margin-top:5px;letter-spacing:.06em;">vs DDR4 JEDEC 1.2V</div>
         </div>
-        <div class="volt-arrow">→</div>
-        <div class="volt-bar-wrap">
-          <div class="volt-val nx1">1.35V</div>
-          <div class="volt-bar nx1"></div>
-          <div class="volt-lbl">NX1</div>
+        <!-- Badge 2: 100% Burn-In Tested -->
+        <div class="stat-badge" style="background:#1a1a1a;border-color:rgba(255,255,255,.2);min-width:100px;">
+          <div class="num" style="font-size:clamp(22px,3.5vw,42px);color:var(--white);">100%</div>
+          <div style="width:100%;height:3px;background:var(--surface2);border-radius:2px;margin:6px 0;overflow:hidden;">
+            <div style="width:100%;height:100%;background:var(--silver);border-radius:2px;box-shadow:0 0 8px rgba(255,255,255,.4);"></div>
+          </div>
+          <div class="lbl">Burn-In Tested</div>
+          <div style="font-family:var(--ff-m);font-size:8px;color:var(--label);margin-top:5px;letter-spacing:.06em;">Every module. Before it ships.</div>
         </div>
-      </div>
-      <div class="solid-badges">
-        <div class="stat-badge"><div class="num" style="color:var(--silver);font-size:clamp(16px,2.5vw,32px);">10%</div><div class="lbl">Lower Voltage vs DDR3</div></div>
-        <div class="stat-badge"><div class="num" style="font-size:clamp(19px,3vw,38px);">1.35V</div><div class="lbl">Low-Voltage Design</div></div>
+        <!-- Badge 3: Frequency Stable -->
+        <div class="stat-badge" style="background:#1a1a1a;border-color:rgba(255,255,255,.2);min-width:120px;">
+          <div class="num" style="font-size:clamp(16px,2.2vw,26px);color:var(--white);margin-bottom:10px;">Frequency</div>
+          <div style="position:relative;width:100%;height:20px;display:flex;align-items:center;">
+            <div style="position:absolute;left:0;font-family:var(--ff-m);font-size:7px;color:var(--label);letter-spacing:.06em;top:-12px;">Hour 1</div>
+            <div style="width:100%;height:1px;background:linear-gradient(90deg,rgba(255,255,255,.15),rgba(255,255,255,.9),rgba(255,255,255,.15));"></div>
+            <div style="position:absolute;right:0;font-family:var(--ff-m);font-size:7px;color:var(--label);letter-spacing:.06em;top:-12px;">Hour 100</div>
+          </div>
+          <div class="lbl" style="margin-top:10px;">Stable</div>
+        </div>
       </div>
     </div>
   </div>
