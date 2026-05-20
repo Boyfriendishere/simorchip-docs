@@ -1,0 +1,774 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>MicroSD T100</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="360d24e8-7d86-80d6-9b6e-f2f93764e1b1" class="page sans"><header><h1 class="page-title" dir="auto">MicroSD T100</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h2 id="360d24e8-7d86-80ae-b3b1-e19c8ac95279" class="">Reliably Boring.</h2></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-80c9-ae16-de3691f36306" class=""><mark class="highlight-red">有一種可靠，叫無聊</mark></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-80f3-bd66-f1bdbe89f8d0" class="">
+</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-80d5-aa5b-fa186010b9fb" class="">We&#x27;re not here to excite you. We&#x27;re not here to thrill you. We&#x27;re just here to be reliable — every single time you need us.</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-801c-99ad-d80ea5dcab87" class=""><mark class="highlight-red">我們不打算讓你興奮。我們不打算讓你熱血。我們只是會在你需要的時候，是可靠的</mark></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8004-92c1-c9ad4d38ed21" class="">IPX7/IPX8 waterproof · -5°C to 55°C operating range · 1.5m drop-tested · IP6X dustproof · 100MB/s · Up to 1TB.</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-80e5-9fb8-d07811a19ecd" class=""><mark class="highlight-red">IPX7/IPX8 防水 · 工作溫度 -5°C 至 55°C · 1.5 公尺落摔測試 · IP6X 防塵 · 100MB/s · 最高 1TB。</mark></p></div><div style="display:contents" dir="auto"><h2 id="360d24e8-7d86-8093-819d-d31de7f21a5d" class=""><strong>Six promises. Zero drama.</strong></h2></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-804e-8207-c0114c3824d3" class=""><mark class="highlight-red">六個承諾。零演技</mark></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-80c4-a98e-c34657a9e0ad" class="">
+</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-806c-81b8-cca853db2a24" class=""><mark class="highlight-yellow">視覺：Hero 背景深炭黑。「Six promises. Zero drama.」字幕式動態出現</mark></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8090-a251-d7baa296873f" class=""><mark class="highlight-yellow">右側產品圖正面MicroSD 跟SD外接卡</mark></p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-8052-865e-fafd1434929c" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="360d24e8-7d86-809e-ba9e-d052c5f80f12"/></div><div style="display:contents" dir="auto"><h2 id="360d24e8-7d86-80de-8d2c-dd294f862acf" class=""><em><strong>Never gonna give you up</strong></em></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b1-a979-e8b7eb25fd6d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8068-9b54-e29885280fe5" class=""><strong>It never lets go of your footage.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8044-8316-cd67a9672dc2" class=""><strong>100MB/s. No Waiting. No Repeating.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8055-85b3-c75ef6b0c912" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805e-aee1-e9907c29c0ab" class="">The one that holds on. 100MB/s read. 30MB/s write. High-quality NAND Flash with ECC error management — every frame you captured stays exactly where you left it. You shoot. It keeps. No negotiation.</p></div><div style="display:contents" dir="auto"><p id="360d24e8-7d86-805e-a3ae-e2273c7068d2" class=""><mark class="highlight-yellow">視覺：右圖行動相機 / 無人機拍攝場景。速度數字 100 / 30 MB/s 大字疊加</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8035-b683-e0021d94067c" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-808a-a7ac-d815398bc651"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-8072-b0d8-f4f09a0fb3ae" class=""><em><strong>Never gonna let you down</strong></em></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b6-a8ac-d4ba0ac1f220" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b9-9779-cd36d067f6ba" class=""><strong>It never drops the moment.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8076-8c54-f5b19df9d70f" class="">V30. U3. Minimum sustained 30MB/s write</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805d-b406-d3a0079cd2ca" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8097-b768-dffd21af8d89" class="">The floor required for 4K UHD to record clean, uninterrupted, every single time. You don&#x27;t prepare for it to fail. Because it doesn&#x27;t.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8099-af15-c1331f912613" class="">64GB. 128GB. 256GB. 512GB. 1TB. Five capacities for every workflow — from the weekend hiker to the operator who doesn&#x27;t come home until the drive is full.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-807c-b22a-dbf860fcc6b5" class=""><mark class="highlight-yellow">視覺：五種容量包裝並排，或大字容量選項排列</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-805d-abdb-cb3ef4aad135"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-80d1-832a-de95788fae36" class=""><em><strong>Never gonna run around and desert you</strong></em></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b9-b931-eb644ce731b2" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b6-a53f-e82bc46d4d89" class="">Rain. Sand. Minus twenty-five degrees. A fall from 1.5 metres onto whatever the ground happens to be. These aren&#x27;t edge cases — they&#x27;re Tuesday for the people who actually use a MicroSD card for something that matters.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8042-b2ba-de642ba1b29c" class="">IPX7/IPX8 waterproof. IP5X/IP6X dustproof. Operating range -5°C to 55°C. Drop-tested to 1.5m. The T100 doesn&#x27;t ask for ideal conditions. It shows up anyway.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8043-aaa9-c4d24cd5186b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8019-9186-c0c8b8a745e2" class=""><mark class="highlight-yellow"><strong>Badge</strong></mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8034-8621-eca1b1c241a5" class=""><strong>waterproof</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8007-b4f2-c4db8747f3c2" class=""><strong>IPX7 / IPX81m depth · 30min+Rain, splash, submersion.Keeps writing.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8098-932f-d245a1915538" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8058-b5dd-e4ba4332627d" class=""><strong>cold resistant</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ee-828b-db71f5395c9b" class="">-5°C to 55°C operating<br/>-25°C to 75°C storage<br/>Arctic shoot to blazing summer.Still reading.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805e-b79d-c2a0f8c8a49c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80cf-9303-c9caee104a1f" class=""><strong>impact resistant</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8059-8d70-d0b3175f7296" class=""><strong>Free-fall tested: 1.5mIEC 60068-2-27 standardDropped. Bounced.Still there.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ec-b598-d0fc32bb840e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80e1-9967-ea5373ce4eda" class=""><strong>dustproof</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8026-96e0-dd35532d86c7" class=""><strong>IP5X / IP6XHigh-concentration dust testDesert. Construction site.Beach. No problem.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80dd-b78a-ee0d9c894c81" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-809b-9b55-eae3a8271885" class=""><mark class="highlight-yellow">視覺：2×2 四格情境照，每格下方疊加對應 icon badge（防水／耐寒耐熱／抗撞／防塵）。四張照片由實拍素材組合</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80a0-b49f-fbfb1c13cf7e"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-80ac-8eaf-c9d231eec9cf" class=""><em><strong>Never gonna make you cry</strong></em></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-806a-b79f-f03e76b5b45d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c6-a980-d58c917ff66c" class=""><strong>It never lets the shot disappear.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8021-aa71-f451077f3239" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8018-b89f-dddf4c9a0555" class="">You know that feeling. You open the folder. The clip isn&#x27;t there. Wrong format, card error, corrupted — doesn&#x27;t matter which one it is, they all feel the same. That specific kind of heartbreak has a name, and we refuse to be the reason.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8067-aa61-d54c4dc5f66f" class="">V30 Video Speed Class. 100MB/s read. A 4GB 4K file transferred in under 45 seconds. The summit you climbed for three hours. The seven-second wildlife moment. The goal that won&#x27;t happen again. What you captured, it keeps. We&#x27;re boring that way.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8031-9229-c5bfaf590cb7" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8083-a5fa-ca7bf7c9aaee" class=""><mark class="highlight-yellow">視覺：高速動態場景（衝浪、滑翔翼、無人機俯拍），4K 標識大字疊加，V30</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80e8-810f-ccca5ab76d1b"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-803a-82a9-da4c8f6f078e" class=""><em><strong>Never gonna say goodbye</strong></em></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8071-8341-d4999c5d04f6" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8085-8472-ebbf45256335" class=""><strong>It never runs out before you do.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8014-8901-e94e09ed3252" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805c-b754-f63e8ef82e82" class="">Action cameras. Drones. Smartphones. Dashcams. Tablets. Security cameras. Standard MicroSD slot — no adapters needed, no configurations, no compatibility surprises at 6am before a shoot. And if you need it in an SD slot? The included adapter has you covered.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8077-ac12-cb595f02c895" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-804b-b537-c9e4852a0aa6" class="">64GB · 128GB · 256GB · 512GB · 1TB. It doesn&#x27;t say goodbye. It just keeps going.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b4-ae47-f6d11df6290c" class=""><mark class="highlight-yellow">視覺：多裝置排列（相機/無人機/手機/行車記錄器等等），讀卡機搭配多裝置連線視覺。SD Adapter 出現</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-8053-b9f8-f3b550da3189"/></div><div style="display:contents" dir="auto"><h2 id="361d24e8-7d86-80b8-9d76-e2318658b240" class=""><em><strong>Never gonna tell a lie and hurt you</strong></em></h2></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-805b-8062-d72ec9def20c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b7-8718-fdd263fd9a8c" class="">The spec sheet is the love letter. We mean every word.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80be-b691-c964cd39867c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80df-bf15-d70f94b06de0" class="">No asterisks. No fine print. No &quot;up to&quot; hiding behind a number that only happens under lab conditions at 3am on a Tuesday. RoHS / REACH / CE / FCC certified.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-803d-87de-eed80af80d1a" class="">3-Year Limited Warranty — because if we&#x27;re going to commit, we commit for three years. What&#x27;s on the box is the whole truth. Boring? Yes. The way we like it.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80d9-8fe2-d1fb3bb100fd" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-801a-a6df-d909233105ce" class=""><mark class="highlight-yellow">視覺：包裝視覺介紹，3年保固</mark></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-805e-a4bb-ca992d027a04"/></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80cc-8078-e948ff34af8c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80a3-b32e-c5dffc80beb5" class=""><strong>64GB / 128GB / 256GB / 512GB / 1TB  ·  U3 / A1 / V30  ·  Read up to 100MB/s  ·  4K UHD  ·  IPX7/IPX8 · IP6X · -5°C~55°C · 1.5m Drop</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b6-9fe0-c21c2a5e7704" class=""><mark class="highlight-yellow">視覺：全寬橫條，大字數字排列，對應官網現有規格亮點條形式</mark></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b2-9451-c93df0bc32dd" class="">
+</p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-80e0-b0a0-fa4541a31e78" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8037-8e7f-de38c0a9054e"><td id="Uk\n" class="" style="width:293.6625061035156px">Never gonna give you up</td><td id="pJKb" class="" style="width:436.6625061035156px">High-quality NAND Flash + ECC</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8048-9f44-f20e0e6b1734"><td id="Uk\n" class="" style="width:293.6625061035156px">Never gonna let you down</td><td id="pJKb" class="" style="width:436.6625061035156px">V30 / U3 · 4K UHD ·</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-807c-9324-c378885e0d77"><td id="Uk\n" class="" style="width:293.6625061035156px">Never gonna run around and desert you</td><td id="pJKb" class="" style="width:436.6625061035156px">IPX7/8 · IP6X · -5°C~55°C · 1.5m Drop</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8083-9d3b-e1b321e9c8df"><td id="Uk\n" class="" style="width:293.6625061035156px">Never gonna make you cry</td><td id="pJKb" class="" style="width:436.6625061035156px">100MB/s · 4GB 4K in &lt;45 sec</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80b1-b3eb-ccaf4ac915ea"><td id="Uk\n" class="" style="width:293.6625061035156px">Never gonna say goodbye</td><td id="pJKb" class="" style="width:436.6625061035156px">64GB · 128GB · 256GB · 512GB · 1TB+ SD Adapter included</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80eb-a440-cdf81d7276ac"><td id="Uk\n" class="" style="width:293.6625061035156px">Never gonna tell a lie and hurt you</td><td id="pJKb" class="" style="width:436.6625061035156px">RoHS / REACH / CE / FCC · 3-Year Warranty</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8048-bdf8-cbf57fdc0c4c" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80ef-bf23-c65300522d63"/></div><div style="display:contents" dir="auto"><h1 id="361d24e8-7d86-8089-a1bd-dec61ac284c1" class=""><strong>Specifications</strong></h1></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80dd-8a2b-ced25b4ba50b" class=""><em>See? Told you it&#x27;d be boring. Here are the numbers.</em></p></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-808d-b334-f99b17a603b2" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80f8-8c89-e131202f31e4"><td id="HEv_" class="">Dimensions</td><td id="U&lt;vT" class=""><strong>15 × 11 × 1 mm</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8056-918b-f49e86f2e74c"><td id="HEv_" class="">Capacity</td><td id="U&lt;vT" class=""><strong>64GB / 128GB / 256GB / 512GB / 1TB</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-800d-9f5c-cabb2e7e616e"><td id="HEv_" class="">Bus Interface</td><td id="U&lt;vT" class=""><strong>UHS-I</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8035-8760-fdabfa11d68a"><td id="HEv_" class="">Speed Class</td><td id="U&lt;vT" class=""><strong>U3</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8099-bf61-cd3fe498f0c5"><td id="HEv_" class="">Video Speed Class</td><td id="U&lt;vT" class=""><strong>V30</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-804f-86ba-e57b28b0ec71"><td id="HEv_" class="">App Performance Class</td><td id="U&lt;vT" class=""><strong>A1</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80ef-b668-cd975845d9e6"><td id="HEv_" class="">Performance (MB/s)</td><td id="U&lt;vT" class=""><strong>Read up to 100 / Write up to 30</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8041-98d2-d10f71f48ac1"><td id="HEv_" class="">Operating Temperature</td><td id="U&lt;vT" class=""><strong>-5°C ~ 55°C</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-807d-ab94-e39c137ff54c"><td id="HEv_" class="">Storage Temperature</td><td id="U&lt;vT" class=""><strong>-25°C ~ 75°C</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8029-ab36-d39db638922a"><td id="HEv_" class="">Waterproof</td><td id="U&lt;vT" class=""><strong>IPX7 / IPX8 (1m depth · 30min+)</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8039-8eac-ce6ed3aa4c23"><td id="HEv_" class="">Dustproof</td><td id="U&lt;vT" class=""><strong>IP5X / IP6X</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-805a-879e-cd8e68b4f787"><td id="HEv_" class="">Impact Resistance</td><td id="U&lt;vT" class=""><strong>Free-fall tested to 1.5m (IEC 60068-2-27)</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80c9-a0e6-fc4bfff30d83"><td id="HEv_" class="">X-ray Proof</td><td id="U&lt;vT" class=""><strong>ISO 7816-1 X-ray compliant</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80a0-97e4-d25918b57b77"><td id="HEv_" class="">Magnetic Field</td><td id="U&lt;vT" class=""><strong>Magnetic field environment tested</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8047-8eb9-e61d51c2d35f"><td id="HEv_" class="">Included</td><td id="U&lt;vT" class=""><strong>SD Adapter</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-803a-a0db-dc40884c2736"><td id="HEv_" class="">Certificate</td><td id="U&lt;vT" class=""><strong>RoHS / REACH / CE / FCC</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8014-adac-e6f20cba4ee0"><td id="HEv_" class="">Product Warranty</td><td id="U&lt;vT" class=""><strong>3-Year Limited Warranty</strong></td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-805a-b9fb-c0c0ba2b090d" class="bulleted-list"><li style="list-style-type:disc">All data secured from Simorchip&#x27;s internal labs under specific testing conditions. Accurate data may vary depending on the operating environment.</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80a0-8d2b-d996438ad267" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8070-9cb0-eee9ecaa3abb" class=""><strong>Reliably Boring.</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ba-9302-ed1d40314451" class="">有一種可靠，叫無聊。</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8054-a865-efc34c87b9fa" class=""><em>The card that never makes news — because nothing ever goes wrong.這張卡從不上新聞——因為什麼事都沒發生。</em></p></div><div style="display:contents" dir="auto"><hr id="361d24e8-7d86-80fc-834b-efd72cd4a6fa"/></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80c1-a395-e3c8605d6989" class="">
+</p></div><div style="display:contents" dir="auto"><h1 id="361d24e8-7d86-80ce-8dc9-e2ec7e1ca7da" class="">for Sales kit</h1></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-80a2-b78a-d783968977ec" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80bd-8f92-faa4b1c64cd2"><th id="oZpn" class="simple-table-header-color simple-table-header" style="width:231.8874969482422px"><strong>客群 / Segment</strong></th><th id="Oo[|" class="simple-table-header-color simple-table-header" style="width:240.8000030517578px"><strong>核心痛點</strong></th><th id="&lt;~ZI" class="simple-table-header-color simple-table-header" style="width:285.52500915527344px"><strong>T100 的答案</strong></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8068-b06e-f52a12044f64"><td id="oZpn" class="" style="width:231.8874969482422px">Outdoor / Drone Operators</td><td id="Oo[|" class="" style="width:240.8000030517578px">野外資料不能丟，環境惡劣</td><td id="&lt;~ZI" class="" style="width:285.52500915527344px">四重防護 + 100MB/s，六個承諾全到位</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80bc-afe5-c6a72dd52e76"><td id="oZpn" class="" style="width:231.8874969482422px">Action Sports Creators</td><td id="Oo[|" class="" style="width:240.8000030517578px">設備受衝擊、淋水是常態</td><td id="&lt;~ZI" class="" style="width:285.52500915527344px">IPX8 + 1.5m 落摔，拍完活著回來</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80e8-b0f9-dbd1a43dba58"><td id="oZpn" class="" style="width:231.8874969482422px">Field Documentation</td><td id="Oo[|" class="" style="width:240.8000030517578px">高粉塵、-5°C~55°C</td><td id="&lt;~ZI" class="" style="width:285.52500915527344px">IP6X + 極寬溫度範圍</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8069-83ae-dff54e29e5a9"><td id="oZpn" class="" style="width:231.8874969482422px">Frequent Travellers</td><td id="Oo[|" class="" style="width:240.8000030517578px">過機場安檢、磁場環境</td><td id="&lt;~ZI" class="" style="width:285.52500915527344px">ISO 7816-1 X-ray 認證 + 磁場測試通過</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80d7-aae3-ea3120bbfad3"><td id="oZpn" class="" style="width:231.8874969482422px">Consumer Upgrade</td><td id="Oo[|" class="" style="width:240.8000030517578px">想買「不會壞的」，不懂規格</td><td id="&lt;~ZI" class="" style="width:285.52500915527344px">Reliably Boring = 就是這個答案</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><h1 id="361d24e8-7d86-80d2-a0f6-c0817a55fbc1" class=""><strong>競品對比</strong></h1></div><div style="display:contents" dir="ltr"><table id="361d24e8-7d86-80a8-a7cc-cc1d304cb161" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8039-a0b1-fcaf9170df24"><th id="};QN" class="simple-table-header-color simple-table-header" style="width:155px"><strong>Feature</strong></th><th id="c\xZ" class="simple-table-header-color simple-table-header"><strong>T100</strong></th><th id="AY^^" class="simple-table-header-color simple-table-header"><strong>Generic</strong></th><th id="=Eo?" class="simple-table-header-color simple-table-header"><strong>Mid-tier</strong></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8084-86b1-e2fcf25c4e49"><td id="};QN" class="" style="width:155px">Read Speed</td><td id="c\xZ" class=""><strong>100MB/s</strong></td><td id="AY^^" class="">80–90MB/s</td><td id="=Eo?" class="">100MB/s</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80a0-8ac6-f8a04ff649c1"><td id="};QN" class="" style="width:155px">Waterproof</td><td id="c\xZ" class=""><strong>IPX7 / IPX8</strong></td><td id="AY^^" class="">△ 部分有</td><td id="=Eo?" class="">IPX7</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-808f-bc49-f43896433255"><td id="};QN" class="" style="width:155px">Temp Range</td><td id="c\xZ" class=""><strong>-5°C ~ 55°C</strong></td><td id="AY^^" class="">0°C ~ 70°C</td><td id="=Eo?" class="">-10°C ~ 70°C</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-8095-af58-ec083e9b28ad"><td id="};QN" class="" style="width:155px">Drop Test</td><td id="c\xZ" class=""><strong>1.5m (IEC)</strong></td><td id="AY^^" class="">✗</td><td id="=Eo?" class="">✗</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-802c-bd07-e2be6f2e95d8"><td id="};QN" class="" style="width:155px">Dustproof</td><td id="c\xZ" class=""><strong>IP6X</strong></td><td id="AY^^" class="">✗</td><td id="=Eo?" class="">IP5X</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80e3-8e95-d79034236527"><td id="};QN" class="" style="width:155px">X-ray Proof</td><td id="c\xZ" class=""><strong>✓ ISO 7816-1</strong></td><td id="AY^^" class="">✗</td><td id="=Eo?" class="">✗</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-809e-b55c-fc36fa22f3fc"><td id="};QN" class="" style="width:155px">Magnetic Field</td><td id="c\xZ" class=""><strong>✓ Tested</strong></td><td id="AY^^" class="">✗</td><td id="=Eo?" class="">✗</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-800d-b7cd-c9d402619881"><td id="};QN" class="" style="width:155px">Capacity Range</td><td id="c\xZ" class=""><strong>64GB – 1TB</strong></td><td id="AY^^" class="">32GB – 512GB</td><td id="=Eo?" class="">64GB – 512GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-80d5-97bb-ceb7fed82acb"><td id="};QN" class="" style="width:155px">SD Adapter</td><td id="c\xZ" class=""><strong>✓ Included</strong></td><td id="AY^^" class="">△ 部分附</td><td id="=Eo?" class="">△ 部分附</td></tr></div><div style="display:contents" dir="ltr"><tr id="361d24e8-7d86-805d-a165-fa6edf6b80a6"><td id="};QN" class="" style="width:155px">Warranty</td><td id="c\xZ" class=""><strong>3 Years</strong></td><td id="AY^^" class="">1–2 Years</td><td id="=Eo?" class="">2 Years</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><ul id="361d24e8-7d86-8088-9479-d8bc6f718fa1" class="bulleted-list"><li style="list-style-type:disc">競品數據為市場通用水準參考，非特定品牌聲明。</li></ul></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8010-94f9-e776842b359e" class="">
+</p></div><div style="display:contents" dir="auto"><h1 id="361d24e8-7d86-80f9-b319-f826ca0d2554" class=""><strong>Q&amp;A</strong></h1></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80b3-8733-f8189480e783" class=""><strong>Q: 防水是真的嗎？可以用在水上運動嗎？</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80a8-aeeb-dd41ad059b32" class="">A: IPX7/IPX8 rated — tested at 1m depth for 30 minutes or more. Suitable for water sports, rain, and accidental submersion. Not rated for pressurised water jets or diving equipment.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80f3-b5ae-ee4d84f08949" class=""><strong>Q: 跟其他 100MB/s 的卡有什麼差？</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8007-bd64-d8ce4355fd91" class="">A: Speed alone isn&#x27;t the differentiator. T100 delivers 100MB/s AND seven-layer environmental protection — waterproof, temperature-resistant, shock-resistant, dustproof, X-ray proof, magnetic field tested, with SD adapter included. Most competitors make you choose between fast and durable. T100 doesn&#x27;t ask you to choose.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80e0-9e14-e3e2d910a6a8" class=""><strong>Q: 過機場安檢會不會影響卡裡的資料？</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80bf-957b-e64656a89f60" class="">A: No. The T100 passes ISO 7816-1 X-ray testing — it&#x27;s rated to handle airport security X-ray exposure without data loss.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8055-a89d-d85d90888bfd" class=""><strong>Q: 保固怎麼處理？</strong></p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-8071-b304-f219a38ac6c6" class="">A: 3-Year Limited Warranty from date of purchase. Contact Simorchip support with proof of purchase for replacement or service.</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-80ce-a822-c88bce85952f" class="">
+</p></div><div style="display:contents" dir="auto"><p id="361d24e8-7d86-800c-a5f4-de696b038260" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
