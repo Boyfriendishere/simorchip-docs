@@ -187,18 +187,6 @@ section{position:relative;width:100%;overflow:hidden;}
 .fiercer-img-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .fiercer-badges{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;}
 /* voltage arrow viz */
-.volt-viz{margin:28px 0 20px;display:flex;align-items:center;gap:0;}
-.volt-bar-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;}
-.volt-bar{width:70%;height:2px;background:var(--border);position:relative;transition:background 1s ease;}
-.volt-bar.prev{background:var(--label);}
-.volt-bar.ex1{background:var(--surface2);}
-.volt-bar.ex1.lit{background:var(--red);}
-.volt-val{font-family:var(--ff-d);font-size:clamp(22px,3vw,36px);letter-spacing:.02em;transition:color .8s ease;}
-.volt-val.prev{color:var(--label);}
-.volt-val.ex1{color:var(--surface2);}
-.volt-val.ex1.lit{color:var(--red);}
-.volt-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--label);text-transform:uppercase;}
-.volt-arrow{font-size:22px;color:var(--red);align-self:center;padding:0 16px;flex-shrink:0;opacity:.5;}
 
 /* ── S04 FASTER ── */
 #s04{background:var(--bg);}
@@ -573,20 +561,6 @@ section{position:relative;width:100%;overflow:hidden;}
           </div>
         </li>
       </ul>
-      <!-- voltage viz -->
-      <div class="volt-viz">
-        <div class="volt-bar-wrap">
-          <div class="volt-val prev">1.5V</div>
-          <div class="volt-bar prev" style="width:60%;"></div>
-          <div class="volt-lbl">Prev Gen</div>
-        </div>
-        <div class="volt-arrow">→</div>
-        <div class="volt-bar-wrap">
-          <div class="volt-val ex1">1.35V</div>
-          <div class="volt-bar ex1" style="width:60%;"></div>
-          <div class="volt-lbl">EX1</div>
-        </div>
-      </div>
       <div class="fiercer-badges" style="gap:10px;">
         <!-- Badge 1: 1.35V XMP Sweet Spot -->
         <div class="stat-badge" style="background:#111;border-color:rgba(192,32,12,.35);position:relative;overflow:hidden;min-width:100px;">
@@ -917,34 +891,7 @@ document.fonts.ready.then(()=>{
   },{threshold:.4}).observe(pv);
 })();
 
-/* VOLT VIZ — number count + line light-up */
-(function(){
-  const viz=document.querySelector('.volt-viz');if(!viz)return;
-  const valEl=viz.querySelector('.volt-val.ex1');
-  const barEl=viz.querySelector('.volt-bar.ex1');
-  let triggered=false;
-  new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting&&!triggered){
-      triggered=true;
-      setTimeout(()=>{
-        barEl?.classList.add('lit');
-        valEl?.classList.add('lit');
-        /* count 1.50 → 1.35 over 900ms */
-        if(!valEl)return;
-        const start=performance.now(),dur=900,from=1.50,to=1.35;
-        function step(now){
-          const t=Math.min((now-start)/dur,1);
-          const ease=1-Math.pow(1-t,3);
-          const v=(from+(to-from)*ease).toFixed(2);
-          valEl.textContent=v+'V';
-          if(t<1)requestAnimationFrame(step);
-          else valEl.textContent='1.35V';
-        }
-        requestAnimationFrame(step);
-      },400);
-    }
-  },{threshold:.5}).observe(viz);
-})();
+
 
 /* GAME LOADER */
 (function(){
@@ -1090,124 +1037,112 @@ document.fonts.ready.then(()=>{
   document.querySelectorAll('.fi-slash,.fi-rise,.fi-snap').forEach(el=>obs.observe(el));
 })();
 
-/* ═══ THERMAL CANVAS — Pixel IR Style ═══ */
+/* ═══ THERMAL CANVAS — Pixel IR ═══ */
 (function(){
   const cv=document.getElementById('thermalCanvas');if(!cv)return;
-  const PX=8; // pixel block size
+  const PX=8;
   let prog=0,started=false;
 
-  // IR color palette: black → purple → blue → cyan → green → yellow → orange → red → white
   function irColor(t){
-    // t: 0.0 (cold) → 1.0 (hot)
     const stops=[
-      [0,   [10,10,30]],
-      [.10, [20,0,80]],
-      [.20, [0,0,180]],
-      [.32, [0,80,220]],
-      [.44, [0,180,200]],
-      [.54, [0,200,80]],
-      [.64, [120,220,0]],
-      [.74, [255,220,0]],
-      [.84, [255,120,0]],
-      [.92, [255,30,0]],
+      [0,   [10,10,20]],
+      [.12, [40,0,60]],
+      [.25, [80,0,120]],
+      [.38, [180,20,0]],
+      [.50, [220,80,0]],
+      [.62, [255,160,0]],
+      [.74, [255,220,20]],
+      [.86, [255,255,80]],
       [1.0, [255,255,255]],
     ];
     let lo=stops[0],hi=stops[stops.length-1];
     for(let i=0;i<stops.length-1;i++){
       if(t>=stops[i][0]&&t<=stops[i+1][0]){lo=stops[i];hi=stops[i+1];break;}
     }
-    const span=hi[0]-lo[0];
-    const f=span===0?0:(t-lo[0])/span;
-    const r=Math.round(lo[1][0]+(hi[1][0]-lo[1][0])*f);
-    const g=Math.round(lo[1][1]+(hi[1][1]-lo[1][1])*f);
-    const b=Math.round(lo[1][2]+(hi[1][2]-lo[1][2])*f);
-    return `rgb(${r},${g},${b})`;
+    const span=hi[0]-lo[0],f=span===0?0:(t-lo[0])/span;
+    return `rgb(${Math.round(lo[1][0]+(hi[1][0]-lo[1][0])*f)},${Math.round(lo[1][1]+(hi[1][1]-lo[1][1])*f)},${Math.round(lo[1][2]+(hi[1][2]-lo[1][2])*f)})`;
   }
 
   function drawPixelThermal(p){
-    const W=cv.offsetWidth||400;
-    const H=260;
+    const W=cv.offsetWidth||400,H=260;
     cv.width=W;cv.height=H;
     const ctx=cv.getContext('2d');
     ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
-
-    const cols=Math.ceil(W/PX);
-    const rows=Math.ceil(H/PX);
+    const cols=Math.ceil(W/PX),rows=Math.ceil(H/PX);
     const mid=Math.floor(cols/2);
     const ease=1-Math.pow(1-Math.min(p,1),3);
 
     for(let row=0;row<rows;row++){
       for(let col=0;col<cols;col++){
-        const nx=col/cols;
-        const ny=row/rows;
+        const nx=col/cols, ny=row/rows;
         let temp;
-
         if(col<mid){
-          // EX1 side — uniform cool, slight variation
-          const dx=nx-.22,dy=ny-.5;
-          const d=Math.sqrt(dx*dx+dy*dy*1.4);
-          temp=0.22+d*.18+Math.sin(col*.8+row*.6)*.015;
-          temp=Math.max(0.15,Math.min(0.38,temp));
+          // EX1 — controlled warm. Yellow-orange center, stays bounded
+          const dx=nx-.22, dy=ny-.5;
+          const d=Math.sqrt(dx*dx+dy*dy*1.2);
+          // base at ~0.62 (yellow-orange), peaks at .72, never goes white
+          temp = 0.48 + Math.max(0, 0.24 - d*1.8) + Math.sin(col*.9+row*.7)*.018;
+          temp = Math.max(0.42, Math.min(0.70, temp));
         } else {
-          // Competitor — hot center blob + secondary hotspot
-          const dx=nx-.72,dy=ny-.42;
-          const d=Math.sqrt(dx*dx*2+dy*dy);
-          const dx2=nx-.85,dy2=ny-.75;
-          const d2=Math.sqrt(dx2*dx2*3+dy2*dy2);
-          const blob1=Math.max(0,1-d*3.5);
-          const blob2=Math.max(0,1-d2*4)*0.6;
-          temp=0.25+Math.max(blob1,blob2)*.72+Math.sin(col*.5+row*.7)*.02;
-          temp=Math.max(0.2,Math.min(1.0,temp));
-          // animate heat spreading in
-          temp=0.2+(temp-0.2)*ease;
+          // Competitor — genuinely overheating. Red center going white-hot
+          const dx=nx-.72, dy=ny-.40;
+          const d=Math.sqrt(dx*dx*1.8+dy*dy);
+          const dx2=nx-.84, dy2=ny-.72;
+          const d2=Math.sqrt(dx2*dx2*2.5+dy2*dy2);
+          const blob1=Math.max(0, 1-d*3.2);
+          const blob2=Math.max(0, 1-d2*3.8)*0.75;
+          const heat=Math.max(blob1,blob2);
+          temp = 0.38 + heat*.65 + Math.sin(col*.5+row*.6)*.022;
+          temp = Math.max(0.32, Math.min(1.0, temp));
+          // animate heat reveal
+          temp = 0.32 + (temp-0.32)*ease;
         }
-
         ctx.fillStyle=irColor(temp);
-        ctx.fillRect(col*PX,row*PX,PX,PX);
+        ctx.fillRect(col*PX, row*PX, PX, PX);
       }
     }
 
-    // Scan line overlay — subtle CRT feel
-    ctx.fillStyle='rgba(0,0,0,.18)';
-    for(let y=0;y<H;y+=2){ctx.fillRect(0,y,W,1);}
+    // scanline overlay
+    ctx.fillStyle='rgba(0,0,0,.16)';
+    for(let y=0;y<H;y+=2) ctx.fillRect(0,y,W,1);
 
-    // Center dividing line
-    ctx.fillStyle='rgba(0,0,0,.7)';
-    ctx.fillRect(mid*PX-1,0,2,H);
-    ctx.fillStyle='rgba(192,32,12,.9)';
-    ctx.fillRect(mid*PX-1,0,1,H);
+    // center divider
+    const mx=mid*PX;
+    ctx.fillStyle='rgba(0,0,0,.8)';ctx.fillRect(mx-1,0,3,H);
+    ctx.fillStyle='rgba(192,32,12,1)';ctx.fillRect(mx,0,1,H);
+    ctx.fillStyle='rgba(192,32,12,.3)';ctx.fillRect(mx-1,0,1,H);ctx.fillRect(mx+1,0,1,H);
 
-    // Labels
+    // labels
     if(ease>.4){
       const lp=Math.min((ease-.4)/.6,1);
       ctx.globalAlpha=lp;
       ctx.font=`bold 9px 'DM Mono',monospace`;
-      // EX1 label
-      ctx.fillStyle='rgba(0,200,220,1)';
-      ctx.fillText('EX1',8,14);
+      // EX1 label — warm but controlled
+      ctx.fillStyle='rgba(255,200,50,1)';
+      ctx.fillText('EX1',8,16);
       ctx.font=`300 8px 'DM Mono',monospace`;
-      ctx.fillStyle='rgba(0,200,220,.8)';
-      ctx.fillText('54°C',8,25);
-      // Comp label
+      ctx.fillStyle='rgba(255,200,50,.8)';
+      ctx.fillText('54°C',8,27);
+      // Comp label — danger red
       ctx.font=`bold 9px 'DM Mono',monospace`;
-      ctx.fillStyle='rgba(255,80,0,1)';
+      ctx.fillStyle='rgba(255,60,0,1)';
       ctx.textAlign='right';
-      ctx.fillText('COMPETITOR',W-8,14);
+      ctx.fillText('COMPETITOR',W-8,16);
       ctx.font=`300 8px 'DM Mono',monospace`;
-      ctx.fillStyle='rgba(255,80,0,.8)';
-      ctx.fillText('72°C+',W-8,25);
+      ctx.fillStyle='rgba(255,60,0,.8)';
+      ctx.fillText('72°C+',W-8,27);
       ctx.textAlign='left';
       ctx.globalAlpha=1;
     }
 
-    // Color scale bar (right edge)
+    // color scale bar
     if(ease>.6){
       const lp2=Math.min((ease-.6)/.4,1);
-      ctx.globalAlpha=lp2*.8;
-      const barX=W-6,barH=H-40,barY=20;
+      ctx.globalAlpha=lp2*.85;
+      const barH=H-44,barY=22;
       for(let i=0;i<barH;i++){
         ctx.fillStyle=irColor(1-(i/barH));
-        ctx.fillRect(barX,barY+i,4,1);
+        ctx.fillRect(W-6,barY+i,4,1);
       }
       ctx.globalAlpha=1;
     }
@@ -1225,7 +1160,6 @@ document.fonts.ready.then(()=>{
     }
   },{threshold:.3}).observe(cv);
 })();
-
 
 /* ═══ WAVEFORM CANVAS ═══ */
 (function(){
