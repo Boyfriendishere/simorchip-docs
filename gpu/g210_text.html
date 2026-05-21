@@ -1,0 +1,753 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>G210</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="365d24e8-7d86-8020-bc92-d982e90748d1" class="page sans"><header><h1 class="page-title" dir="auto">G210</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8019-a566-cf2d1d1a1d7f" class=""><mark class="highlight-yellow">*黃色字體：視覺建議</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8028-ae3b-e3785643484d" class=""><mark class="highlight-red">*紅色字體：中文解釋</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8033-87c8-f7b61afced34" class=""><mark class="highlight-blue">*Hashtag：For SEO</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80a0-a205-dcdfe55d5b48" class="">
+</p></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80ed-9a95-f44efe060479" class="">Simorchip · Entry Series · G210</p></div><div style="display:contents" dir="auto"><h2 id="366d24e8-7d86-8031-8455-d7214b91c88a" class="">G210</h2></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8001-ba24-e9743ea6ae5f" class="">1GB GDDR3</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-804f-8c86-d1a769a720b3" class="">
+</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80c8-b5d8-f37681f72ee2" class=""><strong>Nonstop</strong></p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-807b-a32c-cfd09581b776" class="">Reliability</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-808f-a085-e5f8cac1a7ea" class="">Always there.<br/></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-801a-b3bd-c9e4c67e10a0" class=""><mark class="highlight-yellow"><strong>視覺：</strong></mark><mark class="highlight-yellow"> 產品照全螢幕，冷白側光，背景極暗銀藍液態光斑</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80cc-9103-e8dc122e14e7" class=""><mark class="highlight-yellow"><strong>動態：</strong></mark><mark class="highlight-yellow"> 品牌標最先出現，接著三行主標依序浮現，最後標籤列整排淡入</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8048-b6b6-c38069b21784" class=""><mark class="highlight-blue"><code>#Simorchip</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#G210</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#1 GB</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#GDDR3</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#PCIe2.0 x 16</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#31W</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#GT218</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#DirectX 11.1</code></mark><mark class="highlight-blue"> </mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8037-9189-fb8fb6e080db" class=""><mark class="highlight-blue"><code>#1080P</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#VGA</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#DVI</code></mark><mark class="highlight-blue"> </mark><mark class="highlight-blue"><code>#HDMI</code></mark><mark class="highlight-blue">  </mark><mark class="highlight-blue"><code>#Enrty-Level</code></mark><mark class="highlight-blue"> </mark></p></div><div style="display:contents" dir="auto"><hr id="365d24e8-7d86-802d-bd87-c8d981967bc1"/></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-80f6-9e14-f038a559fc4d" class="">Design language</p></div><div style="display:contents" dir="auto"><h3 id="365d24e8-7d86-80a0-b724-d15f469633cb" class="">Dune Walker <mark class="highlight-red">使徒</mark></h3></div><div style="display:contents" dir="auto"><p id="365d24e8-7d86-807d-aa4e-dd131fee1d21" class=""><mark class="highlight-yellow"><strong>動態：</strong></mark><mark class="highlight-yellow"> 文字由下往上逐行淡入，每行間隔 300ms。產品照從右側 translateX(40px) 淡入，delay 800ms</mark><br/><br/></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8002-bae6-f42dfd4875b8" class="">Not every card needs three fans.</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-800d-b671-f3634a3213cd" class="">Not every card needs RGB.</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8053-a74f-cb35df9e968d" class="">Where the world ends, our journey begins.</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-802e-b9a2-f781f141c11c" class=""><em>This is not decoration. This is presence.</em></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80ea-abde-f1336c0a66c2" class=""><br/><mark class="highlight-red">不是每一張卡都需要三個風扇</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8066-b794-fe3f52999522" class=""><mark class="highlight-red">不是每一張卡都需要 RGB</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80cd-905e-e7743f95d83c" class=""><mark class="highlight-red">世界盡頭，正是我們旅程的開始。</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-804c-98d2-cddf9b00ae4e" class=""><mark class="highlight-red">這不是裝飾。這是存在感。</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80ff-9f0b-ff92ac11f47b" class=""><mark class="highlight-yellow"><strong>動態：</strong></mark><mark class="highlight-yellow"> 文字由下往上逐行淡入，每行間隔 300ms。產品照從右側 translateX(40px) 淡入，delay 800ms。</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8012-bbda-c130b21b80e4" class="">
+</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8088-97f9-d34ea5c82278" class=""><mark class="highlight-yellow"><strong>動態：</strong></mark><mark class="highlight-yellow"> 風扇區域 CSS rotation 20s linear infinite，光斑固定，製造「卡靜光動」視差感</mark></p></div><div style="display:contents" dir="auto"><hr id="366d24e8-7d86-8026-8d4a-ddd034532b66"/></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-806e-967b-d7649d6be901" class="">Why You Need the G210</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80bc-86fc-f157cd136d22" class=""><mark class="highlight-yellow"><strong>視覺：</strong></mark><mark class="highlight-yellow"> 三欄場景排版，每欄大 icon + 場景說明。深黑背景，細線分欄。Hover 時上方出現冷藍細線從左掃右（width 0→100%，0.4s ease）</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8075-92de-dda2ed1885bc" class=""><mark class="highlight-yellow"><strong>動態：</strong></mark><mark class="highlight-yellow"> 三欄依序 stagger 進場，間隔 150ms，translateY(16px)→0，opacity 0→1</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80f5-b6c4-d7ada6a6f1ee" class="">Your motherboard has no integrated graphics.<br/>Or you have three monitors, but only one output.<br/>Or there are thirty computers in the warehouse, every one of them needs a display connected, and it needs to be done this afternoon.<br/>One card. Three outputs. 31 watts. No external power required.</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8051-abf1-f4291069247c" class="">&quot;You don&#x27;t need to think about it. It doesn&#x27;t need you to.”</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80bf-9094-cc6fc600d18c" class=""><mark class="highlight-red">你的主機板沒有內顯<br/>或者你有三台螢幕，但只有一個輸出<br/>或者倉庫裡有三十台電腦，每一台都需要接螢幕，今天下午就要完成<br/>一張卡。三個輸出。31 瓦。不需要外接電源</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-803b-ba12-d1239efba82f" class=""><mark class="highlight-red">你不需要想它。它也不需要你想</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80b4-bc09-e9d6db2eb456" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="366d24e8-7d86-808a-aa3c-f9a3afaf730b"/></div><div style="display:contents" dir="auto"><h2 id="367d24e8-7d86-80d1-a7d7-c07accb14848" class=""><strong>Nonstop</strong></h2></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-80dd-9ae5-df3c4d810adc" class="">30 office computers. One morning. All done.<br/>For IT procurement, the G210 isn&#x27;t a graphics card. It&#x27;s a deployment decision.<br/>No external power connector — no rewiring required.<br/>31W power draw — running all day, every day, and it won&#x27;t show up on the electricity bill.<br/>VGA + HDMI + DVI — it doesn&#x27;t matter what decade your monitors are from.<br/>150 × 69mm — fits in any case, including the narrow industrial ones nobody else can handle.</p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-80a2-82be-c8f5d4bc1f63" class=""><mark class="highlight-red">30 台辦公電腦。同一個早上全部完成<br/>對 IT 採購來說，G210 不是一張顯示卡是一個決策<br/>不需要外接電源接頭，不需要重新配線<br/>31W 功耗，全天候運行，電費帳單不會說謊<br/>VGA + HDMI + DVI，不管螢幕是哪個年代的，都能接<br/>150 × 69mm，放得進任何機殼，包括那些超窄的工業電腦機箱</mark></p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-80f4-ab6c-c78d28764613" class="">
+</p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-80f4-8bec-d6ef1e43a537" class="">You don&#x27;t need the fastest card. You need the one that works every single time.<br/><mark class="highlight-red">你不需要最快的那張。你需要每一次都不出錯的那張</mark></p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-80a6-ab85-c4661a857648" class="">
+</p></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-809e-bfbd-e7d15ad22e76" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>左：</strong></mark><mark class="highlight-yellow"> 30（Bebas Neue 200px+, Cold White, subtle text-shadow glow）</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-8017-8712-cdb6f0f80354" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>右：</strong></mark><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-80d5-a3eb-e2af0593c604" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>主標（28px, Bold）：</strong></mark><mark class="highlight-yellow"> 30 office computers. One morning. All done.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-807f-8b8a-d6a2df82005c" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>副標（18px, Light, Gray）：</strong></mark><mark class="highlight-yellow"> For IT procurement, the G210 isn&#x27;t a graphics card. It&#x27;s a deployment decision. You don&#x27;t need the fastest card. You need the one that works every single time.</mark></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-80f7-a2c0-c428aad371df" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>數字動態：</strong></mark><mark class="highlight-yellow"> Count up from 0 to 30.</mark><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-80d0-bb46-ea7b44af3860" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Trigger:</strong></mark><mark class="highlight-yellow"> Scroll Trigger (when section enters viewport)</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-8039-8ae0-fd082a8e44c1" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Duration:</strong></mark><mark class="highlight-yellow"> 1.2s</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-806b-a56f-cdbabaf7441b" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Easing:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>cubic-bezier(.16, 1, .3, 1)</code></mark></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-80d1-9150-df7e12c0399a" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge：</strong></mark><mark class="highlight-yellow"> Staggered fade-in from left to right (delay: 0.1s between each badge), synced with the final deceleration phase of the number animation.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-80d6-8956-ffd142195eea" class=""><mark class="highlight-yellow">Star Badge</mark></p></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-80ff-82dd-fc6494a0f00e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 1</strong></mark><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-8082-b083-c98dde422ba5" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Header (Bold):</strong></mark><mark class="highlight-yellow"> 0W External Power</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-80bd-83d3-db43bb393041" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Description (Light):</strong></mark><mark class="highlight-yellow"> No external connectors. No rewiring required.</mark></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-80f6-96e6-cdf24f5b56e7" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 2</strong></mark><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-8098-93f6-dbb143d453a3" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Header (Bold):</strong></mark><mark class="highlight-yellow"> 31W Peak TDP</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-80c9-aa7e-d0938a826a88" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Description (Light):</strong></mark><mark class="highlight-yellow"> Running all day, every day. Your electricity bill won&#x27;t lie.</mark></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-8007-b832-fe2a31b3ba8c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 3</strong></mark><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-801f-ad28-e07bd3a4d435" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Header (Bold):</strong></mark><mark class="highlight-yellow"> Triple Interface &amp; 150mm SFF</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="367d24e8-7d86-80c3-899d-e2944acd8fe8" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Description (Light):</strong></mark><mark class="highlight-yellow"> VGA + HDMI + DVI. Fits any case, connects to any generation of monitors.</mark></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><hr id="366d24e8-7d86-8076-a5ae-dc23fa665d3e"/></div><div style="display:contents" dir="auto"><h3 id="366d24e8-7d86-80fb-8a63-cd04ec5b8730" class="">Reliability</h3></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8042-83df-fca8abe3fd63" class=""><mark class="highlight-yellow"><strong>視覺：</strong></mark><mark class="highlight-yellow"> 比較表格，G210 欄冷藍細框，hover 時框線發光。下方功耗對比長條圖，G210 那條比日光燈管短。</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80f7-ac66-c453d0abe654" class=""><mark class="highlight-yellow"><strong>動態：</strong></mark><mark class="highlight-yellow"> 表格列 stagger 進場，長條圖 width 從 0 動畫到比例值，scroll trigger，duration 1.2s。</mark></p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8062-88a5-cc2790b617ea" class="">
+</p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-8028-9914-d4fe52e9b9fb" class="">Not because it&#x27;s the fastest.<br/>But because it&#x27;s exactly enough — and it guarantees peace of mind at midnight.</p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-8025-8dbb-e3b1dbd00fa1" class="">It&#x27;s not the loudest card in the room. It&#x27;s the one still running when everything else is gone.</p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-809c-80a6-eb67186b8c7f" class="">The G210 features a 1,500,000-hour MTBF.<br/>That&#x27;s 171 years.</p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-80d0-8a59-f2a14df66cb6" class="">In theory, once installed, you never have to think about it again.<br/>It works quietly — through this machine&#x27;s retirement, and into the next.</p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-8017-b842-e6c9dd771ff8" class="">A graphics card that draws less power than an office light bulb.</p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-8097-a0af-d9fb703ecd1c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-80bb-b72b-fb5359f70bd5" class=""><mark class="highlight-red">選擇它，不是因為它最快。而是因為它剛剛好——這意味著你半夜再也不用爬起來接維修電話<br/>它不是辦公室裡最耀眼的卡；但當其他東西都被汰換時，只有它還在運作<br/>高達 1,500,000 小時的平均故障間隔（MTBF）<br/>相當於 171 年</mark></p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-8020-9a7b-e12dd63d1a2c" class=""><mark class="highlight-red">一旦裝上去，你基本上就可以忘了它的存在<br/>它會安靜地持續運作，送走這台機器，甚至下一台<br/>比辦公燈泡更省電</mark></p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-805a-8327-dcedb01d02e7" class=""><mark class="highlight-yellow"><br/></mark><mark class="highlight-yellow"><strong>框架：</strong></mark><mark class="highlight-yellow"> 表格整體背景使用 </mark><mark class="highlight-yellow"><code>background: rgba(10, 15, 15, 0.5)</code></mark><mark class="highlight-yellow">（極低不透明度的深色霧面），讓 Dune Walker 的風沙背景能隱約透出來<br/></mark><mark class="highlight-yellow"><strong>G210 欄（The G210 Column）：</strong></mark><mark class="highlight-yellow"> 使用 </mark><mark class="highlight-yellow"><code>border: 1px solid rgba(163, 227, 212, 0.4)</code></mark><mark class="highlight-yellow">（冷藍偏翠綠細框，呼應天空色）<br/></mark><mark class="highlight-yellow"><strong>Hover 特效：</strong></mark><mark class="highlight-yellow"> 當滑鼠懸停時，框線觸發 </mark><mark class="highlight-yellow"><code>box-shadow: 0 0 15px rgba(163, 227, 212, 0.8)</code></mark><mark class="highlight-yellow">，產生如同冷光管（Neon/HUD）的科技發光感，其餘欄位同時輕微變暗（Opacity 0.6）</mark></p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-802b-8574-ea7fb8a8509e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-80eb-bd26-ced975771c3b" class=""><mark class="highlight-yellow"><strong>功耗對比長條圖（Power Consumption Bar Chart）：</strong></mark><mark class="highlight-yellow"><br/>• </mark><mark class="highlight-yellow"><strong>對比項目（Items）：</strong></mark><mark class="highlight-yellow"> *</mark></p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-807e-aca8-f82a6e5b0f7d" class=""><mark class="highlight-yellow">項目一：</mark><mark class="highlight-yellow"><code>Standard Office Fluorescent Tube (T8)</code></mark><mark class="highlight-yellow"> — </mark><mark class="highlight-yellow"><strong>40W</strong></mark><mark class="highlight-yellow"><br/> 項目二：</mark><mark class="highlight-yellow"><code>G210 Deployment Peak</code></mark><mark class="highlight-yellow"> — </mark><mark class="highlight-yellow"><strong>31W</strong></mark><mark class="highlight-yellow"><br/></mark><mark class="highlight-yellow"><strong>長條材質：</strong></mark><mark class="highlight-yellow"> * 日光燈管那條使用普通的微弱灰色（#555）<br/> G210 那條使用</mark><mark class="highlight-yellow"><strong>實心冷白色</strong></mark><mark class="highlight-yellow">，頂端帶有與邊框同色的冷藍發光點。長度完美呈現 $31:40$ 的比例</mark></p></div><div style="display:contents" dir="auto"><p id="367d24e8-7d86-8084-bc94-f304846a1478" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="366d24e8-7d86-8040-b499-d945cdf3debd"/></div><div style="display:contents" dir="auto"><h3 id="366d24e8-7d86-804e-8dec-fee877d7470a" class="">PACKAGING — Packaging Design</h3></div><div style="display:contents" dir="auto"><h3 id="366d24e8-7d86-8003-a880-ca5029219976" class="">PACKAGING — 包裝設計</h3></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8085-8835-e879e10f61ef" class=""><strong>視覺：</strong> 包裝盒斜角 30 度展示，正面朝向讀者，攝影棚點光源打在熔岩金色裂縫上，使紋理發出光澤。左側包裝盒，右側說明文字。</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-802d-922f-da661c97390c" class=""><strong>設計師注意：</strong> 熔岩裂縫圖騰傳達「平靜表面下的穩定力量」，黑色底調 + 金色裂縫 + NVIDIA 綠色角標 = 專業 + 耐用 + 認證。</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-802e-a5bb-ca5abb8fd026" class=""><strong>動態：</strong> 包裝盒 translateX(-30px) + rotateY(5°)→(0°) 淡入，duration 1.4s ease-out。</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80dc-90d5-cd5e2c1a20d3" class=""><strong>Retail hang pack</strong> — Euro-slot hang hole, ready for shelf display or e-commerce fulfilment.<br/><strong>零售掛孔設計</strong> — Euro 規格掛孔，適配實體通路與電商出貨。</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80c1-9b97-ca10336adb91" class=""><strong>Anti-static protection</strong> — The card is wrapped in anti-static material throughout transit and unboxing.<br/><strong>防靜電保護</strong> — 產品以防靜電材料包覆，運送與拆箱過程完整保護。</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8041-b8d3-ef6d947710f9" class=""><strong>Product-visible window</strong> — Confirm the model before opening. No guesswork, no returns.<br/><strong>產品可視窗</strong> — 開箱前即可確認型號，不需要拆封，不需要猜測。</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8022-938f-c8d4eb6876d2" class=""><strong>Full spec on pack</strong> — Model number, serial number, barcode. Warehouse receiving requires no unboxing.<br/><strong>完整規格印刷</strong> — 型號、序號、條碼清晰標示，倉儲收料不需要開箱確認。</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8087-b0cd-cfc1d8980a8f" class=""><strong>Global certifications</strong> — CE · RoHS · FCC · REACH. Compliant for EU, US, and international markets.<br/><strong>全球認證標章</strong> — CE · RoHS · FCC · REACH，歐美與國際市場合規。</p></div><div style="display:contents" dir="auto"><hr id="366d24e8-7d86-8053-ba90-ebfc373f3e3a"/></div><div style="display:contents" dir="auto"><h3 id="366d24e8-7d86-806b-8962-ebd23290461e" class="">SPECIFICATIONS</h3></div><div style="display:contents" dir="auto"><h3 id="366d24e8-7d86-8014-80c8-dc30f130c511" class="">規格表</h3></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-80cf-afad-d0892d9a8c28" class=""><strong>視覺：</strong> 兩欄表格，左欄灰色 monospace，右欄白色。每行 hover 時左側 2px 冷藍細線出現（border-left transition）。上方標示 Entry-Level 定位說明。</p></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-8099-ad93-c7fdcac7c7af" class=""><strong>動態：</strong> 進入視口後逐行 stagger 顯示，每行 delay 50ms。</p></div><div style="display:contents" dir="ltr"><table id="366d24e8-7d86-8060-9eec-e0d2ced47d64" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-8009-80f3-f5fa6637509b"><th id="wdWm" class="simple-table-header-color simple-table-header"></th><th id="RpRw" class="simple-table-header-color simple-table-header"></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-80ca-bf41-cce7c219467f"><td id="wdWm" class="">Architecture</td><td id="RpRw" class="">GT218 · 40nm</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-80f3-8c3d-d207bed1ad0b"><td id="wdWm" class="">Stream Processors</td><td id="RpRw" class="">16</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-8027-bf67-f668fac99dd0"><td id="wdWm" class="">Core Frequency</td><td id="RpRw" class="">589 MHz</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-8034-8cfd-eb3b30f8132e"><td id="wdWm" class="">Memory Type</td><td id="RpRw" class="">GDDR3</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-80ef-95ae-e5f25cad3e5d"><td id="wdWm" class="">Memory Capacity</td><td id="RpRw" class="">1 GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-80c3-b7ed-d32a41c9ee58"><td id="wdWm" class="">Memory Frequency</td><td id="RpRw" class="">500 MHz</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-80e8-bdac-c6d796b30958"><td id="wdWm" class="">Memory Bus Width</td><td id="RpRw" class="">64-bit</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-800d-8f8d-e792478a54b6"><td id="wdWm" class="">Bus Interface</td><td id="RpRw" class="">PCIe 2.0 × 16</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-8085-891b-d90eb6bcbdbe"><td id="wdWm" class="">Display Outputs</td><td id="RpRw" class="">VGA + HDMI + DVI</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-8080-8306-e3b5a67131e3"><td id="wdWm" class="">Max Resolution</td><td id="RpRw" class="">1920 × 1080</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-808b-bde1-f2fabce80221"><td id="wdWm" class="">DirectX Support</td><td id="RpRw" class="">DirectX 11.1 (10_1)</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-80b0-b666-c32e9183a13b"><td id="wdWm" class="">External Power</td><td id="RpRw" class="">Not Required</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-80f7-9806-ee2e209e3b81"><td id="wdWm" class="">Power Consumption</td><td id="RpRw" class="">31W</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-80e6-ad3e-d4a6a71a4fd7"><td id="wdWm" class="">Recommended PSU</td><td id="RpRw" class="">200W and above</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-80ee-86ef-e41da30bb320"><td id="wdWm" class="">Cooling Solution</td><td id="RpRw" class="">Single Fan</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-80a5-8d07-db7abd3fc3ab"><td id="wdWm" class="">Dimensions</td><td id="RpRw" class="">150 × 69 × 16.5 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-8060-8094-cacd55d18678"><td id="wdWm" class="">OS Support</td><td id="RpRw" class="">Windows 10 / Windows 11</td></tr></div><div style="display:contents" dir="ltr"><tr id="366d24e8-7d86-8004-86b7-cf0f25a569eb"><td id="wdWm" class="">Market Positioning</td><td id="RpRw" class="">Entry-Level</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="366d24e8-7d86-807b-8c66-ebbbc84154c6" class=""><em>All specifications sourced from Simorchip internal documentation. Actual performance may vary depending on system configuration and operating environment.</em></p></div><div style="display:contents" dir="auto"><hr id="366d24e8-7d86-806a-8c3f-f52a5b6a2bfd"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
