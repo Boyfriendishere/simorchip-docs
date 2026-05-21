@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip G210 — Nonstop. Reliability. Always there.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0d0b;--bg2:#141210;--surface:#1a1815;--surface2:#221f1b;
+  --sand:#c8b887;--sand2:#a89060;--sand3:#6b5a3e;
+  --sky:#4ecdc4;--sky2:#2ab8b0;--sky3:rgba(78,205,196,.15);
+  --sky-glow:rgba(78,205,196,.08);
+  --ink:#0e0d0b;--white:#f5f0e8;--mute:#b0a890;--label:#7a7260;
+  --border:rgba(200,184,135,.1);--line:rgba(200,184,135,.07);
+  --nvidia:#76b900;
+  --ff-d:'Bebas Neue',sans-serif;
+  --ff-b:'Barlow Condensed',sans-serif;
+  --ff-m:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff-b);background:var(--bg);color:var(--white);overflow-x:hidden;cursor:none;}
+
+/* GRAIN */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.22;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size:180px 180px;mix-blend-mode:overlay;}
+
+/* SAND DUST BG — animated particles */
+.dust{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.dust-p{position:absolute;border-radius:50%;background:var(--sand);opacity:0;animation:dustFloat linear infinite;}
+@keyframes dustFloat{
+  0%{transform:translateY(100vh) translateX(0) scale(.3);opacity:0;}
+  10%{opacity:.15;}
+  90%{opacity:.08;}
+  100%{transform:translateY(-10vh) translateX(var(--dx)) scale(1);opacity:0;}
+}
+
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;background:var(--sky);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;}
+#cur-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(78,205,196,.25);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .22s,height .22s;}
+.trail-dot{position:fixed;width:4px;height:4px;background:var(--sky);border-radius:50%;pointer-events:none;z-index:9990;transform:translate(-50%,-50%);transition:opacity .3s;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:18px 5%;transition:background .3s,border-bottom .3s;}
+nav.sc{background:rgba(14,13,11,.94);backdrop-filter:blur(14px);border-bottom:.5px solid var(--border);}
+.nb{display:flex;flex-direction:column;gap:2px;}
+.nb-s{font-family:var(--ff-m);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--sky);opacity:.7;}
+.nb-b{font-family:var(--ff-m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--white);opacity:.25;}
+.np{display:flex;gap:5px;}
+.np a{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--label);border:.5px solid var(--border);padding:4px 9px;cursor:pointer;text-decoration:none;transition:all .2s;}
+.np a:hover,.np a.on{color:var(--bg);border-color:var(--sky);background:var(--sky);}
+
+/* SHARED */
+section{position:relative;width:100%;overflow:hidden;}
+.full{min-height:100vh;}
+.sky-line{height:1px;background:linear-gradient(90deg,transparent,var(--sky) 30%,var(--sky2) 60%,transparent);width:0;transition:width 1s ease;}
+.sky-line.on{width:44px;}
+/* Reveal: from sand — rise up with dust */
+.fi{opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease;}
+.fi.vis{opacity:1;transform:none;}
+.fi-d1{transition-delay:.12s;}.fi-d2{transition-delay:.24s;}.fi-d3{transition-delay:.36s;}.fi-d4{transition-delay:.48s;}
+.tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.07em;color:var(--label);border:.5px solid var(--border);padding:4px 11px;display:inline-block;background:rgba(200,184,135,.03);}
+.tag::before{content:'#';color:var(--sky);margin-right:2px;}
+.stat-badge{display:inline-flex;flex-direction:column;align-items:flex-start;border:.5px solid var(--border);padding:18px 22px;background:rgba(200,184,135,.03);transition:border-color .3s,background .3s;}
+.stat-badge:hover{border-color:var(--sky);background:var(--sky3);}
+.stat-badge .num{font-family:var(--ff-d);font-size:clamp(26px,4vw,52px);letter-spacing:.02em;color:var(--white);line-height:1;}
+.stat-badge .lbl{font-size:11px;font-weight:500;letter-spacing:.1em;color:var(--mute);margin-top:4px;text-transform:uppercase;font-family:var(--ff-m);}
+.img-ph{background:linear-gradient(135deg,#1a1815,#0e0d0b);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:.5px solid var(--border);}
+.img-ph span{font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(200,184,135,.2);text-align:center;line-height:2.2;padding:0 16px;}
+.sec-wrap{padding:100px 6% 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto;}
+.sec-wrap.rev{direction:rtl;}.sec-wrap.rev>*{direction:ltr;}
+.sh-num{font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;color:var(--label);margin-bottom:14px;text-transform:uppercase;}
+.sh-title{font-family:var(--ff-d);font-size:clamp(64px,9vw,120px);letter-spacing:.02em;color:var(--white);line-height:.88;margin-bottom:8px;}
+.sh-sub{font-family:var(--ff-m);font-size:11px;font-weight:300;letter-spacing:.1em;color:var(--label);text-transform:uppercase;margin-bottom:28px;}
+.bullet-list{list-style:none;margin-top:24px;}
+.bullet-list li{padding:14px 0;border-bottom:.5px solid var(--line);font-size:16px;font-weight:400;line-height:1.7;color:var(--mute);display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;}
+.bullet-list li:last-child{border-bottom:none;}
+.bullet-list .bi{width:28px;height:28px;border:.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.bullet-list .bi svg{width:13px;height:13px;stroke:var(--sky);fill:none;stroke-width:1.5;}
+.bullet-list strong{font-weight:600;color:var(--white);}
+.bullet-list .bn{font-family:var(--ff-m);font-size:9px;letter-spacing:.07em;color:rgba(200,184,135,.2);margin-top:4px;display:block;}
+.btn{font-family:var(--ff-b);font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:transparent;cursor:pointer;transition:all .22s;}
+.btn-sky{border:1px solid var(--sky);color:var(--sky);}.btn-sky:hover{background:var(--sky);color:var(--bg);}
+.btn-ghost{border:1px solid var(--border);color:var(--label);}.btn-ghost:hover{background:var(--white);color:var(--bg);border-color:var(--white);}
+
+/* ── HERO ── */
+#s00{display:flex;align-items:center;padding-top:80px;min-height:100vh;background:var(--bg);}
+
+/* Dune Walker parallax bg — desert horizon glow */
+.dune-bg{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.dune-sky{position:absolute;top:0;left:0;right:0;height:60%;background:linear-gradient(180deg,#0a0e12 0%,#0d1a18 30%,#112420 60%,rgba(14,13,11,0) 100%);}
+.dune-horizon{position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(180deg,transparent 0%,rgba(22,18,12,.6) 40%,var(--bg) 100%);}
+/* Distant mountain silhouettes */
+.dune-mtn{position:absolute;bottom:30%;left:0;right:0;height:180px;opacity:.18;}
+/* Ray of light through clouds */
+.dune-ray{position:absolute;top:-10%;right:10%;width:300px;height:120%;background:linear-gradient(175deg,transparent 0%,rgba(78,205,196,.04) 40%,rgba(78,205,196,.07) 50%,rgba(78,205,196,.03) 60%,transparent 100%);transform:rotate(-15deg);animation:rayPulse 8s ease-in-out infinite;}
+.dune-ray2{position:absolute;top:-10%;right:20%;width:180px;height:100%;background:linear-gradient(175deg,transparent 0%,rgba(200,184,135,.025) 45%,rgba(200,184,135,.04) 50%,transparent 60%);transform:rotate(-18deg);animation:rayPulse 8s ease-in-out infinite 1.5s;}
+@keyframes rayPulse{0%,100%{opacity:.5;}50%{opacity:1;}}
+
+/* G210 CARD illustration */
+.h-right{position:absolute;right:0;top:0;bottom:0;width:52%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(28px);transition:opacity 1.6s ease .2s,transform 1.6s ease .2s;}
+.h-right.on{opacity:1;transform:translateX(0);}
+.g210-wrap{width:82%;max-width:500px;position:relative;}
+.g210-wrap::before{content:'';position:absolute;inset:-80px;z-index:-1;background:radial-gradient(ellipse 65% 40% at 50% 60%,rgba(78,205,196,.07) 0%,transparent 70%);}
+@keyframes cardFloat{0%,100%{transform:translateY(0px) rotate(-1.5deg);}50%{transform:translateY(-8px) rotate(-1.5deg);}}
+.g210-body{width:100%;aspect-ratio:2.15/1;background:linear-gradient(145deg,#1c1a16 0%,#0e0c0a 100%);position:relative;overflow:hidden;border-radius:6px;border:.5px solid rgba(200,184,135,.12);box-shadow:0 40px 100px rgba(0,0,0,.8),0 0 60px rgba(78,205,196,.05);animation:cardFloat 6s ease-in-out infinite;}
+/* glint */
+@keyframes glint{0%{left:-40%;opacity:0;}8%{opacity:1;}92%{opacity:.4;}100%{left:140%;opacity:0;}}
+.g210-body::after{content:'';position:absolute;top:0;left:-40%;width:15%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),rgba(255,255,255,.09),rgba(255,255,255,.05),transparent);animation:glint 6s ease-in-out infinite 3s;pointer-events:none;z-index:10;}
+/* Card structure */
+.g210-fan-area{position:absolute;left:5%;top:8%;bottom:8%;width:38%;background:linear-gradient(135deg,#222018,#181610);border-radius:4px;border:.5px solid rgba(200,184,135,.08);display:flex;align-items:center;justify-content:center;}
+.g210-fan{width:78%;aspect-ratio:1;position:relative;}
+.fan-ring{position:absolute;border-radius:50%;border:.5px solid rgba(200,184,135,.12);}
+.fan-ring1{inset:0;}
+.fan-ring2{inset:12%;}
+.fan-ring3{inset:24%;}
+.fan-hub{position:absolute;inset:44%;background:radial-gradient(circle,#2a2820,#1a1810);border-radius:50%;border:.5px solid rgba(78,205,196,.2);display:flex;align-items:center;justify-content:center;}
+.fan-hub::after{content:'';width:30%;height:30%;background:var(--sky);border-radius:50%;opacity:.6;}
+.fan-blades{position:absolute;inset:0;animation:fanSpin 4s linear infinite;}
+@keyframes fanSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.fan-blade{position:absolute;top:50%;left:50%;width:46%;height:10%;transform-origin:0 50%;background:linear-gradient(90deg,rgba(200,184,135,.12),transparent);border-radius:0 20px 20px 0;}
+/* Card heatsink fins */
+.g210-fins{position:absolute;right:5%;top:8%;bottom:8%;width:12%;display:flex;flex-direction:column;gap:2px;}
+.fin{flex:1;background:linear-gradient(180deg,#222018,#1a1810);border-radius:1px;border:.3px solid rgba(200,184,135,.06);}
+/* Card label area */
+.g210-label{position:absolute;left:46%;right:20%;top:15%;bottom:15%;display:flex;flex-direction:column;justify-content:center;gap:4px;}
+.g210-brand{font-family:var(--ff-m);font-size:6px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.g210-model{font-family:var(--ff-d);font-size:28px;letter-spacing:.06em;color:rgba(255,255,255,.88);line-height:1;}
+.g210-spec{font-family:var(--ff-m);font-size:6px;letter-spacing:.1em;color:rgba(200,184,135,.4);text-transform:uppercase;margin-top:2px;}
+/* NVIDIA badge */
+.g210-nvidia{position:absolute;right:20%;bottom:14%;font-family:var(--ff-b);font-size:7px;font-weight:700;letter-spacing:.06em;color:var(--nvidia);opacity:.8;display:flex;align-items:center;gap:4px;}
+.g210-nvidia::before{content:'';width:14px;height:14px;background:var(--nvidia);clip-path:polygon(50% 0%,100% 100%,0% 100%);opacity:.7;}
+/* Ports */
+.g210-ports{position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;}
+.g210-port{width:6px;height:14px;background:rgba(255,255,255,.08);border-radius:1px 0 0 1px;border:.3px solid rgba(255,255,255,.05);}
+/* Sky glow edge */
+.g210-glow{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,var(--sky) 30%,var(--sky2) 60%,transparent 95%);opacity:.5;}
+
+/* hero fade overlay */
+.h-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,var(--bg) 0%,var(--bg) 18%,rgba(14,13,11,.55) 44%,transparent 64%);}
+.h-left{position:relative;z-index:3;padding:0 0 0 6%;flex:1;max-width:580px;}
+.h-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--label);margin-bottom:28px;opacity:0;transition:opacity .5s ease;}
+.h-eye.on{opacity:1;}
+.h-hl{line-height:.88;margin-bottom:28px;opacity:0;transition:opacity .4s ease;}
+.h-hl.on{opacity:1;}
+.hl-ln{display:block;font-family:var(--ff-d);font-size:clamp(56px,8vw,98px);letter-spacing:.01em;opacity:0;transform:translateY(14px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1);}
+.hl-ln.in{opacity:1;transform:none;}
+.hl-wh{color:var(--white);}
+.hl-sky{color:var(--sky);}
+.hl-dim{color:var(--sand3);opacity:.6;}
+.h-sub{font-size:16px;font-weight:400;line-height:1.85;color:var(--mute);max-width:360px;margin-top:20px;opacity:0;transition:opacity .7s ease;}
+.h-sub.on{opacity:1;}
+.h-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:20px;opacity:0;transition:opacity .5s ease;}
+.h-tags.on{opacity:1;}
+.scr-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0;transition:opacity .5s;z-index:4;}
+.scr-hint.on{opacity:1;}
+.scr-ln{width:1px;height:28px;background:var(--border);position:relative;overflow:hidden;}
+.scr-ln::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--sky);animation:scrdn 1.4s ease infinite 2.5s;}
+@keyframes scrdn{0%{top:-100%}100%{top:100%}}
+.scr-lb{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;color:var(--label);text-transform:uppercase;}
+
+/* ── S01 DESIGN LANGUAGE ── */
+#s01{background:var(--bg2);padding:100px 6%;}
+#s01::before,#s02::before,#s03::before,#s04::before,#s05::before{
+  content:'';display:block;position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--sky) 25%,rgba(78,205,196,.3) 60%,transparent);
+  z-index:2;
+}
+.s01-in{max-width:1080px;margin:0 auto;}
+.bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.bl-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--sky);margin-bottom:14px;}
+.bl-title{font-family:var(--ff-d);font-size:clamp(44px,6vw,74px);letter-spacing:.02em;color:var(--white);line-height:.96;margin-bottom:20px;}
+.bl-body{font-size:16px;font-weight:400;line-height:1.9;color:var(--mute);margin-bottom:24px;}
+.bl-quote{font-size:14px;font-weight:400;letter-spacing:.03em;color:var(--sky);padding:14px 0;border-top:.5px solid rgba(78,205,196,.2);border-bottom:.5px solid rgba(78,205,196,.2);font-style:italic;line-height:1.7;}
+/* WHY table */
+.why-wrap{margin-top:80px;padding-top:64px;border-top:.5px solid var(--line);}
+.why-title{font-family:var(--ff-d);font-size:clamp(40px,5.5vw,64px);letter-spacing:.02em;color:var(--white);margin-bottom:10px;}
+.why-sub{font-size:15px;font-weight:400;color:var(--mute);margin-bottom:40px;}
+.why-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.why-card{border:.5px solid var(--border);padding:22px 18px;background:rgba(200,184,135,.025);transition:border-color .25s,background .25s;}
+.why-card:hover{border-color:var(--sky);background:var(--sky3);}
+.why-card .wc-icon{font-size:22px;margin-bottom:12px;display:block;}
+.why-card .wc-t{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--white);margin-bottom:6px;letter-spacing:.02em;}
+.why-card .wc-b{font-size:14px;font-weight:400;color:var(--mute);line-height:1.65;}
+.why-close{font-size:16px;font-weight:400;color:var(--mute);margin-top:32px;font-style:italic;line-height:1.8;}
+
+/* ── S02 NONSTOP ── */
+#s02{background:var(--bg);}
+/* Big number */
+.big-num-wrap{position:relative;}
+.big-num{font-family:var(--ff-d);font-size:clamp(100px,16vw,220px);letter-spacing:-.02em;color:var(--white);line-height:.85;opacity:.06;position:absolute;top:-40px;left:-20px;pointer-events:none;user-select:none;}
+.nonstop-badges{display:flex;flex-direction:column;gap:12px;margin-top:28px;}
+.ns-badge{border:.5px solid var(--border);padding:18px 20px;background:rgba(200,184,135,.02);transition:border-color .25s,background .25s;}
+.ns-badge:hover{border-color:var(--sky);background:var(--sky3);}
+.ns-badge-h{font-family:var(--ff-b);font-size:15px;font-weight:700;color:var(--white);letter-spacing:.04em;margin-bottom:5px;}
+.ns-badge-d{font-family:var(--ff-b);font-size:14px;font-weight:400;color:var(--mute);line-height:1.6;}
+/* Power bar */
+.power-compare{margin-top:32px;}
+.pc-title{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin-bottom:14px;}
+.pc-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.pc-label{font-family:var(--ff-m);font-size:10px;color:var(--label);width:100px;flex-shrink:0;text-transform:uppercase;letter-spacing:.06em;}
+.pc-track{flex:1;height:6px;background:rgba(200,184,135,.06);border-radius:3px;overflow:hidden;}
+.pc-fill{height:100%;border-radius:3px;width:0;transition:width 1.4s cubic-bezier(.16,1,.3,1);}
+.pc-fill.tube{background:rgba(150,140,120,.35);}
+.pc-fill.g210{background:var(--sky);box-shadow:0 0 10px rgba(78,205,196,.5);}
+.pc-val{font-family:var(--ff-d);font-size:14px;width:40px;text-align:right;flex-shrink:0;}
+.pc-val.sky{color:var(--sky);}
+
+/* ── S03 RELIABILITY ── */
+#s03{background:var(--bg2);}
+.rel-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;padding:100px 6% 80px;align-items:center;max-width:1200px;margin:0 auto;}
+/* Compare table */
+.cmp-tbl{width:100%;border-collapse:collapse;margin-bottom:20px;}
+.cmp-tbl th{font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);padding:0 0 12px;border-bottom:.5px solid var(--line);text-align:left;font-weight:300;}
+.cmp-tbl th.g210-col{color:var(--sky);}
+.cmp-tbl tr{border-bottom:.5px solid var(--line);}
+.cmp-tbl tr:last-child{border-bottom:none;}
+.cmp-tbl td{padding:13px 0;font-size:14px;vertical-align:top;font-weight:400;}
+.cmp-tbl td:first-child{font-family:var(--ff-m);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--label);width:28%;}
+.cmp-tbl .g210-v{color:var(--white);font-weight:500;}
+.cmp-tbl .g210-v.hi{color:var(--sky);}
+.cmp-tbl .no-v{color:rgba(200,184,135,.3);}
+/* MTBF counter */
+.mtbf-display{border:.5px solid rgba(78,205,196,.25);padding:20px 24px;background:rgba(78,205,196,.04);text-align:center;margin-bottom:16px;}
+.mtbf-num{font-family:var(--ff-d);font-size:clamp(24px,4vw,48px);letter-spacing:.04em;color:var(--sky);line-height:1;}
+.mtbf-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--sky);margin-top:4px;opacity:.6;}
+/* 171 years timeline */
+.timeline-viz{margin:16px 0;position:relative;padding:12px 0;}
+.tl-bar{width:100%;height:2px;background:rgba(200,184,135,.08);position:relative;}
+.tl-fill{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,var(--sky),var(--sky2));width:0;transition:width 1.4s ease;}
+.tl-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;border:1.5px solid var(--sky);background:var(--bg);}
+.tl-label{position:absolute;font-family:var(--ff-m);font-size:7.5px;color:var(--label);white-space:nowrap;top:10px;}
+
+/* ── S04 PACKAGING ── */
+#s04{background:var(--bg);padding:100px 6%;}
+.pkg-in{max-width:1100px;margin:0 auto;}
+.pkg-layout{display:grid;grid-template-columns:260px 1fr;gap:60px;align-items:start;}
+/* Package card illustration */
+.pkg-card{width:230px;background:#0c0b09;border-radius:6px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.7),0 0 40px rgba(78,205,196,.04);}
+.pkg-hang-area{display:flex;justify-content:center;padding:12px 0 8px;background:#090807;border-bottom:.5px solid rgba(200,184,135,.06);}
+.pkg-hang-hole{width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(200,184,135,.2);background:#0c0b09;}
+/* Dune Walker package art area */
+.pkg-art{height:120px;position:relative;overflow:hidden;background:linear-gradient(180deg,#0d1a18 0%,#112018 40%,#1a1610 100%);}
+.pkg-art-horizon{position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(180deg,transparent,rgba(22,18,12,.8));}
+.pkg-art-ray{position:absolute;top:-20px;right:20%;width:60px;height:160%;background:linear-gradient(175deg,transparent,rgba(78,205,196,.08),transparent);transform:rotate(-15deg);}
+.pkg-art-figure{position:absolute;bottom:8px;font-size:18px;opacity:.7;}
+.pkg-nvidia{position:absolute;bottom:6px;right:8px;font-family:var(--ff-b);font-size:7px;font-weight:700;color:var(--nvidia);letter-spacing:.04em;opacity:.8;}
+.pkg-body{padding:10px 14px 8px;}
+.pkg-brand-t{font-family:var(--ff-b);font-size:9px;font-weight:400;letter-spacing:.18em;color:rgba(255,255,255,.45);text-transform:uppercase;display:block;}
+.pkg-model-t{font-family:var(--ff-d);font-size:40px;letter-spacing:-.01em;color:var(--white);line-height:1;display:block;margin-top:2px;}
+.pkg-spec-t{font-family:var(--ff-b);font-size:8px;font-weight:300;color:var(--label);letter-spacing:.06em;display:block;margin-top:2px;}
+.pkg-stripe{height:3px;background:linear-gradient(90deg,var(--sky) 0%,rgba(78,205,196,.3) 70%,transparent);margin:8px 0;}
+.pkg-cap-row{display:flex;align-items:center;gap:10px;padding:6px 14px 8px;}
+.pkg-cap{font-family:var(--ff-d);font-size:26px;color:var(--white);line-height:1;}
+.pkg-spd{font-family:var(--ff-b);font-size:8px;font-weight:300;letter-spacing:.06em;color:var(--label);line-height:1.5;text-transform:uppercase;}
+.pkg-spd strong{font-family:var(--ff-d);font-size:16px;color:var(--white);display:block;}
+.pkg-certs{display:flex;gap:4px;padding:6px 14px;border-top:.5px solid rgba(200,184,135,.06);}
+.pkg-cert{font-family:var(--ff-m);font-size:6.5px;color:var(--label);border:.5px solid rgba(200,184,135,.12);padding:2px 4px;letter-spacing:.06em;}
+/* Feature list */
+.pkg-feat-list{display:flex;flex-direction:column;}
+.pkg-feat-item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:.5px solid var(--line);}
+.pkg-feat-item:last-child{border-bottom:none;}
+.pkg-feat-icon{font-size:16px;flex-shrink:0;padding-top:2px;}
+.pkg-feat-nm{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--white);margin-bottom:4px;letter-spacing:.02em;}
+.pkg-feat-ds{font-size:14px;font-weight:400;color:var(--mute);line-height:1.65;}
+
+/* ── S05 SPECS ── */
+#s05{background:var(--bg2);padding:100px 6% 80px;}
+.spec-in{max-width:900px;margin:0 auto;}
+.spec-title{font-family:var(--ff-d);font-size:clamp(44px,5.5vw,66px);letter-spacing:.02em;color:var(--white);margin-bottom:12px;}
+.spec-tag{display:inline-block;font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--sky);border:.5px solid rgba(78,205,196,.3);padding:4px 10px;margin-bottom:40px;}
+.spec-tbl{width:100%;border-collapse:collapse;}
+.spec-tbl tr{border-bottom:.5px solid var(--line);}
+.spec-tbl td{padding:14px 0;font-size:14px;font-weight:400;vertical-align:top;}
+.spec-tbl td:first-child{color:var(--label);width:42%;font-family:var(--ff-m);font-size:10px;letter-spacing:.07em;text-transform:uppercase;border-left:2px solid transparent;transition:border-color .2s;padding-left:3px;}
+.spec-tbl tr:hover td:first-child{border-left-color:var(--sky);}
+.spec-tbl td:last-child{color:var(--white);}
+.spec-disc{font-family:var(--ff-m);font-size:9px;color:var(--label);line-height:1.7;margin-top:18px;}
+.spec-ctas{display:flex;gap:10px;margin-top:44px;flex-wrap:wrap;}
+.spec-foot{margin-top:44px;padding-top:20px;border-top:.5px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;}
+
+/* FOOTER */
+.site-foot{background:#060503;padding:80px 6% 60px;text-align:center;border-top:.5px solid var(--border);}
+.sf-hl{font-family:var(--ff-d);font-size:clamp(28px,4vw,50px);letter-spacing:.06em;color:rgba(245,240,232,.55);display:flex;flex-wrap:wrap;justify-content:center;gap:0 22px;}
+.sf-tagline{margin-top:48px;padding-top:40px;border-top:.5px solid rgba(78,205,196,.1);}
+.sf-t1{font-family:var(--ff-d);font-size:clamp(28px,4.2vw,52px);letter-spacing:.08em;color:rgba(245,240,232,.35);display:block;line-height:1;}
+.sf-t2{font-family:var(--ff-d);font-size:clamp(28px,4.2vw,52px);letter-spacing:.08em;color:var(--sky);display:block;line-height:1;margin-top:4px;}
+.sf-sub{font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;color:rgba(245,240,232,.15);margin-top:28px;text-transform:uppercase;}
+
+@media(max-width:860px){
+  .sec-wrap,.bl-grid,.rel-grid,.pkg-layout{grid-template-columns:1fr;gap:44px;}
+  .sec-wrap.rev{direction:ltr;}
+  .h-right{opacity:.12!important;transform:none!important;width:100%;}
+  .h-fade{background:rgba(14,13,11,.85);}
+  .why-cards,.ctx-cards{grid-template-columns:1fr;}
+}
+@media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="dust" id="dustWrap"></div>
+<div id="cur"></div><div id="cur-ring"></div>
+
+<nav id="nav">
+  <div class="nb"><span class="nb-s">Entry Series</span><span class="nb-b">Simorchip</span></div>
+  <div class="np">
+    <a class="on" onclick="goTo('s00')">Hero</a>
+    <a onclick="goTo('s01')">Dune Walker</a>
+    <a onclick="goTo('s02')">Nonstop</a>
+    <a onclick="goTo('s03')">Reliability</a>
+    <a onclick="goTo('s04')">Packaging</a>
+    <a onclick="goTo('s05')">Specs</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="s00" class="full">
+  <div class="dune-bg">
+    <div class="dune-sky"></div>
+    <div class="dune-ray"></div>
+    <div class="dune-ray2"></div>
+    <div class="dune-horizon"></div>
+  </div>
+  <div class="h-right" id="hRight">
+    <div class="g210-wrap">
+      <div class="g210-body">
+        <div class="g210-glow"></div>
+        <div class="g210-fan-area">
+          <div class="g210-fan">
+            <div class="fan-ring fan-ring1"></div>
+            <div class="fan-ring fan-ring2"></div>
+            <div class="fan-ring fan-ring3"></div>
+            <div class="fan-blades" id="fanBlades">
+              <div class="fan-blade" style="transform:rotate(0deg) translateX(0);"></div>
+              <div class="fan-blade" style="transform:rotate(45deg) translateX(0);"></div>
+              <div class="fan-blade" style="transform:rotate(90deg) translateX(0);"></div>
+              <div class="fan-blade" style="transform:rotate(135deg) translateX(0);"></div>
+              <div class="fan-blade" style="transform:rotate(180deg) translateX(0);"></div>
+              <div class="fan-blade" style="transform:rotate(225deg) translateX(0);"></div>
+              <div class="fan-blade" style="transform:rotate(270deg) translateX(0);"></div>
+              <div class="fan-blade" style="transform:rotate(315deg) translateX(0);"></div>
+            </div>
+            <div class="fan-hub"></div>
+          </div>
+        </div>
+        <div class="g210-fins" id="fins">
+          <div class="fin"></div><div class="fin"></div><div class="fin"></div>
+          <div class="fin"></div><div class="fin"></div><div class="fin"></div>
+          <div class="fin"></div><div class="fin"></div><div class="fin"></div>
+        </div>
+        <div class="g210-label">
+          <span class="g210-brand">Simorchip</span>
+          <span class="g210-model">G210</span>
+          <span class="g210-spec">1GB GDDR3 · PCIe 2.0</span>
+        </div>
+        <div class="g210-nvidia">GeForce</div>
+        <div class="g210-ports">
+          <div class="g210-port"></div>
+          <div class="g210-port"></div>
+          <div class="g210-port"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="h-fade"></div>
+  <div class="h-left">
+    <div class="h-eye" id="hEye">Simorchip · Entry Series · G210</div>
+    <div class="h-hl" id="hHL">
+      <span class="hl-ln hl-wh" id="hl0">Nonstop</span>
+      <span class="hl-ln hl-wh" id="hl1">Reliability</span>
+      <span class="hl-ln hl-sky" id="hl2">Always there.</span>
+    </div>
+    <div class="sky-line" id="hLine" style="margin-top:22px;"></div>
+    <div class="h-sub" id="hSub">1GB GDDR3. VGA + HDMI + DVI.<br>31W. No external power. No excuses.</div>
+    <div class="h-tags" id="hTags">
+      <span class="tag">G210</span>
+      <span class="tag">1GB GDDR3</span>
+      <span class="tag">PCIe 2.0×16</span>
+      <span class="tag">31W</span>
+      <span class="tag">GT218</span>
+      <span class="tag">DirectX 11.1</span>
+      <span class="tag">VGA DVI HDMI</span>
+      <span class="tag">Entry-Level</span>
+    </div>
+  </div>
+  <div class="scr-hint" id="scrHint"><div class="scr-ln"></div><div class="scr-lb">Scroll</div></div>
+</section>
+
+<!-- ═══ S01 DUNE WALKER + WHY ═══ -->
+<section id="s01">
+  <div class="s01-in">
+    <div class="bl-grid fi">
+      <div>
+        <div class="bl-eye">Design Language</div>
+        <div class="bl-title">Dune<br>Walker<br><span style="font-size:.55em;color:var(--sand3);">使徒</span></div>
+        <div class="bl-body">Not every card needs three fans.<br>Not every card needs RGB.<br><br>Where the world ends, our journey begins.<br>世界盡頭，正是我們旅程的開始。</div>
+        <div class="bl-quote">This is not decoration. This is presence.<br>這不是裝飾。這是存在感。</div>
+      </div>
+      <div class="img-ph fi fi-d1" style="aspect-ratio:16/10;min-height:280px;">
+        <span>[ DUNE WALKER — PRODUCT SHOT ]<br>G210 side view · cold side-light<br>sand-gold background glow<br>Fan detail close-up ]</span>
+      </div>
+    </div>
+    <div class="why-wrap fi">
+      <div class="why-title fi">Why You Need the G210</div>
+      <div class="why-sub fi fi-d1">Your motherboard has no integrated graphics. Or you have three monitors, but only one output. Or there are thirty computers in the warehouse, every one of them needs a display connected, and it needs to be done this afternoon.</div>
+      <div class="why-cards fi fi-d2">
+        <div class="why-card">
+          <span class="wc-icon">🖥️</span>
+          <div class="wc-t">No iGPU</div>
+          <div class="wc-b">Your motherboard has no display output. One card solves it. No rebuild required.</div>
+        </div>
+        <div class="why-card">
+          <span class="wc-icon">🖱️</span>
+          <div class="wc-t">Multi-Monitor</div>
+          <div class="wc-b">VGA + HDMI + DVI — three outputs, any generation of display, any office setup.</div>
+        </div>
+        <div class="why-card">
+          <span class="wc-icon">🏭</span>
+          <div class="wc-t">Mass Deployment</div>
+          <div class="wc-b">30 machines, one afternoon. No external power. No special tools. No drama.</div>
+        </div>
+      </div>
+      <p class="why-close fi fi-d3"><em>"You don't need to think about it. It doesn't need you to."<br>你不需要想它。它也不需要你想。</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S02 NONSTOP ═══ -->
+<section id="s02">
+  <div class="sec-wrap">
+    <div class="fi" style="position:relative;">
+      <div class="big-num">30</div>
+      <div class="sh-num">01 — Nonstop</div>
+      <div class="sh-title">Nonstop</div>
+      <div class="sh-sub">30 Machines · One Morning · All Done</div>
+      <div class="sky-line on"></div>
+      <p style="font-size:16px;font-weight:400;color:var(--mute);line-height:1.85;margin:24px 0 8px;">For IT procurement, the G210 isn't a graphics card.<br><strong style="color:var(--white);font-weight:600;">It's a deployment decision.</strong></p>
+      <p style="font-size:16px;font-weight:400;color:var(--mute);line-height:1.85;margin-bottom:24px;">對 IT 採購來說，G210 不是一張顯示卡——是一個決策。</p>
+      <div class="nonstop-badges">
+        <div class="ns-badge">
+          <div class="ns-badge-h">0W External Power</div>
+          <div class="ns-badge-d">No external connectors. No rewiring required. Plug in and go.<br>不需要外接電源，不需要重新配線。</div>
+        </div>
+        <div class="ns-badge">
+          <div class="ns-badge-h">31W Peak TDP</div>
+          <div class="ns-badge-d">Running all day, every day. Your electricity bill won't lie.<br>全天候運行，電費帳單不會說謊。</div>
+        </div>
+        <div class="ns-badge">
+          <div class="ns-badge-h">Triple Interface & 150mm SFF</div>
+          <div class="ns-badge-d">VGA + HDMI + DVI. Fits any case, connects to any generation of monitors.<br>放得進任何機殼，接得上任何年代的螢幕。</div>
+        </div>
+      </div>
+      <p style="font-size:15px;font-weight:400;color:var(--mute);margin-top:20px;font-style:italic;">You don't need the fastest card. You need the one that works every single time.<br><span style="font-size:13px;">你不需要最快的那張。你需要每一次都不出錯的那張。</span></p>
+    </div>
+    <div class="fi fi-d1">
+      <!-- Count-up number -->
+      <div style="text-align:center;margin-bottom:32px;border:.5px solid var(--border);padding:28px;background:rgba(78,205,196,.03);">
+        <div id="bigCount" style="font-family:var(--ff-d);font-size:clamp(72px,12vw,160px);letter-spacing:-.02em;color:var(--white);line-height:1;text-shadow:0 0 60px rgba(78,205,196,.12);">0</div>
+        <div style="font-family:var(--ff-m);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--sky);margin-top:6px;opacity:.7;">Office Computers · One Morning</div>
+      </div>
+      <!-- Power compare bars -->
+      <div class="power-compare" id="pcWrap">
+        <div class="pc-title">Power Consumption — G210 vs Office Fluorescent Tube</div>
+        <div class="pc-row">
+          <span class="pc-label">Fluor. Tube</span>
+          <div class="pc-track"><div class="pc-fill tube" id="pc0" data-w="100"></div></div>
+          <span class="pc-val">~40W</span>
+        </div>
+        <div class="pc-row">
+          <span class="pc-label">G210</span>
+          <div class="pc-track"><div class="pc-fill g210" id="pc1" data-w="78"></div></div>
+          <span class="pc-val sky">31W</span>
+        </div>
+      </div>
+      <p style="font-family:var(--ff-m);font-size:9px;color:var(--label);margin-top:8px;">A graphics card that draws less power than a common office fluorescent tube.<br>比辦公室常見的日光燈管還省電的顯示卡。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S03 RELIABILITY ═══ -->
+<section id="s03">
+  <div class="rel-grid">
+    <div class="fi">
+      <div class="sh-num">02 — Reliability</div>
+      <div class="sh-title">Reliability</div>
+      <div class="sh-sub">1,500,000 hr MTBF · 171 Years</div>
+      <div class="sky-line on"></div>
+      <p style="font-size:16px;font-weight:400;color:var(--mute);line-height:1.85;margin:24px 0;">Not because it's the fastest. But because it's exactly enough — and it guarantees peace of mind at midnight.<br><span style="font-size:14px;opacity:.7;">選擇它，不是因為它最快。而是因為它剛剛好——這意味著你半夜再也不用爬起來接維修電話。</span></p>
+      <p style="font-size:15px;font-weight:400;color:var(--mute);line-height:1.85;margin-bottom:24px;font-style:italic;">It's not the loudest card in the room. It's the one still running when everything else is gone.<br><span style="font-size:13px;">它不是辦公室裡最耀眼的卡；但當其他東西都被汰換時，只有它還在運作。</span></p>
+      <!-- MTBF + timeline -->
+      <div class="mtbf-display fi fi-d1">
+        <div class="mtbf-num" id="mtbfCount">0</div>
+        <div class="mtbf-lbl">Hours MTBF</div>
+      </div>
+      <div class="timeline-viz fi fi-d2" id="tlWrap">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);margin-bottom:8px;">171-Year Operating Life</div>
+        <div class="tl-bar">
+          <div class="tl-fill" id="tlFill"></div>
+          <div class="tl-dot" style="left:0;"><span class="tl-label" style="left:0;">2026 · Install</span></div>
+          <div class="tl-dot" style="left:50%;"><span class="tl-label" style="left:0;">2112</span></div>
+          <div class="tl-dot" style="left:100%;"><span class="tl-label" style="right:0;left:auto;">2197 · Theory</span></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;" class="fi fi-d3">
+        <div class="stat-badge"><div class="num" style="color:var(--sky);">171</div><div class="lbl">Years Theoretical</div></div>
+        <div class="stat-badge"><div class="num">1.5M</div><div class="lbl">Hours MTBF</div></div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <table class="cmp-tbl" id="cmpTbl">
+        <thead>
+          <tr><th></th><th class="g210-col">G210</th><th>No GPU</th><th>iGPU Only</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>VGA Output</td><td class="g210-v hi">✓</td><td class="no-v">✗</td><td class="no-v">Rare</td></tr>
+          <tr><td>HDMI</td><td class="g210-v hi">✓</td><td class="no-v">✗</td><td class="g210-v">✓</td></tr>
+          <tr><td>DVI</td><td class="g210-v hi">✓</td><td class="no-v">✗</td><td class="no-v">Rare</td></tr>
+          <tr><td>External Power</td><td class="g210-v hi">Not Required</td><td class="no-v">—</td><td class="no-v">—</td></tr>
+          <tr><td>Works w/ CPU-less</td><td class="g210-v hi">✓</td><td class="no-v">✗</td><td class="no-v">✗</td></tr>
+          <tr><td>Industrial Use</td><td class="g210-v hi">✓</td><td class="no-v">✗</td><td class="no-v">Limited</td></tr>
+        </tbody>
+      </table>
+      <div class="img-ph" style="height:180px;margin-top:12px;">
+        <span>[ RELIABILITY VISUAL ]<br>G210 installed in narrow industrial chassis<br>Power cable comparison — G210 vs discrete GPU ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S04 PACKAGING ═══ -->
+<section id="s04">
+  <div class="pkg-in">
+    <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:10px;" class="fi">Packaging Design</div>
+    <div class="pkg-layout">
+      <div class="fi" style="opacity:0;transform:translateX(-28px) translateY(0);transition:opacity 1.4s ease,transform 1.4s ease;" id="pkgCard">
+        <div class="pkg-card">
+          <div class="pkg-hang-area"><div class="pkg-hang-hole"></div></div>
+          <div class="pkg-art">
+            <div class="pkg-art-ray"></div>
+            <div class="pkg-art-horizon"></div>
+            <span class="pkg-art-figure" style="left:15%;">🧎</span>
+            <span class="pkg-art-figure" style="left:40%;font-size:14px;opacity:.5;">🧎</span>
+            <span class="pkg-art-figure" style="right:25%;font-size:12px;opacity:.35;">🧎</span>
+            <div class="pkg-nvidia">GeForce G210</div>
+          </div>
+          <div class="pkg-body">
+            <span class="pkg-brand-t">Simorchip</span>
+            <span class="pkg-model-t">G210</span>
+            <span class="pkg-spec-t">GeForce · 1GB GDDR3 · PCIe 2.0</span>
+          </div>
+          <div class="pkg-stripe"></div>
+          <div class="pkg-cap-row">
+            <span class="pkg-cap">1<span style="font-size:.5em;">GB</span></span>
+            <span class="pkg-spd">VGA+HDMI+DVI<br><strong>31W</strong></span>
+          </div>
+          <div class="pkg-certs">
+            <span class="pkg-cert">CE</span><span class="pkg-cert">RoHS</span><span class="pkg-cert">FCC</span><span class="pkg-cert">REACH</span>
+          </div>
+        </div>
+      </div>
+      <div class="fi fi-d2">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:20px;">What's in the box</div>
+        <div class="pkg-feat-list">
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">🏪</div><div><div class="pkg-feat-nm">Retail Hang Pack</div><div class="pkg-feat-ds">Euro-slot hang hole, ready for shelf display or e-commerce fulfilment.<br>Euro 規格掛孔，適配實體通路與電商出貨。</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">⚡</div><div><div class="pkg-feat-nm">Anti-Static Protection</div><div class="pkg-feat-ds">The card is wrapped in anti-static material throughout transit and unboxing.<br>產品以防靜電材料包覆，運送與拆箱過程完整保護。</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">👁️</div><div><div class="pkg-feat-nm">Product-Visible Window</div><div class="pkg-feat-ds">Confirm the model before opening. No guesswork, no returns.<br>開箱前即可確認型號，不需要拆封，不需要猜測。</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">📋</div><div><div class="pkg-feat-nm">Full Spec on Pack</div><div class="pkg-feat-ds">Model number, serial number, barcode. Warehouse receiving requires no unboxing.<br>型號、序號、條碼清晰標示，倉儲收料不需要開箱確認。</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">✅</div><div><div class="pkg-feat-nm">Global Certifications</div><div class="pkg-feat-ds">CE · RoHS · FCC · REACH. Compliant for EU, US, and international markets.<br>CE · RoHS · FCC · REACH，歐美與國際市場合規。</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S05 SPECS ═══ -->
+<section id="s05">
+  <div class="spec-in">
+    <div class="spec-title fi">Specifications</div>
+    <div class="spec-tag fi fi-d1">Entry-Level · GT218 · 40nm</div>
+    <table class="spec-tbl fi fi-d2">
+      <tr><td>Architecture</td><td>GT218 · 40nm</td></tr>
+      <tr><td>Stream Processors</td><td>16</td></tr>
+      <tr><td>Core Frequency</td><td>589 MHz</td></tr>
+      <tr><td>Memory Type</td><td>GDDR3</td></tr>
+      <tr><td>Memory Capacity</td><td>1 GB</td></tr>
+      <tr><td>Memory Frequency</td><td>500 MHz</td></tr>
+      <tr><td>Memory Bus Width</td><td>64-bit</td></tr>
+      <tr><td>Bus Interface</td><td>PCIe 2.0 × 16</td></tr>
+      <tr><td>Display Outputs</td><td>VGA + HDMI + DVI</td></tr>
+      <tr><td>Max Resolution</td><td>1920 × 1080</td></tr>
+      <tr><td>DirectX Support</td><td>DirectX 11.1 (10_1)</td></tr>
+      <tr><td>External Power</td><td>Not Required</td></tr>
+      <tr><td>Power Consumption</td><td>31W</td></tr>
+      <tr><td>Recommended PSU</td><td>200W and above</td></tr>
+      <tr><td>Cooling Solution</td><td>Single Fan</td></tr>
+      <tr><td>Dimensions</td><td>150 × 69 × 16.5 mm</td></tr>
+      <tr><td>OS Support</td><td>Windows 10 / Windows 11</td></tr>
+      <tr><td>Market Positioning</td><td>Entry-Level</td></tr>
+    </table>
+    <div class="spec-disc fi fi-d2">* All specifications sourced from Simorchip internal documentation. Actual performance may vary depending on system configuration and operating environment.</div>
+    <div class="spec-ctas fi">
+      <button class="btn btn-sky">Download Spec Sheet</button>
+      <button class="btn btn-ghost">Explore More Products</button>
+    </div>
+    <div class="spec-foot fi">
+      <span class="tag" style="font-size:9px;">© 2026 Simorchip Technology</span>
+      <span class="tag" style="font-size:9px;">G210 · Entry Series · GeForce</span>
+    </div>
+  </div>
+</section>
+
+<div class="site-foot">
+  <div class="sf-hl">
+    <span>Simorchip G210</span>
+    <span style="color:var(--white);">Nonstop.</span>
+    <span style="color:var(--white);">Reliability.</span>
+    <span style="color:var(--sky);">Always there.</span>
+  </div>
+  <div class="sf-tagline">
+    <span class="sf-t1">This is not decoration.</span>
+    <span class="sf-t2">This is presence.</span>
+  </div>
+  <div class="sf-sub">© 2026 Simorchip Technology · G210 · Entry Series · GeForce</div>
+</div>
+
+<script>
+/* ── DUST PARTICLES ── */
+(function(){
+  const wrap=document.getElementById('dustWrap');
+  for(let i=0;i<28;i++){
+    const d=document.createElement('div');
+    d.className='dust-p';
+    const size=1+Math.random()*3;
+    d.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;--dx:${(Math.random()-0.5)*180}px;animation-duration:${12+Math.random()*18}s;animation-delay:${-Math.random()*20}s;`;
+    wrap.appendChild(d);
+  }
+})();
+
+/* ── CURSOR + TRAIL ── */
+(function(){
+  const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  const TRAIL=6;
+  const dots=Array.from({length:TRAIL},(_,i)=>{
+    const d=document.createElement('div');d.className='trail-dot';
+    const s=4-i*.4;d.style.cssText=`width:${s}px;height:${s}px;opacity:${(1-i/TRAIL)*.35};`;
+    document.body.appendChild(d);return d;
+  });
+  const pos=dots.map(()=>({x:0,y:0}));let head=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    cur.style.left=mx+'px';cur.style.top=my+'px';
+    pos[head]={x:mx,y:my};head=(head+1)%TRAIL;
+  });
+  (function frame(){
+    rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    dots.forEach((_,i)=>{const p=pos[(head-1-i+TRAIL)%TRAIL];dots[i].style.left=p.x+'px';dots[i].style.top=p.y+'px';});
+    requestAnimationFrame(frame);
+  })();
+  document.querySelectorAll('button,.btn,.np a').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';ring.style.width='46px';ring.style.height='46px';});
+    el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';ring.style.width='36px';ring.style.height='36px';});
+  });
+})();
+
+/* ── NAV ── */
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('sc',scrollY>50));
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+const secIds=['s00','s01','s02','s03','s04','s05'];
+const pills=document.querySelectorAll('.np a');
+secIds.forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  new IntersectionObserver(es=>{if(es[0].isIntersecting){const i=secIds.indexOf(id);pills.forEach(p=>p.classList.remove('on'));if(pills[i])pills[i].classList.add('on');}},{threshold:.4}).observe(el);
+});
+
+/* ── SCROLL REVEAL ── */
+const fiObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>fiObs.observe(el));
+
+/* ── SKY LINES ── */
+document.querySelectorAll('.sky-line').forEach(el=>{
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)el.classList.add('on');},{threshold:.5}).observe(el);
+});
+
+/* ── HERO ANIMATION ── */
+document.fonts.ready.then(()=>{
+  function cls(id,d=0){setTimeout(()=>document.getElementById(id)?.classList.add('on'),d);}
+  cls('hRight',0);cls('hEye',300);cls('hHL',500);
+  setTimeout(()=>['hl0','hl1','hl2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('in'),i*320)),540);
+  setTimeout(()=>document.getElementById('hLine')?.classList.add('on'),1400);
+  cls('hSub',1700);cls('hTags',2000);cls('scrHint',2500);
+});
+
+/* ── PACKAGING CARD special entrance ── */
+(function(){
+  const el=document.getElementById('pkgCard');if(!el)return;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){
+      el.style.opacity='1';el.style.transform='none';
+    }
+  },{threshold:.2}).observe(el);
+})();
+
+/* ── COUNT-UP: 30 ── */
+(function(){
+  const el=document.getElementById('bigCount');if(!el)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      const dur=1400,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,3);
+        el.textContent=Math.round(v*30);
+        if(p<1)requestAnimationFrame(f);else el.textContent='30';
+      })(performance.now());
+    }
+  },{threshold:.4}).observe(el);
+})();
+
+/* ── POWER BARS ── */
+(function(){
+  const w=document.getElementById('pcWrap');if(!w)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      ['pc0','pc1'].forEach((id,i)=>setTimeout(()=>{
+        const el=document.getElementById(id);
+        if(el)el.style.width=el.dataset.w+'%';
+      },i*200));
+    }
+  },{threshold:.4}).observe(w);
+})();
+
+/* ── MTBF COUNTER ── */
+(function(){
+  const el=document.getElementById('mtbfCount');if(!el)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      const dur=1800,t=1500000,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,3);
+        el.textContent=Math.round(v*t).toLocaleString();
+        if(p<1)requestAnimationFrame(f);else el.textContent='1,500,000';
+      })(performance.now());
+    }
+  },{threshold:.4}).observe(el);
+})();
+
+/* ── TIMELINE ── */
+(function(){
+  const w=document.getElementById('tlWrap');if(!w)return;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){
+      setTimeout(()=>{const f=document.getElementById('tlFill');if(f)f.style.width='100%';},200);
+    }
+  },{threshold:.4}).observe(w);
+})();
+
+/* ── COMPARE TABLE STAGGER ── */
+(function(){
+  const tbl=document.getElementById('cmpTbl');if(!tbl)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      tbl.querySelectorAll('tbody tr').forEach((row,i)=>{
+        row.style.cssText='opacity:0;transform:translateX(-12px);transition:opacity .5s ease '+i*.08+'s,transform .5s ease '+i*.08+'s;';
+        setTimeout(()=>{row.style.opacity='1';row.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3}).observe(tbl);
+})();
+
+/* ── WHY CARDS STAGGER ── */
+(function(){
+  const cards=document.querySelectorAll('.why-card');
+  if(!cards.length)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      cards.forEach((c,i)=>{
+        c.style.cssText='opacity:0;transform:translateY(18px);transition:opacity .6s ease '+i*.12+'s,transform .6s ease '+i*.12+'s;';
+        setTimeout(()=>{c.style.opacity='1';c.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3}).observe(cards[0]);
+})();
+
+/* ── NONSTOP BADGES STAGGER ── */
+(function(){
+  const badges=document.querySelectorAll('.ns-badge');
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      badges.forEach((b,i)=>{
+        b.style.cssText='opacity:0;transform:translateX(-16px);transition:opacity .6s ease '+i*.15+'s,transform .6s ease '+i*.15+'s;';
+        setTimeout(()=>{b.style.opacity='1';b.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3}).observe(badges[0]);
+})();
+
+/* ── SPEC TABLE STAGGER ── */
+(function(){
+  const tbl=document.querySelector('.spec-tbl');if(!tbl)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      tbl.querySelectorAll('tr').forEach((row,i)=>{
+        row.style.cssText='opacity:0;transition:opacity .4s ease '+(i*.04)+'s;';
+        setTimeout(()=>{row.style.opacity='1';},60);
+      });
+    }
+  },{threshold:.1}).observe(tbl);
+})();
+</script>
+</body>
+</html>
