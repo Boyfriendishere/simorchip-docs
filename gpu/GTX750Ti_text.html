@@ -1,0 +1,749 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>GTX750Ti</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="36bd24e8-7d86-80e6-bf13-e75d75f2d549" class="page sans"><header><h1 class="page-title" dir="auto"><strong>GTX750Ti</strong></h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8190-a35f-e5f4e2291433" class=""><mark class="highlight-yellow">*黃色字體：視覺建議</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-81ed-b6c9-c1857d6174e8" class=""><mark class="highlight-red">*紅色字體：中文解釋</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-815b-af42-de23c8bfe19d" class=""><mark class="highlight-blue">*Hashtag：For SEO</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-805e-9790-d183efb4858b" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="36bd24e8-7d86-8063-bb40-d6af94c6bf2a" class="">GTX 750 Ti</h2></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-814d-a730-ca9a150d1cb1" class="">Simorchip GTX 750 Ti</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80e7-8e34-cf49d54537a4" class="">More. Faster. Still silent.<br/>A display card does one job.<br/>Show everything. All the time. Without stopping.<br/>The GTX 750 Ti has never failed at that job.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8073-8414-f042c69ee44a" class="">This time, it does it without breaking a sweat.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8094-ac09-eceec32f992b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8017-9851-d3901718e6da" class=""><mark class="highlight-red">更強，更快，依然安靜</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80d1-a25a-eb3c9ac433bb" class=""><mark class="highlight-red">顯示卡只做一件事<br/>那就是：始終如一地呈現一切。永不停歇<br/>GTX 750 Ti 從未辜負這項任務<br/>但這一次，它更是輕鬆自如</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80eb-a0ad-f8b39d071281" class=""><code>#GTX750Ti</code> <code>#4GB</code> <code>#GDDR5</code> <code>#PCIe3.0</code> <code>#60W</code> <code>#GM107</code> <code>#DirectX12</code> <code>#VGADVIHDMI</code> <code>#1080P</code> <code>#640Cores</code> <code>#Simorchip</code></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80de-9a04-faebd1309b08" class=""><mark class="highlight-yellow">視覺：GTX 750 Ti 側面照 45° 角，黑色機身紅色斜切裝飾線條主導畫面，Simorchip 金字在風扇中心。背景純黑，低飽和度紅色光暈從散熱器邊緣極低強度滲出，像引擎怠速時的餘溫。產品從右側緩慢浮入。<br/>動態：Hero 文字三行各自由下往上淡入，間隔 320ms。產品照 delay 800ms，translateX(40px)→0，像重量級機器緩慢就位。</mark></p></div><div style="display:contents" dir="auto"><hr id="36bd24e8-7d86-8011-9275-fe4d58a37d94"/></div><div style="display:contents" dir="auto"><h3 id="36bd24e8-7d86-80c6-8d5d-d5d247f8a400" class="">Red Talon <mark class="highlight-red">赤爪</mark></h3></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80c1-8fb6-e63f757bf3f9" class=""><mark class="highlight-yellow">視覺：散熱器正面特寫，紅色斜切裝飾線條放大標示，強調「這不是裝飾，這是設計語言」。黑色機身對比紅色線條，風扇葉片金屬質感特寫。</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8039-9956-da797fc08d60" class="">
+</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8004-b69d-e774c07c9831" class="">Red lines don&#x27;t lie.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80e1-8cd0-c6a2aa945f2c" class="">On the GTX 750 Ti, the cuts aren&#x27;t cosmetic.<br/>They signal intent.<br/>This card is not here to blend in. It&#x27;s here to get things done.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8072-b492-c442e3dd82b9" class=""><em>The GTX 750 Ti is where the entry series ends and real performance begins.</em></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8042-bfdf-e254c2ed4f11" class=""><mark class="highlight-red">紅色線條不說謊<br/>在 GTX 750 Ti 上，這些切線不是裝飾<br/>它們是意圖的宣告<br/>這張卡不是來融入環境的。它是來把事情做完的</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-807e-98f5-d4d655f0fd50" class=""><mark class="highlight-red">Ti 是入門系列的終點，也是真正效能的起點</mark></p></div><div style="display:contents" dir="auto"><hr id="36bd24e8-7d86-809c-a188-d283e4802d11"/></div><div style="display:contents" dir="auto"><h3 id="36bd24e8-7d86-801b-bfc6-ecdb0b263e5c" class="">Why You Need the GTX 750 Ti</h3></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80ba-b598-fac4d76d6e44" class=""><mark class="highlight-yellow">視覺：三欄場景卡片，紅色 accent 線條延伸設計語言，每欄場景說明。進入視口時依序 stagger 浮現，translateY(18px)→0，間隔 150ms</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-804e-b49e-d3e876a2be43" class="">First, understand what GDDR5 means.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80c4-a712-fed4b0600eb1" class="">Your graphics card has its own memory.<br/>The speed of that memory determines how fast the card can move image data.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8024-9ea7-f24b1123f3be" class="">GDDR5 is a generational leap over GDDR3.<br/>The GTX 750 Ti runs GDDR5 at 1250 MHz on a 128-bit bus.<br/>That&#x27;s the difference between a card that struggles with modern workloads and one that handles them without thinking.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8050-91bd-e9906845b11a" class=""><mark class="highlight-red">首先，理解 GDDR5 是什麼</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8045-acb1-de257d537a94" class=""><mark class="highlight-red">你的顯示卡有自己的記憶體<br/>那個記憶體的速度，決定了這張卡能以多快的速度移動畫面資料</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-800b-b108-d6a64e15629d" class=""><mark class="highlight-red">GDDR5 相比 GDDR3 是整個世代的跨越<br/>GTX 750 Ti 在 128-bit 匯流排上以 1250 MHz 的速度運行 GDDR5</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-807d-9133-e7b08cff060a" class=""><mark class="highlight-red">這就是一張在現代工作負載下吃力的卡，和一張毫不費力應對的卡之間的差距</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8045-b9c0-de87914e5363" class="">
+</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80e9-8b51-c07d1a7b8555" class="">1080p gaming. Finally without compromise.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8027-8a3e-c00a76545885" class="">The GTX 750 Ti was designed around 1080p. Every pixel, every frame, delivered at the resolution your monitor was built for. Not struggling. Not dropping. Just running.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-808e-9402-df6b40708074" class="">Content creation that doesn&#x27;t wait for you.<br/>4GB of GDDR5 means video timelines load without buffering. Photo editing stays responsive. Premiere, DaVinci, Photoshop — they all see a card that can keep up.<br/>Premiere、DaVinci、Photoshop</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80d8-ae1e-f30817d6b477" class="">No external power. Still 640 shader cores.<br/>PCIe slot power only. 60W total draw. Slot in, boot up, run — exactly like the G210 and GT730 before it. But with 6.7× the processing cores.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8046-86d3-f91e7be3ba01" class=""><mark class="highlight-red">1080p 遊戲。終於不需要妥協<br/>GTX 750 Ti 圍繞 1080p 而生。每一個像素，每一幀，都以你的螢幕設計的解析度送達<br/>不吃力，不掉幀，只是運作</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80fb-83c4-dc581d44660e" class=""><mark class="highlight-red">內容創作不再等你<br/>4GB GDDR5 意味著影片時間軸載入不卡頓。修圖保持流暢響應<br/>它們看到的是一張能跟上節奏的卡</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8098-8c82-cb6390c941d1" class=""><mark class="highlight-red">不需外接電源。還是 640 個著色器核心<br/>僅靠 PCIe 插槽供電。60W 全功耗。插入、開機、運作——跟 G210 和 GT730 一樣。但有 6.7 倍的處理核心。</mark></p></div><div style="display:contents" dir="auto"><hr id="36bd24e8-7d86-801c-bc04-fc4ae5284d3b"/></div><div style="display:contents" dir="auto"><h3 id="36bd24e8-7d86-8039-989a-ea903c1498ab" class="">Nonstop</h3></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80fc-9a91-c3390e06d148" class="">640 Shader Cores · 4GB GDDR5 · PCIe 3.0</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80c5-8170-f4868cd382de" class=""><mark class="highlight-yellow">視覺：左側超大數字「640」Bebas Neue，低飽和紅色光暈，右側說明文字。數字進入視口時 0→640 計數，duration 1.4s，scroll trigger。下方三個 stat badge stagger snap 進場</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80b6-8e4d-fbf939291e0a" class="">What 640 shader cores means:<br/>Think of shader cores as workers inside your graphics card.<br/>The G210 has 16. The GT730 has 96.<br/>The GTX 750 Ti has 640.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-808f-8cdd-df4a3e85c35b" class="">That&#x27;s not just more — that&#x27;s the difference between office display and actual graphics processing power.<br/>4GB GDDR5 — a different class of memory.<br/>GDDR5 doesn&#x27;t just hold more — it moves data faster.<br/>1250 MHz. 128-bit bus. At full load, the GTX 750 Ti processes image data faster than GDDR3 cards can even receive it.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-802c-bf01-e5ce7ec49970" class="">PCIe 3.0 — double the bandwidth.<br/>PCIe 3.0 × 16 doubles the bandwidth available between the card and your system compared to PCIe 2.0.<br/>The system talks to the card faster. The card responds faster. Everything moves faster.<br/>You&#x27;ll head home at 5 PM. The GTX 750 Ti will just keep rendering.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8054-8a31-ec6530925193" class=""><mark class="highlight-red">640 個著色器核心是什麼意思：<br/>把著色器核心想成顯示卡裡面的工人<br/>G210 有 16 個。GT730 有 96 個<br/>GTX 750 Ti 有 640 個</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80e1-a08f-e25f2f211a3e" class=""><mark class="highlight-red">這不只是更多——而是辦公室顯示輸出，和真正的圖形處理能力之間的差距<br/>4GB GDDR5 — 不同等級的記憶體<br/>GDDR5 不只是存更多——它移動資料的速度更快<br/>1250 MHz。128-bit 匯流排。在滿載時，GTX 750 Ti 處理畫面資料的速度，比 GDDR3 的卡接收資料還快</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80dc-87e0-cf133f397809" class=""><mark class="highlight-red">PCIe 3.0 — 雙倍頻寬<br/>PCIe 3.0 × 16 相比 PCIe 2.0，讓顯示卡與系統之間的頻寬翻倍<br/>系統跟卡溝通更快。卡的響應更快。所有事情都更快<br/>你下班回家了。GTX 750 Ti 還在繼續算</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80b7-96ce-dbadbc64cbfa" class="">
+</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8096-be08-c7da3fdfce30" class=""><mark class="highlight-yellow"><strong>Stat badge 三個：</strong></mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8034-97c4-c4c6a2135425" class=""><mark class="highlight-yellow">640 Shader Cores</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8006-b73c-cc23b9c333ef" class=""><mark class="highlight-yellow">4GB GDDR5 Memory</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8065-94fd-c66fe7c1de2b" class=""><mark class="highlight-yellow">0W External Power Required</mark></p></div><div style="display:contents" dir="auto"><hr id="36bd24e8-7d86-8059-9f8c-de24cb17290c"/></div><div style="display:contents" dir="auto"><h3 id="36bd24e8-7d86-8091-b012-c9c258be3acd" class="">Capable</h3></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80b9-b06a-ef11faf1cc7b" class="">1080p Ready · DirectX 12 · 128-bit GDDR5</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8021-b7ea-ef97466eb988" class=""><mark class="highlight-yellow">視覺：左側文字，右側 GTX 750 Ti 散熱器側面大圖，紅色斜切線條在頂光下清晰可見，強調設計語言的攻擊感。圖片進入視口 opacity 0→1 + scale(0.97)→1，duration 1.2s</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80bd-bf77-f42367a7eed8" class="">DirectX 12 Support (Feature Level 11_0)<br/>DirectX is the language that games and applications use to talk to your graphics card. DirectX 12 is the current standard. The GTX 750 Ti speaks it. Modern software recognizes the card correctly and gives you stable, compatible output across all current platforms.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8081-b4a0-c488abc87fae" class=""><strong>Full HD — 1920 × 1080</strong><br/>Every pixel on a 1080p monitor, delivered correctly and at full speed. Gaming, editing, presentations, multi-monitor setups — all running at the resolution your displays were designed for.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8010-881e-c90282a6ad45" class=""><strong>GM107 Architecture · 28nm</strong><br/>Built on NVIDIA&#x27;s Maxwell architecture. 28nm process. Lower power per operation than its predecessors. 640 cores that do more with less — which is why 60W is enough.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8054-907e-c188ee2b0d41" class=""><strong>VGA + HDMI + DVI — Triple Output</strong><br/>One bracket. Three connections. Any monitor from any era. Any office, any studio, any deployment.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8067-8c31-d9a500933305" class="">
+</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80bb-b002-fd17e89aa45f" class=""><mark class="highlight-yellow">視覺：水平對比長條圖，三條並排</mark></p></div><div style="display:contents" dir="auto"><ul id="36bd24e8-7d86-807f-9c8c-e73e1c794a3e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">G210：16 Shader Cores / 1GB GDDR3 / 64-bit</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36bd24e8-7d86-80bc-81b0-cedbddded7db" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">GT730：96 Shader Cores / 4GB GDDR3 / 64-bit</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36bd24e8-7d86-801f-8057-e627c0ed2323" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">GTX 750 Ti：640 Shader Cores / 4GB GDDR5 / 128-bit</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-806a-ad2c-e2ec79066c81" class=""><mark class="highlight-yellow">動態：width 0→%，scroll trigger，stagger 間隔 300ms。GTX 750 Ti 那條明顯最長</mark></p></div><div style="display:contents" dir="auto"><hr id="36bd24e8-7d86-8060-bf18-cfb4f3ab4887"/></div><div style="display:contents" dir="auto"><h3 id="36bd24e8-7d86-807f-a467-f12968873765" class="">Reliability</h3></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-804b-bb3f-efe228eff644" class=""><strong>1,500,000 hr MTBF · 171 Years · Zero Maintenance</strong></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8036-850f-ef8cb95665cd" class=""><mark class="highlight-yellow">視覺：MTBF 大數字計數器，低飽和紅色光暈，下方雙軌時間軸（人類航空史 vs GTX 750 Ti 理論壽命），同 GT730 邏輯。</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8026-919f-e6b101d6bfca" class="">Not because it&#x27;s the loudest card in the room.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8084-9aad-d7304ee49b8a" class="">Because it&#x27;s the one still running when you&#x27;ve forgotten you own it.<br/>MTBF — Mean Time Between Failures — is the industry standard for measuring how long a component is expected to run before something goes wrong.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80d2-b8fe-daedff6acd64" class="">The GTX 750 Ti is rated at 1,500,000 hours. That&#x27;s 171 years.<br/>It outlives the entire history of flight — from the Wright brothers to your next boarding pass.<br/>It was already ready. It will still be ready.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80fa-912e-c106a21c50f5" class=""><mark class="highlight-yellow"><strong>Stat badge ：</strong></mark><mark class="highlight-yellow"><code>171 Years</code></mark><mark class="highlight-yellow">  /  </mark><mark class="highlight-yellow"><code>1,500,000 Hours MTBF</code></mark></p></div><div style="display:contents" dir="auto"><hr id="36bd24e8-7d86-80f7-8f9f-f9823cec9c90"/></div><div style="display:contents" dir="auto"><h3 id="36bd24e8-7d86-8093-b67a-c2d4aab598a3" class="">Packaging Design</h3></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8046-89b0-dc9636c46034" class=""><mark class="highlight-yellow">視覺：包裝盒斜角 30 度展示（包裝設計確認後補充視覺說明）。延續 Red Talon 設計語言，黑色底調搭配紅色線條。<br/>動態：translateX(-30px) + rotateY(5°)→(0°) 淡入，duration 1.4s ease-out</mark></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8094-a9ce-d16c86bb1880" class=""><strong>Foam-Cushioned Inner Tray</strong> — The card sits in a dedicated foam slot, fully protected from transit shock.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-8048-ae66-d4729c0d3abf" class=""><strong>Anti-Static Bag Protection</strong> — The card is sealed in an anti-static bag before being placed in the tray. Electrostatic discharge protection throughout transit and handling.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80e4-bae7-edd289b4b1bc" class=""><strong>Full Spec on Pack</strong> — Model number, capacity, and key specs clearly printed on the outer box. Warehouse receiving requires no unboxing.</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-809b-b0d3-fa09c390d709" class=""><strong>Global Certifications</strong> — CE · RoHS · FCC · REACH. Compliant for EU, US, and international markets.<br/>SPECIFICATIONS</p></div><div style="display:contents" dir="auto"><hr id="36bd24e8-7d86-8018-9433-f4c5e0a5d082"/></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80d0-99a1-feaa173303fb" class="">Engineered for 1080p performance, broad software compatibility, and zero-maintenance deployment.</p></div><div style="display:contents" dir="ltr"><table id="36bd24e8-7d86-80f6-9e0e-c669ac2f4805" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-8044-ac9c-c34a58fa5eb1"><th id=":?qv" class="simple-table-header-color simple-table-header"></th><th id="&lt;NNk" class="simple-table-header-color simple-table-header"></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-8027-b68e-c66972ac24ca"><td id=":?qv" class=""><strong>Architecture</strong></td><td id="&lt;NNk" class="">GM107 · 28nm</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-8000-a556-d1e0e7103fef"><td id=":?qv" class=""><strong>Stream Processors</strong></td><td id="&lt;NNk" class="">640</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-80d2-b8de-d8e715e20513"><td id=":?qv" class=""><strong>Core Frequency</strong></td><td id="&lt;NNk" class="">1020 MHz</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-808d-933e-dc3dc072a8b5"><td id=":?qv" class=""><strong>Memory Type</strong></td><td id="&lt;NNk" class="">GDDR5</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-8054-b6aa-d2cb214e5394"><td id=":?qv" class=""><strong>Memory Capacity</strong></td><td id="&lt;NNk" class="">4 GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-8057-be78-e9c2c299a8f5"><td id=":?qv" class=""><strong>Memory Frequency</strong></td><td id="&lt;NNk" class="">1250 MHz</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-808b-be41-e09b53f30def"><td id=":?qv" class=""><strong>Memory Bus Width</strong></td><td id="&lt;NNk" class="">128-bit</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-8015-9eda-ee8abd49cb2b"><td id=":?qv" class=""><strong>Bus Interface</strong></td><td id="&lt;NNk" class="">PCIe 3.0 × 16</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-80b1-add8-d8446ecea4a2"><td id=":?qv" class=""><strong>Display Outputs</strong></td><td id="&lt;NNk" class="">VGA + HDMI + DVI</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-80cb-b3ec-f2cedc056fad"><td id=":?qv" class=""><strong>Max Resolution</strong></td><td id="&lt;NNk" class="">1920 × 1080</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-807b-8301-c94542aa92fb"><td id=":?qv" class=""><strong>DirectX Support</strong></td><td id="&lt;NNk" class="">DirectX 12 (11_0)</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-809c-98ba-c4fa3c852654"><td id=":?qv" class=""><strong>External Power</strong></td><td id="&lt;NNk" class="">Not Required</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-8085-812e-cd16629c251d"><td id=":?qv" class=""><strong>Power Consumption</strong></td><td id="&lt;NNk" class="">60W</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-80c6-8697-eb9d35b00fc2"><td id=":?qv" class=""><strong>Recommended PSU</strong></td><td id="&lt;NNk" class="">250W and above</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-80d2-9480-e52af490c1fb"><td id=":?qv" class=""><strong>Cooling Solution</strong></td><td id="&lt;NNk" class="">Single Fan</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-8093-8719-fcbc421d4fcb"><td id=":?qv" class=""><strong>Dimensions</strong></td><td id="&lt;NNk" class="">160 × 111 × 37 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-803b-b12e-e5a6f6da741b"><td id=":?qv" class=""><strong>OS Support</strong></td><td id="&lt;NNk" class="">Windows 10 / Windows 11</td></tr></div><div style="display:contents" dir="ltr"><tr id="36bd24e8-7d86-8059-86c3-fbee16d2241d"><td id=":?qv" class=""><strong>Market Positioning</strong></td><td id="&lt;NNk" class="">Entry-Level</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-800e-b066-cdc03dadcd08" class="">視覺：規格表下方放「下載規格表」按鈕 + 「瀏覽其他產品」按鈕</p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-80b4-a404-d4c43ed98973" class=""><em>All specifications sourced from Simorchip internal documentation. Actual performance may vary depending on system configuration and operating environment.</em></p></div><div style="display:contents" dir="auto"><hr id="36bd24e8-7d86-80a6-ae08-cdd7111439a6"/></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-802e-996c-f489343e5efb" class=""><strong>Simorchip GTX 750 TiMore. Faster. Still silent.</strong></p></div><div style="display:contents" dir="auto"><p id="36bd24e8-7d86-801f-830b-f99729853768" class="">Red lines don&#x27;t lie.</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
