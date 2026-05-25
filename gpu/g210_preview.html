@@ -538,14 +538,10 @@ section{position:relative;width:100%;overflow:hidden;}
     <div class="pkg-layout">
       <div class="fi" style="opacity:0;transform:translateX(-28px) translateY(0);transition:opacity 1.4s ease,transform 1.4s ease;" id="pkgCard">
         <div class="pkg-card">
-          <div class="pkg-hang-area"><div class="pkg-hang-hole"></div></div>
-          <div class="pkg-art">
-            <div class="pkg-art-ray"></div>
-            <div class="pkg-art-horizon"></div>
-            <span class="pkg-art-figure" style="left:15%;">🧎</span>
-            <span class="pkg-art-figure" style="left:40%;font-size:14px;opacity:.5;">🧎</span>
-            <span class="pkg-art-figure" style="right:25%;font-size:12px;opacity:.35;">🧎</span>
-            <div class="pkg-nvidia">GeForce G210</div>
+          <div class="pkg-art" style="background:#0a0908;position:relative;overflow:hidden;">
+            <canvas id="sandCanvas" width="230" height="120" style="position:absolute;top:0;left:0;width:100%;height:100%;display:block;"></canvas>
+            <div style="position:absolute;bottom:6px;left:8px;font-family:var(--ff-d);font-size:22px;letter-spacing:.02em;color:rgba(245,240,232,.82);line-height:1;transform:skewX(-4deg);">G210<span style="font-size:.42em;color:rgba(200,184,135,.5);display:block;letter-spacing:.04em;">1GB GDDR3</span></div>
+            <div style="position:absolute;bottom:6px;right:8px;font-family:var(--ff-b);font-size:7px;font-weight:700;color:var(--nvidia);letter-spacing:.04em;opacity:.8;">GeForce</div>
           </div>
           <div class="pkg-body">
             <span class="pkg-brand-t">Simorchip</span>
@@ -566,7 +562,6 @@ section{position:relative;width:100%;overflow:hidden;}
         <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:20px;">What's in the box</div>
         <div class="pkg-feat-list">
           <div class="pkg-feat-item"><div class="pkg-feat-icon">⚡</div><div><div class="pkg-feat-nm">Anti-Static Protection</div><div class="pkg-feat-ds">The card is wrapped in anti-static material throughout transit and unboxing.<br>產品以防靜電材料包覆，運送與拆箱過程完整保護。</div></div></div>
-          <div class="pkg-feat-item"><div class="pkg-feat-icon">👁️</div><div><div class="pkg-feat-nm">Product-Visible Window</div><div class="pkg-feat-ds">Confirm the model before opening. No guesswork, no returns.<br>開箱前即可確認型號，不需要拆封，不需要猜測。</div></div></div>
           <div class="pkg-feat-item"><div class="pkg-feat-icon">📋</div><div><div class="pkg-feat-nm">Full Spec on Pack</div><div class="pkg-feat-ds">Model number, serial number, barcode. Warehouse receiving requires no unboxing.<br>型號、序號、條碼清晰標示，倉儲收料不需要開箱確認。</div></div></div>
           <div class="pkg-feat-item"><div class="pkg-feat-icon">✅</div><div><div class="pkg-feat-nm">Global Certifications</div><div class="pkg-feat-ds">CE · RoHS · FCC · REACH. Compliant for EU, US, and international markets.<br>CE · RoHS · FCC · REACH，歐美與國際市場合規。</div></div></div>
         </div>
@@ -820,6 +815,105 @@ document.fonts.ready.then(()=>{
     }
   },{threshold:.1}).observe(tbl);
 })();
+/* ── SAND DUST CANVAS — Packaging ── */
+(function(){
+  const cv=document.getElementById('sandCanvas');if(!cv)return;
+  const W=cv.width,H=cv.height;
+  const ctx=cv.getContext('2d');
+  let t=0;
+
+  // Sand particles
+  const particles=Array.from({length:60},()=>({
+    x:Math.random()*W,
+    y:Math.random()*H,
+    size:Math.random()*1.6+.3,
+    speedX:(Math.random()-.3)*.4,
+    speedY:(Math.random()-.5)*.15,
+    opacity:Math.random()*.35+.05,
+    drift:Math.random()*Math.PI*2,
+    driftSpeed:Math.random()*.008+.003,
+  }));
+
+  // Wind streak pools
+  const streaks=Array.from({length:5},()=>({
+    y:Math.random()*H,
+    progress:Math.random(),
+    speed:Math.random()*.006+.003,
+    opacity:0,
+    targetOpacity:Math.random()*.18+.04,
+    width:Math.random()*60+30,
+    phase:Math.random()*Math.PI*2,
+  }));
+
+  function draw(){
+    // Background — deep sand-black gradient
+    const bg=ctx.createLinearGradient(0,0,W,H);
+    bg.addColorStop(0,'#0c0b08');
+    bg.addColorStop(.5,'#111008');
+    bg.addColorStop(1,'#0a0908');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+    // Subtle horizon glow — low amber
+    const hg=ctx.createRadialGradient(W*.55,H*.6,0,W*.55,H*.6,W*.7);
+    hg.addColorStop(0,'rgba(180,140,60,.04)');
+    hg.addColorStop(.5,'rgba(120,90,30,.02)');
+    hg.addColorStop(1,'transparent');
+    ctx.fillStyle=hg;ctx.fillRect(0,0,W,H);
+
+    // Wind streaks — horizontal fine lines
+    streaks.forEach(s=>{
+      s.progress+=s.speed;
+      if(s.progress>1){
+        s.progress=0;
+        s.y=Math.random()*H;
+        s.targetOpacity=Math.random()*.18+.04;
+        s.width=Math.random()*60+30;
+      }
+      // fade in/out
+      const fadePos=s.progress<.15?s.progress/.15:s.progress>.85?(1-s.progress)/.15:1;
+      const op=s.targetOpacity*fadePos;
+      const x=s.progress*W;
+      const gy=ctx.createLinearGradient(x-s.width*.5,0,x+s.width*.5,0);
+      gy.addColorStop(0,'transparent');
+      gy.addColorStop(.3,`rgba(200,175,100,${op})`);
+      gy.addColorStop(.5,`rgba(220,190,110,${op*1.3})`);
+      gy.addColorStop(.7,`rgba(200,175,100,${op})`);
+      gy.addColorStop(1,'transparent');
+      ctx.beginPath();
+      ctx.moveTo(x-s.width*.5,s.y);
+      ctx.lineTo(x+s.width*.5,s.y+Math.sin(s.phase+t)*1.5);
+      ctx.strokeStyle=gy;ctx.lineWidth=.7;ctx.stroke();
+    });
+
+    // Sand particles
+    particles.forEach(p=>{
+      p.x+=p.speedX+Math.sin(p.drift+t*p.driftSpeed)*.3;
+      p.y+=p.speedY+Math.cos(p.drift+t*p.driftSpeed*.7)*.1;
+      // wrap
+      if(p.x>W+2)p.x=-2;
+      if(p.x<-2)p.x=W+2;
+      if(p.y>H+2)p.y=-2;
+      if(p.y<-2)p.y=H+2;
+
+      const alpha=p.opacity*(0.7+Math.sin(t*.8+p.drift)*.3);
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fillStyle=`rgba(200,175,110,${alpha})`;
+      ctx.fill();
+    });
+
+    // Fine dust haze — very subtle top layer
+    const haze=ctx.createLinearGradient(0,0,W,H*.6);
+    haze.addColorStop(0,'rgba(160,140,80,.03)');
+    haze.addColorStop(1,'transparent');
+    ctx.fillStyle=haze;ctx.fillRect(0,0,W,H*.6);
+
+    t+=0.012;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
 </script>
 </body>
 </html>
