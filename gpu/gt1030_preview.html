@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip GT1030 2GB GDDR5D — Same soul. More room.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1a1500;--bg2:#201900;--surface:#2a2200;--surface2:#332b00;
+  --green:#76b900;--green2:#5a8f00;--green3:rgba(118,185,0,.15);
+  --green-glow:rgba(118,185,0,.08);
+  --gold:#c8a84a;--gold2:#a88830;--gold3:rgba(200,168,74,.15);
+  --gold-dim:rgba(200,168,74,.2);
+  --white:#f5f0e8;--mute:#c8b870;--label:#8a7840;
+  --border:rgba(200,168,74,.2);--line:rgba(200,168,74,.1);
+  --green-border:rgba(118,185,0,.25);
+  --ff-d:'Bebas Neue',sans-serif;
+  --ff-b:'Barlow Condensed',sans-serif;
+  --ff-m:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff-b);background:var(--bg);color:var(--white);overflow-x:hidden;cursor:none;}
+
+/* GRAIN */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.2;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size:180px;mix-blend-mode:overlay;}
+
+/* INSTRUMENT GRID BG */
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.04;
+  background-image:linear-gradient(var(--gold) 1px,transparent 1px),linear-gradient(90deg,var(--gold) 1px,transparent 1px);
+  background-size:60px 60px;}
+
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;background:var(--green);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);box-shadow:0 0 10px var(--green);}
+#cur-ring{position:fixed;width:32px;height:32px;border:1px solid var(--gold);border-radius:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%) rotate(45deg);transition:width .18s,height .18s;}
+.trail-dot{position:fixed;border-radius:50%;background:var(--green);pointer-events:none;z-index:9990;transform:translate(-50%,-50%);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:18px 5%;transition:background .3s;}
+nav.sc{background:rgba(26,21,0,.96);backdrop-filter:blur(14px);border-bottom:.5px solid var(--border);}
+.nb{display:flex;flex-direction:column;gap:2px;}
+.nb-s{font-family:var(--ff-m);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);opacity:.8;}
+.nb-b{font-family:var(--ff-m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--white);opacity:.22;}
+.np{display:flex;gap:5px;}
+.np a{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--label);border:.5px solid var(--border);padding:4px 9px;cursor:pointer;text-decoration:none;transition:all .2s;}
+.np a:hover,.np a.on{color:var(--bg);border-color:var(--green);background:var(--green);}
+
+/* SHARED */
+section{position:relative;width:100%;overflow:hidden;}
+.full{min-height:100vh;}
+/* Gold→Green arc line */
+.arc-line{height:1px;background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--green) 60%,transparent);width:0;transition:width 1s ease;}
+.arc-line.on{width:56px;}
+.fi{opacity:0;transform:translateY(20px);transition:opacity .9s ease,transform .9s ease;}
+.fi.vis{opacity:1;transform:none;}
+.fi-d1{transition-delay:.12s;}.fi-d2{transition-delay:.24s;}.fi-d3{transition-delay:.36s;}.fi-d4{transition-delay:.48s;}
+.tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.07em;color:var(--label);border:.5px solid var(--border);padding:4px 11px;display:inline-block;background:rgba(200,168,74,.04);}
+.tag::before{content:'#';color:var(--green);margin-right:2px;}
+.stat-badge{display:inline-flex;flex-direction:column;align-items:flex-start;border:.5px solid var(--border);padding:18px 22px;background:rgba(200,168,74,.04);transition:border-color .3s,background .3s,box-shadow .3s;}
+.stat-badge:hover{border-color:var(--green);background:var(--green3);box-shadow:0 0 18px rgba(118,185,0,.12);}
+.stat-badge .num{font-family:var(--ff-d);font-size:clamp(26px,4vw,52px);letter-spacing:.02em;color:var(--white);line-height:1;}
+.stat-badge .lbl{font-size:11px;font-weight:500;letter-spacing:.1em;color:var(--mute);margin-top:4px;text-transform:uppercase;font-family:var(--ff-m);}
+.img-ph{background:linear-gradient(135deg,#2a2200,#1a1500);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:.5px solid var(--border);}
+.img-ph span{font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(200,168,74,.25);text-align:center;line-height:2.2;padding:0 16px;}
+.sec-wrap{padding:100px 6% 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto;}
+.sec-wrap.rev{direction:rtl;}.sec-wrap.rev>*{direction:ltr;}
+.sh-num{font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;color:var(--label);margin-bottom:14px;text-transform:uppercase;}
+.sh-title{font-family:var(--ff-d);font-size:clamp(64px,9vw,120px);letter-spacing:.02em;color:var(--white);line-height:.88;margin-bottom:8px;}
+.sh-sub{font-family:var(--ff-m);font-size:11px;letter-spacing:.1em;color:var(--label);text-transform:uppercase;margin-bottom:28px;}
+.bullet-list{list-style:none;margin-top:24px;}
+.bullet-list li{padding:14px 0;border-bottom:.5px solid var(--line);font-size:16px;font-weight:400;line-height:1.75;color:var(--mute);display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;}
+.bullet-list li:last-child{border-bottom:none;}
+.bullet-list .bi{width:28px;height:28px;border:.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.bullet-list .bi svg{width:13px;height:13px;stroke:var(--green);fill:none;stroke-width:1.5;}
+.bullet-list strong{font-weight:600;color:var(--white);}
+.btn{font-family:var(--ff-b);font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:transparent;cursor:pointer;transition:all .22s;}
+.btn-green{border:1px solid var(--green);color:var(--green);}.btn-green:hover{background:var(--green);color:var(--bg);box-shadow:0 0 20px rgba(118,185,0,.3);}
+.btn-ghost{border:1px solid var(--border);color:var(--gold);}.btn-ghost:hover{background:var(--gold);color:var(--bg);}
+
+/* section dividers — gold arc */
+#s01::before,#s02::before,#s03::before,#s04::before,#s05::before,#s06::before{
+  content:'';display:block;position:absolute;top:0;left:0;height:1px;width:0;
+  background:linear-gradient(90deg,transparent,var(--gold) 25%,var(--green) 65%,transparent);
+  transition:width .9s cubic-bezier(.16,1,.3,1);z-index:2;
+}
+#s01.div-on::before,#s02.div-on::before,#s03.div-on::before,
+#s04.div-on::before,#s05.div-on::before,#s06.div-on::before{width:100%;}
+
+/* ── HERO ── */
+#s00{display:flex;align-items:center;padding-top:80px;min-height:100vh;background:var(--bg);}
+
+/* Instrument atmosphere */
+.inst-bg{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.inst-glow1{position:absolute;top:20%;right:5%;width:460px;height:360px;border-radius:50%;background:radial-gradient(ellipse,rgba(118,185,0,.05) 0%,transparent 70%);animation:glowPulse 7s ease-in-out infinite;}
+.inst-glow2{position:absolute;bottom:10%;right:25%;width:280px;height:220px;border-radius:50%;background:radial-gradient(ellipse,rgba(200,168,74,.04) 0%,transparent 70%);animation:glowPulse 7s ease-in-out infinite 2.5s;}
+@keyframes glowPulse{0%,100%{opacity:.5;}50%{opacity:1;}}
+/* Scanning line */
+.inst-scan{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(118,185,0,.15),transparent);animation:scanLine 8s linear infinite;}
+@keyframes scanLine{0%{top:0;opacity:0;}5%{opacity:1;}95%{opacity:.3;}100%{top:100vh;opacity:0;}}
+
+/* GT1030 CARD illustration */
+.h-right{position:absolute;right:0;top:0;bottom:0;width:52%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(36px);transition:opacity 1.8s ease .2s,transform 1.8s ease .2s;}
+.h-right.on{opacity:1;transform:translateX(0);}
+.gt1030-wrap{width:82%;max-width:500px;position:relative;}
+.gt1030-wrap::before{content:'';position:absolute;inset:-80px;z-index:-1;background:radial-gradient(ellipse 65% 40% at 55% 55%,rgba(118,185,0,.07) 0%,transparent 70%);}
+@keyframes cardFloat1030{0%,100%{transform:translateY(0px) rotate(-1.2deg);}50%{transform:translateY(-7px) rotate(-1.2deg);}}
+.gt1030-body{width:100%;aspect-ratio:2.25/1;background:linear-gradient(148deg,#221c00 0%,#0e0c00 100%);position:relative;overflow:hidden;border-radius:4px;border:.5px solid rgba(200,168,74,.25);box-shadow:0 40px 120px rgba(0,0,0,.9),0 0 60px rgba(118,185,0,.05);animation:cardFloat1030 7s ease-in-out infinite;}
+@keyframes glint{0%{left:-40%;opacity:0;}8%{opacity:1;}92%{opacity:.3;}100%{left:140%;opacity:0;}}
+.gt1030-body::after{content:'';position:absolute;top:0;left:-40%;width:10%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),rgba(255,255,255,.08),rgba(255,255,255,.05),transparent);animation:glint 8s ease-in-out infinite 5s;pointer-events:none;z-index:10;}
+
+/* Heatsink — modern angular */
+.gt1030-hs{position:absolute;right:0;top:0;bottom:0;width:58%;background:linear-gradient(145deg,#2a2200,#0e0c00);border-left:.5px solid rgba(200,168,74,.12);}
+/* Gold slash lines — the Gold Edge */
+.gt1030-slash1{position:absolute;top:18%;left:10%;width:55%;height:2.5px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2));transform:rotate(0deg);opacity:.8;box-shadow:0 0 6px rgba(200,168,74,.4);}
+.gt1030-slash2{position:absolute;top:25%;left:10%;width:40%;height:1.5px;background:linear-gradient(90deg,transparent,var(--gold2));transform:rotate(0deg);opacity:.5;}
+.gt1030-slash3{position:absolute;bottom:22%;left:10%;width:55%;height:2.5px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2));transform:rotate(0deg);opacity:.7;box-shadow:0 0 6px rgba(200,168,74,.35);}
+.gt1030-slash4{position:absolute;bottom:15%;left:10%;width:40%;height:1.5px;background:linear-gradient(90deg,transparent,var(--gold2));transform:rotate(0deg);opacity:.4;}
+/* Fins */
+.gt1030-fins-wrap{position:absolute;inset:0;display:flex;flex-direction:column;gap:2px;padding:5px;}
+.gt1030-fin{flex:1;background:linear-gradient(90deg,#2a2200,#201800);border-radius:1px;border:.3px solid rgba(200,168,74,.06);}
+/* Fan */
+.gt1030-fan-pos{position:absolute;right:8%;top:50%;transform:translateY(-50%);width:60%;aspect-ratio:1;}
+.gt1030-fan-ring{position:absolute;border-radius:50%;border:.5px solid rgba(200,168,74,.12);}
+.gt1030-fr1{inset:0;background:rgba(14,12,0,.7);}
+.gt1030-fr2{inset:10%;}
+.gt1030-fr3{inset:22%;}
+.gt1030-blades{position:absolute;inset:0;animation:fanSpin1030 5s linear infinite;}
+@keyframes fanSpin1030{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.gt1030-blade{position:absolute;top:50%;left:50%;width:48%;height:7%;transform-origin:0 50%;background:linear-gradient(90deg,rgba(200,168,74,.12),transparent);border-radius:0 20px 20px 0;}
+.gt1030-fan-hub{position:absolute;inset:44%;background:radial-gradient(circle,#2a2200,#0e0c00);border-radius:50%;border:.5px solid rgba(118,185,0,.3);display:flex;align-items:center;justify-content:center;}
+.gt1030-fan-hub::after{content:'';width:32%;height:32%;background:var(--green);border-radius:50%;opacity:.7;box-shadow:0 0 8px rgba(118,185,0,.5);}
+.gt1030-fan-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--ff-b);font-size:6px;font-weight:700;letter-spacing:.06em;color:var(--gold);opacity:.8;z-index:5;white-space:nowrap;}
+
+/* PCB */
+.gt1030-pcb{position:absolute;left:0;top:0;bottom:0;right:42%;background:linear-gradient(145deg,#1e1800,#0e0c00);}
+.gt1030-brand{position:absolute;top:50%;left:2%;transform:translateY(-50%);padding-left:8px;}
+.gt1030-brand-name{font-family:var(--ff-m);font-size:5px;letter-spacing:.2em;color:rgba(255,255,255,.3);text-transform:uppercase;display:block;}
+.gt1030-model{font-family:var(--ff-d);font-size:18px;letter-spacing:.04em;color:var(--white);line-height:1;display:block;}
+.gt1030-sub{font-family:var(--ff-m);font-size:5px;letter-spacing:.1em;color:rgba(200,168,74,.5);text-transform:uppercase;display:block;margin-top:2px;}
+.gt1030-ports{position:absolute;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;}
+.gt1030-port{width:5px;height:14px;background:rgba(255,255,255,.07);border-radius:1px 0 0 1px;border:.3px solid rgba(255,255,255,.04);}
+/* Top edge — gold to green */
+.gt1030-glow{position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent 5%,var(--gold) 35%,var(--green) 65%,transparent 95%);opacity:.6;}
+.gt1030-nvidia{position:absolute;bottom:8%;left:42%;font-family:var(--ff-b);font-size:6px;font-weight:700;letter-spacing:.06em;color:var(--green);opacity:.8;}
+
+/* hero */
+.h-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,var(--bg) 0%,var(--bg) 16%,rgba(26,21,0,.55) 42%,transparent 62%);}
+.h-left{position:relative;z-index:3;padding:0 0 0 6%;flex:1;max-width:580px;}
+.h-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--label);margin-bottom:28px;opacity:0;transition:opacity .5s ease;}
+.h-eye.on{opacity:1;}
+.h-hl{line-height:.88;margin-bottom:28px;opacity:0;transition:opacity .4s ease;}
+.h-hl.on{opacity:1;}
+.hl-ln{display:block;font-family:var(--ff-d);font-size:clamp(56px,8vw,98px);letter-spacing:.01em;opacity:0;transform:translateY(16px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1);}
+.hl-ln.in{opacity:1;transform:none;}
+.hl-wh{color:var(--white);}
+.hl-gn{color:var(--green);text-shadow:0 0 30px rgba(118,185,0,.4);}
+.hl-gd{color:var(--gold);}
+.h-sub{font-size:17px;font-weight:400;line-height:1.85;color:var(--mute);max-width:380px;margin-top:20px;opacity:0;transition:opacity .8s ease;}
+.h-sub.on{opacity:1;}
+.h-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:20px;opacity:0;transition:opacity .5s ease;}
+.h-tags.on{opacity:1;}
+.scr-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0;transition:opacity .5s;z-index:4;}
+.scr-hint.on{opacity:1;}
+.scr-ln{width:1px;height:28px;background:var(--border);position:relative;overflow:hidden;}
+.scr-ln::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--green);animation:scrdn 1.4s ease infinite 2.5s;}
+@keyframes scrdn{0%{top:-100%}100%{top:100%}}
+.scr-lb{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;color:var(--label);text-transform:uppercase;}
+
+/* ── S01 GOLD EDGE ── */
+#s01{background:var(--bg2);padding:100px 6%;}
+.s01-in{max-width:1080px;margin:0 auto;}
+.bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.bl-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.bl-title{font-family:var(--ff-d);font-size:clamp(44px,6vw,74px);letter-spacing:.02em;color:var(--white);line-height:.96;margin-bottom:20px;}
+.bl-body{font-size:16px;font-weight:400;line-height:1.9;color:var(--mute);margin-bottom:24px;}
+.bl-quote{font-size:14px;font-weight:400;letter-spacing:.03em;color:var(--gold);padding:14px 0;border-top:.5px solid var(--gold-dim);border-bottom:.5px solid var(--gold-dim);font-style:italic;line-height:1.7;}
+/* D section */
+.d-explain{margin-top:40px;padding:28px;border:.5px solid var(--border);background:rgba(200,168,74,.03);}
+.d-letter{font-family:var(--ff-d);font-size:clamp(60px,8vw,100px);color:var(--gold);line-height:1;float:left;margin-right:18px;text-shadow:0 0 30px rgba(200,168,74,.3);}
+.d-body{font-size:15px;color:var(--mute);line-height:1.9;}
+.d-body strong{color:var(--white);}
+/* WHY */
+.why-wrap{margin-top:80px;padding-top:64px;border-top:.5px solid var(--line);}
+.why-title{font-family:var(--ff-d);font-size:clamp(40px,5.5vw,64px);color:var(--white);margin-bottom:10px;}
+.why-body{font-size:16px;color:var(--mute);line-height:1.9;margin-bottom:28px;max-width:680px;}
+.why-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.why-card{border:.5px solid var(--border);padding:22px 18px;background:rgba(200,168,74,.025);transition:border-color .25s,background .25s,box-shadow .25s;}
+.why-card:hover{border-color:var(--green);background:var(--green3);box-shadow:0 0 18px rgba(118,185,0,.1);}
+.why-card .wc-icon{font-size:22px;margin-bottom:12px;display:block;}
+.why-card .wc-t{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--white);margin-bottom:6px;}
+.why-card .wc-b{font-size:14px;color:var(--mute);line-height:1.65;}
+
+/* ── S02 NONSTOP ── */
+#s02{background:var(--bg);}
+.big-num{font-family:var(--ff-d);font-size:clamp(100px,16vw,220px);letter-spacing:-.02em;color:var(--gold);line-height:.85;opacity:.05;position:absolute;top:-40px;left:-20px;pointer-events:none;user-select:none;}
+.ns-cards{display:flex;flex-direction:column;gap:10px;margin-top:28px;}
+.ns-card{border:.5px solid var(--border);padding:20px 22px;background:rgba(200,168,74,.025);transition:border-color .25s,background .25s;}
+.ns-card:hover{border-color:var(--green);background:var(--green3);}
+.ns-card-h{font-family:var(--ff-b);font-size:15px;font-weight:700;color:var(--white);letter-spacing:.04em;margin-bottom:8px;}
+.ns-card-b{font-size:15px;color:var(--mute);line-height:1.7;}
+
+/* Efficiency chart */
+.eff-chart{margin-top:28px;}
+.eff-title{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin-bottom:16px;}
+.eff-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.eff-lbl{font-family:var(--ff-m);font-size:9px;color:var(--label);width:80px;flex-shrink:0;text-transform:uppercase;letter-spacing:.06em;}
+.eff-track{flex:1;height:6px;background:rgba(200,168,74,.08);border-radius:3px;overflow:hidden;position:relative;}
+.eff-fill{height:100%;border-radius:3px;width:0;transition:width 1.6s cubic-bezier(.16,1,.3,1);}
+.eff-fill.g210{background:rgba(78,205,196,.3);}
+.eff-fill.gtx{background:rgba(255,45,120,.35);}
+.eff-fill.gt1030{background:var(--green);box-shadow:0 0 10px rgba(118,185,0,.5);}
+.eff-fill.gt1030::after{content:'Most Efficient';position:absolute;right:6px;top:50%;transform:translateY(-50%);font-family:var(--ff-m);font-size:7px;color:var(--bg);white-space:nowrap;letter-spacing:.06em;}
+.eff-val{font-family:var(--ff-d);font-size:13px;width:60px;text-align:right;flex-shrink:0;}
+.eff-val.gn{color:var(--green);}
+
+/* ── S03 CAPABLE ── */
+#s03{background:var(--bg2);}
+.capable-grid{padding:100px 6% 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto;}
+
+/* ── S04 RELIABILITY ── */
+#s04{background:var(--bg);}
+.mtbf-display{border:.5px solid rgba(118,185,0,.3);padding:22px 28px;background:rgba(118,185,0,.04);text-align:center;margin-bottom:20px;}
+.mtbf-num{font-family:var(--ff-d);font-size:clamp(24px,4vw,50px);letter-spacing:.04em;color:var(--green);line-height:1;text-shadow:0 0 30px rgba(118,185,0,.3);}
+.mtbf-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);margin-top:5px;opacity:.6;}
+/* Dual timeline */
+.flight-tl{margin:24px 0;}
+.flt-section-lbl{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;}
+.flt-section-lbl.human{color:var(--label);}
+.flt-section-lbl.gpu{color:var(--green);}
+.flt-row{position:relative;margin-bottom:36px;}
+.flt-track{position:relative;height:2px;background:rgba(118,185,0,.1);}
+.flt-track.human-track{background:rgba(160,155,100,.1);}
+.flt-fill{position:absolute;left:0;top:0;height:100%;width:0;transition:width 1.6s ease;}
+.flt-fill.human-fill{background:linear-gradient(90deg,rgba(160,155,100,.4),rgba(160,155,100,.7));}
+.flt-fill.gpu-fill{background:linear-gradient(90deg,var(--gold),var(--green));box-shadow:0 0 8px rgba(118,185,0,.4);}
+.flt-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:var(--bg);z-index:2;}
+.flt-dot.human-dot{border:1.5px solid rgba(160,155,100,.5);}
+.flt-dot.gpu-dot{border:1.5px solid var(--green);}
+.flt-dot.gpu-dot.install{border-color:var(--gold);box-shadow:0 0 6px rgba(200,168,74,.4);}
+.flt-label{position:absolute;font-family:var(--ff-m);font-size:7px;white-space:nowrap;top:10px;transform:translateX(-50%);}
+.flt-label.human-lbl{color:rgba(160,155,100,.6);}
+.flt-label.gpu-lbl{color:var(--green);}
+.flt-label.gpu-lbl.install-lbl{color:var(--gold);}
+.flt-label.right-align{transform:translateX(-100%);}
+.flt-plane{position:absolute;top:-11px;font-size:13px;transition:left 1.6s ease;opacity:.6;}
+.flt-divider{height:.5px;background:var(--line);margin:4px 0 20px;}
+.flt-compare-note{font-family:var(--ff-m);font-size:9px;color:var(--label);margin-top:4px;}
+.flt-compare-note strong{color:var(--green);}
+.rel-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;}
+
+/* ── S05 PACKAGING ── */
+#s05{background:var(--bg2);padding:100px 6%;}
+.pkg-in{max-width:1100px;margin:0 auto;}
+.pkg-layout{display:grid;grid-template-columns:260px 1fr;gap:60px;align-items:start;}
+.pkg-card{width:232px;background:#100e00;border-radius:4px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.8),0 0 40px rgba(118,185,0,.05);}
+.pkg-art{height:110px;position:relative;overflow:hidden;background:#0e0c00;}
+.pkg-art canvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block;}
+.pkg-model-overlay{position:absolute;bottom:6px;left:8px;font-family:var(--ff-d);font-size:18px;letter-spacing:.02em;color:rgba(245,240,232,.85);line-height:1;z-index:2;}
+.pkg-model-overlay span{font-size:.4em;color:rgba(200,168,74,.6);display:block;letter-spacing:.06em;}
+.pkg-nvidia-badge{position:absolute;bottom:7px;right:8px;font-family:var(--ff-b);font-size:7px;font-weight:700;color:var(--green);letter-spacing:.04em;opacity:.85;z-index:2;}
+.pkg-body{padding:10px 14px 8px;}
+.pkg-brand-t{font-family:var(--ff-b);font-size:8px;font-weight:300;letter-spacing:.16em;color:rgba(255,255,255,.35);text-transform:uppercase;display:block;}
+.pkg-stripe{height:2px;background:linear-gradient(90deg,var(--gold) 0%,var(--green) 50%,rgba(118,185,0,.2) 80%,transparent);margin:8px 0;}
+.pkg-cap-row{display:flex;align-items:center;gap:10px;padding:4px 0 8px;}
+.pkg-cap{font-family:var(--ff-d);font-size:28px;color:var(--white);line-height:1;}
+.pkg-spd{font-family:var(--ff-b);font-size:8px;color:var(--label);text-transform:uppercase;letter-spacing:.06em;line-height:1.5;}
+.pkg-spd strong{font-family:var(--ff-d);font-size:14px;color:var(--green);display:block;}
+.pkg-certs{display:flex;gap:4px;padding:6px 14px;border-top:.5px solid rgba(200,168,74,.1);}
+.pkg-cert{font-family:var(--ff-m);font-size:6.5px;color:var(--label);border:.5px solid rgba(200,168,74,.15);padding:2px 4px;}
+.pkg-feat-list{display:flex;flex-direction:column;}
+.pkg-feat-item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:.5px solid var(--line);}
+.pkg-feat-item:last-child{border-bottom:none;}
+.pkg-feat-icon{font-size:15px;flex-shrink:0;padding-top:2px;}
+.pkg-feat-nm{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--white);margin-bottom:4px;}
+.pkg-feat-ds{font-size:14px;color:var(--mute);line-height:1.65;}
+
+/* ── S06 SPECS ── */
+#s06{background:var(--bg);padding:100px 6% 80px;}
+.spec-in{max-width:900px;margin:0 auto;}
+.spec-title{font-family:var(--ff-d);font-size:clamp(44px,5.5vw,66px);color:var(--white);margin-bottom:12px;}
+.spec-tag{display:inline-block;font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);border:.5px solid var(--green-border);padding:4px 10px;margin-bottom:40px;}
+.spec-tbl{width:100%;border-collapse:collapse;}
+.spec-tbl tr{border-bottom:.5px solid var(--line);}
+.spec-tbl td{padding:14px 0;font-size:14px;vertical-align:top;}
+.spec-tbl td:first-child{color:var(--label);width:42%;font-family:var(--ff-m);font-size:10px;letter-spacing:.07em;text-transform:uppercase;border-left:2px solid transparent;transition:border-color .2s;padding-left:3px;}
+.spec-tbl tr:hover td:first-child{border-left-color:var(--green);}
+.spec-tbl td:last-child{color:var(--white);}
+.spec-disc{font-family:var(--ff-m);font-size:9px;color:var(--label);line-height:1.7;margin-top:18px;}
+.spec-ctas{display:flex;gap:10px;margin-top:44px;flex-wrap:wrap;}
+.spec-foot{margin-top:44px;padding-top:20px;border-top:.5px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;}
+
+/* FOOTER */
+.site-foot{background:#0e0c00;padding:80px 6% 60px;text-align:center;border-top:.5px solid var(--border);}
+.sf-hl{font-family:var(--ff-d);font-size:clamp(28px,4vw,50px);letter-spacing:.06em;color:rgba(245,240,232,.45);display:flex;flex-wrap:wrap;justify-content:center;gap:0 22px;}
+.sf-tagline{margin-top:48px;padding-top:40px;border-top:.5px solid var(--gold-dim);}
+.sf-t1{font-family:var(--ff-d);font-size:clamp(28px,4.2vw,52px);letter-spacing:.08em;color:rgba(245,240,232,.3);display:block;line-height:1;}
+.sf-t2{font-family:var(--ff-d);font-size:clamp(28px,4.2vw,52px);letter-spacing:.08em;color:var(--green);display:block;line-height:1;margin-top:4px;text-shadow:0 0 40px rgba(118,185,0,.3);}
+.sf-sub{font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;color:rgba(245,240,232,.12);margin-top:28px;text-transform:uppercase;}
+
+@media(max-width:860px){
+  .sec-wrap,.bl-grid,.capable-grid,.pkg-layout{grid-template-columns:1fr;gap:44px;}
+  .sec-wrap.rev{direction:ltr;}
+  .h-right{opacity:.1!important;transform:none!important;width:100%;}
+  .h-fade{background:rgba(26,21,0,.88);}
+  .why-cards{grid-template-columns:1fr;}
+}
+@media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="grid-bg"></div>
+<div id="cur"></div><div id="cur-ring"></div>
+
+<nav id="nav">
+  <div class="nb"><span class="nb-s">Entry Series</span><span class="nb-b">Simorchip</span></div>
+  <div class="np">
+    <a class="on" onclick="goTo('s00')">Hero</a>
+    <a onclick="goTo('s01')">Gold Edge</a>
+    <a onclick="goTo('s02')">Nonstop</a>
+    <a onclick="goTo('s03')">Capable</a>
+    <a onclick="goTo('s04')">Reliability</a>
+    <a onclick="goTo('s05')">Packaging</a>
+    <a onclick="goTo('s06')">Specs</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="s00" class="full">
+  <div class="inst-bg">
+    <div class="inst-glow1"></div>
+    <div class="inst-glow2"></div>
+    <div class="inst-scan"></div>
+  </div>
+  <div class="h-right" id="hRight">
+    <div class="gt1030-wrap">
+      <div class="gt1030-body">
+        <div class="gt1030-glow"></div>
+        <div class="gt1030-hs">
+          <div class="gt1030-fins-wrap" id="gt1030Fins"></div>
+          <div class="gt1030-slash1"></div>
+          <div class="gt1030-slash2"></div>
+          <div class="gt1030-slash3"></div>
+          <div class="gt1030-slash4"></div>
+          <div class="gt1030-fan-pos">
+            <div class="gt1030-fr1 gt1030-fan-ring"></div>
+            <div class="gt1030-fr2 gt1030-fan-ring"></div>
+            <div class="gt1030-fr3 gt1030-fan-ring"></div>
+            <div class="gt1030-blades" id="gt1030Blades">
+              <div class="gt1030-blade" style="transform:rotate(0deg);"></div>
+              <div class="gt1030-blade" style="transform:rotate(33deg);"></div>
+              <div class="gt1030-blade" style="transform:rotate(66deg);"></div>
+              <div class="gt1030-blade" style="transform:rotate(99deg);"></div>
+              <div class="gt1030-blade" style="transform:rotate(132deg);"></div>
+              <div class="gt1030-blade" style="transform:rotate(165deg);"></div>
+              <div class="gt1030-blade" style="transform:rotate(198deg);"></div>
+              <div class="gt1030-blade" style="transform:rotate(231deg);"></div>
+              <div class="gt1030-blade" style="transform:rotate(264deg);"></div>
+              <div class="gt1030-blade" style="transform:rotate(297deg);"></div>
+              <div class="gt1030-blade" style="transform:rotate(330deg);"></div>
+            </div>
+            <div class="gt1030-fan-hub">
+              <div class="gt1030-fan-label">Simorchip</div>
+            </div>
+          </div>
+        </div>
+        <div class="gt1030-pcb"></div>
+        <div class="gt1030-brand">
+          <span class="gt1030-brand-name">Simorchip</span>
+          <span class="gt1030-model">GT1030</span>
+          <span class="gt1030-sub">2GB GDDR5D · PCIe 3.0</span>
+        </div>
+        <div class="gt1030-ports">
+          <div class="gt1030-port"></div>
+          <div class="gt1030-port"></div>
+        </div>
+        <div class="gt1030-nvidia">GeForce</div>
+      </div>
+    </div>
+  </div>
+  <div class="h-fade"></div>
+  <div class="h-left">
+    <div class="h-eye" id="hEye">Simorchip · Gold Edge · GT1030 2GB GDDR5D</div>
+    <div class="h-hl" id="hHL">
+      <span class="hl-ln hl-wh" id="hl0">Same soul.</span>
+      <span class="hl-ln hl-gd" id="hl1">More room.</span>
+      <span class="hl-ln hl-gn" id="hl2">Prove it.</span>
+    </div>
+    <div class="arc-line" id="hLine" style="margin-top:22px;"></div>
+    <div class="h-sub" id="hSub">The GT1030 was already efficient.<br>The D version gave it room to prove it.<br><strong style="color:var(--white);">The most performance per watt in this class.</strong></div>
+    <div class="h-tags" id="hTags">
+      <span class="tag">GT1030</span>
+      <span class="tag">2GB GDDR5D</span>
+      <span class="tag">PCIe 3.0×4</span>
+      <span class="tag">30W</span>
+      <span class="tag">GP108</span>
+      <span class="tag">Pascal 12nm</span>
+      <span class="tag">384 Cores</span>
+      <span class="tag">DirectX 12</span>
+    </div>
+  </div>
+  <div class="scr-hint" id="scrHint"><div class="scr-ln"></div><div class="scr-lb">Scroll</div></div>
+</section>
+
+<!-- ═══ S01 GOLD EDGE + WHY ═══ -->
+<section id="s01">
+  <div class="s01-in">
+    <div class="bl-grid fi">
+      <div>
+        <div class="bl-eye">Design Language</div>
+        <div class="bl-title">Gold<br>Edge<br><span style="font-size:.5em;color:var(--label);">金刃</span></div>
+        <div class="bl-body">Gold doesn't shout.<br>It just catches the light at the right angle.<br><br>The GT1030 D version wasn't built to impress.<br>It was built to last, run cool, and never ask for more power than it needs.</div>
+        <div class="bl-quote">This is not excess. This is precision.</div>
+      </div>
+      <div class="img-ph fi fi-d1" style="aspect-ratio:16/10;min-height:280px;">
+        <span>[ GOLD EDGE — PRODUCT SHOT ]<br>GT1030 top view · gold slash lines lit<br>GT1030_2GD5_TOP.png ]</span>
+      </div>
+    </div>
+    <!-- What the D means -->
+    <div class="d-explain fi fi-d2" style="margin-top:60px;">
+      <div class="d-letter">D</div>
+      <div class="d-body">
+        <strong>D is not a downgrade. D is an upgrade in endurance.</strong><br><br>
+        The standard GT1030 is compact. It fits. It works. It runs.<br><br>
+        The GDDR5D version takes the same GP108 core and puts it inside a larger thermal envelope. More heatsink surface. Larger fan diameter. Better sustained thermal performance under load.<br><br>
+        <strong>Same soul. More room to breathe.</strong><br><br>
+        The GP108 core doesn't change. What changes is how long it can run at full speed before it needs to slow down. With the D version: longer. Quieter. More stable.
+      </div>
+    </div>
+    <div class="why-wrap fi">
+      <div class="why-title fi">Why You Need the GT1030 GDDR5D</div>
+      <div class="why-body fi fi-d1">Pascal was NVIDIA's 2016 architecture. At 12nm, it was one of the most power-efficient GPU architectures ever made. The GT1030 is the smallest Pascal card — 30 watts, 384 shader cores.<br><br><strong style="color:var(--white);">Per watt, it's more efficient than almost anything before it.</strong></div>
+      <div class="why-cards fi fi-d2">
+        <div class="why-card">
+          <span class="wc-icon">⚡</span>
+          <div class="wc-t">30W. With a fan.</div>
+          <div class="wc-b">Fanless-territory power draw — but with a full-size fan and heatsink. Thermal headroom that other cards at this power level don't have.</div>
+        </div>
+        <div class="why-card">
+          <span class="wc-icon">🖥️</span>
+          <div class="wc-t">No VGA. Not a problem.</div>
+          <div class="wc-b">HDMI + DVI covers every modern display and most legacy connections. If you need VGA, the G210 and GT730 still have you covered.</div>
+        </div>
+        <div class="why-card">
+          <span class="wc-icon">🔬</span>
+          <div class="wc-t">Pascal starts here.</div>
+          <div class="wc-b">Same architecture family as the GTX 1060, 1070, 1080. The GT1030 is where Pascal begins — and it begins with precision.</div>
+        </div>
+      </div>
+      <p style="font-size:16px;color:var(--mute);margin-top:28px;font-style:italic;">You don't need to think about it. It doesn't need you to.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S02 NONSTOP ═══ -->
+<section id="s02">
+  <div class="sec-wrap">
+    <div class="fi" style="position:relative;">
+      <div class="big-num">384</div>
+      <div class="sh-num">01 — Nonstop</div>
+      <div class="sh-title">Nonstop</div>
+      <div class="sh-sub">384 Shader Cores · 30W · Pascal 12nm</div>
+      <div class="arc-line on"></div>
+      <div class="ns-cards" id="nsCards">
+        <div class="ns-card">
+          <div class="ns-card-h">What 384 shader cores at 30W means</div>
+          <div class="ns-card-b">The G210 has 16 shader cores at 31W. The GT1030 D has 384 shader cores at 30W. Same power draw. 24× the processing cores. That's not an incremental upgrade — that's a different class of hardware wearing the same power bill.</div>
+        </div>
+        <div class="ns-card">
+          <div class="ns-card-h">DirectX 12 Feature Level 12_1</div>
+          <div class="ns-card-b">Higher than the GTX 750 Ti's 11_0. Feature Level 12_1 means better compute shader support, better resource binding, and proper DX12 native rendering — not just compatibility mode.</div>
+        </div>
+        <div class="ns-card">
+          <div class="ns-card-h">1530 MHz Core · 1750 MHz Memory</div>
+          <div class="ns-card-b">Pascal's efficiency at 12nm means high clock speeds without high power. Numbers that belong to a different generation — at entry-level power draw.</div>
+        </div>
+      </div>
+      <p style="font-size:15px;color:var(--mute);margin-top:20px;font-style:italic;">You'll head home at 5 PM. The GT1030 D will just keep rendering.</p>
+    </div>
+    <div class="fi fi-d1">
+      <!-- Count-up 384 -->
+      <div style="text-align:center;margin-bottom:28px;border:.5px solid var(--border);padding:28px;background:rgba(200,168,74,.03);position:relative;overflow:hidden;">
+        <div id="count384" style="font-family:var(--ff-d);font-size:clamp(72px,12vw,160px);letter-spacing:-.02em;color:var(--white);line-height:1;text-shadow:0 0 60px rgba(118,185,0,.15);">0</div>
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-top:4px;opacity:.7;">Shader Cores</div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(118,185,0,.05) 0%,transparent 70%);pointer-events:none;"></div>
+      </div>
+      <!-- Efficiency chart -->
+      <div class="eff-chart" id="effChart">
+        <div class="eff-title">Performance per Watt — Cores/W</div>
+        <div class="eff-row">
+          <span class="eff-lbl">G210</span>
+          <div class="eff-track"><div class="eff-fill g210" id="ef0" data-w="4"></div></div>
+          <span class="eff-val">0.5</span>
+        </div>
+        <div class="eff-row">
+          <span class="eff-lbl">GTX750Ti</span>
+          <div class="eff-track"><div class="eff-fill gtx" id="ef1" data-w="84"></div></div>
+          <span class="eff-val">10.7</span>
+        </div>
+        <div class="eff-row">
+          <span class="eff-lbl" style="color:var(--green);">GT1030 D</span>
+          <div class="eff-track"><div class="eff-fill gt1030" id="ef2" data-w="100"></div></div>
+          <span class="eff-val gn">12.8</span>
+        </div>
+      </div>
+      <!-- Badges -->
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;" id="nsBadges">
+        <div class="stat-badge"><div class="num" style="color:var(--green);">384</div><div class="lbl">Shader Cores</div></div>
+        <div class="stat-badge"><div class="num" style="color:var(--gold);">30W</div><div class="lbl">Total Power Draw</div></div>
+        <div class="stat-badge"><div class="num" style="font-size:clamp(18px,2.5vw,30px);">12nm</div><div class="lbl">Pascal Architecture</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S03 CAPABLE ═══ -->
+<section id="s03">
+  <div class="capable-grid">
+    <div class="fi">
+      <div class="sh-num">02 — Capable</div>
+      <div class="sh-title">Capable</div>
+      <div class="sh-sub">HDMI + DVI · DirectX 12 (12_1) · Pascal</div>
+      <div class="arc-line on"></div>
+      <ul class="bullet-list" style="margin-top:28px;">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div><strong>DirectX 12 Feature Level 12_1</strong> — Higher than most entry cards. Better compute shader support, better resource binding, proper DX12 native rendering. Modern software sees a fully current-generation compatible card.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div><strong>Full HD — 1920 × 1080</strong> — Every pixel on a 1080p display, delivered correctly. Video playback, browsing, office work, light gaming — all at the resolution your monitor was designed for.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div><strong>GP108 · Pascal · 12nm Maxwell</strong> — Same architecture family as the GTX 1060, GTX 1070, GTX 1080. Pascal is where NVIDIA's efficiency peaked. The GT1030 is where Pascal starts — and it starts strong.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M3 6h.01M3 12h.01"/></svg></div>
+          <div><strong>HDMI + DVI</strong> — Two outputs. HDMI for your primary display or TV. DVI for your secondary or older monitor. Every modern and legacy connection in one bracket.</div>
+        </li>
+      </ul>
+    </div>
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:360px;margin-bottom:14px;">
+        <span>[ CAPABLE — TOP VIEW ]<br>GT1030 · gold slash lines in top light<br>GT1030_2GD5_TOP.png ]</span>
+      </div>
+      <div class="img-ph" style="width:100%;height:150px;">
+        <span>[ HDMI + DVI PORTS ]<br>Bracket close-up ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S04 RELIABILITY ═══ -->
+<section id="s04">
+  <div class="sec-wrap rev">
+    <div class="fi">
+      <div class="sh-num">03 — Reliability</div>
+      <div class="sh-title">Reliability</div>
+      <div class="sh-sub">1,500,000 hr MTBF · 171 Years · Zero Maintenance</div>
+      <div class="arc-line on"></div>
+      <p style="font-size:17px;color:var(--mute);line-height:1.85;margin:24px 0 8px;">Not because it's the most powerful.</p>
+      <p style="font-size:17px;font-weight:500;color:var(--white);line-height:1.85;margin-bottom:8px;">Because it was designed to run at 30 watts, cooled by a heatsink built for twice that.</p>
+      <p style="font-size:15px;color:var(--mute);line-height:1.85;margin-bottom:20px;">The D version has more thermal headroom than its workload demands. That headroom is not wasted. It's converted directly into lifespan.</p>
+
+      <div class="mtbf-display fi fi-d1">
+        <div class="mtbf-num" id="mtbfCount">0</div>
+        <div class="mtbf-lbl">Hours MTBF</div>
+      </div>
+
+      <div class="flight-tl fi fi-d2" id="fltWrap">
+        <div class="flt-section-lbl human">Human Aviation History — 123 Years</div>
+        <div class="flt-row">
+          <div class="flt-track human-track" style="width:72%;">
+            <div class="flt-fill human-fill" id="fltFill1"></div>
+            <div class="flt-plane" id="fltPlane1" style="left:0;">✈</div>
+            <div class="flt-dot human-dot" style="left:0%;"><span class="flt-label human-lbl">1903<br>Wright Bros.</span></div>
+            <div class="flt-dot human-dot" style="left:55%;"><span class="flt-label human-lbl">1969<br>Moon Landing</span></div>
+            <div class="flt-dot human-dot" style="left:100%;"><span class="flt-label human-lbl right-align">2026<br>Today</span></div>
+          </div>
+        </div>
+        <div class="flt-divider"></div>
+        <div class="flt-section-lbl gpu">GT1030 GDDR5D Theoretical Lifespan — 171 Years</div>
+        <div class="flt-row">
+          <div class="flt-track" style="width:100%;">
+            <div class="flt-fill gpu-fill" id="fltFill2"></div>
+            <div class="flt-dot gpu-dot install" style="left:0%;"><span class="flt-label gpu-lbl install-lbl">2026<br>You install</span></div>
+            <div class="flt-dot gpu-dot" style="left:44%;"><span class="flt-label gpu-lbl">2101<br>22nd Century</span></div>
+            <div class="flt-dot gpu-dot" style="left:100%;"><span class="flt-label gpu-lbl right-align">2197<br>GT1030 (theory)</span></div>
+          </div>
+        </div>
+        <div class="flt-compare-note">The aviation era spans 123 years. The GT1030 GDDR5D's rated lifespan is <strong>171 years — 39% longer</strong> than the entire history of human flight.</div>
+        <p style="font-size:15px;color:var(--mute);line-height:1.8;margin-top:20px;"><em style="color:var(--white);">It outlives the entire history of flight — from the Wright brothers to your next boarding pass.</em><br>It was already ready. It will still be ready.</p>
+      </div>
+
+      <div class="rel-badges fi fi-d3">
+        <div class="stat-badge"><div class="num" style="color:var(--green);">171</div><div class="lbl">Years Theoretical</div></div>
+        <div class="stat-badge"><div class="num">1.5M</div><div class="lbl">Hours MTBF</div></div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:440px;">
+        <span>[ RELIABILITY VISUAL ]<br>GT1030 D in chassis · long exposure<br>Gold slash lines in darkness ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S05 PACKAGING ═══ -->
+<section id="s05">
+  <div class="pkg-in">
+    <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:10px;" class="fi">Packaging Design</div>
+    <div class="pkg-layout">
+      <div class="fi" id="pkgCard1030">
+        <div class="pkg-card" style="opacity:0;transform:translateX(-28px) rotateY(5deg);transition:opacity 1.4s ease,transform 1.4s ease;">
+          <div class="pkg-art">
+            <canvas id="goldCanvas" width="232" height="110"></canvas>
+            <div class="pkg-model-overlay">GT1030<span>2GB GDDR5D</span></div>
+            <div class="pkg-nvidia-badge">Simorchip</div>
+          </div>
+          <div class="pkg-body">
+            <span class="pkg-brand-t">Simorchip · Gold Edge Series</span>
+            <div class="pkg-stripe"></div>
+            <div class="pkg-cap-row">
+              <span class="pkg-cap">2<span style="font-size:.5em;">GB</span></span>
+              <span class="pkg-spd">HDMI + DVI<br><strong>GDDR5D</strong></span>
+            </div>
+          </div>
+          <div class="pkg-certs">
+            <span class="pkg-cert">CE</span><span class="pkg-cert">RoHS</span><span class="pkg-cert">FCC</span><span class="pkg-cert">REACH</span>
+          </div>
+        </div>
+      </div>
+      <div class="fi fi-d2">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:20px;">What's in the box</div>
+        <div class="pkg-feat-list">
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">🖤</div><div><div class="pkg-feat-nm">Foam-Cushioned Inner Tray</div><div class="pkg-feat-ds">The card sits in a dedicated foam slot, fully protected from transit shock.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">⚡</div><div><div class="pkg-feat-nm">Anti-Static Bag Protection</div><div class="pkg-feat-ds">Sealed in an anti-static bag before placement in the tray. Electrostatic discharge protection throughout transit and handling.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">📋</div><div><div class="pkg-feat-nm">Full Spec on Pack</div><div class="pkg-feat-ds">Model number, capacity, and key specs clearly printed on the outer box. Warehouse receiving requires no unboxing.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">✅</div><div><div class="pkg-feat-nm">Global Certifications</div><div class="pkg-feat-ds">CE · RoHS · FCC · REACH. Compliant for EU, US, and international markets.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S06 SPECS ═══ -->
+<section id="s06">
+  <div class="spec-in">
+    <div class="spec-title fi">Specifications</div>
+    <div class="spec-tag fi fi-d1">Entry-Level · GP108 · 12nm Pascal</div>
+    <table class="spec-tbl fi fi-d2">
+      <tr><td>Architecture</td><td>GP108 · 12nm Pascal</td></tr>
+      <tr><td>Stream Processors</td><td>384</td></tr>
+      <tr><td>Core Frequency</td><td>1530 MHz</td></tr>
+      <tr><td>Memory Type</td><td>GDDR5</td></tr>
+      <tr><td>Memory Capacity</td><td>2 GB</td></tr>
+      <tr><td>Memory Frequency</td><td>1750 MHz</td></tr>
+      <tr><td>Memory Bus Width</td><td>64-bit</td></tr>
+      <tr><td>Bus Interface</td><td>PCIe 3.0 × 4</td></tr>
+      <tr><td>Display Outputs</td><td>HDMI + DVI</td></tr>
+      <tr><td>Max Resolution</td><td>1920 × 1080</td></tr>
+      <tr><td>DirectX Support</td><td>DirectX 12 (12_1)</td></tr>
+      <tr><td>External Power</td><td>Not Required</td></tr>
+      <tr><td>Power Consumption</td><td>30W</td></tr>
+      <tr><td>Recommended PSU</td><td>200W and above</td></tr>
+      <tr><td>Cooling Solution</td><td>Single Fan</td></tr>
+      <tr><td>Dimensions</td><td>155 × 69 × 20 mm</td></tr>
+      <tr><td>OS Support</td><td>Windows 10 / Windows 11</td></tr>
+      <tr><td>Market Positioning</td><td>Entry-level</td></tr>
+    </table>
+    <div class="spec-disc fi fi-d2">* All specifications sourced from Simorchip internal documentation. Actual performance may vary depending on system configuration and operating environment.</div>
+    <div class="spec-ctas fi">
+      <button class="btn btn-green">Download Spec Sheet</button>
+      <button class="btn btn-ghost">Explore More Products</button>
+    </div>
+    <div class="spec-foot fi">
+      <span class="tag" style="font-size:9px;">© 2026 Simorchip Technology</span>
+      <span class="tag" style="font-size:9px;">GT1030 · Gold Edge · GeForce</span>
+    </div>
+  </div>
+</section>
+
+<div class="site-foot">
+  <div class="sf-hl">
+    <span>Simorchip GT1030</span>
+    <span style="color:var(--white);">Same soul.</span>
+    <span style="color:var(--gold);">More room.</span>
+    <span style="color:var(--green);">Prove it.</span>
+  </div>
+  <div class="sf-tagline">
+    <span class="sf-t1">This is not excess.</span>
+    <span class="sf-t2">This is precision.</span>
+  </div>
+  <div class="sf-sub">© 2026 Simorchip Technology · GT1030 2GB GDDR5D · Gold Edge · GeForce</div>
+</div>
+
+<script>
+/* ── CURSOR — diamond ring ── */
+(function(){
+  const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  const TRAIL=6;
+  const dots=Array.from({length:TRAIL},(_,i)=>{
+    const d=document.createElement('div');d.className='trail-dot';
+    const s=4-i*.5;d.style.cssText=`width:${s}px;height:${s}px;opacity:${(1-i/TRAIL)*.25};`;
+    document.body.appendChild(d);return d;
+  });
+  const pos=dots.map(()=>({x:0,y:0}));let head=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    cur.style.left=mx+'px';cur.style.top=my+'px';
+    pos[head]={x:mx,y:my};head=(head+1)%TRAIL;
+  });
+  (function frame(){
+    rx+=(mx-rx)*.1;ry+=(my-ry)*.1;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    dots.forEach((_,i)=>{const p=pos[(head-1-i+TRAIL)%TRAIL];dots[i].style.left=p.x+'px';dots[i].style.top=p.y+'px';});
+    requestAnimationFrame(frame);
+  })();
+  document.querySelectorAll('button,.btn,.np a').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';ring.style.width='44px';ring.style.height='44px';});
+    el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';ring.style.width='32px';ring.style.height='32px';});
+  });
+})();
+
+/* ── NAV ── */
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('sc',scrollY>50));
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+const secIds=['s00','s01','s02','s03','s04','s05','s06'];
+const pills=document.querySelectorAll('.np a');
+secIds.forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  new IntersectionObserver(es=>{if(es[0].isIntersecting){const i=secIds.indexOf(id);pills.forEach(p=>p.classList.remove('on'));if(pills[i])pills[i].classList.add('on');}},{threshold:.4}).observe(el);
+});
+
+/* ── SCROLL REVEAL ── */
+const fiObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>fiObs.observe(el));
+
+/* ── SECTION DIVIDERS ── */
+secIds.slice(1).forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)el.classList.add('div-on');},{threshold:.05}).observe(el);
+});
+
+/* ── ARC LINES ── */
+document.querySelectorAll('.arc-line').forEach(el=>{
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)el.classList.add('on');},{threshold:.5}).observe(el);
+});
+
+/* ── FINS ── */
+(function(){
+  const wrap=document.getElementById('gt1030Fins');if(!wrap)return;
+  for(let i=0;i<14;i++){const f=document.createElement('div');f.className='gt1030-fin';wrap.appendChild(f);}
+})();
+
+/* ── HERO ── */
+document.fonts.ready.then(()=>{
+  function cls(id,d=0){setTimeout(()=>document.getElementById(id)?.classList.add('on'),d);}
+  cls('hRight',0);cls('hEye',350);cls('hHL',560);
+  setTimeout(()=>['hl0','hl1','hl2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('in'),i*340)),600);
+  setTimeout(()=>document.getElementById('hLine')?.classList.add('on'),1600);
+  cls('hSub',1900);cls('hTags',2200);cls('scrHint',2700);
+});
+
+/* ── PACKAGING CARD ── */
+(function(){
+  const wrap=document.getElementById('pkgCard1030');if(!wrap)return;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){const card=wrap.querySelector('.pkg-card');if(card){card.style.opacity='1';card.style.transform='none';}}
+  },{threshold:.2}).observe(wrap);
+})();
+
+/* ── GOLD CANVAS — Packaging: precision instrument readout ── */
+(function(){
+  const cv=document.getElementById('goldCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0;
+
+  function draw(){
+    // Deep instrument background
+    ctx.fillStyle='#0e0c00';ctx.fillRect(0,0,W,H);
+
+    // Grid lines — instrument panel feel
+    ctx.strokeStyle='rgba(200,168,74,.06)';ctx.lineWidth=.5;
+    for(let x=0;x<W;x+=20){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+    // Scanning green line — Pascal readout
+    const scanY=(Math.sin(t*.4)+1)/2*H;
+    const scanG=ctx.createLinearGradient(0,scanY-8,0,scanY+8);
+    scanG.addColorStop(0,'transparent');
+    scanG.addColorStop(.5,`rgba(118,185,0,${0.12+Math.sin(t)*.04})`);
+    scanG.addColorStop(1,'transparent');
+    ctx.fillStyle=scanG;ctx.fillRect(0,scanY-8,W,16);
+
+    // Gold slash lines (matching product)
+    [[0.25,0.28],[0.65,0.68]].forEach(([y1,y2])=>{
+      const g=ctx.createLinearGradient(0,0,W,0);
+      g.addColorStop(0,'transparent');
+      g.addColorStop(.2,`rgba(200,168,74,${0.4+Math.sin(t*.5)*.1})`);
+      g.addColorStop(.7,`rgba(200,168,74,${0.25+Math.sin(t*.5)*.05})`);
+      g.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.moveTo(0,H*y1);ctx.lineTo(W,H*y2);
+      ctx.strokeStyle=g;ctx.lineWidth=1.5;ctx.stroke();
+    });
+
+    // Pulse rings from center
+    for(let i=0;i<4;i++){
+      const phase=(t*.5+i*1.2)%(Math.PI*2);
+      const r=5+i*15+Math.sin(phase)*3;
+      const alpha=(0.12-i*.025)*(0.5+0.5*Math.sin(phase+Math.PI));
+      if(alpha<=0)continue;
+      ctx.beginPath();ctx.arc(W*.5,H*.5,r,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(118,185,0,${alpha})`;ctx.lineWidth=.8;ctx.stroke();
+    }
+
+    // Central green dot
+    ctx.beginPath();ctx.arc(W*.5,H*.5,3,0,Math.PI*2);
+    ctx.fillStyle=`rgba(118,185,0,${0.6+Math.sin(t)*0.3})`;
+    ctx.shadowColor='rgba(118,185,0,.5)';ctx.shadowBlur=8;
+    ctx.fill();ctx.shadowBlur=0;
+
+    // Scanline overlay
+    ctx.fillStyle='rgba(0,0,0,.12)';
+    for(let y=0;y<H;y+=2)ctx.fillRect(0,y,W,1);
+
+    t+=0.025;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── COUNT-UP 384 ── */
+(function(){
+  const el=document.getElementById('count384');if(!el)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      const dur=1400,target=384,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=p<.7?p/.7*.85:0.85+(p-.7)/.3*.15;
+        const eased=1-Math.pow(1-v,2);
+        el.textContent=Math.round(eased*target);
+        if(p<1)requestAnimationFrame(f);else el.textContent='384';
+      })(performance.now());
+    }
+  },{threshold:.4}).observe(el);
+})();
+
+/* ── EFFICIENCY BARS ── */
+(function(){
+  const wrap=document.getElementById('effChart');if(!wrap)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      ['ef0','ef1','ef2'].forEach((id,i)=>setTimeout(()=>{
+        const el=document.getElementById(id);if(el)el.style.width=el.dataset.w+'%';
+      },i*250));
+    }
+  },{threshold:.4}).observe(wrap);
+})();
+
+/* ── NS CARDS STAGGER ── */
+(function(){
+  const cards=document.querySelectorAll('.ns-card');let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      cards.forEach((c,i)=>{
+        c.style.cssText=`opacity:0;transform:translateX(-14px);transition:opacity .6s ease ${i*.15}s,transform .6s ease ${i*.15}s;`;
+        setTimeout(()=>{c.style.opacity='1';c.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3}).observe(cards[0]);
+})();
+
+/* ── BADGES SNAP ── */
+(function(){
+  const wrap=document.getElementById('nsBadges');if(!wrap)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      wrap.querySelectorAll('.stat-badge').forEach((b,i)=>{
+        b.style.cssText=`opacity:0;transform:scale(.9);transition:opacity .5s ease ${i*.15}s,transform .5s cubic-bezier(.34,1.56,.64,1) ${i*.15}s;`;
+        setTimeout(()=>{b.style.opacity='1';b.style.transform='scale(1)';},60);
+      });
+    }
+  },{threshold:.4}).observe(wrap);
+})();
+
+/* ── MTBF ── */
+(function(){
+  const el=document.getElementById('mtbfCount');if(!el)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      const dur=1800,t=1500000,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,3);
+        el.textContent=Math.round(v*t).toLocaleString();
+        if(p<1)requestAnimationFrame(f);else el.textContent='1,500,000';
+      })(performance.now());
+    }
+  },{threshold:.4}).observe(el);
+})();
+
+/* ── FLIGHT TIMELINE ── */
+(function(){
+  const wrap=document.getElementById('fltWrap');if(!wrap)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      setTimeout(()=>{
+        const f1=document.getElementById('fltFill1');
+        const p1=document.getElementById('fltPlane1');
+        if(f1)f1.style.width='100%';
+        if(p1){p1.style.transition='left 1.6s ease';p1.style.left='calc(100% - 14px)';}
+        setTimeout(()=>{const f2=document.getElementById('fltFill2');if(f2)f2.style.width='100%';},300);
+      },200);
+    }
+  },{threshold:.4}).observe(wrap);
+})();
+
+/* ── WHY CARDS STAGGER ── */
+(function(){
+  const cards=document.querySelectorAll('.why-card');if(!cards.length)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      cards.forEach((c,i)=>{
+        c.style.cssText=`opacity:0;transform:translateY(18px);transition:opacity .6s ease ${i*.12}s,transform .6s ease ${i*.12}s;`;
+        setTimeout(()=>{c.style.opacity='1';c.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3}).observe(cards[0]);
+})();
+
+/* ── SPEC TABLE STAGGER ── */
+(function(){
+  const tbl=document.querySelector('.spec-tbl');if(!tbl)return;
+  let done=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      tbl.querySelectorAll('tr').forEach((row,i)=>{
+        row.style.cssText=`opacity:0;transition:opacity .4s ease ${i*.04}s;`;
+        setTimeout(()=>{row.style.opacity='1';},60);
+      });
+    }
+  },{threshold:.1}).observe(tbl);
+})();
+</script>
+</body>
+</html>
