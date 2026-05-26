@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip GTX 1050 Ti — Two fans. No compromise.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1014;--bg2:#0a0c10;--surface:#161820;--surface2:#1c1f28;
+  --ice:#c8ddf0;--ice2:#9ab8d8;--ice3:rgba(200,221,240,.12);
+  --ice-glow:rgba(200,221,240,.06);
+  --gold:#c8a84a;--gold2:#a88830;--gold3:rgba(200,168,74,.15);
+  --white:#eef2f8;--mute:#8a9ab4;--label:#5a6880;
+  --border:rgba(200,221,240,.14);--line:rgba(200,221,240,.07);
+  --gold-border:rgba(200,168,74,.2);
+  --nvidia:#76b900;
+  --ff-d:'Bebas Neue',sans-serif;
+  --ff-b:'Barlow Condensed',sans-serif;
+  --ff-m:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff-b);background:var(--bg);color:var(--white);overflow-x:hidden;cursor:none;}
+
+/* GRAIN */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.15;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size:180px;mix-blend-mode:overlay;}
+
+/* ICE DRIFT — replaces neon rain, cooler particles */
+.drift-wrap{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.drift-line{position:absolute;top:-100px;width:1px;opacity:0;animation:driftFall linear infinite;}
+@keyframes driftFall{
+  0%{top:-100px;opacity:0;}5%{opacity:1;}95%{opacity:.2;}100%{top:110vh;opacity:0;}
+}
+
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;background:var(--ice);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;box-shadow:0 0 12px var(--ice);}
+#cur-ring{position:fixed;width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);animation:ringRotate 3s linear infinite;}
+@keyframes ringRotate{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
+.trail-dot{position:fixed;border-radius:50%;background:var(--ice);pointer-events:none;z-index:9990;transform:translate(-50%,-50%);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:18px 5%;transition:background .3s,border-bottom .3s;}
+nav.sc{background:rgba(14,16,20,.96);backdrop-filter:blur(14px);border-bottom:.5px solid var(--border);}
+.nb{display:flex;flex-direction:column;gap:2px;}
+.nb-s{font-family:var(--ff-m);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--ice);opacity:.8;}
+.nb-b{font-family:var(--ff-m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--white);opacity:.22;}
+.np{display:flex;gap:5px;}
+.np a{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--label);border:.5px solid var(--border);padding:4px 9px;cursor:pointer;text-decoration:none;transition:all .2s;}
+.np a:hover,.np a.on{color:var(--bg);border-color:var(--ice);background:var(--ice);}
+
+/* SHARED */
+section{position:relative;width:100%;overflow:hidden;}
+.full{min-height:100vh;}
+.ice-line{height:1px;background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--ice) 50%,var(--gold) 80%,transparent);width:0;transition:width 1s ease;}
+.ice-line.on{width:60px;}
+.fi{opacity:0;transform:translateY(20px);transition:opacity .9s ease,transform .9s ease;}
+.fi.vis{opacity:1;transform:none;}
+.fi-d1{transition-delay:.12s;}.fi-d2{transition-delay:.24s;}.fi-d3{transition-delay:.36s;}.fi-d4{transition-delay:.48s;}
+.tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.07em;color:var(--label);border:.5px solid var(--gold-border);padding:4px 11px;display:inline-block;background:rgba(200,168,74,.04);}
+.tag::before{content:'#';color:var(--gold);margin-right:2px;}
+.stat-badge{display:inline-flex;flex-direction:column;align-items:flex-start;border:.5px solid var(--border);padding:18px 22px;background:rgba(200,221,240,.03);transition:border-color .3s,background .3s,box-shadow .3s;}
+.stat-badge:hover{border-color:var(--ice);background:var(--ice3);box-shadow:0 0 20px rgba(200,221,240,.12);}
+.stat-badge .num{font-family:var(--ff-d);font-size:clamp(26px,4vw,52px);letter-spacing:.02em;color:var(--white);line-height:1;}
+.stat-badge .lbl{font-size:11px;font-weight:500;letter-spacing:.1em;color:var(--mute);margin-top:4px;text-transform:uppercase;font-family:var(--ff-m);}
+.img-ph{background:linear-gradient(135deg,#161820,#0a0c10);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:.5px solid var(--border);}
+.img-ph span{font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(200,221,240,.18);text-align:center;line-height:2.2;padding:0 16px;}
+.sec-wrap{padding:100px 6% 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto;}
+.sec-wrap.rev{direction:rtl;}.sec-wrap.rev>*{direction:ltr;}
+.sh-num{font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;color:var(--label);margin-bottom:14px;text-transform:uppercase;}
+.sh-title{font-family:var(--ff-d);font-size:clamp(64px,9vw,120px);letter-spacing:.02em;color:var(--white);line-height:.88;margin-bottom:8px;}
+.sh-sub{font-family:var(--ff-m);font-size:11px;letter-spacing:.1em;color:var(--label);text-transform:uppercase;margin-bottom:28px;}
+.bullet-list{list-style:none;margin-top:24px;}
+.bullet-list li{padding:14px 0;border-bottom:.5px solid var(--line);font-size:16px;font-weight:400;line-height:1.75;color:var(--mute);display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;}
+.bullet-list li:last-child{border-bottom:none;}
+.bullet-list .bi{width:28px;height:28px;border:.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.bullet-list .bi svg{width:13px;height:13px;stroke:var(--ice);fill:none;stroke-width:1.5;}
+.bullet-list strong{font-weight:600;color:var(--white);}
+.btn{font-family:var(--ff-b);font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:transparent;cursor:pointer;transition:all .22s;}
+.btn-ice{border:1px solid var(--ice);color:var(--ice);}.btn-ice:hover{background:var(--ice);color:var(--bg);box-shadow:0 0 20px rgba(200,221,240,.3);}
+.btn-ghost{border:1px solid var(--gold-border);color:var(--gold);}.btn-ghost:hover{background:var(--gold);color:var(--bg);border-color:var(--gold);}
+
+/* section dividers */
+#s01::before,#s02::before,#s03::before,#s04::before,#s05::before,#s06::before{
+  content:'';display:block;position:absolute;top:0;left:0;height:1px;width:0;
+  background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--ice) 60%,transparent);
+  transition:width .9s cubic-bezier(.16,1,.3,1);z-index:2;
+}
+#s01.div-on::before,#s02.div-on::before,#s03.div-on::before,
+#s04.div-on::before,#s05.div-on::before,#s06.div-on::before{width:100%;}
+
+/* ── HERO ── */
+#s00{display:flex;align-items:center;padding-top:80px;min-height:100vh;background:var(--bg);}
+
+/* Arctic atmosphere */
+.night-bg{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.night-glow1{position:absolute;top:8%;right:4%;width:540px;height:420px;border-radius:50%;background:radial-gradient(ellipse,rgba(200,221,240,.05) 0%,transparent 70%);animation:glowPulse 7s ease-in-out infinite;}
+.night-glow2{position:absolute;bottom:12%;right:18%;width:320px;height:260px;border-radius:50%;background:radial-gradient(ellipse,rgba(200,168,74,.03) 0%,transparent 70%);animation:glowPulse 7s ease-in-out infinite 2.5s;}
+.night-glow3{position:absolute;top:45%;right:42%;width:220px;height:180px;border-radius:50%;background:radial-gradient(ellipse,rgba(200,221,240,.025) 0%,transparent 70%);animation:glowPulse 9s ease-in-out infinite 1s;}
+@keyframes glowPulse{0%,100%{opacity:.55;}50%{opacity:1;}}
+
+/* DUAL-FAN CARD illustration — 1050 Ti */
+.h-right{position:absolute;right:0;top:0;bottom:0;width:54%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(40px);transition:opacity 1.8s ease .2s,transform 1.8s ease .2s;}
+.h-right.on{opacity:1;transform:translateX(0);}
+.gtx1050-wrap{width:90%;max-width:560px;position:relative;}
+.gtx1050-wrap::before{content:'';position:absolute;inset:-80px;z-index:-1;background:radial-gradient(ellipse 70% 45% at 55% 55%,rgba(200,221,240,.06) 0%,transparent 70%);}
+
+/* Slash reveal */
+.card-slash{position:absolute;inset:0;z-index:20;background:linear-gradient(125deg,transparent 0%,var(--ice) 49%,var(--ice) 51%,transparent 100%);background-size:200% 100%;background-position:200% 0;animation:slashReveal 1.4s cubic-bezier(.76,0,.24,1) .3s forwards;pointer-events:none;border-radius:5px;overflow:hidden;}
+@keyframes slashReveal{0%{background-position:200% 0;opacity:1;}100%{background-position:-200% 0;opacity:0;}}
+
+@keyframes cardFloat1050{0%,100%{transform:translateY(0px) rotate(-1deg);}50%{transform:translateY(-8px) rotate(-1deg);}}
+.gtx1050-body{width:100%;aspect-ratio:2.4/1;background:linear-gradient(148deg,#161c24 0%,#0e1218 100%);position:relative;overflow:hidden;border-radius:5px;border:.5px solid rgba(200,221,240,.16);box-shadow:0 40px 120px rgba(0,0,0,.9),0 0 60px rgba(200,221,240,.04);animation:cardFloat1050 7s ease-in-out infinite;}
+
+/* Glint sweep */
+@keyframes glint{0%{left:-40%;opacity:0;}8%{opacity:1;}92%{opacity:.3;}100%{left:140%;opacity:0;}}
+.gtx1050-body::after{content:'';position:absolute;top:0;left:-40%;width:10%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),rgba(255,255,255,.09),rgba(255,255,255,.05),transparent);animation:glint 8s ease-in-out infinite 5s;pointer-events:none;z-index:10;}
+
+/* Heatsink — spans most of card, dual V-fin array */
+.gtx1050-hs{position:absolute;right:0;top:0;bottom:0;width:76%;background:linear-gradient(145deg,#161c24,#0e1218);border-left:.5px solid rgba(200,221,240,.08);overflow:hidden;}
+/* Fins — two groups with a channel between */
+.gtx1050-fins-wrap{position:absolute;inset:0;display:flex;flex-direction:column;gap:2px;padding:5px;}
+.gtx1050-fin{flex:1;background:linear-gradient(90deg,#161c24,#121820);border-radius:1px;border:.3px solid rgba(200,221,240,.04);}
+
+/* Ice-white subtle glow lines instead of pink slash */
+.gtx1050-gline1{position:absolute;top:25%;left:-10%;width:120%;height:1.5px;background:linear-gradient(90deg,transparent,rgba(200,221,240,.35),transparent);transform:rotate(-6deg);opacity:.7;}
+.gtx1050-gline2{position:absolute;top:50%;left:-10%;width:120%;height:1px;background:linear-gradient(90deg,transparent,rgba(200,221,240,.2),transparent);transform:rotate(-6deg);opacity:.5;}
+.gtx1050-gline3{position:absolute;top:75%;left:-10%;width:120%;height:1.5px;background:linear-gradient(90deg,transparent,rgba(200,221,240,.3),transparent);transform:rotate(-6deg);opacity:.6;}
+
+/* Dual fans */
+.gtx1050-fans{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-around;padding:0 6%;}
+.gtx1050-fan{position:relative;width:40%;aspect-ratio:1;}
+.gtx1050-fan-ring{position:absolute;border-radius:50%;border:.5px solid rgba(200,221,240,.12);}
+.gtx1050-fr1{inset:0;background:rgba(12,16,22,.75);}
+.gtx1050-fr2{inset:9%;}
+.gtx1050-fr3{inset:20%;}
+.gtx1050-fr4{inset:32%;}
+.gtx1050-blades{position:absolute;inset:0;animation:fanSpin 5s linear infinite;}
+.gtx1050-blades.fan2{animation-delay:-2.5s;}
+@keyframes fanSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.gtx1050-blade{position:absolute;top:50%;left:50%;width:48%;height:7%;transform-origin:0 50%;background:linear-gradient(90deg,rgba(200,221,240,.12),transparent);border-radius:0 20px 20px 0;}
+.gtx1050-hub{position:absolute;inset:44%;background:radial-gradient(circle,#1c2230,#0e1218);border-radius:50%;border:.5px solid rgba(200,221,240,.25);display:flex;align-items:center;justify-content:center;}
+.gtx1050-hub::after{content:'';width:32%;height:32%;background:var(--ice2);border-radius:50%;opacity:.6;box-shadow:0 0 8px rgba(200,221,240,.5);}
+.gtx1050-hub-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--ff-b);font-size:5.5px;font-weight:700;letter-spacing:.06em;color:var(--gold);opacity:.7;z-index:5;white-space:nowrap;}
+
+/* PCB side */
+.gtx1050-pcb{position:absolute;left:0;top:0;bottom:0;right:76%;background:linear-gradient(145deg,#141820,#0e1218);}
+.gtx1050-brand{position:absolute;top:50%;left:2%;transform:translateY(-50%);padding-left:8px;}
+.gtx1050-brand-name{font-family:var(--ff-m);font-size:5px;letter-spacing:.2em;color:rgba(255,255,255,.28);text-transform:uppercase;display:block;}
+.gtx1050-model{font-family:var(--ff-d);font-size:16px;letter-spacing:.06em;color:var(--white);line-height:1;display:block;}
+.gtx1050-sub{font-family:var(--ff-m);font-size:4.5px;letter-spacing:.1em;color:rgba(200,168,74,.4);text-transform:uppercase;display:block;margin-top:2px;}
+.gtx1050-ports{position:absolute;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;}
+.gtx1050-port{width:5px;height:11px;background:rgba(255,255,255,.06);border-radius:1px 0 0 1px;border:.3px solid rgba(255,255,255,.04);}
+.gtx1050-glow{position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent 5%,var(--gold) 30%,var(--ice2) 60%,transparent 95%);opacity:.5;}
+.gtx1050-nvidia{position:absolute;bottom:8%;left:38%;font-family:var(--ff-b);font-size:6px;font-weight:700;letter-spacing:.06em;color:var(--nvidia);opacity:.7;}
+
+/* hero layout */
+.h-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,var(--bg) 0%,var(--bg) 16%,rgba(14,16,20,.55) 42%,transparent 62%);}
+.h-left{position:relative;z-index:3;padding:0 0 0 6%;flex:1;max-width:580px;}
+.h-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--label);margin-bottom:28px;opacity:0;transition:opacity .5s ease;}
+.h-eye.on{opacity:1;}
+.h-hl{line-height:.88;margin-bottom:28px;opacity:0;transition:opacity .4s ease;}
+.h-hl.on{opacity:1;}
+.hl-ln{display:block;font-family:var(--ff-d);font-size:clamp(56px,8vw,98px);letter-spacing:.01em;opacity:0;transform:translateY(16px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1);}
+.hl-ln.in{opacity:1;transform:none;}
+.hl-wh{color:var(--white);}
+.hl-ic{color:var(--ice);text-shadow:0 0 30px rgba(200,221,240,.35);}
+.hl-gd{color:var(--gold);}
+.h-sub{font-size:17px;font-weight:400;line-height:1.85;color:var(--mute);max-width:380px;margin-top:20px;opacity:0;transition:opacity .8s ease;}
+.h-sub.on{opacity:1;}
+.h-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:20px;opacity:0;transition:opacity .5s ease;}
+.h-tags.on{opacity:1;}
+.scr-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0;transition:opacity .5s;z-index:4;}
+.scr-hint.on{opacity:1;}
+.scr-ln{width:1px;height:28px;background:var(--border);position:relative;overflow:hidden;}
+.scr-ln::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--ice);animation:scrdn 1.4s ease infinite 2.5s;}
+@keyframes scrdn{0%{top:-100%}100%{top:100%}}
+.scr-lb{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;color:var(--label);text-transform:uppercase;}
+
+/* ── S01 PASCAL EDGE ── */
+#s01{background:var(--bg2);padding:100px 6%;}
+.s01-in{max-width:1080px;margin:0 auto;}
+.bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.bl-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--ice);margin-bottom:14px;}
+.bl-title{font-family:var(--ff-d);font-size:clamp(44px,6vw,74px);letter-spacing:.02em;color:var(--white);line-height:.96;margin-bottom:20px;}
+.bl-body{font-size:16px;font-weight:400;line-height:1.9;color:var(--mute);margin-bottom:24px;}
+.bl-quote{font-size:14px;font-weight:400;letter-spacing:.03em;color:var(--ice2);padding:14px 0;border-top:.5px solid rgba(200,221,240,.14);border-bottom:.5px solid rgba(200,221,240,.14);font-style:italic;line-height:1.7;text-shadow:0 0 20px rgba(200,221,240,.15);}
+.bl-pos{font-family:var(--ff-m);font-size:10px;letter-spacing:.1em;color:var(--gold);margin-top:18px;padding:10px 14px;border:.5px solid var(--gold-border);background:rgba(200,168,74,.04);display:inline-block;}
+
+/* WHY cards */
+.why-wrap{margin-top:80px;padding-top:64px;border-top:.5px solid var(--line);}
+.why-title{font-family:var(--ff-d);font-size:clamp(32px,4.5vw,52px);letter-spacing:.03em;color:var(--white);margin-bottom:16px;}
+.why-body{font-size:16px;color:var(--mute);line-height:1.85;max-width:680px;margin-bottom:40px;}
+.why-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.why-card{border:.5px solid var(--border);padding:24px 20px;transition:border-color .3s,background .3s;}
+.why-card:hover{border-color:var(--ice2);background:rgba(200,221,240,.03);}
+.wc-icon{font-size:20px;display:block;margin-bottom:12px;}
+.wc-t{font-family:var(--ff-b);font-size:16px;font-weight:600;color:var(--white);margin-bottom:8px;letter-spacing:.04em;}
+.wc-b{font-size:14px;color:var(--mute);line-height:1.65;}
+
+/* ── S02 FIERCER ── */
+#s02{background:var(--bg);}
+.big-num{position:absolute;font-family:var(--ff-d);font-size:clamp(160px,22vw,280px);letter-spacing:-.01em;color:rgba(200,221,240,.03);line-height:1;top:50%;left:-2%;transform:translateY(-50%);pointer-events:none;user-select:none;white-space:nowrap;}
+.count-num{font-family:var(--ff-d);font-size:clamp(80px,12vw,160px);color:var(--white);line-height:1;margin:16px 0 8px;text-shadow:0 0 60px rgba(200,221,240,.12);}
+
+/* info cards */
+.ns-cards{display:flex;flex-direction:column;gap:12px;margin-top:28px;}
+.ns-card{border:.5px solid var(--border);padding:18px 20px;transition:border-color .3s,background .3s;}
+.ns-card:hover{border-color:var(--ice2);background:rgba(200,221,240,.03);}
+.ns-card-h{font-family:var(--ff-b);font-size:15px;font-weight:600;color:var(--white);margin-bottom:6px;letter-spacing:.04em;}
+.ns-card-b{font-size:14px;color:var(--mute);line-height:1.65;}
+
+/* badges row */
+.badges-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;}
+
+/* ── S03 CAPABLE — compare bars ── */
+#s03{background:var(--bg2);}
+.capable-grid{padding:100px 6% 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;max-width:1200px;margin:0 auto;}
+.cmp-bar-wrap{margin-top:32px;}
+.cmp-bar-row{margin-bottom:18px;}
+.cmp-bar-label{display:flex;justify-content:space-between;margin-bottom:5px;}
+.cmp-bar-name{font-family:var(--ff-m);font-size:10px;letter-spacing:.06em;color:var(--mute);text-transform:uppercase;}
+.cmp-bar-val{font-family:var(--ff-m);font-size:10px;color:var(--label);}
+.cmp-bar-track{height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden;}
+.cmp-bar-fill{height:100%;width:0;border-radius:2px;transition:width 1.4s cubic-bezier(.16,1,.3,1);}
+.cmp-bar-fill.g210{background:rgba(200,221,240,.2);}
+.cmp-bar-fill.gt1030{background:rgba(200,221,240,.3);}
+.cmp-bar-fill.gtx750ti{background:rgba(200,221,240,.45);}
+.cmp-bar-fill.gtx1050ti{background:linear-gradient(90deg,var(--ice2),var(--ice));box-shadow:0 0 10px rgba(200,221,240,.3);}
+.cmp-bar-row.featured .cmp-bar-name{color:var(--white);}
+.cmp-bar-row.featured .cmp-bar-val{color:var(--gold);}
+
+/* ── S04 RELIABILITY ── */
+#s04{background:var(--bg);}
+.mtbf-display{margin:24px 0;}
+.mtbf-num{font-family:var(--ff-d);font-size:clamp(56px,8vw,96px);color:var(--white);line-height:1;letter-spacing:.02em;}
+.mtbf-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin-top:4px;}
+/* Flight timeline */
+.flight-tl{margin:24px 0;}
+.flt-section-lbl{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;}
+.flt-section-lbl.human{color:var(--label);}
+.flt-section-lbl.gpu{color:var(--ice2);}
+.flt-row{position:relative;margin-bottom:36px;}
+.flt-track{position:relative;height:2px;background:rgba(200,221,240,.06);}
+.flt-track.human-track{background:rgba(200,221,240,.05);}
+.flt-fill{position:absolute;left:0;top:0;height:100%;width:0;transition:width 1.6s ease;}
+.flt-fill.human-fill{background:linear-gradient(90deg,rgba(200,221,240,.2),rgba(200,221,240,.4));}
+.flt-fill.gpu-fill{background:linear-gradient(90deg,var(--ice2),var(--ice));box-shadow:0 0 8px rgba(200,221,240,.3);}
+.flt-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:var(--bg);z-index:2;}
+.flt-dot.human-dot{border:1.5px solid rgba(200,221,240,.3);}
+.flt-dot.gpu-dot{border:1.5px solid var(--ice2);}
+.flt-dot.gpu-dot.install{border-color:var(--gold);box-shadow:0 0 6px rgba(200,168,74,.4);}
+.flt-label{position:absolute;font-family:var(--ff-m);font-size:7px;white-space:nowrap;top:10px;transform:translateX(-50%);}
+.flt-label.human-lbl{color:rgba(200,221,240,.4);}
+.flt-label.gpu-lbl{color:var(--ice2);}
+.flt-label.gpu-lbl.install-lbl{color:var(--gold);}
+.flt-label.right-align{transform:translateX(-100%);}
+.flt-plane{position:absolute;top:-11px;font-size:13px;transition:left 1.6s ease;opacity:.55;}
+.flt-divider{height:.5px;background:var(--line);margin:4px 0 20px;}
+.flt-compare-note{font-family:var(--ff-m);font-size:9px;color:var(--label);margin-top:4px;letter-spacing:.06em;}
+.flt-compare-note strong{color:var(--ice);}
+.rel-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;}
+
+/* ── S05 PACKAGING ── */
+#s05{background:var(--bg2);padding:100px 6%;}
+.pkg-in{max-width:1100px;margin:0 auto;}
+.pkg-layout{display:grid;grid-template-columns:260px 1fr;gap:60px;align-items:start;}
+.pkg-card{width:232px;background:#0c1018;border-radius:4px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.8),0 0 40px rgba(200,221,240,.04);}
+.pkg-art{height:110px;position:relative;overflow:hidden;background:#08090e;}
+.pkg-art canvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block;}
+.pkg-model-overlay{position:absolute;bottom:6px;left:8px;font-family:var(--ff-d);font-size:20px;letter-spacing:.02em;color:rgba(238,242,248,.85);line-height:1;transform:skewX(-4deg);z-index:2;}
+.pkg-model-overlay span{font-size:.42em;color:rgba(200,221,240,.5);display:block;letter-spacing:.04em;}
+.pkg-nvidia-badge{position:absolute;bottom:6px;right:8px;font-family:var(--ff-b);font-size:7px;font-weight:700;color:var(--nvidia);letter-spacing:.04em;opacity:.8;z-index:2;}
+.pkg-body{padding:10px 14px 8px;}
+.pkg-brand-t{font-family:var(--ff-b);font-size:8px;font-weight:300;letter-spacing:.16em;color:rgba(255,255,255,.35);text-transform:uppercase;display:block;}
+.pkg-stripe{height:2px;background:linear-gradient(90deg,var(--gold) 0%,var(--ice2) 50%,rgba(200,221,240,.15) 80%,transparent);margin:8px 0;}
+.pkg-cap-row{display:flex;align-items:center;gap:10px;padding:4px 0 8px;}
+.pkg-cap{font-family:var(--ff-d);font-size:28px;color:var(--white);line-height:1;}
+.pkg-spd{font-family:var(--ff-b);font-size:8px;color:var(--label);text-transform:uppercase;letter-spacing:.06em;line-height:1.5;}
+.pkg-spd strong{font-family:var(--ff-d);font-size:15px;color:var(--ice2);display:block;}
+.pkg-certs{display:flex;gap:4px;padding:6px 14px;border-top:.5px solid rgba(200,221,240,.07);}
+.pkg-cert{font-family:var(--ff-m);font-size:6.5px;color:var(--label);border:.5px solid rgba(200,168,74,.15);padding:2px 4px;}
+.pkg-feat-list{display:flex;flex-direction:column;}
+.pkg-feat-item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:.5px solid var(--line);}
+.pkg-feat-item:last-child{border-bottom:none;}
+.pkg-feat-icon{font-size:15px;flex-shrink:0;padding-top:2px;}
+.pkg-feat-nm{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--white);margin-bottom:4px;}
+.pkg-feat-ds{font-size:14px;color:var(--mute);line-height:1.65;}
+
+/* ── S06 SPECS ── */
+#s06{background:var(--bg);padding:100px 6% 80px;}
+.spec-in{max-width:900px;margin:0 auto;}
+.spec-title{font-family:var(--ff-d);font-size:clamp(44px,5.5vw,66px);color:var(--white);margin-bottom:12px;}
+.spec-tag{display:inline-block;font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ice);border:.5px solid rgba(200,221,240,.2);padding:4px 10px;margin-bottom:40px;}
+.spec-tbl{width:100%;border-collapse:collapse;}
+.spec-tbl tr{border-bottom:.5px solid var(--line);}
+.spec-tbl td{padding:14px 0;font-size:14px;font-weight:400;vertical-align:top;}
+.spec-tbl td:first-child{color:var(--label);width:42%;font-family:var(--ff-m);font-size:10px;letter-spacing:.07em;text-transform:uppercase;border-left:2px solid transparent;transition:border-color .2s;padding-left:3px;}
+.spec-tbl tr:hover td:first-child{border-left-color:var(--ice);}
+.spec-tbl td:last-child{color:var(--white);}
+.spec-disc{font-family:var(--ff-m);font-size:9px;color:var(--label);line-height:1.7;margin-top:18px;}
+.spec-ctas{display:flex;gap:10px;margin-top:44px;flex-wrap:wrap;}
+.spec-foot{margin-top:44px;padding-top:20px;border-top:.5px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;}
+
+/* FOOTER */
+.site-foot{background:#08090e;padding:80px 6% 60px;text-align:center;border-top:.5px solid var(--border);}
+.sf-hl{font-family:var(--ff-d);font-size:clamp(28px,4vw,50px);letter-spacing:.06em;color:rgba(238,242,248,.4);display:flex;flex-wrap:wrap;justify-content:center;gap:0 22px;}
+.sf-tagline{margin-top:48px;padding-top:40px;border-top:.5px solid rgba(200,221,240,.08);}
+.sf-t1{font-family:var(--ff-d);font-size:clamp(28px,4.2vw,52px);letter-spacing:.08em;color:rgba(238,242,248,.28);display:block;line-height:1;}
+.sf-t2{font-family:var(--ff-d);font-size:clamp(28px,4.2vw,52px);letter-spacing:.08em;color:var(--ice2);display:block;line-height:1;margin-top:4px;text-shadow:0 0 40px rgba(200,221,240,.2);}
+.sf-sub{font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;color:rgba(238,242,248,.1);margin-top:28px;text-transform:uppercase;}
+
+@media(max-width:860px){
+  .sec-wrap,.bl-grid,.capable-grid,.pkg-layout{grid-template-columns:1fr;gap:44px;}
+  .sec-wrap.rev{direction:ltr;}
+  .h-right{opacity:.1!important;transform:none!important;width:100%;}
+  .h-fade{background:rgba(14,16,20,.88);}
+  .why-cards{grid-template-columns:1fr;}
+}
+@media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="drift-wrap" id="driftWrap"></div>
+<div id="cur"></div><div id="cur-ring"></div>
+
+<nav id="nav">
+  <div class="nb"><span class="nb-s">Pascal Series</span><span class="nb-b">Simorchip</span></div>
+  <div class="np">
+    <a class="on" onclick="goTo('s00')">Hero</a>
+    <a onclick="goTo('s01')">Pascal Edge</a>
+    <a onclick="goTo('s02')">Fiercer</a>
+    <a onclick="goTo('s03')">Capable</a>
+    <a onclick="goTo('s04')">Reliability</a>
+    <a onclick="goTo('s05')">Packaging</a>
+    <a onclick="goTo('s06')">Specs</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="s00" class="full">
+  <div class="night-bg">
+    <div class="night-glow1"></div>
+    <div class="night-glow2"></div>
+    <div class="night-glow3"></div>
+  </div>
+  <div class="h-right" id="hRight">
+    <div class="gtx1050-wrap">
+      <div class="card-slash"></div>
+      <div class="gtx1050-body">
+        <div class="gtx1050-glow"></div>
+        <div class="gtx1050-hs">
+          <div class="gtx1050-fins-wrap" id="gtxFins"></div>
+          <div class="gtx1050-gline1"></div>
+          <div class="gtx1050-gline2"></div>
+          <div class="gtx1050-gline3"></div>
+          <div class="gtx1050-fans">
+            <!-- Fan 1 -->
+            <div class="gtx1050-fan">
+              <div class="gtx1050-fr1 gtx1050-fan-ring"></div>
+              <div class="gtx1050-fr2 gtx1050-fan-ring"></div>
+              <div class="gtx1050-fr3 gtx1050-fan-ring"></div>
+              <div class="gtx1050-fr4 gtx1050-fan-ring"></div>
+              <div class="gtx1050-blades" id="gtxBlades1">
+                <div class="gtx1050-blade" style="transform:rotate(0deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(32.7deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(65.4deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(98.1deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(130.8deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(163.5deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(196.2deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(228.9deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(261.6deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(294.3deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(327deg);"></div>
+              </div>
+              <div class="gtx1050-hub">
+                <div class="gtx1050-hub-label">Simorchip</div>
+              </div>
+            </div>
+            <!-- Fan 2 -->
+            <div class="gtx1050-fan">
+              <div class="gtx1050-fr1 gtx1050-fan-ring"></div>
+              <div class="gtx1050-fr2 gtx1050-fan-ring"></div>
+              <div class="gtx1050-fr3 gtx1050-fan-ring"></div>
+              <div class="gtx1050-fr4 gtx1050-fan-ring"></div>
+              <div class="gtx1050-blades fan2" id="gtxBlades2">
+                <div class="gtx1050-blade" style="transform:rotate(0deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(32.7deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(65.4deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(98.1deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(130.8deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(163.5deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(196.2deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(228.9deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(261.6deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(294.3deg);"></div>
+                <div class="gtx1050-blade" style="transform:rotate(327deg);"></div>
+              </div>
+              <div class="gtx1050-hub">
+                <div class="gtx1050-hub-label">Simorchip</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gtx1050-pcb"></div>
+        <div class="gtx1050-brand">
+          <span class="gtx1050-brand-name">Simorchip</span>
+          <span class="gtx1050-model">GTX<br>1050Ti</span>
+          <span class="gtx1050-sub">4GB GDDR5 · Pascal</span>
+        </div>
+        <div class="gtx1050-ports">
+          <div class="gtx1050-port"></div>
+          <div class="gtx1050-port"></div>
+          <div class="gtx1050-port"></div>
+        </div>
+        <div class="gtx1050-nvidia">GeForce</div>
+      </div>
+    </div>
+  </div>
+  <div class="h-fade"></div>
+  <div class="h-left">
+    <div class="h-eye" id="hEye">Simorchip · Pascal Edge · GTX 1050 Ti</div>
+    <div class="h-hl" id="hHL">
+      <span class="hl-ln hl-wh" id="hl0">Two fans.</span>
+      <span class="hl-ln hl-ic" id="hl1">No</span>
+      <span class="hl-ln hl-gd" id="hl2">compromise.</span>
+    </div>
+    <div class="ice-line" id="hLine" style="margin-top:22px;"></div>
+    <div class="h-sub" id="hSub">14nm Pascal. 768 shader cores. Dual-fan cooling.<br><strong style="color:var(--white);">You'll head home at 5 PM.</strong><br>The GTX 1050 Ti will still be rendering.</div>
+    <div class="h-tags" id="hTags">
+      <span class="tag">GTX1050Ti</span>
+      <span class="tag">4GB GDDR5</span>
+      <span class="tag">PCIe 3.0×16</span>
+      <span class="tag">75W</span>
+      <span class="tag">GP107</span>
+      <span class="tag">DirectX 12</span>
+      <span class="tag">768 Cores</span>
+      <span class="tag">1080P</span>
+    </div>
+  </div>
+  <div class="scr-hint" id="scrHint"><div class="scr-ln"></div><div class="scr-lb">Scroll</div></div>
+</section>
+
+<!-- ═══ S01 PASCAL EDGE ═══ -->
+<section id="s01">
+  <div class="s01-in">
+    <div class="bl-grid fi">
+      <div>
+        <div class="bl-eye">Design Language</div>
+        <div class="bl-title">Pascal<br>Edge<br><span style="font-size:.5em;color:var(--label);"></span></div>
+        <div class="bl-body">The GTX 750 Ti was Maxwell.<br><br>The GTX 1050 Ti is Pascal — a full architecture generation ahead. 14nm means more transistors per mm², more performance per watt, more sustained clock speeds.<br><br>Same slot. Smaller process. Bigger result.</div>
+        <div class="bl-quote">This is not just more cores. This is better cores.<br>14nm Pascal vs 28nm Maxwell — the jump that matters.</div>
+        <div class="bl-pos">GTX 1050 Ti — Where mid-range performance begins for real.</div>
+      </div>
+      <div class="img-ph fi fi-d1" style="aspect-ratio:16/10;min-height:280px;">
+        <span>[ PASCAL EDGE — PRODUCT SHOT ]<br>GTX 1050 Ti top view · dual-fan symmetric · top light<br>GTX1050Ti top .png ]</span>
+      </div>
+    </div>
+    <div class="why-wrap fi">
+      <div class="why-title fi">Why You Need the GTX 1050 Ti</div>
+      <div class="why-body fi fi-d1">The GTX 750 Ti has 640 shader cores on 28nm Maxwell. The GTX 1050 Ti has 768 cores — but on 14nm Pascal.<br><br>A smaller process means more transistors in the same space, running cooler and more efficiently. The result isn't just incremental. It's architectural.<br><br><strong style="color:var(--white);">More cores. Better cores. And two fans to keep them cold.</strong></div>
+      <div class="why-cards fi fi-d2">
+        <div class="why-card">
+          <span class="wc-icon">🎮</span>
+          <div class="wc-t">1080p Without Limits</div>
+          <div class="wc-b">4GB GDDR5 at 1752 MHz. Enough headroom for high-res textures, large frame buffers, and complex shader programs — all running at full 1080p.</div>
+        </div>
+        <div class="why-card">
+          <span class="wc-icon">❄️</span>
+          <div class="wc-t">Dual-Fan Thermal</div>
+          <div class="wc-b">Two fans, half the load each. The V-shaped fin array channels airflow through the center. Sustained performance under extended workloads — not just benchmark bursts.</div>
+        </div>
+        <div class="why-card">
+          <span class="wc-icon">⚡</span>
+          <div class="wc-t">No External Power</div>
+          <div class="wc-b">75W. PCIe slot only. Dual fans, 768 Pascal cores, DisplayPort output — all without an external power connector. The architecture earns it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S02 FIERCER ═══ -->
+<section id="s02">
+  <div class="sec-wrap">
+    <div class="fi" style="position:relative;">
+      <div class="big-num">768</div>
+      <div class="sh-num">01 — Fiercer</div>
+      <div class="sh-title">Fiercer</div>
+      <div class="sh-sub">768 Shader Cores · Dual-Fan · 14nm Pascal</div>
+      <div class="ice-line on"></div>
+      <div class="count-num" id="count768">0</div>
+      <div class="ns-cards" id="nsCards">
+        <div class="ns-card">
+          <div class="ns-card-h">768 vs 640 — the step up matters</div>
+          <div class="ns-card-b">768 shader cores on 14nm Pascal versus 640 cores on 28nm Maxwell. The count is higher. The architecture is better. Smaller process = more transistors per mm², more performance per watt. The GTX 1050 Ti doesn't just have more cores — it has more capable cores.</div>
+        </div>
+        <div class="ns-card">
+          <div class="ns-card-h">Dual-Fan Thermal Design</div>
+          <div class="ns-card-b">The V-shaped heatsink fin array channels airflow from both fans through the center of the card. Each fan handles half the thermal load. The result: sustained performance under extended workloads, not just burst performance in benchmarks.</div>
+        </div>
+        <div class="ns-card">
+          <div class="ns-card-h">4GB GDDR5 at 1752 MHz</div>
+          <div class="ns-card-b">High-resolution textures. Complex shader programs. Large frame buffers. 4GB is the minimum for comfortable 1080p gaming in 2026. The GTX 1050 Ti meets it without compromise.</div>
+        </div>
+      </div>
+      <div class="badges-row" id="nsBadges">
+        <div class="stat-badge"><div class="num">768</div><div class="lbl">Shader Cores</div></div>
+        <div class="stat-badge"><div class="num">4GB</div><div class="lbl">GDDR5 · 1752 MHz</div></div>
+        <div class="stat-badge"><div class="num" style="font-size:clamp(18px,2.5vw,32px);">0W Ext.</div><div class="lbl">Power Required</div></div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:400px;margin-bottom:14px;">
+        <span>[ FIERCER — DUAL FAN DETAIL ]<br>GTX 1050 Ti side view · dual fan symmetric<br>V-shaped heatsink in top light ]</span>
+      </div>
+      <div class="img-ph" style="width:100%;height:140px;">
+        <span>[ DUAL FAN CLOSE-UP ]<br>Two Simorchip logos centered on fans<br>Blade count visible ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S03 CAPABLE ═══ -->
+<section id="s03">
+  <div class="capable-grid">
+    <div class="fi">
+      <div class="sh-num">02 — Capable</div>
+      <div class="sh-title">Capable</div>
+      <div class="sh-sub">DP + HDMI + DVI · DirectX 12 · Pascal 14nm</div>
+      <div class="ice-line on"></div>
+      <ul class="bullet-list" style="margin-top:28px;">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div><strong>DisplayPort — now you have options.</strong> DisplayPort is the connection standard for high-refresh-rate monitors, professional displays, and multi-monitor productivity setups. The GTX 1050 Ti brings it to the entry of mid-range. 144Hz gaming monitors. 4K output. Daisy-chain displays. All unlocked.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div><strong>DirectX 12 Feature Level 12_1</strong> — Full DX12 native support. Modern games run correctly. Modern engines compile shaders properly. No compatibility workarounds required. Same feature level as cards two tiers above it.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div><strong>GP107 · Pascal · 14nm</strong> — One generation newer than Maxwell. 14nm means more performance per watt, higher sustained clock speeds, better thermal efficiency. 1291 MHz base clock. This is the architecture that powered the GTX 1060, 1070, and 1080.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div>
+          <div><strong>DP + HDMI + DVI — Triple Output</strong> — One bracket. Three connections. Any monitor from any era. Any office, any studio, any deployment.</div>
+        </li>
+      </ul>
+
+      <!-- Compare bars -->
+      <div class="cmp-bar-wrap fi fi-d2" id="cmpBars">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);margin-bottom:20px;">Shader Cores · Generation Comparison</div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label"><span class="cmp-bar-name">G210 — 16 SPs / 31W / Single Fan</span><span class="cmp-bar-val">16</span></div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill g210" id="cb0" data-w="2"></div></div>
+        </div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label"><span class="cmp-bar-name">GT1030 D — 384 SPs / 30W / Single Fan</span><span class="cmp-bar-val">384</span></div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill gt1030" id="cb1" data-w="27"></div></div>
+        </div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label"><span class="cmp-bar-name">GTX 750 Ti — 640 SPs / 60W / Single Fan</span><span class="cmp-bar-val">640</span></div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill gtx750ti" id="cb2" data-w="45"></div></div>
+        </div>
+        <div class="cmp-bar-row featured">
+          <div class="cmp-bar-label"><span class="cmp-bar-name">GTX 1050 Ti — 768 SPs / 75W / Dual Fan</span><span class="cmp-bar-val" style="color:var(--gold);">768</span></div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill gtx1050ti" id="cb3" data-w="100"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:380px;margin-bottom:14px;">
+        <span>[ CAPABLE — FRONT HERO SHOT ]<br>GTX 1050 Ti front · dual-fan symmetric<br>Silver-grey fin array in top light ]</span>
+      </div>
+      <div class="img-ph" style="width:100%;height:150px;">
+        <span>[ OUTPUT PORTS ]<br>DP · HDMI · DVI bracket close-up ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S04 RELIABILITY ═══ -->
+<section id="s04">
+  <div class="sec-wrap rev">
+    <div class="fi">
+      <div class="sh-num">03 — Reliability</div>
+      <div class="sh-title">Reliability</div>
+      <div class="sh-sub">1,500,000 hr MTBF · 171 Years · Zero Maintenance</div>
+      <div class="ice-line on"></div>
+      <p style="font-size:17px;color:var(--mute);line-height:1.85;margin:24px 0 8px;">Not because it's the most powerful card in the room.</p>
+      <p style="font-size:17px;font-weight:500;color:var(--white);line-height:1.85;margin-bottom:20px;">Because dual fans running at half load last longer than one fan running at full.</p>
+      <div class="mtbf-display fi fi-d1">
+        <div class="mtbf-num" id="mtbfCount">0</div>
+        <div class="mtbf-lbl">Hours MTBF</div>
+      </div>
+      <div class="flight-tl fi fi-d2" id="fltWrap">
+        <div class="flt-section-lbl human">Human Aviation History — 123 Years</div>
+        <div class="flt-row">
+          <div class="flt-track human-track" style="width:72%;">
+            <div class="flt-fill human-fill" id="fltFill1"></div>
+            <div class="flt-plane" id="fltPlane1" style="left:0;">✈</div>
+            <div class="flt-dot human-dot" style="left:0%;"><span class="flt-label human-lbl">1903<br>Wright Bros.</span></div>
+            <div class="flt-dot human-dot" style="left:55%;"><span class="flt-label human-lbl">1969<br>Moon Landing</span></div>
+            <div class="flt-dot human-dot" style="left:100%;"><span class="flt-label human-lbl right-align">2026<br>Today</span></div>
+          </div>
+        </div>
+        <div class="flt-divider"></div>
+        <div class="flt-section-lbl gpu">GTX 1050 Ti Theoretical Lifespan — 171 Years</div>
+        <div class="flt-row">
+          <div class="flt-track" style="width:100%;">
+            <div class="flt-fill gpu-fill" id="fltFill2"></div>
+            <div class="flt-dot gpu-dot install" style="left:0%;"><span class="flt-label gpu-lbl install-lbl">2026<br>You install</span></div>
+            <div class="flt-dot gpu-dot" style="left:44%;"><span class="flt-label gpu-lbl">2101<br>22nd Century</span></div>
+            <div class="flt-dot gpu-dot" style="left:100%;"><span class="flt-label gpu-lbl right-align">2197<br>GTX 1050 Ti (theory)</span></div>
+          </div>
+        </div>
+        <div class="flt-compare-note">The aviation era spans 123 years. The GTX 1050 Ti's rated lifespan is <strong>171 years — 39% longer</strong> than the entire history of human flight.</div>
+        <p style="font-size:15px;color:var(--mute);line-height:1.8;margin-top:20px;"><em style="color:var(--white);">It outlives the entire history of flight — from the Wright brothers to your next boarding pass.</em><br>It was already ready. It will still be ready.</p>
+      </div>
+      <div class="rel-badges fi fi-d3">
+        <div class="stat-badge"><div class="num" style="color:var(--ice);">171</div><div class="lbl">Years Theoretical</div></div>
+        <div class="stat-badge"><div class="num">1.5M</div><div class="lbl">Hours MTBF</div></div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:440px;">
+        <span>[ RELIABILITY VISUAL ]<br>GTX 1050 Ti in chassis · long exposure<br>Ice-white glow on dual fans in darkness ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S05 PACKAGING ═══ -->
+<section id="s05">
+  <div class="pkg-in">
+    <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:10px;" class="fi">Packaging Design</div>
+    <div class="pkg-layout">
+      <div class="fi" id="pkgCard1050">
+        <div class="pkg-card" style="opacity:0;transform:translateX(-28px) rotateY(5deg);transition:opacity 1.4s ease,transform 1.4s ease;">
+          <div class="pkg-art">
+            <canvas id="pulseCanvas" width="232" height="110"></canvas>
+            <div class="pkg-model-overlay">GTX 1050 Ti<span>4GB GDDR5</span></div>
+            <div class="pkg-nvidia-badge">Simorchip</div>
+          </div>
+          <div class="pkg-body">
+            <span class="pkg-brand-t">Simorchip · Pascal Edge Series</span>
+            <div class="pkg-stripe"></div>
+            <div class="pkg-cap-row">
+              <span class="pkg-cap">4<span style="font-size:.5em;">GB</span></span>
+              <span class="pkg-spd">DP+HDMI+DVI<br><strong>GDDR5</strong></span>
+            </div>
+          </div>
+          <div class="pkg-certs">
+            <span class="pkg-cert">CE</span><span class="pkg-cert">RoHS</span><span class="pkg-cert">FCC</span><span class="pkg-cert">REACH</span>
+          </div>
+        </div>
+      </div>
+      <div class="fi fi-d2">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:20px;">What's in the box</div>
+        <div class="pkg-feat-list">
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">🖤</div><div><div class="pkg-feat-nm">Foam-Cushioned Inner Tray</div><div class="pkg-feat-ds">The card sits in a dedicated foam slot, fully protected from transit shock. A card with dual fans and a larger PCB needs a tray built for it.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">⚡</div><div><div class="pkg-feat-nm">Anti-Static Bag Protection</div><div class="pkg-feat-ds">Sealed in an anti-static bag before placement in the tray. Full electrostatic discharge protection throughout transit and handling.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">📋</div><div><div class="pkg-feat-nm">Full Spec on Pack</div><div class="pkg-feat-ds">Model number, capacity, and key specs clearly printed on the outer box. Warehouse receiving requires no unboxing.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">✅</div><div><div class="pkg-feat-nm">Global Certifications</div><div class="pkg-feat-ds">CE · RoHS · FCC · REACH. Compliant for EU, US, and international markets.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S06 SPECS ═══ -->
+<section id="s06">
+  <div class="spec-in">
+    <div class="spec-title fi">Specifications</div>
+    <div class="spec-tag fi fi-d1">Mid-Range · GP107 · 14nm Pascal</div>
+    <table class="spec-tbl fi fi-d2">
+      <tr><td>Architecture</td><td>GP107 · 14nm Pascal</td></tr>
+      <tr><td>Stream Processors</td><td>768</td></tr>
+      <tr><td>Core Frequency</td><td>1291 MHz</td></tr>
+      <tr><td>Memory Type</td><td>GDDR5</td></tr>
+      <tr><td>Memory Capacity</td><td>4 GB</td></tr>
+      <tr><td>Memory Frequency</td><td>1752 MHz</td></tr>
+      <tr><td>Memory Bus Width</td><td>128-bit</td></tr>
+      <tr><td>Bus Interface</td><td>PCIe 3.0 × 16</td></tr>
+      <tr><td>Display Outputs</td><td>DP + HDMI + DVI</td></tr>
+      <tr><td>Max Resolution</td><td>1920 × 1080</td></tr>
+      <tr><td>DirectX Support</td><td>DirectX 12 (12_1)</td></tr>
+      <tr><td>External Power</td><td>Not Required</td></tr>
+      <tr><td>Power Consumption</td><td>75W</td></tr>
+      <tr><td>Recommended PSU</td><td>250W and above</td></tr>
+      <tr><td>Cooling Solution</td><td>Dual-Fan</td></tr>
+      <tr><td>Dimensions</td><td>180 × 111 × 37.5 mm</td></tr>
+      <tr><td>OS Support</td><td>Windows 10 / Windows 11</td></tr>
+      <tr><td>Market Positioning</td><td>Mid-Range</td></tr>
+    </table>
+    <div class="spec-disc fi fi-d2">* All specifications sourced from Simorchip internal documentation. Actual performance may vary depending on system configuration and operating environment.</div>
+    <div class="spec-ctas fi">
+      <button class="btn btn-ice">Download Spec Sheet</button>
+      <button class="btn btn-ghost">Explore More Products</button>
+    </div>
+    <div class="spec-foot fi">
+      <span class="tag" style="font-size:9px;">© 2026 Simorchip Technology</span>
+      <span class="tag" style="font-size:9px;">GTX 1050 Ti · Pascal Edge · GeForce</span>
+    </div>
+  </div>
+</section>
+
+<div class="site-foot">
+  <div class="sf-hl">
+    <span>Simorchip GTX 1050 Ti</span>
+    <span style="color:var(--white);">Two fans.</span>
+    <span style="color:var(--ice2);text-shadow:0 0 20px rgba(200,221,240,.25);">No</span>
+    <span style="color:var(--gold);">compromise.</span>
+  </div>
+  <div class="sf-tagline">
+    <span class="sf-t1">Dual fans. Half the heat.</span>
+    <span class="sf-t2">Twice the confidence.</span>
+  </div>
+  <div class="sf-sub">© 2026 Simorchip Technology · GTX 1050 Ti · Pascal Edge · GeForce</div>
+</div>
+
+<script>
+/* ── ICE DRIFT PARTICLES ── */
+(function(){
+  const wrap = document.getElementById('driftWrap');
+  for(let i = 0; i < 18; i++){
+    const line = document.createElement('div');
+    line.className = 'drift-line';
+    const isIce = Math.random() > 0.35;
+    const h = 15 + Math.random() * 70;
+    line.style.cssText = `
+      left:${Math.random()*100}%;
+      height:${h}px;
+      background:linear-gradient(180deg,transparent,${isIce ? 'rgba(200,221,240,' : 'rgba(200,168,74,'}${0.07 + Math.random()*0.1}),transparent);
+      animation-duration:${5 + Math.random()*9}s;
+      animation-delay:${-Math.random()*12}s;
+    `;
+    wrap.appendChild(line);
+  }
+})();
+
+/* ── CURSOR ── */
+(function(){
+  const cur = document.getElementById('cur'), ring = document.getElementById('cur-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  const TRAIL = 6;
+  const dots = Array.from({length: TRAIL}, (_, i) => {
+    const d = document.createElement('div');
+    d.className = 'trail-dot';
+    const s = 4 - i * 0.5;
+    d.style.cssText = `width:${s}px;height:${s}px;opacity:${(1-i/TRAIL)*0.28};`;
+    document.body.appendChild(d); return d;
+  });
+  const pos = dots.map(() => ({x:0,y:0})); let head = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cur.style.left = mx+'px'; cur.style.top = my+'px';
+    pos[head] = {x:mx,y:my}; head = (head+1) % TRAIL;
+  });
+  (function frame(){
+    rx += (mx-rx)*0.1; ry += (my-ry)*0.1;
+    ring.style.left = rx+'px'; ring.style.top = ry+'px';
+    dots.forEach((_,i) => {
+      const p = pos[(head-1-i+TRAIL)%TRAIL];
+      dots[i].style.left = p.x+'px'; dots[i].style.top = p.y+'px';
+    });
+    requestAnimationFrame(frame);
+  })();
+  document.querySelectorAll('button,.btn,.np a').forEach(el => {
+    el.addEventListener('mouseenter', () => { cur.style.width='16px'; cur.style.height='16px'; });
+    el.addEventListener('mouseleave', () => { cur.style.width='8px'; cur.style.height='8px'; });
+  });
+})();
+
+/* ── NAV ── */
+const navEl = document.getElementById('nav');
+window.addEventListener('scroll', () => navEl.classList.toggle('sc', scrollY > 50));
+function goTo(id){ document.getElementById(id)?.scrollIntoView({behavior:'smooth'}); }
+const secIds = ['s00','s01','s02','s03','s04','s05','s06'];
+const pills = document.querySelectorAll('.np a');
+secIds.forEach(id => {
+  const el = document.getElementById(id); if(!el) return;
+  new IntersectionObserver(es => {
+    if(es[0].isIntersecting){ const i = secIds.indexOf(id); pills.forEach(p=>p.classList.remove('on')); if(pills[i]) pills[i].classList.add('on'); }
+  }, {threshold:.4}).observe(el);
+});
+
+/* ── SCROLL REVEAL ── */
+const fiObs = new IntersectionObserver(es => { es.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); }); }, {threshold:.08});
+document.querySelectorAll('.fi').forEach(el => fiObs.observe(el));
+
+/* ── SECTION DIVIDERS ── */
+secIds.slice(1).forEach(id => {
+  const el = document.getElementById(id); if(!el) return;
+  new IntersectionObserver(es => { if(es[0].isIntersecting) el.classList.add('div-on'); }, {threshold:.05}).observe(el);
+});
+
+/* ── ICE LINES ── */
+document.querySelectorAll('.ice-line').forEach(el => {
+  new IntersectionObserver(es => { if(es[0].isIntersecting) el.classList.add('on'); }, {threshold:.5}).observe(el);
+});
+
+/* ── FINS ── */
+(function(){
+  const wrap = document.getElementById('gtxFins'); if(!wrap) return;
+  for(let i = 0; i < 14; i++){
+    const f = document.createElement('div'); f.className = 'gtx1050-fin'; wrap.appendChild(f);
+  }
+})();
+
+/* ── HERO ── */
+document.fonts.ready.then(() => {
+  function cls(id, d=0){ setTimeout(()=>document.getElementById(id)?.classList.add('on'), d); }
+  cls('hRight', 0); cls('hEye', 400); cls('hHL', 600);
+  setTimeout(() => ['hl0','hl1','hl2'].forEach((id,i) => setTimeout(()=>document.getElementById(id)?.classList.add('in'), i*340)), 640);
+  setTimeout(() => document.getElementById('hLine')?.classList.add('on'), 1600);
+  cls('hSub', 1900); cls('hTags', 2200); cls('scrHint', 2700);
+});
+
+/* ── PACKAGING CARD ── */
+(function(){
+  const wrap = document.getElementById('pkgCard1050'); if(!wrap) return;
+  new IntersectionObserver(es => {
+    if(es[0].isIntersecting){
+      const card = wrap.querySelector('.pkg-card');
+      if(card){ card.style.opacity='1'; card.style.transform='none'; }
+    }
+  }, {threshold:.2}).observe(wrap);
+})();
+
+/* ── PULSE CANVAS — ice glow concentric rings ── */
+(function(){
+  const cv = document.getElementById('pulseCanvas'); if(!cv) return;
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  let t = 0, rafId;
+
+  function draw(){
+    ctx.fillStyle = '#08090e';
+    ctx.fillRect(0, 0, W, H);
+
+    const cx = W * 0.45, cy = H * 0.5;
+    for(let i = 0; i < 6; i++){
+      const phase = (t * 0.75 + i * 0.9) % (Math.PI * 2);
+      const r = 8 + i * 17 + Math.sin(phase) * 4;
+      const alpha = (0.13 - i * 0.018) * (0.5 + 0.5 * Math.sin(phase + Math.PI));
+      if(alpha <= 0) continue;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(200,221,240,${alpha})`;
+      ctx.lineWidth = i === 0 ? 1.5 : 0.8;
+      if(i === 0){ ctx.shadowColor = 'rgba(200,221,240,0.35)'; ctx.shadowBlur = 6; }
+      else ctx.shadowBlur = 0;
+      ctx.stroke();
+    }
+    ctx.shadowBlur = 0;
+
+    // Gold outer pulse
+    const goldR = 58 + Math.sin(t * 0.55) * 7;
+    const goldAlpha = 0.05 + Math.sin(t * 0.55) * 0.035;
+    ctx.beginPath();
+    ctx.arc(cx, cy, goldR, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(200,168,74,${goldAlpha})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Scan lines
+    ctx.fillStyle = 'rgba(0,0,0,.1)';
+    for(let y = 0; y < H; y += 2) ctx.fillRect(0, y, W, 1);
+
+    // Ice-white diagonal lines
+    ctx.save();
+    ctx.globalAlpha = 0.2;
+    [[0.25,0.28],[0.5,0.53],[0.72,0.75]].forEach(([y1,y2]) => {
+      const g = ctx.createLinearGradient(0,0,W,0);
+      g.addColorStop(0,'transparent');
+      g.addColorStop(0.3,'rgba(200,221,240,0.5)');
+      g.addColorStop(0.7,'rgba(200,221,240,0.25)');
+      g.addColorStop(1,'transparent');
+      ctx.beginPath();
+      ctx.moveTo(0, H * y1);
+      ctx.lineTo(W, H * y2);
+      ctx.strokeStyle = g;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    });
+    ctx.restore();
+
+    t += 0.028;
+    rafId = requestAnimationFrame(draw);
+  }
+  draw();
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => cancelAnimationFrame(rafId));
+})();
+
+/* ── COUNT-UP 768 — tachometer style ── */
+(function(){
+  const el = document.getElementById('count768'); if(!el) return;
+  let done = false;
+  const obs = new IntersectionObserver(es => {
+    if(es[0].isIntersecting && !done){ done = true;
+      const dur = 1600, target = 768, t0 = performance.now();
+      (function f(now){
+        const p = Math.min((now-t0)/dur, 1);
+        const v = p < 0.7 ? p/0.7 * 0.85 : 0.85 + (p-0.7)/0.3 * 0.15;
+        const eased = 1 - Math.pow(1-v, 2);
+        el.textContent = Math.round(eased * target);
+        if(p < 1) requestAnimationFrame(f);
+        else el.textContent = '768';
+      })(performance.now());
+    }
+  }, {threshold:.4});
+  obs.observe(el);
+})();
+
+/* ── COMPARE BARS ── */
+(function(){
+  const wrap = document.getElementById('cmpBars'); if(!wrap) return;
+  let done = false;
+  const obs = new IntersectionObserver(es => {
+    if(es[0].isIntersecting && !done){ done = true;
+      ['cb0','cb1','cb2','cb3'].forEach((id, i) => setTimeout(() => {
+        const el = document.getElementById(id);
+        if(el) el.style.width = el.dataset.w + '%';
+      }, i * 220));
+    }
+  }, {threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ── NS CARDS STAGGER ── */
+(function(){
+  const cards = document.querySelectorAll('.ns-card'); if(!cards.length) return;
+  let done = false;
+  const obs = new IntersectionObserver(es => {
+    if(es[0].isIntersecting && !done){ done = true;
+      cards.forEach((c,i) => {
+        c.style.cssText = `opacity:0;transform:translateX(-14px);transition:opacity .6s ease ${i*.15}s,transform .6s ease ${i*.15}s;`;
+        setTimeout(() => { c.style.opacity='1'; c.style.transform='none'; }, 60);
+      });
+    }
+  }, {threshold:.3});
+  obs.observe(cards[0]);
+})();
+
+/* ── BADGES SNAP ── */
+(function(){
+  const wrap = document.getElementById('nsBadges'); if(!wrap) return;
+  let done = false;
+  const obs = new IntersectionObserver(es => {
+    if(es[0].isIntersecting && !done){ done = true;
+      wrap.querySelectorAll('.stat-badge').forEach((b,i) => {
+        b.style.cssText = `opacity:0;transform:scale(.9);transition:opacity .5s ease ${i*.15}s,transform .5s cubic-bezier(.34,1.56,.64,1) ${i*.15}s;`;
+        setTimeout(() => { b.style.opacity='1'; b.style.transform='scale(1)'; }, 60);
+      });
+    }
+  }, {threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ── MTBF COUNTER ── */
+(function(){
+  const el = document.getElementById('mtbfCount'); if(!el) return;
+  let done = false;
+  const obs = new IntersectionObserver(es => {
+    if(es[0].isIntersecting && !done){ done = true;
+      const dur = 1800, target = 1500000, t0 = performance.now();
+      (function f(now){
+        const p = Math.min((now-t0)/dur, 1);
+        const v = 1 - Math.pow(1-p, 3);
+        el.textContent = Math.round(v*target).toLocaleString();
+        if(p < 1) requestAnimationFrame(f); else el.textContent = '1,500,000';
+      })(performance.now());
+    }
+  }, {threshold:.4});
+  obs.observe(el);
+})();
+
+/* ── FLIGHT TIMELINE ── */
+(function(){
+  const wrap = document.getElementById('fltWrap'); if(!wrap) return;
+  let done = false;
+  const obs = new IntersectionObserver(es => {
+    if(es[0].isIntersecting && !done){ done = true;
+      setTimeout(() => {
+        const f1 = document.getElementById('fltFill1');
+        const p1 = document.getElementById('fltPlane1');
+        if(f1) f1.style.width = '100%';
+        if(p1){ p1.style.transition = 'left 1.6s ease'; p1.style.left = 'calc(100% - 14px)'; }
+        setTimeout(() => {
+          const f2 = document.getElementById('fltFill2');
+          if(f2) f2.style.width = '100%';
+        }, 300);
+      }, 200);
+    }
+  }, {threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ── WHY CARDS STAGGER ── */
+(function(){
+  const cards = document.querySelectorAll('.why-card'); if(!cards.length) return;
+  let done = false;
+  const obs = new IntersectionObserver(es => {
+    if(es[0].isIntersecting && !done){ done = true;
+      cards.forEach((c,i) => {
+        c.style.cssText = `opacity:0;transform:translateY(18px);transition:opacity .6s ease ${i*.12}s,transform .6s ease ${i*.12}s;`;
+        setTimeout(() => { c.style.opacity='1'; c.style.transform='none'; }, 60);
+      });
+    }
+  }, {threshold:.3});
+  obs.observe(cards[0]);
+})();
+
+/* ── SPEC TABLE STAGGER ── */
+(function(){
+  const tbl = document.querySelector('.spec-tbl'); if(!tbl) return;
+  let done = false;
+  const obs = new IntersectionObserver(es => {
+    if(es[0].isIntersecting && !done){ done = true;
+      tbl.querySelectorAll('tr').forEach((row,i) => {
+        row.style.cssText = `opacity:0;transition:opacity .4s ease ${i*.04}s;`;
+        setTimeout(() => { row.style.opacity='1'; }, 60);
+      });
+    }
+  }, {threshold:.1});
+  obs.observe(tbl);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,749 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>RTX5060</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="36cd24e8-7d86-80df-8dbc-f8a56de3d84d" class="page sans"><header><h1 class="page-title" dir="auto">RTX5060</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-817f-8430-e2b71e95c3c7" class=""><mark class="highlight-yellow">*黃色字體：視覺建議</mark></p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8173-962f-ccb6c8b2cfe0" class=""><mark class="highlight-red">*紅色字體：中文解釋</mark></p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-816b-a179-fbad46f2fd2e" class=""><mark class="highlight-blue">*Hashtag：For SEO</mark></p></div><div style="display:contents" dir="auto"><h2 id="36cd24e8-7d86-8110-b5a6-c2c73fb2faa7" class="">RTX5060Ti 8GB GDDR7</h2></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8154-b2c1-c4c499a65c1e" class="">Simorchip RTX 5060Ti 8GB GDDR7</p></div><div style="display:contents" dir="auto"><hr id="36cd24e8-7d86-816c-91cd-f3a8aa5fa648"/></div><div style="display:contents" dir="auto"><h2 id="36cd24e8-7d86-8132-bf45-f1174dbe8b6f" class="">Hero</h2></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8006-9de4-e67c413838fd" class="">GDDR7 Array Engaged. Kinetic speed unlocked.</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-805b-a149-fca5ff570a63" class="">Dual-propeller vector active.<br/>Absolute conversion, zero performance drag.<br/>The RTX 5060 Ti doesn&#x27;t operate on traditional frame cycles; it forces compliance.<br/>This isn&#x27;t where we wait for the rendering sequence. This is where we launch the vector at railgun velocity.</p></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-8151-a800-f28f736fa4bd" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> The camera skims intensely along the newly integrated PCIe 5.0 gold fingers, tracing up past the 5nm GB206 die inside the hardware layer. The view reveals the dual-fan shroud, featuring sharp, sweeping electric-crimson geometric energy vector accents slashing through a cold dark industrial space.  </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-8026-9323-f4698c12980e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> The primary title &quot;GDDR7 Array Engaged. Kinetic speed unlocked.&quot; impacts the screen with an instantaneous mechanical lock sound, followed by the technical bullet markers pulsing under a high-frequency green and crimson laser grid overlay.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-81aa-9cb9-fe7e4dcfb830" class=""><code>#RTX5060Ti</code> <code>#8GBGDDR7</code> <code>#128Bit</code> <code>#GB206</code> <code>#PCIe5.0</code> <code>#180W</code> <code>#DualFans</code> <code>#MultiDP</code> <code>#HDMI</code> <code>#Simorchip</code> </p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-813a-8010-ec36cc6d9185" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="36cd24e8-7d86-8186-b4f1-d5daffac14c0"/></div><div style="display:contents" dir="auto"><h3 id="36cd24e8-7d86-81a8-b74d-ef847e9d0c19" class="">Accelerator World <mark class="highlight-red">加速世界</mark></h3></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-8104-b252-e6c19f3cb52a" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> Extreme technical close-up on the dual-fan system with parallel blade geometry. The twin golden Simorchip brand medallions remain perfectly anchored at the center of the intake whirlwind. Under studio cross-lighting, the high-density cooling fan fins show an optimized angle designed to handle 5nm high-frequency operations.  </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-805f-bc89-df66589ca8bb" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> On scroll-trigger, the fan blades instantly blur into full rotational velocity within 0.3 seconds, while a digital velocity telemetry meter sweeps violently from a standard diagnostic state to an unblinking glowing white capacity lock.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8198-8a9b-d9d76eea0224" class="">
+</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-803f-b64c-cbda631a7142" class=""><strong>Velocity is the only defensive armor that matters.</strong></p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8008-9db6-d76eb802542b" class="">This dual-fan cooling system is the physical <strong>Accelerator World </strong>built into your graphics core.<br/>When the 5nm GB206 architecture elevates its clocks to a blistering 2407 MHz, thermal friction demands immediate execution</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8056-aabc-c7e7c8c88a24" class="">. The Accelerator intercepts the thermal peak at the exact microsecond of calculation.<br/>With next-generation GDDR7 routing massive asset data through the system, the architecture experiences sudden high-density thermal loading—but this dual-fan cooling layout evacuates the heat chamber without friction.</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-80d9-972c-ecbe89a1bd01" class=""><br/>No spin-up latency. No performance throttling compromises.<br/>It locks your system coordinates at peak architectural output while the core math runs fully redlined.</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-80f2-b49c-ef4ac94e1a35" class=""><br/>Switch on the mainline. Let the Accelerator handle the friction.</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-81b3-835a-d3e9a235fdb5" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="36cd24e8-7d86-81b4-a55c-f0da7a91e87c"/></div><div style="display:contents" dir="auto"><h3 id="36cd24e8-7d86-8179-88f6-c58773b43a91" class="">Why You Need the RTX 5060Ti</h3></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-803d-9f2e-c18fa6d414ef" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> Clean three-column terminal container interface with heavy technical structural division borders.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-80dd-8353-cb6ab662ebd5" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> Staggered 0.1s entry sequence from right to left, accompanied by a sharp digital wireframe matrix flash expanding across each column.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-80c7-bd7d-daa2cad72dfa" class="">Next-Gen GDDR7 — The dawn of complete memory liberation. </p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8046-9ffa-fba22263d5f4" class="">Traditional memory modules belong to the past.<br/>Integrating cutting-edge 8GB GDDR7 architecture on an optimized 128-Bit mainline, this card breaks old throughput restrictions via advanced data coding.<br/>Operating at a sustained 1750 MHz frequency, assets, game files, and rendering matrices flow natively into the compute engines.<br/>The pipeline remains completely clear, instantly.</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-80ce-877d-c24797c04316" class="">5nm GB206 Compute — Absolute clock velocity dominance. </p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-807a-bb2a-dad04a550171" class="">Density dictates the outcome of the calculation.<br/>The advanced 5nm process technology concentrates 4608 independent streaming processors into an ultra-dense, highly efficient layout.<br/>Boasting a massive native core frequency of 2407 MHz, it delivers a direct, overwhelming speed upgrade to advanced lighting structures and scene geometry processing without breaking a sweat.</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8089-8d7a-c4ebb1fb3be3" class="">PCIe 5.0 ×8 Protocol — Next-gen system interconnect. </p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-802f-b77c-eb751da157f3" class="">Bandwidth bottlenecks are a structural failure of the past.<br/>By utilizing the latest PCIe 5.0 standard, the data interface doubles the per-lane transfer capacity directly at the motherboard mainline.<br/>Even running on an optimized 8-lane configuration, the processing units receive instructions without experiencing a single millisecond of pipeline drag.</p></div><div style="display:contents" dir="auto"><hr id="36cd24e8-7d86-81df-9ae4-c0210caf8842"/></div><div style="display:contents" dir="auto"><h3 id="36cd24e8-7d86-81d1-a1b8-f95f6ef33c71" class="">Fiercer</h3></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-81bc-9aab-db3b30570ca4" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> Left side houses an oversized technical typography displaying &quot;4608&quot; using a hard, unyielding industrial font. Right side displays the real-time diagnostic telemetry blocks.  </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-809a-a1b1-eacb62e1669d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> The numeric tracker charges from 0 to 4608 accompanied by an intense low-frequency electric audio hum. A digital vector telemetry grid flashes underneath, stabilizing completely at full capacity initialization.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8059-9421-d9d57d099083" class=""><strong>4608 Stream Processors · High-End Alignment · 5nm Ultra-Dense Node</strong> </p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8035-af58-f35af69f36a4" class="">4608 calculation vectors online. The particle core is fully stabilized. Specifications don&#x27;t compromise; they establish the new standard of power.<br/>The 5nm node brings 4608 independent processing engines together into an ultra-tight, highly responsive layout.<br/>When running advanced real-time compute layers and complex DirectX 12 (12_2) engine calls, the RTX 5060 Ti handles complex path traces directly on the silicon with immediate, unyielding authority.</p></div><div style="display:contents" dir="auto"><h3 id="36cd24e8-7d86-81b0-82ed-f466964cf5a6" class=""><mark class="highlight-yellow">Stat Badge (System Diagnostic Wave)</mark></h3></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-811f-9718-e2c3f12bd1a1" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> Three horizontal diagnostic readouts sitting above raw white metal baseline vectors.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-80cc-b67d-f77bb0b2eb5e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> A high-speed white light progression line sweeps from left to right, fixing the stats into solid system confirmations instantly.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-802c-bfde-cb46c80b0c19" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 1:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>4608 GB206 Units / Active Load</code></mark><mark class="highlight-yellow">   </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-80dd-b9c5-f78a78291afe" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 2:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>8GB GDDR7 / PCIe 5.0 Rail</code></mark><mark class="highlight-yellow">   </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-8042-b8fa-ca1eec915378" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 3:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>180W Thermal Target / Confirmed</code></mark><mark class="highlight-yellow"> </mark></li></ul></div><div style="display:contents" dir="auto"><hr id="36cd24e8-7d86-8194-a319-e171f58087a6"/></div><div style="display:contents" dir="auto"><h3 id="36cd24e8-7d86-810c-9983-c7deb79b5746" class="">Capable</h3></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-8168-9dcd-eff089d30a9a" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>V</strong></mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-80d0-a3ae-e37656175ad4" class="bulleted-list"><li style="list-style-type:disc"><strong>Visual 1:</strong> Isometric technical layout of the premium rear bracket, highlighting the clean industrial 3×DP + HDMI interface suite under cold spot-lighting.  </li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-80ac-ae74-df2129e9ed64" class="bulleted-list"><li style="list-style-type:disc"><strong>Visual 2:</strong> A horizontal chart scaling purely on hardware &quot;Combat Capacity Values&quot; rather than marketing names.</li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-8004-9794-c2d33f012c0b" class="bulleted-list"><li style="list-style-type:disc"><strong>Animation:</strong> Parallax displacement on scroll. The Simorchip RTX 5060 Ti bar breaks past standard operational limits, stretching out to its extreme profile with an electric white thrust plume animation, marking the 4608 Cores and GDDR7 framework in deep gold.  </li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-80cc-8385-f1f179d8d30f" class="bulleted-list"><li style="list-style-type:disc"><strong>Legacy Baselines:</strong> 16 Cores / 30W / Confined to basic text rendering and UI display.</li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-8037-8ccc-e837614c7b72" class="bulleted-list"><li style="list-style-type:disc"><strong>Standard Gatekeepers:</strong> 2304 Cores / 115W / Guards the entry line but respects physical processing boundaries.</li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-805e-905f-c29225f2a785" class="bulleted-list"><li style="list-style-type:disc"><strong>High-End Mainlines:</strong> 3584 Cores / 170W / Breaks the front line via 192-Bit architecture.</li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-80c0-a2c4-cc84f604b0d5" class="bulleted-list"><li style="list-style-type:disc"><strong>Simorchip RTX 5060 Ti:</strong> 4608 Cores / 180W / Total vector acceleration via 5nm GB206 node and GDDR7 array. </li></ul></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-80f0-8686-c7adf9a819dd" class=""><strong>3 × DisplayPort + HDMI — Complete screen distribution array.</strong> The triple DisplayPort setup converts your desktop into a tactical multi-display command bridge.<br/>Output to high-refresh competitive displays and cinematic 1920×1080 resolution arrays simultaneously without experiencing bandwidth starvation.<br/>Paired with HDMI, interface cross-compatibility remains absolute and uncompromised.</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-80fa-9de0-e5946f7fc599" class=""><strong>DirectX 12 Feature Level 12_2</strong> Hardware-level absolute authority.<br/>No software emulation layers required. The 5nm silicon directly executes modern engine instruction calls, mesh shading, and sampler feedback at the metal layer.<br/>The output renders exactly as the source code engineered it—brutal, raw, and pure.</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8111-80f5-f47590bea6cb" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="36cd24e8-7d86-81e7-bbf3-ebad888e2473"/></div><div style="display:contents" dir="auto"><h3 id="36cd24e8-7d86-8193-8650-cc7d42f25371" class="">Reliability</h3></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8123-b335-ed1b515ff7ef" class=""><strong>1,500,000 hr MTBF · 171 Years · Heavy-Duty Engineering</strong></p></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-802f-8f5f-e64c0b575bd3" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> Matte dark industrial backdrop. A dual-rail historical timeline graphic rests underneath a solid white digital lifetime counter blinking with a warm white aura.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-80cd-8fc5-fac9f07952a2" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> Heavy rail industrial indicators scroll left, while the hardware certification matrix slides right, locking together at the 1,500,000-hour mark.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-80ac-a056-f74f35005866" class=""><strong>1,500,000 hr MTBF · 171 Years Continuous Math · Heavy-Duty Standard</strong></p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8026-9e1c-c6f414a5cce1" class=""><strong>Engineered for continuous, relentless duty cycles.Not for shelf display.</strong>The RTX 5060 Ti coordinates 4608 processing streams and ultra-fast GDDR7 memory channels continuously, but its physical frame is engineered to survive prolonged operational pressure.<br/>1,500,000 hours Mean Time Between Failures. A theoretical endurance rating of 171 years.<br/>This timeline outlasts the operational history of modern industrial high-precision milling and heavy automation infrastructure.<br/>It is constructed to lock firmly into your motherboard slot and outlast the operational cycle of everything around it.<br/>Built to handle the speed. Born to stay operational</p></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-8032-874b-dcfeb1190f5d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 1: Structural Endurance</strong></mark><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-80cc-b3b5-e0be0047c050" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> Massive </mark><mark class="highlight-yellow"><strong>171 Years</strong></mark><mark class="highlight-yellow"> lettering anchored above a glowing static infinity cursor (</mark><mark class="highlight-yellow"><code>∞</code></mark><mark class="highlight-yellow">).</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-8049-813c-fb3730a2e17e" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Text:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>171 Years / Core Architecture Life Expectancy</code></mark></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-8014-bc4b-fbe3783a25cc" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 2: Shield Verification</strong></mark><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-80e6-8410-dcde0226542d" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> Stamped metal armor insignia locking alongside the </mark><mark class="highlight-yellow"><strong>1.5M Hours</strong></mark><mark class="highlight-yellow"> validation.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-803a-929a-ed2466742188" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Text:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>1,500,000 Hours / MTBF Validation Certified</code></mark></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-81ea-b731-d70a218b09cb" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="36cd24e8-7d86-81c5-98f1-e73aea139da0"/></div><div style="display:contents" dir="auto"><h3 id="36cd24e8-7d86-816e-ba83-ddac41a6b410" class="">Packaging Design</h3></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-819e-88da-e765430a5ed4" class=""><mark class="highlight-yellow">視覺：包裝確認後補充視覺說明，目前先暫替</mark></p></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-811d-87f6-debb292f2d19" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>主色流線光波紋理</strong></mark><mark class="highlight-yellow">，帶有彩光斑不規則移動效果</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-81bb-a9d5-e1eafbf45067" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">左側黑色條帶 + Simorchip 白字</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36cd24e8-7d86-8191-a354-c72a0dac8240" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow">內盒：黑色硬紙托盤 + 黑色泡棉卡槽，卡放在防靜電袋裡</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8134-838a-e0d3425683db" class=""><strong>Visual:</strong> Irregular flowing iridescent kinetic flares rolling along the matte outer box lines, framed by a sharp, high-contrast white Simorchip brand band.</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-809b-8918-c7150dfcfc59" class=""><strong>Internal Layout:</strong> Rigid structural dark tray combined with precision high-density dark anti-shock foam slots, enclosing the card safely within a factory-sealed anti-static shielding sleeve.</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8058-936e-f22350bb494e" class=""><br/><strong>Foam-Cushioned Inner Tray</strong> — Customized high-density shock foam casing engineered specifically to isolate the $264\times124\times43\text{ mm}$ dual-fan structure from transit vibration.  </p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-80b1-ab2d-e0758e6fde88" class=""><br/><strong>Anti-Static Bag Protection</strong> — Full hermetic anti-static shielding enclosure keeps the premium 5nm layout completely isolated from electrostatic hazards.  </p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-80fa-935f-eb1c5b9b1c96" class=""><br/><strong>Full Spec on Pack</strong> — Physical architecture metrics, core counts, and GDDR7 parameters printed directly on the outer label matrix.  <strong>Global Certifications</strong> — CE · RoHS · FCC · </p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-803c-ace9-cb53d80f50e7" class="">REACH. Fully vetted for deployment across major international markets.</p></div><div style="display:contents" dir="auto"><hr id="36cd24e8-7d86-81a2-9142-d1063ef4f6b9"/></div><div style="display:contents" dir="auto"><h3 id="36cd24e8-7d86-817d-85c6-c4ab599c4c46" class="">SPECIFICATIONS</h3></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8130-b309-f696acaf9e2a" class="">Mid-Range Pascal performance. No external power. Dual-fan cooling.</p></div><div style="display:contents" dir="ltr"><table id="36cd24e8-7d86-8150-90d3-d8680c5d5a87" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-818a-802f-ee65d7fd0038"><th id="z:NB" class="simple-table-header-color simple-table-header"></th><th id="HHk:" class="simple-table-header-color simple-table-header"></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-8162-86ce-e36dfae7756d"><td id="z:NB" class=""><strong>Architecture</strong></td><td id="HHk:" class="">GB206 · 5nm</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-8183-aa25-ce48baabd1ba"><td id="z:NB" class=""><strong>Stream Processors</strong></td><td id="HHk:" class="">4608</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-8167-a346-f713c8051369"><td id="z:NB" class=""><strong>Core Frequency</strong></td><td id="HHk:" class="">2407 MHz</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-81dc-9358-f8a34813cef9"><td id="z:NB" class=""><strong>Memory Type</strong></td><td id="HHk:" class="">GDDR7</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-81ec-b7c3-d11a53655bd4"><td id="z:NB" class=""><strong>Memory Capacity</strong></td><td id="HHk:" class="">8 GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-816c-95a8-c4eaedbff795"><td id="z:NB" class=""><strong>Memory Frequency</strong></td><td id="HHk:" class="">1750 MHz</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-8150-8e6c-d45c7475ebe5"><td id="z:NB" class=""><strong>Memory Bus Width</strong></td><td id="HHk:" class="">128-bit</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-81cc-be0d-dea15cd6bc7a"><td id="z:NB" class=""><strong>Bus Interface</strong></td><td id="HHk:" class="">PCIe 5.0 × 8</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-81c4-b76e-c037b36c7e26"><td id="z:NB" class=""><strong>Display Outputs</strong></td><td id="HHk:" class="">3 * DP + HDMI</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-814f-8d25-f1dd6a86a803"><td id="z:NB" class=""><strong>Max Resolution</strong></td><td id="HHk:" class="">1920 × 1080</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-81e5-bee3-df3ba005093a"><td id="z:NB" class=""><strong>DirectX Support</strong></td><td id="HHk:" class="">DirectX 12 (12_2)</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-817f-b708-e611cb7b465a"><td id="z:NB" class=""><strong>External Power</strong></td><td id="HHk:" class="">8 Pin</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-8181-aec4-e3b604050184"><td id="z:NB" class=""><strong>Power Consumption</strong></td><td id="HHk:" class="">180W</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-8144-b360-eae4a4b390eb"><td id="z:NB" class=""><strong>Recommended PSU</strong></td><td id="HHk:" class="">450W</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-818c-8e1c-f4667d95d18c"><td id="z:NB" class=""><strong>Cooling Solution</strong></td><td id="HHk:" class="">Dual-Fan</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-811e-9e35-f0fb55c0108e"><td id="z:NB" class=""><strong>Dimensions</strong></td><td id="HHk:" class="">264 × 124 × 43 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-8161-a6f4-d1c5d77bec6b"><td id="z:NB" class=""><strong>OS Support</strong></td><td id="HHk:" class="">Windows 10 / Windows 11</td></tr></div><div style="display:contents" dir="ltr"><tr id="36cd24e8-7d86-81ec-be1e-fbad6c8cdb82"><td id="z:NB" class=""><strong>Market Positioning</strong></td><td id="HHk:" class="">High-End</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-81f6-8afc-c8efc1152a82" class=""><em>All specifications sourced from Simorchip internal documentation. Actual performance may vary depending on system configuration and operating environment.</em></p></div><div style="display:contents" dir="auto"><hr id="36cd24e8-7d86-8175-8195-c785c2b1b56b"/></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-815a-8fae-f460e14721d5" class="">
+</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-8049-9504-d6b61c2fb163" class="">Dual fans. Zero reservation.</p></div><div style="display:contents" dir="auto"><p id="36cd24e8-7d86-803b-927f-f1108e545101" class="">The <strong>Simorchip </strong>RTX 5060 Ti does not bargain for velocity.<br/>This isn&#x27;t where we wait for the rendering sequence. This is where we launch the vector at railgun velocity.</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
