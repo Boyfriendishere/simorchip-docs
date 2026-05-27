@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip RTX 5060 Ti — GDDR7 Array Engaged. Railgun velocity.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080a;--bg2:#050608;--surface:#0c0e14;
+  --saber:#4090d0;--saber2:#c0e8ff;--saber3:rgba(64,144,208,.1);
+  --saber-core:#ffffff;
+  --crimson:#c0183a;--crimson2:#ff4060;--crimson3:rgba(192,24,58,.1);
+  --gold:#c8a84a;--gold2:#a08030;--gold-border:rgba(200,168,74,.22);
+  --white:#f8faff;--mute:#607090;--label:#384858;
+  --border:rgba(64,144,208,.14);--line:rgba(64,144,208,.07);
+  --nvidia:#76b900;
+  --ff-d:'Bebas Neue',sans-serif;
+  --ff-b:'Barlow Condensed',sans-serif;
+  --ff-m:'DM Mono',monospace;
+
+  /* SABER GLOW STANDARD — blue */
+  --glow-blue: 0 0 2px #fff, 0 0 8px #c0e8ff, 0 0 22px #4090d0, 0 0 55px rgba(60,140,220,.25);
+  /* SABER GLOW STANDARD — red */
+  --glow-red:  0 0 2px #fff, 0 0 8px #ffb0b0, 0 0 22px #c0183a, 0 0 55px rgba(192,24,58,.25);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff-b);background:var(--bg);color:var(--white);overflow-x:hidden;cursor:none;}
+
+/* GRAIN */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.12;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size:180px;mix-blend-mode:overlay;}
+
+/* VELOCITY VECTOR FIELD */
+#vectorCanvas{position:fixed;inset:0;pointer-events:none;z-index:0;width:100%;height:100%;}
+
+/* ══ LIGHTSABER IGNITION OVERLAY ══ */
+#saberOverlay{
+  position:fixed;inset:0;z-index:9000;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;
+}
+#saberLine{
+  position:absolute;
+  top:50%;left:50%;
+  width:0;height:2px;
+  transform:translate(-50%,-50%);
+  background:var(--saber-core);
+  box-shadow:var(--glow-blue);
+  border-radius:1px;
+  transition:none;
+}
+#saberFlash{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 40% at 50% 50%,rgba(64,144,208,.18),transparent);
+  opacity:0;
+}
+#saberLabel{
+  position:absolute;bottom:36%;
+  font-family:var(--ff-m);font-size:clamp(10px,1.6vw,16px);letter-spacing:.28em;
+  color:var(--saber2);text-transform:uppercase;opacity:0;
+  transition:opacity .3s ease;white-space:nowrap;
+}
+#saberLabel.show{opacity:1;}
+#saberOverlay.done{opacity:0;transition:opacity .45s ease;}
+
+/* ══ LIGHTSABER CURSOR ══ */
+#cur{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+.saber-cur{position:relative;width:28px;height:28px;transition:transform .15s;}
+.sc-v{position:absolute;left:50%;top:0;transform:translateX(-50%);width:1.5px;height:100%;border-radius:1px;background:var(--saber-core);}
+.sc-h{position:absolute;top:50%;left:0;transform:translateY(-50%);height:1.5px;width:100%;border-radius:1px;background:var(--saber-core);}
+.sc-dot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:4px;height:4px;border-radius:50%;background:var(--saber-core);}
+/* blue glow default */
+#cur.blue .sc-v,#cur.blue .sc-h{box-shadow:var(--glow-blue);}
+#cur.blue .sc-dot{box-shadow:var(--glow-blue);}
+/* red glow on hover */
+#cur.red .sc-v,#cur.red .sc-h{background:var(--saber-core);box-shadow:var(--glow-red);}
+#cur.red .sc-dot{background:var(--saber-core);box-shadow:var(--glow-red);}
+#cur.red .saber-cur{transform:rotate(45deg);}
+/* trail dots */
+.trail-dot{position:fixed;border-radius:50%;pointer-events:none;z-index:9990;transform:translate(-50%,-50%);transition:background .2s;}
+
+#cur-ring{position:fixed;width:40px;height:40px;border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);animation:ringRotate 4s linear infinite;border:1px solid rgba(64,144,208,.3);}
+#cur-ring.red-ring{border-color:rgba(192,24,58,.35);}
+@keyframes ringRotate{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:18px 5%;transition:background .3s,border-bottom .3s;opacity:0;}
+nav.visible{opacity:1;transition:opacity .4s ease, background .3s, border-bottom .3s;}
+nav.sc{background:rgba(7,8,10,.97);backdrop-filter:blur(16px);border-bottom:.5px solid var(--border);}
+.nb{display:flex;flex-direction:column;gap:2px;}
+.nb-s{font-family:var(--ff-m);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--saber);opacity:.85;}
+.nb-b{font-family:var(--ff-m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--white);opacity:.2;}
+.np{display:flex;gap:5px;}
+.np a{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--label);border:.5px solid var(--border);padding:4px 9px;cursor:pointer;text-decoration:none;transition:all .2s;}
+.np a:hover,.np a.on{color:var(--bg);border-color:var(--saber);background:var(--saber);}
+
+/* SHARED */
+section{position:relative;width:100%;overflow:hidden;}
+.full{min-height:100vh;}
+.saber-line-h{height:1.5px;background:linear-gradient(90deg,transparent,var(--saber2) 30%,var(--saber-core) 50%,var(--saber2) 70%,transparent);width:0;transition:width 1s ease;box-shadow:var(--glow-blue);}
+.saber-line-h.on{width:100px;}
+.fi{opacity:0;transform:translateY(20px);transition:opacity .9s ease,transform .9s ease;}
+.fi.vis{opacity:1;transform:none;}
+.fi-d1{transition-delay:.12s;}.fi-d2{transition-delay:.24s;}.fi-d3{transition-delay:.36s;}
+.tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.07em;color:var(--label);border:.5px solid var(--gold-border);padding:4px 11px;display:inline-block;background:rgba(200,168,74,.03);}
+.tag::before{content:'#';color:var(--gold);margin-right:2px;}
+.img-ph{background:linear-gradient(135deg,#0c0e14,#050608);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:.5px solid var(--border);}
+.img-ph span{font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(64,144,208,.15);text-align:center;line-height:2.2;padding:0 16px;}
+.sec-wrap{padding:100px 6% 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto;}
+.sec-wrap.rev{direction:rtl;}.sec-wrap.rev>*{direction:ltr;}
+.sh-num{font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;color:var(--label);margin-bottom:14px;text-transform:uppercase;}
+.sh-title{font-family:var(--ff-d);font-size:clamp(64px,9vw,120px);letter-spacing:.02em;color:var(--white);line-height:.88;margin-bottom:8px;}
+.sh-sub{font-family:var(--ff-m);font-size:11px;letter-spacing:.1em;color:var(--label);text-transform:uppercase;margin-bottom:28px;}
+.bullet-list{list-style:none;margin-top:24px;}
+.bullet-list li{padding:14px 0;border-bottom:.5px solid var(--line);font-size:16px;line-height:1.75;color:var(--mute);display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;}
+.bullet-list li:last-child{border-bottom:none;}
+.bullet-list .bi{width:28px;height:28px;border:.5px solid rgba(64,144,208,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.bullet-list .bi svg{width:13px;height:13px;stroke:var(--saber);fill:none;stroke-width:1.5;}
+.bullet-list strong{font-weight:600;color:var(--white);}
+.btn{font-family:var(--ff-b);font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:transparent;cursor:pointer;transition:all .22s;border:none;}
+.btn-saber{border:1px solid var(--saber);color:var(--saber);}
+.btn-saber:hover{background:var(--saber);color:var(--bg);box-shadow:var(--glow-blue);}
+.btn-ghost{border:1px solid var(--gold-border);color:var(--gold);}
+.btn-ghost:hover{background:var(--gold);color:var(--bg);}
+
+/* SABER DIVIDERS */
+#s01::before,#s02::before,#s03::before,#s04::before,#s05::before,#s06::before,#s07::before{
+  content:'';display:block;position:absolute;top:0;left:0;height:1.5px;width:0;
+  background:linear-gradient(90deg,transparent,var(--saber2) 25%,var(--saber-core) 50%,var(--saber2) 75%,transparent);
+  box-shadow:0 0 8px rgba(64,144,208,.4);
+  transition:width .9s cubic-bezier(.16,1,.3,1);z-index:2;
+}
+#s01.div-on::before,#s02.div-on::before,#s03.div-on::before,
+#s04.div-on::before,#s05.div-on::before,#s06.div-on::before,#s07.div-on::before{width:100%;}
+
+/* ══ HERO ══ */
+#s00{display:flex;align-items:center;padding-top:80px;min-height:100vh;}
+.night-glow1{position:absolute;top:4%;right:1%;width:640px;height:520px;border-radius:50%;background:radial-gradient(ellipse,rgba(64,144,208,.04) 0%,transparent 70%);animation:glowPulse 8s ease-in-out infinite;pointer-events:none;}
+.night-glow2{position:absolute;bottom:8%;right:18%;width:380px;height:300px;border-radius:50%;background:radial-gradient(ellipse,rgba(192,24,58,.02) 0%,transparent 70%);animation:glowPulse 8s ease-in-out infinite 3.5s;pointer-events:none;}
+@keyframes glowPulse{0%,100%{opacity:.5;}50%{opacity:1;}}
+
+/* ══ CARD — RTX 5060 Ti ══ */
+.h-right{position:absolute;right:0;top:0;bottom:0;width:57%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(40px);transition:opacity 1.8s ease,transform 1.8s ease;}
+.h-right.on{opacity:1;transform:translateX(0);}
+.rtx5060-wrap{width:94%;max-width:640px;position:relative;}
+.rtx5060-wrap::before{content:'';position:absolute;inset:-80px;z-index:-1;background:radial-gradient(ellipse 70% 45% at 55% 55%,rgba(64,144,208,.06) 0%,transparent 70%);}
+
+/* standard card slash stays, plus saber slashes on top */
+.card-slash{position:absolute;inset:0;z-index:20;background:linear-gradient(125deg,transparent 0%,var(--saber2) 49%,var(--saber2) 51%,transparent 100%);background-size:200% 100%;background-position:200% 0;animation:slashReveal 1.3s cubic-bezier(.76,0,.24,1) .3s forwards;pointer-events:none;border-radius:5px;}
+@keyframes slashReveal{0%{background-position:200% 0;opacity:1;}100%{background-position:-200% 0;opacity:0;}}
+
+/* Two permanent saber slash lines on card */
+.saber-slash-blue{position:absolute;z-index:12;pointer-events:none;
+  top:15%;left:-5%;width:110%;height:1.5px;
+  background:linear-gradient(90deg,transparent 5%,var(--saber2) 30%,var(--saber-core) 50%,var(--saber2) 70%,transparent 95%);
+  box-shadow:var(--glow-blue);
+  transform:rotate(-8deg);
+  animation:saberBreath 2.5s ease-in-out infinite;
+}
+.saber-slash-red{position:absolute;z-index:12;pointer-events:none;
+  top:75%;left:-5%;width:110%;height:1.5px;
+  background:linear-gradient(90deg,transparent 5%,rgba(255,160,160,.8) 30%,var(--saber-core) 50%,rgba(255,160,160,.8) 70%,transparent 95%);
+  box-shadow:var(--glow-red);
+  transform:rotate(-8deg);
+  animation:saberBreath 3.2s ease-in-out infinite .8s;
+}
+@keyframes saberBreath{0%,100%{opacity:.6;}50%{opacity:1;}}
+
+@keyframes cardFloat{0%,100%{transform:translateY(0) rotate(-1deg);}50%{transform:translateY(-9px) rotate(-1deg);}}
+.rtx5060-body{width:100%;aspect-ratio:2.6/1;background:linear-gradient(148deg,#0e1218 0%,#080c12 100%);position:relative;overflow:hidden;border-radius:5px;border:.5px solid rgba(64,144,208,.22);box-shadow:0 40px 140px rgba(0,0,0,.97),0 0 80px rgba(64,144,208,.05);animation:cardFloat 7.5s ease-in-out infinite;}
+@keyframes glint{0%{left:-40%;opacity:0;}6%{opacity:1;}92%{opacity:.2;}100%{left:140%;opacity:0;}}
+.rtx5060-body::after{content:'';position:absolute;top:0;left:-40%;width:10%;height:100%;background:linear-gradient(90deg,transparent,rgba(64,144,208,.04),rgba(192,232,255,.07),rgba(64,144,208,.04),transparent);animation:glint 9s ease-in-out infinite 5.5s;pointer-events:none;z-index:10;}
+.rtx5060-hs{position:absolute;right:0;top:0;bottom:0;width:83%;background:linear-gradient(148deg,#0e1218,#080c12);border-left:.5px solid rgba(64,144,208,.08);overflow:hidden;}
+.rtx5060-fins-wrap{position:absolute;inset:0;display:flex;flex-direction:column;gap:1.5px;padding:4px;}
+.rtx5060-fin{flex:1;background:linear-gradient(90deg,#0e1218,#0c1016);border-radius:1px;border:.3px solid rgba(64,144,208,.03);}
+.rtx5060-vchan{position:absolute;left:50%;top:0;bottom:0;width:3%;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(64,144,208,.05),transparent);}
+/* PCIe 5.0 gold finger accent */
+.rtx5060-pcie{position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold2),var(--gold),var(--gold2));opacity:.5;}
+/* fans */
+.rtx5060-fans{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-around;padding:0 4%;}
+.rtx5060-fan{position:relative;width:40%;aspect-ratio:1;}
+.rtx5060-fan-ring{position:absolute;border-radius:50%;border:.5px solid rgba(64,144,208,.1);}
+.rtx5060-fr1{inset:0;background:rgba(4,6,10,.85);}
+.rtx5060-fr2{inset:7%;}
+.rtx5060-fr3{inset:17%;}
+.rtx5060-fr4{inset:29%;}
+.rtx5060-fr-glow{position:absolute;inset:-3%;border-radius:50%;border:1px solid rgba(64,144,208,.07);box-shadow:0 0 16px rgba(64,144,208,.05);}
+.rtx5060-blades{position:absolute;inset:0;animation:fanSpin 4s linear infinite;}
+.rtx5060-blades.fan2{animation-duration:4.5s;}
+@keyframes fanSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.rtx5060-blade{position:absolute;top:50%;left:50%;width:47%;height:7.5%;transform-origin:0 50%;background:linear-gradient(90deg,rgba(64,144,208,.15),rgba(64,144,208,.02));border-radius:0 20px 20px 0;}
+.rtx5060-hub{position:absolute;inset:44%;background:radial-gradient(circle,#141c28,#080c12);border-radius:50%;border:.5px solid rgba(64,144,208,.35);display:flex;align-items:center;justify-content:center;}
+.rtx5060-hub::after{content:'';width:30%;height:30%;background:var(--saber);border-radius:50%;opacity:.7;box-shadow:0 0 12px rgba(64,144,208,.7);}
+.rtx5060-hub-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--ff-b);font-size:5px;font-weight:700;letter-spacing:.08em;color:var(--gold);opacity:.8;z-index:5;white-space:nowrap;}
+.rtx5060-pcb{position:absolute;left:0;top:0;bottom:0;right:83%;background:linear-gradient(145deg,#0e1218,#080c12);}
+.rtx5060-brand{position:absolute;top:50%;left:2%;transform:translateY(-50%);padding-left:6px;}
+.rtx5060-brand-name{font-family:var(--ff-m);font-size:4.5px;letter-spacing:.2em;color:rgba(255,255,255,.22);text-transform:uppercase;display:block;}
+.rtx5060-model{font-family:var(--ff-d);font-size:12px;letter-spacing:.04em;color:var(--white);line-height:1.05;display:block;}
+.rtx5060-sub{font-family:var(--ff-m);font-size:4px;letter-spacing:.1em;color:rgba(200,168,74,.36);text-transform:uppercase;display:block;margin-top:2px;}
+.rtx5060-ports{position:absolute;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;}
+.rtx5060-port{width:5px;height:11px;background:rgba(255,255,255,.05);border-radius:1px 0 0 1px;}
+.rtx5060-8pin{position:absolute;top:8%;right:2%;display:flex;gap:2.5px;flex-direction:column;}
+.rtx5060-pin-row{display:flex;gap:2px;}
+.rtx5060-pin{width:4px;height:4px;background:rgba(64,144,208,.22);border:.3px solid rgba(64,144,208,.35);border-radius:.5px;}
+.rtx5060-glow-top{position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent 5%,var(--gold) 22%,var(--saber) 55%,var(--saber2) 80%,transparent 95%);opacity:.45;}
+.rtx5060-badge{position:absolute;bottom:8%;right:18%;font-family:var(--ff-b);font-size:6px;font-weight:700;letter-spacing:.06em;color:var(--saber2);opacity:.65;text-shadow:0 0 8px rgba(64,144,208,.5);}
+.rtx5060-gen{position:absolute;top:8%;left:20%;font-family:var(--ff-m);font-size:5px;letter-spacing:.12em;color:rgba(200,168,74,.5);text-transform:uppercase;}
+
+/* HERO LAYOUT */
+.h-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,var(--bg) 0%,var(--bg) 13%,rgba(7,8,10,.5) 40%,transparent 60%);}
+.h-left{position:relative;z-index:3;padding:0 0 0 6%;flex:1;max-width:620px;opacity:0;transition:opacity .4s .1s;}
+.h-left.on{opacity:1;}
+.h-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--label);margin-bottom:28px;opacity:0;transition:opacity .5s ease;}
+.h-eye.on{opacity:1;}
+.h-hl{line-height:.88;margin-bottom:24px;opacity:0;transition:opacity .4s ease;}
+.h-hl.on{opacity:1;}
+.hl-ln{display:block;font-family:var(--ff-d);font-size:clamp(48px,6.8vw,86px);letter-spacing:.01em;opacity:0;transform:translateY(14px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1);}
+.hl-ln.in{opacity:1;transform:none;}
+.hl-wh{color:var(--white);}
+.hl-sb{color:var(--saber2);text-shadow:var(--glow-blue);}
+.hl-gd{color:var(--gold);}
+/* mechanical lock subtitle */
+.h-lock{font-family:var(--ff-m);font-size:clamp(11px,1.4vw,16px);letter-spacing:.08em;color:rgba(64,144,208,.7);text-transform:uppercase;margin-top:14px;opacity:0;transform:none;}
+.h-lock.on{opacity:1;animation:lockFlicker .4s steps(3,end) forwards;}
+@keyframes lockFlicker{0%{opacity:0;}33%{opacity:1;}66%{opacity:.3;}100%{opacity:1;}}
+.h-sub{font-size:16px;line-height:1.85;color:var(--mute);max-width:420px;margin-top:18px;opacity:0;transition:opacity .8s ease;}
+.h-sub.on{opacity:1;}
+.h-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:20px;opacity:0;transition:opacity .5s ease;}
+.h-tags.on{opacity:1;}
+.scr-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0;transition:opacity .5s;z-index:4;}
+.scr-hint.on{opacity:1;}
+.scr-ln{width:1.5px;height:28px;background:var(--border);position:relative;overflow:hidden;box-shadow:var(--glow-blue);}
+.scr-ln::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--saber-core);animation:scrdn 1.4s ease infinite 3s;}
+@keyframes scrdn{0%{top:-100%}100%{top:100%}}
+.scr-lb{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;color:var(--label);text-transform:uppercase;}
+
+/* ══ SERIES TIMELINE BAR ══ */
+#s_timeline{background:var(--bg2);padding:32px 6%;border-top:.5px solid var(--line);border-bottom:.5px solid var(--line);}
+.tl-wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:0;position:relative;}
+.tl-line{position:absolute;top:50%;left:0;right:0;height:1px;background:linear-gradient(90deg,rgba(64,144,208,.08),rgba(64,144,208,.2),rgba(64,144,208,.08));transform:translateY(-50%);}
+.tl-item{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;position:relative;cursor:default;transition:transform .2s;}
+.tl-item:hover{transform:translateY(-3px);}
+.tl-dot{width:8px;height:8px;border-radius:50%;background:rgba(64,144,208,.25);border:1px solid rgba(64,144,208,.3);transition:all .2s;position:relative;z-index:2;}
+.tl-item:hover .tl-dot{background:var(--saber2);box-shadow:0 0 8px rgba(64,144,208,.5);}
+.tl-dot.current{width:12px;height:12px;background:var(--saber2);border-color:var(--saber-core);box-shadow:var(--glow-blue);animation:dotPulse 2s ease-in-out infinite;}
+@keyframes dotPulse{0%,100%{box-shadow:var(--glow-blue);}50%{box-shadow:0 0 3px #fff,0 0 14px #c0e8ff,0 0 40px #4090d0,0 0 80px rgba(60,140,220,.4);}}
+.tl-name{font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;color:var(--label);text-transform:uppercase;white-space:nowrap;text-align:center;}
+.tl-item:hover .tl-name{color:var(--saber2);}
+.tl-name.current-lbl{color:var(--saber2);}
+.tl-spec{font-family:var(--ff-m);font-size:7px;color:rgba(64,144,208,.35);text-align:center;margin-top:2px;white-space:nowrap;}
+
+/* ══ S01 ACCELERATOR WORLD ══ */
+#s01{background:var(--bg2);padding:100px 6%;}
+.s01-in{max-width:1080px;margin:0 auto;}
+.bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.bl-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--saber);margin-bottom:14px;}
+.bl-title-wrap{margin-bottom:20px;}
+.bl-title{font-family:var(--ff-d);font-size:clamp(44px,6vw,74px);letter-spacing:.02em;color:var(--white);line-height:.96;}
+.bl-title-tw{font-family:var(--ff-m);font-size:10px;letter-spacing:.2em;color:var(--saber2);text-transform:uppercase;margin-top:6px;overflow:hidden;white-space:nowrap;width:0;border-right:1.5px solid var(--saber2);display:inline-block;}
+.bl-title-tw.tw-go{animation:typeOut .8s steps(22,end) forwards,cursorBlink .6s step-end 3;}
+@keyframes typeOut{from{width:0;}to{width:16ch;}}
+@keyframes cursorBlink{0%,100%{border-color:var(--saber2);}50%{border-color:transparent;}}
+.bl-title-tw.tw-done{border-right-color:transparent;}
+.bl-body{font-size:16px;line-height:1.9;color:var(--mute);margin-bottom:24px;}
+.bl-blockquote{border-left:2px solid var(--saber);border-left-style:solid;padding:14px 18px;background:rgba(64,144,208,.04);margin-bottom:18px;box-shadow:-2px 0 12px rgba(64,144,208,.15);}
+.bl-blockquote p{font-family:var(--ff-m);font-size:12px;letter-spacing:.04em;color:rgba(192,232,255,.5);line-height:1.75;}
+.bl-blockquote .bq-src{font-size:9px;letter-spacing:.14em;color:var(--label);margin-top:8px;text-transform:uppercase;}
+.bl-pos{font-family:var(--ff-m);font-size:10px;letter-spacing:.1em;color:var(--gold);margin-top:18px;padding:10px 14px;border:.5px solid var(--gold-border);background:rgba(200,168,74,.03);display:inline-block;}
+
+/* SABER SPEED METER */
+.speed-meter-wrap{margin-top:28px;}
+.sm-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin-bottom:8px;display:flex;justify-content:space-between;}
+.sm-label span:last-child{color:var(--saber2);}
+.sm-track{position:relative;height:8px;background:rgba(255,255,255,.04);border-radius:4px;overflow:visible;}
+.sm-fill{position:absolute;top:0;left:0;height:100%;width:0;border-radius:4px;transition:width 1.8s cubic-bezier(.16,1,.3,1);
+  background:linear-gradient(90deg,var(--saber) 0%,var(--saber2) 70%,var(--saber-core) 100%);
+}
+/* saber layered glow on fill */
+.sm-fill.lit{box-shadow:0 0 2px #fff,0 0 10px var(--saber2),0 0 24px var(--saber),0 0 50px rgba(64,144,208,.3);}
+/* tip glow dot */
+.sm-tip{position:absolute;top:50%;right:-6px;transform:translateY(-50%);width:12px;height:12px;border-radius:50%;background:var(--saber-core);opacity:0;transition:opacity .3s;box-shadow:var(--glow-blue);}
+.sm-fill.lit .sm-tip{opacity:1;}
+.sm-status{font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;color:var(--label);margin-top:8px;text-transform:uppercase;transition:color .4s;}
+.sm-status.locked{color:var(--saber2);text-shadow:0 0 10px rgba(64,144,208,.5);}
+
+/* why cards */
+.why-wrap{margin-top:80px;padding-top:64px;border-top:.5px solid var(--line);}
+.why-title{font-family:var(--ff-d);font-size:clamp(32px,4.5vw,52px);color:var(--white);margin-bottom:16px;}
+.why-body{font-size:16px;color:var(--mute);line-height:1.85;max-width:720px;margin-bottom:40px;}
+.why-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.why-card{border:.5px solid var(--border);padding:24px 20px;transition:border-color .3s,background .3s,box-shadow .3s;position:relative;overflow:hidden;}
+.why-card:hover{border-color:var(--saber2);background:rgba(64,144,208,.03);box-shadow:0 0 20px rgba(64,144,208,.06);}
+.wc-icon{font-size:20px;display:block;margin-bottom:12px;}
+.wc-t{font-family:var(--ff-b);font-size:16px;font-weight:600;color:var(--white);margin-bottom:8px;letter-spacing:.04em;}
+.wc-b{font-size:14px;color:var(--mute);line-height:1.65;}
+
+/* ══ S02 FIERCER ══ */
+#s02{background:var(--bg);}
+.big-num-bg{position:absolute;font-family:var(--ff-d);font-size:clamp(160px,22vw,280px);color:rgba(64,144,208,.022);line-height:1;top:50%;left:-2%;transform:translateY(-50%);pointer-events:none;user-select:none;white-space:nowrap;}
+.count-num{font-family:var(--ff-d);font-size:clamp(80px,12vw,160px);color:var(--white);line-height:1;margin:16px 0 4px;text-shadow:0 0 60px rgba(64,144,208,.2);}
+/* shockwave ring */
+#shockRing{position:absolute;top:50%;left:0;width:60px;height:60px;border-radius:50%;border:2px solid var(--saber2);box-shadow:var(--glow-blue);opacity:0;transform:translate(0,-50%) scale(0);pointer-events:none;z-index:10;}
+#shockRing.blast{animation:shockBlast .5s ease-out forwards;}
+@keyframes shockBlast{0%{opacity:1;transform:translate(0,-50%) scale(0);}60%{opacity:.6;}100%{opacity:0;transform:translate(-80%,-50%) scale(8);}}
+#dotGrid{position:absolute;left:0;right:0;bottom:-10px;height:60px;opacity:0;transition:opacity .5s;}
+#dotGrid.vis{opacity:1;}
+.ns-cards{display:flex;flex-direction:column;gap:12px;margin-top:28px;}
+.ns-card{border:.5px solid var(--border);padding:18px 20px;transition:border-color .3s,background .3s;}
+.ns-card:hover{border-color:var(--saber2);background:rgba(64,144,208,.03);}
+.ns-card-h{font-family:var(--ff-b);font-size:15px;font-weight:600;color:var(--white);margin-bottom:6px;letter-spacing:.04em;}
+.ns-card-b{font-size:14px;color:var(--mute);line-height:1.65;}
+/* LED badge sweep */
+.badges-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;position:relative;overflow:hidden;}
+.badges-row.swept::after{
+  content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(192,232,255,.16),rgba(255,255,255,.1),rgba(192,232,255,.16),transparent);
+  animation:ledSweep .65s ease forwards;pointer-events:none;z-index:10;
+}
+@keyframes ledSweep{0%{left:-50%;}100%{left:150%;}}
+.stat-badge{display:inline-flex;flex-direction:column;align-items:flex-start;border:.5px solid var(--border);padding:18px 22px;background:rgba(64,144,208,.03);transition:border-color .3s,background .3s,box-shadow .3s;}
+.stat-badge:hover{border-color:var(--saber);background:var(--saber3);box-shadow:var(--glow-blue);}
+.stat-badge .num{font-family:var(--ff-d);font-size:clamp(26px,4vw,52px);color:var(--white);line-height:1;}
+.stat-badge .lbl{font-size:11px;font-weight:500;letter-spacing:.1em;color:var(--mute);margin-top:4px;text-transform:uppercase;font-family:var(--ff-m);}
+.tach-wrap{height:3px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden;margin-top:6px;}
+.tach-fill{height:100%;width:0;background:linear-gradient(90deg,var(--saber),var(--saber2));border-radius:2px;transition:width 1.8s cubic-bezier(.16,1,.3,1);box-shadow:0 0 6px rgba(64,144,208,.4);}
+
+/* ══ S03 CAPABLE ══ */
+#s03{background:var(--bg2);}
+.capable-grid{padding:100px 6% 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;max-width:1200px;margin:0 auto;}
+.cmp-bar-wrap{margin-top:32px;}
+.cmp-bar-row{margin-bottom:20px;border-radius:3px;padding:6px 8px;transition:background .2s;cursor:default;position:relative;}
+.cmp-bar-row:hover{background:rgba(64,144,208,.05);}
+.cmp-bar-row:hover .cmp-bar-name{color:var(--white);}
+.cmp-bar-row:hover .cmp-bar-val{color:var(--saber);}
+.cmp-bar-row::before{content:'›';position:absolute;left:-14px;top:50%;transform:translateY(-50%);font-family:var(--ff-m);font-size:12px;color:var(--saber);opacity:0;transition:opacity .2s,left .2s;}
+.cmp-bar-row:hover::before{opacity:.6;left:-8px;}
+.cmp-bar-label{display:flex;justify-content:space-between;margin-bottom:6px;align-items:baseline;}
+.cmp-bar-name{font-family:var(--ff-m);font-size:9.5px;letter-spacing:.05em;color:var(--mute);text-transform:uppercase;transition:color .3s;}
+.cmp-bar-note{font-family:var(--ff-m);font-size:8px;color:var(--label);margin-left:5px;}
+.cmp-bar-val{font-family:var(--ff-m);font-size:10px;color:var(--label);transition:color .3s;}
+.cmp-bar-track{height:5px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden;}
+.cmp-bar-fill{height:100%;width:0;border-radius:2px;transition:width 1.5s cubic-bezier(.16,1,.3,1),opacity .8s ease;}
+.cmp-bar-fill.c1{background:rgba(64,144,208,.18);}
+.cmp-bar-fill.c2{background:rgba(64,144,208,.28);}
+.cmp-bar-fill.c3{background:rgba(64,144,208,.42);}
+.cmp-bar-fill.c4{
+  background:linear-gradient(90deg,var(--saber),var(--saber2),var(--saber-core));
+  box-shadow:0 0 3px #fff,0 0 10px var(--saber2),0 0 22px var(--saber);
+}
+/* dim old bars when 5060Ti fires */
+.cmp-bar-fill.dimmed{opacity:.1 !important;}
+/* saber sweep overlay */
+#saberSweep{position:absolute;top:0;bottom:0;width:2px;left:-10px;opacity:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent,var(--saber2),var(--saber-core),var(--saber2),transparent);
+  box-shadow:var(--glow-blue);
+}
+#saberSweep.sweeping{animation:saberSweepAnim .35s ease forwards;}
+@keyframes saberSweepAnim{0%{left:100%;opacity:1;}100%{left:-10px;opacity:0;}}
+.cmp-bar-row.featured .cmp-bar-name{color:var(--white);}
+.cmp-bar-row.featured .cmp-bar-val{color:var(--gold);}
+
+/* ══ S04 RELIABILITY ══ */
+#s04{background:var(--bg);}
+.mtbf-display{margin:24px 0;}
+.mtbf-num{font-family:var(--ff-d);font-size:clamp(56px,8vw,96px);color:var(--white);line-height:1;}
+.mtbf-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin-top:4px;}
+.inf-wrap{margin:20px 0 8px;height:50px;}
+#infPath{stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset 1.5s ease;}
+#infPath.drawn{stroke-dashoffset:0;}
+.rail-tl{margin:24px 0;}
+.rail-section-lbl{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;}
+.rail-section-lbl.human{color:var(--label);}
+.rail-section-lbl.gpu{color:var(--saber);}
+.rail-row{position:relative;margin-bottom:36px;}
+.rail-track{position:relative;height:2px;background:rgba(64,144,208,.05);}
+.rail-track.human-track{background:rgba(255,255,255,.04);}
+.rail-fill{position:absolute;left:0;top:0;height:100%;width:0;transition:width 1.6s ease;}
+.rail-fill.human-fill{background:linear-gradient(90deg,rgba(200,200,200,.18),rgba(200,200,200,.35));}
+.rail-fill.gpu-fill{
+  background:linear-gradient(90deg,var(--saber),var(--saber2),var(--saber-core));
+  box-shadow:0 0 2px #fff,0 0 8px var(--saber2),0 0 18px var(--saber);
+}
+.rail-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:var(--bg);z-index:2;}
+.rail-dot.human-dot{border:1.5px solid rgba(200,200,200,.28);}
+.rail-dot.gpu-dot{border:1.5px solid var(--saber);}
+.rail-dot.gpu-dot.install{border-color:var(--gold);box-shadow:0 0 6px rgba(200,168,74,.4);}
+.rail-label{position:absolute;font-family:var(--ff-m);font-size:7px;white-space:nowrap;top:10px;transform:translateX(-50%);}
+.rail-label.human-lbl{color:rgba(200,200,200,.38);}
+.rail-label.gpu-lbl{color:var(--saber);}
+.rail-label.gpu-lbl.install-lbl{color:var(--gold);}
+.rail-label.right-align{transform:translateX(-100%);}
+.rail-loco{position:absolute;top:-12px;font-size:14px;transition:left 1.6s ease;opacity:.5;}
+.rail-divider{height:.5px;background:var(--line);margin:4px 0 20px;}
+.rail-compare-note{font-family:var(--ff-m);font-size:9px;color:var(--label);margin-top:4px;letter-spacing:.06em;}
+.rail-compare-note strong{color:var(--saber2);}
+.rel-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;}
+
+/* ══ S05 PACKAGING ══ */
+#s05{background:var(--bg2);padding:100px 6%;}
+.pkg-in{max-width:1100px;margin:0 auto;}
+.pkg-layout{display:grid;grid-template-columns:260px 1fr;gap:60px;align-items:start;}
+.pkg-card{width:232px;background:#040508;border-radius:4px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.95),0 0 50px rgba(64,144,208,.05);}
+.pkg-art{height:110px;position:relative;overflow:hidden;background:#030406;}
+.pkg-art canvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block;}
+.pkg-model-overlay{position:absolute;bottom:6px;left:8px;font-family:var(--ff-d);font-size:18px;letter-spacing:.02em;color:rgba(248,250,255,.9);line-height:1;transform:skewX(-4deg);z-index:2;}
+.pkg-model-overlay span{font-size:.4em;color:rgba(64,144,208,.6);display:block;letter-spacing:.06em;}
+.pkg-nvidia-badge{position:absolute;bottom:7px;right:8px;font-family:var(--ff-b);font-size:7px;font-weight:700;color:var(--nvidia);letter-spacing:.04em;opacity:.8;z-index:2;}
+.pkg-body{padding:10px 14px 8px;}
+.pkg-brand-t{font-family:var(--ff-b);font-size:8px;font-weight:300;letter-spacing:.16em;color:rgba(255,255,255,.28);text-transform:uppercase;display:block;}
+.pkg-stripe{height:2px;background:linear-gradient(90deg,var(--gold) 0%,var(--saber) 40%,var(--saber2) 65%,var(--saber-core) 80%,rgba(64,144,208,.1) 90%,transparent);margin:8px 0;box-shadow:0 0 6px rgba(64,144,208,.3);}
+.pkg-cap-row{display:flex;align-items:center;gap:10px;padding:4px 0 8px;}
+.pkg-cap{font-family:var(--ff-d);font-size:28px;color:var(--white);line-height:1;}
+.pkg-spd{font-family:var(--ff-b);font-size:8px;color:var(--label);text-transform:uppercase;letter-spacing:.06em;line-height:1.5;}
+.pkg-spd strong{font-family:var(--ff-d);font-size:15px;color:var(--saber2);display:block;}
+.pkg-certs{display:flex;gap:4px;padding:6px 14px;border-top:.5px solid rgba(64,144,208,.07);}
+.pkg-cert{font-family:var(--ff-m);font-size:6.5px;color:var(--label);border:.5px solid rgba(200,168,74,.15);padding:2px 4px;}
+.pkg-feat-list{display:flex;flex-direction:column;}
+.pkg-feat-item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:.5px solid var(--line);}
+.pkg-feat-item:last-child{border-bottom:none;}
+.pkg-feat-icon{font-size:15px;flex-shrink:0;padding-top:2px;}
+.pkg-feat-nm{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--white);margin-bottom:4px;}
+.pkg-feat-ds{font-size:14px;color:var(--mute);line-height:1.65;}
+
+/* ══ S06 SPECS ══ */
+#s06{background:var(--bg);padding:100px 6% 80px;}
+.spec-in{max-width:900px;margin:0 auto;}
+.spec-title{font-family:var(--ff-d);font-size:clamp(44px,5.5vw,66px);color:var(--white);margin-bottom:12px;}
+.spec-tag{display:inline-block;font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--saber2);border:.5px solid rgba(64,144,208,.22);padding:4px 10px;margin-bottom:40px;box-shadow:0 0 8px rgba(64,144,208,.15);}
+.spec-tbl{width:100%;border-collapse:collapse;}
+.spec-tbl tr{border-bottom:.5px solid var(--line);}
+.spec-tbl td{padding:14px 0;font-size:14px;vertical-align:top;}
+.spec-tbl td:first-child{color:var(--label);width:42%;font-family:var(--ff-m);font-size:10px;letter-spacing:.07em;text-transform:uppercase;border-left:2px solid transparent;transition:border-color .2s;padding-left:3px;}
+.spec-tbl tr:hover td:first-child{border-left-color:var(--saber);box-shadow:-2px 0 8px rgba(64,144,208,.2);}
+.spec-tbl td:last-child{color:var(--white);}
+.spec-disc{font-family:var(--ff-m);font-size:9px;color:var(--label);line-height:1.7;margin-top:18px;}
+.spec-ctas{display:flex;gap:10px;margin-top:44px;flex-wrap:wrap;}
+.spec-foot{margin-top:44px;padding-top:20px;border-top:.5px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;}
+
+/* FOOTER */
+.site-foot{background:#030406;padding:80px 6% 60px;text-align:center;border-top:.5px solid var(--border);}
+.sf-hl{font-family:var(--ff-d);font-size:clamp(28px,4vw,50px);letter-spacing:.06em;color:rgba(248,250,255,.36);display:flex;flex-wrap:wrap;justify-content:center;gap:0 22px;}
+.sf-tagline{margin-top:48px;padding-top:40px;border-top:.5px solid rgba(64,144,208,.07);}
+.sf-t1{font-family:var(--ff-d);font-size:clamp(28px,4.2vw,52px);letter-spacing:.08em;color:rgba(248,250,255,.24);display:block;line-height:1;}
+.sf-t2{font-family:var(--ff-d);font-size:clamp(28px,4.2vw,52px);letter-spacing:.08em;color:var(--saber2);display:block;line-height:1;margin-top:4px;text-shadow:var(--glow-blue);}
+.sf-sub{font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;color:rgba(248,250,255,.1);margin-top:28px;text-transform:uppercase;}
+
+@media(max-width:860px){
+  .sec-wrap,.bl-grid,.capable-grid,.pkg-layout{grid-template-columns:1fr;gap:44px;}
+  .sec-wrap.rev{direction:ltr;}
+  .h-right{opacity:.08!important;transform:none!important;width:100%;}
+  .h-fade{background:rgba(7,8,10,.9);}
+  .why-cards,.tl-wrap{flex-direction:column;}
+}
+@media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}
+  #saberOverlay{display:none;}nav{opacity:1!important;}.h-left{opacity:1!important;}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<canvas id="vectorCanvas"></canvas>
+
+<!-- LIGHTSABER IGNITION -->
+<div id="saberOverlay">
+  <div id="saberLine"></div>
+  <div id="saberFlash"></div>
+  <div id="saberLabel">// GB206 · 5nm · PCIe 5.0 · GDDR7 ARRAY ONLINE</div>
+</div>
+
+<!-- LIGHTSABER CURSOR -->
+<div id="cur" class="blue">
+  <div class="saber-cur">
+    <div class="sc-v"></div>
+    <div class="sc-h"></div>
+    <div class="sc-dot"></div>
+  </div>
+</div>
+<div id="cur-ring"></div>
+
+<nav id="nav">
+  <div class="nb"><span class="nb-s">Blackwell Series</span><span class="nb-b">Simorchip</span></div>
+  <div class="np">
+    <a class="on" onclick="goTo('s00')">Hero</a>
+    <a onclick="goTo('s_timeline')">Series</a>
+    <a onclick="goTo('s01')">Accelerator</a>
+    <a onclick="goTo('s02')">Fiercer</a>
+    <a onclick="goTo('s03')">Capable</a>
+    <a onclick="goTo('s04')">Reliability</a>
+    <a onclick="goTo('s06')">Specs</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="s00" class="full">
+  <div class="night-glow1"></div><div class="night-glow2"></div>
+  <div class="h-right" id="hRight">
+    <div class="rtx5060-wrap">
+      <div class="card-slash"></div>
+      <div class="rtx5060-body">
+        <div class="rtx5060-glow-top"></div>
+        <div class="saber-slash-blue"></div>
+        <div class="saber-slash-red"></div>
+        <div class="rtx5060-hs">
+          <div class="rtx5060-fins-wrap" id="rtxFins"></div>
+          <div class="rtx5060-vchan"></div>
+          <div class="rtx5060-fans">
+            <div class="rtx5060-fan">
+              <div class="rtx5060-fr-glow"></div>
+              <div class="rtx5060-fr1 rtx5060-fan-ring"></div>
+              <div class="rtx5060-fr2 rtx5060-fan-ring"></div>
+              <div class="rtx5060-fr3 rtx5060-fan-ring"></div>
+              <div class="rtx5060-fr4 rtx5060-fan-ring"></div>
+              <div class="rtx5060-blades" id="blades1">
+                <div class="rtx5060-blade" style="transform:rotate(0deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(30deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(60deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(90deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(120deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(150deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(180deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(210deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(240deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(270deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(300deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(330deg)"></div>
+              </div>
+              <div class="rtx5060-hub"><div class="rtx5060-hub-label">Simorchip</div></div>
+            </div>
+            <div class="rtx5060-fan">
+              <div class="rtx5060-fr-glow"></div>
+              <div class="rtx5060-fr1 rtx5060-fan-ring"></div>
+              <div class="rtx5060-fr2 rtx5060-fan-ring"></div>
+              <div class="rtx5060-fr3 rtx5060-fan-ring"></div>
+              <div class="rtx5060-fr4 rtx5060-fan-ring"></div>
+              <div class="rtx5060-blades fan2" id="blades2">
+                <div class="rtx5060-blade" style="transform:rotate(0deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(30deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(60deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(90deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(120deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(150deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(180deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(210deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(240deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(270deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(300deg)"></div>
+                <div class="rtx5060-blade" style="transform:rotate(330deg)"></div>
+              </div>
+              <div class="rtx5060-hub"><div class="rtx5060-hub-label">Simorchip</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="rtx5060-pcb"></div>
+        <div class="rtx5060-brand">
+          <span class="rtx5060-brand-name">Simorchip</span>
+          <span class="rtx5060-model">RTX<br>5060Ti</span>
+          <span class="rtx5060-sub">8GB GDDR7 · GB206</span>
+        </div>
+        <div class="rtx5060-ports">
+          <div class="rtx5060-port"></div><div class="rtx5060-port"></div><div class="rtx5060-port"></div>
+        </div>
+        <div class="rtx5060-8pin">
+          <div class="rtx5060-pin-row"><div class="rtx5060-pin"></div><div class="rtx5060-pin"></div><div class="rtx5060-pin"></div><div class="rtx5060-pin"></div></div>
+          <div class="rtx5060-pin-row"><div class="rtx5060-pin"></div><div class="rtx5060-pin"></div><div class="rtx5060-pin"></div><div class="rtx5060-pin"></div></div>
+        </div>
+        <div class="rtx5060-pcie"></div>
+        <div class="rtx5060-badge">RTX ON</div>
+        <div class="rtx5060-gen">PCIe 5.0 · 5nm</div>
+      </div>
+    </div>
+  </div>
+  <div class="h-fade"></div>
+  <div class="h-left" id="hLeft">
+    <div class="h-eye" id="hEye">Simorchip · Accelerator World · RTX 5060 Ti · Blackwell</div>
+    <div class="h-hl" id="hHL">
+      <span class="hl-ln hl-sb" id="hl0">GDDR7 Array</span>
+      <span class="hl-ln hl-wh" id="hl1">Engaged.</span>
+      <span class="hl-ln hl-gd" id="hl2">Railgun velocity.</span>
+    </div>
+    <div class="h-lock" id="hLock">// KINETIC SPEED UNLOCKED · DUAL PROPELLER VECTOR ACTIVE</div>
+    <div class="saber-line-h" id="hLine" style="margin-top:18px;"></div>
+    <div class="h-sub" id="hSub">The RTX 5060 Ti doesn't operate on traditional frame cycles.<br><strong style="color:var(--white);">It forces compliance.</strong><br>This is where we launch the vector at railgun velocity.</div>
+    <div class="h-tags" id="hTags">
+      <span class="tag">RTX5060Ti</span>
+      <span class="tag">8GB GDDR7</span>
+      <span class="tag">PCIe 5.0×8</span>
+      <span class="tag">180W</span>
+      <span class="tag">GB206</span>
+      <span class="tag">5nm</span>
+      <span class="tag">4608 Cores</span>
+      <span class="tag">2407 MHz</span>
+    </div>
+  </div>
+  <div class="scr-hint" id="scrHint"><div class="scr-ln"></div><div class="scr-lb">Scroll</div></div>
+</section>
+
+<!-- ═══ SERIES TIMELINE ═══ -->
+<section id="s_timeline">
+  <div class="tl-wrap" id="tlWrap">
+    <div class="tl-line"></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-name">G210</div><div class="tl-spec">16C · 31W</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-name">GT730</div><div class="tl-spec">384C · 25W</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-name">GTX750Ti</div><div class="tl-spec">640C · 60W</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-name">GT1030</div><div class="tl-spec">384C · 30W</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-name">GTX1050Ti</div><div class="tl-spec">768C · 75W</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-name">GTX1660S</div><div class="tl-spec">1408C · 125W</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-name">RTX3050</div><div class="tl-spec">2304C · 115W</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-name">RTX3060</div><div class="tl-spec">3584C · 170W</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-name">RTX3070</div><div class="tl-spec">5888C · 220W</div></div>
+    <div class="tl-item"><div class="tl-dot current"></div><div class="tl-name current-lbl">RTX5060Ti ●</div><div class="tl-spec" style="color:var(--saber);">4608C · GDDR7</div></div>
+  </div>
+</section>
+
+<!-- ═══ S01 ACCELERATOR WORLD ═══ -->
+<section id="s01">
+  <div class="s01-in">
+    <div class="bl-grid fi">
+      <div>
+        <div class="bl-eye">Design Language · Weapon Code</div>
+        <div class="bl-title-wrap">
+          <div class="bl-title">Accelerator<br>World<br><span style="font-size:.45em;color:var(--label);">加速世界</span></div>
+          <div class="bl-title-tw" id="blTw">// VECTOR_MAINLINE_LIVE</div>
+        </div>
+        <div class="bl-body">Velocity is the only defensive armor that matters.<br><br>When the 5nm GB206 architecture elevates its clocks to 2407 MHz, thermal friction demands immediate execution. The Accelerator intercepts the thermal peak at the exact microsecond of calculation.<br><br>With next-generation GDDR7 routing massive asset data through the system — this dual-fan cooling layout evacuates the heat chamber without friction.</div>
+        <div class="bl-blockquote">
+          <p>No spin-up latency. No performance throttling. It locks your system coordinates at peak output while the core math runs fully redlined.</p>
+          <div class="bq-src">// RTX 5060 Ti · GB206 · 2407 MHz Mainline Active</div>
+        </div>
+        <div class="bl-pos">RTX 5060 Ti — Switch on the mainline. Let the Accelerator handle the friction.</div>
+        <!-- SABER SPEED METER -->
+        <div class="speed-meter-wrap fi fi-d2" id="speedMeter">
+          <div class="sm-label"><span>0 MHz</span><span id="smVal">— MHz</span><span>2407 MHz</span></div>
+          <div class="sm-track">
+            <div class="sm-fill" id="smFill"><div class="sm-tip"></div></div>
+          </div>
+          <div class="sm-status" id="smStatus">// CORE VELOCITY · STANDBY</div>
+        </div>
+      </div>
+      <div class="img-ph fi fi-d1" style="aspect-ratio:16/10;min-height:280px;">
+        <span>[ ACCELERATOR WORLD — DUAL FAN EXTREME CLOSE-UP ]<br>RTX 5060 Ti · twin gold medallions in intake whirlwind<br>Cross-lighting · 5nm high-density blade geometry ]</span>
+      </div>
+    </div>
+    <div class="why-wrap fi">
+      <div class="why-title fi">Why You Need the RTX 5060 Ti</div>
+      <div class="why-body fi fi-d1">Two generations beyond Ampere. The GB206 die runs on 5nm — the same node as high-end mobile processors. 4608 cores at 2407 MHz. GDDR7 memory with next-generation data coding. PCIe 5.0 with double the per-lane bandwidth of PCIe 4.0.<br><br><strong style="color:var(--white);">This isn't iterative improvement. This is a completely different physics layer.</strong></div>
+      <div class="why-cards fi fi-d2">
+        <div class="why-card">
+          <span class="wc-icon">🌀</span>
+          <div class="wc-t">GDDR7 — Complete Memory Liberation</div>
+          <div class="wc-b">Traditional memory belongs to the past. 8GB GDDR7 on a 128-Bit mainline breaks old throughput restrictions via advanced data coding. Assets, game files, and rendering matrices flow natively into compute engines at sustained 1750 MHz — without a single millisecond of drag.</div>
+        </div>
+        <div class="why-card">
+          <span class="wc-icon">⚡</span>
+          <div class="wc-t">5nm GB206 — 2407 MHz Clock Velocity</div>
+          <div class="wc-b">4608 cores on 5nm ultra-dense layout. 2407 MHz base clock — a speed figure the entire Ampere generation never reached. DirectX 12_2 executed directly at the silicon layer. The pipeline stays wide open at full redline, continuously.</div>
+        </div>
+        <div class="why-card">
+          <span class="wc-icon">🚀</span>
+          <div class="wc-t">PCIe 5.0 — Next-Gen System Rail</div>
+          <div class="wc-b">Double the per-lane transfer capacity of PCIe 4.0, directly at the motherboard mainline. Even at ×8 lanes, pipeline drag is architecturally impossible. The GB206 receives its instructions at the speed the hardware was born to run.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S02 FIERCER ═══ -->
+<section id="s02">
+  <div class="sec-wrap">
+    <div class="fi" style="position:relative;">
+      <div class="big-num-bg">4608</div>
+      <div class="sh-num">01 — Fiercer</div>
+      <div class="sh-title">Fiercer</div>
+      <div class="sh-sub">4608 Stream Processors · 5nm · 2407 MHz</div>
+      <div class="saber-line-h on" style="margin-bottom:16px;"></div>
+      <div style="position:relative;">
+        <div class="count-num" id="count4608">0</div>
+        <div id="shockRing"></div>
+        <canvas id="dotGrid" width="400" height="60"></canvas>
+      </div>
+      <div class="ns-cards" id="nsCards">
+        <div class="ns-card">
+          <div class="ns-card-h">4608 calculation vectors online. Particle core fully stabilized.</div>
+          <div class="ns-card-b">5nm concentrates 4608 processors into a layout denser than anything Ampere produced. Running advanced real-time compute and DirectX 12_2 engine calls, the RTX 5060 Ti handles complex path traces directly on the silicon with immediate, unyielding authority. The RTX 3070 had 5888 cores — but on 8nm. This is 4608 cores on 5nm, at 2407 MHz. The architecture wins.</div>
+        </div>
+        <div class="ns-card">
+          <div class="ns-card-h">GDDR7 — The generation after GDDR6</div>
+          <div class="ns-card-b">Every previous card in this lineup runs GDDR6. The RTX 5060 Ti is the first and only Simorchip card to run GDDR7. Advanced data coding means higher effective bandwidth per MHz than GDDR6 at equivalent frequency. The 128-Bit bus extracts more data than a wider GDDR6 pipeline.</div>
+        </div>
+        <div class="ns-card">
+          <div class="ns-card-h">2407 MHz — Clockspeed no Ampere card touched</div>
+          <div class="ns-card-b">RTX 3050 base: 1552 MHz. RTX 3060: 1320 MHz. RTX 3070: 1500 MHz. RTX 5060 Ti: 2407 MHz. This isn't an incremental step. It's a clock frequency the previous generation's architecture was physically incapable of sustaining continuously.</div>
+        </div>
+      </div>
+      <div class="badges-row" id="nsBadges">
+        <div class="stat-badge">
+          <div class="num">4608</div>
+          <div class="lbl">GB206 Units</div>
+          <div class="tach-wrap"><div class="tach-fill" id="tach1"></div></div>
+        </div>
+        <div class="stat-badge">
+          <div class="num" style="font-size:clamp(18px,2.8vw,38px);">GDDR7</div>
+          <div class="lbl">PCIe 5.0 Rail</div>
+          <div class="tach-wrap"><div class="tach-fill" id="tach2"></div></div>
+        </div>
+        <div class="stat-badge">
+          <div class="num" style="font-size:clamp(18px,2.8vw,38px);">2407</div>
+          <div class="lbl">MHz · Core Clock</div>
+          <div class="tach-wrap"><div class="tach-fill" id="tach3"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:400px;margin-bottom:14px;">
+        <span>[ FIERCER — PCIe 5.0 GOLD FINGERS ]<br>RTX 5060 Ti · camera skims gold PCIe 5.0 contacts<br>Up to dual-fan shroud · crimson geometric accents ]</span>
+      </div>
+      <div class="img-ph" style="width:100%;height:140px;">
+        <span>[ 5nm GB206 DIE ]<br>Hardware layer close-up · 5nm architecture ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S03 CAPABLE ═══ -->
+<section id="s03">
+  <div class="capable-grid">
+    <div class="fi">
+      <div class="sh-num">02 — Capable</div>
+      <div class="sh-title">Capable</div>
+      <div class="sh-sub">3×DP + HDMI · DirectX 12_2 · 5nm Blackwell</div>
+      <div class="saber-line-h on"></div>
+      <ul class="bullet-list" style="margin-top:28px;">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div><strong>3 × DisplayPort + HDMI — Complete Screen Distribution Array.</strong> The triple DisplayPort setup converts your desktop into a tactical multi-display command bridge. Output to high-refresh competitive displays and cinematic resolution arrays simultaneously — without bandwidth starvation. With HDMI included, interface cross-compatibility is absolute and uncompromised.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div><strong>DirectX 12 Feature Level 12_2</strong> — Hardware-level absolute authority. The 5nm silicon directly executes modern engine instruction calls, mesh shading, and sampler feedback at the metal layer. No emulation layers required. The output renders exactly as the source code engineered it.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div><strong>GB206 · Blackwell · 5nm · 2407 MHz</strong> — Two full architecture generations beyond the RTX 3070. 5nm process. GDDR7. PCIe 5.0. The RTX 3070 ran GA104 on 8nm at 1500 MHz. The RTX 5060 Ti runs GB206 on 5nm at 2407 MHz. The generational gap is not a marketing claim — it is physics.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div>
+          <div><strong>PCIe 5.0 × 8 — Next-Gen System Interconnect</strong> — Double the per-lane bandwidth of PCIe 4.0. Even on an ×8 configuration, the total bandwidth exceeds PCIe 4.0 ×16. Bandwidth bottlenecks are a structural failure of the previous generation — the GB206 never experiences them.</div>
+        </li>
+      </ul>
+      <div class="cmp-bar-wrap fi fi-d2" id="cmpBars" style="position:relative;">
+        <div id="saberSweep"></div>
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);margin-bottom:20px;">Combat Capacity — Full Generation Chain</div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">Legacy <span class="cmp-bar-note">— 16C / 只能看股票</span></span>
+            <span class="cmp-bar-val">16</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c1" id="cb0" data-w="1"></div></div>
+        </div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">Gate Guard <span class="cmp-bar-note">— 2304C / 115W / Ampere 入口</span></span>
+            <span class="cmp-bar-val">2304</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c2" id="cb1" data-w="38"></div></div>
+        </div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">High-End Mainline <span class="cmp-bar-note">— 3584C / 170W / 12GB 破線</span></span>
+            <span class="cmp-bar-val">3584</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c3" id="cb2" data-w="62"></div></div>
+        </div>
+        <div class="cmp-bar-row featured">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">RTX 5060 Ti — GDDR7 · 5nm · 世代清場</span>
+            <span class="cmp-bar-val" style="color:var(--gold);">4608 @ 2407</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c4" id="cb3" data-w="100"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:380px;margin-bottom:14px;">
+        <span>[ CAPABLE — FRONT HERO ]<br>RTX 5060 Ti front · saber slash geometry<br>Cold dark industrial · crimson + blue accents ]</span>
+      </div>
+      <div class="img-ph" style="width:100%;height:150px;">
+        <span>[ OUTPUT PORTS ]<br>3×DP · HDMI · premium rear bracket ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S04 RELIABILITY ═══ -->
+<section id="s04">
+  <div class="sec-wrap rev">
+    <div class="fi">
+      <div class="sh-num">03 — Reliability</div>
+      <div class="sh-title">Reliability</div>
+      <div class="sh-sub">1,500,000 hr MTBF · 171 Years · Continuous Math</div>
+      <div class="saber-line-h on"></div>
+      <p style="font-size:17px;color:var(--mute);line-height:1.85;margin:24px 0 8px;">Engineered for continuous, relentless duty cycles. Not for shelf display.</p>
+      <p style="font-size:17px;font-weight:500;color:var(--white);line-height:1.85;margin-bottom:20px;">Built to handle the speed. Born to stay operational.</p>
+      <div class="mtbf-display fi fi-d1">
+        <div class="mtbf-num" id="mtbfCount">0</div>
+        <div class="mtbf-lbl">Hours MTBF</div>
+      </div>
+      <div class="inf-wrap fi fi-d1" id="infWrap">
+        <svg width="160" height="50" viewBox="0 0 160 50" fill="none">
+          <path id="infPath"
+            d="M80 25 C80 25 68 8 50 8 C32 8 18 18 18 25 C18 32 32 42 50 42 C68 42 80 25 80 25 C80 25 92 8 110 8 C128 8 142 18 142 25 C142 32 128 42 110 42 C92 42 80 25 80 25 Z"
+            stroke="rgba(64,144,208,0.7)" stroke-width="1.5" fill="none"/>
+        </svg>
+        <div style="font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;color:var(--label);margin-top:4px;text-transform:uppercase;">Core Architecture Life Expectancy</div>
+      </div>
+      <div class="rail-tl fi fi-d2" id="railWrap">
+        <div class="rail-section-lbl human">Industrial Precision Milling History — 171 Years</div>
+        <div class="rail-row">
+          <div class="rail-track human-track" style="width:100%;">
+            <div class="rail-fill human-fill" id="railFill1"></div>
+            <div class="rail-loco" id="railLoco1" style="left:0;">⚙️</div>
+            <div class="rail-dot human-dot" style="left:0%;"><span class="rail-label human-lbl">1855<br>CNC Precursor</span></div>
+            <div class="rail-dot human-dot" style="left:52%;"><span class="rail-label human-lbl">1960<br>CNC Machine</span></div>
+            <div class="rail-dot human-dot" style="left:100%;"><span class="rail-label human-lbl right-align">2026<br>5nm Silicon</span></div>
+          </div>
+        </div>
+        <div class="rail-divider"></div>
+        <div class="rail-section-lbl gpu">RTX 5060 Ti Theoretical Lifespan — 171 Years</div>
+        <div class="rail-row">
+          <div class="rail-track" style="width:100%;">
+            <div class="rail-fill gpu-fill" id="railFill2"></div>
+            <div class="rail-dot gpu-dot install" style="left:0%;"><span class="rail-label gpu-lbl install-lbl">2026<br>You install</span></div>
+            <div class="rail-dot gpu-dot" style="left:44%;"><span class="rail-label gpu-lbl">2101<br>22nd Century</span></div>
+            <div class="rail-dot gpu-dot" style="left:100%;"><span class="rail-label gpu-lbl right-align">2197<br>RTX 5060 Ti (theory)</span></div>
+          </div>
+        </div>
+        <div class="rail-compare-note">The entire history of industrial precision manufacturing spans 171 years — from early CNC precursors to the 5nm silicon die running inside this card. The RTX 5060 Ti's rated lifespan <strong>matches it exactly.</strong></div>
+      </div>
+      <div class="rel-badges fi fi-d3">
+        <div class="stat-badge"><div class="num" style="color:var(--saber2);">171 ∞</div><div class="lbl">Years Core Life</div></div>
+        <div class="stat-badge"><div class="num">1.5M</div><div class="lbl">Hours MTBF</div></div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:440px;">
+        <span>[ RELIABILITY ]<br>RTX 5060 Ti in chassis · saber blue glow<br>Dual fans lit · crimson geometric slash · darkness ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S05 PACKAGING ═══ -->
+<section id="s05">
+  <div class="pkg-in" style="max-width:1100px;margin:0 auto;padding:100px 0 0;">
+    <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:10px;" class="fi">Packaging Design</div>
+    <div class="pkg-layout">
+      <div class="fi" id="pkgCard">
+        <div class="pkg-card" style="opacity:0;transform:translateX(-28px) rotateY(5deg);transition:opacity 1.4s ease,transform 1.4s ease;">
+          <div class="pkg-art">
+            <canvas id="pulseCanvas" width="232" height="110"></canvas>
+            <div class="pkg-model-overlay">RTX 5060Ti<span>8GB GDDR7</span></div>
+            <div class="pkg-nvidia-badge">Simorchip</div>
+          </div>
+          <div class="pkg-body">
+            <span class="pkg-brand-t">Simorchip · Accelerator World · Blackwell</span>
+            <div class="pkg-stripe"></div>
+            <div class="pkg-cap-row">
+              <span class="pkg-cap">8<span style="font-size:.5em;">GB</span></span>
+              <span class="pkg-spd">3×DP+HDMI<br><strong>GDDR7</strong></span>
+            </div>
+          </div>
+          <div class="pkg-certs">
+            <span class="pkg-cert">CE</span><span class="pkg-cert">RoHS</span><span class="pkg-cert">FCC</span><span class="pkg-cert">REACH</span>
+          </div>
+        </div>
+      </div>
+      <div class="fi fi-d2">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:20px;">What's in the box</div>
+        <div class="pkg-feat-list">
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">🖤</div><div><div class="pkg-feat-nm">Foam-Cushioned Inner Tray</div><div class="pkg-feat-ds">High-density shock foam engineered specifically to isolate the 264×124×43mm dual-fan structure from transit vibration. A card this precise deserves protection built to match.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">⚡</div><div><div class="pkg-feat-nm">Anti-Static Bag Protection</div><div class="pkg-feat-ds">Full hermetic anti-static shielding enclosure. The premium 5nm GB206 layout stays completely isolated from electrostatic hazards from factory to installation.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">📋</div><div><div class="pkg-feat-nm">Full Spec on Pack</div><div class="pkg-feat-ds">Architecture metrics, core counts, and GDDR7 parameters printed directly on the outer label. Warehouse receiving requires no unboxing.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">✅</div><div><div class="pkg-feat-nm">Global Certifications</div><div class="pkg-feat-ds">CE · RoHS · FCC · REACH. Fully vetted for deployment across all major international markets.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S06 SPECS ═══ -->
+<section id="s06">
+  <div class="spec-in">
+    <div class="spec-title fi">Specifications</div>
+    <div class="spec-tag fi fi-d1">High-End · GB206 · 5nm Blackwell · GDDR7</div>
+    <table class="spec-tbl fi fi-d2">
+      <tr><td>Architecture</td><td>GB206 · 5nm Blackwell</td></tr>
+      <tr><td>Stream Processors</td><td>4608</td></tr>
+      <tr><td>Core Frequency</td><td>2407 MHz</td></tr>
+      <tr><td>Memory Type</td><td>GDDR7</td></tr>
+      <tr><td>Memory Capacity</td><td>8 GB</td></tr>
+      <tr><td>Memory Frequency</td><td>1750 MHz</td></tr>
+      <tr><td>Memory Bus Width</td><td>128-bit</td></tr>
+      <tr><td>Bus Interface</td><td>PCIe 5.0 × 8</td></tr>
+      <tr><td>Display Outputs</td><td>3 × DP + HDMI</td></tr>
+      <tr><td>Max Resolution</td><td>1920 × 1080</td></tr>
+      <tr><td>DirectX Support</td><td>DirectX 12 (12_2)</td></tr>
+      <tr><td>External Power</td><td>8 Pin</td></tr>
+      <tr><td>Power Consumption</td><td>180W</td></tr>
+      <tr><td>Recommended PSU</td><td>450W and above</td></tr>
+      <tr><td>Cooling Solution</td><td>Dual-Fan</td></tr>
+      <tr><td>Dimensions</td><td>264 × 124 × 43 mm</td></tr>
+      <tr><td>OS Support</td><td>Windows 10 / Windows 11</td></tr>
+      <tr><td>Market Positioning</td><td>High-End · Blackwell</td></tr>
+    </table>
+    <div class="spec-disc fi fi-d2">* All specifications sourced from Simorchip internal documentation. Actual performance may vary depending on system configuration and operating environment.</div>
+    <div class="spec-ctas fi">
+      <button class="btn btn-saber">Download Spec Sheet</button>
+      <button class="btn btn-ghost">Explore Full Lineup</button>
+    </div>
+    <div class="spec-foot fi">
+      <span class="tag" style="font-size:9px;">© 2026 Simorchip Technology</span>
+      <span class="tag" style="font-size:9px;">RTX 5060 Ti · Accelerator World · Blackwell</span>
+    </div>
+  </div>
+</section>
+
+<div class="site-foot">
+  <div class="sf-hl">
+    <span>Simorchip RTX 5060 Ti</span>
+    <span style="color:var(--saber2);text-shadow:var(--glow-blue);">GDDR7 Array</span>
+    <span style="color:var(--white);">Engaged.</span>
+    <span style="color:var(--gold);">Railgun velocity.</span>
+  </div>
+  <div class="sf-tagline">
+    <span class="sf-t1">This isn't where we wait for the rendering sequence.</span>
+    <span class="sf-t2">這是我們以軌道砲速度發射向量的地方。</span>
+  </div>
+  <div class="sf-sub">© 2026 Simorchip Technology · RTX 5060 Ti · Accelerator World · Blackwell</div>
+</div>
+
+<script>
+/* ══ LIGHTSABER IGNITION ══ */
+(function(){
+  const overlay=document.getElementById('saberOverlay');
+  const line=document.getElementById('saberLine');
+  const flash=document.getElementById('saberFlash');
+  const lbl=document.getElementById('saberLabel');
+  const nav=document.getElementById('nav');
+
+  async function ignite(){
+    await new Promise(r=>setTimeout(r,300));
+    // extend left
+    line.style.transition='width .18s linear';
+    line.style.transformOrigin='center center';
+    line.style.width='55vw';
+    await new Promise(r=>setTimeout(r,200));
+    // hold
+    lbl.classList.add('show');
+    await new Promise(r=>setTimeout(r,700));
+    // FLASH
+    flash.style.transition='opacity .08s ease';
+    flash.style.opacity='1';
+    await new Promise(r=>setTimeout(r,80));
+    flash.style.opacity='0';
+    await new Promise(r=>setTimeout(r,80));
+    flash.style.opacity='.7';
+    await new Promise(r=>setTimeout(r,60));
+    flash.style.opacity='0';
+    await new Promise(r=>setTimeout(r,200));
+    // dismiss
+    overlay.classList.add('done');
+    nav.classList.add('visible');
+    fireHero();
+    setTimeout(()=>overlay.style.display='none',500);
+  }
+
+  function fireHero(){
+    const hLeft=document.getElementById('hLeft');
+    hLeft.classList.add('on');
+    function cls(id,d=0){setTimeout(()=>document.getElementById(id)?.classList.add('on'),d);}
+    cls('hRight',0); cls('hEye',300); cls('hHL',500);
+    setTimeout(()=>['hl0','hl1','hl2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('in'),i*300)),520);
+    setTimeout(()=>document.getElementById('hLine')?.classList.add('on'),1400);
+    setTimeout(()=>document.getElementById('hLock')?.classList.add('on'),1600);
+    cls('hSub',2200); cls('hTags',2500); cls('scrHint',3000);
+  }
+
+  document.fonts.ready.then(ignite);
+})();
+
+/* ══ VELOCITY VECTOR FIELD CANVAS ══ */
+(function(){
+  const cv=document.getElementById('vectorCanvas');
+  let W,H,rafId;
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  resize(); window.addEventListener('resize',resize);
+  const ctx=cv.getContext('2d');
+
+  // Two crossing stream groups: blue (top-right to bottom-left) and crimson (bottom-right to top-left)
+  const streams=[];
+  for(let i=0;i<28;i++){
+    const isBlue=i<18;
+    streams.push({
+      x:Math.random(),y:Math.random(),
+      speed:0.0006+Math.random()*.001,
+      len:0.06+Math.random()*.14,
+      alpha:isBlue?(0.025+Math.random()*.035):(0.015+Math.random()*.025),
+      angle:isBlue?(Math.PI*.88+Math.random()*.25):(Math.PI*1.12+Math.random()*.25),
+      isBlue,
+      phase:Math.random()*Math.PI*2
+    });
+  }
+
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    streams.forEach(s=>{
+      s.phase+=s.speed*16;
+      const pulse=0.6+0.4*Math.sin(s.phase);
+      const sx=(s.x+Math.cos(s.angle)*t*s.speed*0.5)%1;
+      const sy=(s.y+Math.sin(s.angle)*t*s.speed*0.5)%1;
+      const ex=sx+Math.cos(s.angle)*s.len;
+      const ey=sy+Math.sin(s.angle)*s.len;
+      const g=ctx.createLinearGradient(sx*W,sy*H,ex*W,ey*H);
+      const a=s.alpha*pulse;
+      if(s.isBlue){
+        g.addColorStop(0,'rgba(64,144,208,0)');
+        g.addColorStop(.5,`rgba(192,232,255,${a})`);
+        g.addColorStop(1,'rgba(64,144,208,0)');
+      } else {
+        g.addColorStop(0,'rgba(192,24,58,0)');
+        g.addColorStop(.5,`rgba(255,100,120,${a})`);
+        g.addColorStop(1,'rgba(192,24,58,0)');
+      }
+      ctx.beginPath();
+      ctx.moveTo(sx*W,sy*H);
+      ctx.lineTo(ex*W,ey*H);
+      ctx.strokeStyle=g;
+      ctx.lineWidth=s.isBlue?.8:.5;
+      ctx.stroke();
+    });
+    t+=1;
+    rafId=requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('beforeunload',()=>cancelAnimationFrame(rafId));
+})();
+
+/* ══ LIGHTSABER CURSOR — blue / red toggle ══ */
+(function(){
+  const cur=document.getElementById('cur');
+  const ring=document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  let prevX=0,prevY=0,speed=0;
+  const TRAIL=10;
+  const dots=Array.from({length:TRAIL},(_,i)=>{
+    const d=document.createElement('div'); d.className='trail-dot';
+    const s=Math.max(1,3-i*.25);
+    d.style.cssText=`width:${s}px;height:${s}px;opacity:0;transition:background .2s;`;
+    document.body.appendChild(d); return d;
+  });
+  const pos=dots.map(()=>({x:0,y:0})); let head=0;
+  let isRed=false;
+
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX; my=e.clientY;
+    speed=Math.sqrt((mx-prevX)**2+(my-prevY)**2);
+    prevX=mx; prevY=my;
+    cur.style.left=mx+'px'; cur.style.top=my+'px';
+    pos[head]={x:mx,y:my}; head=(head+1)%TRAIL;
+  });
+
+  (function frame(){
+    rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    const trailLen=Math.min(TRAIL, Math.floor(speed*.5)+2);
+    dots.forEach((_,i)=>{
+      const p=pos[(head-1-i+TRAIL)%TRAIL];
+      dots[i].style.left=p.x+'px'; dots[i].style.top=p.y+'px';
+      const alpha=i<trailLen?(1-i/trailLen)*.22:0;
+      dots[i].style.opacity=String(alpha);
+      dots[i].style.background=isRed?'rgba(192,24,58,.7)':'rgba(192,232,255,.7)';
+    });
+    requestAnimationFrame(frame);
+  })();
+
+  // hover → red lightsaber
+  document.querySelectorAll('button,.btn,.np a,.why-card,.stat-badge').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{
+      isRed=true;
+      cur.classList.remove('blue'); cur.classList.add('red');
+      ring.classList.add('red-ring');
+    });
+    el.addEventListener('mouseleave',()=>{
+      isRed=false;
+      cur.classList.remove('red'); cur.classList.add('blue');
+      ring.classList.remove('red-ring');
+    });
+  });
+})();
+
+/* ══ NAV ══ */
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('sc',scrollY>50));
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+const secIds=['s00','s_timeline','s01','s02','s03','s04','s05','s06'];
+const pills=document.querySelectorAll('.np a');
+secIds.forEach(id=>{
+  const el=document.getElementById(id); if(!el) return;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){const i=secIds.indexOf(id);pills.forEach(p=>p.classList.remove('on'));if(pills[i])pills[i].classList.add('on');}
+  },{threshold:.4}).observe(el);
+});
+
+/* ══ SCROLL REVEAL ══ */
+const fiObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>fiObs.observe(el));
+
+/* ══ SECTION DIVIDERS ══ */
+['s01','s02','s03','s04','s05','s06','s07'].forEach(id=>{
+  const el=document.getElementById(id); if(!el) return;
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)el.classList.add('div-on');},{threshold:.05}).observe(el);
+});
+
+/* ══ SABER LINES ══ */
+document.querySelectorAll('.saber-line-h').forEach(el=>{
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)el.classList.add('on');},{threshold:.5}).observe(el);
+});
+
+/* ══ FINS ══ */
+(function(){
+  const wrap=document.getElementById('rtxFins'); if(!wrap) return;
+  for(let i=0;i<18;i++){const f=document.createElement('div');f.className='rtx5060-fin';wrap.appendChild(f);}
+})();
+
+/* ══ S01 TYPEWRITER ══ */
+(function(){
+  const tw=document.getElementById('blTw'); if(!tw) return;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){obs.disconnect();
+      setTimeout(()=>{tw.classList.add('tw-go');setTimeout(()=>tw.classList.add('tw-done'),1300);},300);
+    }
+  },{threshold:.4});
+  obs.observe(tw);
+})();
+
+/* ══ SABER SPEED METER ══ */
+(function(){
+  const wrap=document.getElementById('speedMeter'); if(!wrap) return;
+  const fill=document.getElementById('smFill');
+  const status=document.getElementById('smStatus');
+  const valEl=document.getElementById('smVal');
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting && !done){done=true;
+      setTimeout(()=>{
+        fill.style.width='100%';
+        // count MHz during fill (1.8s)
+        const dur=1800,target=2407,t0=performance.now();
+        (function f(now){
+          const p=Math.min((now-t0)/dur,1);
+          const v=1-Math.pow(1-p,2);
+          if(valEl) valEl.textContent=Math.round(v*target)+' MHz';
+          if(p<1) requestAnimationFrame(f);
+          else{
+            if(valEl) valEl.textContent='2407 MHz';
+            fill.classList.add('lit');
+            if(status){status.textContent='// 2407 MHz LOCKED · CORE VELOCITY CONFIRMED';status.classList.add('locked');}
+          }
+        })(performance.now());
+      },400);
+    }
+  },{threshold:.5});
+  obs.observe(wrap);
+})();
+
+/* ══ COUNT-UP 4608 + shockwave + dot grid ══ */
+(function(){
+  const el=document.getElementById('count4608'); if(!el) return;
+  const shock=document.getElementById('shockRing');
+  const gridCv=document.getElementById('dotGrid');
+  const gCtx=gridCv?gridCv.getContext('2d'):null;
+  let done=false,gridIv;
+
+  function drawGrid(alpha){
+    if(!gCtx) return;
+    gCtx.clearRect(0,0,gridCv.width,gridCv.height);
+    const cols=Math.floor(gridCv.width/12),rows=Math.floor(gridCv.height/12);
+    for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+      const flicker=0.3+Math.random()*.7;
+      gCtx.fillStyle=`rgba(64,144,208,${alpha*flicker*.35})`;
+      gCtx.fillRect(c*12+4,r*12+4,2,2);
+    }
+  }
+
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting && !done){done=true;
+      if(gridCv) gridCv.classList.add('vis');
+      const dur=1800,target=4608,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,2.2);
+        el.textContent=Math.round(v*target);
+        if(gCtx) drawGrid(v);
+        if(p<1) requestAnimationFrame(f);
+        else{
+          el.textContent='4,608';
+          // SHOCKWAVE
+          if(shock) shock.classList.add('blast');
+          // lock grid
+          let la=0,grow=true;
+          gridIv=setInterval(()=>{
+            la=grow?Math.min(la+.04,1):Math.max(la-.02,.4);
+            if(la>=1)grow=false; if(la<=.4)grow=true;
+            drawGrid(la);
+          },80);
+        }
+      })(performance.now());
+    }
+  },{threshold:.4});
+  obs.observe(el);
+  window.addEventListener('beforeunload',()=>clearInterval(gridIv));
+})();
+
+/* ══ BADGES ══ */
+(function(){
+  const wrap=document.getElementById('nsBadges'); if(!wrap) return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting && !done){done=true;
+      wrap.querySelectorAll('.stat-badge').forEach((b,i)=>{
+        b.style.cssText=`opacity:0;transform:scale(.9);transition:opacity .5s ease ${i*.15}s,transform .5s cubic-bezier(.34,1.56,.64,1) ${i*.15}s;`;
+        setTimeout(()=>{b.style.opacity='1';b.style.transform='scale(1)';},60);
+      });
+      setTimeout(()=>{['tach1','tach2','tach3'].forEach((id,i)=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.style.width='100%';},i*180));},600);
+      setTimeout(()=>wrap.classList.add('swept'),900);
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ══ NS CARDS ══ */
+(function(){
+  const cards=document.querySelectorAll('.ns-card'); if(!cards.length) return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting && !done){done=true;
+      cards.forEach((c,i)=>{
+        c.style.cssText=`opacity:0;transform:translateX(-14px);transition:opacity .6s ease ${i*.15}s,transform .6s ease ${i*.15}s;`;
+        setTimeout(()=>{c.style.opacity='1';c.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3});
+  obs.observe(cards[0]);
+})();
+
+/* ══ COMPARE BARS — saber sweep + dim ══ */
+(function(){
+  const wrap=document.getElementById('cmpBars'); if(!wrap) return;
+  const sweep=document.getElementById('saberSweep');
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting && !done){done=true;
+      ['cb0','cb1','cb2','cb3'].forEach((id,i)=>setTimeout(()=>{
+        const el=document.getElementById(id); if(!el) return;
+        el.style.width=el.dataset.w+'%';
+        if(id==='cb3'){
+          setTimeout(()=>{
+            // saber sweep from right to left
+            if(sweep) sweep.classList.add('sweeping');
+            setTimeout(()=>{
+              // dim old bars
+              ['cb0','cb1','cb2'].forEach(oid=>{
+                const o=document.getElementById(oid); if(o) o.classList.add('dimmed');
+              });
+            },380);
+          },1600);
+        }
+      },i*260));
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ══ WHY CARDS ══ */
+(function(){
+  const cards=document.querySelectorAll('.why-card'); if(!cards.length) return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting && !done){done=true;
+      cards.forEach((c,i)=>{
+        c.style.cssText=`opacity:0;transform:translateY(18px);transition:opacity .6s ease ${i*.12}s,transform .6s ease ${i*.12}s;`;
+        setTimeout(()=>{c.style.opacity='1';c.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3});
+  obs.observe(cards[0]);
+})();
+
+/* ══ MTBF ══ */
+(function(){
+  const el=document.getElementById('mtbfCount'); if(!el) return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting && !done){done=true;
+      const dur=1800,target=1500000,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,3);
+        el.textContent=Math.round(v*target).toLocaleString();
+        if(p<1) requestAnimationFrame(f); else el.textContent='1,500,000';
+      })(performance.now());
+    }
+  },{threshold:.4});
+  obs.observe(el);
+})();
+
+/* ══ INFINITY SVG ══ */
+(function(){
+  const wrap=document.getElementById('infWrap'); if(!wrap) return;
+  const path=document.getElementById('infPath'); if(!path) return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting && !done){done=true;
+      setTimeout(()=>{
+        path.classList.add('drawn');
+        setTimeout(()=>{
+          let a=0.7,grow=false;
+          setInterval(()=>{
+            a=grow?Math.min(a+.03,1):Math.max(a-.02,.4);
+            if(a>=1)grow=false; if(a<=.4)grow=true;
+            path.style.stroke=`rgba(64,144,208,${a})`;
+            path.style.filter=`drop-shadow(0 0 ${a*6}px rgba(64,144,208,.6))`;
+          },60);
+        },1700);
+      },300);
+    }
+  },{threshold:.5});
+  obs.observe(wrap);
+})();
+
+/* ══ RAIL TIMELINE ══ */
+(function(){
+  const wrap=document.getElementById('railWrap'); if(!wrap) return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting && !done){done=true;
+      setTimeout(()=>{
+        const f1=document.getElementById('railFill1');
+        const loco=document.getElementById('railLoco1');
+        if(f1) f1.style.width='100%';
+        if(loco){loco.style.transition='left 1.6s ease';loco.style.left='calc(100% - 20px)';}
+        setTimeout(()=>{const f2=document.getElementById('railFill2');if(f2)f2.style.width='100%';},400);
+      },200);
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ══ PACKAGING CARD ══ */
+(function(){
+  const wrap=document.getElementById('pkgCard'); if(!wrap) return;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){const card=wrap.querySelector('.pkg-card');if(card){card.style.opacity='1';card.style.transform='none';}}
+  },{threshold:.2});
+  obs.observe(wrap);
+})();
+
+/* ══ PULSE CANVAS — iridescent prismatic lightsaber diffraction ══ */
+(function(){
+  const cv=document.getElementById('pulseCanvas'); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0,rafId;
+  // Moving iridescent flares
+  const flares=[
+    {x:.2,y:.4,speed:.004,hueBase:200},
+    {x:.55,y:.6,speed:.003,hueBase:280},
+    {x:.8,y:.3,speed:.005,hueBase:340},
+    {x:.4,y:.75,speed:.0035,hueBase:160},
+    {x:.7,y:.55,speed:.006,hueBase:40},
+  ];
+
+  function draw(){
+    ctx.fillStyle='#030406';
+    ctx.fillRect(0,0,W,H);
+
+    // Iridescent moving flares — the series finale signature
+    flares.forEach(fl=>{
+      fl.x=(fl.x+fl.speed*.016)%1.2;
+      if(fl.x>1.1) fl.x=-0.1;
+      const hue=(fl.hueBase+t*12)%360;
+      const cx2=fl.x*W, cy2=fl.y*H;
+      const r=28+Math.sin(t*.5+fl.hueBase)*.8;
+      const g=ctx.createRadialGradient(cx2,cy2,0,cx2,cy2,r);
+      g.addColorStop(0,`hsla(${hue},90%,75%,0.22)`);
+      g.addColorStop(.5,`hsla(${(hue+40)%360},85%,60%,0.1)`);
+      g.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=g;
+      ctx.beginPath(); ctx.arc(cx2,cy2,r,0,Math.PI*2); ctx.fill();
+    });
+
+    // Core saber rings — blue, maintain identity
+    const cx=W*.45,cy=H*.5;
+    for(let i=0;i<6;i++){
+      const phase=(t*.75+i*.88)%(Math.PI*2);
+      const r=6+i*14+Math.sin(phase)*3.5;
+      const alpha=(0.12-i*.014)*(0.5+0.5*Math.sin(phase+Math.PI));
+      if(alpha<=0) continue;
+      ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(192,232,255,${alpha})`;
+      ctx.lineWidth=i===0?1.5:.7;
+      if(i===0){ctx.shadowColor='rgba(64,144,208,0.5)';ctx.shadowBlur=8;}
+      else ctx.shadowBlur=0;
+      ctx.stroke();
+    }
+    ctx.shadowBlur=0;
+
+    // Saber core point
+    const coreR=2.5+Math.sin(t*1.4)*1;
+    ctx.beginPath(); ctx.arc(cx,cy,coreR,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,.9)';
+    ctx.shadowColor='rgba(192,232,255,0.8)'; ctx.shadowBlur=10;
+    ctx.fill(); ctx.shadowBlur=0;
+
+    // Scan lines
+    ctx.fillStyle='rgba(0,0,0,.08)';
+    for(let y=0;y<H;y+=2) ctx.fillRect(0,y,W,1);
+
+    t+=.025;
+    rafId=requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('beforeunload',()=>cancelAnimationFrame(rafId));
+})();
+
+/* ══ SPEC TABLE ══ */
+(function(){
+  const tbl=document.querySelector('.spec-tbl'); if(!tbl) return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting && !done){done=true;
+      tbl.querySelectorAll('tr').forEach((row,i)=>{
+        row.style.cssText=`opacity:0;transition:opacity .4s ease ${i*.04}s;`;
+        setTimeout(()=>{row.style.opacity='1';},60);
+      });
+    }
+  },{threshold:.1});
+  obs.observe(tbl);
+})();
+</script>
+</body>
+</html>
