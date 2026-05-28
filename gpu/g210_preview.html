@@ -234,7 +234,65 @@ section{position:relative;width:100%;overflow:hidden;}
 .tl-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;border:1.5px solid var(--sky);background:var(--bg);}
 .tl-label{position:absolute;font-family:var(--ff-m);font-size:7.5px;color:var(--label);white-space:nowrap;top:10px;}
 
-/* ── S04 PACKAGING ── */
+/* ── USE CASE SCENARIOS ── */
+.uc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0 28px;}
+.uc-block{border:.5px solid var(--border);padding:22px 20px;background:rgba(200,184,135,.02);transition:border-color .3s,background .3s;}
+.uc-block:hover{border-color:rgba(78,205,196,.3);background:rgba(78,205,196,.03);}
+.uc-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:8px;}
+.uc-title{font-family:var(--ff-b);font-size:16px;font-weight:600;color:var(--white);margin-bottom:14px;letter-spacing:.02em;}
+.uc-body{font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;margin-top:14px;}
+
+/* Monitor illustration — Scenario A */
+.uc-screen-group{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.uc-monitor{flex-shrink:0;}
+.uc-mon-inner{display:flex;flex-direction:column;align-items:center;}
+.uc-mon-screen{width:64px;height:44px;border:.5px solid rgba(200,184,135,.2);border-radius:2px;display:flex;align-items:center;justify-content:center;transition:background .6s,border-color .4s;position:relative;overflow:hidden;}
+.uc-mon-screen.off{background:#0a0908;}
+.uc-mon-screen.on{background:#0d1a12;border-color:rgba(78,205,196,.5);}
+.uc-no-signal{font-family:var(--ff-m);font-size:5px;letter-spacing:.1em;color:rgba(200,184,135,.25);text-transform:uppercase;}
+.uc-desktop{width:100%;height:100%;position:relative;padding:2px;}
+.uc-taskbar{position:absolute;bottom:0;left:0;right:0;height:6px;background:rgba(78,205,196,.15);}
+.uc-icon{width:6px;height:6px;background:rgba(78,205,196,.3);border-radius:1px;display:inline-block;margin:3px 2px 0;}
+.uc-mon-base{width:16px;height:6px;background:rgba(200,184,135,.12);clip-path:polygon(20% 0%,80% 0%,100% 100%,0% 100%);margin-top:1px;}
+.uc-arrow{font-size:18px;color:var(--sky);opacity:.5;flex-shrink:0;padding-top:4px;}
+
+/* flash-on animation for monitor A */
+@keyframes monFlash{0%{background:#fff;}10%{background:#0d2518;}100%{background:#0d1a12;}}
+.uc-mon-screen.flash{animation:monFlash .6s ease forwards;}
+
+/* Ports row — Scenario B */
+.uc-ports-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:4px;}
+.uc-port-item{display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0;transition:opacity .5s ease;}
+.uc-port-item.lit{opacity:1;}
+.uc-port{font-family:var(--ff-m);font-size:8px;font-weight:400;letter-spacing:.1em;padding:4px 8px;border:.5px solid rgba(200,184,135,.15);color:var(--label);text-transform:uppercase;transition:border-color .4s,color .4s;}
+.uc-port.vga{border-color:rgba(200,184,135,.25);color:var(--sand);}
+.uc-port.hdmi{border-color:rgba(78,205,196,.3);color:var(--sky);}
+.uc-port.dvi{border-color:rgba(78,205,196,.18);color:rgba(78,205,196,.7);}
+.uc-port-line{width:1px;height:14px;background:linear-gradient(180deg,rgba(78,205,196,.6),rgba(78,205,196,.1));transition:opacity .4s;}
+.uc-mon-sm{font-size:20px;opacity:.7;}
+
+/* Signage block — Scenario C */
+.sig-block{grid-column:1/-1;margin-top:4px;}
+.sig-display{display:flex;flex-direction:column;align-items:center;margin-bottom:4px;}
+.sig-screen{width:100%;max-width:320px;border:.5px solid rgba(78,205,196,.25);background:#050504;border-radius:3px;overflow:hidden;box-shadow:0 0 30px rgba(78,205,196,.05);}
+.sig-inner{padding:12px;}
+.sig-top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.sig-brand{font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;color:rgba(78,205,196,.6);text-transform:uppercase;}
+.sig-dot{width:6px;height:6px;border-radius:50%;background:rgba(78,205,196,.4);}
+.sig-dot.live{animation:sigPulse 2s ease-in-out infinite;}
+@keyframes sigPulse{0%,100%{background:rgba(78,205,196,.3);box-shadow:none;}50%{background:rgba(78,205,196,.9);box-shadow:0 0 8px rgba(78,205,196,.6);}}
+.sig-content{height:28px;overflow:hidden;border:.5px solid rgba(78,205,196,.08);background:rgba(0,0,0,.4);margin-bottom:10px;position:relative;}
+.sig-scroll-wrap{width:100%;overflow:hidden;height:100%;display:flex;align-items:center;}
+.sig-scroll-text{font-family:var(--ff-d);font-size:11px;letter-spacing:.1em;color:rgba(78,205,196,.7);white-space:nowrap;animation:sigTicker 14s linear infinite;}
+@keyframes sigTicker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.sig-footer{display:flex;align-items:center;justify-content:space-between;}
+.sig-uptime-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.16em;color:var(--label);text-transform:uppercase;}
+.sig-uptime-val{font-family:var(--ff-d);font-size:14px;letter-spacing:.04em;color:var(--sky);line-height:1;}
+.sig-stand{width:40px;height:8px;background:rgba(200,184,135,.1);clip-path:polygon(20% 0%,80% 0%,100% 100%,0% 100%);margin-top:1px;}
+
+@media(max-width:860px){.uc-wrap{grid-template-columns:1fr;}.sig-block{grid-column:auto;}}
+
+
 #s04{background:var(--bg);padding:100px 6%;}
 .pkg-in{max-width:1100px;margin:0 auto;}
 .pkg-layout{display:grid;grid-template-columns:260px 1fr;gap:60px;align-items:start;}
@@ -454,7 +512,63 @@ section{position:relative;width:100%;overflow:hidden;}
           <div class="ns-badge-d">VGA + HDMI + DVI. Fits any case, connects to any generation of monitors.<br>放得進任何機殼，接得上任何年代的螢幕。</div>
         </div>
       </div>
-      <p style="font-size:15px;font-weight:400;color:var(--mute);margin-top:20px;font-style:italic;">You don't need the fastest card. You need the one that works every single time.<br><span style="font-size:13px;">你不需要最快的那張。你需要每一次都不出錯的那張。</span></p>
+      <!-- ── USE CASE SCENARIOS ── -->
+      <div class="uc-wrap fi fi-d2">
+        <!-- Scenario A: No iGPU -->
+        <div class="uc-block" id="ucA">
+          <div class="uc-label">Scenario 01</div>
+          <div class="uc-title">主機板沒有內顯</div>
+          <div class="uc-screen-group">
+            <div class="uc-monitor" id="ucMonA">
+              <div class="uc-mon-inner">
+                <div class="uc-mon-screen off" id="ucMonScreen">
+                  <span class="uc-no-signal">NO SIGNAL</span>
+                </div>
+                <div class="uc-mon-base"></div>
+              </div>
+            </div>
+            <div class="uc-arrow">→</div>
+            <div class="uc-monitor">
+              <div class="uc-mon-inner">
+                <div class="uc-mon-screen on">
+                  <div class="uc-desktop">
+                    <div class="uc-taskbar"></div>
+                    <div class="uc-icon"></div><div class="uc-icon"></div><div class="uc-icon"></div>
+                  </div>
+                </div>
+                <div class="uc-mon-base"></div>
+              </div>
+            </div>
+          </div>
+          <div class="uc-body">Your computer isn't broken.<br>It just needs a starting point.<br><span style="opacity:.6;font-size:13px;">你的電腦沒有壞。只是需要一個開始。</span></div>
+        </div>
+
+        <!-- Scenario B: Multi-Monitor -->
+        <div class="uc-block" id="ucB">
+          <div class="uc-label">Scenario 02</div>
+          <div class="uc-title">三個螢幕，一條線都不用改</div>
+          <div class="uc-ports-row" id="ucPorts">
+            <div class="uc-port-item" data-delay="0">
+              <div class="uc-port vga">VGA</div>
+              <div class="uc-port-line" id="vgaLine"></div>
+              <div class="uc-mon-sm" id="mon1">📺</div>
+            </div>
+            <div class="uc-port-item" data-delay="400">
+              <div class="uc-port hdmi">HDMI</div>
+              <div class="uc-port-line" id="hdmiLine"></div>
+              <div class="uc-mon-sm" id="mon2">🖥️</div>
+            </div>
+            <div class="uc-port-item" data-delay="800">
+              <div class="uc-port dvi">DVI</div>
+              <div class="uc-port-line" id="dviLine"></div>
+              <div class="uc-mon-sm" id="mon3">🖥️</div>
+            </div>
+          </div>
+          <div class="uc-body">Excel on one. Teams on another. Browser on the third.<br>No Alt+Tab. No compromise.<br><span style="opacity:.6;font-size:13px;">不管螢幕是哪個年代的都能接。今天下午就能完成。</span></div>
+        </div>
+      </div>
+
+      <p style="font-size:15px;font-weight:400;color:var(--mute);margin-top:28px;font-style:italic;">You don't need the fastest card. You need the one that works every single time.<br><span style="font-size:13px;">你不需要最快的那張。你需要每一次都不出錯的那張。</span></p>
     </div>
     <div class="fi fi-d1">
       <!-- Count-up number -->
@@ -508,6 +622,33 @@ section{position:relative;width:100%;overflow:hidden;}
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;" class="fi fi-d3">
         <div class="stat-badge"><div class="num" style="color:var(--sky);">171</div><div class="lbl">Years Theoretical</div></div>
         <div class="stat-badge"><div class="num">1.5M</div><div class="lbl">Hours MTBF</div></div>
+      </div>
+
+      <!-- ── SCENARIO 03: Digital Signage ── -->
+      <div class="uc-block sig-block fi fi-d4" id="ucC">
+        <div class="uc-label">Scenario 03</div>
+        <div class="uc-title">裝了就忘</div>
+        <div class="sig-display">
+          <div class="sig-screen">
+            <div class="sig-inner">
+              <div class="sig-top-bar">
+                <span class="sig-brand">SIMORCHIP</span>
+                <span class="sig-dot live"></span>
+              </div>
+              <div class="sig-content">
+                <div class="sig-scroll-wrap">
+                  <div class="sig-scroll-text" id="sigScroll">SIMORCHIP G210 · ALWAYS THERE · ENTRY SERIES · NONSTOP · RELIABILITY ·&nbsp;</div>
+                </div>
+              </div>
+              <div class="sig-footer">
+                <span class="sig-uptime-label">UPTIME</span>
+                <span class="sig-uptime-val" id="uptimeCount">00:00:00:00</span>
+              </div>
+            </div>
+          </div>
+          <div class="sig-stand"></div>
+        </div>
+        <div class="uc-body" style="margin-top:16px;">Store displays. Reception screens. Industrial kiosks.<br>It runs. It never asks for attention.<br><span style="opacity:.6;font-size:13px;">數位看板、接待螢幕、展場展示——裝上去就能忘了它的存在。這正是重點。</span></div>
       </div>
     </div>
     <div class="fi fi-d1">
@@ -815,7 +956,59 @@ document.fonts.ready.then(()=>{
     }
   },{threshold:.1}).observe(tbl);
 })();
-/* ── SAND DUST CANVAS — Packaging ── */
+/* ── SCENARIO A: No-iGPU monitor flash ── */
+(function(){
+  const screen=document.getElementById('ucMonScreen');
+  if(!screen)return;
+  let fired=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!fired){fired=true;
+      setTimeout(()=>{
+        screen.classList.remove('off');
+        screen.classList.add('on','flash');
+      },600);
+    }
+  },{threshold:.5}).observe(screen);
+})();
+
+/* ── SCENARIO B: Port stagger light-up ── */
+(function(){
+  const ports=document.querySelectorAll('.uc-port-item');
+  if(!ports.length)return;
+  let fired=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!fired){fired=true;
+      ports.forEach(p=>{
+        const d=parseInt(p.dataset.delay||0);
+        setTimeout(()=>p.classList.add('lit'),d);
+      });
+    }
+  },{threshold:.4}).observe(ports[0]);
+})();
+
+/* ── SCENARIO C: Uptime counter (starts from random offset for realism) ── */
+(function(){
+  const el=document.getElementById('uptimeCount');
+  if(!el)return;
+  // Simulate a machine that's been running for ~180 days already
+  let secs=180*24*3600+Math.floor(Math.random()*3600);
+  function fmt(s){
+    const d=Math.floor(s/86400);
+    const h=Math.floor((s%86400)/3600);
+    const m=Math.floor((s%3600)/60);
+    const ss=s%60;
+    return `${String(d).padStart(3,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+  }
+  let started=false;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!started){started=true;
+      el.textContent=fmt(secs);
+      setInterval(()=>{secs++;el.textContent=fmt(secs);},1000);
+    }
+  },{threshold:.3}).observe(el);
+})();
+
+
 (function(){
   const cv=document.getElementById('sandCanvas');if(!cv)return;
   const W=cv.width,H=cv.height;
