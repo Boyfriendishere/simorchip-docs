@@ -330,6 +330,140 @@ section{position:relative;width:100%;overflow:hidden;}
   .why-cards{grid-template-columns:1fr;}
 }
 @media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+/* ── GDDR6 BANDWIDTH SCENARIO ── */
+.bw-wrap{width:100%;background:rgba(7,10,15,.95);border:.5px solid var(--border);overflow:hidden;}
+.bw-header{padding:13px 16px 10px;border-bottom:.5px solid var(--line);}
+.bw-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.bw-track-area{padding:16px 16px 10px;display:flex;flex-direction:column;gap:10px;}
+.bw-lane{opacity:0;transition:opacity .6s ease,transform .6s ease;transform:translateX(-12px);}
+.bw-lane.vis{opacity:1;transform:none;}
+.bw-lane-label{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.bw-mem-type{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;padding:3px 8px;border:.5px solid transparent;font-weight:400;}
+.bw-gddr5{color:rgba(160,160,160,.7);border-color:rgba(160,160,160,.2);background:rgba(160,160,160,.04);}
+.bw-gddr6{color:var(--blue);border-color:rgba(90,180,240,.35);background:rgba(90,180,240,.06);}
+.bw-lane-spec{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.06em;color:var(--label);}
+.bw-road{position:relative;height:28px;background:rgba(255,255,255,.03);border:.5px solid rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
+.bw-road-line{position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(255,255,255,.06);transform:translateY(-50%);}
+.bw-car{position:absolute;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:4px;transition:left 1.8s cubic-bezier(.16,1,.3,1);}
+.bw-car5{left:2%;}
+.bw-car6{left:2%;}
+.bw-car-body{width:18px;height:10px;background:rgba(120,120,120,.4);border:.5px solid rgba(160,160,160,.3);border-radius:2px;}
+.bw-car-body6{background:rgba(90,180,240,.3);border-color:rgba(90,180,240,.5);box-shadow:0 0 8px rgba(90,180,240,.3);}
+.bw-exhaust{position:absolute;right:-8px;top:50%;transform:translateY(-50%);width:6px;height:2px;background:linear-gradient(90deg,rgba(90,180,240,.5),transparent);border-radius:1px;animation:exhaustPulse 0.4s ease-in-out infinite;}
+@keyframes exhaustPulse{0%,100%{opacity:.4;width:4px;}50%{opacity:1;width:8px;}}
+.bw-stutter{position:absolute;left:50%;top:-18px;transform:translateX(-50%);font-family:var(--ff-m);font-size:7px;letter-spacing:.1em;color:rgba(255,80,80,.8);background:rgba(255,40,40,.1);border:.5px solid rgba(255,80,80,.2);padding:2px 5px;white-space:nowrap;opacity:0;transition:opacity .3s ease;}
+.bw-stutter.vis{opacity:1;}
+.bw-apex{position:absolute;right:8%;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+.bw-apex-marker{width:1px;height:100%;background:rgba(255,255,255,.1);}
+.bw-apex-marker.bw-apex-active{background:rgba(90,180,240,.5);box-shadow:0 0 4px rgba(90,180,240,.3);}
+.bw-apex-lbl{font-family:var(--ff-m);font-size:6px;letter-spacing:.06em;color:rgba(255,255,255,.2);position:absolute;top:-14px;white-space:nowrap;}
+.bw-apex-lbl6{color:rgba(90,180,240,.7);}
+.bw-status{display:flex;align-items:center;gap:5px;margin-top:5px;}
+.bw-status span{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.04em;}
+.bw-status-bad span{color:rgba(160,100,90,.7);}
+.bw-status-good span{color:rgba(90,180,240,.7);}
+.bw-status-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.bw-dot-bad{background:rgba(220,80,60,.7);}
+.bw-dot-good{background:rgba(90,180,240,.9);box-shadow:0 0 5px rgba(90,180,240,.4);}
+.bw-divider{height:.5px;background:var(--line);margin:2px 0;}
+.bw-bars{padding:12px 16px;border-top:.5px solid var(--line);display:flex;flex-direction:column;gap:8px;}
+.bw-bar-row{display:flex;align-items:center;gap:10px;}
+.bw-bar-lbl{font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;color:var(--label);width:110px;flex-shrink:0;}
+.bw-lbl6{color:var(--blue);}
+.bw-bar-track{flex:1;height:5px;background:rgba(255,255,255,.04);border-radius:3px;overflow:hidden;}
+.bw-bar-fill{height:100%;border-radius:3px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+.bw-fill5{background:rgba(140,140,140,.35);}
+.bw-fill6{background:var(--blue);box-shadow:0 0 8px rgba(90,180,240,.4);}
+.bw-bar-val{font-family:var(--ff-m);font-size:8px;color:var(--label);flex-shrink:0;width:72px;text-align:right;}
+.bw-val6{color:var(--blue);}
+.bw-footer{padding:12px 16px;border-top:.5px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.bw-footer span{font-size:11px;opacity:.5;display:block;margin-top:3px;}
+
+/* ── 6-PIN RITUAL SCENARIO ── */
+.pin-wrap{width:100%;background:rgba(7,10,15,.95);border:.5px solid var(--border);overflow:hidden;}
+.pin-header{padding:13px 16px 10px;border-bottom:.5px solid var(--line);}
+.pin-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.pin-states{display:flex;align-items:center;gap:0;padding:18px 16px 14px;}
+.pin-state{flex:1;opacity:0;transition:opacity .6s ease;}
+.pin-state.vis{opacity:1;}
+.pin-state-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);margin-bottom:12px;}
+.pin-label-after{color:var(--blue);}
+.pin-connector-area{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.pin-slot-only{display:flex;flex-direction:column;gap:4px;}
+.pin-slot-bar{height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;position:relative;}
+.pin-slot-fill{height:100%;width:0;background:rgba(140,140,140,.4);border-radius:3px;transition:width 1s ease;}
+.pin-slot-fill.pin-slot-full{background:rgba(90,180,240,.5);box-shadow:0 0 6px rgba(90,180,240,.3);}
+.pin-slot-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:var(--label);}
+.pin-empty-connector{display:flex;flex-direction:column;gap:4px;}
+.pin-empty-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:rgba(90,104,128,.4);}
+.pin-empty-port{width:28px;height:5px;background:rgba(255,255,255,.04);border:.5px solid rgba(255,255,255,.06);border-radius:1px;}
+.pin-active-connector{display:flex;flex-direction:column;gap:4px;}
+.pin-active-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:var(--blue);}
+.pin-active-port{width:28px;height:5px;background:rgba(90,180,240,.2);border:.5px solid rgba(90,180,240,.4);border-radius:1px;}
+.pin-active-port.lit{box-shadow:0 0 4px rgba(90,180,240,.3);}
+.pin-watt-display{font-family:var(--ff-d);font-size:clamp(28px,4vw,44px);letter-spacing:.02em;color:rgba(140,140,140,.4);line-height:1;margin-bottom:8px;transition:color .5s ease,text-shadow .5s ease;}
+.pin-watt-low{color:rgba(140,140,140,.4);}
+.pin-watt-high{color:var(--blue);text-shadow:0 0 20px rgba(90,180,240,.35);}
+.pin-state-desc{font-family:var(--ff-m);font-size:8px;letter-spacing:.04em;color:var(--label);line-height:1.7;}
+.pin-desc-after{color:var(--mute);}
+/* 6-pin cable animation */
+.pin-insert-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;padding:0 10px;padding-top:24px;}
+.pin-cable{display:flex;flex-direction:column;align-items:center;}
+.pin-cable-wire{width:2px;height:30px;background:linear-gradient(180deg,rgba(90,180,240,.3),rgba(90,180,240,.6));transition:height .6s ease;}
+.pin-cable-head{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:4px;background:rgba(90,180,240,.12);border:.5px solid rgba(90,180,240,.3);border-radius:1px;opacity:0;transform:translateY(-10px);transition:opacity .5s ease,transform .8s cubic-bezier(.34,1.56,.64,1);}
+.pin-cable-head.vis{opacity:1;transform:none;}
+.pin-head-pin{width:5px;height:7px;background:rgba(90,180,240,.5);border-radius:1px;}
+.pin-insert-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);opacity:0;transition:opacity .4s ease;}
+.pin-insert-label.vis{opacity:1;}
+/* Copy block */
+.pin-copy{padding:14px 16px;border-top:.5px solid var(--line);opacity:0;transition:opacity .7s ease;}
+.pin-copy.vis{opacity:1;}
+.pin-copy-main{font-family:var(--ff-b);font-size:15px;font-weight:500;color:var(--white);line-height:1.7;margin-bottom:10px;}
+.pin-copy-sub{font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.8;margin-bottom:10px;}
+.pin-copy-close{font-family:var(--ff-b);font-size:13px;font-weight:500;color:var(--steel);line-height:1.7;font-style:italic;border-top:.5px solid var(--line);padding-top:10px;}
+.pin-copy-close span{font-size:12px;opacity:.6;display:block;margin-top:3px;}
+
+/* ── OLYMPICS TIMELINE ── */
+.ol-wrap{width:100%;background:rgba(7,10,15,.95);border:.5px solid var(--border);overflow:hidden;}
+.ol-header{padding:16px 18px 10px;}
+.ol-eyebrow{font-family:var(--ff-d);font-size:clamp(22px,3vw,34px);letter-spacing:.06em;color:var(--white);display:block;line-height:1;}
+.ol-sub{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;color:var(--label);display:block;margin-top:4px;}
+.ol-tl{padding:16px 18px 12px;}
+.ol-section-lbl{font-family:var(--ff-m);font-size:8px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;}
+.ol-lbl-human{color:var(--label);}
+.ol-lbl-gpu{color:var(--blue);}
+.ol-row{position:relative;margin-bottom:32px;}
+.ol-track{position:relative;height:2px;background:rgba(90,180,240,.08);}
+.ol-human-track{background:rgba(160,155,130,.08);}
+.ol-fill{position:absolute;left:0;top:0;height:100%;width:0;transition:width 1.6s ease;}
+.ol-human-fill{background:linear-gradient(90deg,rgba(200,168,74,.4),rgba(200,168,74,.7));}
+.ol-gpu-fill{background:linear-gradient(90deg,var(--gold2),var(--blue));box-shadow:0 0 8px rgba(90,180,240,.3);}
+.ol-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:var(--bg);z-index:2;}
+.ol-human-dot{border:1.5px solid rgba(200,168,74,.4);}
+.ol-gpu-dot{border:1.5px solid var(--blue);}
+.ol-install{border-color:var(--gold);box-shadow:0 0 6px rgba(200,168,74,.4);}
+.ol-label{position:absolute;font-family:var(--ff-m);font-size:7px;white-space:nowrap;top:10px;transform:translateX(-50%);}
+.ol-human-lbl{color:rgba(200,168,74,.5);}
+.ol-gpu-lbl{color:var(--blue);}
+.ol-install-lbl{color:var(--gold);}
+.ol-label.right-align{transform:translateX(-100%);}
+.ol-torch{position:absolute;top:-11px;font-size:13px;transition:left 1.6s ease;opacity:.7;}
+.ol-divider{height:.5px;background:var(--line);margin:2px 0 18px;}
+.ol-compare{font-family:var(--ff-m);font-size:8.5px;letter-spacing:.04em;color:var(--label);line-height:1.75;margin-top:4px;}
+.ol-compare strong{color:var(--blue);}
+/* Games strip */
+.ol-games-strip{display:flex;border-top:.5px solid var(--line);border-bottom:.5px solid var(--line);}
+.ol-game{flex:1;padding:8px 4px;text-align:center;font-family:var(--ff-m);font-size:8px;letter-spacing:.04em;color:var(--label);border-right:.5px solid var(--line);line-height:1.5;opacity:0;transition:opacity .5s ease;}
+.ol-game:last-child{border-right:none;}
+.ol-game.vis{opacity:1;}
+.ol-game span{display:block;font-size:7px;color:rgba(90,104,128,.5);}
+.ol-game-now{color:var(--gold)!important;}
+.ol-game-now span{color:rgba(200,168,74,.5)!important;}
+.ol-game-future{color:var(--blue)!important;background:rgba(90,180,240,.03);}
+.ol-game-future span{color:rgba(90,180,240,.5)!important;}
+.ol-footer{padding:13px 18px;border-top:.5px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.ol-footer span{font-size:11px;opacity:.5;display:block;margin-top:3px;}
+
 </style>
 </head>
 <body>
@@ -465,7 +599,7 @@ section{position:relative;width:100%;overflow:hidden;}
     <div class="bl-grid fi">
       <div>
         <div class="bl-eye">Design Language</div>
-        <div class="bl-title">Twin<br>Cyclone<br><span style="font-size:.5em;color:var(--label);"></span></div>
+        <div class="bl-title">Twin<br>Cyclone</div>
         <div class="bl-body">The mid-range isn't a compromise. It's a border.<br><br>And this card guards it.<br><br>192 bits of bandwidth means you don't ask <em>if</em> it can run the game. You just click settings, drag everything to the right, and launch.</div>
         <div class="bl-quote">The dual fans exist because stability isn't negotiable.<br>Some cards try to promise the future and fail. The GTX 1660 SUPER owns the present.</div>
         <div class="bl-pos">GTX 1660 SUPER — The boundary where mid-range becomes serious.</div>
@@ -538,11 +672,85 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:400px;margin-bottom:14px;">
-        <span>[ FIERCER — CARD SIDE PROFILE ]<br>GTX 1660S side · dual fan symmetric<br>Heatsink fin depth visible · top-light ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:140px;">
-        <span>[ 6-PIN CONNECTOR ]<br>Power connector side detail<br>125W — slot + 6-pin ]</span>
+      <!-- ── GDDR6 BANDWIDTH SCENARIO ── -->
+      <div class="bw-wrap" id="bwWrap">
+        <div class="bw-header">
+          <span class="bw-eyebrow">Bandwidth — The Invisible Edge</span>
+        </div>
+        <div class="bw-track-area">
+          <!-- GDDR5 lane -->
+          <div class="bw-lane" id="bwLane5">
+            <div class="bw-lane-label">
+              <span class="bw-mem-type bw-gddr5">GDDR5</span>
+              <span class="bw-lane-spec">128-bit · ~192 GB/s</span>
+            </div>
+            <div class="bw-road">
+              <div class="bw-road-line"></div>
+              <div class="bw-car bw-car5" id="bwCar5">
+                <div class="bw-car-body"></div>
+                <div class="bw-stutter" id="bwStutter">
+                  <span>STALL</span>
+                </div>
+              </div>
+              <div class="bw-apex bw-apex5">
+                <div class="bw-apex-marker"></div>
+                <span class="bw-apex-lbl">Apex</span>
+              </div>
+            </div>
+            <div class="bw-status bw-status-bad" id="bwStatus5">
+              <div class="bw-status-dot bw-dot-bad"></div>
+              <span>Texture buffer stall · Frame drop</span>
+            </div>
+          </div>
+
+          <!-- VS divider -->
+          <div class="bw-divider">
+            <div class="bw-div-line"></div>
+          </div>
+
+          <!-- GDDR6 lane -->
+          <div class="bw-lane" id="bwLane6">
+            <div class="bw-lane-label">
+              <span class="bw-mem-type bw-gddr6">GDDR6</span>
+              <span class="bw-lane-spec">192-bit · ~336 GB/s</span>
+            </div>
+            <div class="bw-road">
+              <div class="bw-road-line"></div>
+              <div class="bw-car bw-car6" id="bwCar6">
+                <div class="bw-car-body bw-car-body6">
+                  <div class="bw-exhaust"></div>
+                </div>
+              </div>
+              <div class="bw-apex bw-apex6">
+                <div class="bw-apex-marker bw-apex-active"></div>
+                <span class="bw-apex-lbl bw-apex-lbl6">Preloaded</span>
+              </div>
+            </div>
+            <div class="bw-status bw-status-good" id="bwStatus6">
+              <div class="bw-status-dot bw-dot-good"></div>
+              <span>Track preloaded · Full throttle</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bandwidth bar comparison -->
+        <div class="bw-bars" id="bwBars">
+          <div class="bw-bar-row">
+            <span class="bw-bar-lbl">GDDR5 128-bit</span>
+            <div class="bw-bar-track"><div class="bw-bar-fill bw-fill5" id="bwFill5" data-w="57"></div></div>
+            <span class="bw-bar-val">~192 GB/s</span>
+          </div>
+          <div class="bw-bar-row">
+            <span class="bw-bar-lbl bw-lbl6">GDDR6 192-bit</span>
+            <div class="bw-bar-track"><div class="bw-bar-fill bw-fill6" id="bwFill6" data-w="100"></div></div>
+            <span class="bw-bar-val bw-val6">~336 GB/s</span>
+          </div>
+        </div>
+
+        <div class="bw-footer">
+          In competitive play, bandwidth is your reaction time before you react.<br>
+          <span>GDDR6 preloads the corner before you even turn the wheel.</span>
+        </div>
       </div>
     </div>
   </div>
@@ -610,11 +818,77 @@ section{position:relative;width:100%;overflow:hidden;}
     </div>
 
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:380px;margin-bottom:14px;">
-        <span>[ CAPABLE — FRONT HERO SHOT ]<br>GTX 1660S front · dual-fan symmetric<br>Dark shell · silver heat pipe · top-light contrast ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:150px;">
-        <span>[ OUTPUT PORTS ]<br>DP · HDMI · DVI bracket · close-up ]</span>
+      <!-- ── 6-PIN RITUAL SCENARIO ── -->
+      <div class="pin-wrap" id="pinWrap">
+        <div class="pin-header">
+          <span class="pin-eyebrow">The Moment It Changes</span>
+        </div>
+
+        <!-- Power state visual -->
+        <div class="pin-states">
+          <!-- Before: slot only -->
+          <div class="pin-state pin-state-before" id="pinBefore">
+            <div class="pin-state-label">Before</div>
+            <div class="pin-connector-area">
+              <div class="pin-slot-only">
+                <div class="pin-slot-bar">
+                  <div class="pin-slot-fill" id="pinSlotFill"></div>
+                </div>
+                <div class="pin-slot-label">PCIe Slot · 75W max</div>
+              </div>
+              <div class="pin-empty-connector">
+                <div class="pin-empty-port"></div>
+                <div class="pin-empty-port"></div>
+                <div class="pin-empty-label">6-pin — unplugged</div>
+              </div>
+            </div>
+            <div class="pin-watt-display pin-watt-low">75W</div>
+            <div class="pin-state-desc">Slot power only.<br>Card is polite. Card is limited.</div>
+          </div>
+
+          <!-- Arrow -->
+          <div class="pin-insert-wrap" id="pinInsert">
+            <div class="pin-cable">
+              <div class="pin-cable-wire"></div>
+              <div class="pin-cable-head" id="pinHead">
+                <div class="pin-head-pin"></div>
+                <div class="pin-head-pin"></div>
+                <div class="pin-head-pin"></div>
+                <div class="pin-head-pin"></div>
+                <div class="pin-head-pin"></div>
+                <div class="pin-head-pin"></div>
+              </div>
+            </div>
+            <div class="pin-insert-label" id="pinLabel">Insert</div>
+          </div>
+
+          <!-- After: full power -->
+          <div class="pin-state pin-state-after" id="pinAfter">
+            <div class="pin-state-label pin-label-after">After</div>
+            <div class="pin-connector-area">
+              <div class="pin-slot-only">
+                <div class="pin-slot-bar">
+                  <div class="pin-slot-fill pin-slot-full" id="pinSlotFull"></div>
+                </div>
+                <div class="pin-slot-label" style="color:var(--blue);">PCIe Slot · 75W</div>
+              </div>
+              <div class="pin-active-connector" id="pinActiveConn">
+                <div class="pin-active-port lit"></div>
+                <div class="pin-active-port lit"></div>
+                <div class="pin-active-label">6-pin · +50W</div>
+              </div>
+            </div>
+            <div class="pin-watt-display pin-watt-high" id="pinWattHigh">125W</div>
+            <div class="pin-state-desc pin-desc-after">Full thermal headroom.<br>Full clock speed. Full control.</div>
+          </div>
+        </div>
+
+        <!-- The copy -->
+        <div class="pin-copy" id="pinCopy">
+          <p class="pin-copy-main">Most graphics cards take what the slot gives them.<br>This one demands its own line.</p>
+          <p class="pin-copy-sub">The moment you plug in the 6-pin connector, something changes. Not just the wattage. The relationship. The card stops being a passenger. It becomes the engine.</p>
+          <p class="pin-copy-close">This is how a graphics card is supposed to be powered.<br><span>這才是顯示卡通電該有的樣子。</span></p>
+        </div>
       </div>
     </div>
   </div>
@@ -635,15 +909,15 @@ section{position:relative;width:100%;overflow:hidden;}
         <div class="mtbf-lbl">Hours MTBF</div>
       </div>
 
-      <!-- Rail / steam locomotive timeline -->
+      <!-- Olympics timeline — inline left column -->
       <div class="rail-tl fi fi-d2" id="railWrap">
-        <div class="rail-section-lbl human">Modern Steel & Rail History — 171 Years</div>
+        <div class="rail-section-lbl human">Modern Olympics — 130 Years</div>
         <div class="rail-row">
-          <div class="rail-track human-track" style="width:100%;">
+          <div class="rail-track human-track" style="width:76%;">
             <div class="rail-fill human-fill" id="railFill1"></div>
-            <div class="rail-loco" id="railLoco1" style="left:0;">🚂</div>
-            <div class="rail-dot human-dot" style="left:0%;"><span class="rail-label human-lbl">1855<br>Steam Era</span></div>
-            <div class="rail-dot human-dot" style="left:52%;"><span class="rail-label human-lbl">1950<br>Electric Rail</span></div>
+            <div class="rail-loco" id="railLoco1" style="left:0;">🔥</div>
+            <div class="rail-dot human-dot" style="left:0%;"><span class="rail-label human-lbl">1896<br>Athens</span></div>
+            <div class="rail-dot human-dot" style="left:50%;"><span class="rail-label human-lbl">1960<br>Rome</span></div>
             <div class="rail-dot human-dot" style="left:100%;"><span class="rail-label human-lbl right-align">2026<br>Today</span></div>
           </div>
         </div>
@@ -657,7 +931,7 @@ section{position:relative;width:100%;overflow:hidden;}
             <div class="rail-dot gpu-dot" style="left:100%;"><span class="rail-label gpu-lbl right-align">2197<br>GTX 1660S (theory)</span></div>
           </div>
         </div>
-        <div class="rail-compare-note">The entire history of modern steel and rail spans 171 years. The GTX 1660 SUPER's rated lifespan <strong>matches it exactly</strong> — from the first steam locomotives to the digital battlefield you're dominating tonight.</div>
+        <div class="rail-compare-note">Every athlete who has ever competed in the modern Olympics — from Athens 1896 to wherever the flame burns tonight — fits inside the GTX 1660 SUPER's theoretical lifespan with <strong>41 years to spare.</strong></div>
         <p style="font-size:15px;color:var(--mute);line-height:1.8;margin-top:20px;"><em style="color:var(--white);">It was built to endure the pressure.</em><br>It will still be running when the game is won.</p>
       </div>
       <div class="rel-badges fi fi-d3">
@@ -665,10 +939,6 @@ section{position:relative;width:100%;overflow:hidden;}
         <div class="stat-badge"><div class="num">1.5M</div><div class="lbl">Hours MTBF</div></div>
       </div>
     </div>
-    <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:440px;">
-        <span>[ RELIABILITY VISUAL ]<br>GTX 1660S in chassis · blue cold glow<br>Dual fans lit from inside · darkness around ]</span>
-      </div>
     </div>
   </div>
 </section>
@@ -1075,6 +1345,109 @@ document.fonts.ready.then(() => {
     }
   }, {threshold:.1});
   obs.observe(tbl);
+})();
+
+/* ── GDDR6 BANDWIDTH ── */
+(function(){
+  var wrap = document.getElementById('bwWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var lane5 = document.getElementById('bwLane5');
+    var lane6 = document.getElementById('bwLane6');
+    setTimeout(function(){ if(lane5) lane5.classList.add('vis'); }, 100);
+    setTimeout(function(){ if(lane6) lane6.classList.add('vis'); }, 300);
+    // GDDR5 car stalls near apex
+    setTimeout(function(){
+      var car = document.getElementById('bwCar5');
+      if(car) car.style.left = '58%';
+      setTimeout(function(){
+        var stutter = document.getElementById('bwStutter');
+        if(stutter) stutter.classList.add('vis');
+      }, 1900);
+    }, 500);
+    // GDDR6 car clears the corner
+    setTimeout(function(){
+      var car = document.getElementById('bwCar6');
+      if(car) car.style.left = '78%';
+    }, 600);
+    // Bandwidth bars
+    setTimeout(function(){
+      var f5 = document.getElementById('bwFill5');
+      var f6 = document.getElementById('bwFill6');
+      if(f5) f5.style.width = f5.dataset.w + '%';
+      if(f6) f6.style.width = f6.dataset.w + '%';
+    }, 800);
+  }, {threshold: 0.25}).observe(wrap);
+})();
+
+/* ── 6-PIN RITUAL ── */
+(function(){
+  var wrap = document.getElementById('pinWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var before = document.getElementById('pinBefore');
+    var insert = document.getElementById('pinInsert');
+    var after = document.getElementById('pinAfter');
+    var slotFill = document.getElementById('pinSlotFill');
+    var head = document.getElementById('pinHead');
+    var label = document.getElementById('pinLabel');
+    var slotFull = document.getElementById('pinSlotFull');
+    var activeConn = document.getElementById('pinActiveConn');
+    var wattHigh = document.getElementById('pinWattHigh');
+    var copy = document.getElementById('pinCopy');
+    // Before state fades in
+    setTimeout(function(){ if(before) before.classList.add('vis'); }, 100);
+    setTimeout(function(){ if(slotFill) slotFill.style.width = '55%'; }, 400);
+    // Cable appears
+    setTimeout(function(){ if(insert) insert.style.opacity = '1'; }, 700);
+    setTimeout(function(){ if(head) head.classList.add('vis'); }, 900);
+    setTimeout(function(){ if(label) label.classList.add('vis'); }, 900);
+    // After state
+    setTimeout(function(){ if(after) after.classList.add('vis'); }, 1400);
+    setTimeout(function(){ if(slotFull) slotFull.style.width = '100%'; }, 1600);
+    setTimeout(function(){
+      if(activeConn) activeConn.style.opacity = '1';
+    }, 1800);
+    // Copy block
+    setTimeout(function(){ if(copy) copy.classList.add('vis'); }, 2200);
+  }, {threshold: 0.2}).observe(wrap);
+})();
+
+/* ── OLYMPICS TIMELINE ── */
+(function(){
+  var wrap = document.getElementById('olWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    // Human track
+    setTimeout(function(){
+      var f1 = document.getElementById('olFill1');
+      var torch = document.getElementById('olTorch');
+      if(f1) f1.style.width = '100%';
+      if(torch){
+        torch.style.transition = 'left 1.6s ease';
+        torch.style.left = 'calc(100% - 14px)';
+      }
+    }, 200);
+    // GPU track
+    setTimeout(function(){
+      var f2 = document.getElementById('olFill2');
+      if(f2) f2.style.width = '100%';
+    }, 500);
+    // Games strip
+    var games = wrap.querySelectorAll('.ol-game');
+    games.forEach(function(g, i){
+      setTimeout(function(){ g.classList.add('vis'); }, 800 + i * 150);
+    });
+  }, {threshold: 0.25}).observe(wrap);
 })();
 </script>
 </body>
