@@ -1,0 +1,748 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>RX580</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="36dd24e8-7d86-80b8-894f-df922060334a" class="page sans"><header><h1 class="page-title" dir="auto">RX580</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80fd-b8c2-da20adf721bb" class=""><mark class="highlight-yellow">*黃色字體：視覺建議</mark></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-804c-9579-f6154f60d601" class=""><mark class="highlight-red">*紅色字體：中文解釋</mark></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80bb-bad2-ddc1588f701d" class=""><mark class="highlight-blue">*Hashtag：For SEO</mark></p></div><div style="display:contents" dir="auto"><h2 id="36dd24e8-7d86-80db-ac71-d1b8e3c1cdd6" class="">RX580 8GB GDDR5</h2></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8072-a681-ce55ea027b06" class="">Simorchip · RX580 8GB GDDR5</p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-80d0-8044-e45744efda67"/></div><div style="display:contents" dir="auto"><h2 id="36dd24e8-7d86-80ee-8bec-e767dfa22f3d" class="">Hero</h2></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80c9-85ee-eaafea65f90f" class="">Fortress Protocol: Initialized. Massive compute matrix online.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8096-bbf5-c8d32bb50b1d" class="">Dual ball-bearing thermal array engaged.<br/>150W high-fidelity architecture fueled by a dedicated 6-Pin power matrix.<br/>The RX580 8GD5 unleashes the Ellesmere core, driving a massive 256-Bit high-velocity memory highway for uncompromised rendering dominance.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8054-ba8d-d32ccadeaed4" class=""><strong>This isn&#x27;t just an upgrade. This is an absolute structural stronghold for high-density visual workloads.</strong></p></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80e6-9716-c785114c8c03" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> The camera cuts with aggressive, razor-sharp geometric trajectories across the dual-fan shroud. Dramatic, low-key cinematic studio lighting runs precisely along the solid matte-black reinforced PVC backplate and the copper thermal heatpipes, establishing an immediate sense of heavy industrial strength.  </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80ee-b3da-c24e3b487089" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> The primary header &quot;Fortress Protocol: Initialized. Massive compute matrix online.&quot; slams onto the screen with a deep, resonant industrial lock sound. Technical diagnostic code ripples down the viewport as the dual fans spin up with synchronized velocity.  </mark></li></ul></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80a8-b4c3-cc5cc980a68d" class=""><code>#RX580</code> <code>#8GBGDDR5</code> <code>#256Bit</code> <code>#Ellesmere</code> <code>#PCIe3.0</code> <code>#150W</code> <code>#DualFan</code> <code>#BallBearing</code> <code>#PVCBackplate</code> <code>#Simorchip</code></p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-80b2-8138-c3cea01d9570"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-8021-9af5-c960f52eebdc" class="">Design Language：Fortress </h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80a8-9022-e8fdc5f9f116" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> A striking, ultra-crisp macro tracking shot focusing on the dual-fan cooling system. The golden Simorchip crests on both fan hubs anchor the frame. The camera then smoothly orbits to the back of the PCB, revealing the full-coverage, geometric-patterned reinforced PVC backplate.  </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80d9-94b2-fd69763b4361" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> A cool blue electronic diagnostic scan line pulses across the backplate, while red and blue aerodynamic airflow vectors are animated cutting cleanly through the optimized heatsink fin gaps.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-802c-8b3a-ec48b090810b" class="">This heavy-duty dual-fan architecture serves as the <strong>Fortress</strong> for your mainstream computing ecosystem.  <br/>Like an unyielding fortress engineered to withstand continuous stress, this design wraps the 14nm Ellesmere core in a multi-layered defensive shell. Two ultra-durable fans, engineered with industrial-grade ball bearings, spin in perfect harmony to drive relentless thermal dissipation while maintaining absolute acoustic discipline under load. Flipping the card reveals the structural spine: a high-rigidity reinforced PVC backplate designed specifically to prevent PCB warping and block material oxidation over years of constant deployment. Powered by a stable 150W profile via a secure 6-Pin interface, it provides the massive 256-Bit memory width needed to anchor dense multimedia environments, internet café configurations, and high-load content creation stations. Lock your system into the Fortress and execute your vision without fear. </p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8062-86a8-ebcfff9bc319" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-80a1-978c-f47d7dd5118f"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-8068-8989-d9363145ae4e" class="">Why You Need the RX580 8GB</h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80b0-b1b7-ded438dae478" class="bulleted-list"><li style="list-style-type:disc"><strong>Visual:</strong> A modern three-column asymmetric tech-grid split by high-contrast mechanical divider graphics.  </li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80fa-be27-cbd3bfa4d17d" class="bulleted-list"><li style="list-style-type:disc"><strong>Animation:</strong> The structural pillars glide upward into place with a heavy, mechanical snap, backed by an energetic amber-to-red telemetry pulse.  </li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80a4-8f16-f42eb63c464f" class="bulleted-list"><li style="list-style-type:disc"><strong>8GB Massive Buffer — Unrestricted High-Resolution Asset Management</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8054-9159-d9f8de5e2f43" class="bulleted-list"><li style="list-style-type:disc">Heavy creative software and modern rendering pipelines choke on limited memory. Featuring an expanded 8GB GDDR5 frame buffer, this architecture provides a vast digital reservoir to load massive texture packs, complex video timelines, and rich 3D geometry simultaneously. The data flow remains wide open and uninterrupted.</li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80a1-b255-fb6c456d6bbe" class="bulleted-list"><li style="list-style-type:disc"><strong>256-Bit Massive Pipeline — Double the Bandwidth, Zero Bottlenecks</strong><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80c7-8980-d44aa2bab1f2" class="">Narrow memory interfaces restrict processing power. The RX580 opens a massive 256-Bit ultra-wide data highway, operating at a blazing 6000 MHz memory frequency. It enables the GPU core to read and write huge data volumes instantly, transforming stuttering visual pipelines into fluid, responsive real-time rendering environments.</p></div></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80a0-a421-f8664b710601" class="bulleted-list"><li style="list-style-type:disc"><strong>Reinforced PVC Backplate — Complete Anti-Warp &amp; Anti-Oxidation Armor</strong><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80a4-b3bf-e653db328101" class="">Thermal expansion and physical gravity degrade unprotected circuit boards over time. This card comes armored with a rigid PVC backplate that absorbs structural stress, completely eliminating PCB sag while forming a protective barrier against environmental oxidation to maximize components&#x27; operational lifespan.</p></div></li></ul></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-8037-94c6-e39de476e82b"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-80a6-989b-d3fe94f74391" class="">Counterforce</h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80d3-ae9d-fa56d77a2c5a" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> The screen splits dynamically. The left side showcases a bold, oversized typographical element reading &quot;2048&quot;. The right side reveals an exploded technical blueprint of the GCN 4.0 architecture. </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80e5-8327-cf99c33fed31" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> The stream processor counter races from 0 to 2048 with a brilliant digital flash. A wide, shimmering 256-lane grid system locks in below to visually communicate the sheer scale of the memory bus. </mark></li></ul></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80cd-a1ab-ce4d757b6b69" class=""><strong>2048 Stream Processors · 256-Bit Memory Bus · Stable 1206 MHz Clock</strong></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-807d-8d91-eea10cfcaa55" class=""><strong>2048 parallel execution vectors active. The core array is operating at peak rendering density.</strong></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8049-a0b4-e77804b94330" class="">Mainstream processing demands raw parallel computational power. Built on the mature Ellesmere core, 2048 high-performance stream processors run at a sustained 1206 MHz clock speed, pushing massive pixel volumes across a broad 256-Bit highway. This structural throughput eliminates rendering latency. Whether you are cutting high-bitrate 4K multi-cam video sequences, driving high-frame-rate mainstream gaming setups, or running continuous retail display engines, the hardware responds with instantaneous, decisive counterforce.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8064-b83b-feefac7426a1" class=""><mark class="highlight-yellow"><strong>Stat Badge (Fortress Core Diagnostics)</strong></mark><mark class="highlight-yellow"><br/>• </mark><mark class="highlight-yellow"><strong>Badge 1:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>2048 Ellesmere Stream Processors / Stable 1206 MHz Graphics Engine</code></mark><mark class="highlight-yellow"><br/>• </mark><mark class="highlight-yellow"><strong>Badge 2:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>8GB High-Capacity GDDR5 / 256-Bit Ultra-Wide Data Highway</code></mark><mark class="highlight-yellow"><br/>• </mark><mark class="highlight-yellow"><strong>Badge 3:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>Industrial Dual Ball-Bearing Fans / Reinforced Structural PVC Armor</code></mark></p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-8016-8142-ef3e29920ce5"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-80bb-9f7b-e2765255c7e8" class="">Dominance</h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80b2-ba1e-cb89516f2013" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual 1:</strong></mark><mark class="highlight-yellow"> A premium close-up sweep across the native DisplayPort, HDMI, and DVI layout, emphasizing heavy-duty shielding around each high-speed digital socket.  </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-805a-84e9-d6079fb77714" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual 2:</strong></mark><mark class="highlight-yellow"> A fluid workspace chart detailing multi-monitor productivity scaling and 4K UHD display matrices under intense modern operating system workloads.  </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8089-9c5a-c4f0fcea1cac" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> The performance scaling curve surges ahead into the high-efficiency mainstream zone, illuminated by a vivid crimson halo to demonstrate the 8GB VRAM authority</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80c2-b763-f09ad27858e5" class=""><strong>Navigating the Architecture Spectrum</strong></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80c8-88bc-e8ba9e8ff333" class="">Hardware requirements scale with professional demands. While basic entry-level 30W cards are built strictly for legacy terminal replacement and simple UI displays, and ultra-high-end enthusiast accelerators require complex multi-phase power infrastructure, the <strong>Simorchip RX580 8GD5</strong> claims absolute dominance over the mainstream productivity tier. It represents the definitive sweet spot for users who require heavy multi-tasking VRAM capacity, broad digital signage deployment, and uncompromising 1080p-to-4K media workflows.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80d4-b8ed-d457ff283777" class=""><strong>Native 4K UHD Triple-Output — Universal digital connectivity.</strong></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8034-9518-ca33319c3a83" class="">Eliminate display limitations from your professional environment. Armed with native DisplayPort, HDMI, and DVI connections, this hardware easily controls complex multi-screen setups. Drive massive digital signage arrays or construct an expansive three-monitor creative studio workspace with clean, uncompressed digital signal fidelity.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8004-9c39-d926b9f26427" class=""><strong>DirectX 12 &amp; UEFI Native — Seamless Modern Integration</strong></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80ee-9cb3-ea8cfd105841" class="">Instant system initialization with zero software friction. Fully optimized for modern Windows 10 and Windows 11 environments. With complete DirectX 12 hardware support, graphic interfaces, web rendering engines, and advanced creative applications operate with pristine, hardware-accelerated fluid motion.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8025-9211-dfe5185a0d0b" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-80e8-868c-febb7c99c780"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-80f2-94ad-f7963cc48bbc" class="">Anchorage</h3></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8069-9f17-ed403270e918" class=""><mark class="highlight-yellow">• </mark><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> A highly technical blueprint animation illustrating continuous component longevity metrics, overlaid by an active runtime clock ticking past thousands of operational hours.  <br/>• </mark><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> Data streams representing structural rigidity and thermal stability seamlessly weave together, pinning the durability factor at an unbreakable maximum.  <br/></mark><mark class="highlight-yellow"><strong>Built for relentless, long-term operational duty.</strong></mark><br/>  <br/><strong>Engineered to safeguard your system investment.</strong><br/>  <br/>The RX580 8GD5 balances its high-performance mainstream capabilities with comprehensive physical protection. The intelligent temperature control matrix dynamically manages the dual ball-bearing fans, keeping the GPU in its optimal cooling zone while extending the mechanical lifespan of the motors. Backed by a robust 150W power layout and an external 6-Pin connection, power distribution is spread evenly across premium components, preventing concentrated thermal stress points on the PCB. Combined with the anti-sag, anti-oxidation PVC armor backplate, this hardware is built to remain structurally perfect and operationally stable through years of heavy enterprise and gaming usage. Zero compromises. Complete endurance.</p></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-8076-a1c5-fbda8728ceba" class=""><mark class="highlight-yellow">Endurance Badges</mark></h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-801e-b10c-c037aa1da236" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 1: Structural Shield</strong></mark><mark class="highlight-yellow"><br/>• </mark><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> A bold </mark><mark class="highlight-yellow"><strong>PVC Armor-Plate</strong></mark><mark class="highlight-yellow"> badge positioned next to a 3D structural stress-analysis graphic.  <br/>• </mark><mark class="highlight-yellow"><strong>Text:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>Reinforced Rigid PVC Backplate / Anti-Warping &amp; Anti-Oxidation Long-Term Protection</code></mark><mark class="highlight-yellow"><br/>  </mark><mark class="highlight-yellow"><strong>Badge 2: Thermal Longevity</strong></mark><mark class="highlight-yellow"><br/>• </mark><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> A clean dual-fan schematic illustrating the inner workings of an advanced ball-bearing system.  <br/>• </mark><mark class="highlight-yellow"><strong>Text:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>Dual Ball-Bearing Configuration / Ultra-Durable Mechanical Lifespan &amp; Silent Duty Cycles</code></mark></li></ul></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8014-9cb3-f3adc1c55f4a" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-80c0-b3f9-ea008f45561b"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-80f5-b116-fd5241e44271" class="">Packaging Design</h3></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-806e-86f1-defa418b589f" class="">• <strong>Visual Accent:</strong> The outer retail box features a premium matte-black finish slashed with sharp, aggressive crimson tech lines, visually broadcasting the raw computing authority of the Fortress.<br/>• <strong>Brand Architecture:</strong> High-contrast white Simorchip branding anchors the structural side panel.  <br/>• <strong>Internal Structure:</strong> Reinforced dense black fiber core tray combined with custom molded anti-vibration foam chambers, isolating the anti-static shielded product securely.  <br/><strong>Visual:</strong> A premium, custom-branded matte outer retail box showcasing aggressive crimson technical graphics to define the hardware&#x27;s high-performance segment.<br/><strong>Internal Layout:</strong> Heavy-duty rigid internal structure paired with high-impact protective padding, fixing the premium anti-static wrapped matrix perfectly in place.  <br/>• <strong>Fortress Shock-Absorption Carrier</strong> — Precision-cut high-density foam insert engineered specifically to lock the dual-fan 190<em>110</em>40 mm frame securely against transit vibrations.  <br/>• <strong>Advanced Electrostatic Isolation Shield</strong> — Factory-applied premium conductive shielding covers the 14nm Ellesmere silicon array to block external dynamic current threats before setup.  <br/>• <strong>Explicit Specifications Matrix</strong> — Architectural metrics, 8GB deep capacity, and 256-Bit memory channel configurations stated transparently across the external retail label.  <br/>• <strong>International Compliance Certification</strong> — CE · RoHS · FCC · REACH. Fully accredited for multi-market distribution lines.  </p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-80dd-9aac-dac9c2227464"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-80ed-acff-ca2699dc8e80" class="">SPECIFICATIONS</h3></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80ff-b805-cc8952f7b4e4" class="">Entry-Level efficiency. Single-fan silent display output.</p></div><div style="display:contents" dir="ltr"><table id="36dd24e8-7d86-80e5-8b44-dc91869cdd8e" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-80fb-83f2-c9caecc0a2a5"><th id="z:NB" class="simple-table-header-color simple-table-header"></th><th id="HHk:" class="simple-table-header-color simple-table-header"></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-80e1-abee-c19304ae03e1"><td id="z:NB" class=""><strong>Architecture</strong></td><td id="HHk:" class="">GNC 4.0(Polaris)</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-80dd-99de-ea00cd462c2c"><td id="z:NB" class=""><strong>Stream Processors</strong></td><td id="HHk:" class="">2048</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-806a-a22d-e6bd520d5341"><td id="z:NB" class=""><strong>Core Frequency</strong></td><td id="HHk:" class="">1206 MHz</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-80d9-81bf-cc3c3fa61474"><td id="z:NB" class=""><strong>Memory Type</strong></td><td id="HHk:" class="">GDDR5</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-80e4-b454-c5059d4e4c33"><td id="z:NB" class=""><strong>Memory Capacity</strong></td><td id="HHk:" class="">8 GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-80f8-a46e-d6716dba6a51"><td id="z:NB" class=""><strong>Memory Frequency</strong></td><td id="HHk:" class="">6000 MHz</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8078-b7cb-e3e20bf50065"><td id="z:NB" class=""><strong>Memory Bus Width</strong></td><td id="HHk:" class="">256-bit</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8047-8951-e3a0126faf10"><td id="z:NB" class=""><strong>Bus Interface</strong></td><td id="HHk:" class="">PCIe 3.0 × 16</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-80d7-ba0a-c4eaf913fd54"><td id="z:NB" class=""><strong>Display Outputs</strong></td><td id="HHk:" class="">DP + DVI + HDMI</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-808b-8530-e21f0e9053ad"><td id="z:NB" class=""><strong>Max Resolution</strong></td><td id="HHk:" class="">1920 × 1080</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-808f-acea-c046207bc7a6"><td id="z:NB" class=""><strong>DirectX Support</strong></td><td id="HHk:" class="">DirectX 12 (12_1)</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8005-9df0-c6ab8f8739e8"><td id="z:NB" class=""><strong>External Power</strong></td><td id="HHk:" class="">6 Pin</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-80eb-a0c6-e3b641cfda3f"><td id="z:NB" class=""><strong>Power Consumption</strong></td><td id="HHk:" class="">150W</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-80f8-a93b-f70ac8b61835"><td id="z:NB" class=""><strong>Recommended PSU</strong></td><td id="HHk:" class="">350W</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8031-b949-f119a2d10c5c"><td id="z:NB" class=""><strong>Cooling Solution</strong></td><td id="HHk:" class="">Dual-Fan</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8077-9163-dc8b51ef5cfe"><td id="z:NB" class=""><strong>Dimensions</strong></td><td id="HHk:" class="">190 × 110 × 40 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-80cc-be0a-ea7705df59e0"><td id="z:NB" class=""><strong>OS Support</strong></td><td id="HHk:" class="">Windows 10 / Windows 11</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8076-952c-fa45fc81c88f"><td id="z:NB" class=""><strong>Market Positioning</strong></td><td id="HHk:" class="">Mid-Range</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-806d-a83d-db9ba4af5c09" class=""><em>All specifications sourced from Simorchip internal documentation. Actual performance may vary depending on system configuration and operating environment.</em></p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-808e-8bd3-da88c567735c"/></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80f7-94db-cb57b9d7500a" class="">
+</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8068-a826-d2430d7958aa" class="">Dual-propeller thermal control. 256-Bit massive command channel.<br/>The <strong>Simorchip</strong> RX580 8GD5 secures your processing workspace with unrelenting structural stability and raw computing force.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80c9-a6dc-d2d9edd117ce" class=""><strong>This isn&#x27;t just an upgrade. This is an absolute structural stronghold for high-density visual workloads.</strong></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-803b-a384-e670bb471a70" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip RX7600 8GD6 — Gambit Protocol: Overridden.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08080e;--bg2:#0e0c14;--bg3:#14101c;
+  --ink:#f0e8ff;--mute:#7060a0;--label:#4a4070;
+  --purple:#a020d0;--purple2:#c040f0;--purple3:rgba(160,32,208,.1);
+  --purple-glow:rgba(160,32,208,.18);
+  --red:#e02030;--red2:#ff3050;--red3:rgba(224,32,48,.1);
+  --gold:#c8a030;--gold-border:rgba(200,160,48,.2);
+  --border:rgba(160,32,208,.18);--line:rgba(160,32,208,.1);
+  --shadow:rgba(8,8,14,.8);
+  --amd:#e04020;
+  --ff-d:'Bebas Neue',sans-serif;
+  --ff-b:'Barlow Condensed',sans-serif;
+  --ff-m:'Share Tech Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff-b);background:var(--bg);color:var(--ink);overflow-x:hidden;cursor:none;}
+
+/* NOISE */
+.noise{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.3;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;}
+
+/* GLOBAL GLITCH FLICKER — background only, occasional */
+@keyframes bgGlitch{
+  0%,100%{transform:none;opacity:1;}
+  92%{transform:none;opacity:1;}
+  93%{transform:translateX(3px);opacity:.9;}
+  93.5%{transform:translateX(-2px);opacity:1;}
+  94%{transform:none;opacity:1;}
+}
+.glitch-layer{position:fixed;inset:0;pointer-events:none;z-index:2;animation:bgGlitch 11s ease infinite 4s;}
+
+/* CURSOR — crosshair, blue on default, red on hover */
+#cur{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .12s;}
+.sc-v{position:absolute;left:50%;top:0;transform:translateX(-50%);width:1.5px;height:28px;background:#fff;border-radius:1px;}
+.sc-h{position:absolute;top:50%;left:0;transform:translateY(-50%);height:1.5px;width:28px;background:#fff;border-radius:1px;}
+.sc-dot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:4px;height:4px;border-radius:50%;background:#fff;}
+#cur.blue .sc-v,#cur.blue .sc-h{box-shadow:0 0 2px #fff,0 0 8px #c0a0ff,0 0 18px var(--purple),0 0 40px rgba(160,32,208,.3);}
+#cur.blue .sc-dot{box-shadow:0 0 2px #fff,0 0 8px #c0a0ff,0 0 18px var(--purple);}
+#cur.red .sc-v,#cur.red .sc-h{background:#fff;box-shadow:0 0 2px #fff,0 0 8px #ffb0c0,0 0 18px var(--red),0 0 40px rgba(224,32,48,.3);}
+#cur.red .sc-dot{background:#fff;box-shadow:0 0 2px #fff,0 0 8px #ffb0c0,0 0 18px var(--red);}
+#cur.red{transform:translate(-50%,-50%) rotate(45deg);}
+#cur-ring{position:fixed;width:38px;height:38px;border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);animation:ringR 4s linear infinite;border:1px solid rgba(160,32,208,.3);}
+#cur-ring.red-ring{border-color:rgba(224,32,48,.35);}
+@keyframes ringR{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.trail-dot{position:fixed;border-radius:50%;pointer-events:none;z-index:9990;transform:translate(-50%,-50%);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:18px 5%;transition:background .3s,border-bottom .3s;}
+nav.sc{background:rgba(8,8,14,.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(160,32,208,.12);}
+.nav-logo{font-family:var(--ff-d);font-size:17px;letter-spacing:.22em;color:var(--purple2);}
+.nav-logo em{color:var(--red);font-style:normal;}
+.np{display:flex;gap:4px;}
+.np a{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--label);border:1px solid rgba(160,32,208,.14);padding:4px 9px;cursor:pointer;text-decoration:none;transition:all .2s;background:transparent;text-transform:uppercase;}
+.np a:hover,.np a.on{color:var(--bg);border-color:var(--purple);background:var(--purple);}
+
+/* SHARED */
+section{position:relative;width:100%;overflow:hidden;}
+.full{min-height:100vh;}
+.gm-line{height:1.5px;background:linear-gradient(90deg,transparent,var(--purple) 30%,var(--red) 65%,transparent);width:0;transition:width 1s ease;box-shadow:0 0 8px rgba(160,32,208,.4);}
+.gm-line.on{width:90px;}
+.fi{opacity:0;transform:translateY(22px);transition:opacity .85s ease,transform .85s ease;}
+.fi.vis{opacity:1;transform:none;}
+.fi-d1{transition-delay:.12s;}.fi-d2{transition-delay:.24s;}.fi-d3{transition-delay:.36s;}
+.tag{font-family:var(--ff-m);font-size:9px;letter-spacing:.07em;color:var(--label);border:1px solid var(--gold-border);padding:3px 10px;display:inline-block;background:rgba(200,160,48,.04);}
+.tag::before{content:'#';color:var(--gold);margin-right:2px;}
+.btn{font-family:var(--ff-m);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:12px 30px;cursor:pointer;transition:all .22s;border:none;}
+.btn-gambit{background:rgba(160,32,208,.1);border:1px solid rgba(160,32,208,.45);color:var(--purple2);}
+.btn-gambit:hover{background:var(--purple);color:#fff;box-shadow:0 0 28px rgba(160,32,208,.4);}
+.btn-ghost{background:transparent;border:1px solid var(--gold-border);color:var(--gold);}
+.btn-ghost:hover{background:var(--gold);color:var(--bg);}
+
+/* section dividers */
+#s01::before,#s02::before,#s03::before,#s04::before,#s05::before,#s06::before{
+  content:'';display:block;position:absolute;top:0;left:0;height:1.5px;width:0;
+  background:linear-gradient(90deg,transparent,var(--purple) 25%,var(--red) 60%,transparent);
+  box-shadow:0 0 10px rgba(160,32,208,.35);
+  transition:width .9s cubic-bezier(.16,1,.3,1);z-index:2;
+}
+#s01.div-on::before,#s02.div-on::before,#s03.div-on::before,
+#s04.div-on::before,#s05.div-on::before,#s06.div-on::before{width:100%;}
+
+.sec-label{font-family:var(--ff-m);font-size:10px;letter-spacing:.28em;color:var(--purple2);text-transform:uppercase;margin-bottom:12px;}
+.sec-label::before{content:'⬡ ';color:var(--red);font-size:9px;}
+.sec-title{font-family:var(--ff-d);font-size:clamp(44px,6vw,80px);letter-spacing:.04em;color:var(--ink);line-height:.95;margin-bottom:8px;}
+.sec-divider{width:60px;height:2px;background:linear-gradient(90deg,var(--purple),var(--red));margin:20px 0 34px;border-radius:1px;box-shadow:0 0 10px rgba(160,32,208,.5);}
+
+.amd-badge{position:absolute;bottom:14px;right:14px;font-family:var(--ff-m);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--amd);border:1px solid rgba(224,64,32,.22);padding:3px 8px;background:rgba(224,64,32,.08);z-index:5;}
+
+/* img placeholder */
+.img-ph{background:linear-gradient(135deg,var(--bg2),var(--bg3));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(160,32,208,.15);box-shadow:0 4px 20px var(--shadow);}
+.img-ph span{font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(160,32,208,.2);text-align:center;line-height:2.4;padding:0 16px;}
+
+/* ══ HERO ══ */
+#s00{display:flex;align-items:center;padding:100px 6% 80px;min-height:100vh;}
+
+/* purple-black radial glow background */
+.hero-glow{position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:
+    radial-gradient(ellipse 70% 60% at 65% 48%,rgba(100,16,140,.14) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 50% at 20% 75%,rgba(224,32,48,.07) 0%,transparent 60%),
+    linear-gradient(160deg,#08080e 0%,#0e0c14 50%,#08080e 100%);}
+
+/* fractured geometric grid — broken lines */
+.hero-grid{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+.hg-line{position:absolute;background:rgba(160,32,208,.04);}
+.hg-line.h{height:1px;left:0;right:0;}
+.hg-line.v{width:1px;top:0;bottom:0;}
+/* break gaps in grid — Gambit signature */
+.hg-break{position:absolute;background:var(--bg);z-index:2;}
+
+/* diagonal red/purple slash accents */
+.hero-slash1{position:absolute;top:-5%;right:22%;width:2px;height:115%;
+  background:linear-gradient(180deg,transparent 0%,var(--red) 35%,var(--purple) 65%,transparent 100%);
+  transform:rotate(-10deg);opacity:.5;}
+.hero-slash2{position:absolute;top:-5%;right:28%;width:1px;height:115%;
+  background:linear-gradient(180deg,transparent 0%,rgba(160,32,208,.4) 40%,transparent 100%);
+  transform:rotate(-10deg);opacity:.35;}
+
+/* CARD — RX7600, dual fan, 235×124mm, larger */
+.h-right{position:absolute;right:0;top:0;bottom:0;width:54%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(40px);transition:opacity 1.8s ease .2s,transform 1.8s ease .2s;z-index:3;}
+.h-right.on{opacity:1;transform:translateX(0);}
+.rx7600-wrap{width:93%;max-width:600px;position:relative;}
+.rx7600-wrap::before{content:'';position:absolute;inset:-80px;z-index:-1;
+  background:radial-gradient(ellipse 65% 45% at 55% 55%,rgba(160,32,208,.08) 0%,transparent 70%);}
+
+/* aggressive double slash */
+.card-slash1{position:absolute;inset:0;z-index:22;background:linear-gradient(115deg,transparent 0%,var(--red) 48%,var(--red) 52%,transparent 100%);background-size:200% 100%;background-position:200% 0;animation:slashRev 1.1s cubic-bezier(.76,0,.24,1) .1s forwards;pointer-events:none;border-radius:3px;}
+.card-slash2{position:absolute;inset:0;z-index:21;background:linear-gradient(120deg,transparent 0%,var(--purple) 48%,var(--purple) 52%,transparent 100%);background-size:200% 100%;background-position:200% 0;animation:slashRev 1.1s cubic-bezier(.76,0,.24,1) .4s forwards;pointer-events:none;border-radius:3px;}
+@keyframes slashRev{0%{background-position:200% 0;opacity:1;}100%{background-position:-200% 0;opacity:0;}}
+
+@keyframes cardFloat{0%,100%{transform:translateY(0) rotate(-.5deg);}50%{transform:translateY(-8px) rotate(-.5deg);}}
+.rx7600-body{width:100%;aspect-ratio:2.7/1;
+  background:linear-gradient(148deg,#100c18 0%,#08080e 100%);
+  position:relative;overflow:hidden;border-radius:3px;
+  border:1px solid rgba(160,32,208,.2);
+  box-shadow:0 40px 130px rgba(8,8,14,.98),0 0 80px rgba(160,32,208,.06);
+  animation:cardFloat 7.2s ease-in-out infinite;}
+
+/* glitch on card — occasional */
+@keyframes cardGlitch{
+  0%,100%{transform:rotate(-.5deg);}
+  96%{transform:rotate(-.5deg) translateX(0);}
+  96.5%{transform:rotate(-.5deg) translateX(4px);}
+  97%{transform:rotate(-.5deg) translateX(-2px);}
+  97.5%{transform:rotate(-.5deg) translateX(0);}
+}
+.rx7600-body{animation:cardFloat 7.2s ease-in-out infinite,cardGlitch 14s ease-in-out infinite 6s;}
+
+@keyframes scanLine{0%{left:-40%;opacity:0;}5%{opacity:1;}90%{opacity:.2;}100%{left:140%;opacity:0;}}
+.rx7600-body::after{content:'';position:absolute;top:0;left:-40%;width:10%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(160,32,208,.05),rgba(255,220,255,.07),rgba(160,32,208,.05),transparent);
+  animation:scanLine 11s ease-in-out infinite 7s;pointer-events:none;z-index:12;}
+
+/* heatsink */
+.rx7600-hs{position:absolute;right:0;top:0;bottom:0;width:84%;
+  background:linear-gradient(145deg,#120e1c,#0a0810);
+  border-left:1px solid rgba(160,32,208,.1);overflow:hidden;}
+.rx7600-fins-wrap{position:absolute;inset:0;display:flex;flex-direction:column;gap:1.5px;padding:4px;}
+.rx7600-fin{flex:1;background:linear-gradient(90deg,#120e1c,#0e0a18);border-radius:1px;border:.3px solid rgba(160,32,208,.04);}
+/* 3 vertical channel cuts */
+.rx7600-vc1{position:absolute;top:0;bottom:0;left:22%;width:3px;background:linear-gradient(180deg,rgba(160,32,208,.09),rgba(160,32,208,.03));border-radius:1px;}
+.rx7600-vc2{position:absolute;top:0;bottom:0;left:50%;width:3px;background:linear-gradient(180deg,rgba(224,32,48,.08),rgba(224,32,48,.02));border-radius:1px;}
+.rx7600-vc3{position:absolute;top:0;bottom:0;left:77%;width:3px;background:linear-gradient(180deg,rgba(160,32,208,.07),rgba(160,32,208,.02));border-radius:1px;}
+/* nickel heatpipes between fans */
+.rx7600-hp1{position:absolute;top:38%;left:44%;right:4%;height:5%;background:linear-gradient(180deg,rgba(200,180,255,.18),rgba(160,140,220,.08));border-radius:3px;border-top:.5px solid rgba(200,180,255,.2);}
+.rx7600-hp2{position:absolute;top:56%;left:44%;right:4%;height:5%;background:linear-gradient(180deg,rgba(200,180,255,.15),rgba(160,140,220,.06));border-radius:3px;border-top:.5px solid rgba(200,180,255,.16);}
+/* aggressive slash lines */
+.rx7600-sl1{position:absolute;top:18%;left:-8%;width:116%;height:1.5px;
+  background:linear-gradient(90deg,transparent,var(--red) 30%,rgba(224,32,48,.4) 60%,transparent);
+  transform:rotate(-4deg);opacity:.75;}
+.rx7600-sl2{position:absolute;top:82%;left:-8%;width:116%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--purple) 35%,rgba(160,32,208,.35) 65%,transparent);
+  transform:rotate(-4deg);opacity:.6;}
+
+/* diagnostic scan */
+.rx7600-scan{position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(160,32,208,.55),rgba(224,32,48,.3),transparent);
+  opacity:0;top:0;animation:diagScan 7s ease-in-out infinite 4s;z-index:15;pointer-events:none;}
+@keyframes diagScan{0%{top:0;opacity:0;}6%{opacity:.7;}88%{opacity:.15;}100%{top:100%;opacity:0;}}
+
+/* DUAL FANS — high torque Overdrive */
+.rx7600-fans{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-around;padding:0 3%;}
+.rx7600-fan{position:relative;width:40%;aspect-ratio:1;}
+.rx7600-fan-ring{position:absolute;border-radius:50%;border:.5px solid rgba(160,32,208,.12);}
+.rx7600-fr1{inset:0;background:rgba(8,6,16,.85);}
+.rx7600-fr2{inset:8%;}
+.rx7600-fr3{inset:18%;}
+.rx7600-fr4{inset:30%;}
+.rx7600-fr-glow{position:absolute;inset:-3%;border-radius:50%;border:1px solid rgba(160,32,208,.1);}
+/* purple glow ring — Gambit signature, always on */
+.rx7600-glow-ring{position:absolute;inset:-6%;border-radius:50%;
+  border:1.5px solid rgba(160,32,208,.35);
+  box-shadow:0 0 12px rgba(160,32,208,.2),inset 0 0 8px rgba(160,32,208,.08);
+  animation:purpleRing 2.8s ease-in-out infinite;}
+@keyframes purpleRing{0%,100%{opacity:.5;box-shadow:0 0 8px rgba(160,32,208,.15);}50%{opacity:1;box-shadow:0 0 20px rgba(160,32,208,.4),0 0 40px rgba(160,32,208,.1);}}
+/* ball bearing ring */
+.rx7600-bearing{position:absolute;inset:5%;border-radius:50%;border:1px dashed rgba(160,32,208,.15);}
+.rx7600-blades{position:absolute;inset:0;animation:fanOD 3.8s linear infinite;}
+.rx7600-blades.fan2{animation-duration:4.2s;}
+@keyframes fanOD{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.rx7600-blade{position:absolute;top:50%;left:50%;width:46%;height:7.5%;transform-origin:0 50%;
+  background:linear-gradient(90deg,rgba(160,32,208,.2),rgba(160,32,208,.02));border-radius:0 18px 18px 0;}
+/* hub — purple core */
+.rx7600-hub{position:absolute;inset:43%;background:radial-gradient(circle,#1a0a28,#08080e);border-radius:50%;
+  border:.5px solid rgba(160,32,208,.55);box-shadow:0 0 18px rgba(160,32,208,.3);
+  display:flex;align-items:center;justify-content:center;}
+.rx7600-hub::after{content:'';width:32%;height:32%;background:var(--purple2);border-radius:50%;opacity:.85;
+  box-shadow:0 0 14px rgba(160,32,208,.9);}
+.rx7600-hub-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--ff-b);font-size:4.5px;font-weight:700;letter-spacing:.08em;color:rgba(200,160,255,.8);opacity:.85;z-index:5;white-space:nowrap;}
+
+/* PCB */
+.rx7600-pcb{position:absolute;left:0;top:0;bottom:0;right:84%;
+  background:linear-gradient(145deg,#120e1c,#0a0812);}
+.rx7600-brand{position:absolute;top:50%;left:3%;transform:translateY(-50%);padding-left:5px;}
+.rx7600-brand-name{font-family:var(--ff-m);font-size:4px;letter-spacing:.18em;color:rgba(240,232,255,.22);text-transform:uppercase;display:block;}
+.rx7600-model{font-family:var(--ff-d);font-size:10px;letter-spacing:.04em;color:var(--ink);line-height:1.1;display:block;}
+.rx7600-sub{font-family:var(--ff-m);font-size:3.8px;letter-spacing:.1em;color:var(--purple2);text-transform:uppercase;display:block;margin-top:2px;opacity:.55;}
+/* 3×DP + HDMI */
+.rx7600-ports{position:absolute;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;}
+.rx7600-port{width:6px;height:8px;background:rgba(240,232,255,.04);border-radius:1px 0 0 1px;border:.3px solid rgba(240,232,255,.07);position:relative;transition:background .3s;}
+.rx7600-port.hl{background:rgba(160,32,208,.4);border-color:rgba(160,32,208,.65);}
+.rx7600-port-lbl{position:absolute;left:-22px;top:50%;transform:translateY(-50%);font-family:var(--ff-m);font-size:4.5px;letter-spacing:.06em;color:var(--purple2);opacity:0;white-space:nowrap;transition:opacity .3s;}
+.rx7600-port.hl .rx7600-port-lbl{opacity:1;}
+/* 8-pin connector */
+.rx7600-8pin{position:absolute;top:8%;right:2%;display:flex;flex-direction:column;gap:2px;}
+.rx7600-pin-row{display:flex;gap:2px;}
+.rx7600-pin{width:4px;height:4px;background:rgba(160,32,208,.22);border:.3px solid rgba(160,32,208,.4);border-radius:.5px;}
+/* composite armor backplate accent */
+.rx7600-armor{position:absolute;bottom:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,transparent,rgba(160,32,208,.22),rgba(224,32,48,.18),rgba(160,32,208,.22),transparent);}
+/* top glow line */
+.rx7600-glow-top{position:absolute;top:0;left:0;right:0;height:1.5px;
+  background:linear-gradient(90deg,transparent 5%,var(--purple) 22%,var(--red) 55%,var(--purple2) 78%,transparent 95%);
+  opacity:.5;box-shadow:0 0 6px rgba(160,32,208,.4);}
+.rx7600-status{position:absolute;bottom:5px;right:8px;font-family:var(--ff-m);font-size:5.5px;letter-spacing:.1em;color:var(--purple2);opacity:.65;}
+.rx7600-gambit-badge{position:absolute;top:8%;left:18%;font-family:var(--ff-m);font-size:5px;letter-spacing:.1em;color:rgba(160,32,208,.55);text-transform:uppercase;background:rgba(160,32,208,.06);padding:2px 5px;border-radius:2px;}
+
+/* hero left */
+.h-fade{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to right,var(--bg) 0%,var(--bg) 14%,rgba(8,8,14,.55) 42%,transparent 62%);z-index:2;}
+.h-left{position:relative;z-index:4;padding:0 0 0 6%;flex:1;max-width:600px;}
+.h-tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.28em;color:var(--red);text-transform:uppercase;margin-bottom:18px;opacity:0;transition:opacity .5s;}
+.h-tag.on{opacity:1;}
+.h-tag::before{content:'⬡ ';color:var(--purple);font-size:9px;}
+/* violent flash-in status */
+.h-status{font-family:var(--ff-m);font-size:clamp(11px,1.4vw,15px);letter-spacing:.06em;color:rgba(160,32,208,.75);text-transform:uppercase;margin-bottom:18px;opacity:0;overflow:hidden;white-space:nowrap;width:0;border-right:1.5px solid var(--purple);}
+.h-status.typing{animation:typeStatus .9s steps(36,end) forwards,cursorBlink .5s step-end 5;}
+@keyframes typeStatus{from{width:0;}to{width:100%;}}
+@keyframes cursorBlink{0%,100%{border-color:var(--purple);}50%{border-color:transparent;}}
+.h-status.done{border-right-color:transparent;width:auto;}
+.h-hl{margin-bottom:22px;opacity:0;transition:opacity .3s ease;}
+.h-hl.on{opacity:1;}
+.hl-ln{display:block;font-family:var(--ff-d);font-size:clamp(52px,7.5vw,96px);letter-spacing:.03em;line-height:.9;opacity:0;transform:translateY(16px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
+.hl-ln.in{opacity:1;transform:none;}
+.hl-gambit{color:var(--ink);text-shadow:0 0 60px rgba(160,32,208,.15);}
+.hl-rx{color:var(--red2);font-size:.55em;letter-spacing:.14em;}
+.hl-sub{font-family:var(--ff-d);font-size:clamp(16px,2.2vw,28px);color:var(--mute);letter-spacing:.08em;}
+.h-sub{font-size:15px;font-weight:300;letter-spacing:.03em;color:var(--mute);line-height:1.8;max-width:420px;margin-top:16px;opacity:0;transition:opacity .8s ease;}
+.h-sub.on{opacity:1;}
+.h-sub strong{color:var(--ink);font-weight:600;}
+.h-cta{display:flex;align-items:center;gap:24px;margin-top:36px;opacity:0;transition:opacity .5s;}
+.h-cta.on{opacity:1;}
+.h-scroll-hint{font-family:var(--ff-m);font-size:10px;letter-spacing:.18em;color:var(--label);}
+.h-stats{display:flex;gap:36px;margin-top:40px;padding-top:26px;border-top:1px solid rgba(160,32,208,.15);flex-wrap:wrap;opacity:0;transition:opacity .5s;}
+.h-stats.on{opacity:1;}
+.h-stat{display:flex;flex-direction:column;}
+.hsn{font-family:var(--ff-d);font-size:38px;color:var(--ink);line-height:1;}
+.hsn em{font-style:normal;font-size:18px;color:var(--red);}
+.hsl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;color:var(--label);text-transform:uppercase;margin-top:3px;}
+.scr-hint{position:absolute;bottom:28px;left:6%;display:flex;align-items:center;gap:12px;opacity:0;transition:opacity .5s;z-index:4;}
+.scr-hint.on{opacity:1;}
+.scr-ln{width:36px;height:1px;background:var(--label);position:relative;overflow:hidden;}
+.scr-ln::after{content:'';position:absolute;left:-100%;width:100%;height:100%;background:var(--purple2);animation:scanPulse 1.8s linear infinite;}
+@keyframes scanPulse{0%{left:-100%;}100%{left:100%;}}
+.scr-lb{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;color:var(--label);text-transform:uppercase;}
+
+/* ══ S01 GAMBIT ══ */
+#s01{background:var(--bg2);padding:90px 6%;}
+.s01-in{max-width:1060px;margin:0 auto;}
+.bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.bl-title-tw{font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;color:rgba(160,32,208,.65);text-transform:uppercase;margin-top:5px;overflow:hidden;white-space:nowrap;width:0;border-right:1px solid var(--purple);display:inline-block;}
+.bl-title-tw.tw-go{animation:typeOut .7s steps(20,end) forwards,cursorBlinkP .5s step-end 4;}
+@keyframes typeOut{from{width:0;}to{width:14ch;}}
+@keyframes cursorBlinkP{0%,100%{border-color:var(--purple);}50%{border-color:transparent;}}
+.bl-title-tw.tw-done{border-right-color:transparent;}
+.bl-body{font-size:15px;font-weight:300;line-height:1.9;color:var(--mute);margin-bottom:20px;}
+.bl-body strong{color:var(--ink);font-weight:600;}
+.bl-blockquote{border-left:3px solid var(--purple);padding:12px 18px;background:rgba(160,32,208,.06);margin-bottom:16px;}
+.bl-blockquote p{font-family:var(--ff-m);font-size:11px;letter-spacing:.04em;color:rgba(160,32,208,.65);line-height:1.75;}
+.bl-blockquote .bq-src{font-size:8px;letter-spacing:.14em;color:var(--label);margin-top:6px;text-transform:uppercase;}
+.bl-pos{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--gold);margin-top:14px;padding:8px 12px;border:1px solid var(--gold-border);background:rgba(200,160,48,.04);display:inline-block;}
+/* tactical cards */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:52px;background:rgba(160,32,208,.08);}
+.why-card{background:var(--bg2);padding:36px 28px;position:relative;overflow:hidden;transition:background .3s;}
+.why-card:hover{background:var(--bg3);}
+.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--red),transparent);opacity:0;transition:opacity .3s;}
+.why-card:hover::before{opacity:1;}
+.why-num{font-family:var(--ff-d);font-size:52px;color:rgba(160,32,208,.14);line-height:1;margin-bottom:12px;}
+.why-heading{font-family:var(--ff-d);font-size:22px;letter-spacing:.08em;color:var(--ink);margin-bottom:3px;}
+.why-sub{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;color:var(--purple2);text-transform:uppercase;margin-bottom:12px;}
+.why-body{font-size:13px;font-weight:300;color:var(--mute);line-height:1.8;}
+
+/* ══ S02 COUNTERFORCE ══ */
+#s02{background:var(--bg);}
+.cf-layout{padding:90px 6%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto;}
+.cf-left{position:relative;}
+.cf-big-num{font-family:var(--ff-d);font-size:clamp(120px,18vw,220px);line-height:.85;color:rgba(160,32,208,.07);position:absolute;top:-20px;left:-10px;user-select:none;pointer-events:none;}
+.cf-stats{position:relative;z-index:1;display:flex;flex-direction:column;gap:26px;padding-top:44px;}
+.cf-stat{border-left:3px solid var(--purple);padding-left:20px;}
+.cf-stat-val{font-family:var(--ff-d);font-size:48px;color:var(--ink);line-height:1;}
+.cf-stat-val em{font-style:normal;font-size:22px;color:var(--red);}
+.cf-stat-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;color:var(--label);text-transform:uppercase;margin-top:3px;}
+/* quantum grid canvas */
+#quantumCanvas{display:block;margin-top:6px;opacity:0;transition:opacity .5s;}
+#quantumCanvas.vis{opacity:1;}
+.cf-right{}
+.cf-tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.2em;color:var(--purple2);text-transform:uppercase;margin-bottom:18px;}
+.cf-body{font-size:15px;font-weight:300;color:var(--mute);line-height:1.9;}
+.cf-body strong{color:var(--ink);font-weight:600;}
+.cf-kicker{margin-top:26px;font-family:var(--ff-d);font-size:22px;letter-spacing:.1em;color:var(--ink);}
+.cf-kicker em{display:block;color:var(--purple2);font-style:normal;}
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;position:relative;overflow:hidden;}
+.badge-row.swept::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(160,32,208,.12),rgba(200,160,255,.08),rgba(160,32,208,.12),transparent);
+  animation:gmSweep .65s ease forwards;pointer-events:none;z-index:10;}
+@keyframes gmSweep{0%{left:-50%;}100%{left:150%;}}
+.stat-badge{display:inline-flex;flex-direction:column;align-items:flex-start;border:1px solid rgba(160,32,208,.2);padding:16px 20px;background:rgba(160,32,208,.05);transition:border-color .3s,background .3s,box-shadow .3s;}
+.stat-badge:hover{border-color:var(--purple2);background:rgba(160,32,208,.1);box-shadow:0 0 24px rgba(160,32,208,.1);}
+.stat-badge .num{font-family:var(--ff-d);font-size:clamp(22px,3.5vw,42px);color:var(--ink);line-height:1;}
+.stat-badge .lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--label);margin-top:3px;text-transform:uppercase;}
+.bar-wrap{height:3px;background:rgba(160,32,208,.15);border-radius:2px;overflow:hidden;margin-top:5px;}
+/* bar fills deep red then transitions to neon purple — one-move reversal */
+.bar-fill{height:100%;width:0;border-radius:2px;transition:width 1.6s cubic-bezier(.16,1,.3,1);
+  background:linear-gradient(90deg,var(--red),var(--purple),var(--purple2));
+  box-shadow:0 0 4px rgba(160,32,208,.35);}
+
+/* ══ S03 DOMINANCE ══ */
+#s03{background:var(--bg2);}
+.dom-layout{padding:90px 6%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;max-width:1200px;margin:0 auto;}
+.port-row{display:flex;gap:10px;margin-top:20px;}
+.port-item{flex:1;border:1px solid rgba(160,32,208,.18);padding:12px;text-align:center;transition:border-color .3s,background .3s,box-shadow .3s;background:rgba(160,32,208,.04);cursor:default;}
+.port-item.active{border-color:var(--purple);background:rgba(160,32,208,.1);box-shadow:0 0 16px rgba(160,32,208,.15);}
+.port-item:hover{border-color:var(--red);background:rgba(224,32,48,.06);}
+.port-nm{font-family:var(--ff-d);font-size:14px;letter-spacing:.1em;color:var(--ink);margin-bottom:2px;}
+.port-ds{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;color:var(--label);text-transform:uppercase;}
+.bullet-list{list-style:none;margin-top:18px;}
+.bullet-list li{padding:12px 0;border-bottom:1px solid rgba(160,32,208,.08);font-size:15px;font-weight:300;line-height:1.75;color:var(--mute);display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;}
+.bullet-list li:last-child{border-bottom:none;}
+.bullet-list .bi{width:26px;height:26px;border:1px solid rgba(160,32,208,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;background:rgba(160,32,208,.06);}
+.bullet-list .bi svg{width:12px;height:12px;stroke:var(--purple2);fill:none;stroke-width:1.5;}
+.bullet-list strong{font-weight:600;color:var(--ink);}
+.cmp-bar-wrap{margin-top:26px;}
+.cmp-bar-row{margin-bottom:18px;padding:5px 7px;border-radius:2px;transition:background .2s;cursor:default;position:relative;}
+.cmp-bar-row:hover{background:rgba(160,32,208,.06);}
+.cmp-bar-row:hover .cmp-bar-name{color:var(--ink);}
+.cmp-bar-row::before{content:'⬡';position:absolute;left:-14px;top:50%;transform:translateY(-50%);font-size:8px;color:var(--purple);opacity:0;transition:opacity .2s;}
+.cmp-bar-row:hover::before{opacity:.5;}
+.cmp-bar-label{display:flex;justify-content:space-between;margin-bottom:5px;}
+.cmp-bar-name{font-family:var(--ff-m);font-size:9px;letter-spacing:.05em;color:var(--label);text-transform:uppercase;transition:color .2s;}
+.cmp-bar-note{font-family:var(--ff-m);font-size:7.5px;color:rgba(74,64,112,.7);margin-left:5px;}
+.cmp-bar-val{font-family:var(--ff-m);font-size:9px;color:var(--label);}
+.cmp-bar-track{height:4px;background:rgba(160,32,208,.12);border-radius:2px;overflow:hidden;}
+.cmp-bar-fill{height:100%;width:0;border-radius:2px;transition:width 1.4s cubic-bezier(.16,1,.3,1);}
+.cmp-bar-fill.c1{background:rgba(160,32,208,.2);}
+.cmp-bar-fill.c2{background:rgba(160,32,208,.3);}
+.cmp-bar-fill.c3{background:rgba(160,32,208,.22);}
+/* Gambit bar — starts red, transitions to neon purple */
+.cmp-bar-fill.rx76-bar{background:linear-gradient(90deg,var(--red),var(--purple),var(--purple2));box-shadow:1px 0 8px rgba(160,32,208,.45);}
+.cmp-bar-row.featured .cmp-bar-name{color:var(--ink);font-weight:500;}
+.cmp-bar-row.featured .cmp-bar-val{color:var(--purple2);}
+
+/* ══ S04 ANCHORAGE ══ */
+#s04{background:var(--bg);position:relative;overflow:hidden;}
+/* blueprint grid in anchorage */
+.anch-bp{position:absolute;top:0;right:0;width:40%;height:100%;
+  background-image:linear-gradient(rgba(160,32,208,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(160,32,208,.04) 1px,transparent 1px);
+  background-size:40px 40px;opacity:.7;}
+.anch-layout{padding:90px 6%;display:grid;grid-template-columns:1fr 1fr;gap:80px;max-width:1200px;margin:0 auto;}
+.anch-body{font-size:15px;font-weight:300;color:var(--mute);line-height:1.9;margin-top:18px;}
+.anch-body strong{color:var(--ink);font-weight:600;}
+.mtbf-num{font-family:var(--ff-d);font-size:clamp(48px,7vw,84px);color:var(--ink);line-height:1;margin:18px 0 4px;}
+.mtbf-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.runtime-tl{margin:22px 0;}
+.rt-lbl{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:7px;}
+.rt-lbl.human{color:var(--label);}
+.rt-lbl.gpu{color:var(--purple2);}
+.rt-row{margin-bottom:30px;position:relative;}
+.rt-track{position:relative;height:2px;background:rgba(160,32,208,.12);}
+.rt-fill{position:absolute;left:0;top:0;height:100%;width:0;transition:width 1.6s ease;}
+.rt-fill.hfill{background:linear-gradient(90deg,rgba(240,232,255,.15),rgba(240,232,255,.3));}
+.rt-fill.gfill{background:linear-gradient(90deg,var(--red),var(--purple),var(--purple2));box-shadow:0 0 8px rgba(160,32,208,.35);}
+.rt-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:var(--bg);z-index:2;}
+.rt-dot.hd{border:1.5px solid rgba(240,232,255,.22);}
+.rt-dot.gd{border:1.5px solid var(--purple);}
+.rt-dot.gd.install{border-color:var(--gold);box-shadow:0 0 5px rgba(200,160,48,.4);}
+.rt-lbl2{position:absolute;font-family:var(--ff-m);font-size:7px;white-space:nowrap;top:9px;transform:translateX(-50%);color:rgba(240,232,255,.32);}
+.rt-lbl2.gl{color:var(--purple2);}
+.rt-lbl2.il{color:var(--gold);}
+.rt-lbl2.ra{transform:translateX(-100%);}
+.rt-mover{position:absolute;top:-11px;font-size:13px;transition:left 1.6s ease;opacity:.45;}
+.rt-divider{height:1px;background:rgba(160,32,208,.1);margin:3px 0 18px;}
+.rt-note{font-family:var(--ff-m);font-size:9px;color:var(--label);margin-top:4px;letter-spacing:.05em;}
+.rt-note strong{color:var(--purple2);}
+.end-badges{display:flex;flex-direction:column;gap:18px;padding-top:80px;}
+.gambit-badge{display:flex;align-items:flex-start;gap:16px;border:1px solid rgba(160,32,208,.18);padding:18px 22px;background:rgba(160,32,208,.05);transition:border-color .3s,background .3s;position:relative;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+.gambit-badge:hover{border-color:var(--purple2);background:rgba(160,32,208,.1);}
+.gb-icon{font-size:22px;color:var(--purple2);line-height:1;min-width:32px;}
+.gb-title{font-family:var(--ff-d);font-size:17px;letter-spacing:.08em;color:var(--ink);margin-bottom:3px;}
+.gb-desc{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--label);line-height:1.6;text-transform:uppercase;}
+
+/* ══ S05 PACKAGING ══ */
+#s05{background:var(--bg2);padding:90px 6%;}
+.pkg-in{max-width:1060px;margin:0 auto;}
+.pkg-layout{display:grid;grid-template-columns:240px 1fr;gap:52px;align-items:start;}
+.pkg-card{width:218px;background:var(--bg);border-radius:3px;overflow:hidden;box-shadow:0 12px 40px rgba(8,8,14,.9),0 0 40px rgba(160,32,208,.06);}
+.pkg-art{height:104px;position:relative;overflow:hidden;background:#08080e;}
+.pkg-art canvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block;}
+.pkg-model-overlay{position:absolute;bottom:6px;left:8px;font-family:var(--ff-d);font-size:18px;letter-spacing:.04em;color:var(--ink);line-height:1;z-index:2;}
+.pkg-model-overlay span{font-size:.42em;color:var(--purple2);display:block;letter-spacing:.08em;}
+.pkg-amd-badge{position:absolute;bottom:7px;right:8px;font-family:var(--ff-b);font-size:7px;font-weight:700;color:var(--amd);letter-spacing:.04em;opacity:.8;z-index:2;}
+.pkg-body{padding:9px 12px 7px;background:var(--bg2);}
+.pkg-brand-t{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.16em;color:var(--label);text-transform:uppercase;display:block;}
+.pkg-stripe{height:2px;background:linear-gradient(90deg,var(--red) 0%,var(--purple) 40%,var(--purple2) 70%,rgba(160,32,208,.15) 90%,transparent);margin:7px 0;box-shadow:0 0 6px rgba(160,32,208,.3);}
+.pkg-cap-row{display:flex;align-items:center;gap:8px;padding:3px 0 6px;}
+.pkg-cap{font-family:var(--ff-d);font-size:26px;color:var(--ink);line-height:1;}
+.pkg-spd{font-family:var(--ff-b);font-size:7.5px;color:var(--label);text-transform:uppercase;letter-spacing:.06em;line-height:1.5;}
+.pkg-spd strong{font-family:var(--ff-d);font-size:14px;color:var(--purple2);display:block;}
+.pkg-certs{display:flex;gap:3px;padding:5px 12px;border-top:1px solid rgba(160,32,208,.08);background:var(--bg2);}
+.pkg-cert{font-family:var(--ff-m);font-size:6.5px;color:var(--label);border:1px solid rgba(200,160,48,.18);padding:2px 4px;}
+.pkg-feat-list{display:flex;flex-direction:column;}
+.pkg-feat-item{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid rgba(160,32,208,.07);}
+.pkg-feat-item:last-child{border-bottom:none;}
+.pkg-feat-icon{font-size:14px;flex-shrink:0;padding-top:1px;}
+.pkg-feat-nm{font-family:var(--ff-d);font-size:15px;letter-spacing:.06em;color:var(--ink);margin-bottom:3px;}
+.pkg-feat-ds{font-size:13px;font-weight:300;color:var(--mute);line-height:1.65;}
+
+/* ══ S06 SPECS ══ */
+#s06{background:var(--bg);padding:90px 6% 70px;position:relative;}
+#s06::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,transparent,var(--purple) 30%,var(--red) 70%,transparent);}
+.spec-in{max-width:860px;margin:0 auto;}
+.spec-tbl{width:100%;border-collapse:collapse;margin-top:34px;font-family:var(--ff-m);}
+.spec-tbl tr{border-bottom:1px solid rgba(160,32,208,.12);transition:background .2s;}
+.spec-tbl tr:hover{background:rgba(160,32,208,.07);}
+.spec-tbl td{padding:13px 24px;font-size:12px;letter-spacing:.06em;}
+.spec-tbl td:first-child{color:var(--label);text-transform:uppercase;width:42%;border-left:2px solid transparent;transition:border-color .2s;padding-left:6px;}
+.spec-tbl tr:hover td:first-child{border-left-color:var(--purple);}
+.spec-tbl td:last-child{color:var(--ink);}
+.spec-tbl .spec-hl td:last-child{color:var(--purple2);}
+.spec-note{font-family:var(--ff-m);font-size:10px;color:var(--label);margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,32,208,.1);letter-spacing:.06em;}
+.spec-ctas{display:flex;gap:9px;margin-top:34px;flex-wrap:wrap;}
+.spec-foot{margin-top:30px;padding-top:16px;border-top:1px solid rgba(160,32,208,.08);display:flex;gap:7px;flex-wrap:wrap;}
+
+/* CLOSING */
+.closing{background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);text-align:center;padding:110px 6%;position:relative;overflow:hidden;}
+.closing::before{content:'GAMBIT';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--ff-d);font-size:22vw;color:rgba(160,32,208,.05);white-space:nowrap;pointer-events:none;user-select:none;}
+.cl-sub{font-family:var(--ff-m);font-size:11px;letter-spacing:.28em;color:var(--label);text-transform:uppercase;margin-bottom:22px;}
+.cl-tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.22em;color:var(--purple2);margin-bottom:12px;text-transform:uppercase;}
+.cl-tagline{font-family:var(--ff-d);font-size:clamp(32px,4.8vw,58px);letter-spacing:.08em;color:var(--ink);line-height:1.1;max-width:720px;margin:0 auto 18px;position:relative;}
+.cl-tagline .accent{color:var(--purple2);}
+.cl-body{font-family:var(--ff-m);font-size:12px;letter-spacing:.12em;color:var(--mute);max-width:480px;margin:0 auto 44px;line-height:1.75;position:relative;}
+.site-foot{background:var(--bg);border-top:1px solid rgba(160,32,208,.1);padding:26px 6%;display:flex;justify-content:space-between;align-items:center;}
+.sf-brand{font-family:var(--ff-d);font-size:16px;letter-spacing:.22em;color:var(--label);}
+.sf-brand em{color:var(--purple);font-style:normal;}
+.sf-note{font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;color:rgba(74,64,112,.4);}
+
+@media(max-width:860px){
+  .bl-grid,.cf-layout,.dom-layout,.anch-layout,.pkg-layout{grid-template-columns:1fr;gap:44px;}
+  .h-right{opacity:.08!important;transform:none!important;width:100%;}
+  .h-fade{background:rgba(8,8,14,.9);}
+  .why-grid{grid-template-columns:1fr;}
+}
+@media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<div class="glitch-layer"></div>
+<div id="cur" class="blue">
+  <div class="sc-v"></div>
+  <div class="sc-h"></div>
+  <div class="sc-dot"></div>
+</div>
+<div id="cur-ring"></div>
+
+<nav id="nav">
+  <div class="nav-logo">SIMOR<em>CHIP</em></div>
+  <div class="np">
+    <a class="on" onclick="goTo('s00')">Hero</a>
+    <a onclick="goTo('s01')">Gambit</a>
+    <a onclick="goTo('s02')">Counterforce</a>
+    <a onclick="goTo('s03')">Dominance</a>
+    <a onclick="goTo('s04')">Anchorage</a>
+    <a onclick="goTo('s05')">Packaging</a>
+    <a onclick="goTo('s06')">Specs</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="s00" class="full">
+  <div class="hero-glow"></div>
+  <div class="hero-grid" id="heroGrid"></div>
+  <div class="hero-slash1"></div>
+  <div class="hero-slash2"></div>
+
+  <div class="h-right" id="hRight">
+    <div class="rx7600-wrap">
+      <div class="card-slash1"></div>
+      <div class="card-slash2"></div>
+      <div class="rx7600-body">
+        <div class="rx7600-glow-top"></div>
+        <div class="rx7600-scan"></div>
+        <div class="rx7600-hs">
+          <div class="rx7600-fins-wrap" id="rFins"></div>
+          <div class="rx7600-vc1"></div><div class="rx7600-vc2"></div><div class="rx7600-vc3"></div>
+          <div class="rx7600-hp1"></div><div class="rx7600-hp2"></div>
+          <div class="rx7600-sl1"></div><div class="rx7600-sl2"></div>
+          <div class="rx7600-fans">
+            <!-- Fan 1 -->
+            <div class="rx7600-fan">
+              <div class="rx7600-glow-ring"></div>
+              <div class="rx7600-fr-glow"></div>
+              <div class="rx7600-bearing"></div>
+              <div class="rx7600-fr1 rx7600-fan-ring"></div>
+              <div class="rx7600-fr2 rx7600-fan-ring"></div>
+              <div class="rx7600-fr3 rx7600-fan-ring"></div>
+              <div class="rx7600-fr4 rx7600-fan-ring"></div>
+              <div class="rx7600-blades" id="blades1">
+                <div class="rx7600-blade" style="transform:rotate(0deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(30deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(60deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(90deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(120deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(150deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(180deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(210deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(240deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(270deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(300deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(330deg)"></div>
+              </div>
+              <div class="rx7600-hub"><div class="rx7600-hub-label">Simorchip</div></div>
+            </div>
+            <!-- Fan 2 -->
+            <div class="rx7600-fan">
+              <div class="rx7600-glow-ring" style="animation-delay:1.4s;"></div>
+              <div class="rx7600-fr-glow"></div>
+              <div class="rx7600-bearing"></div>
+              <div class="rx7600-fr1 rx7600-fan-ring"></div>
+              <div class="rx7600-fr2 rx7600-fan-ring"></div>
+              <div class="rx7600-fr3 rx7600-fan-ring"></div>
+              <div class="rx7600-fr4 rx7600-fan-ring"></div>
+              <div class="rx7600-blades fan2" id="blades2">
+                <div class="rx7600-blade" style="transform:rotate(0deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(30deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(60deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(90deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(120deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(150deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(180deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(210deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(240deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(270deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(300deg)"></div>
+                <div class="rx7600-blade" style="transform:rotate(330deg)"></div>
+              </div>
+              <div class="rx7600-hub"><div class="rx7600-hub-label">Simorchip</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="rx7600-pcb"></div>
+        <div class="rx7600-brand">
+          <span class="rx7600-brand-name">Simorchip</span>
+          <span class="rx7600-model">RX7600<br>8GD6</span>
+          <span class="rx7600-sub">GDDR6 · Navi 33 · 5nm</span>
+        </div>
+        <div class="rx7600-ports" id="rPorts">
+          <div class="rx7600-port" id="pDP1"><span class="rx7600-port-lbl">DP</span></div>
+          <div class="rx7600-port" id="pDP2"><span class="rx7600-port-lbl">DP</span></div>
+          <div class="rx7600-port" id="pDP3"><span class="rx7600-port-lbl">DP</span></div>
+          <div class="rx7600-port" id="pHDMI"><span class="rx7600-port-lbl">HDMI</span></div>
+        </div>
+        <div class="rx7600-8pin">
+          <div class="rx7600-pin-row"><div class="rx7600-pin"></div><div class="rx7600-pin"></div><div class="rx7600-pin"></div><div class="rx7600-pin"></div></div>
+          <div class="rx7600-pin-row"><div class="rx7600-pin"></div><div class="rx7600-pin"></div><div class="rx7600-pin"></div><div class="rx7600-pin"></div></div>
+        </div>
+        <div class="rx7600-armor"></div>
+        <div class="rx7600-gambit-badge">5nm · RDNA 3</div>
+        <div class="amd-badge">AMD Radeon</div>
+        <div class="rx7600-status">⬡ GAMBIT ONLINE</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="h-fade"></div>
+  <div class="h-left">
+    <div class="h-tag" id="hTag">Gambit Protocol: Overridden — Quantum Breach Sequence Locked</div>
+    <div class="h-status" id="hStatus">HYPER-VELOCITY VECTOR ARRAY UNCHAINED</div>
+    <div class="h-hl" id="hHL">
+      <span class="hl-ln hl-gambit" id="hl0">Gambit</span>
+      <span class="hl-ln hl-rx" id="hl1">RX 7600 · 8GD6</span>
+      <span class="hl-ln hl-sub" id="hl2">Navi 33 · 5nm · RDNA 3</span>
+    </div>
+    <div class="gm-line" id="hLine" style="margin-top:16px;"></div>
+    <div class="h-sub" id="hSub"><strong>Next-gen 5nm graphic execution engine pushed to the absolute edge.</strong><br>The RX7600 8GD6 deploys the RDNA 3 computation matrix, unleashing an aggressive wide-bandwidth pipeline engineered to dominate the visual grid.</div>
+    <div class="h-cta" id="hCta">
+      <button class="btn btn-gambit">Initiate the Gambit</button>
+      <span class="h-scroll-hint">↓ FORCE RIVALS INTO SUBMISSION</span>
+    </div>
+    <div class="h-stats" id="hStats">
+      <div class="h-stat"><div class="hsn" id="heroSP">0<em>SP</em></div><div class="hsl">Stream Processors</div></div>
+      <div class="h-stat"><div class="hsn">8<em>GB</em></div><div class="hsl">GDDR6 Matrix</div></div>
+      <div class="h-stat"><div class="hsn">128<em>-BIT</em></div><div class="hsl">Memory Bus</div></div>
+      <div class="h-stat"><div class="hsn">165<em>W</em></div><div class="hsl">Power Profile</div></div>
+    </div>
+  </div>
+  <div class="scr-hint" id="scrHint"><div class="scr-ln"></div><div class="scr-lb">Scroll</div></div>
+</section>
+
+<!-- ═══ S01 GAMBIT ═══ -->
+<section id="s01">
+  <div class="s01-in">
+    <div class="bl-grid fi">
+      <div>
+        <div class="sec-label">Design Language · Gambit Series</div>
+        <div class="sec-title" style="margin-bottom:6px;">Gambit</div>
+        <div class="bl-title-tw" id="blTw">// PROTOCOL_OVERRIDDEN</div>
+        <div class="sec-divider"></div>
+        <div class="bl-body">Like an aggressive grandmaster executing a ruthless opening sequence, this card packs advanced <strong>5nm RDNA 3 compute nodes</strong> into a weaponized compact footprint.<br><br>Twin high-pressure Overdrive fans, balanced with <strong>dual ball-bearing cores</strong>, strike with devastating thermal efficiency, forcing cold air through the chassis to freeze thermal bottlenecks instantly under extreme workloads.<br><br>Flipping the card reveals the tactical spine: an <strong>impact-resistant composite armor backplate</strong> engineered to shield delicate tracing arrays from system torque and external structural stress.</div>
+        <div class="bl-blockquote">
+          <p>Initiate the Gambit and force your rivals into submission.</p>
+          <div class="bq-src">// RX7600 8GD6 · Navi 33 · 5nm · RDNA 3</div>
+        </div>
+        <div class="bl-pos">RX7600 8GD6 — A high-stakes operational gambit to dominate the visual grid.</div>
+      </div>
+      <div class="img-ph fi fi-d1" style="aspect-ratio:16/10;min-height:260px;">
+        <span>[ GAMBIT — DUAL FAN DUTCH ANGLE ]<br>RX7600 8GD6 · purple glow rings<br>Nickel heatpipes · matte obsidian shroud ]</span>
+      </div>
+    </div>
+    <div class="why-grid" style="margin-top:60px;" id="whyGrid">
+      <div class="why-card fi">
+        <div class="why-num">01</div>
+        <div class="why-heading">RDNA 3 Compute</div>
+        <div class="why-sub">Advanced Architectural Dominance</div>
+        <p class="why-body">Equipped with RDNA 3 architecture, this card deploys dedicated AI acceleration and second-generation raytracing cores, optimizing instruction routing to deliver explosive frame-rate multi-threading. Outdated silicon has no answer for this.</p>
+      </div>
+      <div class="why-card fi fi-d1">
+        <div class="why-num">02</div>
+        <div class="why-heading">8GB GDDR6 Matrix</div>
+        <div class="why-sub">Unthrottled High-Refresh Buffering</div>
+        <p class="why-body">High-speed GDDR6 on a 128-Bit interface enables instantaneous asset swapping and buttery-smooth rendering at maximum settings. Low-bandwidth configurations trigger frame drops in competitive moments. The Gambit doesn't have that problem.</p>
+      </div>
+      <div class="why-card fi fi-d2">
+        <div class="why-num">03</div>
+        <div class="why-heading">Overdrive Thermal</div>
+        <div class="why-sub">Destructive Heat Dissipation</div>
+        <p class="why-body">Custom high-pressure fan blades smash through stagnant air pockets, maintaining frozen core temperatures while ensuring absolute structural stability during relentless operational cycles. Dual ball-bearing cores for mechanical longevity under sustained load.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S02 COUNTERFORCE ═══ -->
+<section id="s02">
+  <div class="cf-layout">
+    <div class="cf-left fi">
+      <div class="cf-big-num">2048</div>
+      <div class="sec-label">Counterforce</div>
+      <div class="sec-title">RDNA 3<br>ROGUE<br>COMPUTE</div>
+      <div class="sec-divider"></div>
+      <div class="cf-stats">
+        <div class="cf-stat fi">
+          <div class="cf-stat-val" id="count2048">0<em>SP</em></div>
+          <div class="cf-stat-lbl">Active Computation Vectors</div>
+          <canvas id="quantumCanvas" width="280" height="28"></canvas>
+        </div>
+        <div class="cf-stat fi fi-d1">
+          <div class="cf-stat-val">2250<em>MHz</em></div>
+          <div class="cf-stat-lbl">Boost Engine · Blistering Clock</div>
+        </div>
+        <div class="cf-stat fi fi-d2">
+          <div class="cf-stat-val">8<em>GB</em></div>
+          <div class="cf-stat-lbl">GDDR6 · High-Speed Matrix</div>
+        </div>
+      </div>
+    </div>
+    <div class="cf-right fi fi-d1">
+      <div class="cf-tag">2048 RDNA 3 Vectors Deployed. Core Grid at Maximum Density.</div>
+      <p class="cf-body">Leveraging the advanced <strong>RDNA 3 core array</strong>, 2048 high-performance stream processors run at blistering <strong>2250 MHz</strong>, forcing massive amounts of geometry data through an optimized architecture.<br><br>This radical throughput completely eliminates pipeline choke points. Whether locking down triple-digit frame rates in esports, encoding flawless AV1 streams in real time, or accelerating heavy generative visual pipelines — the hardware hits back with instant, crushing counterforce.</p>
+      <div class="cf-kicker">This isn't a standard calculation.<br><em>This is a high-stakes gambit.</em></div>
+      <div class="badge-row" id="nsBadges">
+        <div class="stat-badge">
+          <div class="num">2048</div>
+          <div class="lbl">RDNA 3 Cores</div>
+          <div class="bar-wrap"><div class="bar-fill" id="bar1"></div></div>
+        </div>
+        <div class="stat-badge">
+          <div class="num">8GB</div>
+          <div class="lbl">128-Bit GDDR6</div>
+          <div class="bar-wrap"><div class="bar-fill" id="bar2"></div></div>
+        </div>
+        <div class="stat-badge">
+          <div class="num" style="font-size:clamp(18px,2.8vw,34px);">165W</div>
+          <div class="lbl">8-Pin Power</div>
+          <div class="bar-wrap"><div class="bar-fill" id="bar3"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S03 DOMINANCE ═══ -->
+<section id="s03">
+  <div class="dom-layout">
+    <div class="fi">
+      <div class="sec-label">02 — Dominance</div>
+      <div class="sec-title" style="font-size:clamp(44px,6vw,76px);">Dominance</div>
+      <div style="font-family:var(--ff-m);font-size:10px;letter-spacing:.1em;color:var(--label);text-transform:uppercase;margin-bottom:18px;">3×DP + HDMI · DirectX 12 (12_2) · PCIe 4.0</div>
+      <div class="sec-divider"></div>
+      <div class="port-row fi fi-d1" id="portRow">
+        <div class="port-item" id="portDP1"><div class="port-nm">DP</div><div class="port-ds">DisplayPort · 4K</div></div>
+        <div class="port-item" id="portDP2"><div class="port-nm">DP</div><div class="port-ds">DisplayPort · 4K</div></div>
+        <div class="port-item" id="portDP3"><div class="port-nm">DP</div><div class="port-ds">DisplayPort · 4K</div></div>
+        <div class="port-item" id="portHDMI"><div class="port-nm">HDMI</div><div class="port-ds">Digital · 4K</div></div>
+      </div>
+      <ul class="bullet-list" style="margin-top:18px;">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div><strong>3×DisplayPort + HDMI — Quad-screen command array.</strong> Drive three DisplayPort and one HDMI simultaneously — a full competitive multi-monitor array, live production displays, and cinematic render outputs all running in parallel without a single adapter.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div><strong>DirectX 12 (Feature Level 12_2) — Full RDNA 3 hardware execution.</strong> Hardware raytracing, mesh shading, and AI acceleration run natively at the silicon layer. No emulation, no compatibility compromise. Windows 10 and Windows 11 both fully supported.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div><strong>Navi 33 · RDNA 3 · 5nm · 2250 MHz</strong> — The jump from RDNA 2 to RDNA 3 is a fundamental architectural redesign. Improved compute units, second-gen raytracing cores, dedicated AI accelerators. 5nm process delivers more performance per watt than any previous Radeon node.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div>
+          <div><strong>PCIe 4.0 × 8 — Full throughput at all operational frequencies.</strong> Eight lanes at PCIe 4.0 speed equals PCIe 3.0 ×16 in total bandwidth. The instruction pipeline between CPU and 2048 RDNA 3 cores never creates a bottleneck under any workload.</div>
+        </li>
+      </ul>
+      <div class="cmp-bar-wrap fi fi-d2" id="cmpBars">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);margin-bottom:16px;">Architecture Spectrum</div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">Entry Display <span class="cmp-bar-note">— 160C · 18W · legacy output</span></span>
+            <span class="cmp-bar-val">160</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c1" id="cb0" data-w="4"></div></div>
+        </div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">Vision Tier <span class="cmp-bar-note">— 1024C · 6nm · RDNA 2</span></span>
+            <span class="cmp-bar-val">1024</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c2" id="cb1" data-w="42"></div></div>
+        </div>
+        <div class="cmp-bar-row featured">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">RX7600 8GD6 — RDNA 3 · 5nm · Gambit Protocol</span>
+            <span class="cmp-bar-val" style="color:var(--purple2);">2048</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill rx76-bar" id="cb2" data-w="100"></div></div>
+        </div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">High-End RTX <span class="cmp-bar-note">— 3584C · 170W · heavy 3D</span></span>
+            <span class="cmp-bar-val">3584</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c3" id="cb3" data-w="55"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:340px;margin-bottom:12px;">
+        <span>[ DOMINANCE — PORT BRACKET ]<br>RX7600 rear · 3×DP · HDMI<br>Heavy-duty bracket · purple ambient ]</span>
+      </div>
+      <div class="img-ph" style="width:100%;height:128px;">
+        <span>[ PCIe 4.0×8 + 8-PIN · RDNA 3 CONTACTS ]<br>Aggressive trace routing ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S04 ANCHORAGE ═══ -->
+<section id="s04">
+  <div class="anch-bp"></div>
+  <div class="anch-layout">
+    <div class="fi">
+      <div class="sec-label">Anchorage</div>
+      <div class="sec-title">UNRELENTING<br>TACTICAL<br>STABILITY.</div>
+      <div class="sec-divider"></div>
+      <p class="anch-body"><strong>Fueled by raw, unthrottled power delivery.</strong><br><br>The RX7600 8GD6 secures your combat build with unrelenting tactical stability through years of heavy competitive workloads. The intelligent temperature control matrix dynamically manages the dual Overdrive fans, keeping the RDNA 3 core inside its optimal thermal window under extreme overclocks.<br><br>Combined with the <strong>impact-resistant composite armor backplate</strong> and dual ball-bearing fan architecture, this hardware is engineered to remain structurally intact and operationally dominant through continuous high-intensity deployment.</p>
+      <div class="fi fi-d1" style="margin:22px 0 4px;">
+        <div class="mtbf-num" id="mtbfCount">0</div>
+        <div class="mtbf-lbl">Hours MTBF</div>
+      </div>
+      <div class="runtime-tl fi fi-d2" id="rtWrap">
+        <div class="rt-lbl human">Modern Steel &amp; Rail — 171 Years</div>
+        <div class="rt-row">
+          <div class="rt-track" style="width:100%;">
+            <div class="rt-fill hfill" id="rtF1"></div>
+            <div class="rt-mover" id="rtLoco" style="left:0;">🚂</div>
+            <div class="rt-dot hd" style="left:0%;"><span class="rt-lbl2">1855<br>Steam</span></div>
+            <div class="rt-dot hd" style="left:52%;"><span class="rt-lbl2">1960<br>Electric</span></div>
+            <div class="rt-dot hd" style="left:100%;"><span class="rt-lbl2 ra">2026<br>Today</span></div>
+          </div>
+        </div>
+        <div class="rt-divider"></div>
+        <div class="rt-lbl gpu">RX7600 8GD6 Theoretical Lifespan — 171 Years</div>
+        <div class="rt-row">
+          <div class="rt-track" style="width:100%;">
+            <div class="rt-fill gfill" id="rtF2"></div>
+            <div class="rt-dot gd install" style="left:0%;"><span class="rt-lbl2 gl il">2026<br>You install</span></div>
+            <div class="rt-dot gd" style="left:44%;"><span class="rt-lbl2 gl">2101<br>22nd Century</span></div>
+            <div class="rt-dot gd" style="left:100%;"><span class="rt-lbl2 gl ra">2197<br>Gambit (theory)</span></div>
+          </div>
+        </div>
+        <div class="rt-note">171 years of industrial history. The Gambit's rated lifespan <strong>matches it exactly.</strong> Lock it in. Execute without fear.</div>
+      </div>
+      <div class="fi fi-d3" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <div class="stat-badge"><div class="num" style="color:var(--purple2);">1.5M</div><div class="lbl">Hours MTBF</div></div>
+        <div class="stat-badge"><div class="num">8-Pin</div><div class="lbl">165W Dedicated</div></div>
+      </div>
+    </div>
+    <div class="end-badges fi fi-d1">
+      <div class="gambit-badge">
+        <div class="gb-icon">⬡</div>
+        <div>
+          <div class="gb-title">Composite Armor Backplate</div>
+          <div class="gb-desc">Impact-resistant tactical spine<br>Anti-torque structural shielding<br>PCB integrity under sustained load</div>
+        </div>
+      </div>
+      <div class="gambit-badge fi fi-d1">
+        <div class="gb-icon">◈</div>
+        <div>
+          <div class="gb-title">Overdrive Thermal Array</div>
+          <div class="gb-desc">Dual ball-bearing overdrive fans<br>Frozen core under extreme overclock<br>Destructive heat dissipation</div>
+        </div>
+      </div>
+      <div class="gambit-badge fi fi-d2">
+        <div class="gb-icon">★</div>
+        <div>
+          <div class="gb-title">Heatpipe Conductor Array</div>
+          <div class="gb-desc">Nickel-plated copper heatpipes<br>Direct vapor chamber transfer<br>Maximum thermal extraction rate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S05 PACKAGING ═══ -->
+<section id="s05">
+  <div class="pkg-in">
+    <div class="sec-label fi">Packaging Design</div>
+    <div class="pkg-layout">
+      <div class="fi" id="pkgCard">
+        <div class="pkg-card" style="opacity:0;transform:translateX(-24px);transition:opacity 1.4s ease,transform 1.4s ease;">
+          <div class="pkg-art">
+            <canvas id="pulseCanvas" width="218" height="104"></canvas>
+            <div class="pkg-model-overlay">RX7600 8GD6<span>8GB GDDR6</span></div>
+            <div class="pkg-amd-badge">AMD Radeon</div>
+          </div>
+          <div class="pkg-body">
+            <span class="pkg-brand-t">Simorchip · Gambit · Radeon Series</span>
+            <div class="pkg-stripe"></div>
+            <div class="pkg-cap-row">
+              <span class="pkg-cap">8<span style="font-size:.5em;">GB</span></span>
+              <span class="pkg-spd">3×DP + HDMI<br><strong>GDDR6</strong></span>
+            </div>
+          </div>
+          <div class="pkg-certs"><span class="pkg-cert">CE</span><span class="pkg-cert">RoHS</span><span class="pkg-cert">FCC</span><span class="pkg-cert">REACH</span></div>
+        </div>
+      </div>
+      <div class="fi fi-d2">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:18px;">What's in the box</div>
+        <div class="pkg-feat-list">
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">🖤</div><div><div class="pkg-feat-nm">Gambit Tactical Carrier</div><div class="pkg-feat-ds">Precision-milled foam insert engineered for the 235 × 124 × 49 mm dual-fan profile. The matte-obsidian outer shell with neon-purple edge markings broadcasts the card's operational intent before it's opened.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">⚡</div><div><div class="pkg-feat-nm">Electrostatic Isolation Shield</div><div class="pkg-feat-ds">Factory-applied premium conductive anti-static shielding fully encapsulates the 5nm RDNA 3 die before foam placement. Full ESD protection from factory to PCIe slot.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">📋</div><div><div class="pkg-feat-nm">Full Spec on Pack</div><div class="pkg-feat-ds">Model number, 8GB GDDR6 capacity, 128-Bit bus, and 4-port output configuration clearly printed on the outer label. Warehouse receiving requires no unboxing.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">✅</div><div><div class="pkg-feat-nm">Global Certifications</div><div class="pkg-feat-ds">CE · RoHS · FCC · REACH. Fully cleared for enterprise and consumer deployment across all major international markets.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S06 SPECS ═══ -->
+<section id="s06">
+  <div class="spec-in">
+    <div class="sec-label fi">Technical Matrix</div>
+    <div class="sec-title fi">Specifications</div>
+    <div class="sec-divider fi"></div>
+    <table class="spec-tbl fi">
+      <tr><td>Architecture</td><td>Navi 33 · RDNA 3 · 5nm</td></tr>
+      <tr class="spec-hl"><td>Stream Processors</td><td>2048</td></tr>
+      <tr><td>Core Frequency</td><td>2250 MHz</td></tr>
+      <tr><td>Memory Type</td><td>GDDR6</td></tr>
+      <tr class="spec-hl"><td>Memory Capacity</td><td>8 GB</td></tr>
+      <tr><td>Memory Frequency</td><td>2250 MHz</td></tr>
+      <tr><td>Memory Bus Width</td><td>128-bit</td></tr>
+      <tr><td>Bus Interface</td><td>PCIe 4.0 × 8</td></tr>
+      <tr><td>Display Outputs</td><td>3 × DP + HDMI</td></tr>
+      <tr><td>Max Resolution</td><td>1920 × 1080</td></tr>
+      <tr class="spec-hl"><td>DirectX Support</td><td>DirectX 12 (Feature Level 12_2)</td></tr>
+      <tr><td>External Power</td><td>8 Pin</td></tr>
+      <tr><td>Power Consumption</td><td>165W</td></tr>
+      <tr><td>Recommended PSU</td><td>450W and above</td></tr>
+      <tr><td>Cooling Solution</td><td>Dual-Fan · Ball-Bearing · Overdrive</td></tr>
+      <tr><td>Backplate</td><td>Composite Armor · Anti-Torque</td></tr>
+      <tr><td>Dimensions</td><td>235 × 124 × 49 mm</td></tr>
+      <tr><td>OS Support</td><td>Windows 10 / Windows 11</td></tr>
+      <tr><td>Market Positioning</td><td>High-End · Gambit Protocol</td></tr>
+    </table>
+    <p class="spec-note fi">* Power consumption listed as 165W (source document contained a typographic error). Confirmed against 8-pin connector spec and 450W PSU recommendation. All specifications sourced from Simorchip internal documentation.</p>
+    <div class="spec-ctas fi">
+      <button class="btn btn-gambit">Download Spec Sheet</button>
+      <button class="btn btn-ghost">Explore More Products</button>
+    </div>
+    <div class="spec-foot fi">
+      <span class="tag">RX7600</span><span class="tag">8GBGDDR6</span>
+      <span class="tag">GambitProtocol</span><span class="tag">© 2026 Simorchip</span>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<div class="closing">
+  <p class="cl-tag">⬡ Gambit Protocol · Quantum Breach</p>
+  <p class="cl-sub">Simorchip · RX7600 8GD6 · Gambit</p>
+  <h2 class="cl-tagline fi">This isn't a standard calculation.<br><span class="accent">This is a high-stakes gambit.</span></h2>
+  <p class="cl-body fi fi-d1">Hyper-pressure thermal control. 2048-lane rogue calculation channel.<br>Initiate the Gambit and force your rivals into submission.</p>
+  <button class="btn btn-gambit fi fi-d2">View Full Specifications</button>
+</div>
+
+<footer class="site-foot">
+  <div class="sf-brand">SIMOR<em>CHIP</em></div>
+  <div class="sf-note">RX7600 8GD6 · GAMBIT SERIES · © 2026 SIMORCHIP</div>
+</footer>
+
+<script>
+/* ══ CURSOR — blue/red crosshair ══ */
+(function(){
+  const cur=document.getElementById('cur');
+  const ring=document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0,isRed=false;
+  const TRAIL=8;
+  const dots=Array.from({length:TRAIL},(_,i)=>{
+    const d=document.createElement('div');d.className='trail-dot';
+    const s=Math.max(1,3-i*.3);
+    d.style.cssText=`width:${s}px;height:${s}px;opacity:0;`;
+    document.body.appendChild(d);return d;
+  });
+  const pos=dots.map(()=>({x:0,y:0}));let head=0;
+  let prevX=0,prevY=0,spd=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    spd=Math.sqrt((mx-prevX)**2+(my-prevY)**2);prevX=mx;prevY=my;
+    cur.style.left=mx+'px';cur.style.top=my+'px';
+    pos[head]={x:mx,y:my};head=(head+1)%TRAIL;
+  });
+  (function frame(){
+    rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    const trailLen=Math.min(TRAIL,Math.floor(spd*.4)+2);
+    dots.forEach((_,i)=>{
+      const p=pos[(head-1-i+TRAIL)%TRAIL];
+      dots[i].style.left=p.x+'px';dots[i].style.top=p.y+'px';
+      const alpha=i<trailLen?(1-i/trailLen)*.2:0;
+      dots[i].style.opacity=String(alpha);
+      dots[i].style.background=isRed?'rgba(224,32,48,.7)':'rgba(160,32,208,.7)';
+    });
+    requestAnimationFrame(frame);
+  })();
+  document.querySelectorAll('button,.btn,.np a,.why-card,.gambit-badge,.stat-badge,.port-item').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{
+      isRed=true;cur.classList.remove('blue');cur.classList.add('red');ring.classList.add('red-ring');
+    });
+    el.addEventListener('mouseleave',()=>{
+      isRed=false;cur.classList.remove('red');cur.classList.add('blue');ring.classList.remove('red-ring');
+    });
+  });
+})();
+
+/* ══ NAV ══ */
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('sc',scrollY>50));
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+const secIds=['s00','s01','s02','s03','s04','s05','s06'];
+const pills=document.querySelectorAll('.np a');
+secIds.forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){const i=secIds.indexOf(id);pills.forEach(p=>p.classList.remove('on'));if(pills[i])pills[i].classList.add('on');}
+  },{threshold:.4}).observe(el);
+});
+
+/* ══ SCROLL REVEAL ══ */
+const fiObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>fiObs.observe(el));
+
+/* ══ SECTION DIVIDERS ══ */
+secIds.slice(1).forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)el.classList.add('div-on');},{threshold:.05}).observe(el);
+});
+
+/* ══ GM LINES ══ */
+document.querySelectorAll('.gm-line').forEach(el=>{
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)el.classList.add('on');},{threshold:.5}).observe(el);
+});
+
+/* ══ BROKEN GRID ══ */
+(function(){
+  const wrap=document.getElementById('heroGrid');if(!wrap)return;
+  // Horizontal lines with breaks
+  [18,34,50,66,82].forEach(pct=>{
+    const l=document.createElement('div');l.className='hg-line h';
+    l.style.cssText=`top:${pct}%;`;wrap.appendChild(l);
+    // random break
+    const bk=document.createElement('div');bk.className='hg-break';
+    bk.style.cssText=`top:${pct-0.3}%;left:${20+Math.random()*50}%;width:${6+Math.random()*12}%;height:2px;`;
+    wrap.appendChild(bk);
+  });
+  [20,40,60,80].forEach(pct=>{
+    const l=document.createElement('div');l.className='hg-line v';
+    l.style.cssText=`left:${pct}%;`;wrap.appendChild(l);
+  });
+})();
+
+/* ══ FINS ══ */
+(function(){
+  const wrap=document.getElementById('rFins');if(!wrap)return;
+  for(let i=0;i<20;i++){const f=document.createElement('div');f.className='rx7600-fin';wrap.appendChild(f);}
+})();
+
+/* ══ HERO SEQUENCE ══ */
+document.fonts.ready.then(()=>{
+  function cls(id,d=0){setTimeout(()=>document.getElementById(id)?.classList.add('on'),d);}
+  cls('hRight',0);
+  setTimeout(()=>document.getElementById('hTag')?.classList.add('on'),400);
+  setTimeout(()=>{
+    const st=document.getElementById('hStatus');if(!st)return;
+    st.classList.add('typing');setTimeout(()=>st.classList.add('done'),1500);
+  },700);
+  setTimeout(()=>{
+    document.getElementById('hHL')?.classList.add('on');
+    ['hl0','hl1','hl2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('in'),i*260));
+  },1100);
+  setTimeout(()=>document.getElementById('hLine')?.classList.add('on'),2000);
+  cls('hSub',2300);cls('hCta',2600);
+  setTimeout(()=>{
+    document.getElementById('hStats')?.classList.add('on');
+    const el=document.getElementById('heroSP');if(!el)return;
+    const dur=1100,target=2048,t0=performance.now();
+    (function f(now){
+      const p=Math.min((now-t0)/dur,1);
+      const v=1-Math.pow(1-p,2.5);
+      el.innerHTML=`${Math.round(v*target)}<em>SP</em>`;
+      if(p<1)requestAnimationFrame(f);else el.innerHTML='2048<em>SP</em>';
+    })(performance.now());
+  },2900);
+  cls('scrHint',3400);
+  setTimeout(portHighlight,2700);
+});
+
+/* ══ S01 TYPEWRITER ══ */
+(function(){
+  const tw=document.getElementById('blTw');if(!tw)return;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){obs.disconnect();
+      setTimeout(()=>{tw.classList.add('tw-go');setTimeout(()=>tw.classList.add('tw-done'),1100);},300);
+    }
+  },{threshold:.4});
+  obs.observe(tw);
+})();
+
+/* ══ WHY CARDS ══ */
+(function(){
+  const cards=document.querySelectorAll('.why-card');if(!cards.length)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      cards.forEach((c,i)=>{
+        c.style.cssText=`opacity:0;transform:translateY(18px);transition:opacity .55s ease ${i*.13}s,transform .55s ease ${i*.13}s;`;
+        setTimeout(()=>{c.style.opacity='1';c.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3});
+  obs.observe(cards[0]);
+})();
+
+/* ══ PORT HIGHLIGHT — 4 ports ══ */
+function portHighlight(){
+  const ports=[
+    {card:document.getElementById('pDP1'), row:document.getElementById('portDP1')},
+    {card:document.getElementById('pDP2'), row:document.getElementById('portDP2')},
+    {card:document.getElementById('pDP3'), row:document.getElementById('portDP3')},
+    {card:document.getElementById('pHDMI'),row:document.getElementById('portHDMI')},
+  ];
+  let i=0;
+  function next(){
+    if(i>0){ports[i-1].card?.classList.remove('hl');ports[i-1].row?.classList.remove('active');}
+    if(i<ports.length){
+      ports[i].card?.classList.add('hl');ports[i].row?.classList.add('active');
+      i++;setTimeout(next,600);
+    } else {
+      ports.forEach(p=>{p.card?.classList.add('hl');p.row?.classList.add('active');});
+    }
+  }
+  next();
+}
+
+/* ══ COUNT-UP 2048 + quantum grid ══ */
+(function(){
+  const el=document.getElementById('count2048');if(!el)return;
+  const cv=document.getElementById('quantumCanvas');
+  const gCtx=cv?cv.getContext('2d'):null;
+  let done=false,gridIv;
+
+  function drawQuantum(alpha){
+    if(!gCtx)return;
+    gCtx.clearRect(0,0,cv.width,cv.height);
+    // neon purple grid — 2048 blocks = 64×2 layout (wider than RX580's 256)
+    const cols=64,rows=2;
+    const cw=cv.width/cols,ch=cv.height/rows;
+    for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+      const flicker=.3+Math.random()*.7;
+      // alternate purple/red
+      const isP=(c+r)%3!==0;
+      gCtx.fillStyle=isP
+        ?`rgba(160,32,208,${alpha*flicker*.42})`
+        :`rgba(224,32,48,${alpha*flicker*.28})`;
+      gCtx.fillRect(c*cw+.5,r*ch+.5,cw-1,ch-1);
+    }
+    // leading edge glow
+    const filled=Math.round(alpha*cv.width);
+    if(filled>0&&filled<cv.width){
+      const gl=gCtx.createLinearGradient(filled-12,0,filled+6,0);
+      gl.addColorStop(0,'rgba(160,32,208,0)');
+      gl.addColorStop(.5,'rgba(192,128,255,.6)');
+      gl.addColorStop(1,'rgba(160,32,208,0)');
+      gCtx.fillStyle=gl;gCtx.fillRect(filled-12,0,18,cv.height);
+    }
+  }
+
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      if(cv)cv.classList.add('vis');
+      const dur=1300,target=2048,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,2.5);
+        el.innerHTML=`${Math.round(v*target)}<em>SP</em>`;
+        if(gCtx)drawQuantum(v);
+        if(p<1)requestAnimationFrame(f);
+        else{
+          el.innerHTML='2048<em>SP</em>';
+          let la=0,grow=true;
+          gridIv=setInterval(()=>{
+            la=grow?Math.min(la+.04,1):Math.max(la-.02,.35);
+            if(la>=1)grow=false;if(la<=.35)grow=true;
+            drawQuantum(la);
+          },80);
+        }
+      })(performance.now());
+    }
+  },{threshold:.4});
+  obs.observe(el);
+  window.addEventListener('beforeunload',()=>clearInterval(gridIv));
+})();
+
+/* ══ BADGES ══ */
+(function(){
+  const wrap=document.getElementById('nsBadges');if(!wrap)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      wrap.querySelectorAll('.stat-badge').forEach((b,i)=>{
+        b.style.cssText=`opacity:0;transform:scale(.9);transition:opacity .5s ease ${i*.15}s,transform .5s cubic-bezier(.34,1.56,.64,1) ${i*.15}s;`;
+        setTimeout(()=>{b.style.opacity='1';b.style.transform='scale(1)';},60);
+      });
+      setTimeout(()=>{['bar1','bar2','bar3'].forEach((id,i)=>setTimeout(()=>{
+        const e=document.getElementById(id);if(e)e.style.width='100%';
+      },i*180));},600);
+      setTimeout(()=>wrap.classList.add('swept'),920);
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ══ COMPARE BARS ══ */
+(function(){
+  const wrap=document.getElementById('cmpBars');if(!wrap)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      ['cb0','cb1','cb2','cb3'].forEach((id,i)=>setTimeout(()=>{
+        const el=document.getElementById(id);if(el)el.style.width=el.dataset.w+'%';
+      },i*250));
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ══ GAMBIT BADGES stagger ══ */
+(function(){
+  const badges=document.querySelectorAll('.gambit-badge');if(!badges.length)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      badges.forEach((b,i)=>{
+        b.style.cssText=`opacity:0;transform:translateX(-14px);transition:opacity .55s ease ${i*.14}s,transform .55s ease ${i*.14}s;`;
+        setTimeout(()=>{b.style.opacity='1';b.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3});
+  obs.observe(badges[0]);
+})();
+
+/* ══ MTBF ══ */
+(function(){
+  const el=document.getElementById('mtbfCount');if(!el)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      const dur=1800,target=1500000,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,3);
+        el.textContent=Math.round(v*target).toLocaleString();
+        if(p<1)requestAnimationFrame(f);else el.textContent='1,500,000';
+      })(performance.now());
+    }
+  },{threshold:.4});
+  obs.observe(el);
+})();
+
+/* ══ RUNTIME TIMELINE ══ */
+(function(){
+  const wrap=document.getElementById('rtWrap');if(!wrap)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      setTimeout(()=>{
+        const f1=document.getElementById('rtF1');
+        const loco=document.getElementById('rtLoco');
+        if(f1)f1.style.width='100%';
+        if(loco){loco.style.transition='left 1.6s ease';loco.style.left='calc(100% - 16px)';}
+        setTimeout(()=>{const f2=document.getElementById('rtF2');if(f2)f2.style.width='100%';},400);
+      },200);
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ══ PACKAGING CARD ══ */
+(function(){
+  const wrap=document.getElementById('pkgCard');if(!wrap)return;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){const card=wrap.querySelector('.pkg-card');if(card){card.style.opacity='1';card.style.transform='none';}}
+  },{threshold:.2});
+  obs.observe(wrap);
+})();
+
+/* ══ PULSE CANVAS — electric arc neon purple ══ */
+(function(){
+  const cv=document.getElementById('pulseCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0,rafId;
+
+  function draw(){
+    ctx.fillStyle='#08080e';
+    ctx.fillRect(0,0,W,H);
+
+    // deep purple nebula wash
+    const nb=ctx.createRadialGradient(W*.5,H*.5,0,W*.5,H*.5,W*.65);
+    nb.addColorStop(0,'rgba(80,16,120,.1)');
+    nb.addColorStop(1,'rgba(8,8,14,0)');
+    ctx.fillStyle=nb;ctx.fillRect(0,0,W,H);
+
+    // arc nodes
+    const nodes=[{x:W*.2,y:H*.3},{x:W*.5,y:H*.7},{x:W*.75,y:H*.25},{x:W*.35,y:H*.6}];
+
+    // electric arc lines between nodes — erratic
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        if(Math.sin(t*.7+i*j)>0.2){
+          const ax=nodes[i].x,ay=nodes[i].y,bx=nodes[j].x,by=nodes[j].y;
+          const alpha=(0.04+0.08*Math.abs(Math.sin(t*.9+i+j)))*(0.5+0.5*Math.sin(t*1.2+i));
+          ctx.beginPath();ctx.moveTo(ax,ay);
+          // jagged mid-point for arc feel
+          const mx2=(ax+bx)/2+(Math.sin(t*2.1+i*j)*18);
+          const my2=(ay+by)/2+(Math.cos(t*1.8+i+j)*14);
+          ctx.quadraticCurveTo(mx2,my2,bx,by);
+          ctx.strokeStyle=`rgba(160,32,208,${alpha})`;ctx.lineWidth=.6;ctx.stroke();
+        }
+      }
+    }
+
+    // pulsing purple rings
+    const cx=W*.42,cy=H*.5;
+    for(let i=0;i<5;i++){
+      const phase=(t*.7+i*.88)%(Math.PI*2);
+      const r=5+i*13+Math.sin(phase)*3.5;
+      const alpha=(0.12-i*.018)*(0.5+0.5*Math.sin(phase+Math.PI));
+      if(alpha<=0)continue;
+      const isRed=i%3===0;
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+      ctx.strokeStyle=isRed?`rgba(224,32,48,${alpha})`:`rgba(160,32,208,${alpha})`;
+      ctx.lineWidth=i===0?1.3:.6;
+      if(i===0){ctx.shadowColor='rgba(160,32,208,.5)';ctx.shadowBlur=8;}else ctx.shadowBlur=0;
+      ctx.stroke();
+    }
+    ctx.shadowBlur=0;
+
+    // occasional purple flash
+    if(Math.sin(t*.15)>0.92){
+      ctx.fillStyle=`rgba(160,32,208,${(Math.sin(t*.15)-0.92)*3*.06})`;
+      ctx.fillRect(0,0,W,H);
+    }
+
+    // scan lines
+    ctx.fillStyle='rgba(0,0,0,.09)';
+    for(let y=0;y<H;y+=2)ctx.fillRect(0,y,W,1);
+
+    // purple/red diagonal slashes
+    ctx.save();ctx.globalAlpha=.18;
+    [[.2,.26],[.48,.52],[.74,.78]].forEach(([y1,y2],idx)=>{
+      const g=ctx.createLinearGradient(0,0,W,0);
+      g.addColorStop(0,'transparent');
+      g.addColorStop(.25,idx%2===0?'rgba(160,32,208,0.6)':'rgba(224,32,48,0.5)');
+      g.addColorStop(.7,'rgba(160,32,208,0.3)');
+      g.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.moveTo(0,H*y1);ctx.lineTo(W,H*y2);
+      ctx.strokeStyle=g;ctx.lineWidth=1;ctx.stroke();
+    });
+    ctx.restore();
+
+    t+=.026;rafId=requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('beforeunload',()=>cancelAnimationFrame(rafId));
+})();
+
+/* ══ SPEC TABLE ══ */
+(function(){
+  const tbl=document.querySelector('.spec-tbl');if(!tbl)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      tbl.querySelectorAll('tr').forEach((row,i)=>{
+        row.style.cssText=`opacity:0;transition:opacity .38s ease ${i*.04}s;`;
+        setTimeout(()=>{row.style.opacity='1';},60);
+      });
+    }
+  },{threshold:.1});
+  obs.observe(tbl);
+})();
+</script>
+</body>
+</html>

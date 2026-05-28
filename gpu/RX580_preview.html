@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip RX580 8GD5 — Fortress Protocol: Initialized.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sd:#1a1208;--sd2:#2c1f0e;--sd3:#3d2c14;
+  --sb:#5c3d1e;--sw:#7a5230;--st:#b8844a;
+  --sl:#d4a96a;--sp:#e8c98a;--sdust:#f0ddb0;
+  --cr:#c0392b;--crh:#e74c3c;--crd:#8b1a13;
+  --am:#d4851e;
+  --tm:#f0ddb0;--ts:#b8844a;--td:#7a5230;
+  --border:rgba(184,132,74,.18);
+  --shadow:rgba(26,18,8,.6);
+  --ff-d:'Bebas Neue',sans-serif;
+  --ff-b:'Barlow Condensed',sans-serif;
+  --ff-m:'Share Tech Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff-b);background:var(--sd);color:var(--tm);overflow-x:hidden;cursor:none;}
+
+/* NOISE */
+.noise{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;}
+
+/* CURSOR */
+#cur{position:fixed;width:6px;height:6px;border-radius:50%;background:var(--cr);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;box-shadow:0 0 10px var(--cr);}
+#cur-ring{position:fixed;width:28px;height:28px;border:1px solid rgba(192,57,43,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);animation:ringR 3s linear infinite;}
+@keyframes ringR{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
+.trail-dot{position:fixed;border-radius:50%;background:var(--cr);pointer-events:none;z-index:9990;transform:translate(-50%,-50%);opacity:.15;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:18px 5%;transition:background .3s,border-bottom .3s;}
+nav.sc{background:rgba(26,18,8,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--ff-d);font-size:18px;letter-spacing:.22em;color:var(--sl);}
+.nav-logo em{color:var(--cr);font-style:normal;}
+.np{display:flex;gap:4px;}
+.np a{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--td);border:1px solid rgba(184,132,74,.15);padding:4px 9px;cursor:pointer;text-decoration:none;transition:all .2s;background:transparent;text-transform:uppercase;}
+.np a:hover,.np a.on{color:var(--sd);border-color:var(--st);background:var(--st);}
+
+/* SHARED */
+section{position:relative;width:100%;overflow:hidden;}
+.full{min-height:100vh;}
+.sec-label{font-family:var(--ff-m);font-size:10px;letter-spacing:.3em;color:var(--cr);text-transform:uppercase;margin-bottom:12px;}
+.sec-label::before{content:'─── ';color:var(--sb);}
+.sec-title{font-family:var(--ff-d);font-size:clamp(48px,6.5vw,84px);letter-spacing:.04em;color:var(--sp);line-height:.95;margin-bottom:8px;}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--cr),var(--am));margin:22px 0 36px;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 100%,6px 100%);}
+.fi{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease;}
+.fi.vis{opacity:1;transform:none;}
+.fi-d1{transition-delay:.1s;}.fi-d2{transition-delay:.2s;}.fi-d3{transition-delay:.3s;}
+.tag-chip{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--td);border:1px solid rgba(184,132,74,.18);padding:3px 9px;display:inline-block;background:rgba(92,61,30,.2);}
+.tag-chip::before{content:'#';color:var(--am);margin-right:2px;}
+.btn-primary{font-family:var(--ff-m);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--sd);background:var(--st);border:none;padding:13px 32px;cursor:pointer;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));transition:background .25s,transform .2s;}
+.btn-primary:hover{background:var(--sl);transform:translateY(-2px);}
+
+/* section dividers */
+#s01::before,#s02::before,#s03::before,#s04::before,#s05::before,#s06::before{
+  content:'';display:block;position:absolute;top:0;left:0;height:1px;width:0;
+  background:linear-gradient(90deg,transparent,var(--cr) 30%,var(--am) 60%,transparent);
+  transition:width .9s cubic-bezier(.16,1,.3,1);z-index:2;
+}
+#s01.div-on::before,#s02.div-on::before,#s03.div-on::before,
+#s04.div-on::before,#s05.div-on::before,#s06.div-on::before{width:100%;}
+
+/* ══ HERO ══ */
+#s00{display:flex;align-items:center;padding:100px 6% 80px;min-height:100vh;}
+.hero-bg{position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 65% 50%,rgba(92,61,30,.45) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 60% at 15% 80%,rgba(192,57,43,.1) 0%,transparent 60%),
+    linear-gradient(170deg,#1a1208 0%,#2c1f0e 45%,#1a1208 100%);}
+.hero-grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(184,132,74,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(184,132,74,.04) 1px,transparent 1px);
+  background-size:80px 80px;}
+.hero-slash{position:absolute;top:-10%;right:18%;width:3px;height:130%;
+  background:linear-gradient(180deg,transparent 0%,var(--cr) 40%,var(--am) 60%,transparent 100%);
+  transform:rotate(-12deg);opacity:.6;}
+.hero-slash::after{content:'';position:absolute;top:0;bottom:0;left:44px;width:1px;background:inherit;opacity:.3;}
+.hero-horizon{position:absolute;bottom:0;left:0;right:0;height:38%;
+  background:linear-gradient(0deg,rgba(92,61,30,.38) 0%,rgba(61,44,20,.15) 40%,transparent 100%);}
+
+/* CARD illustration — RX580, dual fan, 190×110mm */
+.h-right{position:absolute;right:0;top:0;bottom:0;width:52%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(40px);transition:opacity 1.8s ease .2s,transform 1.8s ease .2s;}
+.h-right.on{opacity:1;transform:translateX(0);}
+.rx580-wrap{width:90%;max-width:560px;position:relative;}
+.rx580-wrap::before{content:'';position:absolute;inset:-80px;z-index:-1;background:radial-gradient(ellipse 65% 40% at 55% 55%,rgba(192,57,43,.06) 0%,transparent 70%);}
+
+/* DUAL SLASH reveal */
+.card-slash1{position:absolute;inset:0;z-index:22;background:linear-gradient(120deg,transparent 0%,var(--cr) 49%,var(--cr) 51%,transparent 100%);background-size:200% 100%;background-position:200% 0;animation:slashRev 1.2s cubic-bezier(.76,0,.24,1) .2s forwards;pointer-events:none;border-radius:3px;}
+.card-slash2{position:absolute;inset:0;z-index:21;background:linear-gradient(128deg,transparent 0%,var(--am) 49%,var(--am) 51%,transparent 100%);background-size:200% 100%;background-position:200% 0;animation:slashRev 1.2s cubic-bezier(.76,0,.24,1) .5s forwards;pointer-events:none;border-radius:3px;}
+@keyframes slashRev{0%{background-position:200% 0;opacity:1;}100%{background-position:-200% 0;opacity:0;}}
+
+@keyframes cardFloat{0%,100%{transform:translateY(0) rotate(-.5deg);}50%{transform:translateY(-8px) rotate(-.5deg);}}
+.rx580-body{width:100%;aspect-ratio:2.5/1;background:linear-gradient(148deg,#221808 0%,#160f04 100%);position:relative;overflow:hidden;border-radius:3px;border:1px solid rgba(184,132,74,.2);box-shadow:0 40px 130px rgba(26,18,8,.95),0 0 80px rgba(192,57,43,.06);animation:cardFloat 7s ease-in-out infinite;}
+@keyframes glint{0%{left:-40%;opacity:0;}6%{opacity:1;}90%{opacity:.2;}100%{left:140%;opacity:0;}}
+.rx580-body::after{content:'';position:absolute;top:0;left:-40%;width:10%;height:100%;background:linear-gradient(90deg,transparent,rgba(184,132,74,.05),rgba(240,210,160,.07),rgba(184,132,74,.05),transparent);animation:glint 10s ease-in-out infinite 6s;pointer-events:none;z-index:12;}
+
+/* heatsink — wide dual-fan build */
+.rx580-hs{position:absolute;right:0;top:0;bottom:0;width:82%;background:linear-gradient(145deg,#1e1408,#14100a);border-left:1px solid rgba(184,132,74,.1);overflow:hidden;}
+.rx580-fins-wrap{position:absolute;inset:0;display:flex;flex-direction:column;gap:1.5px;padding:4px;}
+.rx580-fin{flex:1;background:linear-gradient(90deg,#1e1408,#1a1206);border-radius:1px;border:.3px solid rgba(184,132,74,.04);}
+/* geometric vent channels — Fortress pattern */
+.rx580-vc1{position:absolute;top:0;bottom:0;left:25%;width:3px;background:linear-gradient(180deg,rgba(192,57,43,.08),rgba(192,57,43,.03));border-radius:1px;}
+.rx580-vc2{position:absolute;top:0;bottom:0;left:50%;width:3px;background:linear-gradient(180deg,rgba(212,133,30,.07),rgba(212,133,30,.02));border-radius:1px;}
+.rx580-vc3{position:absolute;top:0;bottom:0;left:75%;width:3px;background:linear-gradient(180deg,rgba(192,57,43,.06),rgba(192,57,43,.02));border-radius:1px;}
+/* diagonal accent lines */
+.rx580-dl1{position:absolute;top:20%;left:-10%;width:120%;height:1.5px;background:linear-gradient(90deg,transparent,rgba(192,57,43,.45),rgba(212,133,30,.2),transparent);transform:rotate(-4deg);opacity:.8;}
+.rx580-dl2{position:absolute;top:80%;left:-10%;width:120%;height:1.5px;background:linear-gradient(90deg,transparent,rgba(212,133,30,.4),rgba(192,57,43,.18),transparent);transform:rotate(-4deg);opacity:.7;}
+/* scan line on card — diagnostic pulse */
+.rx580-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(192,57,43,.5),rgba(212,133,30,.3),transparent);opacity:0;top:0;animation:diagScan 6s ease-in-out infinite 3s;z-index:15;pointer-events:none;}
+@keyframes diagScan{0%{top:0;opacity:0;}6%{opacity:.7;}88%{opacity:.15;}100%{top:100%;opacity:0;}}
+
+/* DUAL FANS */
+.rx580-fans{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-around;padding:0 4%;}
+.rx580-fan{position:relative;width:41%;aspect-ratio:1;}
+.rx580-fan-ring{position:absolute;border-radius:50%;border:.5px solid rgba(184,132,74,.12);}
+.rx580-fr1{inset:0;background:rgba(14,10,4,.82);}
+.rx580-fr2{inset:8%;}
+.rx580-fr3{inset:18%;}
+.rx580-fr4{inset:30%;}
+.rx580-fr-glow{position:absolute;inset:-3%;border-radius:50%;border:1px solid rgba(192,57,43,.08);box-shadow:0 0 16px rgba(192,57,43,.05);}
+/* ball bearing indicator ring */
+.rx580-bearing{position:absolute;inset:5%;border-radius:50%;border:1px dashed rgba(184,132,74,.15);}
+.rx580-blades{position:absolute;inset:0;animation:fSpin 4.2s linear infinite;}
+.rx580-blades.fan2{animation-duration:4.7s;}
+@keyframes fSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.rx580-blade{position:absolute;top:50%;left:50%;width:46%;height:7.5%;transform-origin:0 50%;background:linear-gradient(90deg,rgba(184,132,74,.2),rgba(184,132,74,.02));border-radius:0 18px 18px 0;}
+.rx580-hub{position:absolute;inset:43%;background:radial-gradient(circle,#2a1c0a,#160f04);border-radius:50%;border:.5px solid rgba(212,133,30,.4);display:flex;align-items:center;justify-content:center;}
+.rx580-hub::after{content:'';width:30%;height:30%;background:var(--am);border-radius:50%;opacity:.75;box-shadow:0 0 10px rgba(212,133,30,.6);}
+.rx580-hub-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--ff-b);font-size:5px;font-weight:700;letter-spacing:.08em;color:var(--sl);opacity:.85;z-index:5;white-space:nowrap;}
+
+/* PCB strip */
+.rx580-pcb{position:absolute;left:0;top:0;bottom:0;right:82%;background:linear-gradient(145deg,#1e1408,#14100a);}
+.rx580-brand{position:absolute;top:50%;left:3%;transform:translateY(-50%);padding-left:5px;}
+.rx580-brand-name{font-family:var(--ff-m);font-size:4px;letter-spacing:.18em;color:rgba(240,221,176,.28);text-transform:uppercase;display:block;}
+.rx580-model{font-family:var(--ff-d);font-size:11px;letter-spacing:.04em;color:var(--tm);line-height:1.1;display:block;}
+.rx580-sub{font-family:var(--ff-m);font-size:3.8px;letter-spacing:.1em;color:var(--am);text-transform:uppercase;display:block;margin-top:2px;opacity:.6;}
+.rx580-ports{position:absolute;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;}
+.rx580-port{width:5px;height:10px;background:rgba(240,221,176,.05);border-radius:1px 0 0 1px;border:.3px solid rgba(240,221,176,.08);position:relative;transition:background .3s;}
+.rx580-port.dp{height:8px;}
+.rx580-port.hl{background:rgba(192,57,43,.4);border-color:rgba(192,57,43,.6);}
+.rx580-port-lbl{position:absolute;left:-22px;top:50%;transform:translateY(-50%);font-family:var(--ff-m);font-size:4.5px;letter-spacing:.06em;color:var(--cr);opacity:0;white-space:nowrap;transition:opacity .3s;}
+.rx580-port.hl .rx580-port-lbl{opacity:1;}
+/* 6-pin power connector */
+.rx580-6pin{position:absolute;top:8%;right:2%;display:flex;gap:2px;}
+.rx580-pin{width:5px;height:5px;background:rgba(192,57,43,.25);border:.3px solid rgba(192,57,43,.4);border-radius:.5px;}
+/* PVC backplate accent — bottom edge */
+.rx580-pvc{position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,rgba(184,132,74,.25),rgba(184,132,74,.35),rgba(184,132,74,.25),transparent);}
+/* top glow line */
+.rx580-glow{position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent 5%,var(--am) 22%,var(--cr) 55%,var(--am) 78%,transparent 95%);opacity:.5;}
+.rx580-status{position:absolute;bottom:6px;right:8px;font-family:var(--ff-m);font-size:5.5px;letter-spacing:.1em;color:var(--cr);opacity:.7;}
+.amd-badge{position:absolute;top:8%;left:20%;font-family:var(--ff-m);font-size:5px;letter-spacing:.1em;color:var(--am);opacity:.55;text-transform:uppercase;background:rgba(212,133,30,.06);padding:2px 5px;border-radius:2px;}
+
+/* hero layout */
+.h-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,var(--sd) 0%,var(--sd) 14%,rgba(26,18,8,.55) 42%,transparent 62%);}
+.h-left{position:relative;z-index:3;padding:0;flex:1;max-width:600px;}
+.h-tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.3em;color:var(--cr);text-transform:uppercase;margin-bottom:18px;opacity:0;transition:opacity .5s;}
+.h-tag.on{opacity:1;}
+.h-tag::before{content:'▶ ';color:var(--am);}
+/* staggered title slam */
+.h-hl{margin-bottom:20px;opacity:0;transition:opacity .3s ease;}
+.h-hl.on{opacity:1;}
+.hl-ln{display:block;font-family:var(--ff-d);font-size:clamp(56px,8.5vw,108px);letter-spacing:.03em;line-height:.9;opacity:0;transform:translateY(20px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
+.hl-ln.in{opacity:1;transform:none;}
+.hl-fortress{color:var(--sp);text-shadow:0 0 80px rgba(212,169,106,.3);}
+.hl-rx{color:var(--crh);font-size:.55em;letter-spacing:.14em;}
+.hl-sub{font-family:var(--ff-d);font-size:clamp(18px,2.5vw,32px);color:var(--ts);letter-spacing:.08em;}
+.h-sub{font-size:16px;font-weight:300;letter-spacing:.04em;color:var(--ts);line-height:1.75;max-width:440px;margin-top:16px;opacity:0;transition:opacity .8s ease;}
+.h-sub.on{opacity:1;}
+.h-sub strong{color:var(--sl);font-weight:600;}
+.h-cta{display:flex;align-items:center;gap:28px;margin-top:40px;opacity:0;transition:opacity .5s;}
+.h-cta.on{opacity:1;}
+.h-scroll-hint{font-family:var(--ff-m);font-size:10px;letter-spacing:.18em;color:var(--td);}
+/* hero stats */
+.h-stats{display:flex;gap:40px;margin-top:44px;padding-top:28px;border-top:1px solid rgba(184,132,74,.2);flex-wrap:wrap;opacity:0;transition:opacity .5s;}
+.h-stats.on{opacity:1;}
+.h-stat{display:flex;flex-direction:column;}
+.h-stat-num{font-family:var(--ff-d);font-size:40px;color:var(--sp);line-height:1;}
+.h-stat-num em{font-style:normal;font-size:20px;color:var(--cr);}
+.h-stat-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;color:var(--td);text-transform:uppercase;margin-top:3px;}
+.scr-hint{position:absolute;bottom:28px;left:6%;display:flex;align-items:center;gap:12px;opacity:0;transition:opacity .5s;z-index:4;}
+.scr-hint.on{opacity:1;}
+.scr-ln{width:40px;height:1px;background:var(--td);position:relative;overflow:hidden;}
+.scr-ln::after{content:'';position:absolute;left:-100%;width:100%;height:100%;background:var(--sl);animation:scanPulse 2s linear infinite;}
+@keyframes scanPulse{0%{left:-100%;}100%{left:100%;}}
+.scr-lb{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;color:var(--td);text-transform:uppercase;}
+
+/* ══ S01 FORTRESS ══ */
+#s01{background:linear-gradient(180deg,var(--sd) 0%,var(--sd2) 100%);padding:90px 6%;}
+.s01-in{max-width:1060px;margin:0 auto;}
+.bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.bl-title-tw{font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;color:var(--cr);text-transform:uppercase;margin-top:5px;overflow:hidden;white-space:nowrap;width:0;border-right:1px solid var(--cr);display:inline-block;}
+.bl-title-tw.tw-go{animation:typeOut .7s steps(20,end) forwards,cursorBlink .6s step-end 3;}
+@keyframes typeOut{from{width:0;}to{width:14ch;}}
+@keyframes cursorBlink{0%,100%{border-color:var(--cr);}50%{border-color:transparent;}}
+.bl-title-tw.tw-done{border-right-color:transparent;}
+.bl-body{font-size:15px;font-weight:300;line-height:1.9;color:var(--ts);margin-bottom:20px;}
+.bl-body strong{color:var(--sl);font-weight:600;}
+.bl-blockquote{border-left:3px solid var(--cr);padding:12px 18px;background:rgba(192,57,43,.06);margin-bottom:16px;}
+.bl-blockquote p{font-family:var(--ff-m);font-size:11px;letter-spacing:.04em;color:rgba(192,57,43,.65);line-height:1.75;}
+.bl-blockquote .bq-src{font-size:8px;letter-spacing:.14em;color:var(--td);margin-top:6px;text-transform:uppercase;}
+.bl-pos{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--am);margin-top:14px;padding:8px 12px;border:1px solid rgba(212,133,30,.25);background:rgba(212,133,30,.05);display:inline-block;}
+/* why grid — 3 mechanical cards */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px;background:rgba(184,132,74,.1);}
+.why-card{background:var(--sd2);padding:36px 28px;position:relative;overflow:hidden;transition:background .3s;}
+.why-card:hover{background:var(--sd3);}
+.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cr),transparent);opacity:0;transition:opacity .3s;}
+.why-card:hover::before{opacity:1;}
+.why-num{font-family:var(--ff-d);font-size:56px;color:rgba(92,61,30,.45);line-height:1;margin-bottom:14px;}
+.why-heading{font-family:var(--ff-d);font-size:22px;letter-spacing:.1em;color:var(--sl);margin-bottom:3px;}
+.why-sub{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;color:var(--cr);text-transform:uppercase;margin-bottom:14px;}
+.why-body{font-size:13px;font-weight:300;color:var(--ts);line-height:1.8;}
+
+/* ══ S02 COUNTERFORCE ══ */
+#s02{background:var(--sd3);overflow:hidden;}
+.cf-layout{padding:90px 6%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto;}
+.cf-left{position:relative;}
+.cf-big-num{font-family:var(--ff-d);font-size:clamp(120px,18vw,220px);line-height:.85;color:rgba(92,61,30,.4);position:absolute;top:-20px;left:-10px;user-select:none;pointer-events:none;}
+.cf-stats{position:relative;z-index:1;display:flex;flex-direction:column;gap:28px;padding-top:44px;}
+.cf-stat{border-left:3px solid var(--cr);padding-left:22px;}
+.cf-stat-val{font-family:var(--ff-d);font-size:50px;color:var(--sp);line-height:1;}
+.cf-stat-val em{font-style:normal;font-size:22px;color:var(--cr);}
+.cf-stat-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;color:var(--td);text-transform:uppercase;margin-top:3px;}
+/* 256-lane grid canvas */
+#laneCanvas{display:block;margin-top:6px;opacity:0;transition:opacity .5s;}
+#laneCanvas.vis{opacity:1;}
+.cf-right{}
+.cf-body{font-size:15px;font-weight:300;color:var(--ts);line-height:1.9;margin-top:18px;}
+.cf-body strong{color:var(--sl);font-weight:600;}
+.cf-kicker{margin-top:28px;font-family:var(--ff-d);font-size:22px;letter-spacing:.12em;color:var(--sp);}
+.cf-kicker em{display:block;color:var(--cr);font-style:normal;}
+/* badge row */
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;position:relative;overflow:hidden;}
+.badge-row.swept::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(192,57,43,.1),rgba(240,210,160,.08),rgba(192,57,43,.1),transparent);animation:badgeSweep .7s ease forwards;pointer-events:none;z-index:10;}
+@keyframes badgeSweep{0%{left:-50%;}100%{left:150%;}}
+.stat-badge{display:inline-flex;flex-direction:column;align-items:flex-start;border:1px solid rgba(184,132,74,.2);padding:16px 20px;background:rgba(92,61,30,.2);transition:border-color .3s,background .3s;}
+.stat-badge:hover{border-color:var(--st);background:rgba(92,61,30,.35);}
+.stat-badge .num{font-family:var(--ff-d);font-size:clamp(22px,3.5vw,42px);color:var(--sp);line-height:1;}
+.stat-badge .lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--td);margin-top:3px;text-transform:uppercase;}
+.bar-wrap{height:3px;background:rgba(92,61,30,.4);border-radius:1px;overflow:hidden;margin-top:5px;}
+.bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--cr),var(--am));border-radius:1px;transition:width 1.6s cubic-bezier(.16,1,.3,1);}
+
+/* ══ S03 CAPABLE (Dominance) ══ */
+#s03{background:linear-gradient(180deg,var(--sd2) 0%,var(--sd) 100%);}
+.dom-layout{padding:90px 6%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;max-width:1200px;margin:0 auto;}
+/* port highlight */
+.port-row{display:flex;gap:10px;margin-top:20px;}
+.port-item{flex:1;border:1px solid rgba(184,132,74,.18);padding:12px;text-align:center;transition:border-color .3s,background .3s;background:rgba(92,61,30,.15);cursor:default;}
+.port-item.active{border-color:var(--cr);background:rgba(192,57,43,.1);box-shadow:0 2px 12px rgba(192,57,43,.15);}
+.port-item:hover{border-color:var(--st);background:rgba(92,61,30,.3);}
+.port-nm{font-family:var(--ff-d);font-size:14px;letter-spacing:.1em;color:var(--sl);margin-bottom:2px;}
+.port-ds{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;color:var(--td);text-transform:uppercase;}
+.bullet-list{list-style:none;margin-top:20px;}
+.bullet-list li{padding:13px 0;border-bottom:1px solid rgba(92,61,30,.35);font-size:15px;font-weight:300;line-height:1.75;color:var(--ts);display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;}
+.bullet-list li:last-child{border-bottom:none;}
+.bullet-list .bi{width:26px;height:26px;border:1px solid rgba(184,132,74,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;background:rgba(92,61,30,.2);}
+.bullet-list .bi svg{width:12px;height:12px;stroke:var(--am);fill:none;stroke-width:1.5;}
+.bullet-list strong{font-weight:600;color:var(--sl);}
+/* compare bars */
+.cmp-bar-wrap{margin-top:28px;}
+.cmp-bar-row{margin-bottom:18px;padding:5px 7px;border-radius:2px;transition:background .2s;cursor:default;position:relative;}
+.cmp-bar-row:hover{background:rgba(92,61,30,.2);}
+.cmp-bar-row:hover .cmp-bar-name{color:var(--sl);}
+.cmp-bar-row::before{content:'›';position:absolute;left:-12px;top:50%;transform:translateY(-50%);font-family:var(--ff-m);font-size:11px;color:var(--cr);opacity:0;transition:opacity .2s,left .2s;}
+.cmp-bar-row:hover::before{opacity:.5;left:-6px;}
+.cmp-bar-label{display:flex;justify-content:space-between;margin-bottom:5px;}
+.cmp-bar-name{font-family:var(--ff-m);font-size:9px;letter-spacing:.05em;color:var(--td);text-transform:uppercase;transition:color .2s;}
+.cmp-bar-note{font-family:var(--ff-m);font-size:7.5px;color:rgba(122,82,48,.6);margin-left:5px;}
+.cmp-bar-val{font-family:var(--ff-m);font-size:9px;color:var(--td);}
+.cmp-bar-track{height:4px;background:rgba(92,61,30,.4);border-radius:2px;overflow:hidden;}
+.cmp-bar-fill{height:100%;width:0;border-radius:2px;transition:width 1.4s cubic-bezier(.16,1,.3,1);}
+.cmp-bar-fill.c1{background:rgba(184,132,74,.2);}
+.cmp-bar-fill.c2{background:rgba(184,132,74,.35);}
+.cmp-bar-fill.c3{background:rgba(184,132,74,.22);}
+.cmp-bar-fill.rx580-bar{background:linear-gradient(90deg,var(--cr),var(--am));box-shadow:1px 0 8px rgba(192,57,43,.4);}
+/* overflow shatter */
+.cmp-bar-row.featured .cmp-bar-track{overflow:visible;}
+.cmp-bar-row.featured .cmp-bar-fill.fired::after{content:'';position:absolute;right:-24px;top:-4px;width:20px;height:12px;background:radial-gradient(ellipse at left,rgba(192,57,43,.6),rgba(212,133,30,.3),transparent);border-radius:0 8px 8px 0;clip-path:polygon(0 0,70% 0,100% 50%,70% 100%,0 100%,15% 50%);}
+.cmp-bar-row.featured .cmp-bar-name{color:var(--sl);font-weight:500;}
+.cmp-bar-row.featured .cmp-bar-val{color:var(--am);}
+
+/* ══ S04 THERMAL ══ */
+#s04{background:var(--sd2);position:relative;}
+#s04::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 50% at 80% 50%,rgba(192,57,43,.07) 0%,transparent 70%);pointer-events:none;}
+.thermal-layout{padding:90px 6%;display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:start;max-width:1160px;margin:0 auto;}
+.thermal-body{font-size:15px;font-weight:300;color:var(--ts);line-height:1.9;margin-top:18px;}
+.thermal-body strong{color:var(--sl);font-weight:600;}
+.badge-stack{display:flex;flex-direction:column;gap:18px;margin-top:32px;}
+.fort-badge{display:flex;align-items:flex-start;gap:16px;background:rgba(92,61,30,.18);border:1px solid rgba(184,132,74,.15);padding:18px 22px;position:relative;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));transition:background .3s;}
+.fort-badge:hover{background:rgba(92,61,30,.32);}
+.fb-icon{font-family:var(--ff-d);font-size:28px;color:var(--cr);line-height:1;min-width:38px;}
+.fb-title{font-family:var(--ff-d);font-size:18px;letter-spacing:.08em;color:var(--sl);margin-bottom:3px;}
+.fb-desc{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--td);line-height:1.6;text-transform:uppercase;}
+
+/* ══ S05 ANCHORAGE ══ */
+#s05{background:var(--sd);position:relative;overflow:hidden;}
+.anch-bp{position:absolute;top:0;right:0;width:40%;height:100%;background-image:linear-gradient(rgba(184,132,74,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(184,132,74,.05) 1px,transparent 1px);background-size:40px 40px;opacity:.6;}
+.anch-layout{padding:90px 6%;display:grid;grid-template-columns:1fr 1fr;gap:80px;max-width:1200px;margin:0 auto;}
+.anch-body{font-size:15px;font-weight:300;color:var(--ts);line-height:1.9;margin-top:18px;}
+.anch-body strong{color:var(--sl);font-weight:600;}
+.endurance-badges{display:flex;flex-direction:column;gap:18px;padding-top:72px;}
+.mtbf-num{font-family:var(--ff-d);font-size:clamp(48px,7vw,84px);color:var(--sp);line-height:1;margin:18px 0 4px;}
+.mtbf-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--td);}
+/* runtime timeline */
+.runtime-tl{margin:24px 0;}
+.rt-lbl{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:7px;}
+.rt-lbl.human{color:var(--td);}
+.rt-lbl.gpu{color:var(--am);}
+.rt-row{margin-bottom:32px;position:relative;}
+.rt-track{position:relative;height:2px;background:rgba(92,61,30,.45);}
+.rt-fill{position:absolute;left:0;top:0;height:100%;width:0;transition:width 1.6s ease;}
+.rt-fill.hfill{background:linear-gradient(90deg,rgba(240,221,176,.2),rgba(240,221,176,.38));}
+.rt-fill.gfill{background:linear-gradient(90deg,var(--cr),var(--am));box-shadow:0 0 8px rgba(192,57,43,.35);}
+.rt-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:var(--sd);z-index:2;}
+.rt-dot.hd{border:1.5px solid rgba(240,221,176,.28);}
+.rt-dot.gd{border:1.5px solid var(--am);}
+.rt-dot.gd.install{border-color:var(--st);box-shadow:0 0 5px rgba(184,132,74,.4);}
+.rt-lbl2{position:absolute;font-family:var(--ff-m);font-size:7px;white-space:nowrap;top:9px;transform:translateX(-50%);color:rgba(240,221,176,.38);}
+.rt-lbl2.gl{color:var(--am);}
+.rt-lbl2.il{color:var(--st);}
+.rt-lbl2.ra{transform:translateX(-100%);}
+.rt-mover{position:absolute;top:-11px;font-size:13px;transition:left 1.6s ease;opacity:.5;}
+.rt-divider{height:1px;background:rgba(92,61,30,.35);margin:3px 0 18px;}
+.rt-note{font-family:var(--ff-m);font-size:9px;color:var(--td);margin-top:4px;letter-spacing:.05em;}
+.rt-note strong{color:var(--am);}
+
+/* ══ S06 SPECS ══ */
+#s06{background:var(--sd2);padding:90px 6%;position:relative;}
+#s06::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,transparent,var(--cr) 30%,var(--am) 70%,transparent);}
+.spec-in{max-width:860px;margin:0 auto;}
+.spec-tbl{width:100%;border-collapse:collapse;margin-top:36px;font-family:var(--ff-m);}
+.spec-tbl tr{border-bottom:1px solid rgba(92,61,30,.45);transition:background .2s;}
+.spec-tbl tr:hover{background:rgba(92,61,30,.28);}
+.spec-tbl td{padding:14px 24px;font-size:12px;letter-spacing:.06em;}
+.spec-tbl td:first-child{color:var(--td);text-transform:uppercase;width:42%;border-left:2px solid transparent;transition:border-color .2s;padding-left:6px;}
+.spec-tbl tr:hover td:first-child{border-left-color:var(--cr);}
+.spec-tbl td:last-child{color:var(--sp);}
+.spec-tbl .spec-hl td:last-child{color:var(--crh);}
+.spec-note{font-family:var(--ff-m);font-size:10px;color:var(--td);margin-top:22px;padding-top:16px;border-top:1px solid rgba(92,61,30,.3);letter-spacing:.06em;}
+.spec-ctas{display:flex;gap:9px;margin-top:36px;flex-wrap:wrap;}
+.spec-foot{margin-top:32px;padding-top:18px;border-top:1px solid rgba(92,61,30,.3);display:flex;gap:7px;flex-wrap:wrap;}
+
+/* CLOSING */
+.closing{background:linear-gradient(180deg,var(--sd2) 0%,var(--sd) 100%);text-align:center;padding:110px 6%;position:relative;overflow:hidden;}
+.closing::before{content:'FORTRESS';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--ff-d);font-size:22vw;color:rgba(92,61,30,.07);white-space:nowrap;pointer-events:none;user-select:none;}
+.cl-sub{font-family:var(--ff-m);font-size:11px;letter-spacing:.3em;color:var(--td);text-transform:uppercase;margin-bottom:24px;}
+.cl-tagline{font-family:var(--ff-d);font-size:clamp(32px,5vw,60px);letter-spacing:.1em;color:var(--sp);line-height:1.1;max-width:760px;margin:0 auto 18px;position:relative;}
+.cl-tagline .accent{color:var(--cr);}
+.cl-body{font-family:var(--ff-m);font-size:12px;letter-spacing:.14em;color:var(--ts);max-width:480px;margin:0 auto 44px;line-height:1.75;position:relative;}
+/* FOOTER */
+.site-foot{background:var(--sd);border-top:1px solid rgba(92,61,30,.3);padding:28px 6%;display:flex;justify-content:space-between;align-items:center;}
+.sf-brand{font-family:var(--ff-d);font-size:17px;letter-spacing:.22em;color:var(--td);}
+.sf-brand em{color:var(--cr);font-style:normal;}
+.sf-note{font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;color:rgba(122,82,48,.45);}
+
+/* ══ PKG ══ */
+#pkg{background:var(--sd3);padding:90px 6%;}
+.pkg-in{max-width:1060px;margin:0 auto;}
+.pkg-layout{display:grid;grid-template-columns:240px 1fr;gap:52px;align-items:start;}
+.pkg-card{width:218px;background:#10090200;border-radius:3px;overflow:hidden;box-shadow:0 12px 40px rgba(26,18,8,.8),0 2px 8px rgba(26,18,8,.5);}
+.pkg-art{height:104px;position:relative;overflow:hidden;background:#1a1208;}
+.pkg-art canvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block;}
+.pkg-model-overlay{position:absolute;bottom:6px;left:8px;font-family:var(--ff-d);font-size:18px;letter-spacing:.04em;color:var(--sdust);line-height:1;transform:skewX(-4deg);z-index:2;}
+.pkg-model-overlay span{font-size:.42em;color:var(--cr);display:block;letter-spacing:.08em;}
+.pkg-amd-badge{position:absolute;bottom:7px;right:8px;font-family:var(--ff-b);font-size:7px;font-weight:700;color:#e04020;letter-spacing:.04em;opacity:.8;z-index:2;}
+.pkg-body{padding:9px 12px 7px;background:var(--sd2);}
+.pkg-brand-t{font-family:var(--ff-m);font-size:7.5px;font-weight:300;letter-spacing:.16em;color:var(--td);text-transform:uppercase;display:block;}
+.pkg-stripe{height:2px;background:linear-gradient(90deg,var(--cr) 0%,var(--am) 50%,rgba(212,133,30,.2) 85%,transparent);margin:7px 0;}
+.pkg-cap-row{display:flex;align-items:center;gap:8px;padding:3px 0 6px;}
+.pkg-cap{font-family:var(--ff-d);font-size:26px;color:var(--sp);line-height:1;}
+.pkg-spd{font-family:var(--ff-b);font-size:7.5px;color:var(--td);text-transform:uppercase;letter-spacing:.06em;line-height:1.5;}
+.pkg-spd strong{font-family:var(--ff-d);font-size:14px;color:var(--am);display:block;}
+.pkg-certs{display:flex;gap:3px;padding:5px 12px;border-top:1px solid rgba(92,61,30,.35);background:var(--sd2);}
+.pkg-cert{font-family:var(--ff-m);font-size:6.5px;color:var(--td);border:1px solid rgba(184,132,74,.2);padding:2px 4px;}
+.pkg-feat-list{display:flex;flex-direction:column;}
+.pkg-feat-item{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid rgba(92,61,30,.3);}
+.pkg-feat-item:last-child{border-bottom:none;}
+.pkg-feat-icon{font-size:14px;flex-shrink:0;padding-top:1px;}
+.pkg-feat-nm{font-family:var(--ff-d);font-size:15px;letter-spacing:.06em;color:var(--sl);margin-bottom:3px;}
+.pkg-feat-ds{font-size:13px;font-weight:300;color:var(--ts);line-height:1.65;}
+
+@media(max-width:860px){
+  .bl-grid,.cf-layout,.dom-layout,.thermal-layout,.anch-layout,.pkg-layout{grid-template-columns:1fr;gap:44px;}
+  .h-right{opacity:.08!important;transform:none!important;width:100%;}
+  .h-fade{background:rgba(26,18,8,.9);}
+  .why-grid{grid-template-columns:1fr;}
+  .sec-wrap.rev{direction:ltr;}
+}
+@media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<div id="cur"></div><div id="cur-ring"></div>
+
+<nav id="nav">
+  <div class="nav-logo">SIMOR<em>CHIP</em></div>
+  <div class="np">
+    <a class="on" onclick="goTo('s00')">Hero</a>
+    <a onclick="goTo('s01')">Fortress</a>
+    <a onclick="goTo('s02')">Counterforce</a>
+    <a onclick="goTo('s03')">Dominance</a>
+    <a onclick="goTo('s04')">Thermal</a>
+    <a onclick="goTo('s05')">Anchorage</a>
+    <a onclick="goTo('s06')">Specs</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="s00" class="full">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-slash"></div>
+  <div class="hero-horizon"></div>
+
+  <div class="h-right" id="hRight">
+    <div class="rx580-wrap">
+      <div class="card-slash1"></div>
+      <div class="card-slash2"></div>
+      <div class="rx580-body">
+        <div class="rx580-glow"></div>
+        <div class="rx580-scan"></div>
+        <div class="rx580-hs">
+          <div class="rx580-fins-wrap" id="rFins"></div>
+          <div class="rx580-vc1"></div><div class="rx580-vc2"></div><div class="rx580-vc3"></div>
+          <div class="rx580-dl1"></div><div class="rx580-dl2"></div>
+          <div class="rx580-fans">
+            <!-- Fan 1 -->
+            <div class="rx580-fan">
+              <div class="rx580-fr-glow"></div>
+              <div class="rx580-bearing"></div>
+              <div class="rx580-fr1 rx580-fan-ring"></div>
+              <div class="rx580-fr2 rx580-fan-ring"></div>
+              <div class="rx580-fr3 rx580-fan-ring"></div>
+              <div class="rx580-fr4 rx580-fan-ring"></div>
+              <div class="rx580-blades" id="blades1">
+                <div class="rx580-blade" style="transform:rotate(0deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(30deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(60deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(90deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(120deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(150deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(180deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(210deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(240deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(270deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(300deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(330deg)"></div>
+              </div>
+              <div class="rx580-hub"><div class="rx580-hub-label">Simorchip</div></div>
+            </div>
+            <!-- Fan 2 -->
+            <div class="rx580-fan">
+              <div class="rx580-fr-glow"></div>
+              <div class="rx580-bearing"></div>
+              <div class="rx580-fr1 rx580-fan-ring"></div>
+              <div class="rx580-fr2 rx580-fan-ring"></div>
+              <div class="rx580-fr3 rx580-fan-ring"></div>
+              <div class="rx580-fr4 rx580-fan-ring"></div>
+              <div class="rx580-blades fan2" id="blades2">
+                <div class="rx580-blade" style="transform:rotate(0deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(30deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(60deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(90deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(120deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(150deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(180deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(210deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(240deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(270deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(300deg)"></div>
+                <div class="rx580-blade" style="transform:rotate(330deg)"></div>
+              </div>
+              <div class="rx580-hub"><div class="rx580-hub-label">Simorchip</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="rx580-pcb"></div>
+        <div class="rx580-brand">
+          <span class="rx580-brand-name">Simorchip</span>
+          <span class="rx580-model">RX580<br>8GD5</span>
+          <span class="rx580-sub">GDDR5 · Ellesmere · 14nm</span>
+        </div>
+        <div class="rx580-ports" id="rPorts">
+          <div class="rx580-port dp" id="pDP"><span class="rx580-port-lbl">DP</span></div>
+          <div class="rx580-port" id="pHDMI"><span class="rx580-port-lbl">HDMI</span></div>
+          <div class="rx580-port" id="pDVI"><span class="rx580-port-lbl">DVI</span></div>
+        </div>
+        <div class="rx580-6pin">
+          <div class="rx580-pin"></div><div class="rx580-pin"></div>
+          <div class="rx580-pin"></div><div class="rx580-pin"></div>
+          <div class="rx580-pin"></div><div class="rx580-pin"></div>
+        </div>
+        <div class="rx580-pvc"></div>
+        <div class="amd-badge">AMD Radeon</div>
+        <div class="rx580-status">● FORTRESS ONLINE</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="h-fade"></div>
+  <div class="h-left">
+    <div class="h-tag" id="hTag">Fortress Protocol: Initialized — Dual Ball-Bearing Array Engaged</div>
+    <div class="h-hl" id="hHL">
+      <span class="hl-ln hl-fortress" id="hl0">Fortress</span>
+      <span class="hl-ln hl-rx" id="hl1">RX 580 · 8GD5</span>
+      <span class="hl-ln hl-sub" id="hl2">Ellesmere · 14nm · GCN 4.0</span>
+    </div>
+    <div class="h-sub" id="hSub"><strong>150W high-fidelity architecture. Dedicated 6-Pin power matrix.</strong><br>The RX580 8GD5 unleashes the Ellesmere core, driving a massive 256-Bit high-velocity memory highway for uncompromised rendering dominance.</div>
+    <div class="h-cta" id="hCta">
+      <button class="btn-primary">Explore Fortress</button>
+      <span class="h-scroll-hint">↓ SCROLL TO BREACH</span>
+    </div>
+    <div class="h-stats" id="hStats">
+      <div class="h-stat"><div class="h-stat-num" id="heroSP">0<em>SP</em></div><div class="h-stat-lbl">Stream Processors</div></div>
+      <div class="h-stat"><div class="h-stat-num">256<em>-BIT</em></div><div class="h-stat-lbl">Memory Bus</div></div>
+      <div class="h-stat"><div class="h-stat-num">8<em>GB</em></div><div class="h-stat-lbl">GDDR5 Buffer</div></div>
+      <div class="h-stat"><div class="h-stat-num">150<em>W</em></div><div class="h-stat-lbl">Power Profile</div></div>
+    </div>
+  </div>
+  <div class="scr-hint" id="scrHint"><div class="scr-ln"></div><div class="scr-lb">Scroll</div></div>
+</section>
+
+<!-- ═══ S01 FORTRESS ═══ -->
+<section id="s01">
+  <div class="s01-in">
+    <div class="bl-grid fi">
+      <div>
+        <div class="sec-label">Design Language · Fortress Series</div>
+        <div class="sec-title" style="margin-bottom:6px;">Fortress</div>
+        <div class="bl-title-tw" id="blTw">// PROTOCOL_INITIALIZED</div>
+        <div class="divider"></div>
+        <div class="bl-body">Like an unyielding fortress engineered to withstand continuous stress, this design wraps the 14nm Ellesmere core in a multi-layered defensive shell.<br><br>Two ultra-durable fans, engineered with <strong>industrial-grade ball bearings</strong>, spin in perfect harmony to drive relentless thermal dissipation while maintaining absolute acoustic discipline under load.<br><br>Flipping the card reveals the structural spine: a high-rigidity reinforced PVC backplate designed to prevent PCB warping and block material oxidation over years of constant deployment.</div>
+        <div class="bl-blockquote">
+          <p>Lock your system into the Fortress and execute your vision without fear.</p>
+          <div class="bq-src">// RX580 8GD5 · Ellesmere Core · 256-Bit Command Channel</div>
+        </div>
+        <div class="bl-pos">RX580 8GD5 — The absolute structural stronghold for mainstream visual workloads.</div>
+      </div>
+      <div class="img-ph fi fi-d1" style="aspect-ratio:16/10;min-height:260px;background:linear-gradient(135deg,#2c1f0e,#1a1208);border:1px solid rgba(184,132,74,.18);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(26,18,8,.5);">
+        <span style="font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(184,132,74,.2);text-align:center;line-height:2.4;padding:0 16px;">[ FORTRESS — DUAL FAN MACRO ]<br>RX580 8GD5 front · gold Simorchip crests<br>Low-key cinematic · PVC backplate visible ]</span>
+      </div>
+    </div>
+    <!-- WHY GRID -->
+    <div class="why-grid" style="margin-top:64px;" id="whyGrid">
+      <div class="why-card fi">
+        <div class="why-num">01</div>
+        <div class="why-heading">8GB Massive Buffer</div>
+        <div class="why-sub">Unrestricted Asset Management</div>
+        <p class="why-body">Heavy creative software and modern rendering pipelines choke on limited memory. With an expanded 8GB GDDR5 frame buffer, this architecture provides a vast digital reservoir to load massive texture packs, complex video timelines, and rich 3D geometry simultaneously. The data flow remains wide open and uninterrupted.</p>
+      </div>
+      <div class="why-card fi fi-d1">
+        <div class="why-num">02</div>
+        <div class="why-heading">256-Bit Pipeline</div>
+        <div class="why-sub">Double Bandwidth. Zero Bottlenecks.</div>
+        <p class="why-body">The RX580 opens a massive 256-Bit ultra-wide data highway at a blazing 6000 MHz memory frequency. It enables the GPU core to read and write huge data volumes instantly, transforming stuttering visual pipelines into fluid real-time rendering environments. No restriction. No latency.</p>
+      </div>
+      <div class="why-card fi fi-d2">
+        <div class="why-num">03</div>
+        <div class="why-heading">PVC Backplate</div>
+        <div class="why-sub">Anti-Warp & Anti-Oxidation Armor</div>
+        <p class="why-body">Thermal expansion and physical gravity degrade unprotected circuit boards over time. This card comes armored with a rigid PVC backplate that absorbs structural stress, completely eliminating PCB sag while forming a protective barrier against environmental oxidation for maximum operational lifespan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S02 COUNTERFORCE ═══ -->
+<section id="s02">
+  <div class="cf-layout">
+    <div class="cf-left fi">
+      <div class="cf-big-num">2048</div>
+      <div class="sec-label">Counterforce</div>
+      <div class="sec-title">RAW<br>PARALLEL<br>COMPUTE</div>
+      <div class="divider"></div>
+      <div class="cf-stats">
+        <div class="cf-stat fi">
+          <div class="cf-stat-val" id="count2048">0<em>SP</em></div>
+          <div class="cf-stat-lbl">Parallel Execution Vectors</div>
+          <canvas id="laneCanvas" width="280" height="28"></canvas>
+        </div>
+        <div class="cf-stat fi fi-d1">
+          <div class="cf-stat-val">256<em>-BIT</em></div>
+          <div class="cf-stat-lbl">Memory Bus Width</div>
+        </div>
+        <div class="cf-stat fi fi-d2">
+          <div class="cf-stat-val">1206<em>MHz</em></div>
+          <div class="cf-stat-lbl">Sustained Core Clock</div>
+        </div>
+      </div>
+    </div>
+    <div class="cf-right fi fi-d1">
+      <p style="font-family:var(--ff-m);font-size:10px;letter-spacing:.2em;color:var(--cr);text-transform:uppercase;margin-bottom:20px;">Core Array Operating at Peak Rendering Density</p>
+      <p class="cf-body">Built on the mature <strong>Ellesmere core</strong>, 2048 high-performance stream processors run at a sustained <strong>1206 MHz clock speed</strong>, pushing massive pixel volumes across a broad 256-Bit highway.<br><br>This structural throughput eliminates rendering latency. Whether cutting high-bitrate 4K multi-cam sequences, driving high-frame-rate gaming setups, or running continuous retail display engines — the hardware responds with instantaneous, decisive counterforce.</p>
+      <div class="cf-kicker">This isn't just an upgrade.<br><em>This is an absolute structural stronghold.</em></div>
+      <div class="badge-row" id="nsBadges">
+        <div class="stat-badge">
+          <div class="num">2048</div>
+          <div class="lbl">Ellesmere Cores</div>
+          <div class="bar-wrap"><div class="bar-fill" id="bar1"></div></div>
+        </div>
+        <div class="stat-badge">
+          <div class="num">8GB</div>
+          <div class="lbl">256-Bit GDDR5</div>
+          <div class="bar-wrap"><div class="bar-fill" id="bar2"></div></div>
+        </div>
+        <div class="stat-badge">
+          <div class="num" style="font-size:clamp(18px,2.8vw,34px);">150W</div>
+          <div class="lbl">6-Pin Power</div>
+          <div class="bar-wrap"><div class="bar-fill" id="bar3"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S03 DOMINANCE ═══ -->
+<section id="s03">
+  <div class="dom-layout">
+    <div class="fi">
+      <div class="sec-label">02 — Dominance</div>
+      <div class="sec-title" style="font-size:clamp(44px,6vw,78px);">Dominance</div>
+      <div class="sec-sub" style="font-family:var(--ff-m);font-size:10px;letter-spacing:.1em;color:var(--td);text-transform:uppercase;margin-bottom:20px;">DP + HDMI + DVI · DirectX 12 (12_1) · PCIe 3.0</div>
+      <div class="divider"></div>
+      <!-- Port highlight row -->
+      <div class="port-row fi fi-d1" id="portRow">
+        <div class="port-item" id="portDP"><div class="port-nm">DP</div><div class="port-ds">DisplayPort · 4K</div></div>
+        <div class="port-item" id="portHDMI"><div class="port-nm">HDMI</div><div class="port-ds">Digital · 4K</div></div>
+        <div class="port-item" id="portDVI"><div class="port-nm">DVI</div><div class="port-ds">Digital · Dual-Link</div></div>
+      </div>
+      <ul class="bullet-list" style="margin-top:18px;">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div><strong>Native Triple-Output — Zero adapters, zero signal loss.</strong> DisplayPort, HDMI, and DVI directly on the rear bracket. Drive complex multi-monitor workspace matrices, digital signage arrays, or a three-screen creative studio with clean, uncompressed digital signal fidelity.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div><strong>DirectX 12 (Feature Level 12_1) — Full modern OS integration.</strong> Complete Windows 10 and Windows 11 hardware acceleration support. Browser rendering engines, system transparency layers, and advanced creative applications run with pristine, hardware-accelerated fluid motion. No compatibility patches required.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div><strong>Ellesmere · GCN 4.0 · 14nm · 1206 MHz</strong> — A mature, proven node with an exceptional reliability record. Same GCN 4.0 architecture used across Radeon RX 400/500 series. No driver risks. No thermal edge cases. Install it, lock the Fortress, execute without hesitation.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div>
+          <div><strong>PCIe 3.0 × 16 — Full 16-lane bandwidth.</strong> Every lane at full PCIe 3.0 speed. The instruction pipeline between CPU and GPU never creates a bottleneck. 2048 cores firing simultaneously — the uplink keeps pace, always.</div>
+        </li>
+      </ul>
+      <div class="cmp-bar-wrap fi fi-d2" id="cmpBars">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--td);margin-bottom:16px;">Architecture Spectrum</div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">Entry Display <span class="cmp-bar-note">— 160C · 18W · basic output</span></span>
+            <span class="cmp-bar-val">160</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c1" id="cb0" data-w="5"></div></div>
+        </div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">Enterprise Mid <span class="cmp-bar-note">— 320C · 30W · 128-Bit display</span></span>
+            <span class="cmp-bar-val">320</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c2" id="cb1" data-w="12"></div></div>
+        </div>
+        <div class="cmp-bar-row featured">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">RX580 8GD5 — 256-Bit · 8GB · mainstream stronghold</span>
+            <span class="cmp-bar-val" style="color:var(--am);">2048</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill rx580-bar" id="cb2" data-w="100"></div></div>
+        </div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">High-End RTX <span class="cmp-bar-note">— 3584C · 170W · heavy 3D</span></span>
+            <span class="cmp-bar-val">3584</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c3" id="cb3" data-w="52"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <div style="width:100%;height:340px;margin-bottom:12px;background:linear-gradient(135deg,#2c1f0e,#1a1208);border:1px solid rgba(184,132,74,.18);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(26,18,8,.5);">
+        <span style="font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(184,132,74,.2);text-align:center;line-height:2.4;padding:0 16px;">[ DOMINANCE — PORT BRACKET ]<br>RX580 rear · DP · HDMI · DVI<br>Heavy-duty shielded sockets ]</span>
+      </div>
+      <div style="width:100%;height:128px;background:linear-gradient(135deg,#3d2c14,#2c1f0e);border:1px solid rgba(184,132,74,.18);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(26,18,8,.4);">
+        <span style="font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(184,132,74,.18);text-align:center;line-height:2.4;padding:0 16px;">[ 6-PIN + PCIe 3.0×16 CONTACTS ]<br>Copper trace routing ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S04 THERMAL ═══ -->
+<section id="s04">
+  <div class="thermal-layout">
+    <div class="fi">
+      <div class="sec-label">Thermal Control</div>
+      <div class="sec-title">DUAL<br>PROPELLER<br>COMMAND</div>
+      <div class="divider"></div>
+      <p class="thermal-body">Two ultra-durable fans, engineered with <strong>industrial-grade ball bearings</strong>, spin in perfect harmony to drive relentless thermal dissipation while maintaining absolute acoustic discipline under load.<br><br>The intelligent temperature control matrix dynamically manages both fans, keeping the GPU in its optimal cooling zone while extending the mechanical lifespan of the motors. Powered by a robust <strong>150W layout via a secure 6-Pin interface</strong>.</p>
+    </div>
+    <div>
+      <div class="badge-stack fi fi-d1" id="badgeStack">
+        <div class="fort-badge">
+          <div class="fb-icon">01</div>
+          <div>
+            <div class="fb-title">Dual Ball-Bearing Fans</div>
+            <div class="fb-desc">Ultra-durable mechanical lifespan<br>Silent duty cycles under sustained load</div>
+          </div>
+        </div>
+        <div class="fort-badge fi fi-d1">
+          <div class="fb-icon">02</div>
+          <div>
+            <div class="fb-title">150W Stable Power Layout</div>
+            <div class="fb-desc">Even distribution across premium components<br>Prevents concentrated thermal stress on PCB</div>
+          </div>
+        </div>
+        <div class="fort-badge fi fi-d2">
+          <div class="fb-icon">03</div>
+          <div>
+            <div class="fb-title">Optimized Heatsink Architecture</div>
+            <div class="fb-desc">Aerodynamic airflow vectors cut cleanly<br>Through precision fin-gap channels</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S05 ANCHORAGE ═══ -->
+<section id="s05">
+  <div class="anch-bp"></div>
+  <div class="anch-layout">
+    <div class="fi">
+      <div class="sec-label">Anchorage</div>
+      <div class="sec-title">ZERO<br>COMPROMISES.<br>COMPLETE<br>ENDURANCE.</div>
+      <div class="divider"></div>
+      <p class="anch-body"><strong>Engineered to safeguard your system investment.</strong><br><br>The RX580 8GD5 balances high-performance mainstream capabilities with comprehensive physical protection. The intelligent temperature control matrix dynamically manages the dual ball-bearing fans, keeping the GPU in its optimal cooling zone while extending the mechanical lifespan of the motors.<br><br>Combined with the <strong>anti-sag, anti-oxidation PVC armor backplate</strong>, this hardware is built to remain structurally perfect and operationally stable through years of heavy enterprise and gaming usage.</p>
+      <div class="fi fi-d1" style="margin:22px 0 4px;">
+        <div class="mtbf-num" id="mtbfCount">0</div>
+        <div class="mtbf-lbl">Hours MTBF</div>
+      </div>
+      <div class="runtime-tl fi fi-d2" id="rtWrap">
+        <div class="rt-lbl human">Modern Steel &amp; Rail — 171 Years</div>
+        <div class="rt-row">
+          <div class="rt-track" style="width:100%;">
+            <div class="rt-fill hfill" id="rtF1"></div>
+            <div class="rt-mover" id="rtLoco" style="left:0;">🚂</div>
+            <div class="rt-dot hd" style="left:0%;"><span class="rt-lbl2">1855<br>Steam</span></div>
+            <div class="rt-dot hd" style="left:52%;"><span class="rt-lbl2">1960<br>Electric</span></div>
+            <div class="rt-dot hd" style="left:100%;"><span class="rt-lbl2 ra">2026<br>Today</span></div>
+          </div>
+        </div>
+        <div class="rt-divider"></div>
+        <div class="rt-lbl gpu">RX580 8GD5 Theoretical Lifespan — 171 Years</div>
+        <div class="rt-row">
+          <div class="rt-track" style="width:100%;">
+            <div class="rt-fill gfill" id="rtF2"></div>
+            <div class="rt-dot gd install" style="left:0%;"><span class="rt-lbl2 gl il">2026<br>You install</span></div>
+            <div class="rt-dot gd" style="left:44%;"><span class="rt-lbl2 gl">2101<br>22nd Century</span></div>
+            <div class="rt-dot gd" style="left:100%;"><span class="rt-lbl2 gl ra">2197<br>Fortress (theory)</span></div>
+          </div>
+        </div>
+        <div class="rt-note">171 years of industrial history. The Fortress's rated lifespan <strong>matches it exactly.</strong> Lock it in. Let it hold the line.</div>
+      </div>
+      <div class="fi fi-d3" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <div class="stat-badge"><div class="num" style="color:var(--am);">1.5M</div><div class="lbl">Hours MTBF</div></div>
+        <div class="stat-badge"><div class="num">6-Pin</div><div class="lbl">150W Dedicated</div></div>
+      </div>
+    </div>
+    <div class="endurance-badges fi fi-d1">
+      <div class="fort-badge" style="background:rgba(26,18,8,.65);">
+        <div class="fb-icon">★</div>
+        <div>
+          <div class="fb-title">Structural Shield</div>
+          <div class="fb-desc">Reinforced rigid PVC backplate<br>Anti-warping &amp; anti-oxidation<br>Long-term protection</div>
+        </div>
+      </div>
+      <div class="fort-badge fi fi-d1" style="background:rgba(26,18,8,.65);">
+        <div class="fb-icon">◈</div>
+        <div>
+          <div class="fb-title">Thermal Longevity</div>
+          <div class="fb-desc">Dual ball-bearing configuration<br>Ultra-durable mechanical lifespan<br>Silent duty cycles</div>
+        </div>
+      </div>
+      <div class="fort-badge fi fi-d2" style="background:rgba(26,18,8,.65);border-color:rgba(192,57,43,.3);">
+        <div class="fb-icon">⬡</div>
+        <div>
+          <div class="fb-title">PCB Integrity</div>
+          <div class="fb-desc">Full-coverage armor backplate<br>Geometric pattern reinforcement<br>Years of continuous deployment</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S06 SPECS ═══ -->
+<section id="s06">
+  <div class="spec-in">
+    <div class="sec-label fi">Technical Matrix</div>
+    <div class="sec-title fi">Specifications</div>
+    <div class="divider fi"></div>
+    <table class="spec-tbl fi">
+      <tr><td>Architecture</td><td>GCN 4.0 — Polaris / Ellesmere · 14nm</td></tr>
+      <tr class="spec-hl"><td>Stream Processors</td><td>2048</td></tr>
+      <tr><td>Core Frequency</td><td>1206 MHz</td></tr>
+      <tr><td>Memory Type</td><td>GDDR5</td></tr>
+      <tr class="spec-hl"><td>Memory Capacity</td><td>8 GB</td></tr>
+      <tr><td>Memory Frequency</td><td>6000 MHz</td></tr>
+      <tr class="spec-hl"><td>Memory Bus Width</td><td>256-Bit</td></tr>
+      <tr><td>Bus Interface</td><td>PCIe 3.0 × 16</td></tr>
+      <tr><td>Display Outputs</td><td>DP + HDMI + DVI</td></tr>
+      <tr><td>Max Resolution</td><td>1920 × 1080</td></tr>
+      <tr><td>DirectX Support</td><td>DirectX 12 (Feature Level 12_1)</td></tr>
+      <tr><td>External Power</td><td>6 Pin</td></tr>
+      <tr class="spec-hl"><td>Power Consumption</td><td>150W</td></tr>
+      <tr><td>Recommended PSU</td><td>350W and above</td></tr>
+      <tr><td>Cooling Solution</td><td>Dual-Fan · Ball-Bearing</td></tr>
+      <tr><td>Backplate</td><td>Reinforced PVC · Anti-Warp · Anti-Oxidation</td></tr>
+      <tr><td>Dimensions</td><td>190 × 110 × 40 mm</td></tr>
+      <tr><td>OS Support</td><td>Windows 10 / Windows 11</td></tr>
+      <tr><td>Market Positioning</td><td>Mid-Range · Mainstream Stronghold</td></tr>
+    </table>
+    <p class="spec-note fi">All specifications sourced from Simorchip internal documentation. Actual performance may vary depending on system configuration and operating environment.</p>
+    <div class="spec-ctas fi">
+      <button class="btn-primary">Download Spec Sheet</button>
+      <button class="btn-primary" style="background:transparent;color:var(--am);border:1px solid rgba(212,133,30,.3);">Explore More Products</button>
+    </div>
+    <div class="spec-foot fi">
+      <span class="tag-chip">RX580</span><span class="tag-chip">8GBGDDR5</span>
+      <span class="tag-chip">256Bit</span><span class="tag-chip">Fortress</span>
+      <span class="tag-chip">© 2026 Simorchip</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PKG ═══ -->
+<section id="pkg">
+  <div class="pkg-in">
+    <div class="sec-label fi">Packaging Design</div>
+    <div class="pkg-layout">
+      <div class="fi" id="pkgCard">
+        <div class="pkg-card" style="opacity:0;transform:translateX(-24px);transition:opacity 1.4s ease,transform 1.4s ease;">
+          <div class="pkg-art">
+            <canvas id="pulseCanvas" width="218" height="104"></canvas>
+            <div class="pkg-model-overlay">RX580 8GD5<span>8GB GDDR5</span></div>
+            <div class="pkg-amd-badge">AMD Radeon</div>
+          </div>
+          <div class="pkg-body">
+            <span class="pkg-brand-t">Simorchip · Fortress · Radeon Series</span>
+            <div class="pkg-stripe"></div>
+            <div class="pkg-cap-row">
+              <span class="pkg-cap">8<span style="font-size:.5em;">GB</span></span>
+              <span class="pkg-spd">DP+HDMI+DVI<br><strong>GDDR5</strong></span>
+            </div>
+          </div>
+          <div class="pkg-certs"><span class="pkg-cert">CE</span><span class="pkg-cert">RoHS</span><span class="pkg-cert">FCC</span><span class="pkg-cert">REACH</span></div>
+        </div>
+      </div>
+      <div class="fi fi-d2">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--td);margin-bottom:18px;">What's in the box</div>
+        <div class="pkg-feat-list">
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">🖤</div><div><div class="pkg-feat-nm">Fortress Shock-Absorption Carrier</div><div class="pkg-feat-ds">Precision-cut high-density foam insert engineered to lock the dual-fan 190 × 110 × 40 mm frame securely against transit vibration. The matte-black reinforced outer shell broadcasts the card's structural authority before it's even opened.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">⚡</div><div><div class="pkg-feat-nm">Advanced Electrostatic Isolation Shield</div><div class="pkg-feat-ds">Factory-applied premium conductive anti-static bag completely encapsulates the card before foam placement. Full ESD protection from factory to PCIe slot installation.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">📋</div><div><div class="pkg-feat-nm">Full Spec on Pack</div><div class="pkg-feat-ds">Model number, 8GB GDDR5 capacity, 256-Bit bus, and port configuration clearly printed on the outer label. Warehouse receiving and asset management require no unboxing.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">✅</div><div><div class="pkg-feat-nm">Global Certifications</div><div class="pkg-feat-ds">CE · RoHS · FCC · REACH. Fully cleared for enterprise and consumer deployment across all major international markets.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<div class="closing">
+  <p class="cl-sub">Simorchip · RX580 8GD5 · Fortress</p>
+  <h2 class="cl-tagline fi">This isn't just an upgrade.<br><span class="accent">This is an absolute structural stronghold.</span></h2>
+  <p class="cl-body fi fi-d1">Dual-propeller thermal control. 256-Bit massive command channel.<br>Lock your system into the Fortress and execute without fear.</p>
+  <button class="btn-primary fi fi-d2">View Full Specifications</button>
+</div>
+
+<footer class="site-foot">
+  <div class="sf-brand">SIMOR<em>CHIP</em></div>
+  <div class="sf-note">RX580 8GD5 · FORTRESS SERIES · © 2026 SIMORCHIP</div>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+(function(){
+  const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  const TRAIL=5;
+  const dots=Array.from({length:TRAIL},(_,i)=>{
+    const d=document.createElement('div');d.className='trail-dot';
+    const s=3-i*.4;d.style.cssText=`width:${s}px;height:${s}px;`;
+    document.body.appendChild(d);return d;
+  });
+  const pos=dots.map(()=>({x:0,y:0}));let head=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    cur.style.left=mx+'px';cur.style.top=my+'px';
+    pos[head]={x:mx,y:my};head=(head+1)%TRAIL;
+  });
+  (function frame(){
+    rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    dots.forEach((_,i)=>{
+      const p=pos[(head-1-i+TRAIL)%TRAIL];
+      dots[i].style.left=p.x+'px';dots[i].style.top=p.y+'px';
+    });
+    requestAnimationFrame(frame);
+  })();
+  document.querySelectorAll('button,.btn-primary,.np a,.why-card,.fort-badge,.stat-badge').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cur.style.width='12px';cur.style.height='12px';});
+    el.addEventListener('mouseleave',()=>{cur.style.width='6px';cur.style.height='6px';});
+  });
+})();
+
+/* ── NAV ── */
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('sc',scrollY>50));
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+const secIds=['s00','s01','s02','s03','s04','s05','s06','pkg'];
+const pills=document.querySelectorAll('.np a');
+secIds.forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){const i=secIds.indexOf(id);pills.forEach(p=>p.classList.remove('on'));if(pills[i])pills[i].classList.add('on');}
+  },{threshold:.4}).observe(el);
+});
+
+/* ── SCROLL REVEAL ── */
+const fiObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>fiObs.observe(el));
+
+/* ── SECTION DIVIDERS ── */
+['s01','s02','s03','s04','s05','s06'].forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)el.classList.add('div-on');},{threshold:.05}).observe(el);
+});
+
+/* ── FINS ── */
+(function(){
+  const wrap=document.getElementById('rFins');if(!wrap)return;
+  for(let i=0;i<18;i++){const f=document.createElement('div');f.className='rx580-fin';wrap.appendChild(f);}
+})();
+
+/* ── HERO SEQUENCE ── */
+document.fonts.ready.then(()=>{
+  function cls(id,d=0){setTimeout(()=>document.getElementById(id)?.classList.add('on'),d);}
+  cls('hRight',0);
+  setTimeout(()=>document.getElementById('hTag')?.classList.add('on'),400);
+  setTimeout(()=>{
+    document.getElementById('hHL')?.classList.add('on');
+    ['hl0','hl1','hl2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('in'),i*260));
+  },700);
+  cls('hSub',1600);cls('hCta',1900);
+  setTimeout(()=>{
+    document.getElementById('hStats')?.classList.add('on');
+    // hero stat count-up for SP
+    const el=document.getElementById('heroSP');if(!el)return;
+    const dur=1200,target=2048,t0=performance.now();
+    (function f(now){
+      const p=Math.min((now-t0)/dur,1);
+      const v=1-Math.pow(1-p,2.5);
+      el.innerHTML=`${Math.round(v*target)}<em>SP</em>`;
+      if(p<1)requestAnimationFrame(f);else el.innerHTML='2048<em>SP</em>';
+    })(performance.now());
+  },2200);
+  cls('scrHint',2900);
+  setTimeout(portHighlight,2600);
+});
+
+/* ── S01 TYPEWRITER ── */
+(function(){
+  const tw=document.getElementById('blTw');if(!tw)return;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){obs.disconnect();
+      setTimeout(()=>{tw.classList.add('tw-go');setTimeout(()=>tw.classList.add('tw-done'),1100);},300);
+    }
+  },{threshold:.4});
+  obs.observe(tw);
+})();
+
+/* ── WHY CARDS stagger ── */
+(function(){
+  const cards=document.querySelectorAll('.why-card');if(!cards.length)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      cards.forEach((c,i)=>{
+        c.style.cssText=`opacity:0;transform:translateY(20px);transition:opacity .55s ease ${i*.14}s,transform .55s ease ${i*.14}s;`;
+        setTimeout(()=>{c.style.opacity='1';c.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3});
+  obs.observe(cards[0]);
+})();
+
+/* ── PORT HIGHLIGHT ── */
+function portHighlight(){
+  const ports=[
+    {card:document.getElementById('pDP'),   row:document.getElementById('portDP')},
+    {card:document.getElementById('pHDMI'), row:document.getElementById('portHDMI')},
+    {card:document.getElementById('pDVI'),  row:document.getElementById('portDVI')},
+  ];
+  let i=0;
+  function next(){
+    if(i>0){ports[i-1].card?.classList.remove('hl');ports[i-1].row?.classList.remove('active');}
+    if(i<ports.length){
+      ports[i].card?.classList.add('hl');ports[i].row?.classList.add('active');
+      i++;setTimeout(next,700);
+    } else {
+      ports.forEach(p=>{p.card?.classList.add('hl');p.row?.classList.add('active');});
+    }
+  }
+  next();
+}
+
+/* ── COUNT-UP 2048 + 256-lane grid ── */
+(function(){
+  const el=document.getElementById('count2048');if(!el)return;
+  const cv=document.getElementById('laneCanvas');
+  const gCtx=cv?cv.getContext('2d'):null;
+  let done=false,gridIv;
+
+  function drawGrid(alpha){
+    if(!gCtx)return;
+    gCtx.clearRect(0,0,cv.width,cv.height);
+    // 256 lanes — rectangular blocks
+    const cols=64,rows=2;
+    const cw=cv.width/cols,ch=cv.height/rows;
+    for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+      const flicker=.3+Math.random()*.7;
+      gCtx.fillStyle=`rgba(192,57,43,${alpha*flicker*.38})`;
+      gCtx.fillRect(c*cw+.5,r*ch+.5,cw-1,ch-1);
+    }
+  }
+
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      if(cv){cv.classList.add('vis');}
+      const dur=1400,target=2048,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,2.5);
+        el.innerHTML=`${Math.round(v*target)}<em>SP</em>`;
+        if(gCtx)drawGrid(v);
+        if(p<1)requestAnimationFrame(f);
+        else{
+          el.innerHTML='2048<em>SP</em>';
+          let la=0,grow=true;
+          gridIv=setInterval(()=>{
+            la=grow?Math.min(la+.04,1):Math.max(la-.02,.35);
+            if(la>=1)grow=false;if(la<=.35)grow=true;
+            drawGrid(la);
+          },80);
+        }
+      })(performance.now());
+    }
+  },{threshold:.4});
+  obs.observe(el);
+  window.addEventListener('beforeunload',()=>clearInterval(gridIv));
+})();
+
+/* ── BADGES ── */
+(function(){
+  const wrap=document.getElementById('nsBadges');if(!wrap)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      wrap.querySelectorAll('.stat-badge').forEach((b,i)=>{
+        b.style.cssText=`opacity:0;transform:scale(.9);transition:opacity .5s ease ${i*.15}s,transform .5s cubic-bezier(.34,1.56,.64,1) ${i*.15}s;`;
+        setTimeout(()=>{b.style.opacity='1';b.style.transform='scale(1)';},60);
+      });
+      setTimeout(()=>{['bar1','bar2','bar3'].forEach((id,i)=>setTimeout(()=>{
+        const e=document.getElementById(id);if(e)e.style.width='100%';
+      },i*180));},600);
+      setTimeout(()=>wrap.classList.add('swept'),950);
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ── COMPARE BARS ── */
+(function(){
+  const wrap=document.getElementById('cmpBars');if(!wrap)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      ['cb0','cb1','cb2','cb3'].forEach((id,i)=>setTimeout(()=>{
+        const el=document.getElementById(id);if(!el)return;
+        el.style.width=el.dataset.w+'%';
+        if(id==='cb2')setTimeout(()=>el.classList.add('fired'),1600);
+      },i*250));
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ── BADGE STACK stagger ── */
+(function(){
+  const badges=document.querySelectorAll('.fort-badge');if(!badges.length)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      badges.forEach((b,i)=>{
+        b.style.cssText=`opacity:0;transform:translateX(-14px);transition:opacity .55s ease ${i*.14}s,transform .55s ease ${i*.14}s;`;
+        setTimeout(()=>{b.style.opacity='1';b.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3});
+  obs.observe(badges[0]);
+})();
+
+/* ── MTBF ── */
+(function(){
+  const el=document.getElementById('mtbfCount');if(!el)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      const dur=1800,target=1500000,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,3);
+        el.textContent=Math.round(v*target).toLocaleString();
+        if(p<1)requestAnimationFrame(f);else el.textContent='1,500,000';
+      })(performance.now());
+    }
+  },{threshold:.4});
+  obs.observe(el);
+})();
+
+/* ── RUNTIME TIMELINE ── */
+(function(){
+  const wrap=document.getElementById('rtWrap');if(!wrap)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      setTimeout(()=>{
+        const f1=document.getElementById('rtF1');
+        const loco=document.getElementById('rtLoco');
+        if(f1)f1.style.width='100%';
+        if(loco){loco.style.transition='left 1.6s ease';loco.style.left='calc(100% - 16px)';}
+        setTimeout(()=>{const f2=document.getElementById('rtF2');if(f2)f2.style.width='100%';},400);
+      },200);
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ── PACKAGING CARD ── */
+(function(){
+  const wrap=document.getElementById('pkgCard');if(!wrap)return;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){const card=wrap.querySelector('.pkg-card');if(card){card.style.opacity='1';card.style.transform='none';}}
+  },{threshold:.2});
+  obs.observe(wrap);
+})();
+
+/* ── PULSE CANVAS — fortress crimson pulses ── */
+(function(){
+  const cv=document.getElementById('pulseCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0,rafId;
+
+  function draw(){
+    ctx.fillStyle='#1a1208';
+    ctx.fillRect(0,0,W,H);
+
+    const cx=W*.42,cy=H*.5;
+
+    // crimson/amber alternating rings
+    for(let i=0;i<6;i++){
+      const phase=(t*.75+i*.88)%(Math.PI*2);
+      const r=5+i*14+Math.sin(phase)*3.5;
+      const alpha=(0.12-i*.016)*(0.5+0.5*Math.sin(phase+Math.PI));
+      if(alpha<=0)continue;
+      const isCrimson=i%2===0;
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+      ctx.strokeStyle=isCrimson?`rgba(192,57,43,${alpha})`:`rgba(212,133,30,${alpha*.8})`;
+      ctx.lineWidth=i===0?1.5:.7;
+      if(i===0){ctx.shadowColor='rgba(192,57,43,0.5)';ctx.shadowBlur=8;}else ctx.shadowBlur=0;
+      ctx.stroke();
+    }
+    ctx.shadowBlur=0;
+
+    // amber outer pulse
+    const gR=55+Math.sin(t*.5)*7;
+    ctx.beginPath();ctx.arc(cx,cy,gR,0,Math.PI*2);
+    ctx.strokeStyle=`rgba(212,133,30,${.04+Math.sin(t*.5)*.028})`;
+    ctx.lineWidth=.8;ctx.stroke();
+
+    // scan lines
+    ctx.fillStyle='rgba(0,0,0,.1)';
+    for(let y=0;y<H;y+=2)ctx.fillRect(0,y,W,1);
+
+    // crimson diagonal slashes — fortress pattern
+    ctx.save();ctx.globalAlpha=.16;
+    [[.2,.26],[.46,.52],[.72,.78]].forEach(([y1,y2])=>{
+      const g=ctx.createLinearGradient(0,0,W,0);
+      g.addColorStop(0,'transparent');
+      g.addColorStop(.25,'rgba(192,57,43,0.6)');
+      g.addColorStop(.55,'rgba(212,133,30,0.35)');
+      g.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.moveTo(0,H*y1);ctx.lineTo(W,H*y2);
+      ctx.strokeStyle=g;ctx.lineWidth=1;ctx.stroke();
+    });
+    ctx.restore();
+
+    t+=.026;
+    rafId=requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('beforeunload',()=>cancelAnimationFrame(rafId));
+})();
+
+/* ── SPEC TABLE stagger ── */
+(function(){
+  const tbl=document.querySelector('.spec-tbl');if(!tbl)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      tbl.querySelectorAll('tr').forEach((row,i)=>{
+        row.style.cssText=`opacity:0;transition:opacity .38s ease ${i*.04}s;`;
+        setTimeout(()=>{row.style.opacity='1';},60);
+      });
+    }
+  },{threshold:.1});
+  obs.observe(tbl);
+})();
+</script>
+</body>
+</html>

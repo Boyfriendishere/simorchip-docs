@@ -1,0 +1,747 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>R7350</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="36dd24e8-7d86-8047-9f21-f70486c0deee" class="page sans"><header><h1 class="page-title" dir="auto">R7350</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8189-9284-cb0ff17b630f" class=""><mark class="highlight-yellow">*黃色字體：視覺建議</mark></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-818d-8a84-f56e0d61a053" class=""><mark class="highlight-red">*紅色字體：中文解釋</mark></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-81b1-b0f5-ece8c70393db" class=""><mark class="highlight-blue">*Hashtag：For SEO</mark></p></div><div style="display:contents" dir="auto"><h2 id="36dd24e8-7d86-8113-b2af-fe1c92693f85" class="">R7350 4GB GDDR3</h2></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-81d5-8206-f683ad7430ae" class="">Simorchip · R7350 4GB GDDR3</p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-8196-bf9a-edd873f8c246"/></div><div style="display:contents" dir="auto"><h2 id="36dd24e8-7d86-81ae-ac90-e610107641a2" class="">Hero</h2></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8046-a4ca-dbe27c1d7299" class=""><strong>Gulf Status: Fully Operational. Master channel engaged.</strong></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8073-9bb4-f76b7ca4f432" class="">Single high-velocity fan active.<br/>30W ultra-efficient thermal envelope, drawing pure execution power directly from the PCIe slot.<br/>The R7 350 4GB pushes the Oland architecture to its peak clock limits, delivering a deeper dynamic reserve across a massive 128-Bit memory highway.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80bb-8a64-c58604da4a05" class=""><strong>This isn&#x27;t about excessive power consumption. This is about wider data pipelines and unyielding multi-display authority.</strong><br/></p></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80a4-a558-eaf4e68c3ba8" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> The camera sweeps with sharper, more aggressive angles across the optimized 155</mark><em><mark class="highlight-yellow">111</mark></em><mark class="highlight-yellow">39 mm structural frame. High-contrast studio lighting traces the rear bracket’s native VGA, HDMI, and DVI layout, emphasizing a robust, high-throughput hardware infrastructure.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-809f-a4fd-d02a4f2bf92d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> The primary header &quot;Gulf Status: Fully Operational. Master channel engaged.&quot; cuts in with an authoritative, heavy digital mechanical lock sound, followed by the technical parameters parsing onto the screen via an accelerated terminal command script.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-81e5-9d66-cf10c36dd78c" class=""><code>#R7350</code> <code>#4GBGDDR3</code> <code>#128Bit</code> <code>#OlandPeak</code> <code>#PCIe3.0</code> <code>#30W</code> <code>#SingleFan</code> <code>#VGA</code> <code>#HDMI</code> <code>#DVI</code> <code>#Simorchip</code></p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-817a-97f3-eee54b6bb5b4"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-810a-a8df-fd6d071bf7db" class="">Design Language：Gulf </h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8046-a030-eb9f19dc2cf0" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> A premium, high-fidelity macro shot focusing on the high-velocity single-fan configuration. The iconic golden Simorchip emblem sits perfectly centered as the fan blades spin at peak efficiency. The matte black textured shroud features deeper geometric ventilation channels, engineered for maximum heat dissipation within enterprise desktop enclosures.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8004-8b1f-ece9a02c91d1" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> Upon entering the viewport, the center fan accelerates smoothly with realistic rotational inertia, while a dual-ring amber telemetry line scales outwards to signal an intensified thermal exhaust capability.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80f6-b97a-fb03eefd68c0" class=""><strong>True authority behaves with absolute composure.</strong></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8055-adc9-f01e5be11abe" class="">This optimized single-fan architecture serves as the <strong>Gulf (大海灣)</strong> for your enterprise workstation infrastructure.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8080-a87a-dc4ce30a1124" class="">It represents the definitive peak of our entry-level mainline, unlocking higher core clock dynamics while retaining the spacious 128-Bit data pipeline. The refined 28nm Oland core is driven to its optimal frequency within a strictly disciplined 30W power limit, allowing the custom propeller to sweep away residual heat in near-silence. By completely removing the need for external auxiliary power connectors, it deploys instantly into standard corporate towers, legacy IT environments, and multi-monitor trading desks. No erratic acoustic turbulence. No structural compromises. It commands your workspace with total stability, steering heavy multi-window workloads without breaking a sweat. Dock your display lines and let the Gulf anchor your entire workflow.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-81d2-9455-e6da530bf6b9" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-8146-8845-f85b34717c75"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-8108-bf39-e9c559a6d1aa" class="">Why You Need the R7350 4GB</h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8197-8c05-ec3c5ffe7b7f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> A sleek, minimal three-column grid layout separated by sharp geometric divider lines.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8085-8736-c53bff1f2647" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> The columns slide up sequentially with a snappy, responsive motion, underlaid by a subtle amber pulse that accentuates each strategic benefit.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8035-9247-f19bde81ba37" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>4GB Massive Reservoir — High-Velocity Multi-Tasking</strong></mark><mark class="highlight-yellow"><br/>Modern business tasks require immediate, unthrottled memory access. Packed with an expanded 4GB frame buffer, this architecture provides a vast pool of dedicated VRAM to sustain dense multi-tab browsing, HD media streaming, and real-time backend data operations concurrently. The pipeline remains clear, maintaining perfectly predictable, fluid performance.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80f7-a71b-e9990137775f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>30W Peak Efficiency — Instant Slot-Powered Deployment</strong></mark><mark class="highlight-yellow"><br/>Upgrading hardware shouldn&#x27;t force electrical complications. Operating within a tightly managed 30W thermal envelope, this silicon draws all its operational energy straight from the PCIe slot. Requiring a minimum power supply baseline of just 200W, it easily revitalizes older enterprise systems without requiring costly infrastructure overhauls.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80e8-ae54-e9d32d3faedd" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Optimized Single-Fan Frame — Universal Form Factor Fitting</strong></mark><mark class="highlight-yellow"><br/>Bulky multi-fan setups create physical installation constraints. Measuring a precise 155</mark><em><mark class="highlight-yellow">111</mark></em><mark class="highlight-yellow">39 mm, this single-fan cooling shroud drops effortlessly into mid-towers and standard corporate business desktops. It respects your internal chassis space while providing relentless, long-term thermal regulation.</mark></li></ul></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-81c9-a03c-f931392ec246"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-8141-8689-c98f23caa358" class="">Counterforce</h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-808e-8c83-d8d06bba7ad6" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> The left side displays a bold, stark typographic element reading &quot;320&quot; in a modern sans-serif typeface. The right side showcases real-time architectural blueprint telemetry.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-803c-9ccf-e5f734013dec" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> The numeric core counter counts up rapidly from 0 to 320 with a crisp digital strike. A widened geometric tracking grid locks in to visually represent the heavy throughput of the 128-Bit memory highway.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-803b-839e-c518454d3370" class=""><strong>320 Stream Processors · 128-Bit Data Highway · Enhanced 28nm Architecture</strong></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-805c-a3f8-c4049dafd3e6" class=""><strong>320 computational vectors initialized. The hardware pipeline is operating at peak frequency.</strong><br/>True power doesn&#x27;t demand excessive energy; it demands architectural efficiency. Utilizing an optimized 28nm process, 320 high-efficiency stream processors run at an elevated 925 MHz base clock, communicating in perfect sync across a massive 128-Bit data highway. This provides an aggressive leap in responsiveness. Whether you are manipulating dense financial visualization layers, rendering heavy browser UI engines, or coordinating multiple video feeds, the architecture commands the load with unyielding authority.</p></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-8001-858f-c23910bcb212" class=""><mark class="highlight-yellow">Stat Badge (System Verification Diagnostics)</mark></h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8067-99b1-d19946f3879f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 1:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>320 Oland Stream Processors / Enhanced 925 MHz Peak Core Clock</code></mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8045-9a31-d55a9d8e4848" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 2:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>4GB GDDR3 / 128-Bit High-Bandwidth Data Pipeline</code></mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80ed-bbe7-ff09e319f8f3" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 3:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>30W Efficient Thermal Limit / Pure PCIe Slot Powering</code></mark></li></ul></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-81cc-beeb-f267636b614d"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-81fb-9123-de14733949f9" class="">Dominance</h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8068-9ae7-c2d6fa79537b" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual 1:</strong></mark><mark class="highlight-yellow"> A premium macro camera sweep across the native VGA, HDMI, and DVI ports, showcasing heavy-duty copper trace lines routing directly into the Oland core.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8001-a69e-cc04edc97394" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual 2:</strong></mark><mark class="highlight-yellow"> An interactive OS environment chart showing fluid performance scaling across modern multi-screen setups and dense professional workspaces.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80b9-ace8-e30a68fe5f2d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> The performance index bar for the Simorchip 4GB series glides smoothly past old legacy baselines, glowing with an amber aura to highlight the massive 128-Bit bandwidth advantage.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80b2-b685-c4c0d5482290" class=""><strong>Finding Your Ideal Operational Latitude</strong><br/>Hardware environments span a wide operational spectrum. While minimalist display adapters are restricted to single-screen terminal outputs, and heavy multi-fan accelerators are oversized solutions built strictly for real-time 3D simulation grids, the <strong>Simorchip R7 Series</strong> settles perfectly into the sweet spot of commercial productivity. It is custom-tailored for professional multitasking environments that demand responsive multi-display arrays and fluid HD video decoding without overhead complications.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8024-a4aa-c51ddb19fc29" class=""><strong>Native Triple-Display Array — Zero adapters. Zero signal loss.</strong><br/>Remove fragile hardware conversion points from your workspace. With native VGA, HDMI, and DVI outputs integrated directly onto the rear bracket, you can drive expansive multi-monitor workspace matrices with ease. Manage high-density spreadsheets, live communication feeds, and media layouts simultaneously without purchasing expensive proprietary display hubs.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80e4-925a-f8b3f19d9572" class=""><strong>DirectX 12 (Feature Level 11_1) — Absolute Operating System Synergy</strong><br/>Instant deployment with zero software friction. Fully engineered to support Windows 10 and Windows 11 advanced window managers. Thanks to native DirectX 12 (11_1) execution, web browser hardware acceleration, system transparency layers, and virtual meeting background processing remain crisp, fluid, and completely lag-free.</p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-8187-a530-f6ae99bb415e"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-819a-adf3-e0f64e854408" class="">Anchorage</h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8110-850f-c5b2eab4961e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> A clean, technical hardware blueprint schematic layered beneath a digital runtime duration calculator casting a steady, reassuring glow.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-803c-b8ef-e974294ec5bd" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Animation:</strong></mark><mark class="highlight-yellow"> Long-term component endurance metrics weave together continuously, pinning the structural reliability score at a flawless 100% baseline.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-803e-9ad0-da4de511a552" class=""><strong>Engineered for non-stop operational endurance.Built for uncompromised enterprise longevity.</strong></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8060-bc43-fefb69b2afa0" class="">The R7 350 4GB pairs enhanced core frequencies with rigorous thermal control. Operating within a strict 30W power limit, the physical architecture draws every watt directly from the motherboard&#x27;s PCIe lane, bypassing external power stress points. Lower heat production means substantially less physical stress on internal capacitors and copper traces over years of continuous deployment. It is designed to be installed and forgotten—quietly executing its duties quarter after quarter. No power spikes to monitor, no complex maintenance required. Just pure, uninterrupted uptime.</p></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-8037-9a0b-c62bd666bab7" class=""><mark class="highlight-yellow">Reliability Badges</mark></h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8073-be3e-d6f4403e1c39" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 1: Thermal Discipline</strong></mark><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80e9-b33c-f3f83cce2b36" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> A bold </mark><mark class="highlight-yellow"><strong>30W Cool-Run</strong></mark><mark class="highlight-yellow"> status badge positioned above an advanced structural thermal grid graphic.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8076-a085-e30828e841ec" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Text:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>30W Low Thermal Envelope / Minimal Stress Long-Term Duty Cycles</code></mark></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8062-b095-df9f13ba4e2c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow"><strong>Badge 2: Auxiliary Freedom</strong></mark><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80de-ad7b-dd93fbd555cd" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Visual:</strong></mark><mark class="highlight-yellow"> A clean, cable-free installation diagram highlighting direct motherboard PCIe power routing.</mark></li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80e2-a9dc-e8b8ba998068" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow"><strong>Text:</strong></mark><mark class="highlight-yellow"> </mark><mark class="highlight-yellow"><code>0 External Power Cables / Standard Slot Deployment Compatibility</code></mark></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-813a-8890-f448cae641a3" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-814b-8471-fa1ff8f3cb0b"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-8135-9160-e03de8aaaa72" class="">Packaging Design</h3></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-803c-a904-f2dd3809f48a" class="bulleted-list"><li style="list-style-type:disc"><strong>Visual Accent:</strong> The outer retail box features a premium matte finish adorned with sweeping, deep-ocean current fluid dynamics, visually defining the immense power of the Gulf.</li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80a7-801f-cba332c15267" class="bulleted-list"><li style="list-style-type:disc"><strong>Brand Architecture:</strong> High-contrast white Simorchip branding anchors the structural side panel.</li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-80f8-be93-f08512c08809" class="bulleted-list"><li style="list-style-type:disc"><strong>Internal Structure:</strong> Reinforced dense black fiber core tray combined with custom molded anti-vibration foam chambers, isolating the anti-static shielded product securely.</li></ul></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-8023-8deb-d0b3a6353539" class=""><strong>Visual:</strong> A premium, custom-branded matte outer retail box showcasing sleek deep-current stream elements to define the hardware&#x27;s operational segment.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80d1-aec0-fa1d0b8ce22f" class=""><strong>Internal Layout:</strong> Heavy-duty rigid internal structure paired with high-impact protective padding, fixing the premium anti-static wrapped matrix perfectly in place.</p></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8048-94cd-dc2a3be96d16" class="bulleted-list"><li style="list-style-type:disc"><strong>Tailored Shock-Absorption Carrier</strong> — Precision-cut high-density inner layout modeled exactly to secure the 155<em>111</em>39 mm frame during heavy transit operations.</li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8075-a59b-dc420af77cc4" class="bulleted-list"><li style="list-style-type:disc"><strong>Advanced Electrostatic Isolation Shield</strong> — Factory-applied premium conductive shielding covers the 28nm silicon array to block external dynamic current threats before setup.</li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-8059-9677-c124e56fe648" class="bulleted-list"><li style="list-style-type:disc"><strong>Explicit Specifications Matrix</strong> — Architectural metrics, 4GB deep capacity, and 128-Bit memory channel configurations stated transparently across the external retail label.</li></ul></div><div style="display:contents" dir="auto"><ul id="36dd24e8-7d86-807d-83aa-eb1f6d78c7bb" class="bulleted-list"><li style="list-style-type:disc"><strong>International Compliance Certification</strong> — CE · RoHS · FCC · REACH. Fully accredited for multi-market distribution lines.</li></ul></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-8161-927b-fed523b67f4f"/></div><div style="display:contents" dir="auto"><h3 id="36dd24e8-7d86-81b7-be61-ff13241f9fd5" class="">SPECIFICATIONS</h3></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-81c1-841e-f96581da0c81" class="">Entry-Level efficiency. Single-fan silent display output.</p></div><div style="display:contents" dir="ltr"><table id="36dd24e8-7d86-815f-af17-c3b9dfad5fd1" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8126-b0ca-d57966292197"><th id="z:NB" class="simple-table-header-color simple-table-header"></th><th id="HHk:" class="simple-table-header-color simple-table-header"></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8128-82e1-e16cd51ffe78"><td id="z:NB" class=""><strong>Architecture</strong></td><td id="HHk:" class="">Oland</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8188-845d-caeb84a5e151"><td id="z:NB" class=""><strong>Stream Processors</strong></td><td id="HHk:" class="">320</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-81ca-a68d-e398e6c04dd4"><td id="z:NB" class=""><strong>Core Frequency</strong></td><td id="HHk:" class="">780 MHz</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-816a-a119-d3f787d43aa6"><td id="z:NB" class=""><strong>Memory Type</strong></td><td id="HHk:" class="">GDDR3</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8165-96d2-dddf8371d32d"><td id="z:NB" class=""><strong>Memory Capacity</strong></td><td id="HHk:" class="">4 GB</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-815f-a05e-f94ec0451663"><td id="z:NB" class=""><strong>Memory Frequency</strong></td><td id="HHk:" class="">667 MHz</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-81f3-b24d-f2311c80adae"><td id="z:NB" class=""><strong>Memory Bus Width</strong></td><td id="HHk:" class="">128-bit</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-81ed-a2a5-e62a6d94e8cc"><td id="z:NB" class=""><strong>Bus Interface</strong></td><td id="HHk:" class="">PCIe 3.0 × 8</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-81f8-82fd-c724f2c7e1c0"><td id="z:NB" class=""><strong>Display Outputs</strong></td><td id="HHk:" class="">VGA + DVI + HDMI</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-81aa-a959-f0f720db7aab"><td id="z:NB" class=""><strong>Max Resolution</strong></td><td id="HHk:" class="">1920 × 1080</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-81e4-bf09-d3304fc66aff"><td id="z:NB" class=""><strong>DirectX Support</strong></td><td id="HHk:" class="">DirectX 12 (11_1)</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8189-9f8a-f177309cdba1"><td id="z:NB" class=""><strong>External Power</strong></td><td id="HHk:" class="">Not Required</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8139-99e5-cf6e44351476"><td id="z:NB" class=""><strong>Power Consumption</strong></td><td id="HHk:" class="">30W</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8180-9ca3-e8c3c4e30292"><td id="z:NB" class=""><strong>Recommended PSU</strong></td><td id="HHk:" class="">200W</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-81b9-bcfa-da75152c38b6"><td id="z:NB" class=""><strong>Cooling Solution</strong></td><td id="HHk:" class="">Singke-Fan</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8160-94cb-ea0d26b9143a"><td id="z:NB" class=""><strong>Dimensions</strong></td><td id="HHk:" class="">155 × 111 × 39 mm</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-8104-b01f-cd8c668b3148"><td id="z:NB" class=""><strong>OS Support</strong></td><td id="HHk:" class="">Windows 10 / Windows 11</td></tr></div><div style="display:contents" dir="ltr"><tr id="36dd24e8-7d86-810b-9e69-c6c3e70d245a"><td id="z:NB" class=""><strong>Market Positioning</strong></td><td id="HHk:" class="">Entry-Level</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-81e2-a3e5-f95c1e67904b" class=""><em>All specifications sourced from Simorchip internal documentation. Actual performance may vary depending on system configuration and operating environment.</em></p></div><div style="display:contents" dir="auto"><hr id="36dd24e8-7d86-8182-8ead-c0394ef554ae"/></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-81e7-95c3-eac162b6942d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-80bb-9b52-dcd8132b52a8" class="">Single silent propeller. Expanded processing width.<br/>The <strong>Simorchip</strong> R7 350 4GB opens up your infrastructure workflows without demanding infrastructure complexity.</p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-802d-9c6a-fcee1a0497d6" class=""><strong>This isn&#x27;t about excessive power consumption. This is about wider data pipelines and unyielding multi-display authority.</strong></p></div><div style="display:contents" dir="auto"><p id="36dd24e8-7d86-81a8-b0ce-c67818ab0b77" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

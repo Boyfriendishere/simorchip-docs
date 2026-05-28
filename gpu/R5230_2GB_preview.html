@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip R5230 2GB — Lake Status: Expanded.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f6f9;--bg2:#eaf0f5;--bg3:#e2eaf1;
+  --ink:#0e1520;--mute:#486070;--label:#7090a8;--faint:#c0d4e4;
+  --lake:#1a6090;--lake2:#145078;--lake3:rgba(26,96,144,.1);
+  --lake-light:rgba(26,96,144,.06);
+  --gold:#a07828;--gold2:#c09838;--gold-border:rgba(160,120,40,.2);
+  --amd:#cc1a14;--amd2:rgba(204,26,20,.1);
+  --border:rgba(26,96,144,.15);--line:rgba(26,96,144,.09);
+  --shadow:rgba(14,21,32,.08);
+  --ff-b:'Barlow Condensed',sans-serif;
+  --ff-m:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff-b);background:var(--bg);color:var(--ink);overflow-x:hidden;cursor:none;}
+
+/* DIAGONAL GRID */
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:repeating-linear-gradient(45deg,rgba(26,96,144,.022) 0px,rgba(26,96,144,.022) 1px,transparent 1px,transparent 14px);
+}
+
+/* CURSOR */
+#cur{position:fixed;width:6px;height:6px;border-radius:50%;background:var(--lake);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;box-shadow:0 0 0 2px rgba(26,96,144,.22);}
+#cur-ring{position:fixed;width:30px;height:30px;border:1px solid rgba(26,96,144,.28);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);animation:ringR 4s linear infinite;}
+@keyframes ringR{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
+.trail-dot{position:fixed;border-radius:50%;background:var(--lake);pointer-events:none;z-index:9990;transform:translate(-50%,-50%);opacity:.12;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:50px;transition:background .3s,border-bottom .3s,box-shadow .3s;}
+nav.sc{background:rgba(242,246,249,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);box-shadow:0 1px 12px var(--shadow);}
+.nb{display:flex;flex-direction:column;gap:1px;}
+.nb-s{font-family:var(--ff-m);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--lake);opacity:.9;}
+.nb-b{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);opacity:.25;}
+.np{display:flex;gap:4px;}
+.np a{font-family:var(--ff-m);font-size:9px;letter-spacing:.07em;color:var(--label);border:1px solid var(--border);padding:4px 9px;cursor:pointer;text-decoration:none;transition:all .2s;background:transparent;}
+.np a:hover,.np a.on{color:var(--bg);border-color:var(--lake);background:var(--lake);}
+
+/* SHARED */
+section{position:relative;width:100%;overflow:hidden;}
+.full{min-height:100vh;}
+.tl-line{height:1px;background:linear-gradient(90deg,transparent,var(--lake2) 30%,var(--lake) 55%,transparent);width:0;transition:width 1s ease;}
+.tl-line.on{width:70px;}
+.fi{opacity:0;transform:translateY(18px);transition:opacity .85s ease,transform .85s ease;}
+.fi.vis{opacity:1;transform:none;}
+.fi-d1{transition-delay:.1s;}.fi-d2{transition-delay:.2s;}.fi-d3{transition-delay:.3s;}.fi-d4{transition-delay:.4s;}
+.tag{font-family:var(--ff-m);font-size:9px;letter-spacing:.07em;color:var(--label);border:1px solid var(--gold-border);padding:3px 10px;display:inline-block;background:rgba(160,120,40,.04);}
+.tag::before{content:'#';color:var(--gold);margin-right:2px;}
+.stat-badge{display:inline-flex;flex-direction:column;align-items:flex-start;border:1.5px solid var(--border);padding:18px 22px;background:rgba(255,255,255,.65);transition:border-color .3s,background .3s,box-shadow .3s;box-shadow:0 2px 10px var(--shadow);}
+.stat-badge:hover{border-color:var(--lake);background:rgba(255,255,255,.95);box-shadow:0 6px 24px var(--shadow);}
+.stat-badge .num{font-family:var(--ff-m);font-size:clamp(22px,3.5vw,44px);color:var(--lake2);line-height:1;font-weight:500;}
+.stat-badge .lbl{font-size:10px;font-weight:500;letter-spacing:.1em;color:var(--label);margin-top:4px;text-transform:uppercase;font-family:var(--ff-m);}
+.img-ph{background:linear-gradient(135deg,var(--bg2),var(--bg3));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid var(--border);box-shadow:0 2px 14px var(--shadow);}
+.img-ph span{font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,96,144,.2);text-align:center;line-height:2.4;padding:0 16px;}
+.sec-wrap{padding:90px 6% 70px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1160px;margin:0 auto;}
+.sec-wrap.rev{direction:rtl;}.sec-wrap.rev>*{direction:ltr;}
+.sh-num{font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;color:var(--label);margin-bottom:12px;text-transform:uppercase;}
+.sh-title{font-family:var(--ff-m);font-size:clamp(48px,7vw,88px);font-weight:500;letter-spacing:-.02em;color:var(--ink);line-height:.92;}
+.sh-sub{font-family:var(--ff-m);font-size:10px;letter-spacing:.1em;color:var(--label);text-transform:uppercase;margin-bottom:24px;}
+.bullet-list{list-style:none;margin-top:20px;}
+.bullet-list li{padding:13px 0;border-bottom:1px solid var(--line);font-size:15px;line-height:1.75;color:var(--mute);display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;}
+.bullet-list li:last-child{border-bottom:none;}
+.bullet-list .bi{width:26px;height:26px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;background:rgba(255,255,255,.5);}
+.bullet-list .bi svg{width:12px;height:12px;stroke:var(--lake);fill:none;stroke-width:1.5;}
+.bullet-list strong{font-weight:600;color:var(--ink);}
+.btn{font-family:var(--ff-b);font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:11px 24px;cursor:pointer;transition:all .22s;}
+.btn-lake{border:1px solid var(--lake);color:var(--lake);background:transparent;}.btn-lake:hover{background:var(--lake);color:var(--bg);box-shadow:0 4px 16px rgba(26,96,144,.22);}
+.btn-ghost{border:1px solid var(--gold-border);color:var(--gold);background:transparent;}.btn-ghost:hover{background:var(--gold);color:var(--bg);}
+
+/* section dividers */
+#s01::before,#s02::before,#s03::before,#s04::before,#s05::before,#s06::before{
+  content:'';display:block;position:absolute;top:0;left:0;height:1px;width:0;
+  background:linear-gradient(90deg,transparent,var(--lake2) 25%,var(--lake) 55%,transparent);
+  opacity:.5;transition:width .9s cubic-bezier(.16,1,.3,1);z-index:2;
+}
+#s01.div-on::before,#s02.div-on::before,#s03.div-on::before,
+#s04.div-on::before,#s05.div-on::before,#s06.div-on::before{width:100%;}
+
+/* AMD badge */
+.amd-badge{position:absolute;bottom:16px;right:16px;font-family:var(--ff-m);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--amd);border:1px solid rgba(204,26,20,.2);padding:3px 8px;background:var(--amd2);z-index:5;}
+
+/* ══ HERO ══ */
+#s00{display:flex;align-items:center;padding-top:80px;min-height:100vh;background:var(--bg);}
+.lake-bg{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+/* deeper, larger glows than 1GB */
+.lake-glow1{position:absolute;top:8%;right:4%;width:580px;height:460px;border-radius:50%;background:radial-gradient(ellipse,rgba(26,96,144,.08) 0%,transparent 70%);animation:lkPulse 9s ease-in-out infinite;}
+.lake-glow2{position:absolute;bottom:12%;right:20%;width:340px;height:270px;border-radius:50%;background:radial-gradient(ellipse,rgba(26,96,144,.05) 0%,transparent 70%);animation:lkPulse 9s ease-in-out infinite 4s;}
+.lake-glow3{position:absolute;top:50%;right:40%;width:200px;height:160px;border-radius:50%;background:radial-gradient(ellipse,rgba(160,120,40,.025) 0%,transparent 70%);animation:lkPulse 11s ease-in-out infinite 1.5s;}
+@keyframes lkPulse{0%,100%{opacity:.5;}50%{opacity:1;}}
+
+/* CARD illustration */
+.h-right{position:absolute;right:0;top:0;bottom:0;width:52%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(40px);transition:opacity 1.6s ease .2s,transform 1.6s ease .2s;}
+.h-right.on{opacity:1;transform:translateX(0);}
+.r5230-wrap{width:88%;max-width:520px;position:relative;}
+.r5230-wrap::before{content:'';position:absolute;inset:-60px;z-index:-1;background:radial-gradient(ellipse 65% 40% at 55% 55%,rgba(26,96,144,.07) 0%,transparent 70%);}
+
+.card-slash{position:absolute;inset:0;z-index:20;background:linear-gradient(125deg,transparent 0%,rgba(26,96,144,.28) 49%,rgba(26,96,144,.28) 51%,transparent 100%);background-size:200% 100%;background-position:200% 0;animation:slashReveal 1.3s cubic-bezier(.76,0,.24,1) .3s forwards;pointer-events:none;border-radius:4px;}
+@keyframes slashReveal{0%{background-position:200% 0;opacity:1;}100%{background-position:-200% 0;opacity:0;}}
+
+@keyframes cardFloat{0%,100%{transform:translateY(0) rotate(-.5deg);}50%{transform:translateY(-6px) rotate(-.5deg);}}
+.r5230-body{width:100%;aspect-ratio:2.1/1;background:linear-gradient(148deg,#eef2f6 0%,#e6edf4 100%);position:relative;overflow:hidden;border-radius:4px;border:1px solid rgba(26,96,144,.2);box-shadow:0 24px 70px rgba(14,21,32,.14),0 4px 16px rgba(14,21,32,.08);animation:cardFloat 6.5s ease-in-out infinite;}
+
+.card-ripple{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(26,96,144,.28),transparent);opacity:0;top:0;animation:rippleScan 6s ease-in-out infinite 2.5s;z-index:15;pointer-events:none;}
+@keyframes rippleScan{0%{top:0;opacity:0;}8%{opacity:.5;}88%{opacity:.15;}100%{top:100%;opacity:0;}}
+
+.r5230-hs{position:absolute;right:0;top:0;bottom:0;width:72%;background:linear-gradient(145deg,#e6edf4,#dce6f0);border-left:1px solid rgba(26,96,144,.12);overflow:hidden;}
+.r5230-fins-wrap{position:absolute;inset:0;display:flex;flex-direction:column;gap:1.5px;padding:4px;}
+/* fins slightly denser blue tint vs 1GB */
+.r5230-fin{flex:1;background:linear-gradient(90deg,#e6edf4,#dde8f0);border-radius:1px;border:.5px solid rgba(26,96,144,.06);}
+.r5230-hl{position:absolute;top:50%;left:-5%;width:110%;height:1px;background:linear-gradient(90deg,transparent,rgba(26,96,144,.3),transparent);transform:translateY(-50%);opacity:.5;}
+
+/* single fan — deeper ripple rings (5 vs 3 for 1GB) */
+.r5230-fan-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.r5230-fan{position:relative;width:58%;aspect-ratio:1;}
+.r5230-ripple-ring{position:absolute;border-radius:50%;border:1px solid rgba(26,96,144,.1);animation:rippleExpand 4s ease-out infinite;}
+.r5230-rr1{inset:-8%;animation-delay:0s;}
+.r5230-rr2{inset:-18%;animation-delay:1s;}
+.r5230-rr3{inset:-28%;animation-delay:2s;}
+.r5230-rr4{inset:-38%;animation-delay:3s;}
+.r5230-rr5{inset:-48%;animation-delay:3.8s;border-color:rgba(26,96,144,.05);}
+@keyframes rippleExpand{0%{opacity:.55;transform:scale(.95);}100%{opacity:0;transform:scale(1.06);}}
+
+.r5230-fan-ring{position:absolute;border-radius:50%;border:.5px solid rgba(26,96,144,.13);}
+.r5230-fr1{inset:0;background:rgba(210,225,238,.6);}
+.r5230-fr2{inset:9%;}
+.r5230-fr3{inset:20%;}
+.r5230-fr4{inset:33%;}
+.r5230-blades{position:absolute;inset:0;animation:fanSpinLight 5.5s linear infinite;}
+@keyframes fanSpinLight{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.r5230-blade{position:absolute;top:50%;left:50%;width:44%;height:7%;transform-origin:0 50%;background:linear-gradient(90deg,rgba(26,96,144,.17),rgba(26,96,144,.02));border-radius:0 14px 14px 0;}
+
+/* hub — gold Simorchip */
+.r5230-hub{position:absolute;inset:42%;background:radial-gradient(circle,#f5f8fc,#e6edf4);border-radius:50%;border:1px solid rgba(160,120,40,.38);box-shadow:0 0 10px rgba(160,120,40,.18);display:flex;align-items:center;justify-content:center;}
+.r5230-hub::after{content:'';width:35%;height:35%;background:var(--gold);border-radius:50%;opacity:.8;box-shadow:0 0 6px rgba(160,120,40,.4);}
+.r5230-hub-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--ff-b);font-size:4.5px;font-weight:700;letter-spacing:.08em;color:var(--gold2);opacity:.9;z-index:5;white-space:nowrap;}
+
+.r5230-pcb{position:absolute;left:0;top:0;bottom:0;right:72%;background:linear-gradient(145deg,#dce6f0,#d4e0ec);}
+.r5230-brand{position:absolute;top:50%;left:3%;transform:translateY(-50%);padding-left:5px;}
+.r5230-brand-name{font-family:var(--ff-m);font-size:4.5px;letter-spacing:.18em;color:rgba(14,21,32,.4);text-transform:uppercase;display:block;}
+.r5230-model{font-family:var(--ff-m);font-size:12px;font-weight:500;letter-spacing:.03em;color:var(--ink);line-height:1.1;display:block;}
+.r5230-sub{font-family:var(--ff-m);font-size:4px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;display:block;margin-top:2px;}
+/* ports */
+.r5230-ports{position:absolute;left:0;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:8px 0;}
+.r5230-port{width:7px;height:10px;background:rgba(14,21,32,.07);border-radius:1px 0 0 1px;border:.5px solid rgba(14,21,32,.12);position:relative;transition:background .3s;}
+.r5230-port.vga{height:13px;}
+.r5230-port.hl{background:rgba(26,96,144,.32);border-color:rgba(26,96,144,.5);}
+.r5230-port-lbl{position:absolute;left:-22px;top:50%;transform:translateY(-50%);font-family:var(--ff-m);font-size:5px;letter-spacing:.06em;color:var(--lake2);opacity:0;white-space:nowrap;transition:opacity .3s;}
+.r5230-port.hl .r5230-port-lbl{opacity:1;}
+.r5230-glow{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--lake) 55%,transparent 95%);opacity:.32;}
+.r5230-status{position:absolute;bottom:6px;right:8px;font-family:var(--ff-m);font-size:6px;letter-spacing:.1em;color:var(--lake);opacity:.65;}
+/* 2GB memory badge on card */
+.r5230-mem-badge{position:absolute;top:8%;left:22%;font-family:var(--ff-m);font-size:5px;letter-spacing:.1em;color:var(--lake2);opacity:.6;text-transform:uppercase;background:rgba(26,96,144,.08);padding:2px 5px;border-radius:2px;}
+
+/* HERO LAYOUT */
+.h-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,var(--bg) 0%,var(--bg) 16%,rgba(242,246,249,.42) 42%,transparent 62%);}
+.h-left{position:relative;z-index:3;padding:0 0 0 6%;flex:1;max-width:560px;}
+.h-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--label);margin-bottom:24px;opacity:0;transition:opacity .5s;}
+.h-eye.on{opacity:1;}
+.h-status{font-family:var(--ff-m);font-size:clamp(11px,1.4vw,15px);letter-spacing:.06em;color:var(--lake);text-transform:uppercase;margin-bottom:20px;opacity:0;white-space:nowrap;overflow:hidden;width:0;border-right:1.5px solid var(--lake);}
+.h-status.typing{animation:typeStatus .85s steps(34,end) forwards,cursorBlink .6s step-end 4;}
+@keyframes typeStatus{from{width:0;}to{width:100%;}}
+@keyframes cursorBlink{0%,100%{border-color:var(--lake);}50%{border-color:transparent;}}
+.h-status.done{border-right-color:transparent;width:auto;}
+.h-hl{margin-bottom:20px;opacity:0;transition:opacity .4s ease;}
+.h-hl.on{opacity:1;}
+.hl-ln{display:block;font-family:var(--ff-m);font-size:clamp(44px,6.5vw,80px);font-weight:500;letter-spacing:-.02em;line-height:.92;opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);}
+.hl-ln.in{opacity:1;transform:none;}
+.hl-ink{color:var(--ink);}
+.hl-lk{color:var(--lake);}
+.hl-gd{color:var(--gold);}
+.h-sub{font-size:16px;line-height:1.85;color:var(--mute);max-width:380px;margin-top:18px;opacity:0;transition:opacity .8s ease;}
+.h-sub.on{opacity:1;}
+.h-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:18px;opacity:0;transition:opacity .5s;}
+.h-tags.on{opacity:1;}
+.scr-hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0;transition:opacity .5s;z-index:4;}
+.scr-hint.on{opacity:1;}
+.scr-ln{width:1px;height:26px;background:var(--border);position:relative;overflow:hidden;}
+.scr-ln::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--lake);animation:scrdn 1.4s ease infinite 3s;}
+@keyframes scrdn{0%{top:-100%}100%{top:100%}}
+.scr-lb{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;color:var(--label);text-transform:uppercase;}
+
+/* ══ S01 LAKE ══ */
+#s01{background:var(--bg2);padding:90px 6%;}
+.s01-in{max-width:1060px;margin:0 auto;}
+.bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:68px;align-items:center;}
+.bl-eye{font-family:var(--ff-m);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--lake);margin-bottom:12px;}
+.bl-title-wrap{margin-bottom:18px;}
+.bl-title{font-family:var(--ff-m);font-size:clamp(38px,5.5vw,64px);font-weight:500;letter-spacing:-.01em;color:var(--ink);line-height:.96;}
+.bl-title-tw{font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;color:var(--lake);text-transform:uppercase;margin-top:5px;overflow:hidden;white-space:nowrap;width:0;border-right:1px solid var(--lake);display:inline-block;}
+.bl-title-tw.tw-go{animation:typeOut .7s steps(20,end) forwards,cursorBlink .6s step-end 3;}
+@keyframes typeOut{from{width:0;}to{width:14ch;}}
+.bl-title-tw.tw-done{border-right-color:transparent;}
+.bl-body{font-size:15px;line-height:1.9;color:var(--mute);margin-bottom:20px;}
+.bl-blockquote{border-left:2px solid var(--lake);padding:12px 16px;background:rgba(26,96,144,.05);margin-bottom:16px;}
+.bl-blockquote p{font-family:var(--ff-m);font-size:11px;letter-spacing:.04em;color:var(--lake2);line-height:1.75;}
+.bl-blockquote .bq-src{font-size:8px;letter-spacing:.14em;color:var(--label);margin-top:6px;text-transform:uppercase;}
+.bl-pos{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--gold);margin-top:14px;padding:8px 12px;border:1px solid var(--gold-border);background:rgba(160,120,40,.04);display:inline-block;}
+
+/* 18W GAUGE — same mechanic, same proportion */
+.gauge-wrap{margin-top:24px;}
+.gw-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin-bottom:8px;display:flex;justify-content:space-between;}
+.gw-track{position:relative;height:6px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.gw-fill{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,var(--lake2),var(--lake));border-radius:3px;transition:width 1.6s cubic-bezier(.16,1,.3,1);}
+.gw-fill.lit{box-shadow:2px 0 8px rgba(26,96,144,.28);}
+.gw-status{font-family:var(--ff-m);font-size:9px;color:var(--label);margin-top:6px;transition:color .4s;letter-spacing:.06em;}
+.gw-status.locked{color:var(--lake);}
+.gw-max-lbl{position:absolute;right:0;bottom:-18px;font-family:var(--ff-m);font-size:8px;color:var(--label);letter-spacing:.06em;}
+
+/* 2GB pool depth indicator — unique to this card */
+.pool-depth{margin-top:20px;padding:14px 16px;border:1px solid var(--border);background:rgba(26,96,144,.04);}
+.pd-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin-bottom:10px;display:flex;justify-content:space-between;}
+.pd-label span:last-child{color:var(--lake);}
+.pd-bars{display:flex;gap:3px;align-items:flex-end;height:28px;}
+.pd-bar{flex:1;background:var(--faint);border-radius:2px 2px 0 0;transition:height 1.2s cubic-bezier(.16,1,.3,1),background .4s;}
+.pd-bar.filled{background:var(--lake);}
+.pd-bar.filled-dim{background:rgba(26,96,144,.35);}
+.pd-note{font-family:var(--ff-m);font-size:8px;color:var(--label);margin-top:6px;letter-spacing:.04em;}
+.pd-note strong{color:var(--lake);}
+
+/* why cards */
+.why-wrap{margin-top:72px;padding-top:56px;border-top:1px solid var(--line);}
+.why-title{font-family:var(--ff-m);font-size:clamp(28px,4vw,46px);font-weight:500;color:var(--ink);margin-bottom:14px;}
+.why-body{font-size:15px;color:var(--mute);line-height:1.85;max-width:680px;margin-bottom:36px;}
+.why-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.why-card{border:1.5px solid var(--border);padding:20px;transition:border-color .3s,background .3s,box-shadow .3s;background:rgba(255,255,255,.5);}
+.why-card:hover{border-color:var(--lake);background:rgba(255,255,255,.9);box-shadow:0 6px 24px rgba(14,21,32,.08);}
+.wc-icon{font-size:18px;display:block;margin-bottom:10px;}
+.wc-t{font-family:var(--ff-m);font-size:14px;font-weight:500;color:var(--ink);margin-bottom:7px;letter-spacing:.02em;}
+.wc-b{font-size:13px;color:var(--mute);line-height:1.65;}
+
+/* ══ S02 FIERCER ══ */
+#s02{background:var(--bg);}
+.count-num{font-family:var(--ff-m);font-size:clamp(70px,11vw,140px);color:var(--lake2);line-height:1;margin:14px 0 4px;font-weight:500;letter-spacing:-.02em;}
+.ns-cards{display:flex;flex-direction:column;gap:10px;margin-top:24px;}
+.ns-card{border:1.5px solid var(--border);padding:16px 18px;transition:border-color .3s,background .3s;background:rgba(255,255,255,.4);}
+.ns-card:hover{border-color:var(--lake);background:rgba(255,255,255,.85);}
+.ns-card-h{font-family:var(--ff-m);font-size:13px;font-weight:500;color:var(--ink);margin-bottom:5px;letter-spacing:.02em;}
+.ns-card-b{font-size:13px;color:var(--mute);line-height:1.65;}
+.badges-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;position:relative;overflow:hidden;}
+.badges-row.swept::after{
+  content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(26,96,144,.1),rgba(255,255,255,.18),rgba(26,96,144,.1),transparent);
+  animation:lkSweep .6s ease forwards;pointer-events:none;z-index:10;
+}
+@keyframes lkSweep{0%{left:-50%;}100%{left:150%;}}
+.bar-wrap{height:3px;background:var(--faint);border-radius:2px;overflow:hidden;margin-top:5px;}
+.bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--lake2),var(--lake));border-radius:2px;transition:width 1.6s cubic-bezier(.16,1,.3,1);}
+
+/* ══ S03 CAPABLE ══ */
+#s03{background:var(--bg2);}
+.capable-grid{padding:90px 6% 70px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;max-width:1160px;margin:0 auto;}
+.port-row{display:flex;gap:10px;margin-top:20px;}
+.port-item{flex:1;border:1.5px solid var(--border);padding:12px;text-align:center;transition:border-color .3s,background .3s,box-shadow .3s;background:rgba(255,255,255,.4);cursor:default;}
+.port-item.active{border-color:var(--lake);background:rgba(26,96,144,.07);box-shadow:0 2px 12px rgba(26,96,144,.1);}
+.port-item:hover{border-color:var(--lake2);background:rgba(255,255,255,.85);}
+.port-nm{font-family:var(--ff-m);font-size:11px;font-weight:500;color:var(--ink);margin-bottom:3px;}
+.port-ds{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;color:var(--label);text-transform:uppercase;}
+.cmp-bar-wrap{margin-top:28px;}
+.cmp-bar-row{margin-bottom:18px;padding:5px 7px;border-radius:3px;transition:background .2s;cursor:default;position:relative;}
+.cmp-bar-row:hover{background:rgba(26,96,144,.04);}
+.cmp-bar-row:hover .cmp-bar-name{color:var(--ink);}
+.cmp-bar-row::before{content:'›';position:absolute;left:-12px;top:50%;transform:translateY(-50%);font-family:var(--ff-m);font-size:11px;color:var(--lake);opacity:0;transition:opacity .2s,left .2s;}
+.cmp-bar-row:hover::before{opacity:.5;left:-6px;}
+.cmp-bar-label{display:flex;justify-content:space-between;margin-bottom:5px;}
+.cmp-bar-name{font-family:var(--ff-m);font-size:9px;letter-spacing:.05em;color:var(--mute);text-transform:uppercase;transition:color .2s;}
+.cmp-bar-note{font-family:var(--ff-m);font-size:7.5px;color:var(--label);margin-left:5px;}
+.cmp-bar-val{font-family:var(--ff-m);font-size:9px;color:var(--label);}
+.cmp-bar-track{height:4px;background:var(--faint);border-radius:2px;overflow:hidden;}
+.cmp-bar-fill{height:100%;width:0;border-radius:2px;transition:width 1.4s cubic-bezier(.16,1,.3,1);}
+.cmp-bar-fill.c1{background:rgba(26,96,144,.18);}
+.cmp-bar-fill.c2{background:rgba(26,96,144,.22);}
+.cmp-bar-fill.c3{background:rgba(26,96,144,.25);}
+.cmp-bar-fill.c4{background:rgba(26,96,144,.18);}
+.cmp-bar-fill.r5230-bar{background:linear-gradient(90deg,var(--lake2),var(--lake));box-shadow:1px 0 6px rgba(26,96,144,.22);}
+.cmp-bar-row.featured .cmp-bar-name{color:var(--ink);font-weight:500;}
+.cmp-bar-row.featured .cmp-bar-val{color:var(--lake);}
+
+/* ══ S04 RELIABILITY ══ */
+#s04{background:var(--bg);}
+.mtbf-num{font-family:var(--ff-m);font-size:clamp(48px,7vw,84px);color:var(--ink);line-height:1;font-weight:500;}
+.mtbf-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);margin-top:3px;}
+.rel-badge{border:1.5px solid var(--border);padding:14px 18px;background:rgba(255,255,255,.55);display:inline-flex;flex-direction:column;gap:4px;transition:border-color .3s,box-shadow .3s;}
+.rel-badge:hover{border-color:var(--lake);box-shadow:0 4px 16px var(--shadow);}
+.rb-num{font-family:var(--ff-m);font-size:clamp(20px,2.8vw,36px);color:var(--lake2);font-weight:500;line-height:1;}
+.rb-lbl{font-family:var(--ff-m);font-size:10px;letter-spacing:.1em;color:var(--label);text-transform:uppercase;}
+.runtime-tl{margin:24px 0;}
+.rt-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:7px;}
+.rt-label.human{color:var(--label);}
+.rt-label.gpu{color:var(--lake2);}
+.rt-row{margin-bottom:32px;position:relative;}
+.rt-track{position:relative;height:2px;background:var(--faint);}
+.rt-fill{position:absolute;left:0;top:0;height:100%;width:0;transition:width 1.6s ease;}
+.rt-fill.hfill{background:linear-gradient(90deg,rgba(14,21,32,.14),rgba(14,21,32,.28));}
+.rt-fill.gfill{background:linear-gradient(90deg,var(--lake2),var(--lake));}
+.rt-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:var(--bg);z-index:2;}
+.rt-dot.hd{border:1.5px solid rgba(14,21,32,.22);}
+.rt-dot.gd{border:1.5px solid var(--lake);}
+.rt-dot.gd.install{border-color:var(--gold);box-shadow:0 0 5px rgba(160,120,40,.28);}
+.rt-lbl{position:absolute;font-family:var(--ff-m);font-size:7px;white-space:nowrap;top:9px;transform:translateX(-50%);color:rgba(14,21,32,.38);}
+.rt-lbl.gl{color:var(--lake2);}
+.rt-lbl.gl.il{color:var(--gold);}
+.rt-lbl.ra{transform:translateX(-100%);}
+.rt-mover{position:absolute;top:-11px;font-size:13px;transition:left 1.6s ease;opacity:.45;}
+.rt-divider{height:1px;background:var(--line);margin:3px 0 18px;}
+.rt-note{font-family:var(--ff-m);font-size:9px;color:var(--label);margin-top:4px;letter-spacing:.05em;}
+.rt-note strong{color:var(--lake);}
+
+/* ══ S05 PACKAGING ══ */
+#s05{background:var(--bg2);padding:90px 6%;}
+.pkg-in{max-width:1060px;margin:0 auto;}
+.pkg-layout{display:grid;grid-template-columns:240px 1fr;gap:52px;align-items:start;}
+.pkg-card{width:216px;background:#fff;border-radius:4px;overflow:hidden;box-shadow:0 10px 36px rgba(14,21,32,.12),0 2px 8px rgba(14,21,32,.07);}
+.pkg-art{height:100px;position:relative;overflow:hidden;background:#eef2f6;}
+.pkg-art canvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block;}
+.pkg-model-overlay{position:absolute;bottom:6px;left:8px;font-family:var(--ff-m);font-size:16px;font-weight:500;letter-spacing:.02em;color:var(--ink);line-height:1;z-index:2;}
+.pkg-model-overlay span{font-size:.45em;color:var(--lake);display:block;letter-spacing:.06em;}
+.pkg-amd-badge{position:absolute;bottom:7px;right:8px;font-family:var(--ff-b);font-size:7px;font-weight:700;color:var(--amd);letter-spacing:.04em;opacity:.8;z-index:2;}
+.pkg-body{padding:9px 12px 7px;}
+.pkg-brand-t{font-family:var(--ff-m);font-size:7.5px;font-weight:300;letter-spacing:.16em;color:var(--label);text-transform:uppercase;display:block;}
+.pkg-stripe{height:2px;background:linear-gradient(90deg,var(--gold) 0%,var(--lake2) 40%,var(--lake) 65%,rgba(26,96,144,.15) 85%,transparent);margin:7px 0;}
+.pkg-cap-row{display:flex;align-items:center;gap:8px;padding:3px 0 6px;}
+.pkg-cap{font-family:var(--ff-m);font-size:24px;color:var(--ink);line-height:1;font-weight:500;}
+.pkg-spd{font-family:var(--ff-b);font-size:7.5px;color:var(--label);text-transform:uppercase;letter-spacing:.06em;line-height:1.5;}
+.pkg-spd strong{font-family:var(--ff-m);font-size:13px;color:var(--lake2);display:block;font-weight:500;}
+.pkg-certs{display:flex;gap:3px;padding:5px 12px;border-top:1px solid var(--line);}
+.pkg-cert{font-family:var(--ff-m);font-size:6.5px;color:var(--label);border:1px solid rgba(160,120,40,.18);padding:2px 4px;}
+.pkg-feat-list{display:flex;flex-direction:column;}
+.pkg-feat-item{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--line);}
+.pkg-feat-item:last-child{border-bottom:none;}
+.pkg-feat-icon{font-size:14px;flex-shrink:0;padding-top:1px;}
+.pkg-feat-nm{font-family:var(--ff-m);font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px;}
+.pkg-feat-ds{font-size:13px;color:var(--mute);line-height:1.65;}
+
+/* ══ S06 SPECS ══ */
+#s06{background:var(--bg);padding:90px 6% 70px;}
+.spec-in{max-width:860px;margin:0 auto;}
+.spec-title{font-family:var(--ff-m);font-size:clamp(38px,5vw,58px);color:var(--ink);margin-bottom:10px;font-weight:500;}
+.spec-tag{display:inline-block;font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--lake);border:1px solid var(--border);padding:3px 9px;margin-bottom:36px;background:rgba(26,96,144,.04);}
+.spec-tbl{width:100%;border-collapse:collapse;}
+.spec-tbl tr{border-bottom:1px solid var(--line);}
+.spec-tbl td{padding:12px 0;font-size:13px;vertical-align:top;}
+.spec-tbl td:first-child{color:var(--label);width:42%;font-family:var(--ff-m);font-size:9px;letter-spacing:.07em;text-transform:uppercase;border-left:2px solid transparent;transition:border-color .2s;padding-left:3px;}
+.spec-tbl tr:hover td:first-child{border-left-color:var(--lake);}
+.spec-tbl td:last-child{color:var(--ink);font-family:var(--ff-m);font-size:12px;}
+.spec-disc{font-family:var(--ff-m);font-size:9px;color:var(--label);line-height:1.7;margin-top:16px;}
+.spec-ctas{display:flex;gap:9px;margin-top:36px;flex-wrap:wrap;}
+.spec-foot{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);display:flex;gap:7px;flex-wrap:wrap;}
+
+/* FOOTER */
+.site-foot{background:var(--ink);padding:70px 6% 50px;text-align:center;}
+.sf-hl{font-family:var(--ff-m);font-size:clamp(24px,3.5vw,44px);font-weight:500;letter-spacing:.04em;color:rgba(242,246,249,.35);display:flex;flex-wrap:wrap;justify-content:center;gap:0 20px;}
+.sf-tagline{margin-top:40px;padding-top:36px;border-top:1px solid rgba(242,246,249,.07);}
+.sf-t1{font-family:var(--ff-m);font-size:clamp(24px,3.8vw,46px);font-weight:500;letter-spacing:.04em;color:rgba(242,246,249,.22);display:block;line-height:1;}
+.sf-t2{font-family:var(--ff-m);font-size:clamp(24px,3.8vw,46px);font-weight:500;letter-spacing:.04em;color:#5ab0e0;display:block;line-height:1;margin-top:4px;}
+.sf-sub{font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;color:rgba(242,246,249,.1);margin-top:24px;text-transform:uppercase;}
+
+@media(max-width:860px){
+  .sec-wrap,.bl-grid,.capable-grid,.pkg-layout{grid-template-columns:1fr;gap:40px;}
+  .sec-wrap.rev{direction:ltr;}
+  .h-right{opacity:.1!important;transform:none!important;width:100%;}
+  .h-fade{background:rgba(242,246,249,.88);}
+  .why-cards{grid-template-columns:1fr;}
+}
+@media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div id="cur"></div><div id="cur-ring"></div>
+
+<nav id="nav">
+  <div class="nb"><span class="nb-s">Radeon · Lake</span><span class="nb-b">Simorchip</span></div>
+  <div class="np">
+    <a class="on" onclick="goTo('s00')">Hero</a>
+    <a onclick="goTo('s01')">Lake</a>
+    <a onclick="goTo('s02')">Fiercer</a>
+    <a onclick="goTo('s03')">Capable</a>
+    <a onclick="goTo('s04')">Reliability</a>
+    <a onclick="goTo('s05')">Packaging</a>
+    <a onclick="goTo('s06')">Specs</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="s00" class="full">
+  <div class="lake-bg"><div class="lake-glow1"></div><div class="lake-glow2"></div><div class="lake-glow3"></div></div>
+  <div class="h-right" id="hRight">
+    <div class="r5230-wrap">
+      <div class="card-slash"></div>
+      <div class="r5230-body">
+        <div class="card-ripple"></div>
+        <div class="r5230-glow"></div>
+        <div class="r5230-hs">
+          <div class="r5230-fins-wrap" id="rFins"></div>
+          <div class="r5230-hl"></div>
+          <div class="r5230-fan-wrap">
+            <div class="r5230-fan">
+              <div class="r5230-ripple-ring r5230-rr1"></div>
+              <div class="r5230-ripple-ring r5230-rr2"></div>
+              <div class="r5230-ripple-ring r5230-rr3"></div>
+              <div class="r5230-ripple-ring r5230-rr4"></div>
+              <div class="r5230-ripple-ring r5230-rr5"></div>
+              <div class="r5230-fr1 r5230-fan-ring"></div>
+              <div class="r5230-fr2 r5230-fan-ring"></div>
+              <div class="r5230-fr3 r5230-fan-ring"></div>
+              <div class="r5230-fr4 r5230-fan-ring"></div>
+              <div class="r5230-blades" id="rBlades">
+                <div class="r5230-blade" style="transform:rotate(0deg)"></div>
+                <div class="r5230-blade" style="transform:rotate(36deg)"></div>
+                <div class="r5230-blade" style="transform:rotate(72deg)"></div>
+                <div class="r5230-blade" style="transform:rotate(108deg)"></div>
+                <div class="r5230-blade" style="transform:rotate(144deg)"></div>
+                <div class="r5230-blade" style="transform:rotate(180deg)"></div>
+                <div class="r5230-blade" style="transform:rotate(216deg)"></div>
+                <div class="r5230-blade" style="transform:rotate(252deg)"></div>
+                <div class="r5230-blade" style="transform:rotate(288deg)"></div>
+                <div class="r5230-blade" style="transform:rotate(324deg)"></div>
+              </div>
+              <div class="r5230-hub"><div class="r5230-hub-label">Simorchip</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="r5230-pcb"></div>
+        <div class="r5230-brand">
+          <span class="r5230-brand-name">Simorchip</span>
+          <span class="r5230-model">R5230<br>2GB</span>
+          <span class="r5230-sub">GDDR3 · Caicos</span>
+        </div>
+        <div class="r5230-ports" id="rPorts">
+          <div class="r5230-port vga" id="pVGA"><span class="r5230-port-lbl">VGA</span></div>
+          <div class="r5230-port" id="pHDMI"><span class="r5230-port-lbl">HDMI</span></div>
+          <div class="r5230-port" id="pDVI"><span class="r5230-port-lbl">DVI</span></div>
+        </div>
+        <div class="r5230-mem-badge">2GB Pool</div>
+        <div class="r5230-status">● EXPANDED</div>
+        <div class="amd-badge">AMD Radeon</div>
+      </div>
+    </div>
+  </div>
+  <div class="h-fade"></div>
+  <div class="h-left">
+    <div class="h-eye" id="hEye">Simorchip · R5230 2GB · AMD Radeon · Caicos</div>
+    <div class="h-status" id="hStatus">LAKE STATUS: EXPANDED. CORE POOL SECURED.</div>
+    <div class="h-hl" id="hHL">
+      <span class="hl-ln hl-lk" id="hl0">Deeper pool.</span>
+      <span class="hl-ln hl-ink" id="hl1">Same silence.</span>
+      <span class="hl-ln hl-gd" id="hl2">More headroom.</span>
+    </div>
+    <div class="tl-line" id="hLine" style="margin-top:16px;"></div>
+    <div class="h-sub" id="hSub">18W. Single silent fan. 2GB GDDR3 expanded frame buffer.<br><strong style="color:var(--ink);">The same zero-cable efficiency as the 1GB.</strong><br>With a deeper memory reservoir for multitasking workflows.</div>
+    <div class="h-tags" id="hTags">
+      <span class="tag">R5230</span>
+      <span class="tag">2GBGDDR3</span>
+      <span class="tag">64Bit</span>
+      <span class="tag">Caicos</span>
+      <span class="tag">PCIe2.0</span>
+      <span class="tag">18W</span>
+      <span class="tag">SingleFan</span>
+      <span class="tag">VGA+HDMI+DVI</span>
+    </div>
+  </div>
+  <div class="scr-hint" id="scrHint"><div class="scr-ln"></div><div class="scr-lb">Scroll</div></div>
+</section>
+
+<!-- ═══ S01 LAKE ═══ -->
+<section id="s01">
+  <div class="s01-in">
+    <div class="bl-grid fi">
+      <div>
+        <div class="bl-eye">Design Language · Lake Series</div>
+        <div class="bl-title-wrap">
+          <div class="bl-title">Lake</div>
+          <div class="bl-title-tw" id="blTw">// POOL_EXPANDED</div>
+        </div>
+        <div class="bl-body">A deeper reservoir changes what's possible.<br><br>The R5230 2GB carries the same Caicos core, the same single-fan thermal design, and the same 18W power ceiling as the 1GB model. But doubling the frame buffer opens up more breathing room — for complex browser sessions, high-definition asset pipelines, and dense multi-application workflows.<br><br>No extra thermal strain. No extra cables. Just more depth.</div>
+        <div class="bl-blockquote">
+          <p>The lake doesn't need to be loud. It just needs to be deep enough to hold everything you throw at it.</p>
+          <div class="bq-src">// R5230 2GB · Caicos Core · Expanded Pool Architecture</div>
+        </div>
+        <div class="bl-pos">R5230 2GB — Double the buffer. Same silent discipline.</div>
+
+        <!-- 18W GAUGE -->
+        <div class="gauge-wrap fi fi-d2" id="gaugeWrap">
+          <div class="gw-label"><span>0W</span><span id="gwVal">— W</span><span>18W (max)</span></div>
+          <div class="gw-track">
+            <div class="gw-fill" id="gwFill"></div>
+            <span class="gw-max-lbl">PCIe Bus Only</span>
+          </div>
+          <div class="gw-status" id="gwStatus">// POWER DRAW · STANDBY</div>
+        </div>
+
+        <!-- 2GB POOL DEPTH INDICATOR -->
+        <div class="pool-depth fi fi-d3" id="poolDepth">
+          <div class="pd-label"><span>Memory Pool Depth</span><span id="pdVal">0 / 16 blocks</span></div>
+          <div class="pd-bars" id="pdBars">
+            <div class="pd-bar" style="height:60%"></div>
+            <div class="pd-bar" style="height:80%"></div>
+            <div class="pd-bar" style="height:50%"></div>
+            <div class="pd-bar" style="height:90%"></div>
+            <div class="pd-bar" style="height:70%"></div>
+            <div class="pd-bar" style="height:100%"></div>
+            <div class="pd-bar" style="height:85%"></div>
+            <div class="pd-bar" style="height:60%"></div>
+            <div class="pd-bar" style="height:75%"></div>
+            <div class="pd-bar" style="height:95%"></div>
+            <div class="pd-bar" style="height:65%"></div>
+            <div class="pd-bar" style="height:80%"></div>
+            <div class="pd-bar" style="height:55%"></div>
+            <div class="pd-bar" style="height:90%"></div>
+            <div class="pd-bar" style="height:70%"></div>
+            <div class="pd-bar" style="height:85%"></div>
+          </div>
+          <div class="pd-note">2GB GDDR3 — <strong>2× the frame buffer of the 1GB model.</strong> Extra headroom for HD asset caching, dense browser sessions, and multi-application display pipelines.</div>
+        </div>
+      </div>
+      <div class="img-ph fi fi-d1" style="aspect-ratio:16/10;min-height:260px;">
+        <span>[ LAKE — SINGLE FAN CLOSE-UP ]<br>R5230 2GB front · golden Simorchip emblem centered<br>Deeper blue ambient · calm studio light ]</span>
+      </div>
+    </div>
+    <div class="why-wrap fi">
+      <div class="why-title fi">Why You Need the R5230 2GB</div>
+      <div class="why-body fi fi-d1">When the 1GB model handles routine single-display and basic multi-screen work with ease, the 2GB model handles the same workloads — plus the sessions that push deeper. More browser tabs holding HD assets. Denser spreadsheet views across multiple displays. Video editing timelines that don't stutter.<br><br><strong style="color:var(--ink);">Same power ceiling. Same thermal footprint. More room to operate.</strong></div>
+      <div class="why-cards fi fi-d2">
+        <div class="why-card">
+          <span class="wc-icon">🗂️</span>
+          <div class="wc-t">2GB — Doubled Buffer Depth</div>
+          <div class="wc-b">High-definition video assets, complex browser rendering, and dense spreadsheet layouts no longer tax system RAM. The expanded 2GB frame buffer gives the data pipeline extra breathing room without asking anything extra from the rest of the system.</div>
+        </div>
+        <div class="why-card">
+          <span class="wc-icon">⚡</span>
+          <div class="wc-t">18W — Still Runs From the Slot</div>
+          <div class="wc-b">Doubling the memory didn't change the power equation. Still 18W. Still PCIe slot only. Still no external cables. A 200W PSU handles everything. The upgrade is purely in the memory pool — nothing else changes.</div>
+        </div>
+        <div class="why-card">
+          <span class="wc-icon">📐</span>
+          <div class="wc-t">Same Compact Form Factor</div>
+          <div class="wc-b">145 × 69 × 16.5 mm. Same physical footprint as the 1GB. HTPC cases, mini-ITX builds, slim corporate desktops — the 2GB installs in all of them, with no compromise on fit.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S02 FIERCER ═══ -->
+<section id="s02">
+  <div class="sec-wrap">
+    <div class="fi" style="position:relative;">
+      <div class="sh-num">01 — Fiercer</div>
+      <div class="sh-title" style="margin-bottom:8px;">Fiercer</div>
+      <div class="sh-sub">160 Stream Processors · 40nm · Caicos · 2GB Pool</div>
+      <div class="tl-line on"></div>
+      <div class="count-num" id="count160">000</div>
+      <div class="ns-cards" id="nsCards">
+        <div class="ns-card">
+          <div class="ns-card-h">160 processing vectors online. 2GB pool confirmed.</div>
+          <div class="ns-card-b">The 40nm process positions 160 stream processors onto a stable, low-power silicon matrix. With 2GB GDDR3 backing the pipeline, the R5230 2GB handles multi-display text workflows, 1080P video streams, HD asset sessions, and standard enterprise applications with clean, predictable visual output — and more reservoir depth to draw from without memory pressure.</div>
+        </div>
+        <div class="ns-card">
+          <div class="ns-card-h">2GB GDDR3 · 64-Bit · Expanded pipeline</div>
+          <div class="ns-card-b">Where the 1GB model allocates 1GB across active display buffers, the 2GB model maintains a deeper reserve. Complex browser sessions, high-resolution asset caches, and layered display pipelines operate without exhausting the frame buffer. The pipeline stays clear under sustained multi-application load.</div>
+        </div>
+        <div class="ns-card">
+          <div class="ns-card-h">PCIe 2.0 × 8 — Same broad compatibility</div>
+          <div class="ns-card-b">PCIe 2.0 × 8 connects across virtually every desktop platform produced in the last 15 years. Enterprise towers, legacy business desktops, mini-ITX boards — the 2GB model drops in exactly where the 1GB does, with no platform-specific requirements.</div>
+        </div>
+      </div>
+      <div class="badges-row" id="nsBadges">
+        <div class="stat-badge">
+          <div class="num">160</div>
+          <div class="lbl">Caicos Cores</div>
+          <div class="bar-wrap"><div class="bar-fill" id="bar1"></div></div>
+        </div>
+        <div class="stat-badge">
+          <div class="num">2GB</div>
+          <div class="lbl">GDDR3 · 64-Bit</div>
+          <div class="bar-wrap"><div class="bar-fill" id="bar2"></div></div>
+        </div>
+        <div class="stat-badge">
+          <div class="num">18W</div>
+          <div class="lbl">PCIe Powered</div>
+          <div class="bar-wrap"><div class="bar-fill" id="bar3"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:360px;margin-bottom:12px;">
+        <span>[ FIERCER — CARD PROFILE ]<br>R5230 2GB · single fan · deeper blue ambient<br>Clean light · 2GB label visible ]</span>
+      </div>
+      <div class="img-ph" style="width:100%;height:120px;">
+        <span>[ CAICOS CORE + 2GB MODULE ]<br>PCB detail · memory chips visible ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S03 CAPABLE ═══ -->
+<section id="s03">
+  <div class="capable-grid">
+    <div class="fi">
+      <div class="sh-num">02 — Capable</div>
+      <div class="sh-title" style="margin-bottom:8px;">Capable</div>
+      <div class="sh-sub">VGA + HDMI + DVI · DirectX 12 (11_0) · PCIe 2.0</div>
+      <div class="tl-line on"></div>
+      <div class="port-row fi fi-d1" id="portRow">
+        <div class="port-item" id="portVGA"><div class="port-nm">VGA</div><div class="port-ds">Legacy · D-Sub 15</div></div>
+        <div class="port-item" id="portHDMI"><div class="port-nm">HDMI</div><div class="port-ds">Digital · 1080P</div></div>
+        <div class="port-item" id="portDVI"><div class="port-nm">DVI</div><div class="port-ds">Digital · Dual-Link</div></div>
+      </div>
+      <ul class="bullet-list" style="margin-top:20px;">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div><strong>VGA + HDMI + DVI — Three native ports, no adapters.</strong> Connect any monitor from any decade directly on the bracket. Legacy enterprise displays, modern screens, office projectors — simultaneously, without signal conversion or proprietary hub adapters.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div><strong>DirectX 12 Feature Level 11_0</strong> — Full Windows 10 and Windows 11 compatibility out of the box. Desktop composition, browser rendering, and standard application display all run natively without patches or software workarounds.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div><strong>Caicos · 40nm · AMD VLIW-5 — Proven architecture.</strong> A mature node running a reliable, low-heat silicon layout. No new driver risks. No thermal edge cases. Continuous output under extended operating conditions, day after day.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div>
+          <div><strong>PCIe 2.0 × 8 — Drop in, it works.</strong> Compatible with virtually every desktop platform from the last 15 years. No board-specific requirements. Legacy towers, enterprise desktops, mini-ITX — universal baseline.</div>
+        </li>
+      </ul>
+      <div class="cmp-bar-wrap fi fi-d2" id="cmpBars">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);margin-bottom:18px;">Deployment Sweet Spot</div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">R5230 1GB <span class="cmp-bar-note">— 1GB pool · routine display tasks</span></span>
+            <span class="cmp-bar-val">1GB</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c1" id="cb0" data-w="50"></div></div>
+        </div>
+        <div class="cmp-bar-row featured">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">R5230 2GB — expanded pool · multi-app headroom</span>
+            <span class="cmp-bar-val" style="color:var(--lake);">2GB</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill r5230-bar" id="cb1" data-w="100"></div></div>
+        </div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">Mid-Range <span class="cmp-bar-note">— 2304C · 115W · gaming tier</span></span>
+            <span class="cmp-bar-val">2304</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c3" id="cb2" data-w="55"></div></div>
+        </div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">High-End <span class="cmp-bar-note">— 3584C · 170W · heavy 3D</span></span>
+            <span class="cmp-bar-val">3584</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c4" id="cb3" data-w="40"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:340px;margin-bottom:12px;">
+        <span>[ CAPABLE — PORT BRACKET ]<br>R5230 2GB rear · VGA · HDMI · DVI<br>All three outputs · deep blue ambient ]</span>
+      </div>
+      <div class="img-ph" style="width:100%;height:130px;">
+        <span>[ MULTI-DISPLAY SETUP ]<br>Two monitors · R5230 2GB driving both ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S04 RELIABILITY ═══ -->
+<section id="s04">
+  <div class="sec-wrap rev">
+    <div class="fi">
+      <div class="sh-num">03 — Reliability</div>
+      <div class="sh-title" style="margin-bottom:8px;">Reliability</div>
+      <div class="sh-sub">1,500,000 hr MTBF · 171 Years · Minimal Thermal Wear</div>
+      <div class="tl-line on"></div>
+      <p style="font-size:16px;color:var(--mute);line-height:1.85;margin:20px 0 8px;">18W is the power ceiling. That means minimal thermal wear on every component, across every duty cycle.</p>
+      <p style="font-size:16px;font-weight:500;color:var(--ink);line-height:1.85;margin-bottom:18px;">No fan curve management. No power spike risk. Clean, persistent output from first boot to last.</p>
+      <div class="fi fi-d1" style="margin:20px 0;">
+        <div class="mtbf-num" id="mtbfCount">0</div>
+        <div class="mtbf-lbl">Hours MTBF</div>
+      </div>
+      <div class="runtime-tl fi fi-d2" id="rtWrap">
+        <div class="rt-label human">Modern Steel &amp; Rail — 171 Years</div>
+        <div class="rt-row">
+          <div class="rt-track" style="width:100%;">
+            <div class="rt-fill hfill" id="rtF1"></div>
+            <div class="rt-mover" id="rtLoco" style="left:0;">🚂</div>
+            <div class="rt-dot hd" style="left:0%;"><span class="rt-lbl">1855<br>Steam</span></div>
+            <div class="rt-dot hd" style="left:52%;"><span class="rt-lbl">1960<br>Electric</span></div>
+            <div class="rt-dot hd" style="left:100%;"><span class="rt-lbl ra">2026<br>Today</span></div>
+          </div>
+        </div>
+        <div class="rt-divider"></div>
+        <div class="rt-label gpu">R5230 2GB Theoretical Lifespan — 171 Years</div>
+        <div class="rt-row">
+          <div class="rt-track" style="width:100%;">
+            <div class="rt-fill gfill" id="rtF2"></div>
+            <div class="rt-dot gd install" style="left:0%;"><span class="rt-lbl gl il">2026<br>You install</span></div>
+            <div class="rt-dot gd" style="left:44%;"><span class="rt-lbl gl">2101<br>22nd Century</span></div>
+            <div class="rt-dot gd" style="left:100%;"><span class="rt-lbl gl ra">2197<br>R5230 (theory)</span></div>
+          </div>
+        </div>
+        <div class="rt-note">The entire history of modern steel and rail spans 171 years. The R5230 2GB's rated lifespan <strong>matches it exactly</strong>. Install it once, let it run.</div>
+      </div>
+      <div class="fi fi-d3" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <div class="rel-badge"><div class="rb-num">18W</div><div class="rb-lbl">Silent · Zero Heat Spike</div></div>
+        <div class="rel-badge"><div class="rb-num">0</div><div class="rb-lbl">External Cables Required</div></div>
+        <div class="rel-badge"><div class="rb-num">1.5M</div><div class="rb-lbl">Hours MTBF</div></div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:400px;">
+        <span>[ RELIABILITY ]<br>R5230 2GB installed · slim chassis<br>Natural daylight · clean deployment ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S05 PACKAGING ═══ -->
+<section id="s05">
+  <div class="pkg-in">
+    <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:10px;" class="fi">Packaging Design</div>
+    <div class="pkg-layout">
+      <div class="fi" id="pkgCard">
+        <div class="pkg-card" style="opacity:0;transform:translateX(-24px);transition:opacity 1.4s ease,transform 1.4s ease;">
+          <div class="pkg-art">
+            <canvas id="pulseCanvas" width="216" height="100"></canvas>
+            <div class="pkg-model-overlay">R5230 2GB<span>GDDR3 · PCIe 2.0</span></div>
+            <div class="pkg-amd-badge">AMD Radeon</div>
+          </div>
+          <div class="pkg-body">
+            <span class="pkg-brand-t">Simorchip · Lake · Radeon Series</span>
+            <div class="pkg-stripe"></div>
+            <div class="pkg-cap-row">
+              <span class="pkg-cap">2<span style="font-size:.5em;">GB</span></span>
+              <span class="pkg-spd">VGA+HDMI+DVI<br><strong>GDDR3</strong></span>
+            </div>
+          </div>
+          <div class="pkg-certs">
+            <span class="pkg-cert">CE</span><span class="pkg-cert">RoHS</span><span class="pkg-cert">FCC</span><span class="pkg-cert">REACH</span>
+          </div>
+        </div>
+      </div>
+      <div class="fi fi-d2">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:18px;">What's in the box</div>
+        <div class="pkg-feat-list">
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">📦</div><div><div class="pkg-feat-nm">Foam-Cushioned Inner Tray</div><div class="pkg-feat-ds">The compact single-fan card sits in a dedicated foam slot. Built for the 145 × 69 × 16.5 mm profile — same tray dimensions as the 1GB model.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">⚡</div><div><div class="pkg-feat-nm">Anti-Static Bag Protection</div><div class="pkg-feat-ds">Sealed in an anti-static bag before tray placement. Full ESD protection from factory to installation — no cables to worry about inside the box.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">📋</div><div><div class="pkg-feat-nm">Full Spec on Pack</div><div class="pkg-feat-ds">Model number, 2GB capacity, and port configuration clearly printed on the outer box. Distinguishes cleanly from the 1GB model at a glance.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">✅</div><div><div class="pkg-feat-nm">Global Certifications</div><div class="pkg-feat-ds">CE · RoHS · FCC · REACH. Cleared for EU, US, and international deployment.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S06 SPECS ═══ -->
+<section id="s06">
+  <div class="spec-in">
+    <div class="spec-title fi">Specifications</div>
+    <div class="spec-tag fi fi-d1">Entry · Caicos · 40nm · AMD Radeon · 2GB</div>
+    <table class="spec-tbl fi fi-d2">
+      <tr><td>Architecture</td><td>Caicos · 40nm · AMD VLIW-5</td></tr>
+      <tr><td>Stream Processors</td><td>160</td></tr>
+      <tr><td>Memory Type</td><td>GDDR3</td></tr>
+      <tr><td>Memory Capacity</td><td>2 GB</td></tr>
+      <tr><td>Memory Bus Width</td><td>64-bit</td></tr>
+      <tr><td>Bus Interface</td><td>PCIe 2.0 × 8</td></tr>
+      <tr><td>Display Outputs</td><td>VGA + HDMI + DVI</td></tr>
+      <tr><td>Max Resolution</td><td>1920 × 1080</td></tr>
+      <tr><td>DirectX Support</td><td>DirectX 12 (Feature Level 11_0)</td></tr>
+      <tr><td>External Power</td><td>Not Required</td></tr>
+      <tr><td>Power Consumption</td><td>18W</td></tr>
+      <tr><td>Recommended PSU</td><td>200W and above</td></tr>
+      <tr><td>Cooling Solution</td><td>Single-Fan</td></tr>
+      <tr><td>Dimensions</td><td>145 × 69 × 16.5 mm</td></tr>
+      <tr><td>OS Support</td><td>Windows 10 / Windows 11</td></tr>
+      <tr><td>Market Positioning</td><td>Entry · Display · Expanded Buffer</td></tr>
+    </table>
+    <div class="spec-disc fi fi-d2">* All specifications sourced from Simorchip internal documentation. Actual performance may vary depending on system configuration and operating environment.</div>
+    <div class="spec-ctas fi">
+      <button class="btn btn-lake">Download Spec Sheet</button>
+      <button class="btn btn-ghost">Explore More Products</button>
+    </div>
+    <div class="spec-foot fi">
+      <span class="tag" style="font-size:9px;">© 2026 Simorchip Technology</span>
+      <span class="tag" style="font-size:9px;">R5230 2GB · Lake · AMD Radeon</span>
+    </div>
+  </div>
+</section>
+
+<div class="site-foot">
+  <div class="sf-hl">
+    <span>Simorchip R5230 2GB</span>
+    <span style="color:#5ab0e0;">Lake</span>
+    <span style="color:rgba(242,246,249,.5);">Status: Expanded.</span>
+  </div>
+  <div class="sf-tagline">
+    <span class="sf-t1">The snow-white moon shines upon the earth.</span>
+    <span class="sf-t2">Hiding your deepest secret.</span>
+  </div>
+  <div class="sf-sub">© 2026 Simorchip Technology · R5230 2GB · Lake · AMD Radeon Caicos</div>
+</div>
+
+<script>
+/* ── CURSOR ── */
+(function(){
+  const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  const TRAIL=5;
+  const dots=Array.from({length:TRAIL},(_,i)=>{
+    const d=document.createElement('div');d.className='trail-dot';
+    const s=3-i*.4;d.style.cssText=`width:${s}px;height:${s}px;`;
+    document.body.appendChild(d);return d;
+  });
+  const pos=dots.map(()=>({x:0,y:0}));let head=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    cur.style.left=mx+'px';cur.style.top=my+'px';
+    pos[head]={x:mx,y:my};head=(head+1)%TRAIL;
+  });
+  (function frame(){
+    rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    dots.forEach((_,i)=>{
+      const p=pos[(head-1-i+TRAIL)%TRAIL];
+      dots[i].style.left=p.x+'px';dots[i].style.top=p.y+'px';
+    });
+    requestAnimationFrame(frame);
+  })();
+  document.querySelectorAll('button,.btn,.np a').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cur.style.width='10px';cur.style.height='10px';});
+    el.addEventListener('mouseleave',()=>{cur.style.width='6px';cur.style.height='6px';});
+  });
+})();
+
+/* ── NAV ── */
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('sc',scrollY>50));
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+const secIds=['s00','s01','s02','s03','s04','s05','s06'];
+const pills=document.querySelectorAll('.np a');
+secIds.forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){const i=secIds.indexOf(id);pills.forEach(p=>p.classList.remove('on'));if(pills[i])pills[i].classList.add('on');}
+  },{threshold:.4}).observe(el);
+});
+
+/* ── SCROLL REVEAL ── */
+const fiObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>fiObs.observe(el));
+
+/* ── SECTION DIVIDERS ── */
+secIds.slice(1).forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)el.classList.add('div-on');},{threshold:.05}).observe(el);
+});
+
+/* ── TL LINES ── */
+document.querySelectorAll('.tl-line').forEach(el=>{
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)el.classList.add('on');},{threshold:.5}).observe(el);
+});
+
+/* ── FINS ── */
+(function(){
+  const wrap=document.getElementById('rFins');if(!wrap)return;
+  for(let i=0;i<12;i++){const f=document.createElement('div');f.className='r5230-fin';wrap.appendChild(f);}
+})();
+
+/* ── HERO SEQUENCE ── */
+document.fonts.ready.then(()=>{
+  function cls(id,d=0){setTimeout(()=>document.getElementById(id)?.classList.add('on'),d);}
+  cls('hRight',0);cls('hEye',400);
+  setTimeout(()=>{
+    const st=document.getElementById('hStatus');if(!st)return;
+    st.classList.add('typing');
+    setTimeout(()=>st.classList.add('done'),1500);
+  },600);
+  cls('hHL',1000);
+  setTimeout(()=>['hl0','hl1','hl2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('in'),i*300)),1020);
+  setTimeout(()=>document.getElementById('hLine')?.classList.add('on'),2000);
+  cls('hSub',2300);cls('hTags',2600);cls('scrHint',3200);
+  setTimeout(portHighlight,2800);
+});
+
+/* ── PORT HIGHLIGHT ── */
+function portHighlight(){
+  const ports=[
+    {card:document.getElementById('pVGA'),  row:document.getElementById('portVGA')},
+    {card:document.getElementById('pHDMI'), row:document.getElementById('portHDMI')},
+    {card:document.getElementById('pDVI'),  row:document.getElementById('portDVI')},
+  ];
+  let i=0;
+  function next(){
+    if(i>0){ports[i-1].card?.classList.remove('hl');ports[i-1].row?.classList.remove('active');}
+    if(i<ports.length){
+      ports[i].card?.classList.add('hl');ports[i].row?.classList.add('active');
+      i++;setTimeout(next,700);
+    } else {
+      ports.forEach(p=>{p.card?.classList.add('hl');p.row?.classList.add('active');});
+    }
+  }
+  next();
+}
+
+/* ── S01 TYPEWRITER ── */
+(function(){
+  const tw=document.getElementById('blTw');if(!tw)return;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){obs.disconnect();
+      setTimeout(()=>{tw.classList.add('tw-go');setTimeout(()=>tw.classList.add('tw-done'),1100);},300);
+    }
+  },{threshold:.4});
+  obs.observe(tw);
+})();
+
+/* ── 18W GAUGE ── */
+(function(){
+  const wrap=document.getElementById('gaugeWrap');if(!wrap)return;
+  const fill=document.getElementById('gwFill');
+  const status=document.getElementById('gwStatus');
+  const valEl=document.getElementById('gwVal');
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      setTimeout(()=>{
+        fill.style.width='12%';
+        const dur=1400,target=18,t0=performance.now();
+        (function f(now){
+          const p=Math.min((now-t0)/dur,1);
+          const v=1-Math.pow(1-p,2);
+          if(valEl)valEl.textContent=Math.round(v*target)+'W';
+          if(p<1)requestAnimationFrame(f);
+          else{
+            valEl.textContent='18W';
+            fill.classList.add('lit');
+            status.textContent='// 18W LOCKED · PCIe BUS ONLY · 0W EXTERNAL';
+            status.classList.add('locked');
+          }
+        })(performance.now());
+      },400);
+    }
+  },{threshold:.5});
+  obs.observe(wrap);
+})();
+
+/* ── 2GB POOL DEPTH BARS ── */
+(function(){
+  const wrap=document.getElementById('poolDepth');if(!wrap)return;
+  const bars=wrap.querySelectorAll('.pd-bar');
+  const valEl=document.getElementById('pdVal');
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      setTimeout(()=>{
+        let filled=0;
+        function fillNext(){
+          if(filled>=bars.length){
+            if(valEl)valEl.textContent='16 / 16 blocks — 2GB active';
+            return;
+          }
+          bars[filled].classList.add('filled');
+          filled++;
+          if(valEl)valEl.textContent=`${filled} / 16 blocks`;
+          setTimeout(fillNext,80);
+        }
+        fillNext();
+      },400);
+    }
+  },{threshold:.5});
+  obs.observe(wrap);
+})();
+
+/* ── COUNT-UP 160 ── */
+(function(){
+  const el=document.getElementById('count160');if(!el)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      const dur=1200,target=160,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,2.5);
+        const n=Math.round(v*target);
+        el.textContent=String(n).padStart(3,'0');
+        if(p<1)requestAnimationFrame(f);else el.textContent='160';
+      })(performance.now());
+    }
+  },{threshold:.4});
+  obs.observe(el);
+})();
+
+/* ── BADGES ── */
+(function(){
+  const wrap=document.getElementById('nsBadges');if(!wrap)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      wrap.querySelectorAll('.stat-badge').forEach((b,i)=>{
+        b.style.cssText=`opacity:0;transform:translateY(12px);transition:opacity .5s ease ${i*.15}s,transform .5s ease ${i*.15}s;`;
+        setTimeout(()=>{b.style.opacity='1';b.style.transform='none';},60);
+      });
+      setTimeout(()=>{['bar1','bar2','bar3'].forEach((id,i)=>setTimeout(()=>{
+        const e=document.getElementById(id);if(e)e.style.width='100%';
+      },i*180));},600);
+      setTimeout(()=>wrap.classList.add('swept'),900);
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ── NS CARDS ── */
+(function(){
+  const cards=document.querySelectorAll('.ns-card');if(!cards.length)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      cards.forEach((c,i)=>{
+        c.style.cssText=`opacity:0;transform:translateX(-12px);transition:opacity .55s ease ${i*.14}s,transform .55s ease ${i*.14}s;`;
+        setTimeout(()=>{c.style.opacity='1';c.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3});
+  obs.observe(cards[0]);
+})();
+
+/* ── COMPARE BARS ── */
+(function(){
+  const wrap=document.getElementById('cmpBars');if(!wrap)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      ['cb0','cb1','cb2','cb3'].forEach((id,i)=>setTimeout(()=>{
+        const el=document.getElementById(id);if(el)el.style.width=el.dataset.w+'%';
+      },i*230));
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ── WHY CARDS ── */
+(function(){
+  const cards=document.querySelectorAll('.why-card');if(!cards.length)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      cards.forEach((c,i)=>{
+        c.style.cssText=`opacity:0;transform:translateY(16px);transition:opacity .55s ease ${i*.12}s,transform .55s ease ${i*.12}s;`;
+        setTimeout(()=>{c.style.opacity='1';c.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3});
+  obs.observe(cards[0]);
+})();
+
+/* ── MTBF ── */
+(function(){
+  const el=document.getElementById('mtbfCount');if(!el)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      const dur=1800,target=1500000,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,3);
+        el.textContent=Math.round(v*target).toLocaleString();
+        if(p<1)requestAnimationFrame(f);else el.textContent='1,500,000';
+      })(performance.now());
+    }
+  },{threshold:.4});
+  obs.observe(el);
+})();
+
+/* ── RUNTIME TIMELINE ── */
+(function(){
+  const wrap=document.getElementById('rtWrap');if(!wrap)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      setTimeout(()=>{
+        const f1=document.getElementById('rtF1');
+        const loco=document.getElementById('rtLoco');
+        if(f1)f1.style.width='100%';
+        if(loco){loco.style.transition='left 1.6s ease';loco.style.left='calc(100% - 16px)';}
+        setTimeout(()=>{const f2=document.getElementById('rtF2');if(f2)f2.style.width='100%';},400);
+      },200);
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ── PACKAGING CARD ── */
+(function(){
+  const wrap=document.getElementById('pkgCard');if(!wrap)return;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){
+      const card=wrap.querySelector('.pkg-card');
+      if(card){card.style.opacity='1';card.style.transform='none';}
+    }
+  },{threshold:.2});
+  obs.observe(wrap);
+})();
+
+/* ── PULSE CANVAS — lake deeper ripples, slower rhythm ── */
+(function(){
+  const cv=document.getElementById('pulseCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0,rafId;
+
+  function draw(){
+    ctx.fillStyle='#eef2f6';
+    ctx.fillRect(0,0,W,H);
+
+    // deeper, slower blobs — vs 1GB which are fast and small
+    [[W*.35,H*.45,1.0],[W*.65,H*.55,1.4],[W*.5,H*.3,.7]].forEach(([cx2,cy2,phase])=>{
+      const r=36+Math.sin(t*.3+phase)*8;
+      const alpha=.065+Math.sin(t*.3+phase)*.03;
+      const g=ctx.createRadialGradient(cx2,cy2,0,cx2,cy2,r);
+      g.addColorStop(0,`rgba(26,96,144,${alpha})`);
+      g.addColorStop(1,'rgba(26,96,144,0)');
+      ctx.fillStyle=g;
+      ctx.beginPath();ctx.arc(cx2,cy2,r,0,Math.PI*2);ctx.fill();
+    });
+
+    // 5 ripple rings (vs 4 on 1GB) — wider spacing, slower
+    const cx=W*.4,cy=H*.5;
+    for(let i=0;i<5;i++){
+      const phase=(t*.4+i*1.0)%(Math.PI*2);
+      const r=5+i*14+Math.sin(phase)*3;
+      const alpha=(0.085-i*.014)*(0.5+0.5*Math.sin(phase+Math.PI));
+      if(alpha<=0)continue;
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(26,96,144,${alpha})`;
+      ctx.lineWidth=i===0?1.3:.6;
+      ctx.stroke();
+    }
+
+    // gold hub
+    const gR=52+Math.sin(t*.38)*6;
+    ctx.beginPath();ctx.arc(cx,cy,gR,0,Math.PI*2);
+    ctx.strokeStyle=`rgba(160,120,40,${.038+Math.sin(t*.38)*.022})`;
+    ctx.lineWidth=.8;ctx.stroke();
+
+    // diagonal texture
+    ctx.save();ctx.globalAlpha=.055;
+    [[.2,.24],[.46,.5],[.72,.76]].forEach(([y1,y2])=>{
+      const g2=ctx.createLinearGradient(0,0,W,0);
+      g2.addColorStop(0,'transparent');
+      g2.addColorStop(.3,'rgba(26,96,144,0.5)');
+      g2.addColorStop(.7,'rgba(26,96,144,0.25)');
+      g2.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.moveTo(0,H*y1);ctx.lineTo(W,H*y2);
+      ctx.strokeStyle=g2;ctx.lineWidth=1;ctx.stroke();
+    });
+    ctx.restore();
+
+    t+=.022; // slower than 1GB (.025)
+    rafId=requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('beforeunload',()=>cancelAnimationFrame(rafId));
+})();
+
+/* ── SPEC TABLE ── */
+(function(){
+  const tbl=document.querySelector('.spec-tbl');if(!tbl)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      tbl.querySelectorAll('tr').forEach((row,i)=>{
+        row.style.cssText=`opacity:0;transition:opacity .35s ease ${i*.04}s;`;
+        setTimeout(()=>{row.style.opacity='1';},60);
+      });
+    }
+  },{threshold:.1});
+  obs.observe(tbl);
+})();
+</script>
+</body>
+</html>

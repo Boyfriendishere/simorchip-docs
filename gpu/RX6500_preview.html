@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip RX6500 4GD6 — Vision Matrix: Online.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080c18;--bg2:#0c1020;--bg3:#101428;
+  --ink:#e8e0f8;--mute:#7080a8;--label:#4a5878;
+  --ruby:#c8243a;--ruby2:#e03050;--ruby3:rgba(200,36,58,.1);
+  --gold:#d4a030;--gold2:#b88020;--gold-border:rgba(212,160,48,.22);
+  --star:rgba(200,180,255,.07);--star2:rgba(200,180,255,.04);
+  --border:rgba(200,160,80,.16);--line:rgba(200,160,80,.09);
+  --shadow:rgba(8,12,24,.7);
+  --amd:#e04020;
+  --ff-d:'Bebas Neue',sans-serif;
+  --ff-b:'Barlow Condensed',sans-serif;
+  --ff-m:'Share Tech Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff-b);background:var(--bg);color:var(--ink);overflow-x:hidden;cursor:none;}
+
+/* STAR FIELD — full page canvas */
+#starCanvas{position:fixed;inset:0;pointer-events:none;z-index:0;width:100%;height:100%;}
+
+/* CONSTELLATION OVERLAY — thin runic lines */
+.constellation-overlay{position:fixed;inset:0;pointer-events:none;z-index:1;
+  background-image:
+    linear-gradient(rgba(200,180,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(200,180,255,.015) 1px,transparent 1px);
+  background-size:120px 120px;
+}
+
+/* NOISE */
+.noise{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.25;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;}
+
+/* CURSOR */
+#cur{position:fixed;width:6px;height:6px;border-radius:50%;background:var(--ruby);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;box-shadow:0 0 12px var(--ruby);}
+#cur-ring{position:fixed;width:28px;height:28px;border:1px solid rgba(200,36,58,.3);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);animation:ringR 4s linear infinite;}
+@keyframes ringR{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
+.trail-dot{position:fixed;border-radius:50%;background:var(--ruby);pointer-events:none;z-index:9990;transform:translate(-50%,-50%);opacity:.12;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:18px 5%;transition:background .3s,border-bottom .3s;}
+nav.sc{background:rgba(8,12,24,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(200,160,80,.12);}
+.nav-logo{font-family:var(--ff-d);font-size:17px;letter-spacing:.22em;color:var(--gold);}
+.nav-logo em{color:var(--ruby);font-style:normal;}
+.np{display:flex;gap:4px;}
+.np a{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--label);border:1px solid rgba(200,160,80,.14);padding:4px 9px;cursor:pointer;text-decoration:none;transition:all .2s;background:transparent;text-transform:uppercase;}
+.np a:hover,.np a.on{color:var(--bg);border-color:var(--ruby);background:var(--ruby);}
+
+/* SHARED */
+section{position:relative;width:100%;overflow:hidden;}
+.full{min-height:100vh;}
+/* Vision divider — thin dashed gradient */
+.vis-line{height:1px;background:linear-gradient(90deg,transparent,var(--ruby) 30%,var(--gold) 60%,transparent);width:0;transition:width 1s ease;position:relative;}
+.vis-line.on{width:80px;}
+.vis-line::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(90deg,transparent,rgba(200,36,58,.4) 30%,rgba(212,160,48,.3) 60%,transparent);
+  filter:blur(3px);}
+.fi{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s ease;}
+.fi.vis{opacity:1;transform:none;}
+.fi-d1{transition-delay:.12s;}.fi-d2{transition-delay:.24s;}.fi-d3{transition-delay:.36s;}
+.tag{font-family:var(--ff-m);font-size:9px;letter-spacing:.07em;color:var(--label);border:1px solid var(--gold-border);padding:3px 10px;display:inline-block;background:rgba(212,160,48,.04);}
+.tag::before{content:'#';color:var(--gold);margin-right:2px;}
+.btn{font-family:var(--ff-m);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:12px 30px;cursor:pointer;transition:all .22s;border:none;}
+.btn-vision{background:rgba(200,36,58,.12);border:1px solid rgba(200,36,58,.4);color:var(--ruby2);}
+.btn-vision:hover{background:var(--ruby);color:var(--bg);box-shadow:0 0 24px rgba(200,36,58,.3);}
+.btn-ghost{background:transparent;border:1px solid var(--gold-border);color:var(--gold);}
+.btn-ghost:hover{background:var(--gold);color:var(--bg);}
+
+/* section top dividers */
+#s01::before,#s02::before,#s03::before,#s04::before,#s05::before,#s06::before{
+  content:'';display:block;position:absolute;top:0;left:0;height:1px;width:0;
+  background:linear-gradient(90deg,transparent,var(--ruby) 25%,var(--gold) 55%,transparent);
+  filter:blur(0.5px);
+  transition:width .9s cubic-bezier(.16,1,.3,1);z-index:2;
+}
+#s01.div-on::before,#s02.div-on::before,#s03.div-on::before,
+#s04.div-on::before,#s05.div-on::before,#s06.div-on::before{width:100%;}
+
+/* section label */
+.sec-label{font-family:var(--ff-m);font-size:10px;letter-spacing:.28em;color:var(--ruby);text-transform:uppercase;margin-bottom:12px;}
+.sec-label::before{content:'✦ ';color:var(--gold);font-size:8px;}
+.sec-title{font-family:var(--ff-d);font-size:clamp(44px,6vw,80px);letter-spacing:.04em;color:var(--ink);line-height:.95;margin-bottom:8px;}
+.sec-divider{width:60px;height:2px;background:linear-gradient(90deg,var(--ruby),var(--gold));margin:20px 0 34px;border-radius:1px;box-shadow:0 0 8px rgba(200,36,58,.3);}
+
+/* AMD badge */
+.amd-badge{position:absolute;bottom:14px;right:14px;font-family:var(--ff-m);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--amd);border:1px solid rgba(224,64,32,.22);padding:3px 8px;background:rgba(224,64,32,.08);z-index:5;}
+
+/* img placeholder */
+.img-ph{background:linear-gradient(135deg,var(--bg2),var(--bg3));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(200,160,80,.14);box-shadow:0 4px 20px var(--shadow);}
+.img-ph span{font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(200,160,80,.2);text-align:center;line-height:2.4;padding:0 16px;}
+
+/* ══ HERO ══ */
+#s00{display:flex;align-items:center;padding:100px 6% 80px;min-height:100vh;}
+
+/* deep space nebula glow */
+.hero-nebula{position:absolute;inset:0;pointer-events:none;z-index:1;}
+.nb1{position:absolute;top:10%;right:5%;width:600px;height:480px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(120,60,200,.07) 0%,transparent 70%);
+  animation:nebPulse 9s ease-in-out infinite;}
+.nb2{position:absolute;bottom:8%;right:20%;width:360px;height:290px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(200,36,58,.06) 0%,transparent 70%);
+  animation:nebPulse 9s ease-in-out infinite 4s;}
+.nb3{position:absolute;top:40%;left:35%;width:280px;height:220px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(212,160,48,.03) 0%,transparent 70%);
+  animation:nebPulse 12s ease-in-out infinite 2s;}
+@keyframes nebPulse{0%,100%{opacity:.5;}50%{opacity:1;}}
+
+/* thin constellation line accents */
+.hero-const{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+.hc-line{position:absolute;background:linear-gradient(90deg,transparent,rgba(200,180,255,.08),transparent);height:1px;}
+
+/* CARD — RX6500, dual fan, 205×115mm */
+.h-right{position:absolute;right:0;top:0;bottom:0;width:54%;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(40px);transition:opacity 1.8s ease .2s,transform 1.8s ease .2s;z-index:3;}
+.h-right.on{opacity:1;transform:translateX(0);}
+.rx6500-wrap{width:92%;max-width:580px;position:relative;}
+.rx6500-wrap::before{content:'';position:absolute;inset:-80px;z-index:-1;
+  background:radial-gradient(ellipse 65% 45% at 55% 55%,rgba(200,36,58,.06) 0%,transparent 70%);}
+
+/* slash reveal — soft fluid, not mechanical */
+.card-slash{position:absolute;inset:0;z-index:22;
+  background:linear-gradient(118deg,transparent 0%,rgba(200,36,58,.4) 48%,rgba(200,36,58,.4) 52%,transparent 100%);
+  background-size:200% 100%;background-position:200% 0;
+  animation:fluidReveal 1.6s cubic-bezier(.4,0,.2,1) .3s forwards;
+  pointer-events:none;border-radius:4px;}
+@keyframes fluidReveal{0%{background-position:200% 0;opacity:1;}100%{background-position:-200% 0;opacity:0;}}
+
+@keyframes cardFloat{0%,100%{transform:translateY(0) rotate(-.5deg);}50%{transform:translateY(-7px) rotate(-.5deg);}}
+.rx6500-body{width:100%;aspect-ratio:2.6/1;
+  background:linear-gradient(148deg,#0e1020 0%,#080c18 100%);
+  position:relative;overflow:hidden;border-radius:4px;
+  border:1px solid rgba(200,180,255,.14);
+  box-shadow:0 32px 100px rgba(8,12,24,.95),0 0 60px rgba(200,36,58,.05);
+  animation:cardFloat 7s ease-in-out infinite;}
+
+/* subtle starfield on card surface */
+.card-stars{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+
+@keyframes glintFlow{0%{left:-40%;opacity:0;}6%{opacity:1;}90%{opacity:.2;}100%{left:140%;opacity:0;}}
+.rx6500-body::after{content:'';position:absolute;top:0;left:-40%;width:10%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(200,180,255,.04),rgba(255,240,220,.06),rgba(200,180,255,.04),transparent);
+  animation:glintFlow 10s ease-in-out infinite 6s;pointer-events:none;z-index:12;}
+
+/* heatsink */
+.rx6500-hs{position:absolute;right:0;top:0;bottom:0;width:82%;
+  background:linear-gradient(145deg,#121828,#0a1020);
+  border-left:1px solid rgba(200,180,255,.08);overflow:hidden;}
+.rx6500-fins-wrap{position:absolute;inset:0;display:flex;flex-direction:column;gap:1.5px;padding:4px;}
+.rx6500-fin{flex:1;background:linear-gradient(90deg,#121828,#0e1422);border-radius:1px;border:.3px solid rgba(200,180,255,.03);}
+.rx6500-vchan{position:absolute;left:50%;top:0;bottom:0;width:3%;transform:translateX(-50%);
+  background:linear-gradient(90deg,transparent,rgba(200,36,58,.05),transparent);}
+/* celestial lines on shroud */
+.rx6500-cl1{position:absolute;top:22%;left:-10%;width:120%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,36,58,.35),rgba(212,160,48,.15),transparent);
+  transform:rotate(-4deg);opacity:.7;}
+.rx6500-cl2{position:absolute;top:78%;left:-10%;width:120%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,160,48,.3),rgba(200,36,58,.12),transparent);
+  transform:rotate(-4deg);opacity:.6;}
+/* constellation dots on shroud */
+.rx6500-cdot{position:absolute;border-radius:50%;background:rgba(200,180,255,.4);box-shadow:0 0 4px rgba(200,180,255,.3);}
+
+/* DUAL FANS — whisper-soft */
+.rx6500-fans{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-around;padding:0 4%;}
+.rx6500-fan{position:relative;width:41%;aspect-ratio:1;}
+.rx6500-fan-ring{position:absolute;border-radius:50%;border:.5px solid rgba(200,180,255,.1);}
+.rx6500-fr1{inset:0;background:rgba(8,10,20,.82);}
+.rx6500-fr2{inset:8%;}
+.rx6500-fr3{inset:18%;}
+.rx6500-fr4{inset:30%;}
+/* sonar rings — Vision signature */
+.sonar-ring{position:absolute;border-radius:50%;border:1px solid var(--ruby);opacity:0;transform:scale(.85);animation:sonarPulse 3s ease-out infinite;}
+.sonar-ring.sr1{inset:-10%;animation-delay:0s;}
+.sonar-ring.sr2{inset:-22%;border-color:rgba(212,160,48,.5);animation-delay:1s;}
+@keyframes sonarPulse{0%{opacity:.55;transform:scale(.9);}100%{opacity:0;transform:scale(1.06);}}
+/* fan glow ring */
+.rx6500-fr-glow{position:absolute;inset:-3%;border-radius:50%;border:1px solid rgba(200,36,58,.07);}
+.rx6500-blades{position:absolute;inset:0;animation:fanWhisper 5s linear infinite;}
+.rx6500-blades.fan2{animation-duration:5.6s;}
+@keyframes fanWhisper{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.rx6500-blade{position:absolute;top:50%;left:50%;width:45%;height:7%;transform-origin:0 50%;
+  background:linear-gradient(90deg,rgba(200,36,58,.15),rgba(200,36,58,.02));border-radius:0 18px 18px 0;}
+/* hub — ruby falcon eye */
+.rx6500-hub{position:absolute;inset:43%;background:radial-gradient(circle,#1a0812,#080c18);border-radius:50%;
+  border:.5px solid rgba(200,36,58,.45);box-shadow:0 0 14px rgba(200,36,58,.25);
+  display:flex;align-items:center;justify-content:center;}
+.rx6500-hub::after{content:'';width:32%;height:32%;background:var(--ruby);border-radius:50%;opacity:.85;
+  box-shadow:0 0 12px rgba(200,36,58,.8);}
+.rx6500-hub-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--ff-b);font-size:4.5px;font-weight:700;letter-spacing:.08em;color:var(--gold);opacity:.85;z-index:5;white-space:nowrap;}
+
+/* PCB */
+.rx6500-pcb{position:absolute;left:0;top:0;bottom:0;right:82%;
+  background:linear-gradient(145deg,#0e1422,#08100e);}
+.rx6500-brand{position:absolute;top:50%;left:3%;transform:translateY(-50%);padding-left:5px;}
+.rx6500-brand-name{font-family:var(--ff-m);font-size:4px;letter-spacing:.18em;color:rgba(232,224,248,.25);text-transform:uppercase;display:block;}
+.rx6500-model{font-family:var(--ff-d);font-size:11px;letter-spacing:.04em;color:var(--ink);line-height:1.1;display:block;}
+.rx6500-sub{font-family:var(--ff-m);font-size:4px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;display:block;margin-top:2px;opacity:.6;}
+/* DP + HDMI only */
+.rx6500-ports{position:absolute;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;}
+.rx6500-port{width:6px;height:9px;background:rgba(232,224,248,.05);border-radius:1px 0 0 1px;border:.3px solid rgba(232,224,248,.08);position:relative;transition:background .3s;}
+.rx6500-port.hl{background:rgba(200,36,58,.38);border-color:rgba(200,36,58,.6);}
+.rx6500-port-lbl{position:absolute;left:-22px;top:50%;transform:translateY(-50%);font-family:var(--ff-m);font-size:4.5px;letter-spacing:.06em;color:var(--ruby2);opacity:0;white-space:nowrap;transition:opacity .3s;}
+.rx6500-port.hl .rx6500-port-lbl{opacity:1;}
+/* 6-pin */
+.rx6500-6pin{position:absolute;top:8%;right:2%;display:flex;gap:2px;}
+.rx6500-pin{width:4px;height:5px;background:rgba(200,36,58,.2);border:.3px solid rgba(200,36,58,.35);border-radius:.5px;}
+/* top glow */
+.rx6500-glow{position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 5%,var(--gold2) 22%,var(--ruby) 55%,rgba(200,180,255,.4) 80%,transparent 95%);opacity:.4;}
+.rx6500-status{position:absolute;bottom:5px;right:8px;font-family:var(--ff-m);font-size:5.5px;letter-spacing:.1em;color:var(--ruby);opacity:.65;}
+.rx6500-vision-badge{position:absolute;top:8%;left:20%;font-family:var(--ff-m);font-size:5px;letter-spacing:.1em;color:rgba(200,180,255,.5);text-transform:uppercase;background:rgba(120,60,200,.06);padding:2px 5px;border-radius:2px;}
+
+/* hero left */
+.h-fade{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to right,var(--bg) 0%,var(--bg) 14%,rgba(8,12,24,.52) 42%,transparent 62%);z-index:2;}
+.h-left{position:relative;z-index:4;padding:0 0 0 6%;flex:1;max-width:600px;}
+.h-tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.28em;color:var(--ruby);text-transform:uppercase;margin-bottom:18px;opacity:0;transition:opacity .5s;}
+.h-tag.on{opacity:1;}
+.h-tag::before{content:'✦ ';color:var(--gold);font-size:8px;}
+.h-status{font-family:var(--ff-m);font-size:clamp(11px,1.4vw,15px);letter-spacing:.06em;color:rgba(200,180,255,.6);text-transform:uppercase;margin-bottom:18px;opacity:0;overflow:hidden;white-space:nowrap;width:0;border-right:1.5px solid rgba(200,180,255,.5);}
+.h-status.typing{animation:typeStatus .9s steps(34,end) forwards,cursorBlink .6s step-end 4;}
+@keyframes typeStatus{from{width:0;}to{width:100%;}}
+@keyframes cursorBlink{0%,100%{border-color:rgba(200,180,255,.5);}50%{border-color:transparent;}}
+.h-status.done{border-right-color:transparent;width:auto;}
+.h-hl{margin-bottom:22px;opacity:0;transition:opacity .4s ease;}
+.h-hl.on{opacity:1;}
+.hl-ln{display:block;font-family:var(--ff-d);font-size:clamp(52px,7.5vw,96px);letter-spacing:.03em;line-height:.9;opacity:0;transform:translateY(16px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1);}
+.hl-ln.in{opacity:1;transform:none;}
+.hl-vision{color:var(--ink);text-shadow:0 0 60px rgba(200,180,255,.15);}
+.hl-rx{color:var(--ruby2);font-size:.55em;letter-spacing:.14em;}
+.hl-sub{font-family:var(--ff-d);font-size:clamp(16px,2.2vw,28px);color:var(--mute);letter-spacing:.08em;}
+.h-sub{font-size:15px;font-weight:300;letter-spacing:.03em;color:var(--mute);line-height:1.8;max-width:420px;margin-top:16px;opacity:0;transition:opacity .8s ease;}
+.h-sub.on{opacity:1;}
+.h-sub strong{color:var(--ink);font-weight:600;}
+.h-cta{display:flex;align-items:center;gap:24px;margin-top:36px;opacity:0;transition:opacity .5s;}
+.h-cta.on{opacity:1;}
+.h-scroll-hint{font-family:var(--ff-m);font-size:10px;letter-spacing:.18em;color:var(--label);}
+/* hero stats */
+.h-stats{display:flex;gap:36px;margin-top:40px;padding-top:26px;border-top:1px solid rgba(200,160,80,.15);flex-wrap:wrap;opacity:0;transition:opacity .5s;}
+.h-stats.on{opacity:1;}
+.h-stat{display:flex;flex-direction:column;}
+.hsn{font-family:var(--ff-d);font-size:38px;color:var(--ink);line-height:1;}
+.hsn em{font-style:normal;font-size:18px;color:var(--ruby);}
+.hsl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;color:var(--label);text-transform:uppercase;margin-top:3px;}
+.scr-hint{position:absolute;bottom:28px;left:6%;display:flex;align-items:center;gap:12px;opacity:0;transition:opacity .5s;z-index:4;}
+.scr-hint.on{opacity:1;}
+.scr-ln{width:36px;height:1px;background:var(--label);position:relative;overflow:hidden;}
+.scr-ln::after{content:'';position:absolute;left:-100%;width:100%;height:100%;background:var(--ink);animation:scanPulse 2s linear infinite;}
+@keyframes scanPulse{0%{left:-100%;}100%{left:100%;}}
+.scr-lb{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;color:var(--label);text-transform:uppercase;}
+
+/* ══ S01 VISION ══ */
+#s01{background:var(--bg2);padding:90px 6%;}
+.s01-in{max-width:1060px;margin:0 auto;}
+.bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.bl-title-tw{font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;color:rgba(200,180,255,.5);text-transform:uppercase;margin-top:5px;overflow:hidden;white-space:nowrap;width:0;border-right:1px solid rgba(200,180,255,.4);display:inline-block;}
+.bl-title-tw.tw-go{animation:typeOut .7s steps(20,end) forwards,cursorBlinkS .6s step-end 3;}
+@keyframes typeOut{from{width:0;}to{width:14ch;}}
+@keyframes cursorBlinkS{0%,100%{border-color:rgba(200,180,255,.4);}50%{border-color:transparent;}}
+.bl-title-tw.tw-done{border-right-color:transparent;}
+.bl-body{font-size:15px;font-weight:300;line-height:1.9;color:var(--mute);margin-bottom:20px;}
+.bl-body strong{color:var(--ink);font-weight:600;}
+.bl-blockquote{border-left:2px solid var(--ruby);padding:12px 18px;background:rgba(200,36,58,.05);margin-bottom:16px;}
+.bl-blockquote p{font-family:var(--ff-m);font-size:11px;letter-spacing:.04em;color:rgba(200,36,58,.6);line-height:1.75;}
+.bl-blockquote .bq-src{font-size:8px;letter-spacing:.14em;color:var(--label);margin-top:6px;text-transform:uppercase;}
+.bl-pos{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--gold);margin-top:14px;padding:8px 12px;border:1px solid var(--gold-border);background:rgba(212,160,48,.04);display:inline-block;}
+/* why cards — runic divider style */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:52px;background:rgba(200,180,255,.06);}
+.why-card{background:var(--bg2);padding:36px 28px;position:relative;overflow:hidden;transition:background .3s;}
+.why-card:hover{background:var(--bg3);}
+.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--ruby),rgba(200,180,255,.3),transparent);opacity:0;transition:opacity .3s;}
+.why-card:hover::before{opacity:1;}
+/* star fleck in card corner */
+.why-card::after{content:'✦';position:absolute;top:14px;right:16px;font-size:8px;color:rgba(200,160,80,.25);opacity:0;transition:opacity .3s;}
+.why-card:hover::after{opacity:1;}
+.why-num{font-family:var(--ff-d);font-size:52px;color:rgba(120,60,200,.18);line-height:1;margin-bottom:12px;}
+.why-heading{font-family:var(--ff-d);font-size:22px;letter-spacing:.08em;color:var(--ink);margin-bottom:3px;}
+.why-sub{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;color:var(--ruby);text-transform:uppercase;margin-bottom:12px;}
+.why-body{font-size:13px;font-weight:300;color:var(--mute);line-height:1.8;}
+
+/* ══ S02 COUNTERFORCE ══ */
+#s02{background:var(--bg);}
+.cf-layout{padding:90px 6%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto;}
+.cf-left{position:relative;}
+.cf-big-num{font-family:var(--ff-d);font-size:clamp(120px,18vw,220px);line-height:.85;color:rgba(120,60,200,.1);position:absolute;top:-20px;left:-10px;user-select:none;pointer-events:none;}
+.cf-stats{position:relative;z-index:1;display:flex;flex-direction:column;gap:26px;padding-top:44px;}
+.cf-stat{border-left:2px solid var(--ruby);padding-left:20px;}
+.cf-stat-val{font-family:var(--ff-d);font-size:48px;color:var(--ink);line-height:1;}
+.cf-stat-val em{font-style:normal;font-size:22px;color:var(--ruby);}
+.cf-stat-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;color:var(--label);text-transform:uppercase;margin-top:3px;}
+/* mana bar grid */
+#manaCanvas{display:block;margin-top:6px;opacity:0;transition:opacity .5s;}
+#manaCanvas.vis{opacity:1;}
+.cf-right{}
+.cf-tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.2em;color:var(--ruby);text-transform:uppercase;margin-bottom:18px;}
+.cf-body{font-size:15px;font-weight:300;color:var(--mute);line-height:1.9;}
+.cf-body strong{color:var(--ink);font-weight:600;}
+.cf-kicker{margin-top:26px;font-family:var(--ff-d);font-size:22px;letter-spacing:.1em;color:var(--ink);}
+.cf-kicker em{display:block;color:var(--ruby);font-style:normal;}
+/* badge row */
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;position:relative;overflow:hidden;}
+.badge-row.swept::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(200,36,58,.1),rgba(200,180,255,.08),rgba(200,36,58,.1),transparent);
+  animation:visSweep .65s ease forwards;pointer-events:none;z-index:10;}
+@keyframes visSweep{0%{left:-50%;}100%{left:150%;}}
+.stat-badge{display:inline-flex;flex-direction:column;align-items:flex-start;border:1px solid rgba(200,160,80,.16);padding:16px 20px;background:rgba(120,60,200,.05);transition:border-color .3s,background .3s,box-shadow .3s;}
+.stat-badge:hover{border-color:var(--ruby);background:rgba(200,36,58,.06);box-shadow:0 0 20px rgba(200,36,58,.08);}
+.stat-badge .num{font-family:var(--ff-d);font-size:clamp(22px,3.5vw,42px);color:var(--ink);line-height:1;}
+.stat-badge .lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--label);margin-top:3px;text-transform:uppercase;}
+.bar-wrap{height:3px;background:rgba(120,60,200,.2);border-radius:2px;overflow:hidden;margin-top:5px;}
+.bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--ruby),var(--gold));border-radius:2px;transition:width 1.6s cubic-bezier(.16,1,.3,1);box-shadow:0 0 4px rgba(200,36,58,.3);}
+
+/* ══ S03 DOMINANCE ══ */
+#s03{background:var(--bg2);}
+.dom-layout{padding:90px 6%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;max-width:1200px;margin:0 auto;}
+.port-row{display:flex;gap:10px;margin-top:20px;}
+.port-item{flex:1;border:1px solid rgba(200,160,80,.16);padding:12px;text-align:center;transition:border-color .3s,background .3s,box-shadow .3s;background:rgba(120,60,200,.04);cursor:default;}
+.port-item.active{border-color:var(--ruby);background:rgba(200,36,58,.07);box-shadow:0 0 14px rgba(200,36,58,.12);}
+.port-item:hover{border-color:var(--gold2);background:rgba(212,160,48,.05);}
+.port-nm{font-family:var(--ff-d);font-size:14px;letter-spacing:.1em;color:var(--ink);margin-bottom:2px;}
+.port-ds{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;color:var(--label);text-transform:uppercase;}
+.bullet-list{list-style:none;margin-top:18px;}
+.bullet-list li{padding:12px 0;border-bottom:1px solid rgba(200,180,255,.06);font-size:15px;font-weight:300;line-height:1.75;color:var(--mute);display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;}
+.bullet-list li:last-child{border-bottom:none;}
+.bullet-list .bi{width:26px;height:26px;border:1px solid rgba(200,160,80,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;background:rgba(120,60,200,.06);}
+.bullet-list .bi svg{width:12px;height:12px;stroke:var(--ruby);fill:none;stroke-width:1.5;}
+.bullet-list strong{font-weight:600;color:var(--ink);}
+.cmp-bar-wrap{margin-top:26px;}
+.cmp-bar-row{margin-bottom:18px;padding:5px 7px;border-radius:2px;transition:background .2s;cursor:default;position:relative;}
+.cmp-bar-row:hover{background:rgba(200,36,58,.04);}
+.cmp-bar-row:hover .cmp-bar-name{color:var(--ink);}
+.cmp-bar-row::before{content:'✦';position:absolute;left:-14px;top:50%;transform:translateY(-50%);font-family:var(--ff-m);font-size:8px;color:var(--ruby);opacity:0;transition:opacity .2s;}
+.cmp-bar-row:hover::before{opacity:.5;}
+.cmp-bar-label{display:flex;justify-content:space-between;margin-bottom:5px;}
+.cmp-bar-name{font-family:var(--ff-m);font-size:9px;letter-spacing:.05em;color:var(--label);text-transform:uppercase;transition:color .2s;}
+.cmp-bar-note{font-family:var(--ff-m);font-size:7.5px;color:rgba(74,88,120,.7);margin-left:5px;}
+.cmp-bar-val{font-family:var(--ff-m);font-size:9px;color:var(--label);}
+.cmp-bar-track{height:4px;background:rgba(120,60,200,.15);border-radius:2px;overflow:hidden;}
+.cmp-bar-fill{height:100%;width:0;border-radius:2px;transition:width 1.4s cubic-bezier(.16,1,.3,1);}
+.cmp-bar-fill.c1{background:rgba(200,36,58,.18);}
+.cmp-bar-fill.c2{background:rgba(200,36,58,.28);}
+.cmp-bar-fill.c3{background:rgba(200,36,58,.18);}
+.cmp-bar-fill.rx65-bar{background:linear-gradient(90deg,var(--ruby),var(--gold));box-shadow:1px 0 6px rgba(200,36,58,.35);}
+.cmp-bar-row.featured .cmp-bar-name{color:var(--ink);font-weight:500;}
+.cmp-bar-row.featured .cmp-bar-val{color:var(--gold);}
+.cmp-bar-row.featured .cmp-bar-track{overflow:visible;}
+.cmp-bar-row.featured .cmp-bar-fill.fired::after{content:'';position:absolute;right:-20px;top:-4px;width:16px;height:12px;background:radial-gradient(ellipse at left,rgba(200,36,58,.6),rgba(212,160,48,.3),transparent);border-radius:0 8px 8px 0;}
+
+/* ══ S04 ANCHORAGE ══ */
+#s04{background:var(--bg);}
+.anch-layout{padding:90px 6%;display:grid;grid-template-columns:1fr 1fr;gap:80px;max-width:1200px;margin:0 auto;}
+.anch-body{font-size:15px;font-weight:300;color:var(--mute);line-height:1.9;margin-top:18px;}
+.anch-body strong{color:var(--ink);font-weight:600;}
+.mtbf-num{font-family:var(--ff-d);font-size:clamp(48px,7vw,84px);color:var(--ink);line-height:1;margin:18px 0 4px;}
+.mtbf-lbl{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.runtime-tl{margin:22px 0;}
+.rt-lbl{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:7px;}
+.rt-lbl.human{color:var(--label);}
+.rt-lbl.gpu{color:var(--ruby);}
+.rt-row{margin-bottom:30px;position:relative;}
+.rt-track{position:relative;height:2px;background:rgba(120,60,200,.15);}
+.rt-fill{position:absolute;left:0;top:0;height:100%;width:0;transition:width 1.6s ease;}
+.rt-fill.hfill{background:linear-gradient(90deg,rgba(232,224,248,.15),rgba(232,224,248,.32));}
+.rt-fill.gfill{background:linear-gradient(90deg,var(--ruby),var(--gold));box-shadow:0 0 8px rgba(200,36,58,.3);}
+.rt-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:var(--bg);z-index:2;}
+.rt-dot.hd{border:1.5px solid rgba(232,224,248,.25);}
+.rt-dot.gd{border:1.5px solid var(--ruby);}
+.rt-dot.gd.install{border-color:var(--gold);box-shadow:0 0 5px rgba(212,160,48,.4);}
+.rt-lbl2{position:absolute;font-family:var(--ff-m);font-size:7px;white-space:nowrap;top:9px;transform:translateX(-50%);color:rgba(232,224,248,.35);}
+.rt-lbl2.gl{color:var(--ruby);}
+.rt-lbl2.il{color:var(--gold);}
+.rt-lbl2.ra{transform:translateX(-100%);}
+.rt-mover{position:absolute;top:-11px;font-size:13px;transition:left 1.6s ease;opacity:.45;}
+.rt-divider{height:1px;background:rgba(120,60,200,.1);margin:3px 0 18px;}
+.rt-note{font-family:var(--ff-m);font-size:9px;color:var(--label);margin-top:4px;letter-spacing:.05em;}
+.rt-note strong{color:var(--ruby);}
+/* endurance badges */
+.end-badges{display:flex;flex-direction:column;gap:18px;padding-top:80px;}
+.vision-badge{display:flex;align-items:flex-start;gap:16px;border:1px solid rgba(200,160,80,.14);padding:18px 22px;background:rgba(120,60,200,.05);transition:border-color .3s,background .3s;position:relative;overflow:hidden;}
+.vision-badge::before{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ruby),transparent);transform:scaleX(0);transition:transform .3s ease;}
+.vision-badge:hover::before{transform:scaleX(1);}
+.vision-badge:hover{border-color:var(--ruby);background:rgba(200,36,58,.06);}
+.vb-icon{font-size:22px;color:var(--ruby);line-height:1;min-width:32px;}
+.vb-title{font-family:var(--ff-d);font-size:17px;letter-spacing:.08em;color:var(--ink);margin-bottom:3px;}
+.vb-desc{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--label);line-height:1.6;text-transform:uppercase;}
+
+/* ══ S05 PACKAGING ══ */
+#s05{background:var(--bg2);padding:90px 6%;}
+.pkg-in{max-width:1060px;margin:0 auto;}
+.pkg-layout{display:grid;grid-template-columns:240px 1fr;gap:52px;align-items:start;}
+.pkg-card{width:218px;background:var(--bg);border-radius:4px;overflow:hidden;box-shadow:0 12px 40px rgba(8,12,24,.8),0 0 40px rgba(200,36,58,.04);}
+.pkg-art{height:104px;position:relative;overflow:hidden;background:#080c18;}
+.pkg-art canvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block;}
+.pkg-model-overlay{position:absolute;bottom:6px;left:8px;font-family:var(--ff-d);font-size:18px;letter-spacing:.02em;color:var(--ink);line-height:1;z-index:2;}
+.pkg-model-overlay span{font-size:.42em;color:var(--ruby2);display:block;letter-spacing:.08em;}
+.pkg-amd-badge{position:absolute;bottom:7px;right:8px;font-family:var(--ff-b);font-size:7px;font-weight:700;color:var(--amd);letter-spacing:.04em;opacity:.8;z-index:2;}
+.pkg-body{padding:9px 12px 7px;background:var(--bg2);}
+.pkg-brand-t{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.16em;color:var(--label);text-transform:uppercase;display:block;}
+.pkg-stripe{height:2px;background:linear-gradient(90deg,var(--ruby) 0%,var(--gold) 50%,rgba(200,180,255,.15) 80%,transparent);margin:7px 0;box-shadow:0 0 6px rgba(200,36,58,.25);}
+.pkg-cap-row{display:flex;align-items:center;gap:8px;padding:3px 0 6px;}
+.pkg-cap{font-family:var(--ff-d);font-size:26px;color:var(--ink);line-height:1;}
+.pkg-spd{font-family:var(--ff-b);font-size:7.5px;color:var(--label);text-transform:uppercase;letter-spacing:.06em;line-height:1.5;}
+.pkg-spd strong{font-family:var(--ff-d);font-size:14px;color:var(--ruby2);display:block;}
+.pkg-certs{display:flex;gap:3px;padding:5px 12px;border-top:1px solid rgba(200,180,255,.06);background:var(--bg2);}
+.pkg-cert{font-family:var(--ff-m);font-size:6.5px;color:var(--label);border:1px solid rgba(212,160,48,.18);padding:2px 4px;}
+.pkg-feat-list{display:flex;flex-direction:column;}
+.pkg-feat-item{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid rgba(200,180,255,.05);}
+.pkg-feat-item:last-child{border-bottom:none;}
+.pkg-feat-icon{font-size:14px;flex-shrink:0;padding-top:1px;}
+.pkg-feat-nm{font-family:var(--ff-d);font-size:15px;letter-spacing:.06em;color:var(--ink);margin-bottom:3px;}
+.pkg-feat-ds{font-size:13px;font-weight:300;color:var(--mute);line-height:1.65;}
+
+/* ══ S06 SPECS ══ */
+#s06{background:var(--bg);padding:90px 6% 70px;position:relative;}
+#s06::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,transparent,var(--ruby) 30%,var(--gold) 70%,transparent);}
+.spec-in{max-width:860px;margin:0 auto;}
+.spec-tbl{width:100%;border-collapse:collapse;margin-top:34px;font-family:var(--ff-m);}
+.spec-tbl tr{border-bottom:1px solid rgba(120,60,200,.14);transition:background .2s;}
+.spec-tbl tr:hover{background:rgba(120,60,200,.07);}
+.spec-tbl td{padding:13px 24px;font-size:12px;letter-spacing:.06em;}
+.spec-tbl td:first-child{color:var(--label);text-transform:uppercase;width:42%;border-left:2px solid transparent;transition:border-color .2s;padding-left:6px;}
+.spec-tbl tr:hover td:first-child{border-left-color:var(--ruby);}
+.spec-tbl td:last-child{color:var(--ink);}
+.spec-tbl .spec-hl td:last-child{color:var(--ruby2);}
+.spec-note{font-family:var(--ff-m);font-size:10px;color:var(--label);margin-top:20px;padding-top:16px;border-top:1px solid rgba(120,60,200,.12);letter-spacing:.06em;}
+.spec-ctas{display:flex;gap:9px;margin-top:34px;flex-wrap:wrap;}
+.spec-foot{margin-top:30px;padding-top:16px;border-top:1px solid rgba(200,180,255,.06);display:flex;gap:7px;flex-wrap:wrap;}
+
+/* CLOSING */
+.closing{background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);text-align:center;padding:110px 6%;position:relative;overflow:hidden;}
+.closing::before{content:'VISION';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--ff-d);font-size:22vw;color:rgba(120,60,200,.05);white-space:nowrap;pointer-events:none;user-select:none;}
+.cl-sub{font-family:var(--ff-m);font-size:11px;letter-spacing:.28em;color:var(--label);text-transform:uppercase;margin-bottom:22px;}
+.cl-tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.22em;color:var(--ruby);margin-bottom:12px;text-transform:uppercase;}
+.cl-tagline{font-family:var(--ff-d);font-size:clamp(32px,4.8vw,58px);letter-spacing:.08em;color:var(--ink);line-height:1.1;max-width:720px;margin:0 auto 18px;position:relative;}
+.cl-tagline .accent{color:var(--ruby);}
+.cl-body{font-family:var(--ff-m);font-size:12px;letter-spacing:.12em;color:var(--mute);max-width:480px;margin:0 auto 44px;line-height:1.75;position:relative;}
+/* FOOTER */
+.site-foot{background:var(--bg);border-top:1px solid rgba(120,60,200,.12);padding:26px 6%;display:flex;justify-content:space-between;align-items:center;}
+.sf-brand{font-family:var(--ff-d);font-size:16px;letter-spacing:.22em;color:var(--label);}
+.sf-brand em{color:var(--ruby);font-style:normal;}
+.sf-note{font-family:var(--ff-m);font-size:9px;letter-spacing:.14em;color:rgba(74,88,120,.45);}
+
+@media(max-width:860px){
+  .bl-grid,.cf-layout,.dom-layout,.anch-layout,.pkg-layout{grid-template-columns:1fr;gap:44px;}
+  .h-right{opacity:.08!important;transform:none!important;width:100%;}
+  .h-fade{background:rgba(8,12,24,.9);}
+  .why-grid{grid-template-columns:1fr;}
+}
+@media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+</style>
+</head>
+<body>
+<canvas id="starCanvas"></canvas>
+<div class="constellation-overlay"></div>
+<div class="noise"></div>
+<div id="cur"></div><div id="cur-ring"></div>
+
+<nav id="nav">
+  <div class="nav-logo">SIMOR<em>CHIP</em></div>
+  <div class="np">
+    <a class="on" onclick="goTo('s00')">Hero</a>
+    <a onclick="goTo('s01')">Vision</a>
+    <a onclick="goTo('s02')">Counterforce</a>
+    <a onclick="goTo('s03')">Dominance</a>
+    <a onclick="goTo('s04')">Anchorage</a>
+    <a onclick="goTo('s05')">Packaging</a>
+    <a onclick="goTo('s06')">Specs</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="s00" class="full">
+  <div class="hero-nebula"><div class="nb1"></div><div class="nb2"></div><div class="nb3"></div></div>
+  <div class="hero-const" id="heroConst"></div>
+
+  <div class="h-right" id="hRight">
+    <div class="rx6500-wrap">
+      <div class="card-slash"></div>
+      <div class="rx6500-body">
+        <div class="rx6500-glow"></div>
+        <div class="card-stars" id="cardStars"></div>
+        <div class="rx6500-hs">
+          <div class="rx6500-fins-wrap" id="rFins"></div>
+          <div class="rx6500-vchan"></div>
+          <div class="rx6500-cl1"></div>
+          <div class="rx6500-cl2"></div>
+          <!-- constellation dots on shroud -->
+          <div class="rx6500-cdot" style="width:3px;height:3px;top:28%;left:35%;"></div>
+          <div class="rx6500-cdot" style="width:2px;height:2px;top:60%;left:55%;"></div>
+          <div class="rx6500-cdot" style="width:3px;height:3px;top:45%;left:70%;opacity:.6;"></div>
+          <div class="rx6500-cdot" style="width:2px;height:2px;top:72%;left:42%;opacity:.5;"></div>
+          <div class="rx6500-fans">
+            <!-- Fan 1 -->
+            <div class="rx6500-fan">
+              <div class="rx6500-fr-glow"></div>
+              <div class="sonar-ring sr1"></div>
+              <div class="sonar-ring sr2"></div>
+              <div class="rx6500-fr1 rx6500-fan-ring"></div>
+              <div class="rx6500-fr2 rx6500-fan-ring"></div>
+              <div class="rx6500-fr3 rx6500-fan-ring"></div>
+              <div class="rx6500-fr4 rx6500-fan-ring"></div>
+              <div class="rx6500-blades" id="blades1">
+                <div class="rx6500-blade" style="transform:rotate(0deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(30deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(60deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(90deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(120deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(150deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(180deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(210deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(240deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(270deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(300deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(330deg)"></div>
+              </div>
+              <div class="rx6500-hub"><div class="rx6500-hub-label">Simorchip</div></div>
+            </div>
+            <!-- Fan 2 -->
+            <div class="rx6500-fan">
+              <div class="rx6500-fr-glow"></div>
+              <div class="sonar-ring sr1" style="animation-delay:.5s;"></div>
+              <div class="sonar-ring sr2" style="animation-delay:1.5s;"></div>
+              <div class="rx6500-fr1 rx6500-fan-ring"></div>
+              <div class="rx6500-fr2 rx6500-fan-ring"></div>
+              <div class="rx6500-fr3 rx6500-fan-ring"></div>
+              <div class="rx6500-fr4 rx6500-fan-ring"></div>
+              <div class="rx6500-blades fan2" id="blades2">
+                <div class="rx6500-blade" style="transform:rotate(0deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(30deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(60deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(90deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(120deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(150deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(180deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(210deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(240deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(270deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(300deg)"></div>
+                <div class="rx6500-blade" style="transform:rotate(330deg)"></div>
+              </div>
+              <div class="rx6500-hub"><div class="rx6500-hub-label">Simorchip</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="rx6500-pcb"></div>
+        <div class="rx6500-brand">
+          <span class="rx6500-brand-name">Simorchip</span>
+          <span class="rx6500-model">RX6500<br>4GD6</span>
+          <span class="rx6500-sub">GDDR6 · Navi · 6nm</span>
+        </div>
+        <div class="rx6500-ports" id="rPorts">
+          <div class="rx6500-port" id="pDP"><span class="rx6500-port-lbl">DP</span></div>
+          <div class="rx6500-port" id="pHDMI"><span class="rx6500-port-lbl">HDMI</span></div>
+        </div>
+        <div class="rx6500-6pin">
+          <div class="rx6500-pin"></div><div class="rx6500-pin"></div>
+          <div class="rx6500-pin"></div><div class="rx6500-pin"></div>
+          <div class="rx6500-pin"></div><div class="rx6500-pin"></div>
+        </div>
+        <div class="rx6500-vision-badge">6nm · Navi</div>
+        <div class="amd-badge">AMD Radeon</div>
+        <div class="rx6500-status">✦ VISION ONLINE</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="h-fade"></div>
+  <div class="h-left">
+    <div class="h-tag" id="hTag">Vision Matrix: Online — Celestial Alignment Locked</div>
+    <div class="h-status" id="hStatus">WHISPERING BLADE THERMAL GEOMETRY ACTIVE</div>
+    <div class="h-hl" id="hHL">
+      <span class="hl-ln hl-vision" id="hl0">Vision</span>
+      <span class="hl-ln hl-rx" id="hl1">RX 6500 · 4GD6</span>
+      <span class="hl-ln hl-sub" id="hl2">Navi · 6nm · RDNA 2</span>
+    </div>
+    <div class="vis-line" id="hLine" style="margin-top:16px;"></div>
+    <div class="h-sub" id="hSub"><strong>High-efficiency 6nm sorcery engine. Refined power matrix.</strong><br>The RX6500 4GD6 awakens the Navi core array, focusing a high-velocity GDDR6 pipeline into a singular, razor-sharp point of execution for total visual clarity.</div>
+    <div class="h-cta" id="hCta">
+      <button class="btn btn-vision">Awaken Vision</button>
+      <span class="h-scroll-hint">↓ SEE WHAT OTHERS MISS</span>
+    </div>
+    <div class="h-stats" id="hStats">
+      <div class="h-stat"><div class="hsn" id="heroSP">0<em>SP</em></div><div class="hsl">Stream Processors</div></div>
+      <div class="h-stat"><div class="hsn">4<em>GB</em></div><div class="hsl">GDDR6 Buffer</div></div>
+      <div class="h-stat"><div class="hsn">64<em>-BIT</em></div><div class="hsl">Memory Bus</div></div>
+      <div class="h-stat"><div class="hsn">107<em>W</em></div><div class="hsl">Power Profile</div></div>
+    </div>
+  </div>
+  <div class="scr-hint" id="scrHint"><div class="scr-ln"></div><div class="scr-lb">Scroll</div></div>
+</section>
+
+<!-- ═══ S01 VISION ═══ -->
+<section id="s01">
+  <div class="s01-in">
+    <div class="bl-grid fi">
+      <div>
+        <div class="sec-label">Design Language · Vision Series</div>
+        <div class="sec-title" style="margin-bottom:6px;">Vision</div>
+        <div class="bl-title-tw" id="blTw">// MATRIX_ONLINE</div>
+        <div class="sec-divider"></div>
+        <div class="bl-body">Like an omniscient raptor soaring above the clouds, this design houses the advanced <strong>6nm Navi core</strong> within an ultra-sleek, aerodynamic chassis.<br><br>Two whisper-silent fans, engineered with specialized low-friction bearings, operate with absolute grace to maintain pristine thermal equilibrium without breaking acoustic discipline under load.<br><br>Operating on a highly optimized power profile, it delivers the precise high-frequency responsiveness needed to anchor fluid esports arenas, crisp multimedia setups, and immediate content creation tasks.</div>
+        <div class="bl-blockquote">
+          <p>Awaken your Vision and see what others miss.</p>
+          <div class="bq-src">// RX6500 4GD6 · Navi Core · 6nm Precision</div>
+        </div>
+        <div class="bl-pos">RX6500 4GD6 — Your absolute omniscient conduit to modern rendering dimensions.</div>
+      </div>
+      <div class="img-ph fi fi-d1" style="aspect-ratio:16/10;min-height:260px;">
+        <span>[ VISION — DUAL FAN ORBITAL SWEEP ]<br>RX6500 4GD6 · ruby falcon-eye hubs<br>Constellation lines on shroud · ethereal ]</span>
+      </div>
+    </div>
+    <!-- WHY GRID -->
+    <div class="why-grid" style="margin-top:60px;" id="whyGrid">
+      <div class="why-card fi">
+        <div class="why-num">01</div>
+        <div class="why-heading">6nm Architecture</div>
+        <div class="why-sub">Peak Efficiency Core</div>
+        <p class="why-body">Built on a highly advanced 6nm processing node, this architecture concentrates pure computational power into a smaller, faster footprint, running cooler while delivering exceptional frame-rate responsiveness. Two generations beyond 14nm.</p>
+      </div>
+      <div class="why-card fi fi-d1">
+        <div class="why-num">02</div>
+        <div class="why-heading">GDDR6 Buffer</div>
+        <div class="why-sub">High-Velocity Asset Delivery</div>
+        <p class="why-body">Ultra-fast GDDR6 memory operating at high frequencies opens an instantaneous data lane that feeds the GPU core with zero hesitation for smooth display rendering. No stutter, no latency, no compromise.</p>
+      </div>
+      <div class="why-card fi fi-d2">
+        <div class="why-num">03</div>
+        <div class="why-heading">Whispering Blades</div>
+        <div class="why-sub">Acoustic Silence & Cool Dominance</div>
+        <p class="why-body">Custom-profiled fan blades slice through air pockets cleanly, eliminating turbulent noise while sustaining a protective cooling field around the silicon core. Absolute acoustic discipline under sustained load.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S02 COUNTERFORCE ═══ -->
+<section id="s02">
+  <div class="cf-layout">
+    <div class="cf-left fi">
+      <div class="cf-big-num">1024</div>
+      <div class="sec-label">Counterforce</div>
+      <div class="sec-title">VISION<br>STREAM<br>ARRAY</div>
+      <div class="sec-divider"></div>
+      <div class="cf-stats">
+        <div class="cf-stat fi">
+          <div class="cf-stat-val" id="count1024">0<em>SP</em></div>
+          <div class="cf-stat-lbl">Parallel Execution Vectors</div>
+          <canvas id="manaCanvas" width="260" height="24"></canvas>
+        </div>
+        <div class="cf-stat fi fi-d1">
+          <div class="cf-stat-val">2610<em>MHz</em></div>
+          <div class="cf-stat-lbl">Core Clock · Peak Velocity</div>
+        </div>
+        <div class="cf-stat fi fi-d2">
+          <div class="cf-stat-val">4<em>GB</em></div>
+          <div class="cf-stat-lbl">GDDR6 · High-Velocity Buffer</div>
+        </div>
+      </div>
+    </div>
+    <div class="cf-right fi fi-d1">
+      <div class="cf-tag">1024 Vision Stream Processors Active</div>
+      <p class="cf-body">Featuring <strong>1024 high-performance stream processors</strong> running at breathtaking <strong>2610 MHz clock speeds</strong>, this hardware propels pixels through an agile, optimized data lane.<br><br>Whether climbing the competitive ranks in high-refresh esports, processing crisp high-bitrate streaming video, or driving clean multi-display creative workspaces — the hardware responds with instantaneous, decisive counterforce.</p>
+      <div class="cf-kicker">This isn't just a component.<br><em>This is your omniscient conduit.</em></div>
+      <div class="badge-row" id="nsBadges">
+        <div class="stat-badge">
+          <div class="num">1024</div>
+          <div class="lbl">Navi Vectors</div>
+          <div class="bar-wrap"><div class="bar-fill" id="bar1"></div></div>
+        </div>
+        <div class="stat-badge">
+          <div class="num">4GB</div>
+          <div class="lbl">GDDR6 · Fast</div>
+          <div class="bar-wrap"><div class="bar-fill" id="bar2"></div></div>
+        </div>
+        <div class="stat-badge">
+          <div class="num" style="font-size:clamp(18px,2.8vw,34px);">107W</div>
+          <div class="lbl">6-Pin Power</div>
+          <div class="bar-wrap"><div class="bar-fill" id="bar3"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S03 DOMINANCE ═══ -->
+<section id="s03">
+  <div class="dom-layout">
+    <div class="fi">
+      <div class="sec-label">02 — Dominance</div>
+      <div class="sec-title" style="font-size:clamp(44px,6vw,76px);">Dominance</div>
+      <div style="font-family:var(--ff-m);font-size:10px;letter-spacing:.1em;color:var(--label);text-transform:uppercase;margin-bottom:18px;">DP + HDMI · DirectX 12 (12_2) · PCIe 4.0</div>
+      <div class="sec-divider"></div>
+      <div class="port-row fi fi-d1" id="portRow">
+        <div class="port-item" id="portDP"><div class="port-nm">DP</div><div class="port-ds">DisplayPort · 4K</div></div>
+        <div class="port-item" id="portHDMI"><div class="port-nm">HDMI</div><div class="port-ds">Digital · 4K</div></div>
+      </div>
+      <ul class="bullet-list" style="margin-top:18px;">
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div><strong>Native 4K Display Engines — Pristine digital connectivity.</strong> Armed with high-bandwidth DisplayPort and HDMI outputs, this hardware commands multi-screen monitors and streams gorgeous 4K media with flawless digital signals. Zero visual compromise.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div><strong>DirectX 12 Ultimate (Feature Level 12_2)</strong> — Complete hardware-level acceleration. Graphical interfaces, browser video engines, and modern gaming applications operate with crisp, fluid motion from first boot. Zero software friction on Windows 10 and Windows 11.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <div><strong>Navi · RDNA 2 · 6nm · 2610 MHz</strong> — Two generations beyond legacy chips. The 6nm node delivers exceptional efficiency per watt, running cooler and faster within the same power envelope. 1024 stream processors with RDNA 2 compute optimizations active.</div>
+        </li>
+        <li>
+          <div class="bi"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div>
+          <div><strong>PCIe 4.0 × 4 — Next-gen bus platform.</strong> Double the per-lane bandwidth of PCIe 3.0. Even on a ×4 configuration, the data pipeline runs faster than any PCIe 3.0 setup. Instant instructions, zero uplink bottleneck.</div>
+        </li>
+      </ul>
+      <div class="cmp-bar-wrap fi fi-d2" id="cmpBars">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);margin-bottom:16px;">Architecture Spectrum</div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">Entry Display <span class="cmp-bar-note">— 160C · 18W · legacy output</span></span>
+            <span class="cmp-bar-val">160</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c1" id="cb0" data-w="4"></div></div>
+        </div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">Enterprise Mid <span class="cmp-bar-note">— 320C · 30W · enterprise display</span></span>
+            <span class="cmp-bar-val">320</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c2" id="cb1" data-w="14"></div></div>
+        </div>
+        <div class="cmp-bar-row featured">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">RX6500 4GD6 — 6nm · GDDR6 · Vision tier</span>
+            <span class="cmp-bar-val" style="color:var(--gold);">1024</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill rx65-bar" id="cb2" data-w="100"></div></div>
+        </div>
+        <div class="cmp-bar-row">
+          <div class="cmp-bar-label">
+            <span class="cmp-bar-name">High-End Gaming <span class="cmp-bar-note">— 2048C · 150W · heavy render</span></span>
+            <span class="cmp-bar-val">2048</span>
+          </div>
+          <div class="cmp-bar-track"><div class="cmp-bar-fill c3" id="cb3" data-w="52"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <div class="img-ph" style="width:100%;height:340px;margin-bottom:12px;">
+        <span>[ DOMINANCE — PORT BRACKET ]<br>RX6500 rear · DP · HDMI · clean<br>Elegant minimal bracket · celestial ambient ]</span>
+      </div>
+      <div class="img-ph" style="width:100%;height:128px;">
+        <span>[ PCIe 4.0 · 6nm NAVI CONTACTS ]<br>Clean trace routing · gold contacts ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S04 ANCHORAGE ═══ -->
+<section id="s04">
+  <div class="anch-layout">
+    <div class="fi">
+      <div class="sec-label">Anchorage</div>
+      <div class="sec-title">ELEGANT<br>ENDURANCE.</div>
+      <div class="sec-divider"></div>
+      <p class="anch-body"><strong>Engineered for elegant, long-term operational service.</strong><br><br>The RX6500 4GD6 balances swift performance with intelligent physical preservation. The onboard smart thermal matrix dynamically modulates fan behavior, keeping the GPU inside its optimal temperature threshold while ensuring near-silent operation during lighter workloads.<br><br>Energy is distributed evenly across premium components, removing concentrated heat points from the board. This hardware remains structurally pristine and completely stable over years of continuous deployment.</p>
+      <div class="fi fi-d1" style="margin:22px 0 4px;">
+        <div class="mtbf-num" id="mtbfCount">0</div>
+        <div class="mtbf-lbl">Hours MTBF</div>
+      </div>
+      <div class="runtime-tl fi fi-d2" id="rtWrap">
+        <div class="rt-lbl human">Modern Steel &amp; Rail — 171 Years</div>
+        <div class="rt-row">
+          <div class="rt-track" style="width:100%;">
+            <div class="rt-fill hfill" id="rtF1"></div>
+            <div class="rt-mover" id="rtLoco" style="left:0;">🚂</div>
+            <div class="rt-dot hd" style="left:0%;"><span class="rt-lbl2">1855<br>Steam</span></div>
+            <div class="rt-dot hd" style="left:52%;"><span class="rt-lbl2">1960<br>Electric</span></div>
+            <div class="rt-dot hd" style="left:100%;"><span class="rt-lbl2 ra">2026<br>Today</span></div>
+          </div>
+        </div>
+        <div class="rt-divider"></div>
+        <div class="rt-lbl gpu">RX6500 4GD6 Theoretical Lifespan — 171 Years</div>
+        <div class="rt-row">
+          <div class="rt-track" style="width:100%;">
+            <div class="rt-fill gfill" id="rtF2"></div>
+            <div class="rt-dot gd install" style="left:0%;"><span class="rt-lbl2 gl il">2026<br>You install</span></div>
+            <div class="rt-dot gd" style="left:44%;"><span class="rt-lbl2 gl">2101<br>22nd Century</span></div>
+            <div class="rt-dot gd" style="left:100%;"><span class="rt-lbl2 gl ra">2197<br>Vision (theory)</span></div>
+          </div>
+        </div>
+        <div class="rt-note">171 years of industrial history. The Vision's rated lifespan <strong>matches it exactly.</strong> Awaken it once. Let it watch for you.</div>
+      </div>
+      <div class="fi fi-d3" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <div class="stat-badge"><div class="num" style="color:var(--ruby2);">1.5M</div><div class="lbl">Hours MTBF</div></div>
+        <div class="stat-badge"><div class="num">6nm</div><div class="lbl">Cool-Run Node</div></div>
+      </div>
+    </div>
+    <div class="end-badges fi fi-d1">
+      <div class="vision-badge">
+        <div class="vb-icon">✦</div>
+        <div>
+          <div class="vb-title">Aerodynamic Rigidity</div>
+          <div class="vb-desc">Streamlined compact chassis<br>Anti-flex structural integrity<br>Optimized airflow geometry</div>
+        </div>
+      </div>
+      <div class="vision-badge fi fi-d1">
+        <div class="vb-icon">◈</div>
+        <div>
+          <div class="vb-title">Silent Thermal Lifespan</div>
+          <div class="vb-desc">Whispering fan architecture<br>Extended mechanical motor lifespan<br>Near-silent duty cycles</div>
+        </div>
+      </div>
+      <div class="vision-badge fi fi-d2">
+        <div class="vb-icon">○</div>
+        <div>
+          <div class="vb-title">Precision Power Matrix</div>
+          <div class="vb-desc">Optimized 107W thermal profile<br>Even distribution across components<br>Zero heat concentration points</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S05 PACKAGING ═══ -->
+<section id="s05">
+  <div class="pkg-in">
+    <div class="sec-label fi">Packaging Design</div>
+    <div class="pkg-layout">
+      <div class="fi" id="pkgCard">
+        <div class="pkg-card" style="opacity:0;transform:translateX(-24px);transition:opacity 1.4s ease,transform 1.4s ease;">
+          <div class="pkg-art">
+            <canvas id="pulseCanvas" width="218" height="104"></canvas>
+            <div class="pkg-model-overlay">RX6500 4GD6<span>4GB GDDR6</span></div>
+            <div class="pkg-amd-badge">AMD Radeon</div>
+          </div>
+          <div class="pkg-body">
+            <span class="pkg-brand-t">Simorchip · Vision · Radeon Series</span>
+            <div class="pkg-stripe"></div>
+            <div class="pkg-cap-row">
+              <span class="pkg-cap">4<span style="font-size:.5em;">GB</span></span>
+              <span class="pkg-spd">DP + HDMI<br><strong>GDDR6</strong></span>
+            </div>
+          </div>
+          <div class="pkg-certs"><span class="pkg-cert">CE</span><span class="pkg-cert">RoHS</span><span class="pkg-cert">FCC</span><span class="pkg-cert">REACH</span></div>
+        </div>
+      </div>
+      <div class="fi fi-d2">
+        <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--label);margin-bottom:18px;">What's in the box</div>
+        <div class="pkg-feat-list">
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">✦</div><div><div class="pkg-feat-nm">Vision Secure Carrier</div><div class="pkg-feat-ds">Precision-cut interior foam inserts engineered to lock the streamlined 205 × 115 × 36 mm frame safely against transit vibration. The matte outer box is slashed with elegant crimson stellar lines that broadcast the card's refined clarity before it's even opened.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">⚡</div><div><div class="pkg-feat-nm">Advanced Static Protection Shield</div><div class="pkg-feat-ds">Factory-applied premium conductive shielding wraps the 6nm Navi core to block external electrostatic threats. Full ESD protection from factory to PCIe slot installation.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">📋</div><div><div class="pkg-feat-nm">Explicit Specifications Matrix</div><div class="pkg-feat-ds">Core architectural stats, 4GB GDDR6 capacity, and modern display engine data stated transparently on the retail label. Warehouse receiving requires no unboxing.</div></div></div>
+          <div class="pkg-feat-item"><div class="pkg-feat-icon">✅</div><div><div class="pkg-feat-nm">International Compliance Certification</div><div class="pkg-feat-ds">CE · RoHS · FCC · REACH. Fully accredited for global distribution lines across all major international markets.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ S06 SPECS ═══ -->
+<section id="s06">
+  <div class="spec-in">
+    <div class="sec-label fi">Technical Matrix</div>
+    <div class="sec-title fi">Specifications</div>
+    <div class="sec-divider fi"></div>
+    <table class="spec-tbl fi">
+      <tr><td>Architecture</td><td>Navi · RDNA 2 · 6nm</td></tr>
+      <tr class="spec-hl"><td>Stream Processors</td><td>1024</td></tr>
+      <tr><td>Core Frequency</td><td>2610 MHz</td></tr>
+      <tr><td>Memory Type</td><td>GDDR6</td></tr>
+      <tr class="spec-hl"><td>Memory Capacity</td><td>4 GB</td></tr>
+      <tr><td>Memory Frequency</td><td>2000 MHz</td></tr>
+      <tr><td>Memory Bus Width</td><td>64-bit</td></tr>
+      <tr><td>Bus Interface</td><td>PCIe 4.0 × 4</td></tr>
+      <tr><td>Display Outputs</td><td>DP + HDMI</td></tr>
+      <tr><td>Max Resolution</td><td>1920 × 1080</td></tr>
+      <tr class="spec-hl"><td>DirectX Support</td><td>DirectX 12 (Feature Level 12_2)</td></tr>
+      <tr><td>External Power</td><td>6 Pin</td></tr>
+      <tr><td>Power Consumption</td><td>107W</td></tr>
+      <tr><td>Recommended PSU</td><td>300W and above</td></tr>
+      <tr><td>Cooling Solution</td><td>Dual-Fan · Whispering Blade</td></tr>
+      <tr><td>Dimensions</td><td>205 × 115 × 36 mm</td></tr>
+      <tr><td>OS Support</td><td>Windows 10 / Windows 11</td></tr>
+      <tr><td>Market Positioning</td><td>Mid-Range · Efficiency Tier</td></tr>
+    </table>
+    <p class="spec-note fi">All specifications sourced from Simorchip internal documentation. Actual performance may vary depending on system configuration and operating environment.</p>
+    <div class="spec-ctas fi">
+      <button class="btn btn-vision">Download Spec Sheet</button>
+      <button class="btn btn-ghost">Explore More Products</button>
+    </div>
+    <div class="spec-foot fi">
+      <span class="tag">RX6500</span><span class="tag">4GBGDDR6</span>
+      <span class="tag">VisionMatrix</span><span class="tag">© 2026 Simorchip</span>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<div class="closing">
+  <p class="cl-tag">✦ Vision Matrix · Celestial Alignment</p>
+  <p class="cl-sub">Simorchip · RX6500 4GD6 · Vision</p>
+  <h2 class="cl-tagline fi">This isn't just a component.<br><span class="accent">This is your omniscient conduit.</span></h2>
+  <p class="cl-body fi fi-d1">Aerodynamic thermal control. Agile high-speed execution matrix.<br>Awaken your Vision and see what others miss.</p>
+  <button class="btn btn-vision fi fi-d2">View Full Specifications</button>
+</div>
+
+<footer class="site-foot">
+  <div class="sf-brand">SIMOR<em>CHIP</em></div>
+  <div class="sf-note">RX6500 4GD6 · VISION SERIES · © 2026 SIMORCHIP</div>
+</footer>
+
+<script>
+/* ══ STAR FIELD — moving stars background ══ */
+(function(){
+  const cv=document.getElementById('starCanvas');
+  let W,H,rafId;
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  const ctx=cv.getContext('2d');
+
+  // Generate stars with different sizes and speeds
+  const STAR_COUNT=280;
+  const stars=Array.from({length:STAR_COUNT},()=>({
+    x:Math.random(),y:Math.random(),
+    size:Math.random()<0.7?0.5:Math.random()<0.5?1:1.5,
+    opacity:0.1+Math.random()*.7,
+    twinklePhase:Math.random()*Math.PI*2,
+    twinkleSpeed:0.003+Math.random()*.008,
+    driftX:(Math.random()-.5)*.00004,  // very slow drift
+    driftY:(Math.random()-.5)*.00003,
+    color:Math.random()<.15?'rgba(200,180,255,':'rgba(232,224,248,',
+  }));
+
+  // Constellation lines — sparse, thin
+  const CONST_LINES=12;
+  const constLines=Array.from({length:CONST_LINES},()=>({
+    x1:Math.random(),y1:Math.random(),
+    x2:Math.random(),y2:Math.random(),
+    opacity:0.015+Math.random()*.025,
+  }));
+
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    // Deep space gradient base
+    const bg=ctx.createRadialGradient(W*.65,H*.4,0,W*.65,H*.4,W*.8);
+    bg.addColorStop(0,'rgba(18,16,42,.7)');
+    bg.addColorStop(.5,'rgba(12,16,32,.4)');
+    bg.addColorStop(1,'rgba(8,12,24,0)');
+    ctx.fillStyle=bg;
+    ctx.fillRect(0,0,W,H);
+
+    // Constellation lines
+    constLines.forEach(l=>{
+      ctx.beginPath();
+      ctx.moveTo(l.x1*W,l.y1*H);
+      ctx.lineTo(l.x2*W,l.y2*H);
+      ctx.strokeStyle=`rgba(200,180,255,${l.opacity})`;
+      ctx.lineWidth=.4;
+      ctx.stroke();
+    });
+
+    // Stars
+    stars.forEach(s=>{
+      s.twinklePhase+=s.twinkleSpeed;
+      s.x+=s.driftX;s.y+=s.driftY;
+      // wrap around
+      if(s.x<0)s.x=1;if(s.x>1)s.x=0;
+      if(s.y<0)s.y=1;if(s.y>1)s.y=0;
+
+      const twinkle=0.5+0.5*Math.sin(s.twinklePhase);
+      const alpha=s.opacity*(0.4+0.6*twinkle);
+
+      // larger stars get a soft glow
+      if(s.size>1){
+        const g=ctx.createRadialGradient(s.x*W,s.y*H,0,s.x*W,s.y*H,s.size*4);
+        g.addColorStop(0,`${s.color}${alpha*.5})`);
+        g.addColorStop(1,`${s.color}0)`);
+        ctx.fillStyle=g;
+        ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.size*4,0,Math.PI*2);ctx.fill();
+      }
+
+      ctx.beginPath();
+      ctx.arc(s.x*W,s.y*H,s.size*.8,0,Math.PI*2);
+      ctx.fillStyle=`${s.color}${alpha})`;
+      ctx.fill();
+    });
+
+    // Occasional shooting star
+    if(t%420<2){
+      const sx=Math.random()*W*.7+W*.1;
+      const sy=Math.random()*H*.5;
+      const len=60+Math.random()*80;
+      const g=ctx.createLinearGradient(sx,sy,sx+len,sy+len*.3);
+      g.addColorStop(0,'rgba(200,180,255,0)');
+      g.addColorStop(.4,'rgba(232,224,248,.6)');
+      g.addColorStop(1,'rgba(200,36,58,.3)');
+      ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(sx+len,sy+len*.3);
+      ctx.strokeStyle=g;ctx.lineWidth=1;ctx.stroke();
+    }
+
+    t++;
+    rafId=requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('beforeunload',()=>cancelAnimationFrame(rafId));
+})();
+
+/* ══ CARD STARS — micro star field on card surface ══ */
+(function(){
+  const wrap=document.getElementById('cardStars');if(!wrap)return;
+  for(let i=0;i<18;i++){
+    const dot=document.createElement('div');
+    const s=Math.random()<.6?.5:1;
+    const opacity=.15+Math.random()*.35;
+    dot.style.cssText=`
+      position:absolute;border-radius:50%;
+      width:${s}px;height:${s}px;
+      background:rgba(200,180,255,${opacity});
+      top:${Math.random()*100}%;
+      left:${Math.random()*80+10}%;
+      animation:starTwinkle ${2+Math.random()*3}s ease-in-out infinite ${Math.random()*2}s;
+    `;
+    wrap.appendChild(dot);
+  }
+  // inject keyframe
+  const style=document.createElement('style');
+  style.textContent='@keyframes starTwinkle{0%,100%{opacity:.2;}50%{opacity:1;}}';
+  document.head.appendChild(style);
+})();
+
+/* ══ CONSTELLATION HERO LINES ══ */
+(function(){
+  const wrap=document.getElementById('heroConst');if(!wrap)return;
+  const lines=[
+    {top:'22%',left:'30%',width:'18%',angle:'-8deg'},
+    {top:'55%',left:'45%',width:'12%',angle:'15deg'},
+    {top:'38%',left:'60%',width:'8%',angle:'-22deg'},
+    {top:'70%',left:'35%',width:'14%',angle:'5deg'},
+  ];
+  lines.forEach(l=>{
+    const el=document.createElement('div');
+    el.className='hc-line';
+    el.style.cssText=`top:${l.top};left:${l.left};width:${l.width};transform:rotate(${l.angle});`;
+    wrap.appendChild(el);
+  });
+})();
+
+/* ══ CURSOR ══ */
+(function(){
+  const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  const TRAIL=5;
+  const dots=Array.from({length:TRAIL},(_,i)=>{
+    const d=document.createElement('div');d.className='trail-dot';
+    const s=3-i*.4;d.style.cssText=`width:${s}px;height:${s}px;`;
+    document.body.appendChild(d);return d;
+  });
+  const pos=dots.map(()=>({x:0,y:0}));let head=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    cur.style.left=mx+'px';cur.style.top=my+'px';
+    pos[head]={x:mx,y:my};head=(head+1)%TRAIL;
+  });
+  (function frame(){
+    rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    dots.forEach((_,i)=>{
+      const p=pos[(head-1-i+TRAIL)%TRAIL];
+      dots[i].style.left=p.x+'px';dots[i].style.top=p.y+'px';
+    });
+    requestAnimationFrame(frame);
+  })();
+  document.querySelectorAll('button,.btn,.np a,.why-card,.vision-badge,.stat-badge').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cur.style.width='10px';cur.style.height='10px';});
+    el.addEventListener('mouseleave',()=>{cur.style.width='6px';cur.style.height='6px';});
+  });
+})();
+
+/* ══ NAV ══ */
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('sc',scrollY>50));
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+const secIds=['s00','s01','s02','s03','s04','s05','s06'];
+const pills=document.querySelectorAll('.np a');
+secIds.forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){const i=secIds.indexOf(id);pills.forEach(p=>p.classList.remove('on'));if(pills[i])pills[i].classList.add('on');}
+  },{threshold:.4}).observe(el);
+});
+
+/* ══ SCROLL REVEAL ══ */
+const fiObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>fiObs.observe(el));
+
+/* ══ SECTION DIVIDERS ══ */
+secIds.slice(1).forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)el.classList.add('div-on');},{threshold:.05}).observe(el);
+});
+
+/* ══ VIS LINES ══ */
+document.querySelectorAll('.vis-line').forEach(el=>{
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)el.classList.add('on');},{threshold:.5}).observe(el);
+});
+
+/* ══ FINS ══ */
+(function(){
+  const wrap=document.getElementById('rFins');if(!wrap)return;
+  for(let i=0;i<18;i++){const f=document.createElement('div');f.className='rx6500-fin';wrap.appendChild(f);}
+})();
+
+/* ══ HERO SEQUENCE ══ */
+document.fonts.ready.then(()=>{
+  function cls(id,d=0){setTimeout(()=>document.getElementById(id)?.classList.add('on'),d);}
+  cls('hRight',0);
+  setTimeout(()=>document.getElementById('hTag')?.classList.add('on'),400);
+  setTimeout(()=>{
+    const st=document.getElementById('hStatus');if(!st)return;
+    st.classList.add('typing');setTimeout(()=>st.classList.add('done'),1500);
+  },700);
+  setTimeout(()=>{
+    document.getElementById('hHL')?.classList.add('on');
+    ['hl0','hl1','hl2'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('in'),i*280));
+  },1100);
+  setTimeout(()=>document.getElementById('hLine')?.classList.add('on'),2000);
+  cls('hSub',2300);cls('hCta',2600);
+  setTimeout(()=>{
+    document.getElementById('hStats')?.classList.add('on');
+    const el=document.getElementById('heroSP');if(!el)return;
+    const dur=1000,target=1024,t0=performance.now();
+    (function f(now){
+      const p=Math.min((now-t0)/dur,1);
+      const v=1-Math.pow(1-p,2.5);
+      el.innerHTML=`${Math.round(v*target)}<em>SP</em>`;
+      if(p<1)requestAnimationFrame(f);else el.innerHTML='1024<em>SP</em>';
+    })(performance.now());
+  },2900);
+  cls('scrHint',3400);
+  setTimeout(portHighlight,2700);
+});
+
+/* ══ S01 TYPEWRITER ══ */
+(function(){
+  const tw=document.getElementById('blTw');if(!tw)return;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){obs.disconnect();
+      setTimeout(()=>{tw.classList.add('tw-go');setTimeout(()=>tw.classList.add('tw-done'),1100);},300);
+    }
+  },{threshold:.4});
+  obs.observe(tw);
+})();
+
+/* ══ WHY CARDS stagger ══ */
+(function(){
+  const cards=document.querySelectorAll('.why-card');if(!cards.length)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      cards.forEach((c,i)=>{
+        c.style.cssText=`opacity:0;transform:translateY(18px);transition:opacity .6s ease ${i*.14}s,transform .6s ease ${i*.14}s;`;
+        setTimeout(()=>{c.style.opacity='1';c.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3});
+  obs.observe(cards[0]);
+})();
+
+/* ══ PORT HIGHLIGHT ══ */
+function portHighlight(){
+  const ports=[
+    {card:document.getElementById('pDP'),  row:document.getElementById('portDP')},
+    {card:document.getElementById('pHDMI'),row:document.getElementById('portHDMI')},
+  ];
+  let i=0;
+  function next(){
+    if(i>0){ports[i-1].card?.classList.remove('hl');ports[i-1].row?.classList.remove('active');}
+    if(i<ports.length){
+      ports[i].card?.classList.add('hl');ports[i].row?.classList.add('active');
+      i++;setTimeout(next,700);
+    } else {
+      ports.forEach(p=>{p.card?.classList.add('hl');p.row?.classList.add('active');});
+    }
+  }
+  next();
+}
+
+/* ══ COUNT-UP 1024 — mana bar ══ */
+(function(){
+  const el=document.getElementById('count1024');if(!el)return;
+  const cv=document.getElementById('manaCanvas');
+  const gCtx=cv?cv.getContext('2d'):null;
+  let done=false,gridIv;
+
+  function drawMana(progress){
+    if(!gCtx)return;
+    gCtx.clearRect(0,0,cv.width,cv.height);
+    // mana bar — segmented ruby-to-gold fill
+    const segments=32,sw=cv.width/segments,filledCount=Math.round(progress*segments);
+    for(let i=0;i<segments;i++){
+      const filled=i<filledCount;
+      const ratio=i/segments;
+      const r=Math.round(200+(212-200)*ratio);
+      const g=Math.round(36+(160-36)*ratio);
+      const b=Math.round(58*(1-ratio)+48*ratio);
+      gCtx.fillStyle=filled?`rgba(${r},${g},${b},${0.6+Math.random()*.4})`:'rgba(120,60,200,.12)';
+      gCtx.fillRect(i*sw+.5,0,sw-1,cv.height);
+    }
+    // glow on leading edge
+    if(filledCount>0&&filledCount<segments){
+      const ex=filledCount*sw;
+      const gl=gCtx.createLinearGradient(ex-10,0,ex+6,0);
+      gl.addColorStop(0,'rgba(200,36,58,0)');
+      gl.addColorStop(.5,'rgba(232,200,100,.5)');
+      gl.addColorStop(1,'rgba(200,36,58,0)');
+      gCtx.fillStyle=gl;
+      gCtx.fillRect(ex-10,0,16,cv.height);
+    }
+  }
+
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      if(cv)cv.classList.add('vis');
+      const dur=1400,target=1024,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,2.5);
+        el.innerHTML=`${Math.round(v*target)}<em>SP</em>`;
+        if(gCtx)drawMana(v);
+        if(p<1)requestAnimationFrame(f);
+        else{
+          el.innerHTML='1024<em>SP</em>';
+          let la=0,grow=true;
+          gridIv=setInterval(()=>{
+            la=grow?Math.min(la+.03,1):Math.max(la-.015,.7);
+            if(la>=1)grow=false;if(la<=.7)grow=true;
+            drawMana(la);
+          },80);
+        }
+      })(performance.now());
+    }
+  },{threshold:.4});
+  obs.observe(el);
+  window.addEventListener('beforeunload',()=>clearInterval(gridIv));
+})();
+
+/* ══ BADGES ══ */
+(function(){
+  const wrap=document.getElementById('nsBadges');if(!wrap)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      wrap.querySelectorAll('.stat-badge').forEach((b,i)=>{
+        b.style.cssText=`opacity:0;transform:translateY(12px);transition:opacity .5s ease ${i*.15}s,transform .5s cubic-bezier(.34,1.56,.64,1) ${i*.15}s;`;
+        setTimeout(()=>{b.style.opacity='1';b.style.transform='none';},60);
+      });
+      setTimeout(()=>{['bar1','bar2','bar3'].forEach((id,i)=>setTimeout(()=>{
+        const e=document.getElementById(id);if(e)e.style.width='100%';
+      },i*180));},600);
+      setTimeout(()=>wrap.classList.add('swept'),920);
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ══ COMPARE BARS ══ */
+(function(){
+  const wrap=document.getElementById('cmpBars');if(!wrap)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      ['cb0','cb1','cb2','cb3'].forEach((id,i)=>setTimeout(()=>{
+        const el=document.getElementById(id);if(!el)return;
+        el.style.width=el.dataset.w+'%';
+        if(id==='cb2')setTimeout(()=>el.classList.add('fired'),1600);
+      },i*250));
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ══ ENDURANCE BADGE stagger ══ */
+(function(){
+  const badges=document.querySelectorAll('.vision-badge');if(!badges.length)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      badges.forEach((b,i)=>{
+        b.style.cssText=`opacity:0;transform:translateX(-14px);transition:opacity .55s ease ${i*.14}s,transform .55s ease ${i*.14}s;`;
+        setTimeout(()=>{b.style.opacity='1';b.style.transform='none';},60);
+      });
+    }
+  },{threshold:.3});
+  obs.observe(badges[0]);
+})();
+
+/* ══ MTBF ══ */
+(function(){
+  const el=document.getElementById('mtbfCount');if(!el)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      const dur=1800,target=1500000,t0=performance.now();
+      (function f(now){
+        const p=Math.min((now-t0)/dur,1);
+        const v=1-Math.pow(1-p,3);
+        el.textContent=Math.round(v*target).toLocaleString();
+        if(p<1)requestAnimationFrame(f);else el.textContent='1,500,000';
+      })(performance.now());
+    }
+  },{threshold:.4});
+  obs.observe(el);
+})();
+
+/* ══ RUNTIME TIMELINE ══ */
+(function(){
+  const wrap=document.getElementById('rtWrap');if(!wrap)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      setTimeout(()=>{
+        const f1=document.getElementById('rtF1');
+        const loco=document.getElementById('rtLoco');
+        if(f1)f1.style.width='100%';
+        if(loco){loco.style.transition='left 1.6s ease';loco.style.left='calc(100% - 16px)';}
+        setTimeout(()=>{const f2=document.getElementById('rtF2');if(f2)f2.style.width='100%';},400);
+      },200);
+    }
+  },{threshold:.4});
+  obs.observe(wrap);
+})();
+
+/* ══ PACKAGING CARD ══ */
+(function(){
+  const wrap=document.getElementById('pkgCard');if(!wrap)return;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){const card=wrap.querySelector('.pkg-card');if(card){card.style.opacity='1';card.style.transform='none';}}
+  },{threshold:.2});
+  obs.observe(wrap);
+})();
+
+/* ══ PULSE CANVAS — starfield + ruby core ══ */
+(function(){
+  const cv=document.getElementById('pulseCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0,rafId;
+
+  // mini stars on canvas
+  const stars=Array.from({length:28},()=>({
+    x:Math.random()*W,y:Math.random()*H,
+    r:Math.random()<.6?.4:.7,
+    phase:Math.random()*Math.PI*2,
+    speed:.012+Math.random()*.02,
+  }));
+
+  function draw(){
+    ctx.fillStyle='#080c18';
+    ctx.fillRect(0,0,W,H);
+
+    // subtle nebula wash
+    const nb=ctx.createRadialGradient(W*.55,H*.4,0,W*.55,H*.4,W*.7);
+    nb.addColorStop(0,'rgba(80,40,160,.08)');
+    nb.addColorStop(1,'rgba(8,12,24,0)');
+    ctx.fillStyle=nb;ctx.fillRect(0,0,W,H);
+
+    // mini stars
+    stars.forEach(s=>{
+      s.phase+=s.speed;
+      const alpha=.1+.5*Math.sin(s.phase);
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(200,180,255,${alpha})`;ctx.fill();
+    });
+
+    // ruby core rings
+    const cx=W*.4,cy=H*.5;
+    for(let i=0;i<5;i++){
+      const phase=(t*.65+i*.9)%(Math.PI*2);
+      const r=5+i*14+Math.sin(phase)*3.5;
+      const alpha=(0.11-i*.017)*(0.5+0.5*Math.sin(phase+Math.PI));
+      if(alpha<=0)continue;
+      const isRuby=i%2===0;
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+      ctx.strokeStyle=isRuby?`rgba(200,36,58,${alpha})`:`rgba(212,160,48,${alpha*.7})`;
+      ctx.lineWidth=i===0?1.3:.6;
+      if(i===0){ctx.shadowColor='rgba(200,36,58,.45)';ctx.shadowBlur=7;}else ctx.shadowBlur=0;
+      ctx.stroke();
+    }
+    ctx.shadowBlur=0;
+
+    // ruby eye center
+    const cr=2.5+Math.sin(t*1.3)*1;
+    ctx.beginPath();ctx.arc(cx,cy,cr,0,Math.PI*2);
+    ctx.fillStyle='rgba(200,36,58,.9)';
+    ctx.shadowColor='rgba(200,36,58,.8)';ctx.shadowBlur=10;ctx.fill();ctx.shadowBlur=0;
+
+    // scan lines
+    ctx.fillStyle='rgba(0,0,0,.08)';
+    for(let y=0;y<H;y+=2)ctx.fillRect(0,y,W,1);
+
+    // celestial diagonal lines
+    ctx.save();ctx.globalAlpha=.12;
+    [[.2,.24],[.48,.52],[.74,.78]].forEach(([y1,y2])=>{
+      const g=ctx.createLinearGradient(0,0,W,0);
+      g.addColorStop(0,'transparent');
+      g.addColorStop(.25,'rgba(200,36,58,.5)');
+      g.addColorStop(.6,'rgba(200,180,255,.25)');
+      g.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.moveTo(0,H*y1);ctx.lineTo(W,H*y2);
+      ctx.strokeStyle=g;ctx.lineWidth=1;ctx.stroke();
+    });
+    ctx.restore();
+
+    t+=.024;rafId=requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('beforeunload',()=>cancelAnimationFrame(rafId));
+})();
+
+/* ══ SPEC TABLE ══ */
+(function(){
+  const tbl=document.querySelector('.spec-tbl');if(!tbl)return;
+  let done=false;
+  const obs=new IntersectionObserver(es=>{
+    if(es[0].isIntersecting&&!done){done=true;
+      tbl.querySelectorAll('tr').forEach((row,i)=>{
+        row.style.cssText=`opacity:0;transition:opacity .38s ease ${i*.04}s;`;
+        setTimeout(()=>{row.style.opacity='1';},60);
+      });
+    }
+  },{threshold:.1});
+  obs.observe(tbl);
+})();
+</script>
+</body>
+</html>
