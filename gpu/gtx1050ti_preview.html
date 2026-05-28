@@ -321,6 +321,110 @@ section{position:relative;width:100%;overflow:hidden;}
   .why-cards{grid-template-columns:1fr;}
 }
 @media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+/* ── DP DUAL MONITOR SCENARIO ── */
+.dp-wrap{width:100%;background:rgba(14,16,20,.9);border:.5px solid var(--border);overflow:hidden;}
+.dp-header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:.5px solid var(--line);}
+.dp-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.dp-tag{font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;color:var(--ice);border:.5px solid rgba(200,221,240,.2);padding:3px 8px;background:rgba(200,221,240,.04);}
+.dp-screens{display:flex;align-items:flex-end;gap:14px;padding:18px 16px 8px;}
+.dp-monitor{display:flex;flex-direction:column;align-items:center;opacity:0;transition:opacity .7s ease,transform .7s ease;}
+.dp-main{flex:1.4;transform:translateY(14px);}
+.dp-sub{flex:1;transform:translateY(14px);}
+.dp-monitor.vis{opacity:1;transform:none;}
+.dp-bezel{display:flex;flex-direction:column;align-items:center;width:100%;}
+.dp-screen{width:100%;aspect-ratio:16/10;border:.5px solid rgba(200,221,240,.2);border-radius:2px 2px 0 0;overflow:hidden;position:relative;background:#060810;}
+.dp-screen-main{border-color:rgba(200,221,240,.4);box-shadow:0 0 20px rgba(200,221,240,.06);}
+.dp-screen-content{position:absolute;inset:0 0 18% 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+.dp-fps-counter{font-family:var(--ff-d);font-size:clamp(18px,3vw,32px);letter-spacing:.04em;color:var(--ice);text-shadow:0 0 12px rgba(200,221,240,.4);line-height:1;}
+.dp-res-tag{font-family:var(--ff-m);font-size:7px;letter-spacing:.1em;color:var(--label);}
+.dp-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.08) 0px,transparent 1px,transparent 3px);pointer-events:none;}
+.dp-content-work{justify-content:center;padding:16% 10%;}
+.dp-work-bars{width:100%;display:flex;flex-direction:column;gap:6px;}
+.dp-work-bar{height:4px;background:rgba(200,221,240,.15);border-radius:2px;position:relative;overflow:hidden;}
+.dp-work-bar::after{content:'';position:absolute;inset:0;width:0;background:rgba(200,221,240,.3);border-radius:2px;transition:width 1s ease;}
+.dp-work-bar.lit::after{width:100%;}
+.dp-status-bar{position:absolute;bottom:0;left:0;right:0;height:18%;display:flex;align-items:center;gap:6px;padding:0 8%;background:rgba(0,0,0,.5);border-top:.5px solid rgba(255,255,255,.04);}
+.dp-conn{font-family:var(--ff-m);font-size:7px;letter-spacing:.1em;padding:2px 5px;border:.5px solid transparent;border-radius:1px;font-weight:400;}
+.dp-conn-dp{color:var(--ice);border-color:rgba(200,221,240,.3);background:rgba(200,221,240,.08);}
+.dp-conn-hdmi{color:var(--gold);border-color:rgba(200,168,74,.3);background:rgba(200,168,74,.06);}
+.dp-conn-label{font-family:var(--ff-m);font-size:6px;letter-spacing:.06em;color:var(--label);}
+.dp-neck{width:10%;height:8px;background:rgba(255,255,255,.05);}
+.dp-base{width:35%;height:4px;background:rgba(255,255,255,.04);border-radius:2px;}
+.dp-mon-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);margin-top:6px;text-align:center;}
+.dp-label-sub{color:rgba(90,104,128,.7);}
+.dp-port-row{display:flex;gap:8px;padding:8px 16px 12px;border-top:.5px solid var(--line);}
+.dp-port-item{display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0;transition:opacity .5s ease;}
+.dp-port-item.vis{opacity:1;}
+.dp-port-dvi{opacity:.4!important;}
+.dp-port-badge{font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;padding:4px 10px;border:.5px solid transparent;}
+.dp-p-dp{color:var(--ice);border-color:rgba(200,221,240,.3);background:rgba(200,221,240,.06);}
+.dp-p-hdmi{color:var(--gold);border-color:rgba(200,168,74,.25);background:rgba(200,168,74,.04);}
+.dp-p-dvi{color:var(--label);border-color:rgba(90,104,128,.2);}
+.dp-port-note{font-family:var(--ff-m);font-size:7px;color:var(--label);letter-spacing:.06em;}
+.dp-port-wire{width:1px;height:12px;background:linear-gradient(180deg,rgba(200,221,240,.4),rgba(200,221,240,.1));}
+.dp-footer{padding:12px 16px;border-top:.5px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.dp-footer span{font-size:11px;opacity:.5;display:block;margin-top:3px;}
+
+/* ── DUAL FAN THERMAL SCENARIO ── */
+.th-wrap{width:100%;background:rgba(10,12,16,.9);border:.5px solid var(--border);overflow:hidden;}
+.th-header{padding:13px 16px 10px;border-bottom:.5px solid var(--line);}
+.th-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);display:block;}
+.th-sub{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.06em;color:rgba(90,104,128,.6);display:block;margin-top:3px;}
+.th-chart{display:flex;gap:0;padding:16px 16px 8px;}
+.th-y-axis{display:flex;flex-direction:column;justify-content:space-between;padding-bottom:2px;margin-right:8px;flex-shrink:0;}
+.th-y-axis span{font-family:var(--ff-m);font-size:7px;color:var(--label);letter-spacing:.04em;}
+.th-graph{flex:1;position:relative;height:160px;}
+.th-zone{position:absolute;left:0;right:0;}
+.th-zone-danger{top:0;height:30%;background:rgba(255,60,60,.04);border-bottom:.5px solid rgba(255,60,60,.12);}
+.th-zone-danger span{font-family:var(--ff-m);font-size:7px;color:rgba(255,80,80,.4);letter-spacing:.06em;position:absolute;right:4px;top:4px;}
+.th-zone-safe{top:30%;bottom:0;background:rgba(200,221,240,.02);}
+.th-zone-safe span{font-family:var(--ff-m);font-size:7px;color:rgba(200,221,240,.25);letter-spacing:.06em;position:absolute;right:4px;top:4px;}
+.th-svg{position:absolute;inset:0;width:100%;height:100%;}
+.th-path-single{stroke:rgba(255,80,80,.6);stroke-width:1.5;stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset 2s ease;}
+.th-path-dual{stroke:rgba(200,221,240,.8);stroke-width:1.5;stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset 2s ease .3s;}
+.th-fill-single{fill:rgba(255,80,80,.06);opacity:0;transition:opacity .5s ease 1.5s;}
+.th-fill-dual{fill:rgba(200,221,240,.04);opacity:0;transition:opacity .5s ease 1.8s;}
+.th-path-single.drawn{stroke-dashoffset:0;}
+.th-path-dual.drawn{stroke-dashoffset:0;}
+.th-fill-single.vis,.th-fill-dual.vis{opacity:1;}
+.th-legend{padding:10px 16px;display:flex;flex-direction:column;gap:8px;border-top:.5px solid var(--line);}
+.th-leg-item{display:flex;align-items:flex-start;gap:10px;}
+.th-leg-dot{width:10px;height:3px;border-radius:2px;margin-top:6px;flex-shrink:0;}
+.th-leg-single{background:rgba(255,80,80,.7);}
+.th-leg-dual{background:rgba(200,221,240,.8);}
+.th-leg-name{font-family:var(--ff-b);font-size:13px;font-weight:600;color:var(--mute);margin-bottom:2px;}
+.th-leg-desc{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.04em;color:var(--label);line-height:1.6;}
+.th-callout{padding:12px 16px;border-top:.5px solid var(--line);background:rgba(200,221,240,.02);opacity:0;transition:opacity .6s ease;}
+.th-callout.vis{opacity:1;}
+.th-callout-num{font-family:var(--ff-d);font-size:clamp(18px,2.5vw,26px);letter-spacing:.04em;color:var(--ice);margin-bottom:4px;}
+.th-callout-body{font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.7;}
+
+/* ── ENTRY SERIES TIMELINE ── */
+.es-wrap{width:100%;background:rgba(10,12,16,.95);border:.5px solid var(--border);overflow:hidden;}
+.es-header{padding:16px 18px 12px;border-bottom:.5px solid var(--line);display:flex;align-items:baseline;gap:10px;}
+.es-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--label);}
+.es-complete{font-family:var(--ff-d);font-size:clamp(20px,2.8vw,30px);letter-spacing:.06em;color:var(--ice);opacity:0;transition:opacity .8s ease;text-shadow:0 0 18px rgba(200,221,240,.3);}
+.es-complete.vis{opacity:1;}
+.es-cards{display:flex;flex-direction:column;gap:0;}
+.es-card{display:flex;align-items:center;justify-content:space-between;padding:11px 18px;border-bottom:.5px solid var(--line);opacity:0;transform:translateX(-12px);transition:opacity .5s ease,transform .5s ease,background .3s;}
+.es-card.vis{opacity:1;transform:none;}
+.es-card:hover{background:rgba(200,221,240,.03);}
+.es-card-final{background:rgba(200,221,240,.03);border-bottom:none;}
+.es-card-final.vis{border-left:2px solid rgba(200,221,240,.3);}
+.es-card-num{font-family:var(--ff-d);font-size:clamp(14px,2vw,18px);letter-spacing:.04em;color:var(--mute);flex-shrink:0;width:100px;}
+.es-num-final{color:var(--white)!important;}
+.es-card-spec{font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;color:var(--label);flex:1;text-align:center;}
+.es-card-role{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;color:rgba(90,104,128,.6);flex-shrink:0;text-align:right;}
+.es-role-final{color:rgba(200,221,240,.6)!important;}
+.es-card-crown{font-size:14px;margin-right:6px;opacity:.7;}
+.es-line-wrap{padding:12px 18px;display:flex;align-items:center;gap:12px;border-top:.5px solid var(--line);}
+.es-line{flex:1;height:1px;width:0;background:linear-gradient(90deg,rgba(200,221,240,.3),rgba(200,168,74,.4));transition:width 1s ease;box-shadow:0 0 6px rgba(200,221,240,.15);}
+.es-arrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;color:var(--gold);white-space:nowrap;opacity:0;transition:opacity .5s ease;}
+.es-arrow.vis{opacity:1;}
+.es-footer{padding:13px 18px;border-top:.5px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;opacity:0;transition:opacity .6s ease;}
+.es-footer.vis{opacity:1;}
+.es-footer span{font-size:11px;opacity:.5;display:block;margin-top:3px;}
+
 </style>
 </head>
 <body>
@@ -452,7 +556,7 @@ section{position:relative;width:100%;overflow:hidden;}
     <div class="bl-grid fi">
       <div>
         <div class="bl-eye">Design Language</div>
-        <div class="bl-title">Pascal<br>Edge<br><span style="font-size:.5em;color:var(--label);"></span></div>
+        <div class="bl-title">Pascal<br>Edge</div>
         <div class="bl-body">The GTX 750 Ti was Maxwell.<br><br>The GTX 1050 Ti is Pascal — a full architecture generation ahead. 14nm means more transistors per mm², more performance per watt, more sustained clock speeds.<br><br>Same slot. Smaller process. Bigger result.</div>
         <div class="bl-quote">This is not just more cores. This is better cores.<br>14nm Pascal vs 28nm Maxwell — the jump that matters.</div>
         <div class="bl-pos">GTX 1050 Ti — Where mid-range performance begins for real.</div>
@@ -516,11 +620,71 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:400px;margin-bottom:14px;">
-        <span>[ FIERCER — DUAL FAN DETAIL ]<br>GTX 1050 Ti side view · dual fan symmetric<br>V-shaped heatsink in top light ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:140px;">
-        <span>[ DUAL FAN CLOSE-UP ]<br>Two Simorchip logos centered on fans<br>Blade count visible ]</span>
+      <!-- ── DP DUAL MONITOR SCENARIO ── -->
+      <div class="dp-wrap" id="dpWrap">
+        <div class="dp-header">
+          <span class="dp-eyebrow">Series First — DisplayPort</span>
+          <span class="dp-tag">144Hz Unlocked</span>
+        </div>
+        <div class="dp-screens">
+          <div class="dp-monitor dp-main" id="dpMain">
+            <div class="dp-bezel">
+              <div class="dp-screen dp-screen-main">
+                <div class="dp-screen-content">
+                  <div class="dp-fps-counter" id="dpFps">0 fps</div>
+                  <div class="dp-res-tag">1920 × 1080</div>
+                  <div class="dp-scanlines"></div>
+                </div>
+                <div class="dp-status-bar">
+                  <div class="dp-conn dp-conn-dp">DP</div>
+                  <span class="dp-conn-label">DisplayPort · 144Hz</span>
+                </div>
+              </div>
+              <div class="dp-neck"></div>
+              <div class="dp-base"></div>
+            </div>
+            <div class="dp-mon-label">Primary — Gaming</div>
+          </div>
+          <div class="dp-monitor dp-sub" id="dpSub">
+            <div class="dp-bezel dp-bezel-sub">
+              <div class="dp-screen dp-screen-sub">
+                <div class="dp-screen-content dp-content-work">
+                  <div class="dp-work-bars">
+                    <div class="dp-work-bar" style="width:85%"></div>
+                    <div class="dp-work-bar" style="width:62%"></div>
+                    <div class="dp-work-bar" style="width:73%"></div>
+                    <div class="dp-work-bar" style="width:45%"></div>
+                  </div>
+                </div>
+                <div class="dp-status-bar">
+                  <div class="dp-conn dp-conn-hdmi">HDMI</div>
+                  <span class="dp-conn-label">1080p · 60Hz</span>
+                </div>
+              </div>
+              <div class="dp-neck"></div>
+              <div class="dp-base"></div>
+            </div>
+            <div class="dp-mon-label dp-label-sub">Secondary — Work</div>
+          </div>
+        </div>
+        <div class="dp-port-row" id="dpPortRow">
+          <div class="dp-port-item" id="dpPortDp">
+            <div class="dp-port-badge dp-p-dp">DisplayPort</div>
+            <div class="dp-port-wire" id="dpWireMain"></div>
+          </div>
+          <div class="dp-port-item" id="dpPortHdmi">
+            <div class="dp-port-badge dp-p-hdmi">HDMI</div>
+            <div class="dp-port-wire" id="dpWireSub"></div>
+          </div>
+          <div class="dp-port-item dp-port-dvi">
+            <div class="dp-port-badge dp-p-dvi">DVI</div>
+            <div class="dp-port-note">+ legacy ready</div>
+          </div>
+        </div>
+        <div class="dp-footer">
+          Two screens. One bracket. No cables to negotiate.<br>
+          <span>DisplayPort arrives in the series — and with it, everything 144Hz enables.</span>
+        </div>
       </div>
     </div>
   </div>
@@ -576,11 +740,52 @@ section{position:relative;width:100%;overflow:hidden;}
     </div>
 
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:380px;margin-bottom:14px;">
-        <span>[ CAPABLE — FRONT HERO SHOT ]<br>GTX 1050 Ti front · dual-fan symmetric<br>Silver-grey fin array in top light ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:150px;">
-        <span>[ OUTPUT PORTS ]<br>DP · HDMI · DVI bracket close-up ]</span>
+      <!-- ── DUAL FAN THERMAL SCENARIO ── -->
+      <div class="th-wrap" id="thWrap">
+        <div class="th-header">
+          <span class="th-eyebrow">Under Extended Load</span>
+          <span class="th-sub">Single Fan vs Dual Fan · 60 min sustained</span>
+        </div>
+        <div class="th-chart" id="thChart">
+          <div class="th-y-axis">
+            <span>95°C</span>
+            <span>80°C</span>
+            <span>65°C</span>
+            <span>50°C</span>
+          </div>
+          <div class="th-graph">
+            <!-- Danger zone -->
+            <div class="th-zone th-zone-danger"><span>Throttle Zone</span></div>
+            <div class="th-zone th-zone-safe"><span>Safe Zone</span></div>
+            <!-- Single fan line -->
+            <svg class="th-svg" viewBox="0 0 300 160" preserveAspectRatio="none">
+              <path id="thLineSingle" class="th-path-single" d="" fill="none"/>
+              <path id="thLineDual" class="th-path-dual" d="" fill="none"/>
+              <path id="thFillSingle" class="th-fill-single" d="" />
+              <path id="thFillDual" class="th-fill-dual" d="" />
+            </svg>
+          </div>
+        </div>
+        <div class="th-legend">
+          <div class="th-leg-item">
+            <div class="th-leg-dot th-leg-single"></div>
+            <div>
+              <div class="th-leg-name">Single Fan</div>
+              <div class="th-leg-desc">Hits throttle zone → clock speed drops → performance loss</div>
+            </div>
+          </div>
+          <div class="th-leg-item">
+            <div class="th-leg-dot th-leg-dual"></div>
+            <div>
+              <div class="th-leg-name" style="color:var(--ice);">Dual Fan · GTX 1050 Ti</div>
+              <div class="th-leg-desc">Stays in safe zone → full clock speed maintained</div>
+            </div>
+          </div>
+        </div>
+        <div class="th-callout" id="thCallout">
+          <div class="th-callout-num">Half load.</div>
+          <div class="th-callout-body">Each fan handles 50% of the thermal budget. Not because the card runs hot — because headroom is what makes it last.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -630,8 +835,48 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:440px;">
-        <span>[ RELIABILITY VISUAL ]<br>GTX 1050 Ti in chassis · long exposure<br>Ice-white glow on dual fans in darkness ]</span>
+      <!-- ── ENTRY SERIES TIMELINE ── -->
+      <div class="es-wrap" id="esWrap">
+        <div class="es-header">
+          <span class="es-eyebrow">Entry Series</span>
+          <span class="es-complete" id="esComplete">Complete.</span>
+        </div>
+        <div class="es-cards" id="esCards">
+          <div class="es-card" data-i="0">
+            <div class="es-card-num">G210</div>
+            <div class="es-card-spec">16 Cores · 31W</div>
+            <div class="es-card-role">Display Output</div>
+          </div>
+          <div class="es-card" data-i="1">
+            <div class="es-card-num">GT730</div>
+            <div class="es-card-spec">96 Cores · 49W</div>
+            <div class="es-card-role">Office Deployment</div>
+          </div>
+          <div class="es-card" data-i="2">
+            <div class="es-card-num">GT1030</div>
+            <div class="es-card-spec">384 Cores · 30W</div>
+            <div class="es-card-role">Efficient Creation</div>
+          </div>
+          <div class="es-card" data-i="3">
+            <div class="es-card-num">GTX 750 Ti</div>
+            <div class="es-card-spec">640 Cores · 60W</div>
+            <div class="es-card-role">First Gaming</div>
+          </div>
+          <div class="es-card es-card-final" data-i="4">
+            <div class="es-card-crown">★</div>
+            <div class="es-card-num es-num-final">GTX 1050 Ti</div>
+            <div class="es-card-spec" style="color:var(--ice);">768 Cores · 75W · Dual Fan</div>
+            <div class="es-card-role es-role-final">Entry Series — End.</div>
+          </div>
+        </div>
+        <div class="es-line-wrap">
+          <div class="es-line" id="esLine"></div>
+          <div class="es-arrow" id="esArrow">→ Mid Range</div>
+        </div>
+        <div class="es-footer" id="esFooter">
+          Five cards. One philosophy.<br>
+          <span>From display output to dual-fan gaming — every step earned. What comes next is a different conversation.</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1033,6 +1278,130 @@ document.fonts.ready.then(() => {
     }
   }, {threshold:.1});
   obs.observe(tbl);
+})();
+
+/* ── DP DUAL MONITOR ── */
+(function(){
+  var wrap = document.getElementById('dpWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var main = document.getElementById('dpMain');
+    var sub = document.getElementById('dpSub');
+    setTimeout(function(){ if(main) main.classList.add('vis'); }, 100);
+    setTimeout(function(){ if(sub) sub.classList.add('vis'); }, 350);
+    // Work bar animation
+    setTimeout(function(){
+      wrap.querySelectorAll('.dp-work-bar').forEach(function(b){ b.classList.add('lit'); });
+    }, 600);
+    // FPS counter
+    setTimeout(function(){
+      var el = document.getElementById('dpFps');
+      if(!el) return;
+      var dur = 1200, target = 144, t0 = performance.now();
+      (function tick(now){
+        var p = Math.min((now - t0) / dur, 1);
+        var v = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(v * target) + ' fps';
+        if(p < 1) requestAnimationFrame(tick);
+        else el.textContent = '144 fps';
+      })(performance.now());
+    }, 500);
+    // Ports
+    var ports = wrap.querySelectorAll('.dp-port-item');
+    ports.forEach(function(p, i){
+      setTimeout(function(){ p.classList.add('vis'); }, 900 + i * 180);
+    });
+  }, {threshold: 0.25}).observe(wrap);
+})();
+
+/* ── DUAL FAN THERMAL ── */
+(function(){
+  var wrap = document.getElementById('thWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    // SVG paths: single fan climbs into throttle, dual fan stays stable
+    // viewBox 0 0 300 160, danger zone is top 30% = y < 48
+    var W = 300, H = 160;
+    var singlePts = [];
+    var dualPts = [];
+    for(var i = 0; i <= 20; i++){
+      var x = (i / 20) * W;
+      // Single: starts ~y120, climbs to y30 (throttle zone) then stays high
+      var ySingle = i < 12
+        ? 120 - (i / 12) * 80
+        : 40 + Math.sin(i * 0.4) * 4;
+      // Dual: starts ~y120, stabilises around y80
+      var yDual = i < 6
+        ? 120 - (i / 6) * 40
+        : 80 + Math.sin(i * 0.6) * 3;
+      singlePts.push([x, ySingle]);
+      dualPts.push([x, yDual]);
+    }
+    function pts2path(pts){
+      return pts.map(function(p, i){ return (i === 0 ? 'M' : 'L') + p[0] + ' ' + p[1]; }).join(' ');
+    }
+    function pts2fill(pts, H){
+      return pts2path(pts) + ' L' + pts[pts.length-1][0] + ' ' + H + ' L0 ' + H + ' Z';
+    }
+    var ps = document.getElementById('thLineSingle');
+    var pd = document.getElementById('thLineDual');
+    var fs = document.getElementById('thFillSingle');
+    var fd = document.getElementById('thFillDual');
+    if(ps) ps.setAttribute('d', pts2path(singlePts));
+    if(pd) pd.setAttribute('d', pts2path(dualPts));
+    if(fs) fs.setAttribute('d', pts2fill(singlePts, H));
+    if(fd) fd.setAttribute('d', pts2fill(dualPts, H));
+    setTimeout(function(){
+      if(ps) ps.classList.add('drawn');
+      if(pd) pd.classList.add('drawn');
+    }, 200);
+    setTimeout(function(){
+      if(fs) fs.classList.add('vis');
+      if(fd) fd.classList.add('vis');
+    }, 1800);
+    setTimeout(function(){
+      var c = document.getElementById('thCallout');
+      if(c) c.classList.add('vis');
+    }, 2200);
+  }, {threshold: 0.25}).observe(wrap);
+})();
+
+/* ── ENTRY SERIES TIMELINE ── */
+(function(){
+  var wrap = document.getElementById('esWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var cards = wrap.querySelectorAll('.es-card');
+    cards.forEach(function(card, i){
+      setTimeout(function(){ card.classList.add('vis'); }, i * 200);
+    });
+    var totalDelay = cards.length * 200;
+    setTimeout(function(){
+      var complete = document.getElementById('esComplete');
+      if(complete) complete.classList.add('vis');
+    }, totalDelay + 100);
+    setTimeout(function(){
+      var line = document.getElementById('esLine');
+      if(line) line.style.width = '100%';
+    }, totalDelay + 400);
+    setTimeout(function(){
+      var arrow = document.getElementById('esArrow');
+      if(arrow) arrow.classList.add('vis');
+    }, totalDelay + 1000);
+    setTimeout(function(){
+      var footer = document.getElementById('esFooter');
+      if(footer) footer.classList.add('vis');
+    }, totalDelay + 1200);
+  }, {threshold: 0.2}).observe(wrap);
 })();
 </script>
 </body>
