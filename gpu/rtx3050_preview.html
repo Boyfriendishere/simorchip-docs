@@ -362,6 +362,117 @@ section{position:relative;width:100%;overflow:hidden;}
   .why-cards{grid-template-columns:1fr;}
 }
 @media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+/* ══ SOLO BROADCAST SCENARIO ══ */
+.sb-wrap{width:100%;background:rgba(4,8,6,.97);border:.5px solid var(--border);overflow:hidden;}
+.sb-header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px 10px;border-bottom:.5px solid var(--line);}
+.sb-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.sb-live{display:flex;align-items:center;gap:5px;font-family:var(--ff-m);font-size:8px;letter-spacing:.12em;color:rgba(255,60,60,.9);text-transform:uppercase;}
+.sb-live-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,60,60,.9);animation:livePulse 1.2s ease-in-out infinite;}
+@keyframes livePulse{0%,100%{opacity:.5;box-shadow:none;}50%{opacity:1;box-shadow:0 0 8px rgba(255,60,60,.7);}}
+.sb-pipelines{display:flex;flex-direction:column;gap:0;}
+.sb-pipe{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:.5px solid var(--line);opacity:0;transform:translateX(-10px);transition:opacity .5s ease,transform .5s ease,background .3s;}
+.sb-pipe.vis{opacity:1;transform:none;}
+.sb-pipe:hover{background:rgba(57,217,122,.02);}
+.sb-pipe:last-child{border-bottom:none;}
+.sb-pipe-left{display:flex;align-items:center;gap:10px;}
+.sb-pipe-icon{font-size:16px;flex-shrink:0;}
+.sb-pipe-name{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--white);margin-bottom:2px;}
+.sb-pipe-tech{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;color:var(--label);}
+.sb-pipe-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.sb-meter-track{width:80px;height:4px;background:rgba(57,217,122,.08);border-radius:2px;overflow:hidden;}
+.sb-meter-fill{height:100%;border-radius:2px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+.sb-fill-game{background:linear-gradient(90deg,var(--green2),var(--green));box-shadow:0 0 6px rgba(57,217,122,.4);}
+.sb-fill-obs{background:linear-gradient(90deg,rgba(255,140,60,.6),rgba(255,160,80,.8));}
+.sb-fill-color{background:linear-gradient(90deg,rgba(150,100,255,.5),rgba(180,120,255,.7));}
+.sb-fill-chat{background:rgba(57,217,122,.25);}
+.sb-fps{font-family:var(--ff-d);font-size:15px;letter-spacing:.04em;color:var(--green);width:52px;text-align:right;line-height:1;}
+.sb-bitrate{font-family:var(--ff-m);font-size:9px;color:rgba(255,160,80,.8);width:52px;text-align:right;}
+.sb-status-ok{font-family:var(--ff-m);font-size:9px;color:rgba(150,100,255,.8);width:52px;text-align:right;}
+.sb-cpu-pct{font-family:var(--ff-m);font-size:9px;color:var(--label);width:52px;text-align:right;}
+/* GPU ring */
+.sb-gpu-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-top:.5px solid var(--line);background:rgba(57,217,122,.02);opacity:0;transition:opacity .6s ease;}
+.sb-gpu-row.vis{opacity:1;}
+.sb-gpu-title{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--white);display:block;margin-bottom:3px;}
+.sb-gpu-sub{font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;color:var(--label);display:block;}
+.sb-gpu-ring{position:relative;width:52px;height:52px;flex-shrink:0;}
+.sb-ring-svg{width:100%;height:100%;transform:rotate(-90deg);}
+.sb-ring-bg{fill:none;stroke:rgba(57,217,122,.08);stroke-width:4;}
+.sb-ring-fill{fill:none;stroke:var(--green);stroke-width:4;stroke-linecap:round;stroke-dasharray:150.8;stroke-dashoffset:150.8;transition:stroke-dashoffset 1.4s cubic-bezier(.16,1,.3,1);filter:drop-shadow(0 0 4px rgba(57,217,122,.5));}
+.sb-ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--ff-d);font-size:13px;color:var(--green);letter-spacing:.02em;}
+.sb-footer{padding:12px 16px;border-top:.5px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.sb-footer span{font-size:11px;opacity:.5;display:block;margin-top:3px;}
+
+/* ══ STREAMER SETUP SCENE ══ */
+.ss-wrap{width:100%;background:rgba(4,8,6,.98);border:.5px solid var(--border);overflow:hidden;}
+.ss-header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px 10px;border-bottom:.5px solid var(--line);}
+.ss-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.ss-online{display:flex;align-items:center;gap:5px;font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;color:var(--green);}
+.ss-online-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:onlinePulse 2s ease-in-out infinite;}
+@keyframes onlinePulse{0%,100%{opacity:.4;}50%{opacity:1;box-shadow:0 0 8px rgba(57,217,122,.6);}}
+/* Desk layout */
+.ss-desk{display:flex;align-items:flex-end;gap:10px;padding:16px 14px 8px;}
+/* Main monitor */
+.ss-monitor-main{flex:1.7;opacity:0;transform:translateY(12px);transition:opacity .7s ease,transform .7s ease;}
+.ss-monitor-main.vis{opacity:1;transform:none;}
+.ss-mon-bezel{display:flex;flex-direction:column;align-items:center;}
+.ss-mon-screen{width:100%;aspect-ratio:16/9;background:#020503;border:.5px solid rgba(57,217,122,.3);border-radius:2px 2px 0 0;overflow:hidden;position:relative;box-shadow:0 0 20px rgba(57,217,122,.08),0 12px 40px rgba(0,0,0,.8);}
+/* Game view */
+.ss-game-view{position:absolute;inset:16% 0 0 0;}
+.ss-game-bg{position:absolute;inset:0;background:linear-gradient(135deg,#060e06 0%,#0a1a0a 40%,#061008 100%);}
+.ss-game-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 40% 60%,rgba(57,217,122,.08) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 75% 30%,rgba(57,217,122,.05) 0%,transparent 60%);}
+.ss-game-hud{position:absolute;top:6%;right:5%;text-align:right;z-index:5;}
+.ss-hud-fps{font-family:var(--ff-d);font-size:clamp(16px,2.5vw,22px);color:var(--green);line-height:1;text-shadow:0 0 10px rgba(57,217,122,.5);}
+.ss-hud-label{font-family:var(--ff-m);font-size:6px;letter-spacing:.1em;color:rgba(57,217,122,.5);text-transform:uppercase;}
+.ss-game-particles{position:absolute;inset:0;pointer-events:none;}
+.ss-particle{position:absolute;border-radius:50%;background:var(--green);animation:particleFly linear infinite;}
+@keyframes particleFly{0%{opacity:0;transform:translate(0,0) scale(0);}20%{opacity:.8;}80%{opacity:.3;}100%{opacity:0;transform:translate(var(--px),var(--py)) scale(.3);}}
+/* RT reflection */
+.ss-rt-floor{position:absolute;bottom:0;left:0;right:0;height:30%;overflow:hidden;}
+.ss-rt-reflect{position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(57,217,122,.04));border-top:.5px solid rgba(57,217,122,.1);}
+.ss-rt-badge{position:absolute;bottom:6px;left:6px;font-family:var(--ff-m);font-size:6px;letter-spacing:.12em;color:var(--green);border:.5px solid rgba(57,217,122,.3);padding:2px 5px;background:rgba(57,217,122,.06);}
+/* OBS bar */
+.ss-obs-bar{position:absolute;top:0;left:0;right:0;height:16%;background:rgba(0,0,0,.75);display:flex;align-items:center;gap:8%;padding:0 5%;border-bottom:.5px solid rgba(57,217,122,.1);z-index:10;}
+.ss-obs-rec{display:flex;align-items:center;gap:3px;font-family:var(--ff-m);font-size:6px;letter-spacing:.1em;color:rgba(255,60,60,.9);flex-shrink:0;}
+.ss-rec-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,60,60,.9);animation:livePulse 1.2s ease-in-out infinite;}
+.ss-obs-stream{font-family:var(--ff-m);font-size:6px;letter-spacing:.06em;color:var(--green);display:flex;align-items:center;gap:3px;flex-shrink:0;}
+.ss-stream-dot{width:4px;height:4px;border-radius:50%;background:var(--green);}
+.ss-obs-bitrate{font-family:var(--ff-m);font-size:6px;color:rgba(255,160,80,.8);flex-shrink:0;margin-left:auto;}
+.ss-obs-viewers{font-family:var(--ff-m);font-size:6px;color:var(--mute);flex-shrink:0;}
+/* Color overlay */
+.ss-color-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(57,217,122,.015),rgba(20,60,30,.03));mix-blend-mode:color;pointer-events:none;}
+.ss-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0px,transparent 1px,transparent 3px);pointer-events:none;}
+.ss-mon-neck{width:8%;height:8px;background:rgba(255,255,255,.05);}
+.ss-mon-base{width:32%;height:4px;background:rgba(255,255,255,.04);border-radius:2px;}
+/* Side monitor */
+.ss-monitor-side{flex:1;opacity:0;transform:translateY(16px);transition:opacity .7s ease .25s,transform .7s ease .25s;}
+.ss-monitor-side.vis{opacity:1;transform:none;}
+.ss-side-bezel{display:flex;flex-direction:column;align-items:center;}
+.ss-side-screen{width:100%;aspect-ratio:9/16;background:#020503;border:.5px solid rgba(57,217,122,.15);border-radius:2px 2px 0 0;overflow:hidden;position:relative;}
+.ss-chat-header{font-family:var(--ff-m);font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:var(--label);padding:6px 8px;border-bottom:.5px solid var(--line);background:rgba(0,0,0,.4);}
+.ss-chat-feed{padding:6px 8px;display:flex;flex-direction:column;gap:5px;overflow:hidden;}
+.ss-chat-msg{font-family:var(--ff-m);font-size:6.5px;letter-spacing:.03em;color:var(--mute);line-height:1.5;opacity:0;transition:opacity .4s ease;}
+.ss-chat-msg.vis{opacity:1;}
+.ss-chat-alert{color:var(--green)!important;}
+.ss-chatter{color:var(--green);margin-right:4px;}
+.ss-side-neck{width:10%;height:6px;background:rgba(255,255,255,.05);}
+.ss-side-base{width:40%;height:3px;background:rgba(255,255,255,.04);border-radius:2px;}
+/* Stats bar */
+.ss-stats{display:flex;gap:0;border-top:.5px solid var(--line);opacity:0;transition:opacity .6s ease;}
+.ss-stats.vis{opacity:1;}
+.ss-stat{flex:1;padding:10px 12px;border-right:.5px solid var(--line);}
+.ss-stat:last-child{border-right:none;}
+.ss-stat-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.1em;color:var(--label);margin-bottom:5px;text-transform:uppercase;}
+.ss-stat-bar-track{height:3px;background:rgba(57,217,122,.07);border-radius:2px;overflow:hidden;margin-bottom:4px;}
+.ss-stat-fill{height:100%;border-radius:2px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+.ss-gpu-fill{background:linear-gradient(90deg,var(--green2),var(--green));box-shadow:0 0 4px rgba(57,217,122,.4);}
+.ss-cpu-fill{background:rgba(200,168,74,.5);}
+.ss-vram-fill{background:linear-gradient(90deg,var(--green2),var(--green));box-shadow:0 0 4px rgba(57,217,122,.3);}
+.ss-temp-fill{background:rgba(200,168,74,.4);}
+.ss-stat-val{font-family:var(--ff-d);font-size:13px;letter-spacing:.03em;color:var(--mute);line-height:1;}
+.ss-val-green{color:var(--green)!important;}
+.ss-footer{padding:12px 16px;border-top:.5px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.ss-footer span{font-size:11px;opacity:.5;display:block;margin-top:3px;}
+
 </style>
 </head>
 <body>
@@ -495,7 +606,7 @@ section{position:relative;width:100%;overflow:hidden;}
       <div>
         <div class="bl-eye">Design Language · Weapon Code</div>
         <div class="bl-title-wrap">
-          <div class="bl-title">Trigger<br><span style="font-size:.5em;color:var(--label);"></span></div>
+          <div class="bl-title">Trigger</div>
           <div class="bl-title-tw" id="blTw">// WEAPON_ARMED</div>
         </div>
         <div class="bl-body">Every elite weapon demands a flawless switch.<br><br>This dual-fan array is the mechanical trigger of your system. It doesn't sit in the PCIe slot waiting for commands — it commands the airflow the microsecond data initializes.<br><br>With a 128-bit GDDR6 pipeline running on high alert, heat attempts to bottleneck your performance — but the Trigger design executes it without mercy.</div>
@@ -576,11 +687,101 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:400px;margin-bottom:14px;">
-        <span>[ FIERCER — CARD SIDE PROFILE ]<br>RTX 3050 · dual fan · top-light<br>Green ambient on heatsink fins ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:140px;">
-        <span>[ 6-PIN CONNECTOR ]<br>Power side detail · 115W ]</span>
+      <!-- ── SOLO BROADCAST SCENARIO ── -->
+      <div class="sb-wrap" id="sbWrap">
+        <div class="sb-header">
+          <span class="sb-eyebrow">Scenario — The Solo Broadcast</span>
+          <div class="sb-live"><div class="sb-live-dot"></div><span>LIVE</span></div>
+        </div>
+
+        <!-- Four parallel pipelines -->
+        <div class="sb-pipelines" id="sbPipes">
+
+          <div class="sb-pipe" data-i="0">
+            <div class="sb-pipe-left">
+              <div class="sb-pipe-icon">🎮</div>
+              <div class="sb-pipe-info">
+                <div class="sb-pipe-name">Game Render</div>
+                <div class="sb-pipe-tech">2304 Ampere Cores · Full budget</div>
+              </div>
+            </div>
+            <div class="sb-pipe-right">
+              <div class="sb-meter-track">
+                <div class="sb-meter-fill sb-fill-game" id="sbM0"></div>
+              </div>
+              <div class="sb-fps" id="sbFps">0 fps</div>
+            </div>
+          </div>
+
+          <div class="sb-pipe" data-i="1">
+            <div class="sb-pipe-left">
+              <div class="sb-pipe-icon">📡</div>
+              <div class="sb-pipe-info">
+                <div class="sb-pipe-name">OBS Stream Encode</div>
+                <div class="sb-pipe-tech">NVENC Hardware · Independent pipeline</div>
+              </div>
+            </div>
+            <div class="sb-pipe-right">
+              <div class="sb-meter-track">
+                <div class="sb-meter-fill sb-fill-obs" id="sbM1"></div>
+              </div>
+              <div class="sb-bitrate" id="sbBitrate">0 Mbps</div>
+            </div>
+          </div>
+
+          <div class="sb-pipe" data-i="2">
+            <div class="sb-pipe-left">
+              <div class="sb-pipe-icon">🎨</div>
+              <div class="sb-pipe-info">
+                <div class="sb-pipe-name">Real-time Color Grade</div>
+                <div class="sb-pipe-tech">GPU overlay · No CPU load</div>
+              </div>
+            </div>
+            <div class="sb-pipe-right">
+              <div class="sb-meter-track">
+                <div class="sb-meter-fill sb-fill-color" id="sbM2"></div>
+              </div>
+              <div class="sb-status-ok">Active</div>
+            </div>
+          </div>
+
+          <div class="sb-pipe" data-i="3">
+            <div class="sb-pipe-left">
+              <div class="sb-pipe-icon">💬</div>
+              <div class="sb-pipe-info">
+                <div class="sb-pipe-name">Chat · Alerts · Scenes</div>
+                <div class="sb-pipe-tech">CPU barely touched</div>
+              </div>
+            </div>
+            <div class="sb-pipe-right">
+              <div class="sb-meter-track">
+                <div class="sb-meter-fill sb-fill-chat" id="sbM3"></div>
+              </div>
+              <div class="sb-cpu-pct" id="sbCpu">CPU 0%</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- GPU load indicator -->
+        <div class="sb-gpu-row" id="sbGpuRow">
+          <div class="sb-gpu-label">
+            <span class="sb-gpu-title">RTX 3050 · 2304 Cores</span>
+            <span class="sb-gpu-sub">All four pipelines running. Zero competition.</span>
+          </div>
+          <div class="sb-gpu-ring" id="sbRing">
+            <svg viewBox="0 0 60 60" class="sb-ring-svg">
+              <circle cx="30" cy="30" r="24" class="sb-ring-bg"/>
+              <circle cx="30" cy="30" r="24" class="sb-ring-fill" id="sbRingFill"/>
+            </svg>
+            <div class="sb-ring-num" id="sbRingNum">0%</div>
+          </div>
+        </div>
+
+        <div class="sb-footer">
+          Nobody told you to get a second PC.<br>
+          <span>You didn't need one. Four jobs. One card. No negotiation.</span>
+        </div>
       </div>
     </div>
   </div>
@@ -705,8 +906,96 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:440px;">
-        <span>[ RELIABILITY ]<br>RTX 3050 in chassis · green cold glow<br>Dual fans lit from inside · darkness around ]</span>
+      <!-- ── STREAMER SETUP SCENE ── -->
+      <div class="ss-wrap" id="ssWrap">
+        <div class="ss-header">
+          <span class="ss-eyebrow">The Setup That Never Stops</span>
+          <div class="ss-online"><div class="ss-online-dot"></div><span>All Systems Online</span></div>
+        </div>
+
+        <!-- Main monitor -->
+        <div class="ss-desk">
+          <div class="ss-monitor-main" id="ssMonMain">
+            <div class="ss-mon-bezel">
+              <div class="ss-mon-screen">
+                <!-- Game viewport -->
+                <div class="ss-game-view">
+                  <div class="ss-game-bg"></div>
+                  <div class="ss-game-hud">
+                    <div class="ss-hud-fps" id="ssFps">144</div>
+                    <div class="ss-hud-label">FPS</div>
+                  </div>
+                  <div class="ss-game-particles" id="ssParticles"></div>
+                  <!-- RT reflection floor -->
+                  <div class="ss-rt-floor">
+                    <div class="ss-rt-reflect"></div>
+                    <div class="ss-rt-badge">RT ON</div>
+                  </div>
+                </div>
+                <!-- OBS overlay top bar -->
+                <div class="ss-obs-bar">
+                  <div class="ss-obs-rec"><span class="ss-rec-dot"></span>REC</div>
+                  <div class="ss-obs-stream"><span class="ss-stream-dot"></span>LIVE · 1080p60</div>
+                  <div class="ss-obs-bitrate" id="ssBit">6.2 Mbps</div>
+                  <div class="ss-obs-viewers">👥 <span id="ssViewers">1,204</span></div>
+                </div>
+                <!-- Color grade LUT overlay -->
+                <div class="ss-color-overlay"></div>
+                <!-- Scanlines -->
+                <div class="ss-scanlines"></div>
+              </div>
+              <div class="ss-mon-neck"></div>
+              <div class="ss-mon-base"></div>
+            </div>
+          </div>
+
+          <!-- Side monitor — chat -->
+          <div class="ss-monitor-side" id="ssMonSide">
+            <div class="ss-side-bezel">
+              <div class="ss-side-screen">
+                <div class="ss-chat-header">CHAT</div>
+                <div class="ss-chat-feed" id="ssChatFeed">
+                  <div class="ss-chat-msg"><span class="ss-chatter">StreamerFan99</span> PogChamp PogChamp</div>
+                  <div class="ss-chat-msg"><span class="ss-chatter">NightOwl_KR</span> let's gooo</div>
+                  <div class="ss-chat-msg ss-chat-alert"><span class="ss-chatter">⭐ xCybr</span> just subscribed!</div>
+                  <div class="ss-chat-msg"><span class="ss-chatter">TechHead</span> what GPU is that?</div>
+                  <div class="ss-chat-msg"><span class="ss-chatter">ProViewer</span> RTX 3050 no lag</div>
+                </div>
+              </div>
+              <div class="ss-side-neck"></div>
+              <div class="ss-side-base"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- System stats bar -->
+        <div class="ss-stats" id="ssStats">
+          <div class="ss-stat">
+            <div class="ss-stat-label">GPU</div>
+            <div class="ss-stat-bar-track"><div class="ss-stat-fill ss-gpu-fill" id="ssGpuFill"></div></div>
+            <div class="ss-stat-val ss-val-green" id="ssGpuVal">0%</div>
+          </div>
+          <div class="ss-stat">
+            <div class="ss-stat-label">CPU</div>
+            <div class="ss-stat-bar-track"><div class="ss-stat-fill ss-cpu-fill" id="ssCpuFill"></div></div>
+            <div class="ss-stat-val" id="ssCpuVal">0%</div>
+          </div>
+          <div class="ss-stat">
+            <div class="ss-stat-label">VRAM</div>
+            <div class="ss-stat-bar-track"><div class="ss-stat-fill ss-vram-fill" id="ssVramFill"></div></div>
+            <div class="ss-stat-val ss-val-green" id="ssVramVal">0 GB</div>
+          </div>
+          <div class="ss-stat">
+            <div class="ss-stat-label">TEMP</div>
+            <div class="ss-stat-bar-track"><div class="ss-stat-fill ss-temp-fill" id="ssTempFill"></div></div>
+            <div class="ss-stat-val" id="ssTempVal">0°C</div>
+          </div>
+        </div>
+
+        <div class="ss-footer">
+          171 years of rated endurance. Built for the longest streams.<br>
+          <span>不掉幀，不過熱，不需要副機。這才是直播該有的準備。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1206,6 +1495,162 @@ document.fonts.ready.then(() => {
     }
   },{threshold:.1});
   obs.observe(tbl);
+})();
+
+/* ══ SOLO BROADCAST ══ */
+(function(){
+  var wrap = document.getElementById('sbWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var pipes = wrap.querySelectorAll('.sb-pipe');
+    pipes.forEach(function(p, i){
+      setTimeout(function(){ p.classList.add('vis'); }, i * 200);
+    });
+    var totalDelay = pipes.length * 200;
+    // Animate meters
+    setTimeout(function(){
+      var m0 = document.getElementById('sbM0');
+      var m1 = document.getElementById('sbM1');
+      var m2 = document.getElementById('sbM2');
+      var m3 = document.getElementById('sbM3');
+      if(m0) m0.style.width = '82%';
+      if(m1) m1.style.width = '68%';
+      if(m2) m2.style.width = '55%';
+      if(m3) m3.style.width = '22%';
+    }, totalDelay + 100);
+    // FPS counter
+    setTimeout(function(){
+      var el = document.getElementById('sbFps');
+      if(!el) return;
+      var dur = 1000, target = 144, t0 = performance.now();
+      (function tick(now){
+        var p = Math.min((now-t0)/dur, 1);
+        var v = 1 - Math.pow(1-p, 3);
+        el.textContent = Math.round(v*target) + ' fps';
+        if(p < 1) requestAnimationFrame(tick);
+        else el.textContent = '144 fps';
+      })(performance.now());
+    }, totalDelay + 200);
+    // Bitrate counter
+    setTimeout(function(){
+      var el = document.getElementById('sbBitrate');
+      if(!el) return;
+      var dur = 800, target = 62, t0 = performance.now();
+      (function tick(now){
+        var p = Math.min((now-t0)/dur, 1);
+        var v = 1 - Math.pow(1-p, 3);
+        el.textContent = (v*target/10).toFixed(1) + ' Mbps';
+        if(p < 1) requestAnimationFrame(tick);
+        else el.textContent = '6.2 Mbps';
+      })(performance.now());
+    }, totalDelay + 300);
+    // CPU %
+    setTimeout(function(){
+      var el = document.getElementById('sbCpu');
+      if(!el) return;
+      var dur = 600, target = 18, t0 = performance.now();
+      (function tick(now){
+        var p = Math.min((now-t0)/dur, 1);
+        var v = 1 - Math.pow(1-p, 3);
+        el.textContent = 'CPU ' + Math.round(v*target) + '%';
+        if(p < 1) requestAnimationFrame(tick);
+        else el.textContent = 'CPU 18%';
+      })(performance.now());
+    }, totalDelay + 300);
+    // GPU ring
+    setTimeout(function(){
+      var row = document.getElementById('sbGpuRow');
+      var ring = document.getElementById('sbRingFill');
+      var num = document.getElementById('sbRingNum');
+      if(row) row.classList.add('vis');
+      // circumference 150.8, target 89%
+      setTimeout(function(){
+        if(ring) ring.style.strokeDashoffset = 150.8 * (1 - 0.89);
+        if(num){
+          var dur = 1400, t0 = performance.now();
+          (function tick(now){
+            var p = Math.min((now-t0)/dur, 1);
+            var v = 1 - Math.pow(1-p, 3);
+            num.textContent = Math.round(v*89) + '%';
+            if(p < 1) requestAnimationFrame(tick);
+            else num.textContent = '89%';
+          })(performance.now());
+        }
+      }, 200);
+    }, totalDelay + 600);
+  }, {threshold: 0.2}).observe(wrap);
+})();
+
+/* ══ STREAMER SETUP SCENE ══ */
+(function(){
+  var wrap = document.getElementById('ssWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var monMain = document.getElementById('ssMonMain');
+    var monSide = document.getElementById('ssMonSide');
+    // Monitors slide in
+    setTimeout(function(){ if(monMain) monMain.classList.add('vis'); }, 100);
+    setTimeout(function(){ if(monSide) monSide.classList.add('vis'); }, 350);
+    // Chat messages appear
+    var msgs = wrap.querySelectorAll('.ss-chat-msg');
+    msgs.forEach(function(m, i){
+      setTimeout(function(){ m.classList.add('vis'); }, 600 + i * 280);
+    });
+    // Add particles to game view
+    setTimeout(function(){
+      var pWrap = document.getElementById('ssParticles');
+      if(!pWrap) return;
+      for(var i = 0; i < 8; i++){
+        var p = document.createElement('div');
+        p.className = 'ss-particle';
+        var size = 2 + Math.random() * 3;
+        var dur = 1.5 + Math.random() * 2;
+        var delay = Math.random() * 2;
+        var px = (Math.random() - 0.5) * 80 + 'px';
+        var py = (Math.random() - 0.5) * 60 + 'px';
+        p.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;--px:'+px+';--py:'+py+';animation-duration:'+dur+'s;animation-delay:'+delay+'s;opacity:0.6;';
+        pWrap.appendChild(p);
+      }
+    }, 300);
+    // Stats bars animate
+    setTimeout(function(){
+      var stats = document.getElementById('ssStats');
+      if(stats) stats.classList.add('vis');
+      setTimeout(function(){
+        var gf = document.getElementById('ssGpuFill');
+        var cf = document.getElementById('ssCpuFill');
+        var vf = document.getElementById('ssVramFill');
+        var tf = document.getElementById('ssTempFill');
+        if(gf) gf.style.width = '89%';
+        if(cf) cf.style.width = '22%';
+        if(vf) vf.style.width = '72%';
+        if(tf) tf.style.width = '52%';
+        // Animate values
+        function countUp(elId, target, suffix, dur){
+          var el = document.getElementById(elId);
+          if(!el) return;
+          var t0 = performance.now();
+          (function tick(now){
+            var p = Math.min((now-t0)/dur, 1);
+            var v = 1 - Math.pow(1-p, 3);
+            el.textContent = (typeof target === 'number' ? Math.round(v*target) : (v*target).toFixed(1)) + suffix;
+            if(p < 1) requestAnimationFrame(tick);
+            else el.textContent = target + suffix;
+          })(performance.now());
+        }
+        countUp('ssGpuVal', 89, '%', 1200);
+        countUp('ssCpuVal', 22, '%', 800);
+        countUp('ssVramVal', 5.8, ' GB', 1000);
+        countUp('ssTempVal', 68, '°C', 900);
+      }, 200);
+    }, 900);
+  }, {threshold: 0.2}).observe(wrap);
 })();
 </script>
 </body>
