@@ -244,6 +244,42 @@ section{position:relative;width:100%;overflow:hidden;}
 /* stat badges */
 .rel-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;}
 
+/* ── WHILE IT RUNS PANEL ── */
+.wir-panel{background:rgba(6,8,5,.95);border:.5px solid rgba(74,92,42,.22);overflow:hidden;}
+.wir-header{padding:18px 20px 14px;border-bottom:.5px solid rgba(74,92,42,.12);}
+.wir-eyebrow{font-family:var(--ff-d);font-size:clamp(22px,3vw,32px);letter-spacing:.06em;color:var(--white);display:block;line-height:1;}
+.wir-sub{font-family:var(--ff-m);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);display:block;margin-top:6px;}
+
+/* Rows */
+.wir-rows{display:flex;flex-direction:column;}
+.wir-row{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:.5px solid rgba(74,92,42,.1);opacity:0;transform:translateX(-12px);transition:opacity .5s ease,transform .5s ease,background .25s;}
+.wir-row.visible{opacity:1;transform:none;}
+.wir-row:hover{background:rgba(74,92,42,.04);}
+.wir-row:last-child{border-bottom:none;}
+.wir-left{display:flex;align-items:center;gap:12px;}
+.wir-icon{font-size:18px;flex-shrink:0;opacity:.7;}
+.wir-name{font-family:var(--ff-b);font-size:15px;font-weight:600;color:var(--mute);letter-spacing:.02em;margin-bottom:2px;}
+.wir-cycle{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;color:var(--label);}
+.wir-right{text-align:right;flex-shrink:0;}
+.wir-count{font-family:var(--ff-d);font-size:clamp(28px,4vw,48px);letter-spacing:.02em;color:rgba(160,155,120,.5);line-height:1;}
+.wir-unit{font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);margin-top:2px;}
+
+/* GT730 highlight row */
+.wir-row-gpu{background:rgba(74,92,42,.06);border-top:.5px solid rgba(74,92,42,.2)!important;border-bottom:none!important;}
+.wir-row-gpu:hover{background:rgba(74,92,42,.1);}
+.wir-right-gpu .wir-count{color:var(--olive);text-shadow:0 0 20px rgba(74,92,42,.4);}
+.wir-zero{position:relative;}
+.wir-zero::after{content:'Replaced: 0';position:absolute;bottom:-14px;right:0;font-family:var(--ff-m);font-size:7px;letter-spacing:.12em;color:var(--olive);opacity:.7;white-space:nowrap;text-transform:uppercase;}
+
+/* Bar track behind count */
+.wir-bar-wrap{position:absolute;bottom:0;left:0;right:0;height:1px;background:rgba(74,92,42,.08);}
+.wir-bar-fill{height:100%;width:0;background:rgba(160,155,120,.2);transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+.wir-row-gpu .wir-bar-fill{background:var(--olive);box-shadow:0 0 6px rgba(74,92,42,.4);}
+
+/* Footer */
+.wir-footer{padding:16px 20px;font-family:var(--ff-b);font-size:14px;font-weight:400;color:var(--mute);line-height:1.75;border-top:.5px solid rgba(74,92,42,.12);font-style:italic;}
+.wir-footer span{font-size:12px;opacity:.6;display:block;margin-top:4px;}
+
 /* ── S05 PACKAGING ── */
 #s05{background:var(--bg2);padding:100px 6%;}
 .pkg-in{max-width:1100px;margin:0 auto;}
@@ -406,7 +442,7 @@ section{position:relative;width:100%;overflow:hidden;}
     <div class="bl-grid fi">
       <div>
         <div class="bl-eye">Design Language</div>
-        <div class="bl-title">Void<br>Sentinel<br><span style="font-size:.5em;color:var(--label);">虛空哨兵</span></div>
+        <div class="bl-title">Void<br>Sentinel<br><span style="font-size:.5em;color:var(--label);"></span></div>
         <div class="bl-body">Not every sentinel announces itself.<br>Some just stand there.<br>And when you need them, they're already on.</div>
         <div class="bl-quote">This card doesn't perform for you.<br>It works for you.</div>
       </div>
@@ -587,8 +623,86 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:420px;">
-        <span>[ RELIABILITY VISUAL ]<br>GT730 installed in industrial chassis<br>Single cable — no external power<br>Long-exposure still ]</span>
+      <div class="wir-panel" id="wirPanel">
+        <div class="wir-header">
+          <span class="wir-eyebrow">While it runs</span>
+          <span class="wir-sub">171-year theoretical lifespan · replacements per unit</span>
+        </div>
+
+        <div class="wir-rows" id="wirRows">
+          <div class="wir-row" data-count="171">
+            <div class="wir-left">
+              <span class="wir-icon">💡</span>
+              <div class="wir-info">
+                <div class="wir-name">Office Fluorescent Tube</div>
+                <div class="wir-cycle">Replaced every ~1 year</div>
+              </div>
+            </div>
+            <div class="wir-right">
+              <div class="wir-count" id="wc0">0</div>
+              <div class="wir-unit">times</div>
+            </div>
+          </div>
+          <div class="wir-row" data-count="85">
+            <div class="wir-left">
+              <span class="wir-icon">🖱️</span>
+              <div class="wir-info">
+                <div class="wir-name">Mouse</div>
+                <div class="wir-cycle">Replaced every ~2 years</div>
+              </div>
+            </div>
+            <div class="wir-right">
+              <div class="wir-count" id="wc1">0</div>
+              <div class="wir-unit">times</div>
+            </div>
+          </div>
+          <div class="wir-row" data-count="57">
+            <div class="wir-left">
+              <span class="wir-icon">⌨️</span>
+              <div class="wir-info">
+                <div class="wir-name">Keyboard</div>
+                <div class="wir-cycle">Replaced every ~3 years</div>
+              </div>
+            </div>
+            <div class="wir-right">
+              <div class="wir-count" id="wc2">0</div>
+              <div class="wir-unit">times</div>
+            </div>
+          </div>
+          <div class="wir-row" data-count="34">
+            <div class="wir-left">
+              <span class="wir-icon">🖨️</span>
+              <div class="wir-info">
+                <div class="wir-name">Printer</div>
+                <div class="wir-cycle">Replaced every ~5 years</div>
+              </div>
+            </div>
+            <div class="wir-right">
+              <div class="wir-count" id="wc3">0</div>
+              <div class="wir-unit">times</div>
+            </div>
+          </div>
+
+          <!-- GT730 — highlight row -->
+          <div class="wir-row wir-row-gpu">
+            <div class="wir-left">
+              <span class="wir-icon">✅</span>
+              <div class="wir-info">
+                <div class="wir-name" style="color:var(--white);">GT730</div>
+                <div class="wir-cycle" style="color:var(--olive);">1,500,000 hr MTBF</div>
+              </div>
+            </div>
+            <div class="wir-right wir-right-gpu">
+              <div class="wir-count wir-zero" id="wc4">0</div>
+              <div class="wir-unit" style="color:var(--olive);">times</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wir-footer">
+          In the time the GT730 is rated to run, you'll replace everything else in this room — several times over.<br>
+          <span>在 GT730 的理論壽命裡，這個房間裡的其他東西，你會換上好幾輪。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -930,6 +1044,56 @@ document.fonts.ready.then(()=>{
       });
     }
   },{threshold:.4}).observe(wrap);
+})();
+
+/* ── WHILE IT RUNS ── */
+(function(){
+  const panel=document.getElementById('wirPanel');
+  if(!panel)return;
+
+  // counts: [171, 85, 57, 34, 0]
+  const rows=panel.querySelectorAll('.wir-row');
+  const counts=[171,85,57,34,0];
+  const maxCount=171;
+
+  let fired=false;
+  new IntersectionObserver(es=>{
+    if(!es[0].isIntersecting||fired)return;
+    fired=true;
+
+    rows.forEach((row,i)=>{
+      const delay=i*160;
+      // slide in
+      setTimeout(()=>{row.classList.add('visible');},delay);
+
+      // count up (skip last row — GT730 stays 0)
+      if(i<4){
+        const target=counts[i];
+        setTimeout(()=>{
+          const el=document.getElementById('wc'+i);
+          if(!el)return;
+          const dur=900+i*80;
+          const t0=performance.now();
+          (function tick(now){
+            const p=Math.min((now-t0)/dur,1);
+            const v=1-Math.pow(1-p,4);
+            el.textContent=Math.round(v*target);
+            if(p<1)requestAnimationFrame(tick);
+            else el.textContent=target;
+          })(performance.now());
+        },delay+200);
+      } else {
+        // GT730 row: slide in last, stays at 0, just pulse the glow
+        setTimeout(()=>{
+          const el=document.getElementById('wc4');
+          if(el){
+            el.style.transition='text-shadow .6s ease';
+            el.style.textShadow='0 0 30px rgba(74,92,42,.7)';
+          }
+        },delay+400);
+      }
+    });
+  },{threshold:.2}).observe(panel);
 })();
 </script>
 </body>
