@@ -401,6 +401,112 @@ section{position:relative;width:100%;overflow:hidden;}
   .why-cards{grid-template-columns:1fr;}
 }
 @media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}#ignitionOverlay{display:none;}}
+/* ══ IGNITION GAMING SCENARIO ══ */
+.ig-wrap{width:100%;background:rgba(10,6,2,.98);border:.5px solid var(--border);overflow:hidden;}
+.ig-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:.5px solid var(--line);}
+.ig-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.ig-status{font-family:var(--ff-m);font-size:8px;letter-spacing:.14em;color:var(--orange);border:.5px solid rgba(232,96,48,.3);padding:3px 8px;transition:all .3s;}
+.ig-status.live{color:var(--ember);border-color:var(--ember);box-shadow:0 0 8px rgba(240,144,32,.3);}
+/* Viewport */
+.ig-viewport{position:relative;width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;}
+.ig-black{position:absolute;inset:0;background:#000;z-index:10;transition:opacity .4s ease;}
+.ig-black.gone{opacity:0;pointer-events:none;}
+/* Canvas */
+.ig-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:8;pointer-events:none;}
+/* Spark */
+.ig-spark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:0;height:0;background:var(--orange);border-radius:50%;z-index:9;transition:none;}
+@keyframes sparkBurst{0%{width:0;height:0;opacity:1;box-shadow:0 0 0 rgba(232,96,48,0);}40%{width:120px;height:120px;opacity:.9;box-shadow:0 0 60px rgba(232,96,48,.8),0 0 120px rgba(240,144,32,.4);}100%{width:300px;height:300px;opacity:0;box-shadow:none;}}
+.ig-spark.fire{animation:sparkBurst .5s ease-out forwards;}
+/* Game world */
+.ig-world{position:absolute;inset:0;opacity:0;transition:opacity .3s ease .15s;z-index:5;}
+.ig-world.vis{opacity:1;}
+.ig-world-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0c08 0%,#121808 40%,#0c1006 100%);}
+.ig-world-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 45% 55%,rgba(232,96,48,.06) 0%,transparent 70%),radial-gradient(ellipse 40% 35% at 80% 25%,rgba(240,144,32,.05) 0%,transparent 60%);}
+/* RT shadows */
+.ig-rt-shadow{position:absolute;border-radius:2px;opacity:.6;}
+.sh1{width:30%;height:50%;bottom:0;left:15%;background:linear-gradient(180deg,transparent,rgba(0,0,0,.7));transform:skewX(-8deg);}
+.sh2{width:20%;height:40%;bottom:0;left:55%;background:linear-gradient(180deg,transparent,rgba(0,0,0,.6));transform:skewX(5deg);}
+.sh3{width:25%;height:35%;bottom:0;right:5%;background:linear-gradient(180deg,transparent,rgba(0,0,0,.5));transform:skewX(-3deg);}
+/* Crosshair */
+.ig-crosshair{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:32px;height:32px;opacity:.8;}
+.ig-ch-h{position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(232,96,48,.8);transform:translateY(-50%);}
+.ig-ch-v{position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(232,96,48,.8);transform:translateX(-50%);}
+.ig-ch-ring{position:absolute;inset:6px;border:1px solid rgba(232,96,48,.6);border-radius:50%;}
+/* RT + DLSS badges */
+.ig-rt-badge,.ig-dlss-badge{position:absolute;font-family:var(--ff-m);font-size:6px;letter-spacing:.12em;padding:2px 5px;border:.5px solid transparent;opacity:0;transition:opacity .4s ease;}
+.ig-rt-badge{top:8%;left:5%;color:var(--orange);border-color:rgba(232,96,48,.4);background:rgba(232,96,48,.08);}
+.ig-dlss-badge{top:8%;left:18%;color:var(--ember);border-color:rgba(240,144,32,.3);background:rgba(240,144,32,.06);}
+.ig-rt-badge.vis,.ig-dlss-badge.vis{opacity:1;}
+/* HUD */
+.ig-hud{position:absolute;inset:0;pointer-events:none;z-index:6;opacity:0;transition:opacity .5s ease;}
+.ig-hud.vis{opacity:1;}
+.ig-fps-block{position:absolute;top:8%;right:5%;text-align:right;}
+.ig-fps-num{font-family:var(--ff-d);font-size:clamp(22px,3.5vw,36px);letter-spacing:.03em;color:var(--ember);line-height:1;text-shadow:0 0 14px rgba(240,144,32,.5);}
+.ig-fps-lbl{font-family:var(--ff-m);font-size:6px;letter-spacing:.12em;color:rgba(240,144,32,.5);text-transform:uppercase;}
+.ig-hud-right{position:absolute;bottom:8%;right:5%;text-align:right;display:flex;flex-direction:column;gap:3px;}
+.ig-ping,.ig-res{font-family:var(--ff-m);font-size:7px;letter-spacing:.08em;color:var(--label);}
+/* Scanline */
+.ig-scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0px,transparent 1px,transparent 3px);pointer-events:none;z-index:7;}
+/* Trigger button */
+.ig-trigger-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-top:.5px solid var(--line);}
+.ig-trigger-btn{display:flex;align-items:center;gap:7px;font-family:var(--ff-b);font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--orange);border:.5px solid rgba(232,96,48,.4);padding:8px 14px;cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.ig-trigger-btn:hover{background:rgba(232,96,48,.08);border-color:var(--orange);box-shadow:0 0 16px rgba(232,96,48,.2);}
+.ig-trigger-btn.fired{color:var(--ember);border-color:var(--ember);pointer-events:none;}
+.ig-trigger-icon{font-size:10px;}
+.ig-trigger-note{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.06em;color:var(--label);}
+.ig-footer{padding:11px 14px;border-top:.5px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.ig-footer span{font-size:11px;opacity:.5;display:block;margin-top:2px;}
+
+/* ══ INTERNET HISTORY NODE MAP ══ */
+.net-wrap{margin:20px 0;}
+.net-title-row{margin-bottom:10px;}
+.net-lbl-human{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);}
+.net-canvas{width:100%;height:220px;display:block;border:.5px solid var(--border);background:rgba(10,6,2,.9);}
+.net-nodes-legend{display:flex;flex-direction:column;gap:5px;margin-top:10px;}
+.net-leg-item{display:flex;align-items:center;gap:7px;font-family:var(--ff-m);font-size:7.5px;letter-spacing:.04em;color:var(--label);}
+.net-leg-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.net-leg-human{background:rgba(200,168,74,.6);}
+.net-leg-rtx{background:var(--orange);box-shadow:0 0 5px rgba(232,96,48,.5);}
+.net-compare{font-family:var(--ff-m);font-size:8.5px;letter-spacing:.04em;color:var(--label);line-height:1.8;margin-top:12px;}
+.net-compare strong{color:var(--orange);}
+.net-compare span{opacity:.6;display:block;margin-top:4px;font-size:7.5px;}
+
+/* ══ IGNITER STATUS PANEL ══ */
+.is-wrap{width:100%;background:rgba(10,6,2,.98);border:.5px solid var(--border);overflow:hidden;}
+.is-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:.5px solid var(--line);}
+.is-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.is-armed{display:flex;align-items:center;gap:5px;font-family:var(--ff-m);font-size:8px;letter-spacing:.12em;color:var(--orange);}
+.is-armed-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:armedPulse 1.4s ease-in-out infinite;}
+@keyframes armedPulse{0%,100%{opacity:.4;box-shadow:none;}50%{opacity:1;box-shadow:0 0 8px rgba(232,96,48,.7);}}
+/* Countdown */
+.is-countdown{padding:18px 14px 14px;border-bottom:.5px solid var(--line);}
+.is-cd-label{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--label);margin-bottom:6px;}
+.is-cd-num{font-family:var(--ff-d);font-size:clamp(32px,5vw,58px);letter-spacing:.03em;color:var(--orange);line-height:1;text-shadow:0 0 24px rgba(232,96,48,.3);}
+.is-cd-sub{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:var(--label);margin-top:5px;}
+/* Vitals */
+.is-vitals{display:flex;flex-direction:column;gap:0;border-bottom:.5px solid var(--line);}
+.is-vital{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:.5px solid var(--line);opacity:0;transition:opacity .5s ease;}
+.is-vital:last-child{border-bottom:none;}
+.is-vital.vis{opacity:1;}
+.is-vital-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;color:var(--label);width:80px;flex-shrink:0;}
+.is-vital-bar{flex:1;height:4px;background:rgba(232,96,48,.07);border-radius:2px;overflow:hidden;}
+.is-vbar-fill{height:100%;border-radius:2px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+.is-vbar-clock{background:linear-gradient(90deg,var(--orange2),var(--orange));box-shadow:0 0 6px rgba(232,96,48,.4);}
+.is-vbar-temp{background:linear-gradient(90deg,rgba(200,168,74,.4),rgba(200,168,74,.7));}
+.is-vbar-power{background:linear-gradient(90deg,var(--orange2),var(--ember));box-shadow:0 0 6px rgba(240,144,32,.3);}
+.is-vbar-fan{background:rgba(232,96,48,.3);}
+.is-vital-val{font-family:var(--ff-d);font-size:13px;letter-spacing:.03em;color:var(--mute);width:60px;text-align:right;flex-shrink:0;}
+.is-val-orange{color:var(--orange)!important;}
+/* Confirm rows */
+.is-confirm{display:flex;flex-direction:column;gap:0;border-bottom:.5px solid var(--line);}
+.is-confirm-row{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:.5px solid var(--line);font-family:var(--ff-m);font-size:8px;letter-spacing:.04em;color:var(--label);opacity:0;transition:opacity .5s ease;}
+.is-confirm-row:last-child{border-bottom:none;}
+.is-confirm-row.vis{opacity:1;}
+.is-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.is-dot.ok{background:rgba(100,200,80,.7);box-shadow:0 0 5px rgba(100,200,80,.4);}
+.is-footer{padding:11px 14px;font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.is-footer span{font-size:11px;opacity:.5;display:block;margin-top:2px;}
+
 </style>
 </head>
 <body>
@@ -551,7 +657,7 @@ section{position:relative;width:100%;overflow:hidden;}
       <div>
         <div class="bl-eye">Design Language · Weapon Code</div>
         <div class="bl-title-wrap">
-          <div class="bl-title">Igniter<br><span style="font-size:.5em;color:var(--label);"></span></div>
+          <div class="bl-title">Igniter</div>
           <div class="bl-title-tw" id="blTw">// DETONATION_ARMED</div>
         </div>
         <div class="bl-body">When the spark is struck, the response must be a firestorm.<br><br>The exact microsecond the massive 256-Bit bus detonates 5888 streaming processors into full GA104 deployment, a monumental thermal spike is born. The Igniter intercepts it instantly.<br><br>With 220W continuous power capacity, heat builds with terrifying velocity — but this aerodynamic defense shroud expels the thermal load before it can touch the silicon layer.</div>
@@ -635,11 +741,67 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:400px;margin-bottom:14px;">
-        <span>[ FIERCER — MATTE BLACK PCB ]<br>RTX 3070 · 256-Bit bus architecture<br>Harsh industrial orange glow · geometric density ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:140px;">
-        <span>[ 8-PIN · 220W ]<br>Power connector · heavy-duty side detail ]</span>
+      <!-- ── IGNITION GAMING SCENARIO ── -->
+      <div class="ig-wrap" id="igWrap">
+        <div class="ig-header">
+          <span class="ig-eyebrow">Ignition Sequence</span>
+          <div class="ig-status" id="igStatus">STANDBY</div>
+        </div>
+
+        <!-- Main game viewport -->
+        <div class="ig-viewport" id="igViewport">
+          <!-- Black screen before ignition -->
+          <div class="ig-black" id="igBlack"></div>
+          <!-- Spark at center -->
+          <div class="ig-spark" id="igSpark"></div>
+          <!-- Explosion particles canvas -->
+          <canvas class="ig-canvas" id="igCanvas"></canvas>
+          <!-- Game world revealed after explosion -->
+          <div class="ig-world" id="igWorld">
+            <div class="ig-world-bg"></div>
+            <!-- RT shadows -->
+            <div class="ig-rt-shadow sh1"></div>
+            <div class="ig-rt-shadow sh2"></div>
+            <div class="ig-rt-shadow sh3"></div>
+            <!-- Crosshair -->
+            <div class="ig-crosshair" id="igCrosshair">
+              <div class="ig-ch-h"></div>
+              <div class="ig-ch-v"></div>
+              <div class="ig-ch-ring"></div>
+            </div>
+            <!-- RT badge -->
+            <div class="ig-rt-badge" id="igRtBadge">RT ON</div>
+            <!-- DLSS badge -->
+            <div class="ig-dlss-badge" id="igDlssBadge">DLSS</div>
+          </div>
+          <!-- HUD overlay — appears after ignition -->
+          <div class="ig-hud" id="igHud">
+            <div class="ig-fps-block">
+              <div class="ig-fps-num" id="igFps">0</div>
+              <div class="ig-fps-lbl">FPS</div>
+            </div>
+            <div class="ig-hud-right">
+              <div class="ig-ping">12ms</div>
+              <div class="ig-res">1440p</div>
+            </div>
+          </div>
+          <!-- Scan line -->
+          <div class="ig-scanline"></div>
+        </div>
+
+        <!-- Ignition trigger button -->
+        <div class="ig-trigger-row">
+          <div class="ig-trigger-btn" id="igTrigger">
+            <div class="ig-trigger-icon">▶</div>
+            <span>Pull the Pin</span>
+          </div>
+          <div class="ig-trigger-note">5888 Vectors · GA104 · 220W</div>
+        </div>
+
+        <div class="ig-footer">
+          The spark doesn't wait for permission.<br>
+          <span>引信一觸，爆炸已經在路上了。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -738,29 +900,27 @@ section{position:relative;width:100%;overflow:hidden;}
         </svg>
         <div style="font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;color:var(--label);margin-top:4px;text-transform:uppercase;">Core Architecture Life Expectancy</div>
       </div>
-      <div class="rail-tl fi fi-d2" id="railWrap">
-        <div class="rail-section-lbl human">Modern Steel &amp; Rail History — 171 Years</div>
-        <div class="rail-row">
-          <div class="rail-track human-track" style="width:100%;">
-            <div class="rail-fill human-fill" id="railFill1"></div>
-            <div class="rail-loco" id="railLoco1" style="left:0;">🚂</div>
-            <div class="rail-dot human-dot" style="left:0%;"><span class="rail-label human-lbl">1855<br>Steam Era</span></div>
-            <div class="rail-dot human-dot" style="left:52%;"><span class="rail-label human-lbl">1950<br>Electric Rail</span></div>
-            <div class="rail-dot human-dot" style="left:100%;"><span class="rail-label human-lbl right-align">2026<br>Today</span></div>
+      <!-- Internet History Node Map -->
+      <div class="net-wrap fi fi-d2" id="netWrap">
+        <div class="net-title-row">
+          <span class="net-lbl-human">Internet History — 57 Years</span>
+        </div>
+        <!-- Canvas for node network -->
+        <canvas id="netCanvas" class="net-canvas"></canvas>
+        <div class="net-nodes-legend">
+          <div class="net-leg-item">
+            <div class="net-leg-dot net-leg-human"></div>
+            <span>1969 → 2026 · 57 years · Internet history</span>
+          </div>
+          <div class="net-leg-item">
+            <div class="net-leg-dot net-leg-rtx"></div>
+            <span>2026 → 2197 · 171 years · RTX 3070 (theory)</span>
           </div>
         </div>
-        <div class="rail-divider"></div>
-        <div class="rail-section-lbl gpu">RTX 3070 Theoretical Lifespan — 171 Years</div>
-        <div class="rail-row">
-          <div class="rail-track" style="width:100%;">
-            <div class="rail-fill gpu-fill" id="railFill2"></div>
-            <div class="rail-dot gpu-dot install" style="left:0%;"><span class="rail-label gpu-lbl install-lbl">2026<br>You install</span></div>
-            <div class="rail-dot gpu-dot" style="left:44%;"><span class="rail-label gpu-lbl">2101<br>22nd Century</span></div>
-            <div class="rail-dot gpu-dot" style="left:100%;"><span class="rail-label gpu-lbl right-align">2197<br>RTX 3070 (theory)</span></div>
-          </div>
+        <div class="net-compare">
+          The entire history of the internet — from four connected nodes to seven billion users — fits inside the RTX 3070's rated lifespan. <strong>Twice.</strong><br>
+          <span>從 ARPANET 的四個節點，到今天七十億人連線的世界。這段歷史，在 RTX 3070 的理論壽命裡，可以跑兩遍。</span>
         </div>
-        <div class="rail-compare-note">The RTX 3070 outlasts the entire history of modern heavy steel and rail — from the first steam locomotive to the workload you're running tonight. <strong>171 years. Exactly matched.</strong></div>
-        <p style="font-size:15px;color:var(--mute);line-height:1.8;margin-top:20px;"><em style="color:var(--white);">Built to lock into your PCIe slot and outlast the lifecycle of every component around it.</em></p>
       </div>
       <div class="rel-badges fi fi-d3">
         <div class="stat-badge">
@@ -774,8 +934,56 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:440px;">
-        <span>[ RELIABILITY ]<br>RTX 3070 in chassis · orange fire glow<br>Dual heavy fans in darkness · 220W heat ]</span>
+      <!-- ── IGNITER STATUS PANEL ── -->
+      <div class="is-wrap" id="isWrap">
+        <div class="is-header">
+          <span class="is-eyebrow">Igniter · System Status</span>
+          <div class="is-armed"><div class="is-armed-dot"></div>ARMED</div>
+        </div>
+
+        <!-- MTBF countdown -->
+        <div class="is-countdown">
+          <div class="is-cd-label">Hours Until Theoretical Failure</div>
+          <div class="is-cd-num" id="isCdNum">1,500,000</div>
+          <div class="is-cd-sub">counting down at 1 hr / hr · estimated depletion: 2197</div>
+        </div>
+
+        <!-- System vitals -->
+        <div class="is-vitals" id="isVitals">
+          <div class="is-vital">
+            <div class="is-vital-label">Core Clock</div>
+            <div class="is-vital-bar"><div class="is-vbar-fill is-vbar-clock" id="isVClock"></div></div>
+            <div class="is-vital-val is-val-orange" id="isVClockVal">0 MHz</div>
+          </div>
+          <div class="is-vital">
+            <div class="is-vital-label">Thermal Load</div>
+            <div class="is-vital-bar"><div class="is-vbar-fill is-vbar-temp" id="isVTemp"></div></div>
+            <div class="is-vital-val" id="isVTempVal">0°C</div>
+          </div>
+          <div class="is-vital">
+            <div class="is-vital-label">Power Draw</div>
+            <div class="is-vital-bar"><div class="is-vbar-fill is-vbar-power" id="isVPower"></div></div>
+            <div class="is-vital-val is-val-orange" id="isVPowerVal">0W</div>
+          </div>
+          <div class="is-vital">
+            <div class="is-vital-label">Fan RPM</div>
+            <div class="is-vital-bar"><div class="is-vbar-fill is-vbar-fan" id="isVFan"></div></div>
+            <div class="is-vital-val" id="isVFanVal">0 RPM</div>
+          </div>
+        </div>
+
+        <!-- Status confirmation -->
+        <div class="is-confirm" id="isConfirm">
+          <div class="is-confirm-row"><div class="is-dot ok"></div><span>Thermal headroom — Adequate</span></div>
+          <div class="is-confirm-row"><div class="is-dot ok"></div><span>Clock stability — Locked</span></div>
+          <div class="is-confirm-row"><div class="is-dot ok"></div><span>Cooling response — Instant</span></div>
+          <div class="is-confirm-row"><div class="is-dot ok"></div><span>Long-term endurance — 1,500,000 hr rated</span></div>
+        </div>
+
+        <div class="is-footer">
+          It doesn't cool down because it's hot.<br>
+          <span>It stays cool so it can keep burning.</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1351,6 +1559,352 @@ document.querySelectorAll('.fire-line').forEach(el=>{
     }
   },{threshold:.1});
   obs.observe(tbl);
+})();
+
+/* ══ IGNITION GAMING SCENARIO ══ */
+(function(){
+  var wrap = document.getElementById('igWrap');
+  if(!wrap) return;
+  var btn = document.getElementById('igTrigger');
+  var fired = false;
+
+  function ignite(){
+    if(fired) return;
+    fired = true;
+    var status = document.getElementById('igStatus');
+    var black = document.getElementById('igBlack');
+    var spark = document.getElementById('igSpark');
+    var world = document.getElementById('igWorld');
+    var hud = document.getElementById('igHud');
+    var canvas = document.getElementById('igCanvas');
+    var rtBadge = document.getElementById('igRtBadge');
+    var dlssBadge = document.getElementById('igDlssBadge');
+    var fpsEl = document.getElementById('igFps');
+    if(btn) btn.classList.add('fired');
+    if(status){ status.textContent='IGNITING'; status.classList.add('live'); }
+
+    // Spark burst
+    setTimeout(function(){
+      if(spark) spark.classList.add('fire');
+    }, 100);
+
+    // Particle explosion on canvas
+    setTimeout(function(){
+      if(!canvas) return;
+      var vp = document.getElementById('igViewport');
+      canvas.width = vp ? vp.offsetWidth : 400;
+      canvas.height = vp ? vp.offsetHeight : 225;
+      var ctx = canvas.getContext('2d');
+      var W = canvas.width, H = canvas.height;
+      var cx = W/2, cy = H/2;
+      var particles = [];
+      var colors = ['rgba(232,96,48,','rgba(240,144,32,','rgba(255,180,60,','rgba(200,80,30,'];
+      for(var i=0;i<80;i++){
+        var angle = Math.random()*Math.PI*2;
+        var speed = 2 + Math.random()*6;
+        particles.push({
+          x:cx, y:cy,
+          vx: Math.cos(angle)*speed,
+          vy: Math.sin(angle)*speed,
+          life: 1,
+          decay: 0.015+Math.random()*0.025,
+          size: 1.5+Math.random()*3.5,
+          col: colors[Math.floor(Math.random()*colors.length)]
+        });
+      }
+      function drawParticles(){
+        ctx.clearRect(0,0,W,H);
+        var alive = false;
+        particles.forEach(function(p){
+          if(p.life <= 0) return;
+          alive = true;
+          p.x += p.vx; p.y += p.vy;
+          p.vx *= 0.94; p.vy *= 0.94;
+          p.life -= p.decay;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+          ctx.fillStyle = p.col + p.life.toFixed(2)+')';
+          ctx.shadowColor = p.col+'0.8)';
+          ctx.shadowBlur = 6;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        });
+        if(alive) requestAnimationFrame(drawParticles);
+        else ctx.clearRect(0,0,W,H);
+      }
+      drawParticles();
+    }, 120);
+
+    // Reveal world
+    setTimeout(function(){
+      if(black) black.classList.add('gone');
+      if(world) world.classList.add('vis');
+    }, 380);
+
+    // HUD + badges
+    setTimeout(function(){
+      if(hud) hud.classList.add('vis');
+      if(rtBadge) rtBadge.classList.add('vis');
+      if(dlssBadge) dlssBadge.classList.add('vis');
+    }, 600);
+
+    // FPS counter ramp up
+    setTimeout(function(){
+      if(!fpsEl) return;
+      var dur = 1200, target = 165, t0 = performance.now();
+      (function tick(now){
+        var p = Math.min((now-t0)/dur, 1);
+        var v = 1 - Math.pow(1-p, 3);
+        fpsEl.textContent = Math.round(v*target);
+        if(p < 1) requestAnimationFrame(tick);
+        else fpsEl.textContent = target;
+      })(performance.now());
+    }, 700);
+
+    if(status) setTimeout(function(){ status.textContent='ENGAGED'; }, 1400);
+  }
+
+  if(btn) btn.addEventListener('click', ignite);
+
+  // Auto-trigger on scroll into view
+  new IntersectionObserver(function(es){
+    if(es[0].isIntersecting && !fired){
+      setTimeout(ignite, 800);
+    }
+  }, {threshold: 0.5}).observe(wrap);
+})();
+
+/* ══ INTERNET HISTORY NODE MAP ══ */
+(function(){
+  var wrap = document.getElementById('netWrap');
+  if(!wrap) return;
+  var canvas = document.getElementById('netCanvas');
+  if(!canvas) return;
+  var fired = false;
+
+  // Historical internet nodes
+  var nodes = [
+    {label:'ARPANET', year:'1969', sub:'4 nodes', x:0.06, y:0.45, r:5, type:'human'},
+    {label:'TCP/IP', year:'1983', sub:'Protocol born', x:0.22, y:0.35, r:5, type:'human'},
+    {label:'WWW', year:'1991', sub:'Public web', x:0.38, y:0.48, r:6, type:'human'},
+    {label:'Google', year:'1998', sub:'Search era', x:0.52, y:0.32, r:5.5, type:'human'},
+    {label:'4G/LTE', year:'2009', sub:'Mobile net', x:0.65, y:0.50, r:5, type:'human'},
+    {label:'Today', year:'2026', sub:'7B users', x:0.80, y:0.38, r:7, type:'now'},
+    {label:'RTX 3070', year:'2197', sub:'Theory', x:0.94, y:0.62, r:9, type:'rtx'}
+  ];
+
+  // Data packets flowing along connections
+  var packets = [];
+
+  function initCanvas(){
+    canvas.width = canvas.offsetWidth * (window.devicePixelRatio||1);
+    canvas.height = 220 * (window.devicePixelRatio||1);
+    canvas.style.height = '220px';
+  }
+
+  function lerp(a,b,t){ return a+(b-a)*t; }
+
+  var progress = 0; // 0→1 draw progress
+  var t = 0;
+
+  function draw(){
+    initCanvas();
+    var ctx = canvas.getContext('2d');
+    var W = canvas.width, H = canvas.height;
+    var dpr = window.devicePixelRatio||1;
+    ctx.clearRect(0,0,W,H);
+
+    // Background data rain (very subtle)
+    ctx.save();
+    ctx.globalAlpha = 0.04;
+    ctx.font = (9*dpr)+'px monospace';
+    ctx.fillStyle = 'rgba(232,96,48,1)';
+    var cols = Math.floor(W/(12*dpr));
+    for(var c=0;c<cols;c++){
+      var ch = String.fromCharCode(48+Math.floor((Math.sin(t*0.3+c)*0.5+0.5)*74));
+      ctx.fillText(ch, c*12*dpr, ((t*18*dpr + c*37*dpr) % (H+20*dpr)));
+    }
+    ctx.restore();
+
+    // Draw connections (edge by edge as progress advances)
+    var conns = [];
+    for(var i=0;i<nodes.length-1;i++) conns.push([i,i+1]);
+    // Extra cross-connections for network feel
+    conns.push([0,2],[1,3],[2,4],[3,5]);
+
+    conns.forEach(function(conn, ci){
+      var a = nodes[conn[0]], b = nodes[conn[1]];
+      var ax = a.x*W, ay = a.y*H, bx = b.x*W, by = b.y*H;
+      var connProgress = Math.max(0, Math.min(1, (progress*conns.length - ci)));
+      if(connProgress <= 0) return;
+
+      // Connection line
+      ctx.beginPath();
+      ctx.moveTo(ax, ay);
+      ctx.lineTo(lerp(ax,bx,connProgress), lerp(ay,by,connProgress));
+      var isRtxConn = conn[1]===6;
+      ctx.strokeStyle = isRtxConn
+        ? 'rgba(232,96,48,'+(0.3*connProgress)+')'
+        : 'rgba(200,168,74,'+(0.25*connProgress)+')';
+      ctx.lineWidth = isRtxConn ? 1.5*dpr : dpr;
+      ctx.stroke();
+
+      // Flowing packets
+      if(connProgress >= 1 && ci < 6){
+        var pct = ((t*0.6 + ci*0.3) % 1);
+        var px = lerp(ax,bx,pct), py = lerp(ay,by,pct);
+        ctx.beginPath();
+        ctx.arc(px, py, 2*dpr, 0, Math.PI*2);
+        ctx.fillStyle = isRtxConn ? 'rgba(240,144,32,0.9)' : 'rgba(200,168,74,0.7)';
+        ctx.shadowColor = isRtxConn ? 'rgba(240,144,32,0.8)' : 'rgba(200,168,74,0.5)';
+        ctx.shadowBlur = 4*dpr;
+        ctx.fill();
+        ctx.shadowBlur=0;
+      }
+    });
+
+    // Draw nodes
+    nodes.forEach(function(node, ni){
+      var nodeProgress = Math.max(0, Math.min(1, (progress*nodes.length - ni)*2));
+      if(nodeProgress <= 0) return;
+      var nx = node.x*W, ny = node.y*H;
+      var r = node.r*dpr*nodeProgress;
+
+      // Pulse ring
+      var pulse = (Math.sin(t*1.5+ni*0.8)+1)/2;
+      ctx.beginPath();
+      ctx.arc(nx, ny, r + pulse*8*dpr*nodeProgress, 0, Math.PI*2);
+      ctx.strokeStyle = node.type==='rtx'
+        ? 'rgba(232,96,48,'+(0.15*nodeProgress*pulse)+')'
+        : node.type==='now'
+          ? 'rgba(200,168,74,'+(0.2*nodeProgress*pulse)+')'
+          : 'rgba(200,168,74,'+(0.12*nodeProgress*pulse)+')';
+      ctx.lineWidth = dpr;
+      ctx.stroke();
+
+      // Node dot
+      ctx.beginPath();
+      ctx.arc(nx, ny, r, 0, Math.PI*2);
+      if(node.type==='rtx'){
+        ctx.fillStyle = 'rgba(232,96,48,'+(0.85*nodeProgress)+')';
+        ctx.shadowColor = 'rgba(232,96,48,0.8)';
+        ctx.shadowBlur = 14*dpr;
+      } else if(node.type==='now'){
+        ctx.fillStyle = 'rgba(200,168,74,'+(0.8*nodeProgress)+')';
+        ctx.shadowColor = 'rgba(200,168,74,0.5)';
+        ctx.shadowBlur = 8*dpr;
+      } else {
+        ctx.fillStyle = 'rgba(200,168,74,'+(0.45*nodeProgress)+')';
+        ctx.shadowColor = 'rgba(200,168,74,0.3)';
+        ctx.shadowBlur = 4*dpr;
+      }
+      ctx.fill();
+      ctx.shadowBlur=0;
+
+      // Label
+      if(nodeProgress > 0.6){
+        ctx.globalAlpha = (nodeProgress-0.6)/0.4;
+        ctx.font = 'bold '+(8*dpr)+'px monospace';
+        ctx.fillStyle = node.type==='rtx' ? 'rgba(232,96,48,1)' : 'rgba(200,168,74,0.8)';
+        ctx.textAlign = 'center';
+        ctx.fillText(node.year, nx, ny - r - 8*dpr);
+        ctx.font = (6.5*dpr)+'px monospace';
+        ctx.fillStyle = 'rgba(120,90,60,0.9)';
+        ctx.fillText(node.label, nx, ny + r + 12*dpr);
+        ctx.globalAlpha = 1;
+      }
+    });
+
+    // RTX span indicator — dashed vertical line from 2026 to 2197
+    if(progress > 0.9){
+      var nowNode = nodes[5], rtxNode = nodes[6];
+      ctx.setLineDash([3*dpr,4*dpr]);
+      ctx.beginPath();
+      ctx.moveTo(nowNode.x*W, nowNode.y*H);
+      ctx.lineTo(rtxNode.x*W, rtxNode.y*H);
+      ctx.strokeStyle = 'rgba(232,96,48,'+(0.3*(progress-0.9)*10)+')';
+      ctx.lineWidth = dpr;
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    t += 0.016;
+    if(fired) requestAnimationFrame(draw);
+  }
+
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    // Animate progress 0→1 over 2.4s
+    var dur = 2400, t0 = performance.now();
+    (function tick(now){
+      progress = Math.min((now-t0)/dur, 1);
+      if(progress < 1) requestAnimationFrame(tick);
+    })(performance.now());
+    draw();
+  }, {threshold: 0.25}).observe(wrap);
+})();
+
+/* ══ IGNITER STATUS PANEL ══ */
+(function(){
+  var wrap = document.getElementById('isWrap');
+  if(!wrap) return;
+  var fired = false;
+
+  // Live MTBF countdown (starts from 1,500,000, ticks down 1/hr = 1/3600 per second)
+  var mtbf = 1500000;
+  var cdEl = document.getElementById('isCdNum');
+  setInterval(function(){
+    // Symbolic: show it ticking
+    var el = document.getElementById('isCdNum');
+    if(el && fired){
+      mtbf = Math.max(0, mtbf - 1/3600);
+      el.textContent = Math.floor(mtbf).toLocaleString();
+    }
+  }, 1000);
+
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+
+    // Vitals animate in
+    var vitals = wrap.querySelectorAll('.is-vital');
+    vitals.forEach(function(v,i){
+      setTimeout(function(){ v.classList.add('vis'); }, i*150);
+    });
+
+    // Fill bars + count values
+    var barData = [
+      {fillId:'isVClock', valId:'isVClockVal', w:88, target:1935, suffix:' MHz', dur:1200},
+      {fillId:'isVTemp',  valId:'isVTempVal',  w:60, target:72,   suffix:'°C',   dur:900},
+      {fillId:'isVPower', valId:'isVPowerVal', w:92, target:218,  suffix:'W',    dur:1100},
+      {fillId:'isVFan',   valId:'isVFanVal',   w:72, target:2640, suffix:' RPM', dur:1000}
+    ];
+    barData.forEach(function(d,i){
+      setTimeout(function(){
+        var fill = document.getElementById(d.fillId);
+        var val  = document.getElementById(d.valId);
+        if(fill) fill.style.width = d.w+'%';
+        if(val){
+          var t0 = performance.now();
+          (function tick(now){
+            var p = Math.min((now-t0)/d.dur, 1);
+            var v = 1 - Math.pow(1-p, 3);
+            val.textContent = Math.round(v*d.target) + d.suffix;
+            if(p<1) requestAnimationFrame(tick);
+            else val.textContent = d.target + d.suffix;
+          })(performance.now());
+        }
+      }, i*160 + 200);
+    });
+
+    // Confirm rows stagger
+    var rows = wrap.querySelectorAll('.is-confirm-row');
+    rows.forEach(function(r,i){
+      setTimeout(function(){ r.classList.add('vis'); }, 900+i*130);
+    });
+
+  }, {threshold: 0.25}).observe(wrap);
 })();
 </script>
 </body>
