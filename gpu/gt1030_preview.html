@@ -221,6 +221,67 @@ section{position:relative;width:100%;overflow:hidden;}
 #s03{background:var(--bg2);}
 .capable-grid{padding:100px 6% 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto;}
 
+/* ── DUAL MONITOR ── */
+.dm-wrap{width:100%;}
+.dm-label-row{display:flex;justify-content:space-between;margin-bottom:10px;}
+.dm-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border:.5px solid transparent;}
+.dm-label.dm-bad{color:rgba(180,100,70,.8);border-color:rgba(180,100,70,.2);background:rgba(180,100,70,.04);}
+.dm-label.dm-good{color:var(--gold);border-color:var(--gold-dim);background:rgba(200,168,74,.04);}
+.dm-screens{display:flex;align-items:flex-end;width:100%;}
+.dm-monitor{flex:1;min-width:0;opacity:0;transition:opacity .7s ease,transform .7s ease;}
+#dmLeft{transform:translateX(-18px);}
+#dmRight{transform:translateX(18px);}
+.dm-monitor.vis{opacity:1;transform:none;}
+.dm-bezel{display:flex;flex-direction:column;align-items:center;}
+.dm-screen{width:100%;aspect-ratio:16/10;border:.5px solid rgba(120,100,60,.25);border-radius:2px 2px 0 0;overflow:hidden;position:relative;background:#0a0800;box-shadow:0 16px 50px rgba(0,0,0,.6);}
+.dm-bezel-gold .dm-screen{border-color:rgba(200,168,74,.35);box-shadow:0 16px 50px rgba(0,0,0,.6),0 0 24px rgba(200,168,74,.07);}
+.dm-layer{position:absolute;inset:0;}
+.dm-photo-bad{background-color:#18100a;}
+.dm-photo-bad::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 35% 45%,rgba(120,70,30,.55) 0%,transparent 65%),radial-gradient(ellipse 40% 35% at 72% 32%,rgba(90,55,20,.45) 0%,transparent 58%),radial-gradient(ellipse 50% 42% at 55% 72%,rgba(105,65,25,.4) 0%,transparent 62%);}
+.dm-photo-bad::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,170,60,.06) 0%,rgba(200,90,30,.04) 100%);mix-blend-mode:color;}
+.dm-photo-good{background-color:#100c00;}
+.dm-photo-good::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 35% 45%,rgba(200,145,55,.78) 0%,transparent 65%),radial-gradient(ellipse 40% 35% at 72% 32%,rgba(165,115,45,.65) 0%,transparent 58%),radial-gradient(ellipse 50% 42% at 55% 72%,rgba(180,130,50,.58) 0%,transparent 62%);filter:saturate(1.25);}
+.dm-shift{background:linear-gradient(135deg,rgba(255,165,50,.07) 0%,rgba(210,100,30,.05) 100%);mix-blend-mode:color;pointer-events:none;}
+.dm-bands::before{content:'';position:absolute;left:0;right:0;top:30%;height:1px;background:rgba(255,190,70,.1);}
+.dm-bands::after{content:'';position:absolute;left:0;right:0;top:62%;height:1px;background:rgba(255,180,60,.08);}
+.dm-chrome{position:absolute;inset:0;pointer-events:none;}
+.dm-toolbar{position:absolute;top:0;left:0;right:0;height:16%;background:rgba(0,0,0,.55);border-bottom:.5px solid rgba(255,255,255,.04);display:flex;align-items:center;padding:0 6%;gap:3%;}
+.dm-tbtn{width:5%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.07);flex-shrink:0;}
+.dm-tbar{flex:1;height:2px;background:rgba(255,255,255,.05);border-radius:1px;}
+.dm-swatch{width:8%;aspect-ratio:1;border-radius:1px;flex-shrink:0;}
+.dm-swatch-bad{background:rgba(190,120,50,.5);border:.5px solid rgba(190,120,50,.3);}
+.dm-swatch-good{background:linear-gradient(135deg,rgba(200,168,74,.95),rgba(175,140,50,.85));border:.5px solid rgba(200,168,74,.5);box-shadow:0 0 5px rgba(200,168,74,.25);}
+.dm-canvas{position:absolute;top:18%;left:5%;right:5%;bottom:18%;}
+.dm-stroke{position:absolute;top:20%;left:8%;height:10%;border-radius:100px;}
+.dm-stroke-bad{width:52%;background:linear-gradient(90deg,transparent,rgba(190,120,50,.3),rgba(170,100,40,.25),transparent);filter:blur(2.5px);opacity:.65;}
+.dm-stroke-good{width:52%;background:linear-gradient(90deg,transparent,rgba(200,168,74,.8),rgba(180,148,55,.72),transparent);box-shadow:0 0 4px rgba(200,168,74,.12);}
+.dm-ghost{position:absolute;bottom:18%;right:12%;width:9px;height:9px;border:1px solid rgba(255,255,255,.18);border-radius:1px;opacity:.35;}
+.dm-cursor{position:absolute;width:9px;height:9px;border-radius:1px;}
+.dm-cursor-bad{bottom:22%;right:15%;border:1px solid rgba(200,130,60,.45);}
+.dm-cursor-good{bottom:18%;right:12%;border:1.5px solid rgba(200,168,74,.95);box-shadow:0 0 4px rgba(200,168,74,.3);}
+.dm-status{position:absolute;bottom:0;left:0;right:0;height:16%;display:flex;align-items:center;gap:5px;padding:0 5%;background:rgba(0,0,0,.6);border-top:.5px solid rgba(255,255,255,.04);}
+.dm-status span{font-family:var(--ff-m);font-size:6px;letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dm-status-bad span{color:rgba(180,110,70,.7);}
+.dm-status-good span{color:rgba(200,168,74,.8);}
+.dm-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.dm-dot-bad{background:rgba(180,80,55,.85);}
+.dm-dot-good{background:rgba(200,168,74,.95);box-shadow:0 0 4px rgba(200,168,74,.4);}
+.dm-neck{width:8%;height:10px;background:rgba(255,255,255,.05);}
+.dm-base{width:38%;height:4px;background:rgba(255,255,255,.04);border-radius:2px;}
+.dm-vs{display:flex;flex-direction:column;align-items:center;gap:5px;padding:0 8px;flex-shrink:0;align-self:center;padding-bottom:22px;opacity:0;transition:opacity .5s ease .35s;}
+.dm-vs.vis{opacity:1;}
+.dm-vs-ln{width:.5px;height:36px;background:rgba(200,168,74,.14);}
+.dm-vs-txt{font-family:var(--ff-m);font-size:7px;letter-spacing:.1em;color:var(--label);border:.5px solid rgba(200,168,74,.14);padding:3px 5px;background:rgba(200,168,74,.03);}
+.dm-captions{display:flex;justify-content:space-between;margin-top:11px;}
+.dm-cap{flex:1;}
+.dm-cap-right{text-align:right;}
+.dm-cap-t{font-family:var(--ff-d);font-size:15px;letter-spacing:.06em;margin-bottom:2px;}
+.dm-cap-bad{color:rgba(180,100,65,.65);}
+.dm-cap-good{color:var(--gold);}
+.dm-cap-d{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;color:var(--label);line-height:1.6;}
+.dm-footer{margin-top:14px;padding-top:13px;border-top:.5px solid rgba(200,168,74,.1);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.dm-footer span{font-size:11px;opacity:.5;display:block;margin-top:3px;}
+
 /* ── S04 RELIABILITY ── */
 #s04{background:var(--bg);}
 .mtbf-display{border:.5px solid rgba(118,185,0,.3);padding:22px 28px;background:rgba(118,185,0,.04);text-align:center;margin-bottom:20px;}
@@ -412,7 +473,7 @@ section{position:relative;width:100%;overflow:hidden;}
     <div class="bl-grid fi">
       <div>
         <div class="bl-eye">Design Language</div>
-        <div class="bl-title">Gold<br>Edge<br><span style="font-size:.5em;color:var(--label);">金刃</span></div>
+        <div class="bl-title">Gold<br>Edge<br><span style="font-size:.5em;color:var(--label);"></span></div>
         <div class="bl-body">Gold doesn't shout.<br>It just catches the light at the right angle.<br><br>The GT1030 D version wasn't built to impress.<br>It was built to last, run cool, and never ask for more power than it needs.</div>
         <div class="bl-quote">This is not excess. This is precision.</div>
       </div>
@@ -545,11 +606,47 @@ section{position:relative;width:100%;overflow:hidden;}
       </ul>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:360px;margin-bottom:14px;">
-        <span>[ CAPABLE — TOP VIEW ]<br>GT1030 · gold slash lines in top light<br>GT1030_2GD5_TOP.png ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:150px;">
-        <span>[ HDMI + DVI PORTS ]<br>Bracket close-up ]</span>
+      <div class="dm-wrap" id="dmWrap">
+        <div class="dm-label-row">
+          <div class="dm-label dm-bad">Integrated Graphics</div>
+          <div class="dm-label dm-good">GT1030 GDDR5D</div>
+        </div>
+        <div class="dm-screens">
+          <div class="dm-monitor" id="dmLeft">
+            <div class="dm-bezel">
+              <div class="dm-screen" id="dmIgpu">
+                <div class="dm-layer dm-photo-bad"></div>
+                <div class="dm-layer dm-shift"></div>
+                <div class="dm-layer dm-bands"></div>
+                <div class="dm-chrome">
+                  <div class="dm-toolbar"><div class="dm-tbtn"></div><div class="dm-tbtn"></div><div class="dm-tbtn"></div><div class="dm-tbar"></div><div class="dm-swatch dm-swatch-bad"></div></div>
+                  <div class="dm-canvas"><div class="dm-stroke dm-stroke-bad"></div><div class="dm-ghost"></div><div class="dm-cursor dm-cursor-bad"></div></div>
+                </div>
+                <div class="dm-status dm-status-bad"><div class="dm-dot dm-dot-bad"></div><span>Color mismatch &middot; Lag detected</span></div>
+              </div>
+              <div class="dm-neck"></div><div class="dm-base"></div>
+            </div>
+          </div>
+          <div class="dm-vs" id="dmVs"><div class="dm-vs-ln"></div><div class="dm-vs-txt">vs</div><div class="dm-vs-ln"></div></div>
+          <div class="dm-monitor" id="dmRight">
+            <div class="dm-bezel dm-bezel-gold">
+              <div class="dm-screen" id="dmGt1030">
+                <div class="dm-layer dm-photo-good"></div>
+                <div class="dm-chrome">
+                  <div class="dm-toolbar"><div class="dm-tbtn"></div><div class="dm-tbtn"></div><div class="dm-tbtn"></div><div class="dm-tbar"></div><div class="dm-swatch dm-swatch-good"></div></div>
+                  <div class="dm-canvas"><div class="dm-stroke dm-stroke-good"></div><div class="dm-cursor dm-cursor-good"></div></div>
+                </div>
+                <div class="dm-status dm-status-good"><div class="dm-dot dm-dot-good"></div><span>sRGB accurate &middot; No lag</span></div>
+              </div>
+              <div class="dm-neck"></div><div class="dm-base"></div>
+            </div>
+          </div>
+        </div>
+        <div class="dm-captions">
+          <div class="dm-cap"><div class="dm-cap-t dm-cap-bad">Before</div><div class="dm-cap-d">Color shift &middot; Brush lag &middot; Profile mismatch</div></div>
+          <div class="dm-cap dm-cap-right"><div class="dm-cap-t dm-cap-good">After</div><div class="dm-cap-d">Pixel-accurate &middot; Instant response &middot; True sRGB</div></div>
+        </div>
+        <div class="dm-footer">Your creative work deserves to look exactly the way you made it.<br><span>你的作品應該如實呈現，不多一點偏移，不少一點精準。</span></div>
       </div>
     </div>
   </div>
@@ -956,6 +1053,27 @@ document.fonts.ready.then(()=>{
       });
     }
   },{threshold:.1}).observe(tbl);
+})();
+
+/* ── DUAL MONITOR ── */
+(function(){
+  var wrap=document.getElementById('dmWrap');
+  if(!wrap)return;
+  var left=document.getElementById('dmLeft');
+  var right=document.getElementById('dmRight');
+  var vs=document.getElementById('dmVs');
+  var fired=false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting||fired)return;
+    fired=true;
+    setTimeout(function(){if(left)left.classList.add('vis');},100);
+    setTimeout(function(){if(vs)vs.classList.add('vis');},380);
+    setTimeout(function(){if(right)right.classList.add('vis');},580);
+    setTimeout(function(){
+      var s=document.getElementById('dmGt1030');
+      if(s)s.style.boxShadow='0 16px 50px rgba(0,0,0,.6),0 0 36px rgba(200,168,74,.14)';
+    },1100);
+  },{threshold:0.3}).observe(wrap);
 })();
 </script>
 </body>
