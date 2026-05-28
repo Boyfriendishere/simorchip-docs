@@ -457,6 +457,161 @@ section{position:relative;width:100%;overflow:hidden;}
 }
 @media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}
   #saberOverlay{display:none;}nav{opacity:1!important;}.h-left{opacity:1!important;}}
+/* ══ RENDER TIME REVERSAL ══ */
+.rr-wrap{width:100%;background:rgba(5,6,10,.98);border:.5px solid var(--border);overflow:hidden;}
+.rr-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:.5px solid var(--line);}
+.rr-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.rr-tag{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;color:var(--label);border:.5px solid var(--border);padding:3px 8px;}
+.rr-row{padding:16px 14px;border-bottom:.5px solid var(--line);opacity:0;transition:opacity .6s ease,transform .6s ease;transform:translateY(8px);}
+.rr-row.vis{opacity:1;transform:none;}
+.rr-row-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.rr-gpu-label{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--mute);}
+.rr-label-rtx{color:var(--white)!important;}
+.rr-est{font-family:var(--ff-d);font-size:clamp(14px,2vw,20px);letter-spacing:.04em;line-height:1;}
+.rr-est-slow{color:rgba(160,80,80,.7);}
+.rr-est-fast{color:var(--saber);text-shadow:0 0 12px rgba(64,144,208,.4);}
+.rr-bar-track{position:relative;height:8px;background:rgba(255,255,255,.04);border-radius:4px;overflow:hidden;margin-bottom:8px;}
+.rr-track-rtx{background:rgba(64,144,208,.06);}
+.rr-bar-fill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:4px;transition:width 3s linear;}
+.rr-fill-old{background:rgba(140,80,80,.4);}
+.rr-fill-new{background:linear-gradient(90deg,var(--saber2),var(--saber));box-shadow:0 0 8px rgba(64,144,208,.5);transition:width .8s cubic-bezier(.16,1,.3,1)!important;}
+.rr-bar-label{position:absolute;inset:0;display:flex;align-items:center;padding:0 8px;font-family:var(--ff-m);font-size:6.5px;letter-spacing:.08em;color:rgba(255,255,255,.2);}
+.rr-label-done{color:rgba(64,144,208,.7)!important;opacity:0;transition:opacity .4s ease;}
+.rr-label-done.vis{opacity:1;}
+.rr-row-foot{display:flex;justify-content:space-between;}
+.rr-spec-dim{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;color:var(--label);}
+.rr-spec-bright{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;color:rgba(64,144,208,.6);}
+.rr-elapsed{font-family:var(--ff-d);font-size:13px;letter-spacing:.04em;color:var(--mute);}
+.rr-elapsed-rtx{color:var(--saber)!important;}
+.rr-vs{display:flex;align-items:center;gap:8px;padding:8px 14px;}
+.rr-vs-line{flex:1;height:.5px;background:var(--line);}
+.rr-vs-txt{font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;color:var(--label);}
+.rr-scene-info{padding:10px 14px;border-top:.5px solid var(--line);display:flex;flex-direction:column;gap:4px;}
+.rr-scene-row{display:flex;gap:12px;font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;}
+.rr-scene-k{color:var(--label);width:52px;flex-shrink:0;}
+.rr-scene-v{color:var(--mute);}
+.rr-callout{padding:14px;border-top:.5px solid var(--line);background:rgba(64,144,208,.03);display:flex;flex-direction:column;align-items:center;opacity:0;transition:opacity .6s ease;}
+.rr-callout.vis{opacity:1;}
+.rr-callout-num{font-family:var(--ff-d);font-size:clamp(28px,4vw,48px);letter-spacing:.04em;color:var(--saber);line-height:1;text-shadow:0 0 20px rgba(64,144,208,.35);}
+.rr-callout-lbl{font-family:var(--ff-m);font-size:8px;letter-spacing:.12em;color:var(--label);text-transform:uppercase;margin-top:4px;}
+.rr-callout-sub{font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);margin-top:6px;font-style:italic;}
+.rr-footer{padding:11px 14px;border-top:.5px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.rr-footer span{font-size:11px;opacity:.5;display:block;margin-top:2px;}
+
+/* ══ VFX WORKSTATION ══ */
+.vfx-wrap{width:100%;background:rgba(5,6,10,.98);border:.5px solid var(--border);overflow:hidden;}
+.vfx-header{display:flex;align-items:center;justify-content:space-between;padding:11px 12px 9px;border-bottom:.5px solid var(--line);}
+.vfx-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);}
+.vfx-live{display:flex;align-items:center;gap:5px;font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;color:var(--saber);}
+.vfx-live-dot{width:5px;height:5px;border-radius:50%;background:var(--saber);animation:vfxLivePulse 1.8s ease-in-out infinite;}
+@keyframes vfxLivePulse{0%,100%{opacity:.3;}50%{opacity:1;box-shadow:0 0 6px rgba(64,144,208,.7);}}
+.vfx-desk{display:flex;gap:6px;padding:10px 10px 6px;align-items:flex-end;}
+.vfx-mon{opacity:0;transform:translateY(10px);transition:opacity .7s ease,transform .7s ease;}
+.vfx-mon.vis{opacity:1;transform:none;}
+.vfx-mon-left{flex:1;}
+.vfx-mon-center{flex:1.6;}
+.vfx-mon-right{flex:1;}
+.vfx-bezel{display:flex;flex-direction:column;align-items:center;}
+.vfx-bezel-main .vfx-screen{border-color:rgba(64,144,208,.3)!important;box-shadow:0 0 16px rgba(64,144,208,.06),0 10px 35px rgba(0,0,0,.8)!important;}
+.vfx-screen{width:100%;border:.5px solid rgba(64,144,208,.15);border-radius:2px 2px 0 0;overflow:hidden;position:relative;background:#04050a;}
+.vfx-screen-ae{aspect-ratio:16/10;}
+.vfx-screen-dv{aspect-ratio:16/10;}
+.vfx-screen-rq{aspect-ratio:9/16;}
+/* AE screen */
+.vfx-ae-comp{position:absolute;inset:0 0 18% 0;overflow:hidden;}
+.vfx-ae-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(10,8,4,.8),#050304);}
+.vfx-ae-explosion{position:absolute;inset:0;pointer-events:none;}
+.vfx-ae-overlay{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.05) 0px,transparent 1px,transparent 3px);}
+.vfx-ae-bar{position:absolute;bottom:0;left:0;right:0;height:18%;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:space-between;padding:0 6%;border-top:.5px solid rgba(64,144,208,.08);}
+.vfx-ae-label{font-family:var(--ff-m);font-size:6px;letter-spacing:.08em;color:var(--label);}
+.vfx-ae-fps{font-family:var(--ff-d);font-size:11px;letter-spacing:.04em;color:var(--saber);}
+/* DaVinci screen */
+.vfx-dv-top{height:14%;background:rgba(0,0,0,.6);display:flex;align-items:center;padding:0 5%;border-bottom:.5px solid rgba(64,144,208,.07);}
+.vfx-dv-tabs{display:flex;gap:3%;width:100%;}
+.vfx-tab{font-family:var(--ff-m);font-size:5.5px;letter-spacing:.06em;color:var(--label);padding:2px 0;}
+.vfx-tab-active{color:var(--saber);border-bottom:1px solid var(--saber);}
+.vfx-dv-preview{height:42%;background:#03040a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.vfx-preview-frame{position:relative;width:85%;height:85%;background:rgba(64,144,208,.03);border:.5px solid rgba(64,144,208,.1);}
+.vfx-frame-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 50%,rgba(20,30,60,.5),rgba(5,6,10,.8));}
+.vfx-frame-tc{position:absolute;bottom:4px;right:6px;font-family:var(--ff-d);font-size:8px;letter-spacing:.06em;color:rgba(64,144,208,.5);}
+.vfx-dv-timeline{height:28%;background:rgba(0,0,0,.5);position:relative;border-top:.5px solid rgba(64,144,208,.06);}
+.vfx-tl-tracks{position:absolute;inset:4px 0;display:flex;flex-direction:column;gap:2px;padding:0 4px;}
+.vfx-tl-track-row{height:100%;border-radius:1px;overflow:hidden;}
+.vfx-tl-playhead{position:absolute;top:0;bottom:0;width:1px;background:rgba(192,232,255,.7);box-shadow:0 0 4px rgba(64,144,208,.5);left:35%;transition:left 6s linear;}
+/* Render queue screen */
+.vfx-rq-header{font-family:var(--ff-m);font-size:7px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);padding:6px 8px;border-bottom:.5px solid var(--line);}
+.vfx-rq-list{padding:4px 8px;display:flex;flex-direction:column;gap:3px;}
+.vfx-rq-item{display:flex;align-items:center;gap:5px;padding:3px 0;font-family:var(--ff-m);font-size:6.5px;letter-spacing:.04em;color:var(--mute);}
+.vfx-rq-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.vfx-rq-dot.done{background:rgba(64,144,208,.7);}
+.vfx-rq-dot.active{background:var(--saber);box-shadow:0 0 5px rgba(64,144,208,.6);animation:vfxLivePulse 1.2s ease-in-out infinite;}
+.vfx-rq-dot.wait{background:rgba(255,255,255,.1);}
+.vfx-rq-item span:first-of-type{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.vfx-rq-time{font-family:var(--ff-m);font-size:6.5px;color:rgba(64,144,208,.6);flex-shrink:0;}
+.rq-done span{color:rgba(64,144,208,.5);}
+.rq-active span{color:var(--white);}
+.vfx-rq-prog{flex:1;height:3px;background:rgba(64,144,208,.08);border-radius:2px;overflow:hidden;}
+.vfx-rq-fill{height:100%;background:var(--saber);border-radius:2px;width:0;transition:width 2s linear;}
+.vfx-rq-vram{display:flex;align-items:center;gap:5px;padding:6px 8px;border-top:.5px solid var(--line);margin-top:2px;}
+.vfx-vram-lbl{font-family:var(--ff-m);font-size:6px;letter-spacing:.1em;color:var(--label);flex-shrink:0;}
+.vfx-vram-bar{flex:1;height:3px;background:rgba(64,144,208,.07);border-radius:2px;overflow:hidden;}
+.vfx-vram-fill{height:100%;background:linear-gradient(90deg,rgba(64,144,208,.4),var(--saber));border-radius:2px;width:0;transition:width 1.2s ease;}
+.vfx-vram-val{font-family:var(--ff-d);font-size:9px;color:var(--saber);flex-shrink:0;}
+.vfx-dp-badge{position:absolute;bottom:4px;right:5px;font-family:var(--ff-m);font-size:5.5px;letter-spacing:.1em;color:rgba(64,144,208,.3);pointer-events:none;}
+.vfx-neck{width:8%;height:7px;background:rgba(255,255,255,.04);}
+.vfx-base{width:32%;height:4px;background:rgba(255,255,255,.03);border-radius:2px;}
+.vfx-base-wide{width:40%;}
+.vfx-mon-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.08em;text-transform:uppercase;color:var(--label);margin-top:5px;text-align:center;}
+.vfx-label-main{color:rgba(64,144,208,.6)!important;}
+.vfx-footer{padding:11px 12px;border-top:.5px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.vfx-footer span{font-size:11px;opacity:.5;display:block;margin-top:2px;}
+
+/* ══ DIRECTOR'S CAREER COUNTER ══ */
+.dc-wrap{width:100%;background:rgba(5,6,10,.98);border:.5px solid var(--border);overflow:hidden;}
+.dc-header{padding:12px 14px 10px;border-bottom:.5px solid var(--line);display:flex;align-items:baseline;gap:8px;}
+.dc-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.dc-sub{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:rgba(64,144,208,.4);}
+/* Film strip */
+.dc-strip-wrap{position:relative;padding:12px 0;border-bottom:.5px solid var(--line);overflow:hidden;height:80px;}
+.dc-strip{display:flex;gap:4px;padding:0 14px;position:absolute;top:12px;left:0;transition:transform .8s cubic-bezier(.16,1,.3,1);}
+.dc-frame{width:48px;height:56px;background:rgba(64,144,208,.04);border:.5px solid rgba(64,144,208,.12);border-radius:1px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;opacity:0;transition:opacity .3s ease,border-color .3s ease;}
+.dc-frame.lit{opacity:1;}
+.dc-frame.lit-rtx{border-color:rgba(64,144,208,.4)!important;background:rgba(64,144,208,.08)!important;box-shadow:0 0 8px rgba(64,144,208,.15);}
+.dc-frame-num{font-family:var(--ff-d);font-size:13px;letter-spacing:.04em;color:var(--mute);line-height:1;}
+.dc-frame-rtx .dc-frame-num{color:var(--saber)!important;}
+.dc-frame-label{font-family:var(--ff-m);font-size:5.5px;letter-spacing:.06em;color:var(--label);text-align:center;}
+.dc-strip-fade-l,.dc-strip-fade-r{position:absolute;top:0;bottom:0;width:28px;z-index:2;pointer-events:none;}
+.dc-strip-fade-l{left:0;background:linear-gradient(90deg,rgba(5,6,10,1),transparent);}
+.dc-strip-fade-r{right:0;background:linear-gradient(270deg,rgba(5,6,10,1),transparent);}
+/* Counter */
+.dc-counter-area{padding:16px 14px 12px;border-bottom:.5px solid var(--line);text-align:center;}
+.dc-counter-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--label);margin-bottom:8px;}
+.dc-counter-row{display:flex;align-items:baseline;justify-content:center;gap:8px;}
+.dc-num{font-family:var(--ff-d);font-size:clamp(48px,8vw,80px);letter-spacing:.02em;color:var(--saber);line-height:1;text-shadow:0 0 30px rgba(64,144,208,.35);}
+.dc-unit{font-family:var(--ff-m);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);}
+.dc-counter-sub{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;color:var(--label);margin-top:6px;}
+/* Timeline bars */
+.dc-tl{padding:12px 14px;border-bottom:.5px solid var(--line);display:flex;flex-direction:column;gap:10px;}
+.dc-tl-row{display:flex;align-items:center;gap:8px;}
+.dc-tl-label{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;color:var(--label);width:120px;flex-shrink:0;}
+.dc-lbl-career{color:var(--label);}
+.dc-lbl-rtx{color:var(--saber);}
+.dc-tl-track{flex:1;height:5px;border-radius:3px;overflow:hidden;}
+.dc-track-career{background:rgba(255,255,255,.05);}
+.dc-track-rtx{background:rgba(64,144,208,.06);}
+.dc-tl-fill{height:100%;border-radius:3px;width:0;transition:width 1.4s cubic-bezier(.16,1,.3,1);}
+.dc-fill-career{background:rgba(200,168,74,.4);}
+.dc-fill-rtx{background:linear-gradient(90deg,var(--saber2),var(--saber));box-shadow:0 0 6px rgba(64,144,208,.4);}
+.dc-tl-val{font-family:var(--ff-m);font-size:8px;color:var(--label);flex-shrink:0;width:42px;text-align:right;}
+.dc-val-rtx{color:var(--saber)!important;}
+/* Punchline */
+.dc-punchline{padding:10px 14px;display:flex;align-items:center;justify-content:center;gap:8px;opacity:0;transition:opacity .6s ease;}
+.dc-punchline.vis{opacity:1;}
+.dc-punchline span{font-family:var(--ff-m);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(64,144,208,.5);}
+.dc-still-dot{width:6px;height:6px;border-radius:50%;background:var(--saber);animation:vfxLivePulse 2s ease-in-out infinite;}
+.dc-footer{padding:11px 14px;border-top:.5px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.dc-footer span{font-size:11px;opacity:.5;display:block;margin-top:2px;}
+
 </style>
 </head>
 <body>
@@ -621,7 +776,7 @@ section{position:relative;width:100%;overflow:hidden;}
       <div>
         <div class="bl-eye">Design Language · Weapon Code</div>
         <div class="bl-title-wrap">
-          <div class="bl-title">Accelerator<br>World<br><span style="font-size:.45em;color:var(--label);"></span></div>
+          <div class="bl-title">Accelerator<br>World</div>
           <div class="bl-title-tw" id="blTw">// VECTOR_MAINLINE_LIVE</div>
         </div>
         <div class="bl-body">Velocity is the only defensive armor that matters.<br><br>When the 5nm GB206 architecture elevates its clocks to 2407 MHz, thermal friction demands immediate execution. The Accelerator intercepts the thermal peak at the exact microsecond of calculation.<br><br>With next-generation GDDR7 routing massive asset data through the system — this dual-fan cooling layout evacuates the heat chamber without friction.</div>
@@ -714,11 +869,70 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:400px;margin-bottom:14px;">
-        <span>[ FIERCER — PCIe 5.0 GOLD FINGERS ]<br>RTX 5060 Ti · camera skims gold PCIe 5.0 contacts<br>Up to dual-fan shroud · crimson geometric accents ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:140px;">
-        <span>[ 5nm GB206 DIE ]<br>Hardware layer close-up · 5nm architecture ]</span>
+      <!-- ── RENDER TIME REVERSAL ── -->
+      <div class="rr-wrap" id="rrWrap">
+        <div class="rr-header">
+          <span class="rr-eyebrow">Same Scene · Same Settings</span>
+          <span class="rr-tag">GPU Render Benchmark</span>
+        </div>
+
+        <!-- Old GPU row -->
+        <div class="rr-row rr-old" id="rrOld">
+          <div class="rr-row-header">
+            <div class="rr-gpu-label">Previous Gen</div>
+            <div class="rr-est rr-est-slow" id="rrEstOld">Est. 3h 12m</div>
+          </div>
+          <div class="rr-bar-track">
+            <div class="rr-bar-fill rr-fill-old" id="rrFillOld"></div>
+            <div class="rr-bar-label">Rendering...</div>
+          </div>
+          <div class="rr-row-foot">
+            <span class="rr-spec-dim">GDDR6 · 3584 Cores</span>
+            <span class="rr-elapsed" id="rrElapsedOld">0:00</span>
+          </div>
+        </div>
+
+        <!-- VS divider -->
+        <div class="rr-vs">
+          <div class="rr-vs-line"></div>
+          <span class="rr-vs-txt">vs</span>
+          <div class="rr-vs-line"></div>
+        </div>
+
+        <!-- RTX 5060Ti row -->
+        <div class="rr-row rr-new" id="rrNew">
+          <div class="rr-row-header">
+            <div class="rr-gpu-label rr-label-rtx">RTX 5060 Ti</div>
+            <div class="rr-est rr-est-fast" id="rrEstNew">Est. 11m 48s</div>
+          </div>
+          <div class="rr-bar-track rr-track-rtx">
+            <div class="rr-bar-fill rr-fill-new" id="rrFillNew"></div>
+            <div class="rr-bar-label rr-label-done" id="rrDoneLabel">Complete ✓</div>
+          </div>
+          <div class="rr-row-foot">
+            <span class="rr-spec-bright">GDDR7 · 4608 Cores · 5nm</span>
+            <span class="rr-elapsed rr-elapsed-rtx" id="rrElapsedNew">0:00</span>
+          </div>
+        </div>
+
+        <!-- Scene info -->
+        <div class="rr-scene-info">
+          <div class="rr-scene-row"><span class="rr-scene-k">Scene</span><span class="rr-scene-v">Explosion VFX · 240 frames · 4K</span></div>
+          <div class="rr-scene-row"><span class="rr-scene-k">Samples</span><span class="rr-scene-v">4096 samples · Ray Depth 12</span></div>
+          <div class="rr-scene-row"><span class="rr-scene-k">Engine</span><span class="rr-scene-v">GPU Render · Path Trace</span></div>
+        </div>
+
+        <!-- Time saved callout -->
+        <div class="rr-callout" id="rrCallout">
+          <div class="rr-callout-num" id="rrTimeSaved">—</div>
+          <div class="rr-callout-lbl">saved per render</div>
+          <div class="rr-callout-sub">That's time back in your day. Not waiting. Creating.</div>
+        </div>
+
+        <div class="rr-footer">
+          The director doesn't wait for the card.<br>
+          <span>導演等待渲染的時間，已經結束了。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -784,11 +998,92 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:380px;margin-bottom:14px;">
-        <span>[ CAPABLE — FRONT HERO ]<br>RTX 5060 Ti front · saber slash geometry<br>Cold dark industrial · crimson + blue accents ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:150px;">
-        <span>[ OUTPUT PORTS ]<br>3×DP · HDMI · premium rear bracket ]</span>
+      <!-- ── VFX WORKSTATION ── -->
+      <div class="vfx-wrap" id="vfxWrap">
+        <div class="vfx-header">
+          <span class="vfx-eyebrow">3 × DisplayPort · Active</span>
+          <div class="vfx-live"><div class="vfx-live-dot"></div>All Screens Live</div>
+        </div>
+        <div class="vfx-desk">
+          <!-- Left: After Effects preview -->
+          <div class="vfx-mon vfx-mon-left" id="vfxMonL">
+            <div class="vfx-bezel">
+              <div class="vfx-screen vfx-screen-ae">
+                <div class="vfx-ae-comp">
+                  <!-- Explosion VFX layers -->
+                  <div class="vfx-ae-bg"></div>
+                  <div class="vfx-ae-explosion" id="vfxExplosion"></div>
+                  <div class="vfx-ae-overlay"></div>
+                </div>
+                <div class="vfx-ae-bar">
+                  <span class="vfx-ae-label">After Effects · Comp 1</span>
+                  <span class="vfx-ae-fps" id="vfxAeFps">0 fps</span>
+                </div>
+                <div class="vfx-dp-badge">DP — 1</div>
+              </div>
+              <div class="vfx-neck"></div><div class="vfx-base"></div>
+            </div>
+            <div class="vfx-mon-label">VFX Preview</div>
+          </div>
+
+          <!-- Center: DaVinci main timeline -->
+          <div class="vfx-mon vfx-mon-center" id="vfxMonC">
+            <div class="vfx-bezel vfx-bezel-main">
+              <div class="vfx-screen vfx-screen-dv">
+                <!-- DaVinci Resolve UI -->
+                <div class="vfx-dv-top">
+                  <div class="vfx-dv-tabs">
+                    <div class="vfx-tab">Cut</div>
+                    <div class="vfx-tab vfx-tab-active">Edit</div>
+                    <div class="vfx-tab">Color</div>
+                    <div class="vfx-tab">Fusion</div>
+                  </div>
+                </div>
+                <div class="vfx-dv-preview">
+                  <div class="vfx-preview-frame" id="vfxPreview">
+                    <div class="vfx-frame-bg"></div>
+                    <div class="vfx-frame-tc" id="vfxTc">01:24:08:16</div>
+                  </div>
+                </div>
+                <div class="vfx-dv-timeline">
+                  <div class="vfx-tl-tracks" id="vfxTracks"></div>
+                  <div class="vfx-tl-playhead" id="vfxPlayhead"></div>
+                </div>
+                <div class="vfx-dp-badge">DP — 2</div>
+              </div>
+              <div class="vfx-neck"></div><div class="vfx-base vfx-base-wide"></div>
+            </div>
+            <div class="vfx-mon-label vfx-label-main">DaVinci Resolve · 4K RAW</div>
+          </div>
+
+          <!-- Right: Render queue -->
+          <div class="vfx-mon vfx-mon-right" id="vfxMonR">
+            <div class="vfx-bezel">
+              <div class="vfx-screen vfx-screen-rq">
+                <div class="vfx-rq-header">Render Queue</div>
+                <div class="vfx-rq-list" id="vfxRqList">
+                  <div class="vfx-rq-item rq-done"><div class="vfx-rq-dot done"></div><span>Scene_01_Final</span><span class="vfx-rq-time">11:48</span></div>
+                  <div class="vfx-rq-item rq-active"><div class="vfx-rq-dot active"></div><span>Scene_02_VFX</span><div class="vfx-rq-prog"><div class="vfx-rq-fill" id="vfxRqFill"></div></div></div>
+                  <div class="vfx-rq-item rq-wait"><div class="vfx-rq-dot wait"></div><span>Scene_03_Color</span><span class="vfx-rq-time">—</span></div>
+                  <div class="vfx-rq-item rq-wait"><div class="vfx-rq-dot wait"></div><span>Scene_04_Final</span><span class="vfx-rq-time">—</span></div>
+                </div>
+                <div class="vfx-rq-vram">
+                  <span class="vfx-vram-lbl">VRAM</span>
+                  <div class="vfx-vram-bar"><div class="vfx-vram-fill" id="vfxVramFill"></div></div>
+                  <span class="vfx-vram-val" id="vfxVramVal">0 GB</span>
+                </div>
+                <div class="vfx-dp-badge">DP — 3</div>
+              </div>
+              <div class="vfx-neck"></div><div class="vfx-base"></div>
+            </div>
+            <div class="vfx-mon-label">Render Queue</div>
+          </div>
+        </div>
+
+        <div class="vfx-footer">
+          Three screens. One card. No proxy. No compromise.<br>
+          <span>4K RAW · VFX 合成 · 渲染隊列——同時運作，互不干擾。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -845,8 +1140,59 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:440px;">
-        <span>[ RELIABILITY ]<br>RTX 5060 Ti in chassis · saber blue glow<br>Dual fans lit · crimson geometric slash · darkness ]</span>
+      <!-- ── DIRECTOR'S CAREER COUNTER ── -->
+      <div class="dc-wrap" id="dcWrap">
+        <div class="dc-header">
+          <span class="dc-eyebrow">A Director's Lifetime</span>
+          <span class="dc-sub">@ 1 film every 3 years</span>
+        </div>
+
+        <!-- Film strip -->
+        <div class="dc-strip-wrap">
+          <div class="dc-strip" id="dcStrip">
+            <!-- Frames generated by JS -->
+          </div>
+          <div class="dc-strip-fade-l"></div>
+          <div class="dc-strip-fade-r"></div>
+        </div>
+
+        <!-- Counter -->
+        <div class="dc-counter-area">
+          <div class="dc-counter-label">Films completed in RTX 5060 Ti's theoretical lifespan</div>
+          <div class="dc-counter-row">
+            <div class="dc-num" id="dcNum">0</div>
+            <div class="dc-unit">films</div>
+          </div>
+          <div class="dc-counter-sub" id="dcSub">Counting...</div>
+        </div>
+
+        <!-- Timeline bar -->
+        <div class="dc-tl">
+          <div class="dc-tl-row">
+            <div class="dc-tl-label dc-lbl-career">Director's career · ~40 yrs</div>
+            <div class="dc-tl-track dc-track-career">
+              <div class="dc-tl-fill dc-fill-career" id="dcFillCareer"></div>
+            </div>
+            <div class="dc-tl-val">13 films</div>
+          </div>
+          <div class="dc-tl-row">
+            <div class="dc-tl-label dc-lbl-rtx">RTX 5060 Ti · 171 yrs</div>
+            <div class="dc-tl-track dc-track-rtx">
+              <div class="dc-tl-fill dc-fill-rtx" id="dcFillRtx"></div>
+            </div>
+            <div class="dc-tl-val dc-val-rtx">57 films</div>
+          </div>
+        </div>
+
+        <div class="dc-punchline" id="dcPunchline">
+          <span>Theoretically still running</span>
+          <div class="dc-still-dot"></div>
+        </div>
+
+        <div class="dc-footer">
+          From first short film to final masterpiece — and then some.<br>
+          <span>171 年的理論壽命，足夠陪一個導演走完整個職業生涯，還多出四輩子。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1450,6 +1796,223 @@ document.querySelectorAll('.saber-line-h').forEach(el=>{
     }
   },{threshold:.1});
   obs.observe(tbl);
+})();
+
+/* ══ RENDER TIME REVERSAL ══ */
+(function(){
+  var wrap = document.getElementById('rrWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var oldRow = document.getElementById('rrOld');
+    var newRow = document.getElementById('rrNew');
+    var fillOld = document.getElementById('rrFillOld');
+    var fillNew = document.getElementById('rrFillNew');
+    var doneLabel = document.getElementById('rrDoneLabel');
+    var elapsedOld = document.getElementById('rrElapsedOld');
+    var elapsedNew = document.getElementById('rrElapsedNew');
+    var callout = document.getElementById('rrCallout');
+    var timeSaved = document.getElementById('rrTimeSaved');
+
+    setTimeout(function(){ if(oldRow) oldRow.classList.add('vis'); }, 100);
+    setTimeout(function(){ if(newRow) newRow.classList.add('vis'); }, 300);
+
+    // Old GPU: slow progress bar (simulated crawl)
+    setTimeout(function(){
+      if(fillOld) fillOld.style.width = '28%'; // Only 28% done — still rendering
+      var secs = 0;
+      var oldTimer = setInterval(function(){
+        secs++;
+        var m = Math.floor(secs/60), s = secs%60;
+        if(elapsedOld) elapsedOld.textContent = m+':'+(s<10?'0':'')+s;
+        if(secs >= 999) clearInterval(oldTimer);
+      }, 100); // accelerated for demo
+    }, 500);
+
+    // RTX 5060Ti: fast — bar fills in 0.8s then done
+    setTimeout(function(){
+      if(fillNew){ fillNew.style.width = '100%'; }
+      // Elapsed counts up fast to 11:48
+      var secs = 0, target = 708;
+      var newTimer = setInterval(function(){
+        secs += 12;
+        if(secs >= target) secs = target;
+        var m = Math.floor(secs/60), s = secs%60;
+        if(elapsedNew) elapsedNew.textContent = m+':'+(s<10?'0':'')+s;
+        if(secs >= target){ clearInterval(newTimer); if(doneLabel) doneLabel.classList.add('vis'); }
+      }, 15);
+    }, 600);
+
+    // Time saved callout
+    setTimeout(function(){
+      if(callout) callout.classList.add('vis');
+      if(timeSaved){
+        var dur = 1000, t0 = performance.now();
+        (function tick(now){
+          var p = Math.min((now-t0)/dur,1);
+          var v = 1-Math.pow(1-p,3);
+          var mins = Math.round(v*184);
+          var h = Math.floor(mins/60), m = mins%60;
+          timeSaved.textContent = h+'h '+(m<10?'0':'')+m+'m';
+          if(p<1) requestAnimationFrame(tick);
+          else timeSaved.textContent = '3h 00m';
+        })(performance.now());
+      }
+    }, 1600);
+  }, {threshold: 0.25}).observe(wrap);
+})();
+
+/* ══ VFX WORKSTATION ══ */
+(function(){
+  var wrap = document.getElementById('vfxWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var monL = document.getElementById('vfxMonL');
+    var monC = document.getElementById('vfxMonC');
+    var monR = document.getElementById('vfxMonR');
+    setTimeout(function(){ if(monL) monL.classList.add('vis'); }, 100);
+    setTimeout(function(){ if(monC) monC.classList.add('vis'); }, 300);
+    setTimeout(function(){ if(monR) monR.classList.add('vis'); }, 500);
+
+    // Build timeline tracks
+    setTimeout(function(){
+      var tl = document.getElementById('vfxTracks');
+      if(!tl) return;
+      var cols = ['rgba(192,232,255,.2)','rgba(64,144,208,.25)','rgba(200,168,74,.2)','rgba(192,24,58,.15)','rgba(64,144,208,.12)'];
+      cols.forEach(function(c){
+        var row = document.createElement('div');
+        row.className = 'vfx-tl-track-row';
+        row.style.cssText = 'background:'+c+';border-radius:1px;height:100%;';
+        tl.appendChild(row);
+      });
+    }, 200);
+
+    // Move playhead after tracks appear
+    setTimeout(function(){
+      var ph = document.getElementById('vfxPlayhead');
+      if(ph) ph.style.left = '65%';
+    }, 600);
+
+    // AE FPS counter
+    setTimeout(function(){
+      var el = document.getElementById('vfxAeFps');
+      if(!el) return;
+      var dur = 800, target = 24, t0 = performance.now();
+      (function tick(now){
+        var p = Math.min((now-t0)/dur,1);
+        el.textContent = Math.round((1-Math.pow(1-p,3))*target) + ' fps';
+        if(p<1) requestAnimationFrame(tick);
+        else el.textContent = '24 fps';
+      })(performance.now());
+    }, 400);
+
+    // Generate explosion particles on AE screen
+    setTimeout(function(){
+      var exp = document.getElementById('vfxExplosion');
+      if(!exp) return;
+      for(var i=0;i<12;i++){
+        var p = document.createElement('div');
+        var size = 3+Math.random()*8;
+        var cx = 30+Math.random()*40, cy = 20+Math.random()*60;
+        p.style.cssText = 'position:absolute;border-radius:50%;width:'+size+'px;height:'+size+'px;left:'+cx+'%;top:'+cy+'%;background:radial-gradient(circle,rgba(240,140,40,.8),rgba(200,80,20,.3),transparent);animation:vfxExpPulse '+(1+Math.random())+'s ease-in-out '+(Math.random()*2)+'s infinite;';
+        exp.appendChild(p);
+      }
+      var style = document.createElement('style');
+      style.textContent = '@keyframes vfxExpPulse{0%,100%{opacity:.4;transform:scale(1);}50%{opacity:.9;transform:scale(1.3);}}';
+      document.head.appendChild(style);
+    }, 300);
+
+    // Render queue progress
+    setTimeout(function(){
+      var fill = document.getElementById('vfxRqFill');
+      if(fill){ fill.style.width='72%'; }
+    }, 700);
+
+    // VRAM fill
+    setTimeout(function(){
+      var f = document.getElementById('vfxVramFill');
+      var v = document.getElementById('vfxVramVal');
+      if(f) f.style.width = '68%';
+      if(v){
+        var dur = 1000, t0 = performance.now();
+        (function tick(now){
+          var p = Math.min((now-t0)/dur,1);
+          v.textContent = ((1-Math.pow(1-p,3))*5.4).toFixed(1)+' GB';
+          if(p<1) requestAnimationFrame(tick);
+          else v.textContent = '5.4 GB';
+        })(performance.now());
+      }
+    }, 600);
+
+  }, {threshold: 0.2}).observe(wrap);
+})();
+
+/* ══ DIRECTOR'S CAREER COUNTER ══ */
+(function(){
+  var wrap = document.getElementById('dcWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var strip = document.getElementById('dcStrip');
+    var TOTAL = 57;
+
+    // Build film frames
+    if(strip){
+      for(var i=1;i<=TOTAL+4;i++){
+        var frame = document.createElement('div');
+        frame.className = 'dc-frame' + (i===TOTAL?' dc-frame-rtx':'');
+        frame.innerHTML = '<div class="dc-frame-num">'+(i<10?'0':'')+i+'</div><div class="dc-frame-label">'+(i===TOTAL?'RTX 5060 Ti':'Film '+(i<10?'0':'')+i)+'</div>';
+        strip.appendChild(frame);
+      }
+    }
+
+    // Stagger frames lighting up, then scroll strip
+    var frames = strip ? strip.querySelectorAll('.dc-frame') : [];
+    var counter = 0;
+    var fillCareer = document.getElementById('dcFillCareer');
+    var fillRtx = document.getElementById('dcFillRtx');
+    var numEl = document.getElementById('dcNum');
+    var subEl = document.getElementById('dcSub');
+    var punchline = document.getElementById('dcPunchline');
+
+    function lightNext(){
+      if(counter >= frames.length) return;
+      frames[counter].classList.add('lit');
+      if(counter === TOTAL-1) frames[counter].classList.add('lit-rtx');
+      // Scroll strip to keep active frame in view
+      if(strip && counter > 2){
+        strip.style.transform = 'translateX(-'+(counter-2)*52+'px)';
+      }
+      // Update counter display
+      if(numEl && counter < TOTAL) numEl.textContent = counter+1;
+      counter++;
+      if(counter < TOTAL){
+        setTimeout(lightNext, 80);
+      } else {
+        // Final frame
+        frames[TOTAL-1].classList.add('lit-rtx');
+        if(numEl) numEl.textContent = TOTAL;
+        if(subEl) subEl.textContent = 'Theoretical lifespan: still counting.';
+        if(punchline) setTimeout(function(){ punchline.classList.add('vis'); }, 400);
+      }
+    }
+
+    // Timeline bars
+    setTimeout(function(){
+      if(fillCareer) fillCareer.style.width = '23%'; // 40/171 years
+      if(fillRtx)    fillRtx.style.width    = '100%';
+    }, 200);
+
+    setTimeout(lightNext, 400);
+
+  }, {threshold: 0.2}).observe(wrap);
 })();
 </script>
 </body>
