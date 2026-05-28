@@ -366,6 +366,140 @@ section{position:relative;width:100%;overflow:hidden;}
   .why-cards{grid-template-columns:1fr;}
 }
 @media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+/* ══ BEFORE / AFTER ══ */
+.ba-wrap{width:100%;background:var(--bg2);border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 12px var(--shadow);}
+.ba-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:1px solid var(--border);}
+.ba-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.ba-tag{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;color:var(--teal);border:1px solid rgba(26,144,112,.2);padding:3px 8px;background:rgba(26,144,112,.04);}
+.ba-screens{display:flex;align-items:flex-end;gap:0;padding:16px 12px 10px;}
+.ba-side{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;transition:opacity .6s ease,transform .6s ease;}
+.ba-before{transform:translateX(-10px);}
+.ba-after{transform:translateX(10px);}
+.ba-side.vis{opacity:1;transform:none;}
+.ba-mon{display:flex;flex-direction:column;align-items:center;}
+.ba-bezel{display:flex;flex-direction:column;align-items:center;width:100%;}
+.ba-screen{width:100%;aspect-ratio:4/3;border-radius:2px 2px 0 0;overflow:hidden;position:relative;}
+.ba-screen-off{background:#1a1a1a;border:1px solid #333;display:flex;align-items:center;justify-content:center;}
+.ba-no-signal{text-align:center;}
+.ba-ns-icon{font-size:18px;margin-bottom:4px;opacity:.5;}
+.ba-ns-text{font-family:var(--ff-m);font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,.3);text-transform:uppercase;}
+.ba-ns-sub{font-family:var(--ff-m);font-size:7px;color:rgba(255,255,255,.15);margin-top:3px;letter-spacing:.06em;}
+.ba-screen-on{background:#f0f4f2;border:1px solid rgba(26,144,112,.25);}
+.ba-bezel-on .ba-screen{box-shadow:0 0 12px rgba(26,144,112,.12);}
+.ba-desktop{position:absolute;inset:0;background:linear-gradient(180deg,#e8f0ec,#dde8e4);}
+.ba-taskbar{position:absolute;bottom:0;left:0;right:0;height:14%;background:rgba(26,144,112,.15);display:flex;align-items:center;padding:0 5%;gap:3%;border-top:1px solid rgba(26,144,112,.1);}
+.ba-start{width:12px;height:12px;background:rgba(26,144,112,.4);border-radius:2px;flex-shrink:0;}
+.ba-tb-icons{display:flex;gap:3px;flex:1;}
+.ba-tb-icon{width:10px;height:10px;background:rgba(26,144,112,.2);border-radius:1px;}
+.ba-clock{font-family:var(--ff-m);font-size:6px;color:rgba(26,144,112,.6);letter-spacing:.04em;flex-shrink:0;}
+.ba-desktop-icons{position:absolute;top:6px;left:6px;display:flex;flex-direction:column;gap:5px;}
+.ba-dsk-icon{width:10px;height:10px;background:rgba(26,144,112,.2);border-radius:1px;}
+.ba-window{position:absolute;top:8%;left:15%;right:5%;bottom:18%;background:#fff;border-radius:2px;box-shadow:0 2px 8px rgba(0,0,0,.1);border:1px solid rgba(0,0,0,.06);}
+.ba-win-bar{display:flex;align-items:center;gap:4px;padding:3px 6px;background:rgba(26,144,112,.08);border-bottom:1px solid rgba(26,144,112,.1);}
+.ba-win-dots{display:flex;gap:2px;} .ba-win-dots span{width:4px;height:4px;border-radius:50%;background:rgba(26,144,112,.3);}
+.ba-win-title{font-family:var(--ff-m);font-size:5.5px;color:var(--label);letter-spacing:.04em;}
+.ba-win-body{padding:6px;display:flex;flex-direction:column;gap:4px;}
+.ba-excel-row{height:3px;background:rgba(26,144,112,.1);border-radius:1px;}
+.ba-neck{width:10%;height:8px;background:rgba(0,0,0,.06);}
+.ba-base{width:35%;height:4px;background:rgba(0,0,0,.05);border-radius:2px;}
+.ba-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);}
+.ba-label-after{color:var(--teal);}
+.ba-desc{font-family:var(--ff-m);font-size:8px;letter-spacing:.04em;color:var(--label);text-align:center;line-height:1.6;}
+.ba-desc-after{color:var(--teal2);}
+.ba-arrow{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;padding:0 8px;padding-bottom:32px;opacity:0;transition:opacity .5s ease .3s;}
+.ba-arrow.vis{opacity:1;}
+.ba-arrow-line{width:1px;height:20px;background:rgba(26,144,112,.2);}
+.ba-arrow-head{font-size:16px;color:var(--teal);opacity:.7;}
+.ba-arrow-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:var(--label);text-align:center;line-height:1.5;}
+.ba-status-row{display:flex;flex-direction:column;gap:5px;padding:10px 14px;border-top:1px solid var(--border);opacity:0;transition:opacity .5s ease;}
+.ba-status-row.vis{opacity:1;}
+.ba-status-item{display:flex;align-items:center;gap:7px;font-family:var(--ff-m);font-size:8px;letter-spacing:.04em;color:var(--label);}
+.ba-status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.ba-dot-ok{background:var(--teal);box-shadow:0 0 4px rgba(26,144,112,.4);}
+.ba-footer{padding:11px 14px;border-top:1px solid var(--border);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.ba-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--label);}
+
+/* ══ DUAL MONITOR DIAGRAM ══ */
+.dm2-wrap{width:100%;background:var(--bg2);border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 12px var(--shadow);}
+.dm2-header{padding:12px 14px 10px;border-bottom:1px solid var(--border);}
+.dm2-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.dm2-diagram{padding:14px 12px 8px;display:flex;align-items:flex-end;gap:12px;}
+.dm2-card{flex-shrink:0;opacity:0;transition:opacity .6s ease;}
+.dm2-card.vis{opacity:1;}
+.dm2-card-body{background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:10px 10px 8px;width:80px;}
+.dm2-card-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:var(--label);margin-bottom:8px;text-align:center;}
+.dm2-ports-out{display:flex;flex-direction:column;gap:5px;}
+.dm2-port-item{display:flex;align-items:center;gap:6px;}
+.dm2-port{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;padding:3px 7px;border:1px solid transparent;border-radius:1px;flex-shrink:0;}
+.dm2-p-vga{color:var(--label);border-color:rgba(26,144,112,.15);background:rgba(26,144,112,.04);}
+.dm2-p-hdmi{color:var(--teal);border-color:rgba(26,144,112,.3);background:rgba(26,144,112,.06);}
+.dm2-p-dvi{color:var(--label);border-color:rgba(26,144,112,.12);}
+.dm2-wire{flex:1;height:1px;background:rgba(26,144,112,.15);transition:background .4s ease,box-shadow .4s ease;}
+.dm2-wire.active{background:rgba(26,144,112,.5);box-shadow:0 0 4px rgba(26,144,112,.2);}
+.dm2-monitors{flex:1;display:flex;gap:10px;align-items:flex-end;}
+.dm2-monitor{flex:1;opacity:0;transition:opacity .6s ease,transform .6s ease;transform:translateY(8px);}
+.dm2-monitor.vis{opacity:1;transform:none;}
+.dm2-mon-bezel{display:flex;flex-direction:column;align-items:center;}
+.dm2-mon-screen{width:100%;aspect-ratio:4/3;border:1px solid rgba(0,0,0,.1);border-radius:2px 2px 0 0;overflow:hidden;background:#f8f8f8;}
+.dm2-bezel-old .dm2-mon-screen{background:#eeeeee;border-color:rgba(0,0,0,.15);}
+.dm2-bezel-new .dm2-mon-screen{background:#f0f6f4;border-color:rgba(26,144,112,.2);box-shadow:0 0 8px rgba(26,144,112,.08);}
+.dm2-screen-content{padding:6% 8%;height:100%;}
+.dm2-app-bar{height:10%;border-radius:1px;margin-bottom:6px;}
+.dm2-app-rows{display:flex;flex-direction:column;gap:4px;}
+.dm2-app-row{height:3px;background:rgba(0,0,0,.1);border-radius:1px;}
+.dm2-browser-bar{display:flex;align-items:center;gap:3px;margin-bottom:5px;}
+.dm2-browser-dot{width:4px;height:4px;border-radius:50%;background:rgba(26,144,112,.2);}
+.dm2-url-bar{flex:1;height:5px;background:rgba(26,144,112,.1);border-radius:2px;}
+.dm2-mon-neck{width:10%;height:7px;background:rgba(0,0,0,.06);}
+.dm2-mon-base{width:35%;height:4px;background:rgba(0,0,0,.05);border-radius:2px;}
+.dm2-mon-tag{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.04em;color:var(--label);text-align:center;margin-top:6px;line-height:1.6;}
+.dm2-mon-tag span{color:var(--label);opacity:.6;font-size:7px;}
+.dm2-tag-new{color:var(--teal2)!important;}
+.dm2-port-detail{display:flex;gap:0;border-top:1px solid var(--border);}
+.dm2-pd-item{flex:1;padding:10px 10px;border-right:1px solid var(--border);}
+.dm2-pd-item:last-child{border-right:none;}
+.dm2-pd-badge{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;padding:3px 8px;border:1px solid transparent;display:inline-block;margin-bottom:5px;}
+.dm2-pd-vga{color:var(--label);border-color:rgba(26,144,112,.2);}
+.dm2-pd-hdmi{color:var(--teal);border-color:rgba(26,144,112,.35);background:rgba(26,144,112,.04);}
+.dm2-pd-dvi{color:var(--label);border-color:rgba(26,144,112,.15);}
+.dm2-pd-desc{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.03em;color:var(--label);line-height:1.6;}
+.dm2-footer{padding:11px 14px;border-top:1px solid var(--border);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.dm2-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--label);}
+
+/* ══ UPTIME STATUS PANEL ══ */
+.up-wrap{width:100%;background:var(--bg2);border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 12px var(--shadow);}
+.up-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:1px solid var(--border);}
+.up-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.up-online{display:flex;align-items:center;gap:5px;font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;color:var(--teal);}
+.up-online-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:upPulse 2s ease-in-out infinite;}
+@keyframes upPulse{0%,100%{opacity:.4;}50%{opacity:1;box-shadow:0 0 6px rgba(26,144,112,.5);}}
+.up-counter{padding:18px 14px 14px;border-bottom:1px solid var(--border);text-align:center;}
+.up-counter-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);margin-bottom:8px;}
+.up-counter-num{font-family:var(--ff-m);font-size:clamp(16px,2.5vw,26px);letter-spacing:.04em;color:var(--teal2);line-height:1;font-weight:500;}
+.up-counter-sub{font-family:var(--ff-m);font-size:7px;letter-spacing:.08em;color:var(--label);margin-top:5px;text-transform:uppercase;}
+.up-vitals{display:flex;flex-direction:column;gap:0;border-bottom:1px solid var(--border);}
+.up-vital{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);opacity:0;transition:opacity .5s ease;}
+.up-vital:last-child{border-bottom:none;}
+.up-vital.vis{opacity:1;}
+.up-vital-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;color:var(--label);width:80px;flex-shrink:0;}
+.up-vital-bar{flex:1;height:4px;background:rgba(26,144,112,.08);border-radius:2px;overflow:hidden;}
+.up-vbar{height:100%;border-radius:2px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+.up-vbar-temp{background:rgba(26,144,112,.4);}
+.up-vbar-power{background:rgba(26,144,112,.5);}
+.up-vbar-fan{background:rgba(26,144,112,.3);}
+.up-vital-val{font-family:var(--ff-m);font-size:10px;color:var(--label);width:52px;text-align:right;flex-shrink:0;}
+.up-val-ok{color:var(--teal2)!important;}
+.up-log{padding:10px 14px;border-bottom:1px solid var(--border);}
+.up-log-title{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--label);margin-bottom:7px;}
+.up-log-row{display:flex;align-items:center;gap:7px;padding:3px 0;font-family:var(--ff-m);font-size:7.5px;letter-spacing:.03em;color:var(--label);}
+.up-log-blank{opacity:.35;}
+.up-log-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.up-log-dot.ok{background:var(--teal);}
+.up-log-dot.blank{background:rgba(26,144,112,.2);}
+.up-log-time{color:rgba(26,144,112,.5);width:46px;flex-shrink:0;font-size:7px;}
+.up-footer{padding:11px 14px;font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.up-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--label);}
+
 </style>
 </head>
 <body>
@@ -559,11 +693,104 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:360px;margin-bottom:12px;">
-        <span>[ FIERCER — CARD PROFILE ]<br>R5230 1GB side · single fan shroud<br>Clean light · minimal shadows ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:120px;">
-        <span>[ CAICOS CORE ]<br>PCB detail · Caicos chip visible ]</span>
+      <!-- ── BEFORE / AFTER ── -->
+      <div class="ba-wrap" id="baWrap">
+        <div class="ba-header">
+          <span class="ba-eyebrow">Before · After</span>
+          <span class="ba-tag">R5230 1GB Installed</span>
+        </div>
+        <div class="ba-screens">
+          <!-- Before -->
+          <div class="ba-side ba-before" id="baBefore">
+            <div class="ba-mon">
+              <div class="ba-bezel">
+                <div class="ba-screen ba-screen-off" id="baScreenOff">
+                  <div class="ba-no-signal">
+                    <div class="ba-ns-icon">⚠</div>
+                    <div class="ba-ns-text">NO SIGNAL</div>
+                    <div class="ba-ns-sub">Check video cable</div>
+                  </div>
+                </div>
+                <div class="ba-neck"></div>
+                <div class="ba-base"></div>
+              </div>
+            </div>
+            <div class="ba-label ba-label-before">Before</div>
+            <div class="ba-desc">主機板無內顯<br>螢幕無訊號</div>
+          </div>
+
+          <!-- Arrow -->
+          <div class="ba-arrow" id="baArrow">
+            <div class="ba-arrow-line"></div>
+            <div class="ba-arrow-head">→</div>
+            <div class="ba-arrow-label">Insert<br>R5230</div>
+          </div>
+
+          <!-- After -->
+          <div class="ba-side ba-after" id="baAfter">
+            <div class="ba-mon">
+              <div class="ba-bezel ba-bezel-on">
+                <div class="ba-screen ba-screen-on" id="baScreenOn">
+                  <!-- Desktop simulation -->
+                  <div class="ba-desktop">
+                    <div class="ba-taskbar">
+                      <div class="ba-start"></div>
+                      <div class="ba-tb-icons">
+                        <div class="ba-tb-icon"></div>
+                        <div class="ba-tb-icon"></div>
+                        <div class="ba-tb-icon"></div>
+                      </div>
+                      <div class="ba-clock" id="baClock">09:24</div>
+                    </div>
+                    <div class="ba-desktop-icons">
+                      <div class="ba-dsk-icon"></div>
+                      <div class="ba-dsk-icon"></div>
+                      <div class="ba-dsk-icon"></div>
+                    </div>
+                    <!-- Open window -->
+                    <div class="ba-window" id="baWindow">
+                      <div class="ba-win-bar">
+                        <div class="ba-win-dots"><span></span><span></span><span></span></div>
+                        <div class="ba-win-title">Microsoft Excel</div>
+                      </div>
+                      <div class="ba-win-body">
+                        <div class="ba-excel-row" style="width:90%"></div>
+                        <div class="ba-excel-row" style="width:70%"></div>
+                        <div class="ba-excel-row" style="width:85%"></div>
+                        <div class="ba-excel-row" style="width:60%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ba-neck"></div>
+                <div class="ba-base"></div>
+              </div>
+            </div>
+            <div class="ba-label ba-label-after">After</div>
+            <div class="ba-desc ba-desc-after">正常顯示<br>即插即用</div>
+          </div>
+        </div>
+
+        <!-- Status row -->
+        <div class="ba-status-row" id="baStatusRow">
+          <div class="ba-status-item">
+            <div class="ba-status-dot ba-dot-ok"></div>
+            <span>Display output — Active</span>
+          </div>
+          <div class="ba-status-item">
+            <div class="ba-status-dot ba-dot-ok"></div>
+            <span>No external power required</span>
+          </div>
+          <div class="ba-status-item">
+            <div class="ba-status-dot ba-dot-ok"></div>
+            <span>18W · PCIe slot only</span>
+          </div>
+        </div>
+
+        <div class="ba-footer">
+          It wasn't broken. It just needed a starting point.<br>
+          <span>不是壞了。只是需要一個開始。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -646,11 +873,100 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:340px;margin-bottom:12px;">
-        <span>[ CAPABLE — PORT BRACKET ]<br>R5230 1GB rear · VGA · HDMI · DVI<br>Clean studio · all three outputs visible ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:130px;">
-        <span>[ MULTI-MONITOR SETUP ]<br>Two displays · R5230 driving both ]</span>
+      <!-- ── DUAL MONITOR DIAGRAM ── -->
+      <div class="dm2-wrap" id="dm2Wrap">
+        <div class="dm2-header">
+          <span class="dm2-eyebrow">Any Screen. Any Era.</span>
+        </div>
+        <div class="dm2-diagram">
+          <!-- Card -->
+          <div class="dm2-card" id="dm2Card">
+            <div class="dm2-card-body">
+              <div class="dm2-card-label">R5230 1GB</div>
+              <div class="dm2-ports-out">
+                <div class="dm2-port-item" id="dm2Vga">
+                  <div class="dm2-port dm2-p-vga">VGA</div>
+                  <div class="dm2-wire" id="dm2WireVga"></div>
+                </div>
+                <div class="dm2-port-item" id="dm2Hdmi">
+                  <div class="dm2-port dm2-p-hdmi">HDMI</div>
+                  <div class="dm2-wire" id="dm2WireHdmi"></div>
+                </div>
+                <div class="dm2-port-item" id="dm2Dvi">
+                  <div class="dm2-port dm2-p-dvi">DVI</div>
+                  <div class="dm2-wire" id="dm2WireDvi"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Monitors -->
+          <div class="dm2-monitors">
+            <!-- Monitor A: old VGA -->
+            <div class="dm2-monitor" id="dm2MonA">
+              <div class="dm2-mon-bezel dm2-bezel-old">
+                <div class="dm2-mon-screen dm2-screen-a">
+                  <div class="dm2-screen-content">
+                    <div class="dm2-app-bar" style="background:rgba(0,100,180,.15)"></div>
+                    <div class="dm2-app-rows">
+                      <div class="dm2-app-row" style="width:80%"></div>
+                      <div class="dm2-app-row" style="width:65%"></div>
+                      <div class="dm2-app-row" style="width:90%"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="dm2-mon-neck"></div>
+                <div class="dm2-mon-base"></div>
+              </div>
+              <div class="dm2-mon-tag">舊螢幕 · VGA<br><span>任何年代</span></div>
+            </div>
+
+            <!-- Monitor B: modern HDMI -->
+            <div class="dm2-monitor" id="dm2MonB">
+              <div class="dm2-mon-bezel dm2-bezel-new">
+                <div class="dm2-mon-screen dm2-screen-b">
+                  <div class="dm2-screen-content">
+                    <div class="dm2-browser-bar">
+                      <div class="dm2-browser-dot"></div>
+                      <div class="dm2-browser-dot"></div>
+                      <div class="dm2-browser-dot"></div>
+                      <div class="dm2-url-bar"></div>
+                    </div>
+                    <div class="dm2-app-rows" style="margin-top:4px;">
+                      <div class="dm2-app-row" style="width:70%"></div>
+                      <div class="dm2-app-row" style="width:85%"></div>
+                      <div class="dm2-app-row" style="width:55%"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="dm2-mon-neck"></div>
+                <div class="dm2-mon-base"></div>
+              </div>
+              <div class="dm2-mon-tag dm2-tag-new">現代螢幕 · HDMI<br><span>1080P · 清晰</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Port detail row -->
+        <div class="dm2-port-detail" id="dm2PortDetail">
+          <div class="dm2-pd-item">
+            <div class="dm2-pd-badge dm2-pd-vga">VGA</div>
+            <div class="dm2-pd-desc">D-Sub 15 · Legacy<br>二十年前的螢幕也能接</div>
+          </div>
+          <div class="dm2-pd-item">
+            <div class="dm2-pd-badge dm2-pd-hdmi">HDMI</div>
+            <div class="dm2-pd-desc">Digital · 1080P<br>現代螢幕直接連</div>
+          </div>
+          <div class="dm2-pd-item">
+            <div class="dm2-pd-badge dm2-pd-dvi">DVI</div>
+            <div class="dm2-pd-desc">Dual-Link Digital<br>介於兩者之間的橋</div>
+          </div>
+        </div>
+
+        <div class="dm2-footer">
+          Three ports. No adapters. No compromises.<br>
+          <span>一張卡，接任何年代的螢幕。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -700,8 +1016,52 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:400px;">
-        <span>[ RELIABILITY ]<br>R5230 installed in slim chassis<br>Natural light · clean deployment ]</span>
+      <!-- ── UPTIME STATUS PANEL ── -->
+      <div class="up-wrap" id="upWrap">
+        <div class="up-header">
+          <span class="up-eyebrow">System Status</span>
+          <div class="up-online"><div class="up-online-dot"></div>Running</div>
+        </div>
+
+        <!-- Uptime counter -->
+        <div class="up-counter">
+          <div class="up-counter-label">Continuous Uptime</div>
+          <div class="up-counter-num" id="upNum">—</div>
+          <div class="up-counter-sub">days · hours · minutes · seconds</div>
+        </div>
+
+        <!-- Vitals -->
+        <div class="up-vitals" id="upVitals">
+          <div class="up-vital">
+            <div class="up-vital-label">Temperature</div>
+            <div class="up-vital-bar"><div class="up-vbar up-vbar-temp" id="upTempBar"></div></div>
+            <div class="up-vital-val up-val-ok" id="upTempVal">0°C</div>
+          </div>
+          <div class="up-vital">
+            <div class="up-vital-label">Power Draw</div>
+            <div class="up-vital-bar"><div class="up-vbar up-vbar-power" id="upPowerBar"></div></div>
+            <div class="up-vital-val up-val-ok" id="upPowerVal">0W</div>
+          </div>
+          <div class="up-vital">
+            <div class="up-vital-label">Fan Speed</div>
+            <div class="up-vital-bar"><div class="up-vbar up-vbar-fan" id="upFanBar"></div></div>
+            <div class="up-vital-val" id="upFanVal">0 RPM</div>
+          </div>
+        </div>
+
+        <!-- Event log -->
+        <div class="up-log" id="upLog">
+          <div class="up-log-title">Event Log</div>
+          <div class="up-log-row"><div class="up-log-dot ok"></div><span class="up-log-time">—</span><span>System boot · Display initialized</span></div>
+          <div class="up-log-row"><div class="up-log-dot ok"></div><span class="up-log-time">—</span><span>Thermal stable · 18W confirmed</span></div>
+          <div class="up-log-row up-log-blank"><div class="up-log-dot blank"></div><span class="up-log-time">—</span><span>No anomalies detected</span></div>
+          <div class="up-log-row up-log-blank"><div class="up-log-dot blank"></div><span class="up-log-time">—</span><span>No anomalies detected</span></div>
+        </div>
+
+        <div class="up-footer">
+          No complex fan curves. No heat spikes. Just display stability.<br>
+          <span>插上去就忘了它的存在。這正是重點。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1146,6 +1506,128 @@ function portHighlight(){
     }
   },{threshold:.1});
   obs.observe(tbl);
+})();
+
+/* ══ BEFORE / AFTER ══ */
+(function(){
+  var wrap = document.getElementById('baWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var before = document.getElementById('baBefore');
+    var after  = document.getElementById('baAfter');
+    var arrow  = document.getElementById('baArrow');
+    var status = document.getElementById('baStatusRow');
+    var clock  = document.getElementById('baClock');
+    // Live clock on desktop
+    function updateClock(){
+      if(!clock) return;
+      var now = new Date();
+      clock.textContent = String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+    }
+    setInterval(updateClock,1000); updateClock();
+    setTimeout(function(){ if(before) before.classList.add('vis'); },100);
+    setTimeout(function(){ if(arrow)  arrow.classList.add('vis');  },400);
+    setTimeout(function(){ if(after)  after.classList.add('vis');  },700);
+    setTimeout(function(){ if(status) status.classList.add('vis'); },1100);
+  },{threshold:0.25}).observe(wrap);
+})();
+
+/* ══ DUAL MONITOR DIAGRAM ══ */
+(function(){
+  var wrap = document.getElementById('dm2Wrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var card  = document.getElementById('dm2Card');
+    var monA  = document.getElementById('dm2MonA');
+    var monB  = document.getElementById('dm2MonB');
+    var wVga  = document.getElementById('dm2WireVga');
+    var wHdmi = document.getElementById('dm2WireHdmi');
+    var wDvi  = document.getElementById('dm2WireDvi');
+    var detail= document.getElementById('dm2PortDetail');
+    setTimeout(function(){ if(card) card.classList.add('vis'); },100);
+    setTimeout(function(){ if(wVga)  wVga.classList.add('active');  },400);
+    setTimeout(function(){ if(monA)  monA.classList.add('vis');     },500);
+    setTimeout(function(){ if(wHdmi) wHdmi.classList.add('active'); },650);
+    setTimeout(function(){ if(monB)  monB.classList.add('vis');     },750);
+    setTimeout(function(){ if(wDvi)  wDvi.classList.add('active');  },900);
+    setTimeout(function(){
+      if(detail){ detail.style.opacity='0'; detail.style.transition='opacity .5s ease'; detail.style.opacity='1'; }
+    },1100);
+  },{threshold:0.25}).observe(wrap);
+})();
+
+/* ══ UPTIME PANEL ══ */
+(function(){
+  var wrap = document.getElementById('upWrap');
+  if(!wrap) return;
+  var fired = false;
+  // Start from a realistic base (2847 days = ~7.8 years of "deployment")
+  var baseSecs = 2847*86400 + 14*3600 + 33*60 + 7;
+  var startTime = Date.now();
+
+  function fmtUptime(s){
+    var d=Math.floor(s/86400), h=Math.floor((s%86400)/3600), m=Math.floor((s%3600)/60), ss=s%60;
+    return d+'d '+String(h).padStart(2,'0')+'h '+String(m).padStart(2,'0')+'m '+String(ss).padStart(2,'0')+'s';
+  }
+  function fmtDate(daysAgo){
+    var d = new Date(Date.now() - daysAgo*86400000);
+    return d.getFullYear()+'-'+(d.getMonth()+1).toString().padStart(2,'0')+'-'+d.getDate().toString().padStart(2,'0');
+  }
+
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var numEl = document.getElementById('upNum');
+    // Start counter
+    setInterval(function(){
+      var elapsed = Math.floor((Date.now()-startTime)/1000);
+      if(numEl) numEl.textContent = fmtUptime(baseSecs+elapsed);
+    },1000);
+    if(numEl) numEl.textContent = fmtUptime(baseSecs);
+    // Vitals animate in
+    var vitals = wrap.querySelectorAll('.up-vital');
+    vitals.forEach(function(v,i){
+      setTimeout(function(){ v.classList.add('vis'); },200+i*150);
+    });
+    setTimeout(function(){
+      var tb = document.getElementById('upTempBar');
+      var pb = document.getElementById('upPowerBar');
+      var fb = document.getElementById('upFanBar');
+      var tv = document.getElementById('upTempVal');
+      var pv = document.getElementById('upPowerVal');
+      var fv = document.getElementById('upFanVal');
+      if(tb) tb.style.width='32%';
+      if(pb) pb.style.width='18%';
+      if(fb) fb.style.width='28%';
+      function countTo(el,target,suffix,dur){
+        if(!el)return;
+        var t0=performance.now();
+        (function tick(now){
+          var p=Math.min((now-t0)/dur,1),v=1-Math.pow(1-p,3);
+          el.textContent=Math.round(v*target)+suffix;
+          if(p<1)requestAnimationFrame(tick);
+          else el.textContent=target+suffix;
+        })(performance.now());
+      }
+      countTo(tv,31,'°C',800);
+      countTo(pv,17.8,'W',700);
+      countTo(fv,1240,' RPM',900);
+    },400);
+    // Log timestamps
+    setTimeout(function(){
+      var logTimes = wrap.querySelectorAll('.up-log-time');
+      if(logTimes[0]) logTimes[0].textContent = fmtDate(2847);
+      if(logTimes[1]) logTimes[1].textContent = fmtDate(2847);
+      if(logTimes[2]) logTimes[2].textContent = 'Never';
+      if(logTimes[3]) logTimes[3].textContent = 'Never';
+    },600);
+  },{threshold:0.25}).observe(wrap);
 })();
 </script>
 </body>
