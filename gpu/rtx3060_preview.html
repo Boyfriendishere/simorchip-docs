@@ -361,6 +361,137 @@ section{position:relative;width:100%;overflow:hidden;}
   .gauge-wrap{display:none;}
 }
 @media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+/* ══ LATE NIGHT DAW SCENE ══ */
+.daw-wrap{width:100%;background:rgba(5,8,14,.98);border:.5px solid var(--border);overflow:hidden;}
+.daw-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:.5px solid var(--line);}
+.daw-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);}
+.daw-clock{font-family:var(--ff-d);font-size:16px;letter-spacing:.06em;color:var(--silver);opacity:.5;}
+.daw-studio{display:flex;gap:8px;padding:12px 12px 6px;align-items:flex-end;}
+/* Main monitor */
+.daw-mon-main{flex:1.8;opacity:0;transform:translateY(10px);transition:opacity .7s ease,transform .7s ease;}
+.daw-mon-main.vis{opacity:1;transform:none;}
+.daw-bezel{display:flex;flex-direction:column;align-items:center;}
+.daw-screen{width:100%;border-radius:2px 2px 0 0;overflow:hidden;position:relative;}
+.daw-screen-main{aspect-ratio:16/10;background:#060810;border:.5px solid rgba(208,220,232,.2);box-shadow:0 0 16px rgba(208,220,232,.04),0 12px 40px rgba(0,0,0,.8);}
+.daw-menubar{display:flex;align-items:center;gap:6px;padding:0 6%;height:14%;background:rgba(0,0,0,.6);border-bottom:.5px solid rgba(208,220,232,.06);}
+.daw-mbtn{width:5px;height:5px;border-radius:50%;background:rgba(208,220,232,.15);}
+.daw-mtitle{font-family:var(--ff-m);font-size:6px;letter-spacing:.06em;color:var(--label);flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.daw-transport{display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.daw-play-btn{font-size:7px;color:var(--silver);opacity:.8;}
+.daw-timecode{font-family:var(--ff-d);font-size:9px;letter-spacing:.04em;color:var(--silver);line-height:1;}
+.daw-bpm{font-family:var(--ff-m);font-size:6px;color:var(--label);letter-spacing:.06em;}
+/* Tracks area */
+.daw-tracks{position:relative;height:62%;display:flex;flex-direction:column;gap:.5px;padding:3px 0;background:rgba(0,0,0,.2);}
+.daw-track{display:flex;align-items:center;flex:1;gap:4px;padding:0 4px;}
+.daw-track-label{font-family:var(--ff-m);font-size:5.5px;letter-spacing:.04em;color:var(--label);width:28px;flex-shrink:0;white-space:nowrap;overflow:hidden;}
+.daw-track-lane{flex:1;height:100%;position:relative;background:rgba(208,220,232,.02);border-radius:1px;overflow:hidden;}
+.daw-waveform{position:absolute;inset:0;opacity:0;transition:opacity .5s ease;}
+.daw-waveform.vis{opacity:1;}
+/* Waveform shapes via gradients */
+.daw-waveform::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0px,transparent 3px,rgba(208,220,232,.25) 3px,rgba(208,220,232,.25) 4px,transparent 4px,transparent 6px);}
+.daw-wf-kick::before{background:repeating-linear-gradient(90deg,transparent 0px,transparent 8px,rgba(208,220,232,.4) 8px,rgba(208,220,232,.4) 10px,transparent 10px,transparent 18px);}
+.daw-wf-vocal::before{background:repeating-linear-gradient(90deg,rgba(208,220,232,.08) 0px,rgba(208,220,232,.3) 2px,rgba(208,220,232,.08) 4px);}
+.daw-track[data-col="silver"] .daw-waveform::before{filter:hue-rotate(0deg);background:repeating-linear-gradient(90deg,transparent 0px,transparent 2px,rgba(208,220,232,.35) 2px,rgba(208,220,232,.35) 3.5px,transparent 3.5px,transparent 6px);}
+.daw-track[data-col="blue"] .daw-waveform::before{background:repeating-linear-gradient(90deg,transparent 0px,transparent 2px,rgba(90,140,220,.5) 2px,rgba(90,140,220,.5) 3.5px,transparent 3.5px,transparent 5px);}
+.daw-track[data-col="gold"] .daw-waveform::before{background:repeating-linear-gradient(90deg,transparent 0px,transparent 2px,rgba(200,168,74,.5) 2px,rgba(200,168,74,.5) 3.5px,transparent 3.5px,transparent 5px);}
+/* Playhead */
+.daw-playhead{position:absolute;top:0;bottom:0;width:1px;background:rgba(208,220,232,.6);box-shadow:0 0 4px rgba(208,220,232,.4);left:0;transition:left 8s linear;}
+/* VU meter */
+.daw-vu{width:5px;flex-shrink:0;height:100%;background:rgba(208,220,232,.04);position:relative;border-radius:1px;overflow:hidden;}
+.daw-vu::after{content:'';position:absolute;bottom:0;left:0;right:0;height:0;border-radius:1px;transition:height .15s ease;}
+/* VRAM bar */
+.daw-vram-bar{display:flex;align-items:center;gap:5px;padding:3px 6px;background:rgba(0,0,0,.5);border-top:.5px solid rgba(208,220,232,.05);}
+.daw-vram-label{font-family:var(--ff-m);font-size:5.5px;letter-spacing:.1em;color:var(--label);flex-shrink:0;}
+.daw-vram-track{flex:1;height:3px;background:rgba(208,220,232,.06);border-radius:2px;overflow:hidden;}
+.daw-vram-fill{height:100%;width:0;background:linear-gradient(90deg,rgba(208,220,232,.4),var(--silver));border-radius:2px;transition:width 1.4s ease;}
+.daw-vram-val{font-family:var(--ff-d);font-size:8px;color:var(--silver);flex-shrink:0;letter-spacing:.03em;}
+.daw-neck{width:8%;height:7px;background:rgba(255,255,255,.05);}
+.daw-base{width:32%;height:4px;background:rgba(255,255,255,.04);border-radius:2px;}
+/* Side stack */
+.daw-side-stack{display:flex;flex-direction:column;gap:8px;flex:1;}
+.daw-mon-side{opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s ease;}
+.daw-mon-side.vis{opacity:1;transform:none;}
+.daw-bezel-dim .daw-screen{border-color:rgba(208,220,232,.1)!important;}
+.daw-screen-mv{aspect-ratio:16/10;background:#040608;border:.5px solid rgba(208,220,232,.12);position:relative;overflow:hidden;}
+.daw-mv-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(208,220,232,.04),transparent);}
+.daw-mv-label{font-family:var(--ff-m);font-size:6px;letter-spacing:.1em;color:var(--label);position:absolute;top:6px;left:6px;}
+.daw-mv-beat{position:absolute;inset:0;border:.5px solid transparent;transition:border-color .05s ease,background .05s ease;}
+.daw-mv-beat.pulse{border-color:rgba(208,220,232,.15);background:rgba(208,220,232,.02);}
+.daw-mv-port{font-family:var(--ff-m);font-size:5.5px;letter-spacing:.1em;color:rgba(208,220,232,.25);position:absolute;bottom:5px;right:6px;}
+.daw-screen-midi{aspect-ratio:16/10;background:#04060a;border:.5px solid rgba(208,220,232,.1);position:relative;overflow:hidden;}
+.daw-midi-grid{position:absolute;inset:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
+.daw-midi-pad{border-radius:1px;background:rgba(208,220,232,.06);border:.5px solid rgba(208,220,232,.1);transition:background .1s,box-shadow .1s;}
+.daw-midi-pad.hit{background:rgba(208,220,232,.25);box-shadow:0 0 5px rgba(208,220,232,.3);}
+.daw-midi-pad.hit-gold{background:rgba(200,168,74,.3);box-shadow:0 0 5px rgba(200,168,74,.4);}
+.daw-base-sm{width:40%;}
+/* Ambient glow floor */
+.daw-glow-floor{height:8px;background:linear-gradient(180deg,rgba(208,220,232,.04),transparent);margin:0 12px;}
+.daw-footer{padding:11px 14px;border-top:.5px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.daw-footer span{font-size:11px;opacity:.5;display:block;margin-top:2px;}
+
+/* ══ STUDIO GEAR SCENE ══ */
+.sg-scene{width:100%;background:rgba(5,8,14,.95);border:.5px solid var(--border);overflow:hidden;margin:20px 0;}
+.sg-header{display:flex;align-items:center;justify-content:space-between;padding:11px 14px 9px;border-bottom:.5px solid var(--line);}
+.sg-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);}
+.sg-uptime{font-family:var(--ff-m);font-size:8px;color:var(--silver);opacity:.5;letter-spacing:.06em;}
+.sg-gear{padding:12px;display:flex;flex-direction:column;gap:8px;}
+.sg-row{display:flex;gap:8px;}
+.sg-item{flex:1;opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease;}
+.sg-item.vis{opacity:1;transform:none;}
+.sg-item-wide{flex:1.6;}
+.sg-item-screen{width:100%;aspect-ratio:16/10;background:#040608;border:.5px solid rgba(208,220,232,.12);border-radius:1px;overflow:hidden;position:relative;}
+.sg-screen-daw{background:#040610;}
+.sg-mini-tracks{padding:6px 6px;display:flex;flex-direction:column;gap:3px;}
+.sg-mini-track{height:3px;background:rgba(208,220,232,.15);border-radius:1px;}
+.sg-play-dot{position:absolute;bottom:5px;right:5px;width:5px;height:5px;border-radius:50%;background:rgba(208,220,232,.4);box-shadow:0 0 4px rgba(208,220,232,.3);}
+.sg-screen-mv{background:#040408;}
+.sg-mv-content{padding:8px 6px;display:flex;flex-direction:column;gap:4px;}
+.sg-mv-line{height:2px;width:80%;background:rgba(208,220,232,.1);border-radius:1px;}
+.sg-mv-badge{position:absolute;bottom:5px;left:5px;font-family:var(--ff-m);font-size:5px;letter-spacing:.1em;color:var(--silver);opacity:.4;}
+.sg-screen-midi{background:#030406;}
+.sg-midi-pads{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;padding:5px;}
+.sg-midi-pad{aspect-ratio:1;background:rgba(208,220,232,.05);border:.3px solid rgba(208,220,232,.1);border-radius:1px;transition:background .15s;}
+.sg-midi-pad.active{background:rgba(208,220,232,.2);box-shadow:0 0 4px rgba(208,220,232,.2);}
+.sg-item-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:var(--label);margin-top:4px;text-align:center;}
+/* HW unit */
+.sg-hw-unit{width:100%;background:#040608;border:.5px solid rgba(208,220,232,.1);border-radius:1px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;}
+.sg-hw-knobs{display:flex;gap:6px;align-items:center;}
+.sg-knob{width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(208,220,232,.3),rgba(208,220,232,.08));border:.5px solid rgba(208,220,232,.15);}
+.sg-hw-faders{display:flex;gap:4px;align-items:flex-end;height:18px;}
+.sg-fader{width:4px;border-radius:1px;background:rgba(208,220,232,.08);flex-shrink:0;}
+.sg-fader-hi{height:90%;background:rgba(208,220,232,.25);}
+.sg-fader-mid{height:55%;background:rgba(208,220,232,.15);}
+.sg-fader-lo{height:30%;background:rgba(208,220,232,.1);}
+.sg-fader{height:70%;}
+.sg-hw-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:var(--label);}
+/* VRAM unit */
+.sg-vram-unit{background:#040608;border:.5px solid rgba(208,220,232,.12);border-radius:1px;padding:10px;display:flex;flex-direction:column;gap:4px;height:100%;justify-content:center;}
+.sg-vram-title{font-family:var(--ff-m);font-size:7px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);}
+.sg-vram-num{font-family:var(--ff-d);font-size:clamp(16px,2.5vw,24px);letter-spacing:.04em;color:var(--silver);line-height:1;text-shadow:0 0 10px rgba(208,220,232,.2);}
+.sg-vram-bar{height:3px;background:rgba(208,220,232,.06);border-radius:2px;overflow:hidden;}
+.sg-vram-fill{height:100%;width:0;background:linear-gradient(90deg,rgba(208,220,232,.3),var(--silver));border-radius:2px;transition:width 1.2s ease;}
+.sg-vram-sub{font-family:var(--ff-m);font-size:7px;color:var(--label);letter-spacing:.06em;}
+.sg-caption{padding:8px 12px;border-top:.5px solid var(--line);font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;color:var(--label);line-height:1.6;}
+
+/* ══ PYRAMID TIMELINE ══ */
+.pyr-tl{margin:20px 0;}
+.pyr-title-row{margin-bottom:14px;}
+.pyr-lbl{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);}
+.pyr-row{display:flex;align-items:flex-end;gap:5px;}
+.pyr-item{display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;}
+.pyr-shape{width:0;height:0;border-left:calc(var(--pw,20px)/2) solid transparent;border-right:calc(var(--pw,20px)/2) solid transparent;border-bottom:var(--ph,28px) solid rgba(200,168,74,.2);opacity:0;transform:scaleY(0);transform-origin:bottom;transition:opacity .4s ease,transform .5s cubic-bezier(.34,1.56,.64,1);}
+.pyr-shape.built{opacity:1;transform:scaleY(1);}
+.pyr-shape-rtx{border-bottom-color:var(--silver)!important;filter:drop-shadow(0 0 6px rgba(208,220,232,.3));}
+.pyr-base{width:100%;height:2px;background:rgba(200,168,74,.2);border-radius:1px;opacity:0;transition:opacity .3s ease .3s;}
+.pyr-shape.built + .pyr-base{opacity:1;}
+.pyr-base-rtx{background:var(--silver)!important;}
+.pyr-label{font-family:var(--ff-m);font-size:6.5px;letter-spacing:.04em;color:var(--label);text-align:center;margin-top:4px;line-height:1.4;}
+.pyr-lbl-rtx{color:var(--silver)!important;}
+.pyr-lbl-rtx span{color:var(--gold);display:block;font-size:6px;}
+.pyr-item-rtx .pyr-shape{--pw:28px;--ph:44px;}
+.pyr-note{font-family:var(--ff-m);font-size:8.5px;letter-spacing:.04em;color:var(--label);line-height:1.75;margin-top:12px;}
+.pyr-note strong{color:var(--silver);}
+
 </style>
 </head>
 <body>
@@ -489,7 +620,7 @@ section{position:relative;width:100%;overflow:hidden;}
       <div>
         <div class="bl-eye">Design Language · Weapon Code</div>
         <div class="bl-title-wrap">
-          <div class="bl-title">Striker<br><span style="font-size:.5em;color:var(--label);"></span></div>
+          <div class="bl-title">Striker</div>
           <div class="bl-title-tw" id="blTw">// STRIKE_CONFIRMED</div>
         </div>
         <div class="bl-body">When the signal transmits, the strike must be absolute.<br><br>This dual-fan cooling layout is the Striker of your entire graphics engine. It doesn't wait for internal temperatures to report back — the exact microsecond the 192-Bit bus channels raw data into the GA106 die, the Striker triggers a massive volumetric air displacement.<br><br>No spin-up hesitation. No structural thermal throttling.</div>
@@ -605,11 +736,85 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:400px;margin-bottom:14px;">
-        <span>[ FIERCER — SIDE PROFILE ]<br>RTX 3060 · dual fan · silver ambient<br>192-Bit heatsink depth visible ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:140px;">
-        <span>[ 8-PIN CONNECTOR ]<br>Power side · 170W · 8-pin detail ]</span>
+      <!-- ── LATE NIGHT DAW SCENE ── -->
+      <div class="daw-wrap" id="dawWrap">
+        <div class="daw-header">
+          <span class="daw-eyebrow">02:34 AM — Session Active</span>
+          <div class="daw-clock" id="dawClock">02:34:07</div>
+        </div>
+
+        <!-- Three monitor setup -->
+        <div class="daw-studio">
+
+          <!-- Main monitor: DAW timeline -->
+          <div class="daw-mon daw-mon-main" id="dawMonMain">
+            <div class="daw-bezel">
+              <div class="daw-screen daw-screen-main">
+                <!-- DAW UI -->
+                <div class="daw-menubar">
+                  <div class="daw-mbtn"></div><div class="daw-mbtn"></div><div class="daw-mbtn"></div>
+                  <div class="daw-mtitle">Session_03_Final_v7.als</div>
+                  <div class="daw-transport">
+                    <div class="daw-play-btn" id="dawPlay">▶</div>
+                    <div class="daw-timecode" id="dawTime">3:42.08</div>
+                    <div class="daw-bpm">124 BPM</div>
+                  </div>
+                </div>
+                <!-- Tracks -->
+                <div class="daw-tracks" id="dawTracks">
+                  <div class="daw-track" data-col="silver"><div class="daw-track-label">Strings</div><div class="daw-track-lane"><div class="daw-waveform" id="dawW0"></div><div class="daw-playhead" id="dawHead"></div></div><div class="daw-vu" id="dawVu0"></div></div>
+                  <div class="daw-track" data-col="blue"><div class="daw-track-label">Synth Lead</div><div class="daw-track-lane"><div class="daw-waveform" id="dawW1"></div></div><div class="daw-vu" id="dawVu1"></div></div>
+                  <div class="daw-track" data-col="gold"><div class="daw-track-label">Piano</div><div class="daw-track-lane"><div class="daw-waveform" id="dawW2"></div></div><div class="daw-vu" id="dawVu2"></div></div>
+                  <div class="daw-track" data-col="dim"><div class="daw-track-label">Kick</div><div class="daw-track-lane"><div class="daw-waveform daw-wf-kick" id="dawW3"></div></div><div class="daw-vu" id="dawVu3"></div></div>
+                  <div class="daw-track" data-col="dim"><div class="daw-track-label">Bass</div><div class="daw-track-lane"><div class="daw-waveform" id="dawW4"></div></div><div class="daw-vu" id="dawVu4"></div></div>
+                  <div class="daw-track" data-col="dim"><div class="daw-track-label">Vocals</div><div class="daw-track-lane"><div class="daw-waveform daw-wf-vocal" id="dawW5"></div></div><div class="daw-vu" id="dawVu5"></div></div>
+                </div>
+                <!-- VRAM usage bottom bar -->
+                <div class="daw-vram-bar">
+                  <span class="daw-vram-label">VRAM</span>
+                  <div class="daw-vram-track"><div class="daw-vram-fill" id="dawVramFill"></div></div>
+                  <span class="daw-vram-val" id="dawVramVal">0 / 12 GB</span>
+                </div>
+              </div>
+              <div class="daw-neck"></div><div class="daw-base"></div>
+            </div>
+          </div>
+
+          <!-- Right stack: two small monitors -->
+          <div class="daw-side-stack">
+            <!-- MV preview -->
+            <div class="daw-mon daw-mon-side" id="dawMonMv">
+              <div class="daw-bezel daw-bezel-dim">
+                <div class="daw-screen daw-screen-mv">
+                  <div class="daw-mv-bg"></div>
+                  <div class="daw-mv-label">MV Preview · Sync</div>
+                  <div class="daw-mv-beat" id="dawBeat"></div>
+                  <div class="daw-mv-port">DP — 2</div>
+                </div>
+                <div class="daw-neck"></div><div class="daw-base daw-base-sm"></div>
+              </div>
+            </div>
+            <!-- MIDI mapping -->
+            <div class="daw-mon daw-mon-side" id="dawMonMidi">
+              <div class="daw-bezel daw-bezel-dim">
+                <div class="daw-screen daw-screen-midi">
+                  <div class="daw-midi-grid" id="dawMidiGrid"></div>
+                  <div class="daw-mv-port">DP — 3</div>
+                </div>
+                <div class="daw-neck"></div><div class="daw-base daw-base-sm"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Ambient glow from screens -->
+        <div class="daw-glow-floor"></div>
+
+        <div class="daw-footer">
+          The session started at 9 PM. It's 2:34 AM.<br>
+          <span>The card hasn't thought about stopping.</span>
+        </div>
       </div>
     </div>
   </div>
@@ -693,36 +898,98 @@ section{position:relative;width:100%;overflow:hidden;}
       <div class="sh-sub">1,500,000 hr MTBF · 171 Years · Heavy-Duty Engineering</div>
       <div class="slv-line on"></div>
       <p style="font-size:17px;color:var(--mute);line-height:1.85;margin:24px 0 8px;">Engineered for heavy continuous duty cycles. Not for shelf display.</p>
-      <p style="font-size:17px;font-weight:500;color:var(--white);line-height:1.85;margin-bottom:20px;">The RTX 3060 coordinates massive 12GB data buffers and real-time vectors continuously — but its physical armor is built to survive the frontline.</p>
-      <div class="mtbf-display fi fi-d1">
+      <p style="font-size:17px;font-weight:500;color:var(--white);line-height:1.85;margin-bottom:20px;">The RTX 3060 coordinates massive 12GB data buffers and real-time vectors continuously — its physical armor is built to survive the frontline.</p>
+
+      <!-- Studio gear scene -->
+      <div class="sg-scene fi fi-d1" id="sgScene">
+        <div class="sg-header">
+          <span class="sg-eyebrow">Studio · Always Running</span>
+          <div class="sg-uptime">Uptime <span id="sgUptime">—</span></div>
+        </div>
+        <div class="sg-gear">
+          <div class="sg-row sg-row-top">
+            <div class="sg-item" data-i="0">
+              <div class="sg-item-screen sg-screen-daw">
+                <div class="sg-mini-tracks">
+                  <div class="sg-mini-track" style="background:rgba(208,220,232,.15);width:90%"></div>
+                  <div class="sg-mini-track" style="background:rgba(200,168,74,.2);width:75%"></div>
+                  <div class="sg-mini-track" style="background:rgba(208,220,232,.1);width:85%"></div>
+                  <div class="sg-mini-track" style="background:rgba(208,220,232,.08);width:60%"></div>
+                </div>
+                <div class="sg-play-dot"></div>
+              </div>
+              <div class="sg-item-label">DAW · 34 Tracks</div>
+            </div>
+            <div class="sg-item" data-i="1">
+              <div class="sg-item-screen sg-screen-mv">
+                <div class="sg-mv-content">
+                  <div class="sg-mv-line"></div>
+                  <div class="sg-mv-line" style="width:60%;opacity:.5"></div>
+                </div>
+                <div class="sg-mv-badge">MV SYNC</div>
+              </div>
+              <div class="sg-item-label">Video Preview · 4K</div>
+            </div>
+            <div class="sg-item" data-i="2">
+              <div class="sg-item-screen sg-screen-midi">
+                <div class="sg-midi-pads" id="sgPads"></div>
+              </div>
+              <div class="sg-item-label">MIDI Controller</div>
+            </div>
+          </div>
+          <div class="sg-row sg-row-bot">
+            <div class="sg-item sg-item-wide" data-i="3">
+              <div class="sg-hw-unit">
+                <div class="sg-hw-knobs">
+                  <div class="sg-knob"></div><div class="sg-knob"></div><div class="sg-knob"></div><div class="sg-knob"></div><div class="sg-knob"></div>
+                </div>
+                <div class="sg-hw-faders">
+                  <div class="sg-fader"></div><div class="sg-fader sg-fader-hi"></div><div class="sg-fader"></div><div class="sg-fader sg-fader-mid"></div><div class="sg-fader"></div><div class="sg-fader sg-fader-lo"></div><div class="sg-fader"></div><div class="sg-fader sg-fader-hi"></div>
+                </div>
+                <div class="sg-hw-label">Audio Interface · Mixer</div>
+              </div>
+            </div>
+            <div class="sg-item" data-i="4">
+              <div class="sg-vram-unit">
+                <div class="sg-vram-title">VRAM Active</div>
+                <div class="sg-vram-num" id="sgVram">8.4 GB</div>
+                <div class="sg-vram-bar"><div class="sg-vram-fill" id="sgVramFill2"></div></div>
+                <div class="sg-vram-sub">of 12 GB</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sg-caption">3 × DisplayPort · 12GB VRAM · All instruments loaded. No proxy. No compromise.</div>
+      </div>
+
+      <div class="mtbf-display fi fi-d2">
         <div class="mtbf-num" id="mtbfCount">0</div>
         <div class="mtbf-lbl">Hours MTBF</div>
       </div>
-      <div class="rail-tl fi fi-d2" id="railWrap">
-        <div class="rail-section-lbl human">Modern Steel &amp; Rail History — 171 Years</div>
-        <div class="rail-row">
-          <div class="rail-track human-track" style="width:100%;">
-            <div class="rail-fill human-fill" id="railFill1"></div>
-            <div class="rail-loco" id="railLoco1" style="left:0;">🚂</div>
-            <div class="rail-dot human-dot" style="left:0%;"><span class="rail-label human-lbl">1855<br>Steam Era</span></div>
-            <div class="rail-dot human-dot" style="left:52%;"><span class="rail-label human-lbl">1950<br>Electric Rail</span></div>
-            <div class="rail-dot human-dot" style="left:100%;"><span class="rail-label human-lbl right-align">2026<br>Today</span></div>
+
+      <!-- Pyramid timeline replaces rail -->
+      <div class="pyr-tl fi fi-d3" id="pyrWrap">
+        <div class="pyr-title-row">
+          <span class="pyr-lbl">171 Years — In Perspective</span>
+        </div>
+        <div class="pyr-row" id="pyrRow">
+          <div class="pyr-item" data-i="0"><div class="pyr-shape" id="pyr0"></div><div class="pyr-base"></div><div class="pyr-label">23 yrs</div></div>
+          <div class="pyr-item" data-i="1"><div class="pyr-shape" id="pyr1"></div><div class="pyr-base"></div><div class="pyr-label">46 yrs</div></div>
+          <div class="pyr-item" data-i="2"><div class="pyr-shape" id="pyr2"></div><div class="pyr-base"></div><div class="pyr-label">69 yrs</div></div>
+          <div class="pyr-item" data-i="3"><div class="pyr-shape" id="pyr3"></div><div class="pyr-base"></div><div class="pyr-label">92 yrs</div></div>
+          <div class="pyr-item" data-i="4"><div class="pyr-shape" id="pyr4"></div><div class="pyr-base"></div><div class="pyr-label">115 yrs</div></div>
+          <div class="pyr-item" data-i="5"><div class="pyr-shape" id="pyr5"></div><div class="pyr-base"></div><div class="pyr-label">138 yrs</div></div>
+          <div class="pyr-item" data-i="6"><div class="pyr-shape" id="pyr6"></div><div class="pyr-base"></div><div class="pyr-label">161 yrs</div></div>
+          <div class="pyr-item pyr-item-rtx" data-i="7">
+            <div class="pyr-shape pyr-shape-rtx" id="pyr7"></div>
+            <div class="pyr-base pyr-base-rtx"></div>
+            <div class="pyr-label pyr-lbl-rtx">171 yrs<br><span>RTX 3060</span></div>
           </div>
         </div>
-        <div class="rail-divider"></div>
-        <div class="rail-section-lbl gpu">RTX 3060 Theoretical Lifespan — 171 Years</div>
-        <div class="rail-row">
-          <div class="rail-track" style="width:100%;">
-            <div class="rail-fill gpu-fill" id="railFill2"></div>
-            <div class="rail-dot gpu-dot install" style="left:0%;"><span class="rail-label gpu-lbl install-lbl">2026<br>You install</span></div>
-            <div class="rail-dot gpu-dot" style="left:44%;"><span class="rail-label gpu-lbl">2101<br>22nd Century</span></div>
-            <div class="rail-dot gpu-dot" style="left:100%;"><span class="rail-label gpu-lbl right-align">2197<br>RTX 3060 (theory)</span></div>
-          </div>
-        </div>
-        <div class="rail-compare-note">The history of modern steel and rail spans 171 years. The RTX 3060's rated lifespan <strong>matches it exactly</strong>. Built to lock into your PCIe bracket and outlast the operational lifecycle of everything around it.</div>
-        <p style="font-size:15px;color:var(--mute);line-height:1.8;margin-top:20px;"><em style="color:var(--white);">Built to endure the pressure. Born to stay ready.</em></p>
+        <div class="pyr-note">One pyramid takes ~23 years to build. The RTX 3060's theoretical lifespan equals <strong>7 complete pyramids</strong> — and then some.</div>
       </div>
-      <div class="rel-badges fi fi-d3">
+
+      <div class="rel-badges fi fi-d4">
         <div class="stat-badge">
           <div class="num" style="color:var(--silver);">171 ∞</div>
           <div class="lbl">Years Architectural Life</div>
@@ -1252,6 +1519,209 @@ document.fonts.ready.then(()=>{
     }
   },{threshold:.1});
   obs.observe(tbl);
+})();
+
+/* ══ LATE NIGHT DAW SCENE ══ */
+(function(){
+  var wrap = document.getElementById('dawWrap');
+  if(!wrap) return;
+  var fired = false;
+
+  // Live clock
+  function updateClock(){
+    var el = document.getElementById('dawClock');
+    if(!el) return;
+    var now = new Date();
+    var h = String(now.getHours()).padStart(2,'0');
+    var m = String(now.getMinutes()).padStart(2,'0');
+    var s = String(now.getSeconds()).padStart(2,'0');
+    el.textContent = h+':'+m+':'+s;
+  }
+  setInterval(updateClock, 1000);
+
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+
+    var monMain = document.getElementById('dawMonMain');
+    var monMv = document.getElementById('dawMonMv');
+    var monMidi = document.getElementById('dawMonMidi');
+
+    // Build midi pads
+    var grid = document.getElementById('dawMidiGrid');
+    if(grid){
+      for(var i=0;i<16;i++){
+        var pad = document.createElement('div');
+        pad.className = 'daw-midi-pad';
+        grid.appendChild(pad);
+      }
+    }
+
+    setTimeout(function(){ if(monMain) monMain.classList.add('vis'); }, 100);
+    setTimeout(function(){ if(monMv) monMv.classList.add('vis'); }, 350);
+    setTimeout(function(){ if(monMidi) monMidi.classList.add('vis'); }, 500);
+
+    // Reveal waveforms
+    setTimeout(function(){
+      for(var i=0;i<6;i++){
+        (function(idx){
+          setTimeout(function(){
+            var w = document.getElementById('dawW'+idx);
+            if(w) w.classList.add('vis');
+          }, idx*120);
+        })(i);
+      }
+    }, 400);
+
+    // Animate playhead
+    setTimeout(function(){
+      var ph = document.getElementById('dawHead');
+      if(ph) ph.style.left = '68%';
+    }, 600);
+
+    // VRAM fill
+    setTimeout(function(){
+      var f = document.getElementById('dawVramFill');
+      var v = document.getElementById('dawVramVal');
+      if(f) f.style.width = '72%';
+      if(v){
+        var dur = 1000, t0 = performance.now();
+        (function tick(now){
+          var p = Math.min((now-t0)/dur,1);
+          var val = (1-Math.pow(1-p,3))*8.6;
+          v.textContent = val.toFixed(1) + ' / 12 GB';
+          if(p<1) requestAnimationFrame(tick);
+          else v.textContent = '8.6 / 12 GB';
+        })(performance.now());
+      }
+    }, 700);
+
+    // VU meters pulse
+    var vuCols = ['rgba(208,220,232,.6)','rgba(90,140,220,.7)','rgba(200,168,74,.7)','rgba(208,220,232,.4)','rgba(208,220,232,.35)','rgba(208,220,232,.3)'];
+    function animateVu(){
+      for(var i=0;i<6;i++){
+        (function(idx){
+          var vu = document.getElementById('dawVu'+idx);
+          if(!vu) return;
+          var h = (15 + Math.random()*70)+'%';
+          vu.style.cssText = 'width:5px;flex-shrink:0;height:100%;background:rgba(208,220,232,.04);position:relative;border-radius:1px;overflow:hidden;';
+          vu.style.background = 'rgba(208,220,232,.04)';
+          if(!vu._after){
+            var after = document.createElement('div');
+            after.style.cssText = 'position:absolute;bottom:0;left:0;right:0;border-radius:1px;background:'+vuCols[idx]+';transition:height .12s ease;';
+            vu.appendChild(after);
+            vu._after = after;
+          }
+          vu._after.style.height = h;
+        })(i);
+      }
+    }
+    setTimeout(function(){ setInterval(animateVu, 200); }, 800);
+
+    // Beat pulse on MV screen
+    function beatPulse(){
+      var el = document.getElementById('dawBeat');
+      if(!el) return;
+      el.classList.add('pulse');
+      setTimeout(function(){ el.classList.remove('pulse'); }, 80);
+    }
+    setTimeout(function(){ setInterval(beatPulse, 484); }, 900); // ~124BPM
+
+    // MIDI pad random hits
+    function midiHit(){
+      var pads = wrap.querySelectorAll('.daw-midi-pad');
+      if(!pads.length) return;
+      var idx = Math.floor(Math.random()*pads.length);
+      var cls = Math.random()>0.7?'hit-gold':'hit';
+      pads[idx].classList.add(cls);
+      setTimeout(function(){ pads[idx].classList.remove(cls); }, 120);
+    }
+    setTimeout(function(){ setInterval(midiHit, 320); }, 1000);
+
+  }, {threshold: 0.2}).observe(wrap);
+})();
+
+/* ══ STUDIO GEAR SCENE + PYRAMID ══ */
+(function(){
+  var scene = document.getElementById('sgScene');
+  var pyrWrap = document.getElementById('pyrWrap');
+  if(!scene && !pyrWrap) return;
+  var fired = false;
+
+  // Build MIDI pads in gear scene
+  var sgPads = document.getElementById('sgPads');
+  if(sgPads){
+    for(var i=0;i<16;i++){
+      var pad = document.createElement('div');
+      pad.className = 'sg-midi-pad';
+      sgPads.appendChild(pad);
+    }
+  }
+
+  // Uptime counter
+  var uptimeSecs = 312*86400 + Math.floor(Math.random()*86400);
+  function fmtUptime(s){
+    var d=Math.floor(s/86400), h=Math.floor((s%86400)/3600), m=Math.floor((s%3600)/60);
+    return d+'d '+String(h).padStart(2,'0')+'h '+String(m).padStart(2,'0')+'m';
+  }
+  var el = document.getElementById('sgUptime');
+  if(el) el.textContent = fmtUptime(uptimeSecs);
+  setInterval(function(){
+    uptimeSecs++;
+    var el = document.getElementById('sgUptime');
+    if(el) el.textContent = fmtUptime(uptimeSecs);
+  }, 1000);
+
+  // Pyramid sizes: 8 items, graduated heights
+  var pyrHeights = [18,22,26,30,34,38,42,48];
+  var pyrWidths  = [16,18,20,22,24,26,28,32];
+  for(var i=0;i<8;i++){
+    var s = document.getElementById('pyr'+i);
+    if(s){
+      s.style.setProperty('--ph', pyrHeights[i]+'px');
+      s.style.setProperty('--pw', pyrWidths[i]+'px');
+    }
+  }
+
+  new IntersectionObserver(function(es){
+    if(!(es[0]||{}).isIntersecting || fired) return;
+    fired = true;
+
+    // Gear items stagger in
+    var items = (scene||document).querySelectorAll ? (scene ? scene.querySelectorAll('.sg-item') : []) : [];
+    items.forEach(function(item, i){
+      setTimeout(function(){ item.classList.add('vis'); }, i*150);
+    });
+
+    // VRAM bar
+    setTimeout(function(){
+      var f = document.getElementById('sgVramFill2');
+      if(f) f.style.width = '70%';
+    }, 400);
+
+    // MIDI pad random pulse in gear scene
+    function sgMidiHit(){
+      var pads = document.querySelectorAll('.sg-midi-pad');
+      if(!pads.length) return;
+      var idx = Math.floor(Math.random()*pads.length);
+      pads[idx].classList.add('active');
+      setTimeout(function(){ pads[idx].classList.remove('active'); }, 150);
+    }
+    setTimeout(function(){ setInterval(sgMidiHit, 400); }, 600);
+
+    // Pyramids build one by one
+    if(pyrWrap){
+      for(var j=0;j<8;j++){
+        (function(idx){
+          setTimeout(function(){
+            var ps = document.getElementById('pyr'+idx);
+            if(ps) ps.classList.add('built');
+          }, 800 + idx*180);
+        })(j);
+      }
+    }
+
+  }, {threshold: 0.15}).observe(scene || pyrWrap);
 })();
 </script>
 </body>
