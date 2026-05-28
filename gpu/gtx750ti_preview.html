@@ -322,6 +322,92 @@ section{position:relative;width:100%;overflow:hidden;}
   .why-cards{grid-template-columns:1fr;}
 }
 @media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+/* ── 1080P GAMING SCENARIO ── */
+.gm-wrap{width:100%;background:rgba(48,20,35,.8);border:.5px solid rgba(255,45,120,.15);overflow:hidden;}
+.gm-header{padding:14px 18px 10px;border-bottom:.5px solid rgba(255,45,120,.1);}
+.gm-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--label);}
+.gm-ui{padding:0;}
+.gm-ui-bar{display:flex;align-items:center;gap:5px;padding:8px 12px;background:rgba(0,0,0,.3);border-bottom:.5px solid rgba(255,45,120,.08);}
+.gm-ui-dot{width:7px;height:7px;border-radius:50%;}
+.gm-ui-dot.r{background:rgba(255,80,80,.7);}
+.gm-ui-dot.y{background:rgba(255,200,50,.6);}
+.gm-ui-dot.g{background:rgba(80,200,80,.6);}
+.gm-ui-title{font-family:var(--ff-m);font-size:8px;letter-spacing:.12em;color:var(--label);margin-left:6px;}
+.gm-settings{padding:4px 0;}
+.gm-row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:.5px solid rgba(255,45,120,.06);opacity:0;transform:translateX(-10px);transition:opacity .5s ease,transform .5s ease;}
+.gm-row.vis{opacity:1;transform:none;}
+.gm-key{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--label);flex-shrink:0;}
+.gm-val-wrap{display:flex;align-items:center;gap:7px;}
+.gm-val-old{font-family:var(--ff-m);font-size:9px;color:rgba(255,45,120,.4);text-decoration:line-through;opacity:0;transition:opacity .4s ease;}
+.gm-val-old.vis{opacity:1;}
+.gm-arrow{font-family:var(--ff-m);font-size:9px;color:rgba(255,45,120,.3);opacity:0;transition:opacity .3s ease;}
+.gm-arrow.vis{opacity:1;}
+.gm-val-new{font-family:var(--ff-m);font-size:9px;color:var(--pink);font-weight:500;opacity:0;transition:opacity .5s ease;}
+.gm-val-new.vis{opacity:1;}
+/* FPS meter */
+.gm-fps-wrap{padding:14px 16px;border-top:.5px solid rgba(255,45,120,.08);}
+.gm-fps-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);margin-bottom:8px;}
+.gm-fps-track{position:relative;height:8px;background:rgba(0,0,0,.4);border-radius:4px;overflow:hidden;margin-bottom:5px;}
+.gm-fps-bar{position:absolute;left:0;top:0;height:100%;width:0;border-radius:4px;background:linear-gradient(90deg,rgba(255,45,120,.4),var(--pink));box-shadow:0 0 8px rgba(255,45,120,.4);transition:width 1.4s cubic-bezier(.16,1,.3,1);}
+.gm-fps-zones{display:flex;justify-content:space-between;margin-top:3px;}
+.gm-fps-zone{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:var(--label);}
+.gm-fps-zone.good{color:rgba(255,45,120,.7);}
+.gm-fps-num{font-family:var(--ff-d);font-size:clamp(28px,4vw,44px);color:var(--pink);line-height:1;text-shadow:0 0 16px rgba(255,45,120,.4);margin-top:4px;}
+.gm-fps-unit{font-family:var(--ff-m);font-size:11px;color:var(--label);letter-spacing:.1em;}
+/* Apply button */
+.gm-apply{padding:12px 16px;border-top:.5px solid rgba(255,45,120,.1);opacity:0;transition:opacity .6s ease;}
+.gm-apply.vis{opacity:1;}
+.gm-apply-btn{font-family:var(--ff-b);font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--pink);border:.5px solid rgba(255,45,120,.4);padding:8px 16px;display:inline-block;background:rgba(255,45,120,.06);cursor:default;}
+.gm-apply-note{font-family:var(--ff-m);font-size:7.5px;color:var(--label);margin-top:6px;letter-spacing:.06em;}
+.gm-footer{padding:14px 16px;border-top:.5px solid rgba(255,45,120,.1);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.gm-footer span{font-size:11px;opacity:.5;display:block;margin-top:3px;}
+
+/* ── SAME 60W PANEL ── */
+.sw-wrap{width:100%;background:rgba(30,15,25,.9);border:.5px solid rgba(255,45,120,.15);overflow:hidden;}
+.sw-header{padding:18px 20px 10px;}
+.sw-eyebrow{font-family:var(--ff-d);font-size:clamp(24px,3.5vw,38px);letter-spacing:.06em;color:var(--white);display:block;line-height:1;}
+.sw-eyebrow-sub{font-family:var(--ff-d);font-size:clamp(16px,2.2vw,24px);letter-spacing:.06em;color:var(--label);display:block;margin-top:2px;}
+.sw-power-line{padding:20px 20px 16px;display:flex;align-items:center;gap:0;}
+/* Plug */
+.sw-plug{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.sw-plug-body{width:26px;height:32px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.06));border:.5px solid rgba(255,255,255,.15);border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;}
+.sw-plug-pin{width:3px;height:8px;background:rgba(255,255,255,.4);border-radius:1px;}
+.sw-plug-label{font-family:var(--ff-d);font-size:13px;letter-spacing:.06em;color:rgba(255,45,120,.8);}
+/* Wire */
+.sw-wire{flex:1;height:2px;position:relative;background:rgba(255,45,120,.1);margin:0 8px;}
+.sw-wire-fill{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,rgba(255,45,120,.6),rgba(255,45,120,.9));box-shadow:0 0 6px rgba(255,45,120,.4);transition:width .8s ease;}
+.sw-wire-spark{position:absolute;right:-3px;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:var(--pink);box-shadow:0 0 10px var(--pink);opacity:0;transition:opacity .3s ease;}
+.sw-wire-spark.vis{opacity:1;animation:sparkPulse 1.2s ease-in-out infinite;}
+@keyframes sparkPulse{0%,100%{box-shadow:0 0 6px var(--pink);}50%{box-shadow:0 0 16px var(--pink),0 0 30px rgba(255,45,120,.4);}}
+/* Split + branches */
+.sw-split{width:2px;height:80px;background:rgba(255,45,120,.15);position:relative;flex-shrink:0;margin:0 0 0 0;align-self:center;}
+.sw-wire-branch{position:absolute;left:0;height:2px;width:0;background:rgba(255,45,120,.5);box-shadow:0 0 4px rgba(255,45,120,.3);transition:width .6s ease;}
+.sw-branch-top{top:0;transform-origin:left center;}
+.sw-branch-bot{bottom:0;transform-origin:left center;}
+/* Devices */
+.sw-devices{display:flex;flex-direction:column;justify-content:space-between;gap:12px;margin-left:12px;flex:1;}
+.sw-device{border:.5px solid rgba(255,255,255,.08);padding:12px 14px;opacity:0;transition:opacity .6s ease,border-color .4s ease;background:rgba(0,0,0,.2);}
+.sw-device.vis{opacity:1;}
+.sw-device-top.vis{border-color:rgba(255,255,255,.12);}
+.sw-device-bot.vis{border-color:rgba(255,45,120,.35);background:rgba(255,45,120,.04);box-shadow:0 0 20px rgba(255,45,120,.06);}
+.sw-device-icon{font-size:20px;margin-bottom:6px;opacity:.6;}
+.sw-device-name{font-family:var(--ff-b);font-size:13px;font-weight:600;color:var(--mute);margin-bottom:4px;}
+.sw-device-desc{font-family:var(--ff-m);font-size:8px;letter-spacing:.04em;color:var(--label);line-height:1.7;}
+.sw-device-tag{font-family:var(--ff-m);font-size:7px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px;padding:3px 7px;border:.5px solid rgba(255,255,255,.08);display:inline-block;}
+/* GPU icon bars */
+.sw-gpu-icon{display:flex;align-items:flex-end;gap:3px;height:22px;margin-bottom:6px;}
+.sw-gpu-bar{width:6px;border-radius:1px 1px 0 0;background:rgba(255,45,120,.5);}
+.sw-gpu-bar.b1{height:40%;animation:barPulse 1.6s ease-in-out infinite;}
+.sw-gpu-bar.b2{height:75%;animation:barPulse 1.6s ease-in-out infinite .3s;}
+.sw-gpu-bar.b3{height:100%;animation:barPulse 1.6s ease-in-out infinite .6s;}
+@keyframes barPulse{0%,100%{opacity:.5;}50%{opacity:1;box-shadow:0 0 6px rgba(255,45,120,.5);}}
+.sw-desc-gpu{color:var(--mute);}
+.sw-tag-gpu{color:rgba(255,45,120,.7);border-color:rgba(255,45,120,.25);}
+/* Quote */
+.sw-quote{padding:16px 20px;border-top:.5px solid rgba(255,45,120,.1);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.8;font-style:italic;opacity:0;transition:opacity .8s ease;}
+.sw-quote.vis{opacity:1;}
+.sw-quote span{font-size:11px;opacity:.55;display:block;margin-top:4px;}
+
 </style>
 </head>
 <body>
@@ -426,7 +512,7 @@ section{position:relative;width:100%;overflow:hidden;}
     <div class="bl-grid fi">
       <div>
         <div class="bl-eye">Design Language</div>
-        <div class="bl-title">Red<br>Talon<br><span style="font-size:.5em;color:var(--label);">赤爪</span></div>
+        <div class="bl-title">Red<br>Talon<br><span style="font-size:.5em;color:var(--label);"></span></div>
         <div class="bl-body">Red lines don't lie.<br><br>On the GTX 750 Ti, the cuts aren't cosmetic.<br>They signal intent.</div>
         <div class="bl-quote">This card is not here to blend in.<br>It's here to get things done.</div>
         <div class="bl-pos">GTX 750 Ti — Where the entry series ends and real performance begins.</div>
@@ -548,11 +634,74 @@ section{position:relative;width:100%;overflow:hidden;}
       </ul>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:360px;margin-bottom:14px;">
-        <span>[ CAPABLE — HEATSINK + RED SLASHES ]<br>GTX750Ti side view · slash lines in top light<br>GT750TI_4GD5_TOP.png ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:150px;">
-        <span>[ TRIPLE OUTPUT PORTS ]<br>VGA · HDMI · DVI bracket close-up ]</span>
+      <!-- ── 1080P GAMING SCENARIO ── -->
+      <div class="gm-wrap" id="gmWrap">
+        <div class="gm-header">
+          <span class="gm-eyebrow">Scenario — First Real 1080p</span>
+        </div>
+        <!-- Fake game settings UI -->
+        <div class="gm-ui">
+          <div class="gm-ui-bar">
+            <div class="gm-ui-dot r"></div><div class="gm-ui-dot y"></div><div class="gm-ui-dot g"></div>
+            <span class="gm-ui-title">Display Settings</span>
+          </div>
+          <div class="gm-settings">
+            <div class="gm-row">
+              <span class="gm-key">Resolution</span>
+              <div class="gm-val-wrap">
+                <span class="gm-val-old" id="gmResOld">1280 × 720</span>
+                <span class="gm-arrow">→</span>
+                <span class="gm-val-new" id="gmResNew">1920 × 1080</span>
+              </div>
+            </div>
+            <div class="gm-row">
+              <span class="gm-key">Quality Preset</span>
+              <div class="gm-val-wrap">
+                <span class="gm-val-old" id="gmQualOld">Low</span>
+                <span class="gm-arrow">→</span>
+                <span class="gm-val-new" id="gmQualNew">High</span>
+              </div>
+            </div>
+            <div class="gm-row">
+              <span class="gm-key">Anti-Aliasing</span>
+              <div class="gm-val-wrap">
+                <span class="gm-val-old" id="gmAaOld">Off</span>
+                <span class="gm-arrow">→</span>
+                <span class="gm-val-new" id="gmAaNew">4×MSAA</span>
+              </div>
+            </div>
+            <div class="gm-row">
+              <span class="gm-key">Texture Quality</span>
+              <div class="gm-val-wrap">
+                <span class="gm-val-old" id="gmTexOld">512MB</span>
+                <span class="gm-arrow">→</span>
+                <span class="gm-val-new" id="gmTexNew">4GB GDDR5</span>
+              </div>
+            </div>
+          </div>
+          <!-- FPS meter -->
+          <div class="gm-fps-wrap">
+            <div class="gm-fps-label">Frame Rate</div>
+            <div class="gm-fps-track">
+              <div class="gm-fps-bar" id="gmFpsBar"></div>
+              <div class="gm-fps-zones">
+                <span class="gm-fps-zone bad">Unstable</span>
+                <span class="gm-fps-zone ok">Playable</span>
+                <span class="gm-fps-zone good">Smooth</span>
+              </div>
+            </div>
+            <div class="gm-fps-num"><span id="gmFpsNum">0</span> <span class="gm-fps-unit">fps</span></div>
+          </div>
+          <!-- Apply button -->
+          <div class="gm-apply" id="gmApply">
+            <div class="gm-apply-btn">Apply &amp; Restart</div>
+            <div class="gm-apply-note">No external power required · PCIe slot only</div>
+          </div>
+        </div>
+        <div class="gm-footer">
+          The first time you drag that resolution slider to 1080p and it doesn't flinch.<br>
+          <span>第一次把解析度拉到 1080p，畫面沒有猶豫，直接跑。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -603,8 +752,52 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:440px;">
-        <span>[ RELIABILITY VISUAL ]<br>GTX 750 Ti in chassis · long exposure<br>Red slash lines glowing in darkness ]</span>
+      <!-- ── SAME 60W PANEL ── -->
+      <div class="sw-wrap" id="swWrap">
+        <div class="sw-header">
+          <span class="sw-eyebrow">Same 60W.</span>
+          <span class="sw-eyebrow-sub">Different universe.</span>
+        </div>
+        <!-- Power line visual -->
+        <div class="sw-power-line" id="swLine">
+          <div class="sw-plug">
+            <div class="sw-plug-body">
+              <div class="sw-plug-pin"></div><div class="sw-plug-pin"></div>
+            </div>
+            <div class="sw-plug-label">60W</div>
+          </div>
+          <div class="sw-wire" id="swWire">
+            <div class="sw-wire-fill" id="swWireFill"></div>
+            <div class="sw-wire-spark" id="swSpark"></div>
+          </div>
+          <div class="sw-split">
+            <div class="sw-wire-branch sw-branch-top" id="swBranchTop"></div>
+            <div class="sw-wire-branch sw-branch-bot" id="swBranchBot"></div>
+          </div>
+          <div class="sw-devices">
+            <div class="sw-device sw-device-top" id="swDevTop">
+              <div class="sw-device-icon">💡</div>
+              <div class="sw-device-name">Fluorescent Tube</div>
+              <div class="sw-device-desc">Illuminates your desk.<br>That's it.</div>
+              <div class="sw-device-tag">60W → Light</div>
+            </div>
+            <div class="sw-device sw-device-bot" id="swDevBot">
+              <div class="sw-device-icon sw-gpu-icon">
+                <div class="sw-gpu-bar b1"></div>
+                <div class="sw-gpu-bar b2"></div>
+                <div class="sw-gpu-bar b3"></div>
+              </div>
+              <div class="sw-device-name" style="color:var(--white);">GTX 750 Ti</div>
+              <div class="sw-device-desc sw-desc-gpu">640 shader cores.<br>4GB GDDR5.<br>Your entire world, rendered.</div>
+              <div class="sw-device-tag sw-tag-gpu">60W → Everything</div>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom quote -->
+        <div class="sw-quote" id="swQuote">
+          A fluorescent tube and a GTX 750 Ti walk into the same power outlet.<br>Only one of them renders your world.<br>
+          <span>同樣一條電，一個照亮你的桌面，另一個重建你的世界。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -999,6 +1192,67 @@ document.fonts.ready.then(() => {
       });
     }
   }, {threshold:.1}).observe(tbl);
+})();
+
+/* ── 1080P GAMING SCENARIO ── */
+(function(){
+  var wrap = document.getElementById('gmWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var rows = wrap.querySelectorAll('.gm-row');
+    rows.forEach(function(row, i){
+      setTimeout(function(){ row.classList.add('vis'); }, i * 160);
+      setTimeout(function(){
+        row.querySelectorAll('.gm-val-old,.gm-arrow,.gm-val-new').forEach(function(el){ el.classList.add('vis'); });
+      }, i * 160 + 300);
+    });
+    var totalDelay = rows.length * 160 + 400;
+    setTimeout(function(){
+      var bar = document.getElementById('gmFpsBar');
+      var num = document.getElementById('gmFpsNum');
+      var apply = document.getElementById('gmApply');
+      if(bar) bar.style.width = '88%';
+      if(apply) apply.classList.add('vis');
+      if(num){
+        var dur = 1200, target = 87, t0 = performance.now();
+        (function tick(now){
+          var p = Math.min((now - t0) / dur, 1);
+          var v = 1 - Math.pow(1 - p, 3);
+          num.textContent = Math.round(v * target);
+          if(p < 1) requestAnimationFrame(tick);
+          else num.textContent = target;
+        })(performance.now());
+      }
+    }, totalDelay);
+  }, {threshold: 0.25}).observe(wrap);
+})();
+
+/* ── SAME 60W PANEL ── */
+(function(){
+  var wrap = document.getElementById('swWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var wireFill = document.getElementById('swWireFill');
+    var spark = document.getElementById('swSpark');
+    var branchTop = document.getElementById('swBranchTop');
+    var branchBot = document.getElementById('swBranchBot');
+    var devTop = document.getElementById('swDevTop');
+    var devBot = document.getElementById('swDevBot');
+    var quote = document.getElementById('swQuote');
+    setTimeout(function(){ if(wireFill) wireFill.style.width = '100%'; }, 200);
+    setTimeout(function(){ if(spark) spark.classList.add('vis'); }, 1000);
+    setTimeout(function(){ if(branchTop) branchTop.style.width = '20px'; }, 1100);
+    setTimeout(function(){ if(branchBot) branchBot.style.width = '20px'; }, 1150);
+    setTimeout(function(){ if(devTop) devTop.classList.add('vis'); }, 1300);
+    setTimeout(function(){ if(devBot) devBot.classList.add('vis'); }, 1500);
+    setTimeout(function(){ if(quote) quote.classList.add('vis'); }, 2000);
+  }, {threshold: 0.25}).observe(wrap);
 })();
 </script>
 </body>
