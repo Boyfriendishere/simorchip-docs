@@ -379,6 +379,137 @@ section{position:relative;width:100%;overflow:hidden;}
   .why-cards{grid-template-columns:1fr;}
 }
 @media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+/* ══ CORPORATE DISPLAY INSTALL ══ */
+.cd-wrap{width:100%;background:var(--bg2);border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 12px var(--shadow);}
+.cd-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:1px solid var(--border);}
+.cd-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.cd-tag{font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;color:var(--amber);border:1px solid rgba(176,112,32,.2);padding:3px 8px;background:rgba(176,112,32,.04);}
+.cd-room{padding:16px 14px 10px;border-bottom:1px solid var(--border);}
+.cd-floor{display:flex;align-items:center;gap:0;justify-content:space-between;}
+/* TV */
+.cd-tv-wall{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.cd-tv{display:flex;flex-direction:column;align-items:center;}
+.cd-tv-screen{width:160px;height:92px;background:#111;border:1.5px solid #333;border-radius:3px;overflow:hidden;position:relative;transition:border-color .4s;}
+.cd-tv-screen.on{border-color:rgba(176,112,32,.5);box-shadow:0 0 14px rgba(176,112,32,.15);}
+.cd-tv-off{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#111;}
+.cd-tv-notext{font-family:var(--ff-m);font-size:10px;color:rgba(255,255,255,.1);}
+.cd-tv-off.hidden{display:none;}
+.cd-slideshow{position:absolute;inset:0;display:none;}
+.cd-slideshow.active{display:block;}
+.cd-slide{position:absolute;inset:0;background:linear-gradient(135deg,#1a1200,#0a0800);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0;transition:opacity .5s ease;}
+.cd-slide.active{opacity:1;}
+.cd-slide-bar{height:2px;background:rgba(176,112,32,.5);border-radius:1px;margin-bottom:6px;width:80%;transition:width 3s linear;}
+.cd-slide-logo{font-family:var(--ff-d);font-size:18px;letter-spacing:.12em;color:rgba(176,112,32,.9);text-shadow:0 0 10px rgba(176,112,32,.3);}
+.cd-slide-sub{font-family:var(--ff-m);font-size:7px;letter-spacing:.1em;color:rgba(176,112,32,.4);text-transform:uppercase;}
+.cd-tv-badge{position:absolute;bottom:4px;right:5px;font-family:var(--ff-m);font-size:5.5px;letter-spacing:.08em;color:rgba(176,112,32,.5);}
+.cd-tv-label{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.06em;color:var(--label);margin-top:5px;}
+/* Cable */
+.cd-cable-wrap{flex:1;display:flex;align-items:center;padding:0 8px;margin-top:30px;}
+.cd-cable{width:100%;height:2px;background:rgba(176,112,32,.1);border-radius:1px;position:relative;overflow:hidden;}
+.cd-cable-fill{position:absolute;left:0;top:0;height:100%;width:0;background:rgba(176,112,32,.6);box-shadow:0 0 4px rgba(176,112,32,.3);transition:width .8s ease;}
+/* PC */
+.cd-pc-wrap{display:flex;flex-direction:column;align-items:center;}
+.cd-pc-body{background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;width:90px;align-items:center;}
+.cd-pc-light{width:6px;height:6px;border-radius:50%;background:rgba(176,112,32,.2);transition:background .4s,box-shadow .4s;}
+.cd-pc-light.on{background:var(--amber);box-shadow:0 0 5px rgba(176,112,32,.5);}
+.cd-pc-label{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.06em;color:var(--label);text-align:center;}
+.cd-pc-badge{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:rgba(176,112,32,.6);text-align:center;}
+/* Status */
+.cd-status{display:flex;flex-direction:column;gap:0;border-bottom:1px solid var(--border);}
+.cd-stat-item{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);opacity:0;transition:opacity .5s ease;}
+.cd-stat-item:last-child{border-bottom:none;}
+.cd-stat-item.vis{opacity:1;}
+.cd-stat-icon{font-size:12px;flex-shrink:0;transition:all .3s ease;}
+.cd-stat-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;color:var(--label);text-transform:uppercase;margin-bottom:2px;}
+.cd-stat-val{font-family:var(--ff-m);font-size:8.5px;letter-spacing:.04em;color:var(--amber2);}
+.cd-footer{padding:11px 14px;font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.cd-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--label);}
+
+/* ══ THREE MONITOR DIAGRAM ══ */
+.tm-wrap{width:100%;background:var(--bg2);border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 12px var(--shadow);}
+.tm-header{padding:12px 14px 10px;border-bottom:1px solid var(--border);}
+.tm-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.tm-diagram{padding:14px 12px 8px;display:flex;align-items:flex-end;gap:10px;}
+.tm-card{flex-shrink:0;opacity:0;transition:opacity .6s ease;}
+.tm-card.vis{opacity:1;}
+.tm-card-body{background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:10px 10px 8px;width:82px;}
+.tm-card-name{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:var(--label);margin-bottom:8px;text-align:center;}
+.tm-ports-col{display:flex;flex-direction:column;gap:5px;}
+.tm-port-row{display:flex;align-items:center;gap:6px;}
+.tm-port{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;padding:3px 7px;border:1px solid transparent;border-radius:1px;flex-shrink:0;}
+.tm-p-vga{color:var(--label);border-color:rgba(176,112,32,.18);background:rgba(176,112,32,.04);}
+.tm-p-hdmi{color:var(--amber);border-color:rgba(176,112,32,.35);background:rgba(176,112,32,.06);}
+.tm-p-dvi{color:var(--label);border-color:rgba(176,112,32,.14);}
+.tm-wire{flex:1;height:1px;background:rgba(176,112,32,.12);transition:background .4s,box-shadow .4s;}
+.tm-wire.active{background:rgba(176,112,32,.5);box-shadow:0 0 4px rgba(176,112,32,.2);}
+.tm-monitors{flex:1;display:flex;gap:6px;align-items:flex-end;}
+.tm-mon{flex:1;opacity:0;transition:opacity .6s ease,transform .6s ease;transform:translateY(8px);}
+.tm-mon-main{flex:1.5;}
+.tm-mon.vis{opacity:1;transform:none;}
+.tm-mon-bezel{display:flex;flex-direction:column;align-items:center;}
+.tm-mon-screen{width:100%;border:1px solid rgba(0,0,0,.1);border-radius:2px 2px 0 0;overflow:hidden;}
+.tm-screen-lobby{aspect-ratio:16/10;background:#0a0800;border-color:rgba(176,112,32,.25);box-shadow:0 0 8px rgba(176,112,32,.08);}
+.tm-screen-main{aspect-ratio:16/10;background:#f4f0ea;border-color:rgba(176,112,32,.2);}
+.tm-screen-data{aspect-ratio:16/10;background:#f0ece4;}
+.tm-lobby-content{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8%;}
+.tm-lb-bar{height:2px;background:rgba(176,112,32,.4);border-radius:1px;width:70%;margin-bottom:4px;}
+.tm-lb-logo{font-family:var(--ff-d);font-size:11px;letter-spacing:.14em;color:rgba(176,112,32,.8);}
+.tm-lb-sub{font-family:var(--ff-m);font-size:5.5px;letter-spacing:.06em;color:rgba(176,112,32,.35);}
+.tm-main-content{padding:6%;}
+.tm-win-bar{display:flex;align-items:center;gap:3px;margin-bottom:5px;}
+.tm-win-d{width:4px;height:4px;border-radius:50%;background:rgba(176,112,32,.2);}
+.tm-win-title{font-family:var(--ff-m);font-size:5.5px;color:var(--label);margin-left:2px;}
+.tm-main-rows{display:flex;flex-direction:column;gap:3px;}
+.tm-main-row{height:3px;background:rgba(176,112,32,.12);border-radius:1px;}
+.tm-data-content{padding:8%;}
+.tm-data-rows{display:flex;flex-direction:column;gap:4px;}
+.tm-data-row{display:flex;align-items:center;gap:4px;}
+.tm-dr-dot{width:4px;height:4px;border-radius:50%;background:rgba(176,112,32,.3);flex-shrink:0;}
+.tm-dr-bar{height:3px;background:rgba(176,112,32,.1);border-radius:1px;}
+.tm-mn{width:10%;height:7px;background:rgba(0,0,0,.06);}
+.tm-mb{width:35%;height:4px;background:rgba(0,0,0,.05);border-radius:2px;}
+.tm-mb-wide{width:42%;}
+.tm-mon-tag{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.04em;color:var(--label);text-align:center;margin-top:5px;line-height:1.6;}
+.tm-mon-tag span{opacity:.6;font-size:7px;}
+.tm-tag-main{color:var(--amber2)!important;}
+.tm-spec-row{display:flex;border-top:1px solid var(--border);}
+.tm-spec-item{flex:1;padding:10px;border-right:1px solid var(--border);}
+.tm-spec-item:last-child{border-right:none;}
+.tm-spec-badge{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;padding:3px 8px;border:1px solid transparent;display:inline-block;margin-bottom:5px;}
+.tm-sb-vga{color:var(--label);border-color:rgba(176,112,32,.2);}
+.tm-sb-hdmi{color:var(--amber);border-color:rgba(176,112,32,.35);background:rgba(176,112,32,.04);}
+.tm-sb-dvi{color:var(--label);border-color:rgba(176,112,32,.15);}
+.tm-spec-desc{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.03em;color:var(--label);line-height:1.6;}
+.tm-footer{padding:11px 14px;border-top:1px solid var(--border);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.tm-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--label);}
+
+/* ══ FLEET DEPLOYMENT PANEL ══ */
+.fl-wrap{width:100%;background:var(--bg2);border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 12px var(--shadow);}
+.fl-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:1px solid var(--border);}
+.fl-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.fl-all-ok{display:flex;align-items:center;gap:5px;font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;color:var(--amber);}
+.fl-ok-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);animation:flPulse 2s ease-in-out infinite;}
+@keyframes flPulse{0%,100%{opacity:.4;}50%{opacity:1;box-shadow:0 0 6px rgba(176,112,32,.5);}}
+.fl-grid{padding:12px 14px 8px;display:flex;flex-direction:column;gap:4px;border-bottom:1px solid var(--border);}
+.fl-unit{display:flex;align-items:center;gap:8px;opacity:0;transition:opacity .4s ease;}
+.fl-unit.vis{opacity:1;}
+.fl-unit-id{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.06em;color:var(--label);width:32px;flex-shrink:0;}
+.fl-unit-bar{flex:1;height:4px;background:rgba(176,112,32,.08);border-radius:2px;overflow:hidden;}
+.fl-unit-fill{height:100%;background:linear-gradient(90deg,rgba(176,112,32,.3),var(--amber));border-radius:2px;width:0;transition:width 1s ease;}
+.fl-unit-days{font-family:var(--ff-m);font-size:7.5px;color:var(--label);width:52px;text-align:right;flex-shrink:0;}
+.fl-totals{display:flex;border-bottom:1px solid var(--border);}
+.fl-total-item{flex:1;padding:10px 12px;border-right:1px solid var(--border);text-align:center;}
+.fl-total-item:last-child{border-right:none;}
+.fl-total-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);margin-bottom:4px;}
+.fl-total-val{font-family:var(--ff-m);font-size:clamp(16px,2.5vw,24px);color:var(--ink);font-weight:500;line-height:1;}
+.fl-val-zero{color:var(--amber)!important;}
+.fl-val-amber{color:var(--amber2)!important;}
+.fl-clock-badge{padding:8px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+.fl-clock-label{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);}
+.fl-clock-val{font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;color:var(--amber2);}
+.fl-footer{padding:11px 14px;font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.fl-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--label);}
+
 </style>
 </head>
 <body>
@@ -585,11 +716,92 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:360px;margin-bottom:12px;">
-        <span>[ COUNTERFORCE — CARD SIDE ]<br>R7240 4GB · single fan · amber ambient<br>Geometric ventilation channels visible ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:120px;">
-        <span>[ OLAND CORE + PCIe 3.0 CONTACTS ]<br>PCB detail · 128-Bit trace routing ]</span>
+      <!-- ── CORPORATE DISPLAY INSTALL ── -->
+      <div class="cd-wrap" id="cdWrap">
+        <div class="cd-header">
+          <span class="cd-eyebrow">Deployment Scenario</span>
+          <span class="cd-tag">Lobby · Reception · Always On</span>
+        </div>
+
+        <!-- Room layout -->
+        <div class="cd-room" id="cdRoom">
+          <!-- Floor plan top-down -->
+          <div class="cd-floor">
+            <!-- TV on wall -->
+            <div class="cd-tv-wall">
+              <div class="cd-tv" id="cdTv">
+                <div class="cd-tv-screen" id="cdTvScreen">
+                  <div class="cd-tv-off">
+                    <div class="cd-tv-notext">—</div>
+                  </div>
+                  <!-- Slideshow content (appears after connection) -->
+                  <div class="cd-slideshow" id="cdSlideshow">
+                    <div class="cd-slide active" id="cdSlide0">
+                      <div class="cd-slide-bar"></div>
+                      <div class="cd-slide-logo">SIMORCHIP</div>
+                      <div class="cd-slide-sub">Enterprise Solutions</div>
+                    </div>
+                    <div class="cd-slide" id="cdSlide1">
+                      <div class="cd-slide-bar" style="width:60%"></div>
+                      <div class="cd-slide-logo" style="font-size:.7em">WELCOME</div>
+                      <div class="cd-slide-sub">Visitor Registration Floor 3</div>
+                    </div>
+                  </div>
+                  <div class="cd-tv-badge">HDMI · 1080P</div>
+                </div>
+                <div class="cd-tv-label">55" Display</div>
+              </div>
+            </div>
+
+            <!-- Cable -->
+            <div class="cd-cable-wrap">
+              <div class="cd-cable" id="cdCable">
+                <div class="cd-cable-fill" id="cdCableFill"></div>
+              </div>
+            </div>
+
+            <!-- PC unit -->
+            <div class="cd-pc-wrap">
+              <div class="cd-pc" id="cdPc">
+                <div class="cd-pc-body">
+                  <div class="cd-pc-light" id="cdPcLight"></div>
+                  <div class="cd-pc-label">Corporate PC</div>
+                  <div class="cd-pc-badge">R7240 · 30W</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status indicators -->
+        <div class="cd-status" id="cdStatus">
+          <div class="cd-stat-item">
+            <div class="cd-stat-icon" id="cdStatPow">⬜</div>
+            <div class="cd-stat-info">
+              <div class="cd-stat-label">Power</div>
+              <div class="cd-stat-val" id="cdStatPowVal">PCIe slot only · 30W</div>
+            </div>
+          </div>
+          <div class="cd-stat-item">
+            <div class="cd-stat-icon" id="cdStatDisp">⬜</div>
+            <div class="cd-stat-info">
+              <div class="cd-stat-label">Display</div>
+              <div class="cd-stat-val" id="cdStatDispVal">HDMI · 1920×1080</div>
+            </div>
+          </div>
+          <div class="cd-stat-item">
+            <div class="cd-stat-icon" id="cdStatOp">⬜</div>
+            <div class="cd-stat-info">
+              <div class="cd-stat-label">Operation</div>
+              <div class="cd-stat-val" id="cdStatOpVal">24/7 · Silent · Unattended</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cd-footer">
+          IT installs it. Nobody else thinks about it again.<br>
+          <span>裝完就走。它自己跑。這才是企業部署的標準。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -659,11 +871,88 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:340px;margin-bottom:12px;">
-        <span>[ CAPABLE — PORT BRACKET ]<br>R7240 rear · VGA · HDMI · DVI<br>Copper trace lines · amber studio light ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:130px;">
-        <span>[ MULTI-MONITOR TRADING DESK ]<br>Three screens · R7240 driving all three ]</span>
+      <!-- ── THREE MONITOR DIAGRAM ── -->
+      <div class="tm-wrap" id="tmWrap">
+        <div class="tm-header">
+          <span class="tm-eyebrow">Triple Output · One Bracket</span>
+        </div>
+        <div class="tm-diagram">
+          <!-- Card -->
+          <div class="tm-card" id="tmCard">
+            <div class="tm-card-body">
+              <div class="tm-card-name">R7240 4GB</div>
+              <div class="tm-ports-col">
+                <div class="tm-port-row" id="tmPVga">
+                  <div class="tm-port tm-p-vga">VGA</div>
+                  <div class="tm-wire" id="tmWVga"></div>
+                </div>
+                <div class="tm-port-row" id="tmPHdmi">
+                  <div class="tm-port tm-p-hdmi">HDMI</div>
+                  <div class="tm-wire" id="tmWHdmi"></div>
+                </div>
+                <div class="tm-port-row" id="tmPDvi">
+                  <div class="tm-port tm-p-dvi">DVI</div>
+                  <div class="tm-wire" id="tmWDvi"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Monitors -->
+          <div class="tm-monitors">
+            <div class="tm-mon" id="tmMonA">
+              <div class="tm-mon-bezel tm-bezel-lobby">
+                <div class="tm-mon-screen tm-screen-lobby">
+                  <div class="tm-lobby-content">
+                    <div class="tm-lb-bar"></div>
+                    <div class="tm-lb-logo">CORP</div>
+                    <div class="tm-lb-sub">Lobby Display</div>
+                  </div>
+                </div>
+                <div class="tm-mn"></div><div class="tm-mb"></div>
+              </div>
+              <div class="tm-mon-tag">大廳展示<br><span>VGA · 1080P</span></div>
+            </div>
+            <div class="tm-mon tm-mon-main" id="tmMonB">
+              <div class="tm-mon-bezel tm-bezel-main">
+                <div class="tm-mon-screen tm-screen-main">
+                  <div class="tm-main-content">
+                    <div class="tm-win-bar"><div class="tm-win-d"></div><div class="tm-win-d"></div><div class="tm-win-d"></div><div class="tm-win-title">Dashboard</div></div>
+                    <div class="tm-main-rows">
+                      <div class="tm-main-row" style="width:90%"></div>
+                      <div class="tm-main-row" style="width:70%"></div>
+                      <div class="tm-main-row" style="width:85%"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tm-mn"></div><div class="tm-mb tm-mb-wide"></div>
+              </div>
+              <div class="tm-mon-tag tm-tag-main">主辦公螢幕<br><span>HDMI · 1080P</span></div>
+            </div>
+            <div class="tm-mon" id="tmMonC">
+              <div class="tm-mon-bezel">
+                <div class="tm-mon-screen tm-screen-data">
+                  <div class="tm-data-content">
+                    <div class="tm-data-rows">
+                      <div class="tm-data-row"><div class="tm-dr-dot"></div><div class="tm-dr-bar" style="width:80%"></div></div>
+                      <div class="tm-data-row"><div class="tm-dr-dot"></div><div class="tm-dr-bar" style="width:60%"></div></div>
+                      <div class="tm-data-row"><div class="tm-dr-dot"></div><div class="tm-dr-bar" style="width:75%"></div></div>
+                      <div class="tm-data-row"><div class="tm-dr-dot"></div><div class="tm-dr-bar" style="width:50%"></div></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tm-mn"></div><div class="tm-mb"></div>
+              </div>
+              <div class="tm-mon-tag">資料流<br><span>DVI · 1080P</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Port specs row -->
+        <div class="tm-spec-row">
+          <div class="tm-spec-item"><div class="tm-spec-badge tm-sb-vga">VGA</div><div class="tm-spec-desc">Legacy displays<br>任何年代螢幕</div></div>
+          <div class="tm-spec-item"><div class="tm-spec-badge tm-sb-hdmi">HDMI</div><div class="tm-spec-desc">TV · modern screens<br>大廳電視直連</div></div>
+          <div class="tm-spec-item"><div class="tm-spec-badge tm-sb-dvi">DVI</div><div class="tm-spec-desc">Dual-Link digital<br>企業標準螢幕</div></div>
+        </div>
+        <div class="tm-footer">Three screens. One card. Zero adapters.<br><span>128-Bit 高速通道，三條線同時輸出，互不干擾。</span></div>
       </div>
     </div>
   </div>
@@ -713,8 +1002,51 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:400px;">
-        <span>[ ANCHORAGE ]<br>R7240 installed · corporate tower<br>Natural light · anchored deployment ]</span>
+      <!-- ── FLEET DEPLOYMENT PANEL ── -->
+      <div class="fl-wrap" id="flWrap">
+        <div class="fl-header">
+          <span class="fl-eyebrow">Fleet Status · R7240 Deployment</span>
+          <div class="fl-all-ok"><div class="fl-ok-dot"></div>All Units Normal</div>
+        </div>
+        <!-- Unit grid -->
+        <div class="fl-grid" id="flGrid">
+          <div class="fl-unit" data-days="1847" data-i="0"><div class="fl-unit-id">PC-01</div><div class="fl-unit-bar"><div class="fl-unit-fill" id="flu0"></div></div><div class="fl-unit-days" id="fld0">—</div></div>
+          <div class="fl-unit" data-days="1620" data-i="1"><div class="fl-unit-id">PC-02</div><div class="fl-unit-bar"><div class="fl-unit-fill" id="flu1"></div></div><div class="fl-unit-days" id="fld1">—</div></div>
+          <div class="fl-unit" data-days="1391" data-i="2"><div class="fl-unit-id">PC-03</div><div class="fl-unit-bar"><div class="fl-unit-fill" id="flu2"></div></div><div class="fl-unit-days" id="fld2">—</div></div>
+          <div class="fl-unit" data-days="1205" data-i="3"><div class="fl-unit-id">PC-04</div><div class="fl-unit-bar"><div class="fl-unit-fill" id="flu3"></div></div><div class="fl-unit-days" id="fld3">—</div></div>
+          <div class="fl-unit" data-days="987" data-i="4"><div class="fl-unit-id">PC-05</div><div class="fl-unit-bar"><div class="fl-unit-fill" id="flu4"></div></div><div class="fl-unit-days" id="fld4">—</div></div>
+          <div class="fl-unit" data-days="842" data-i="5"><div class="fl-unit-id">PC-06</div><div class="fl-unit-bar"><div class="fl-unit-fill" id="flu5"></div></div><div class="fl-unit-days" id="fld5">—</div></div>
+          <div class="fl-unit" data-days="734" data-i="6"><div class="fl-unit-id">PC-07</div><div class="fl-unit-bar"><div class="fl-unit-fill" id="flu6"></div></div><div class="fl-unit-days" id="fld6">—</div></div>
+          <div class="fl-unit" data-days="612" data-i="7"><div class="fl-unit-id">PC-08</div><div class="fl-unit-bar"><div class="fl-unit-fill" id="flu7"></div></div><div class="fl-unit-days" id="fld7">—</div></div>
+          <div class="fl-unit" data-days="488" data-i="8"><div class="fl-unit-id">PC-09</div><div class="fl-unit-bar"><div class="fl-unit-fill" id="flu8"></div></div><div class="fl-unit-days" id="fld8">—</div></div>
+          <div class="fl-unit" data-days="365" data-i="9"><div class="fl-unit-id">PC-10</div><div class="fl-unit-bar"><div class="fl-unit-fill" id="flu9"></div></div><div class="fl-unit-days" id="fld9">—</div></div>
+          <div class="fl-unit" data-days="241" data-i="10"><div class="fl-unit-id">PC-11</div><div class="fl-unit-bar"><div class="fl-unit-fill" id="flu10"></div></div><div class="fl-unit-days" id="fld10">—</div></div>
+          <div class="fl-unit" data-days="128" data-i="11"><div class="fl-unit-id">PC-12</div><div class="fl-unit-bar"><div class="fl-unit-fill" id="flu11"></div></div><div class="fl-unit-days" id="fld11">—</div></div>
+        </div>
+        <!-- Totals -->
+        <div class="fl-totals" id="flTotals">
+          <div class="fl-total-item">
+            <div class="fl-total-label">Units Deployed</div>
+            <div class="fl-total-val">12</div>
+          </div>
+          <div class="fl-total-item">
+            <div class="fl-total-label">Maintenance Calls</div>
+            <div class="fl-total-val fl-val-zero">0</div>
+          </div>
+          <div class="fl-total-item">
+            <div class="fl-total-label">Combined Uptime</div>
+            <div class="fl-total-val fl-val-amber" id="flTotalDays">—</div>
+          </div>
+        </div>
+        <!-- Clock badge for R7240 -->
+        <div class="fl-clock-badge">
+          <span class="fl-clock-label">Core Clock</span>
+          <span class="fl-clock-val">780 MHz · Oland Base · Stable</span>
+        </div>
+        <div class="fl-footer">
+          Installed and forgotten. Still running.<br>
+          <span>12 台，0 通維修電話。這才是企業採購的理由。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1232,6 +1564,118 @@ function portHighlight(){
     }
   },{threshold:.1});
   obs.observe(tbl);
+})();
+
+/* ══ CORPORATE DISPLAY INSTALL ══ */
+(function(){
+  var wrap = document.getElementById('cdWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var cable = document.getElementById('cdCableFill');
+    var tvScreen = document.getElementById('cdTvScreen');
+    var slideshow = document.getElementById('cdSlideshow');
+    var tvOff = tvScreen ? tvScreen.querySelector('.cd-tv-off') : null;
+    var pcLight = document.getElementById('cdPcLight');
+    var stats = wrap.querySelectorAll('.cd-stat-item');
+    // PC powers on
+    setTimeout(function(){ if(pcLight) pcLight.classList.add('on'); },300);
+    // Cable signal flows
+    setTimeout(function(){ if(cable) cable.style.width='100%'; },600);
+    // TV turns on
+    setTimeout(function(){
+      if(tvScreen) tvScreen.classList.add('on');
+      if(tvOff) tvOff.classList.add('hidden');
+      if(slideshow) slideshow.classList.add('active');
+    },1400);
+    // Slideshow cycles
+    setTimeout(function(){
+      var slides = [document.getElementById('cdSlide0'), document.getElementById('cdSlide1')];
+      var cur = 0;
+      setInterval(function(){
+        if(slides[cur]) slides[cur].classList.remove('active');
+        cur = (cur+1) % slides.length;
+        if(slides[cur]) slides[cur].classList.add('active');
+      }, 2800);
+    },1600);
+    // Status items appear
+    stats.forEach(function(s,i){
+      setTimeout(function(){ if(s) s.classList.add('vis'); },1600+i*200);
+    });
+    // Status icons update
+    var icons = ['cdStatPow','cdStatDisp','cdStatOp'];
+    icons.forEach(function(id,i){
+      setTimeout(function(){
+        var el = document.getElementById(id);
+        if(el) el.textContent = '✅';
+      }, 1700+i*200);
+    });
+  },{threshold:0.25}).observe(wrap);
+})();
+
+/* ══ THREE MONITOR DIAGRAM ══ */
+(function(){
+  var wrap = document.getElementById('tmWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var card = document.getElementById('tmCard');
+    var monA = document.getElementById('tmMonA');
+    var monB = document.getElementById('tmMonB');
+    var monC = document.getElementById('tmMonC');
+    var wV = document.getElementById('tmWVga');
+    var wH = document.getElementById('tmWHdmi');
+    var wD = document.getElementById('tmWDvi');
+    setTimeout(function(){ if(card) card.classList.add('vis'); },100);
+    setTimeout(function(){ if(wV) wV.classList.add('active'); },350);
+    setTimeout(function(){ if(monA) monA.classList.add('vis'); },450);
+    setTimeout(function(){ if(wH) wH.classList.add('active'); },600);
+    setTimeout(function(){ if(monB) monB.classList.add('vis'); },700);
+    setTimeout(function(){ if(wD) wD.classList.add('active'); },850);
+    setTimeout(function(){ if(monC) monC.classList.add('vis'); },950);
+  },{threshold:0.25}).observe(wrap);
+})();
+
+/* ══ FLEET DEPLOYMENT PANEL ══ */
+(function(){
+  var wrap = document.getElementById('flWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var units = wrap.querySelectorAll('.fl-unit');
+    var maxDays = 1847;
+    units.forEach(function(unit, i){
+      var days = parseInt(unit.dataset.days);
+      setTimeout(function(){
+        if(unit) unit.classList.add('vis');
+        var fill = document.getElementById('flu'+i);
+        var dayEl = document.getElementById('fld'+i);
+        if(fill) fill.style.width = (days/maxDays*100)+'%';
+        if(dayEl) dayEl.textContent = days+' days';
+      }, i*80);
+    });
+    // Totals
+    setTimeout(function(){
+      var totalDays = 0;
+      units.forEach(function(u){ totalDays += parseInt(u.dataset.days); });
+      var el = document.getElementById('flTotalDays');
+      if(el){
+        var dur = 1200, t0 = performance.now();
+        (function tick(now){
+          var p = Math.min((now-t0)/dur,1), v = 1-Math.pow(1-p,3);
+          el.textContent = Math.round(v*totalDays).toLocaleString()+' days';
+          if(p<1) requestAnimationFrame(tick);
+          else el.textContent = totalDays.toLocaleString()+' days';
+        })(performance.now());
+      }
+    }, units.length*80+200);
+  },{threshold:0.2}).observe(wrap);
 })();
 </script>
 </body>
