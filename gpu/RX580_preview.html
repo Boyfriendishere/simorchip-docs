@@ -385,6 +385,133 @@ section{position:relative;width:100%;overflow:hidden;}
 .pkg-feat-nm{font-family:var(--ff-d);font-size:15px;letter-spacing:.06em;color:var(--sl);margin-bottom:3px;}
 .pkg-feat-ds{font-size:13px;font-weight:300;color:var(--ts);line-height:1.65;}
 
+/* ── 256-BIT HIGHWAY ── */
+.hw-wrap{width:100%;background:rgba(26,18,8,.95);border:1px solid var(--border);overflow:hidden;}
+.hw-header{padding:12px 14px 10px;border-bottom:1px solid rgba(184,132,74,.1);}
+.hw-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--td);}
+.hw-roads{display:flex;flex-direction:column;gap:0;padding:14px 14px 8px;}
+.hw-road-block{opacity:0;transform:translateX(-10px);transition:opacity .6s ease,transform .6s ease;}
+.hw-road-block.vis{opacity:1;transform:none;}
+.hw-road-label{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.hw-bit{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;padding:3px 8px;border:1px solid transparent;border-radius:1px;}
+.hw-bit-slow{color:rgba(160,100,80,.8);border-color:rgba(160,100,80,.25);}
+.hw-bit-fast{color:var(--am);border-color:rgba(212,133,30,.35);background:rgba(212,133,30,.05);}
+.hw-road-desc{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.04em;color:var(--td);}
+.hw-road{position:relative;border:1px solid rgba(184,132,74,.1);border-radius:2px;overflow:hidden;padding:4px 0;}
+.hw-road-narrow{background:rgba(26,18,8,.8);}
+.hw-road-wide{background:rgba(26,18,8,.8);}
+.hw-lane{height:12px;position:relative;border-bottom:1px solid rgba(184,132,74,.06);overflow:hidden;}
+.hw-lane:last-of-type{border-bottom:none;}
+.hw-car{position:absolute;top:50%;transform:translateY(-50%);width:16px;height:7px;border-radius:2px;}
+.hw-car-go{background:rgba(212,133,30,.5);left:30%;animation:hwMove 2.2s linear infinite;}
+.hw-car-stuck{background:rgba(160,80,60,.3);}
+.hw-car-stuck:nth-child(2){left:48%;}
+.hw-car-stuck:nth-child(3){left:52%;}
+@keyframes hwMove{0%{left:-5%;}100%{left:105%;}}
+.hw-car-rx{background:rgba(212,133,30,.7);box-shadow:0 0 4px rgba(212,133,30,.3);animation:hwMoveRx linear infinite;}
+.hw-lane:nth-child(1) .hw-car-rx{animation-duration:1.1s;left:10%;}
+.hw-lane:nth-child(2) .hw-car-rx{animation-duration:1.4s;left:35%;}
+.hw-lane:nth-child(3) .hw-car-rx{animation-duration:1.2s;left:60%;}
+.hw-lane:nth-child(4) .hw-car-rx{animation-duration:1.6s;left:80%;}
+@keyframes hwMoveRx{0%{left:-5%;}100%{left:105%;}}
+.hw-congestion{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--ff-m);font-size:7px;letter-spacing:.1em;color:rgba(220,80,60,.8);background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.25);padding:2px 5px;opacity:0;transition:opacity .4s ease;}
+.hw-congestion.vis{opacity:1;}
+.hw-road-stat{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.04em;margin-top:5px;}
+.hw-stat-slow{color:rgba(160,100,80,.6);}
+.hw-stat-fast{color:rgba(212,133,30,.7);}
+.hw-vs{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--td);text-align:center;padding:8px 0;}
+.hw-numbers{display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid rgba(184,132,74,.1);}
+.hw-num-item{flex:1;text-align:center;}
+.hw-num-val{font-family:var(--ff-d);font-size:clamp(18px,2.8vw,28px);letter-spacing:.04em;line-height:1;}
+.hw-val-slow{color:rgba(160,100,80,.6);}
+.hw-val-fast{color:var(--am);}
+.hw-num-lbl{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:var(--td);margin-top:3px;}
+.hw-num-arrow{font-size:18px;color:var(--am);opacity:.5;flex-shrink:0;}
+.hw-footer{padding:11px 14px;border-top:1px solid rgba(184,132,74,.1);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--tm);line-height:1.75;font-style:italic;}
+.hw-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--td);}
+
+/* ── THERMAL CHART ── */
+.th-wrap{width:100%;background:rgba(26,18,8,.95);border:1px solid var(--border);overflow:hidden;margin-bottom:0;}
+.th-header{padding:12px 14px 10px;border-bottom:1px solid rgba(184,132,74,.1);}
+.th-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--td);display:block;}
+.th-sub{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.06em;color:rgba(184,132,74,.4);display:block;margin-top:2px;}
+.th-chart-area{display:flex;gap:6px;padding:14px 14px 8px;}
+.th-y-axis{display:flex;flex-direction:column;justify-content:space-between;padding-bottom:2px;}
+.th-y-axis span{font-family:var(--ff-m);font-size:7px;color:var(--td);letter-spacing:.03em;}
+.th-graph{flex:1;position:relative;height:140px;}
+.th-zone-danger{position:absolute;left:0;right:0;top:0;height:28%;background:rgba(192,57,43,.04);border-bottom:1px solid rgba(192,57,43,.12);}
+.th-zone-danger span{font-family:var(--ff-m);font-size:6.5px;color:rgba(192,57,43,.4);letter-spacing:.06em;position:absolute;right:4px;top:3px;}
+.th-zone-safe{position:absolute;left:0;right:0;top:28%;bottom:0;background:rgba(212,133,30,.02);}
+.th-zone-safe span{font-family:var(--ff-m);font-size:6.5px;color:rgba(212,133,30,.25);letter-spacing:.06em;position:absolute;right:4px;top:4px;}
+.th-svg{position:absolute;inset:0;width:100%;height:100%;}
+.th-path-single{stroke:rgba(192,57,43,.65);stroke-width:1.5;stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset 2s ease;}
+.th-path-dual{stroke:rgba(212,133,30,.85);stroke-width:1.5;stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset 2s ease .3s;}
+.th-fill-single{fill:rgba(192,57,43,.06);opacity:0;transition:opacity .5s ease 1.5s;}
+.th-fill-dual{fill:rgba(212,133,30,.05);opacity:0;transition:opacity .5s ease 1.8s;}
+.th-path-single.drawn{stroke-dashoffset:0;}
+.th-path-dual.drawn{stroke-dashoffset:0;}
+.th-fill-single.vis,.th-fill-dual.vis{opacity:1;}
+.th-legend{padding:10px 14px;border-top:1px solid rgba(184,132,74,.1);display:flex;flex-direction:column;gap:7px;}
+.th-leg-item{display:flex;align-items:flex-start;gap:8px;}
+.th-leg-dot{width:10px;height:3px;border-radius:2px;margin-top:7px;flex-shrink:0;}
+.th-dot-single{background:rgba(192,57,43,.7);}
+.th-dot-dual{background:rgba(212,133,30,.85);}
+.th-leg-name{font-family:var(--ff-b);font-size:13px;font-weight:600;color:var(--tm);margin-bottom:2px;}
+.th-name-rx{color:var(--am)!important;}
+.th-leg-desc{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.04em;color:var(--td);line-height:1.6;}
+.th-callout{padding:11px 14px;border-top:1px solid rgba(184,132,74,.1);opacity:0;transition:opacity .6s ease;}
+.th-callout.vis{opacity:1;}
+.th-callout-line{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--am);display:block;margin-bottom:5px;}
+.th-callout-sub{font-family:var(--ff-m);font-size:8px;letter-spacing:.04em;color:var(--td);line-height:1.7;}
+
+/* ── GENERATIONAL LEGACY ── */
+.gen-wrap{margin:0 0 20px;padding:16px 0 0;}
+.gen-title-row{margin-bottom:14px;}
+.gen-lbl{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--td);}
+.gen-timeline{display:flex;flex-direction:column;gap:0;}
+.gen-item{display:flex;align-items:flex-start;gap:0;position:relative;}
+.gen-dot{width:10px;height:10px;border-radius:50%;background:rgba(212,133,30,.2);border:1.5px solid rgba(212,133,30,.3);flex-shrink:0;margin-top:4px;opacity:0;transition:opacity .4s ease,background .3s;}
+.gen-dot.vis{opacity:1;}
+.gen-dot-you{background:rgba(212,133,30,.6);border-color:var(--am);}
+.gen-dot-final{background:var(--cr);border-color:var(--cr);box-shadow:0 0 8px rgba(192,57,43,.5);}
+.gen-line{width:1px;height:28px;background:rgba(212,133,30,.15);margin-left:4px;opacity:0;transition:opacity .3s ease .2s;}
+.gen-line.vis{opacity:1;}
+.gen-card{margin-left:12px;padding-bottom:16px;opacity:0;transform:translateX(-8px);transition:opacity .5s ease,transform .5s ease;}
+.gen-card.vis{opacity:1;transform:none;}
+.gen-year{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;color:var(--td);margin-bottom:2px;}
+.gen-name{font-family:var(--ff-b);font-size:15px;font-weight:600;color:var(--tm);margin-bottom:2px;}
+.gen-desc{font-family:var(--ff-m);font-size:8.5px;letter-spacing:.04em;color:var(--td);line-height:1.6;}
+.gen-card-you .gen-name{color:var(--am);}
+.gen-card-final .gen-year{color:var(--cr);}
+.gen-card-final .gen-name{color:var(--cr)!important;font-size:17px;}
+.gen-card-final .gen-desc{color:var(--am);}
+.gen-year-final,.gen-name-final,.gen-desc-final{color:var(--cr)!important;}
+.gen-footnote{font-family:var(--ff-m);font-size:8px;letter-spacing:.04em;color:rgba(212,133,30,.4);line-height:1.8;border-top:1px solid rgba(184,132,74,.1);padding-top:10px;margin-top:4px;}
+.gen-footnote span{opacity:.6;font-size:7.5px;}
+
+/* ── WHILE IT RENDERS ── */
+.wir-wrap{width:100%;background:rgba(26,18,8,.95);border:1px solid var(--border);overflow:hidden;margin-bottom:14px;}
+.wir-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:1px solid rgba(184,132,74,.1);}
+.wir-eyebrow{font-family:var(--ff-d);font-size:clamp(18px,2.5vw,26px);letter-spacing:.06em;color:var(--tm);}
+.wir-sub{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.1em;color:var(--td);}
+.wir-rows{display:flex;flex-direction:column;}
+.wir-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid rgba(184,132,74,.07);opacity:0;transform:translateX(-10px);transition:opacity .5s ease,transform .5s ease;}
+.wir-row.vis{opacity:1;transform:none;}
+.wir-row-gpu{background:rgba(212,133,30,.03);border-top:1px solid rgba(212,133,30,.2)!important;}
+.wir-left{display:flex;align-items:center;gap:10px;}
+.wir-icon{font-size:16px;flex-shrink:0;}
+.wir-name{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--tm);margin-bottom:1px;}
+.wir-cycle{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;color:var(--td);}
+.wir-right{text-align:right;flex-shrink:0;}
+.wir-count{font-family:var(--ff-d);font-size:clamp(22px,3.5vw,36px);letter-spacing:.02em;color:rgba(184,132,74,.45);line-height:1;}
+.wir-right-gpu .wir-count{color:var(--am);text-shadow:0 0 16px rgba(212,133,30,.3);}
+.wir-unit{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--td);margin-top:2px;}
+.wir-zero::after{content:'Replaced: 0';position:absolute;bottom:-13px;right:0;font-family:var(--ff-m);font-size:6.5px;letter-spacing:.1em;color:var(--am);opacity:.7;white-space:nowrap;}
+.wir-right-gpu{position:relative;}
+.wir-footer{padding:11px 14px;border-top:1px solid rgba(184,132,74,.1);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--tm);line-height:1.75;font-style:italic;}
+.wir-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--td);}
+
+
 @media(max-width:860px){
   .bl-grid,.cf-layout,.dom-layout,.thermal-layout,.anch-layout,.pkg-layout{grid-template-columns:1fr;gap:44px;}
   .h-right{opacity:.08!important;transform:none!important;width:100%;}
@@ -685,11 +812,71 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div style="width:100%;height:340px;margin-bottom:12px;background:linear-gradient(135deg,#2c1f0e,#1a1208);border:1px solid rgba(184,132,74,.18);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(26,18,8,.5);">
-        <span style="font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(184,132,74,.2);text-align:center;line-height:2.4;padding:0 16px;">[ DOMINANCE — PORT BRACKET ]<br>RX580 rear · DP · HDMI · DVI<br>Heavy-duty shielded sockets ]</span>
-      </div>
-      <div style="width:100%;height:128px;background:linear-gradient(135deg,#3d2c14,#2c1f0e);border:1px solid rgba(184,132,74,.18);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(26,18,8,.4);">
-        <span style="font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(184,132,74,.18);text-align:center;line-height:2.4;padding:0 16px;">[ 6-PIN + PCIe 3.0×16 CONTACTS ]<br>Copper trace routing ]</span>
+      <!-- ── 256-BIT HIGHWAY ── -->
+      <div class="hw-wrap" id="hwWrap">
+        <div class="hw-header">
+          <span class="hw-eyebrow">Memory Bus Width — Why It Matters</span>
+        </div>
+        <div class="hw-roads">
+          <!-- 128-bit: 2-lane congestion -->
+          <div class="hw-road-block" id="hwRoad128">
+            <div class="hw-road-label">
+              <span class="hw-bit hw-bit-slow">128-Bit</span>
+              <span class="hw-road-desc">2 lanes · congestion at peak</span>
+            </div>
+            <div class="hw-road hw-road-narrow">
+              <div class="hw-lane">
+                <div class="hw-car hw-car-go" id="hwCar1a"></div>
+                <div class="hw-car hw-car-stuck" id="hwCar1b"></div>
+                <div class="hw-car hw-car-stuck" id="hwCar1c"></div>
+              </div>
+              <div class="hw-lane">
+                <div class="hw-car hw-car-go" id="hwCar2a"></div>
+                <div class="hw-car hw-car-stuck" id="hwCar2b"></div>
+              </div>
+              <div class="hw-congestion" id="hwCongestion">
+                <span>STALL</span>
+              </div>
+            </div>
+            <div class="hw-road-stat hw-stat-slow">峰值時塞車 · 幀率掉落</div>
+          </div>
+
+          <!-- VS -->
+          <div class="hw-vs">vs</div>
+
+          <!-- 256-bit: 4-lane clear -->
+          <div class="hw-road-block" id="hwRoad256">
+            <div class="hw-road-label">
+              <span class="hw-bit hw-bit-fast">256-Bit</span>
+              <span class="hw-road-desc">4 lanes · always clear</span>
+            </div>
+            <div class="hw-road hw-road-wide">
+              <div class="hw-lane"><div class="hw-car hw-car-rx" id="hwCarR1"></div></div>
+              <div class="hw-lane"><div class="hw-car hw-car-rx" id="hwCarR2"></div></div>
+              <div class="hw-lane"><div class="hw-car hw-car-rx" id="hwCarR3"></div></div>
+              <div class="hw-lane"><div class="hw-car hw-car-rx" id="hwCarR4"></div></div>
+            </div>
+            <div class="hw-road-stat hw-stat-fast">全速通行 · 8GB 不堵車</div>
+          </div>
+        </div>
+
+        <!-- Bandwidth numbers -->
+        <div class="hw-numbers" id="hwNumbers">
+          <div class="hw-num-item">
+            <div class="hw-num-val hw-val-slow" id="hwBw128">0 GB/s</div>
+            <div class="hw-num-lbl">128-Bit GDDR5</div>
+          </div>
+          <div class="hw-num-arrow">→</div>
+          <div class="hw-num-item">
+            <div class="hw-num-val hw-val-fast" id="hwBw256">0 GB/s</div>
+            <div class="hw-num-lbl">256-Bit GDDR5 · RX580</div>
+          </div>
+        </div>
+
+        <div class="hw-footer">
+          Double the lanes. Double the throughput. Zero negotiation.<br>
+          <span>256-Bit 就是四線道高速公路——峰值時，你的資料不用等。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -705,7 +892,50 @@ section{position:relative;width:100%;overflow:hidden;}
       <p class="thermal-body">Two ultra-durable fans, engineered with <strong>industrial-grade ball bearings</strong>, spin in perfect harmony to drive relentless thermal dissipation while maintaining absolute acoustic discipline under load.<br><br>The intelligent temperature control matrix dynamically manages both fans, keeping the GPU in its optimal cooling zone while extending the mechanical lifespan of the motors. Powered by a robust <strong>150W layout via a secure 6-Pin interface</strong>.</p>
     </div>
     <div>
-      <div class="badge-stack fi fi-d1" id="badgeStack">
+      <!-- ── DUAL FAN THERMAL CHART ── -->
+      <div class="th-wrap" id="thWrap">
+        <div class="th-header">
+          <span class="th-eyebrow">60-Minute Sustained Load</span>
+          <span class="th-sub">Single Fan vs Dual Ball-Bearing</span>
+        </div>
+        <div class="th-chart-area">
+          <div class="th-y-axis">
+            <span>95°C</span><span>80°C</span><span>65°C</span><span>50°C</span>
+          </div>
+          <div class="th-graph">
+            <div class="th-zone-danger"><span>Throttle Zone</span></div>
+            <div class="th-zone-safe"><span>Safe Zone</span></div>
+            <svg class="th-svg" id="thSvg" viewBox="0 0 300 160" preserveAspectRatio="none">
+              <path id="thSingle" class="th-path-single" d="" fill="none"/>
+              <path id="thDual"   class="th-path-dual"   d="" fill="none"/>
+              <path id="thFillS"  class="th-fill-single" d=""/>
+              <path id="thFillD"  class="th-fill-dual"   d=""/>
+            </svg>
+          </div>
+        </div>
+        <div class="th-legend">
+          <div class="th-leg-item">
+            <div class="th-leg-dot th-dot-single"></div>
+            <div>
+              <div class="th-leg-name">Single Fan</div>
+              <div class="th-leg-desc">溫度爬進降頻區 → 主動降速 → 性能損失</div>
+            </div>
+          </div>
+          <div class="th-leg-item">
+            <div class="th-leg-dot th-dot-dual"></div>
+            <div>
+              <div class="th-leg-name th-name-rx">RX580 · Dual Ball-Bearing</div>
+              <div class="th-leg-desc">全程在安全區 → 時鐘不降 → 性能不妥協</div>
+            </div>
+          </div>
+        </div>
+        <div class="th-callout" id="thCallout">
+          <span class="th-callout-line">你的顯示卡在流汗，RX580 在吹冷氣。</span>
+          <span class="th-callout-sub">降頻是顯示卡在說「我撐不住了」。<br>RX580 從來不說這句話。</span>
+        </div>
+      </div>
+      <!-- Keep original badges below -->
+      <div class="badge-stack fi fi-d1" id="badgeStack" style="margin-top:16px;">
         <div class="fort-badge">
           <div class="fb-icon">01</div>
           <div>
@@ -745,28 +975,71 @@ section{position:relative;width:100%;overflow:hidden;}
         <div class="mtbf-num" id="mtbfCount">0</div>
         <div class="mtbf-lbl">Hours MTBF</div>
       </div>
-      <div class="runtime-tl fi fi-d2" id="rtWrap">
-        <div class="rt-lbl human">Modern Steel &amp; Rail — 171 Years</div>
-        <div class="rt-row">
-          <div class="rt-track" style="width:100%;">
-            <div class="rt-fill hfill" id="rtF1"></div>
-            <div class="rt-mover" id="rtLoco" style="left:0;">🚂</div>
-            <div class="rt-dot hd" style="left:0%;"><span class="rt-lbl2">1855<br>Steam</span></div>
-            <div class="rt-dot hd" style="left:52%;"><span class="rt-lbl2">1960<br>Electric</span></div>
-            <div class="rt-dot hd" style="left:100%;"><span class="rt-lbl2 ra">2026<br>Today</span></div>
+
+      <!-- ── GENERATIONAL LEGACY ── -->
+      <div class="gen-wrap fi fi-d2" id="genWrap">
+        <div class="gen-title-row">
+          <span class="gen-lbl">171 Years — Who's Still Using It?</span>
+        </div>
+        <div class="gen-timeline" id="genTimeline">
+          <div class="gen-item" data-i="0">
+            <div class="gen-dot gen-dot-you"></div>
+            <div class="gen-line" id="genLine0"></div>
+            <div class="gen-card gen-card-you" id="genCard0">
+              <div class="gen-year">2026</div>
+              <div class="gen-name">你</div>
+              <div class="gen-desc">裝上 RX580</div>
+            </div>
+          </div>
+          <div class="gen-item" data-i="1">
+            <div class="gen-dot" id="genDot1"></div>
+            <div class="gen-line" id="genLine1"></div>
+            <div class="gen-card" id="genCard1">
+              <div class="gen-year">2056</div>
+              <div class="gen-name">子</div>
+              <div class="gen-desc">「爸這個還能用？」</div>
+            </div>
+          </div>
+          <div class="gen-item" data-i="2">
+            <div class="gen-dot" id="genDot2"></div>
+            <div class="gen-line" id="genLine2"></div>
+            <div class="gen-card" id="genCard2">
+              <div class="gen-year">2086</div>
+              <div class="gen-name">孫</div>
+              <div class="gen-desc">「這是古董吧？」</div>
+            </div>
+          </div>
+          <div class="gen-item" data-i="3">
+            <div class="gen-dot" id="genDot3"></div>
+            <div class="gen-line" id="genLine3"></div>
+            <div class="gen-card" id="genCard3">
+              <div class="gen-year">2116</div>
+              <div class="gen-name">曾孫</div>
+              <div class="gen-desc">「學校說這叫文物」</div>
+            </div>
+          </div>
+          <div class="gen-item" data-i="4">
+            <div class="gen-dot" id="genDot4"></div>
+            <div class="gen-line" id="genLine4"></div>
+            <div class="gen-card" id="genCard4">
+              <div class="gen-year">2146</div>
+              <div class="gen-name">玄孫</div>
+              <div class="gen-desc">「這能拍懷舊 YouTube 欸」</div>
+            </div>
+          </div>
+          <div class="gen-item" data-i="5">
+            <div class="gen-dot gen-dot-final" id="genDot5"></div>
+            <div class="gen-card gen-card-final" id="genCard5">
+              <div class="gen-year gen-year-final">2197</div>
+              <div class="gen-name gen-name-final">來孫</div>
+              <div class="gen-desc gen-desc-final">RX580 — 理論上還沒壞</div>
+            </div>
           </div>
         </div>
-        <div class="rt-divider"></div>
-        <div class="rt-lbl gpu">RX580 8GD5 Theoretical Lifespan — 171 Years</div>
-        <div class="rt-row">
-          <div class="rt-track" style="width:100%;">
-            <div class="rt-fill gfill" id="rtF2"></div>
-            <div class="rt-dot gd install" style="left:0%;"><span class="rt-lbl2 gl il">2026<br>You install</span></div>
-            <div class="rt-dot gd" style="left:44%;"><span class="rt-lbl2 gl">2101<br>22nd Century</span></div>
-            <div class="rt-dot gd" style="left:100%;"><span class="rt-lbl2 gl ra">2197<br>Fortress (theory)</span></div>
-          </div>
+        <div class="gen-footnote" id="genFootnote">
+          * 我們只能保證在地球上可以使用。<br>
+          <span>（暗示：屆時你的來孫可能已經在火星了）</span>
         </div>
-        <div class="rt-note">171 years of industrial history. The Fortress's rated lifespan <strong>matches it exactly.</strong> Lock it in. Let it hold the line.</div>
       </div>
       <div class="fi fi-d3" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
         <div class="stat-badge"><div class="num" style="color:var(--am);">1.5M</div><div class="lbl">Hours MTBF</div></div>
@@ -774,26 +1047,51 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="endurance-badges fi fi-d1">
-      <div class="fort-badge" style="background:rgba(26,18,8,.65);">
-        <div class="fb-icon">★</div>
-        <div>
-          <div class="fb-title">Structural Shield</div>
-          <div class="fb-desc">Reinforced rigid PVC backplate<br>Anti-warping &amp; anti-oxidation<br>Long-term protection</div>
+      <!-- ── WHILE IT RENDERS ── -->
+      <div class="wir-wrap" id="wirWrap">
+        <div class="wir-header">
+          <span class="wir-eyebrow">While It Runs</span>
+          <span class="wir-sub">171-year lifespan · replacements per unit</span>
         </div>
+        <div class="wir-rows">
+          <div class="wir-row" data-count="171">
+            <div class="wir-left"><span class="wir-icon">💡</span><div class="wir-info"><div class="wir-name">辦公室日光燈管</div><div class="wir-cycle">每 ~1 年換一次</div></div></div>
+            <div class="wir-right"><div class="wir-count" id="wc0">0</div><div class="wir-unit">次</div></div>
+          </div>
+          <div class="wir-row" data-count="85">
+            <div class="wir-left"><span class="wir-icon">🖱️</span><div class="wir-info"><div class="wir-name">滑鼠</div><div class="wir-cycle">每 ~2 年換一次</div></div></div>
+            <div class="wir-right"><div class="wir-count" id="wc1">0</div><div class="wir-unit">次</div></div>
+          </div>
+          <div class="wir-row" data-count="57">
+            <div class="wir-left"><span class="wir-icon">⌨️</span><div class="wir-info"><div class="wir-name">鍵盤</div><div class="wir-cycle">每 ~3 年換一次</div></div></div>
+            <div class="wir-right"><div class="wir-count" id="wc2">0</div><div class="wir-unit">次</div></div>
+          </div>
+          <div class="wir-row" data-count="34">
+            <div class="wir-left"><span class="wir-icon">🖨️</span><div class="wir-info"><div class="wir-name">印表機</div><div class="wir-cycle">每 ~5 年換一次</div></div></div>
+            <div class="wir-right"><div class="wir-count" id="wc3">0</div><div class="wir-unit">次</div></div>
+          </div>
+          <div class="wir-row wir-row-gpu">
+            <div class="wir-left"><span class="wir-icon">🔴</span><div class="wir-info"><div class="wir-name" style="color:var(--tm);">RX580 8GD5</div><div class="wir-cycle" style="color:var(--am);">1,500,000 hr MTBF</div></div></div>
+            <div class="wir-right wir-right-gpu"><div class="wir-count wir-zero" id="wc4">0</div><div class="wir-unit" style="color:var(--am);">次</div></div>
+          </div>
+        </div>
+        <div class="wir-footer">
+          Everything else in this room gets replaced.<br>
+          <span>這個房間裡的每一樣東西都會被換掉。除了它。</span>
+        </div>
+      </div>
+      <!-- Original badges kept below -->
+      <div class="fort-badge" style="background:rgba(26,18,8,.65);margin-top:14px;">
+        <div class="fb-icon">★</div>
+        <div><div class="fb-title">Structural Shield</div><div class="fb-desc">Reinforced rigid PVC backplate<br>Anti-warping &amp; anti-oxidation</div></div>
       </div>
       <div class="fort-badge fi fi-d1" style="background:rgba(26,18,8,.65);">
         <div class="fb-icon">◈</div>
-        <div>
-          <div class="fb-title">Thermal Longevity</div>
-          <div class="fb-desc">Dual ball-bearing configuration<br>Ultra-durable mechanical lifespan<br>Silent duty cycles</div>
-        </div>
+        <div><div class="fb-title">Thermal Longevity</div><div class="fb-desc">Dual ball-bearing configuration<br>Ultra-durable mechanical lifespan</div></div>
       </div>
       <div class="fort-badge fi fi-d2" style="background:rgba(26,18,8,.65);border-color:rgba(192,57,43,.3);">
         <div class="fb-icon">⬡</div>
-        <div>
-          <div class="fb-title">PCB Integrity</div>
-          <div class="fb-desc">Full-coverage armor backplate<br>Geometric pattern reinforcement<br>Years of continuous deployment</div>
-        </div>
+        <div><div class="fb-title">PCB Integrity</div><div class="fb-desc">Full-coverage armor backplate<br>Years of continuous deployment</div></div>
       </div>
     </div>
   </div>
@@ -1162,63 +1460,133 @@ function portHighlight(){
   obs.observe(wrap);
 })();
 
-/* ── PULSE CANVAS — fortress crimson pulses ── */
+/* ── DESERT FORTRESS CANVAS ── */
 (function(){
-  const cv=document.getElementById('pulseCanvas');if(!cv)return;
-  const ctx=cv.getContext('2d');
-  const W=cv.width,H=cv.height;
-  let t=0,rafId;
+  var cv = document.getElementById('pulseCanvas');
+  if(!cv) return;
+  var ctx = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+  var t = 0, rafId;
+
+  // Sand particles
+  var particles = [];
+  for(var i=0;i<120;i++){
+    particles.push({
+      x: Math.random()*W,
+      y: Math.random()*H,
+      size: 0.4+Math.random()*1.4,
+      speed: 0.12+Math.random()*0.35,
+      angle: -0.3+Math.random()*0.18, // drift right-upward
+      alpha: 0.15+Math.random()*0.45,
+      drift: (Math.random()-0.5)*0.008
+    });
+  }
+
+  // Fortress silhouette points (normalized 0-1)
+  function drawFortress(){
+    var fx = W*0.15, fy = H*0.12;
+    var fw = W*0.7, fh = H*0.75;
+    var alpha = 0.06 + Math.sin(t*0.4)*0.015;
+    ctx.strokeStyle = 'rgba(192,57,43,'+alpha+')';
+    ctx.fillStyle   = 'rgba(26,18,8,'+(0.3+Math.sin(t*0.3)*0.05)+')';
+    ctx.lineWidth   = 0.8;
+
+    // Main wall base
+    ctx.beginPath();
+    ctx.moveTo(fx,          fy+fh);
+    ctx.lineTo(fx+fw,       fy+fh);
+    ctx.lineTo(fx+fw,       fy+fh*0.35);
+    ctx.lineTo(fx+fw*0.88,  fy+fh*0.35);
+    ctx.lineTo(fx+fw*0.88,  fy+fh*0.18);
+    ctx.lineTo(fx+fw*0.72,  fy+fh*0.18);
+    ctx.lineTo(fx+fw*0.72,  fy+fh*0.35);
+    ctx.lineTo(fx+fw*0.62,  fy+fh*0.35);
+    ctx.lineTo(fx+fw*0.62,  fy+fh*0.08); // center tower top
+    ctx.lineTo(fx+fw*0.55,  fy+fh*0.08);
+    ctx.lineTo(fx+fw*0.55,  fy);          // center tower peak
+    ctx.lineTo(fx+fw*0.45,  fy);
+    ctx.lineTo(fx+fw*0.45,  fy+fh*0.08);
+    ctx.lineTo(fx+fw*0.38,  fy+fh*0.08);
+    ctx.lineTo(fx+fw*0.38,  fy+fh*0.35);
+    ctx.lineTo(fx+fw*0.28,  fy+fh*0.35);
+    ctx.lineTo(fx+fw*0.28,  fy+fh*0.18);
+    ctx.lineTo(fx+fw*0.12,  fy+fh*0.18);
+    ctx.lineTo(fx+fw*0.12,  fy+fh*0.35);
+    ctx.lineTo(fx,          fy+fh*0.35);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Battlements (merlons) on center tower
+    ctx.globalAlpha = alpha*1.5;
+    [[0.47,0.5],[0.5,0.53]] .forEach(function(pair){
+      ctx.fillRect(fx+fw*pair[0], fy-H*0.04, fw*0.03, H*0.05);
+    });
+    ctx.globalAlpha = 1;
+  }
 
   function draw(){
-    ctx.fillStyle='#1a1208';
+    // Deep desert dark background
+    ctx.fillStyle = '#1a1208';
     ctx.fillRect(0,0,W,H);
 
-    const cx=W*.42,cy=H*.5;
+    // Horizon glow — warm desert
+    var horizon = ctx.createLinearGradient(0,H*0.55,0,H);
+    horizon.addColorStop(0,'rgba(212,133,30,0.06)');
+    horizon.addColorStop(1,'rgba(192,57,43,0.04)');
+    ctx.fillStyle = horizon;
+    ctx.fillRect(0,H*0.5,W,H*0.5);
 
-    // crimson/amber alternating rings
-    for(let i=0;i<6;i++){
-      const phase=(t*.75+i*.88)%(Math.PI*2);
-      const r=5+i*14+Math.sin(phase)*3.5;
-      const alpha=(0.12-i*.016)*(0.5+0.5*Math.sin(phase+Math.PI));
-      if(alpha<=0)continue;
-      const isCrimson=i%2===0;
-      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
-      ctx.strokeStyle=isCrimson?`rgba(192,57,43,${alpha})`:`rgba(212,133,30,${alpha*.8})`;
-      ctx.lineWidth=i===0?1.5:.7;
-      if(i===0){ctx.shadowColor='rgba(192,57,43,0.5)';ctx.shadowBlur=8;}else ctx.shadowBlur=0;
-      ctx.stroke();
+    // Sand dune silhouette (bottom curve)
+    ctx.beginPath();
+    ctx.moveTo(0,H);
+    for(var x=0;x<=W;x++){
+      var y = H*0.82 + Math.sin(x*0.018+t*0.1)*H*0.06 + Math.sin(x*0.035-t*0.07)*H*0.03;
+      ctx.lineTo(x,y);
     }
-    ctx.shadowBlur=0;
+    ctx.lineTo(W,H);ctx.closePath();
+    ctx.fillStyle = 'rgba(26,16,6,0.7)';
+    ctx.fill();
 
-    // amber outer pulse
-    const gR=55+Math.sin(t*.5)*7;
-    ctx.beginPath();ctx.arc(cx,cy,gR,0,Math.PI*2);
-    ctx.strokeStyle=`rgba(212,133,30,${.04+Math.sin(t*.5)*.028})`;
-    ctx.lineWidth=.8;ctx.stroke();
+    // Fortress silhouette
+    drawFortress();
 
-    // scan lines
-    ctx.fillStyle='rgba(0,0,0,.1)';
-    for(let y=0;y<H;y+=2)ctx.fillRect(0,y,W,1);
-
-    // crimson diagonal slashes — fortress pattern
-    ctx.save();ctx.globalAlpha=.16;
-    [[.2,.26],[.46,.52],[.72,.78]].forEach(([y1,y2])=>{
-      const g=ctx.createLinearGradient(0,0,W,0);
-      g.addColorStop(0,'transparent');
-      g.addColorStop(.25,'rgba(192,57,43,0.6)');
-      g.addColorStop(.55,'rgba(212,133,30,0.35)');
-      g.addColorStop(1,'transparent');
-      ctx.beginPath();ctx.moveTo(0,H*y1);ctx.lineTo(W,H*y2);
-      ctx.strokeStyle=g;ctx.lineWidth=1;ctx.stroke();
+    // Sand particles drifting
+    particles.forEach(function(p){
+      p.x += p.speed + p.drift;
+      p.y -= p.angle * p.speed * 0.8;
+      p.drift += (Math.random()-0.5)*0.002;
+      if(p.x > W+2){ p.x = -2; p.y = Math.random()*H; }
+      if(p.y < -2){ p.y = H+2; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+      var warmness = Math.random()>0.7;
+      ctx.fillStyle = warmness
+        ? 'rgba(212,133,30,'+p.alpha+')'
+        : 'rgba(240,210,150,'+p.alpha+')';
+      ctx.fill();
     });
-    ctx.restore();
 
-    t+=.026;
-    rafId=requestAnimationFrame(draw);
+    // Top edge gold line (matches product slash)
+    var topGlow = ctx.createLinearGradient(0,0,W,0);
+    topGlow.addColorStop(0,'transparent');
+    topGlow.addColorStop(0.3,'rgba(212,133,30,0.5)');
+    topGlow.addColorStop(0.7,'rgba(192,57,43,0.3)');
+    topGlow.addColorStop(1,'transparent');
+    ctx.fillStyle = topGlow;
+    ctx.fillRect(0,0,W,1.5);
+
+    // Scanline overlay
+    ctx.fillStyle = 'rgba(0,0,0,0.09)';
+    for(var y=0;y<H;y+=2) ctx.fillRect(0,y,W,1);
+
+    t += 0.022;
+    rafId = requestAnimationFrame(draw);
   }
   draw();
-  window.addEventListener('beforeunload',()=>cancelAnimationFrame(rafId));
+  window.addEventListener('beforeunload', function(){ cancelAnimationFrame(rafId); });
 })();
+
 
 /* ── SPEC TABLE stagger ── */
 (function(){
@@ -1233,6 +1601,141 @@ function portHighlight(){
     }
   },{threshold:.1});
   obs.observe(tbl);
+})();
+
+/* ── 256-BIT HIGHWAY ── */
+(function(){
+  var wrap = document.getElementById('hwWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var r128 = document.getElementById('hwRoad128');
+    var r256 = document.getElementById('hwRoad256');
+    var cong = document.getElementById('hwCongestion');
+    var bw128 = document.getElementById('hwBw128');
+    var bw256 = document.getElementById('hwBw256');
+    setTimeout(function(){ if(r128) r128.classList.add('vis'); }, 100);
+    setTimeout(function(){ if(r256) r256.classList.add('vis'); }, 350);
+    setTimeout(function(){ if(cong) cong.classList.add('vis'); }, 1200);
+    // Bandwidth counters
+    setTimeout(function(){
+      function countTo(el,target,suffix,dur){
+        if(!el) return;
+        var t0=performance.now();
+        (function tick(now){
+          var p=Math.min((now-t0)/dur,1),v=1-Math.pow(1-p,3);
+          el.textContent=Math.round(v*target)+suffix;
+          if(p<1) requestAnimationFrame(tick);
+          else el.textContent=target+suffix;
+        })(performance.now());
+      }
+      countTo(bw128, 192, ' GB/s', 900);
+      countTo(bw256, 384, ' GB/s', 1100);
+    }, 600);
+  }, {threshold:0.25}).observe(wrap);
+})();
+
+/* ── THERMAL CHART ── */
+(function(){
+  var wrap = document.getElementById('thWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var W=300, H=160;
+    var singlePts=[], dualPts=[];
+    for(var i=0;i<=20;i++){
+      var x=(i/20)*W;
+      var ySingle = i<12 ? 120-(i/12)*80 : 36+Math.sin(i*.5)*5;
+      var yDual   = i<6  ? 120-(i/6)*38  : 82+Math.sin(i*.6)*4;
+      singlePts.push([x,ySingle]);
+      dualPts.push([x,yDual]);
+    }
+    function p2d(pts){ return pts.map(function(p,i){return(i===0?'M':'L')+p[0]+' '+p[1];}).join(' '); }
+    function p2f(pts){ return p2d(pts)+' L'+pts[pts.length-1][0]+' '+H+' L0 '+H+' Z'; }
+    var ps=document.getElementById('thSingle'), pd=document.getElementById('thDual');
+    var fs=document.getElementById('thFillS'),  fd=document.getElementById('thFillD');
+    if(ps) ps.setAttribute('d', p2d(singlePts));
+    if(pd) pd.setAttribute('d', p2d(dualPts));
+    if(fs) fs.setAttribute('d', p2f(singlePts));
+    if(fd) fd.setAttribute('d', p2f(dualPts));
+    setTimeout(function(){
+      if(ps) ps.classList.add('drawn');
+      if(pd) pd.classList.add('drawn');
+    }, 200);
+    setTimeout(function(){
+      if(fs) fs.classList.add('vis');
+      if(fd) fd.classList.add('vis');
+    }, 1800);
+    setTimeout(function(){
+      var c=document.getElementById('thCallout');
+      if(c) c.classList.add('vis');
+    }, 2200);
+  }, {threshold:0.25}).observe(wrap);
+})();
+
+/* ── GENERATIONAL LEGACY ── */
+(function(){
+  var wrap = document.getElementById('genWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    for(var i=0;i<6;i++){
+      (function(idx){
+        setTimeout(function(){
+          var dot  = document.getElementById('genDot'+idx);
+          var line = document.getElementById('genLine'+idx);
+          var card = document.getElementById('genCard'+idx);
+          if(dot)  dot.classList.add('vis');
+          if(line) line.classList.add('vis');
+          if(card) card.classList.add('vis');
+        }, idx*320);
+      })(i);
+    }
+    setTimeout(function(){
+      var fn = document.getElementById('genFootnote');
+      if(fn){ fn.style.opacity='0'; fn.style.transition='opacity .6s ease'; setTimeout(function(){fn.style.opacity='1';},50); }
+    }, 6*320+200);
+  }, {threshold:0.2}).observe(wrap);
+})();
+
+/* ── WHILE IT RENDERS ── */
+(function(){
+  var wrap = document.getElementById('wirWrap');
+  if(!wrap) return;
+  var fired = false;
+  var counts=[171,85,57,34,0];
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var rows = wrap.querySelectorAll('.wir-row');
+    rows.forEach(function(row,i){
+      setTimeout(function(){ if(row) row.classList.add('vis'); }, i*160);
+      if(i<4){
+        setTimeout(function(){
+          var el=document.getElementById('wc'+i);
+          if(!el) return;
+          var target=counts[i], dur=900, t0=performance.now();
+          (function tick(now){
+            var p=Math.min((now-t0)/dur,1),v=1-Math.pow(1-p,4);
+            el.textContent=Math.round(v*target);
+            if(p<1) requestAnimationFrame(tick);
+            else el.textContent=target;
+          })(performance.now());
+        }, i*160+200);
+      } else {
+        setTimeout(function(){
+          var el=document.getElementById('wc4');
+          if(el){ el.style.transition='text-shadow .6s ease'; el.style.textShadow='0 0 24px rgba(212,133,30,.6)'; }
+        }, i*160+400);
+      }
+    });
+  }, {threshold:0.2}).observe(wrap);
 })();
 </script>
 </body>
