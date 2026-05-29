@@ -481,6 +481,113 @@ section{position:relative;width:100%;overflow:hidden;}
   .why-grid{grid-template-columns:1fr;}
 }
 @media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+
+/* ── LOADING SCREEN REVERSAL ── */
+.ld-wrap{width:100%;background:rgba(8,8,14,.98);border:1px solid var(--border);overflow:hidden;}
+.ld-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:1px solid var(--line);}
+.ld-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--label);}
+.ld-tag{font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;color:var(--purple2);border:1px solid rgba(160,32,208,.25);padding:3px 8px;}
+.ld-row{padding:14px;border-bottom:1px solid var(--line);opacity:0;transition:opacity .6s ease,transform .6s ease;transform:translateY(6px);}
+.ld-row.vis{opacity:1;transform:none;}
+.ld-row-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.ld-gpu-label{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--mute);}
+.ld-label-rx{color:var(--ink)!important;}
+.ld-spec-dim{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;color:var(--label);}
+.ld-spec-bright{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;color:rgba(160,32,208,.6);}
+.ld-progress-wrap{position:relative;margin-bottom:8px;}
+.ld-progress-track{height:8px;background:rgba(255,255,255,.04);border-radius:4px;overflow:hidden;}
+.ld-track-rx{background:rgba(160,32,208,.06);}
+.ld-progress-fill{height:100%;width:0;border-radius:4px;transition:width 3s linear;}
+.ld-fill-old{background:rgba(120,100,80,.4);}
+.ld-fill-new{background:linear-gradient(90deg,var(--purple),var(--purple2));box-shadow:0 0 8px rgba(160,32,208,.5);transition:width .7s cubic-bezier(.16,1,.3,1)!important;}
+.ld-progress-label{position:absolute;right:0;top:-16px;font-family:var(--ff-m);font-size:7px;letter-spacing:.08em;color:var(--label);}
+.ld-label-done{color:var(--purple2)!important;opacity:0;transition:opacity .4s ease;}
+.ld-label-done.vis{opacity:1;}
+.ld-row-bot{display:flex;align-items:center;justify-content:space-between;}
+.ld-waiting{display:flex;align-items:center;gap:4px;font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;color:var(--label);}
+.ld-wait-dot{width:4px;height:4px;border-radius:50%;background:var(--label);animation:ldWaitPulse 1.2s ease-in-out infinite;}
+.ld-wait-dot:nth-child(2){animation-delay:.2s;}
+.ld-wait-dot:nth-child(3){animation-delay:.4s;}
+@keyframes ldWaitPulse{0%,100%{opacity:.2;}50%{opacity:.8;}}
+.ld-ingame{display:flex;align-items:center;gap:5px;font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;color:var(--purple2);opacity:0;transition:opacity .4s ease;}
+.ld-ingame.vis{opacity:1;}
+.ld-ingame-dot{width:6px;height:6px;border-radius:50%;background:var(--purple2);box-shadow:0 0 5px rgba(160,32,208,.6);animation:ldIngame 1.5s ease-in-out infinite;}
+@keyframes ldIngame{0%,100%{opacity:.5;}50%{opacity:1;}}
+.ld-timer{font-family:var(--ff-d);font-size:clamp(14px,2.2vw,22px);letter-spacing:.04em;line-height:1;}
+.ld-timer-slow{color:rgba(120,100,80,.5);}
+.ld-timer-fast{color:var(--purple2);text-shadow:0 0 10px rgba(160,32,208,.4);}
+.ld-vs{display:flex;align-items:center;gap:8px;padding:8px 14px;}
+.ld-vs-line{flex:1;height:.5px;background:var(--line);}
+.ld-vs span{font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;color:var(--label);}
+.ld-callout{padding:13px 14px;border-top:1px solid var(--line);background:rgba(160,32,208,.03);opacity:0;transition:opacity .6s ease;}
+.ld-callout.vis{opacity:1;}
+.ld-callout-main{font-family:var(--ff-b);font-size:15px;font-weight:600;color:var(--purple2);margin-bottom:5px;}
+.ld-callout-sub{font-family:var(--ff-m);font-size:8px;letter-spacing:.04em;color:var(--label);line-height:1.7;}
+.ld-footer{padding:11px 14px;border-top:1px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.ld-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--label);}
+
+/* ── ESPORTS SEASON COUNTER ── */
+.es-wrap{margin:0 0 18px;}
+.es-header{display:flex;align-items:baseline;gap:8px;margin-bottom:12px;}
+.es-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);}
+.es-sub{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:rgba(160,32,208,.4);}
+.es-strip-wrap{position:relative;height:64px;overflow:hidden;border:1px solid var(--border);background:rgba(8,8,14,.9);margin-bottom:12px;}
+.es-strip{display:flex;gap:4px;padding:8px 10px;position:absolute;top:0;left:0;transition:transform .8s cubic-bezier(.16,1,.3,1);}
+.es-badge{width:44px;height:48px;border:1px solid rgba(160,32,208,.15);border-radius:2px;background:rgba(160,32,208,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex-shrink:0;opacity:0;transition:opacity .3s ease;}
+.es-badge.lit{opacity:1;}
+.es-badge.lit-rx{border-color:var(--purple2)!important;background:rgba(160,32,208,.12)!important;box-shadow:0 0 8px rgba(160,32,208,.2);}
+.es-badge-num{font-family:var(--ff-d);font-size:13px;letter-spacing:.04em;color:var(--mute);line-height:1;}
+.es-badge.lit-rx .es-badge-num{color:var(--purple2)!important;}
+.es-badge-lbl{font-family:var(--ff-m);font-size:5.5px;letter-spacing:.04em;color:var(--label);text-align:center;}
+.es-fade-l,.es-fade-r{position:absolute;top:0;bottom:0;width:24px;z-index:2;pointer-events:none;}
+.es-fade-l{left:0;background:linear-gradient(90deg,rgba(8,8,14,1),transparent);}
+.es-fade-r{right:0;background:linear-gradient(270deg,rgba(8,8,14,1),transparent);}
+.es-counter-area{text-align:center;padding:14px 0 10px;border-bottom:1px solid var(--line);}
+.es-counter-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--label);margin-bottom:8px;}
+.es-counter-row{display:flex;align-items:baseline;justify-content:center;gap:8px;}
+.es-num{font-family:var(--ff-d);font-size:clamp(44px,7vw,72px);letter-spacing:.02em;color:var(--purple2);line-height:1;text-shadow:0 0 24px rgba(160,32,208,.3);}
+.es-unit{font-family:var(--ff-m);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);}
+.es-counter-sub{font-family:var(--ff-m);font-size:8px;letter-spacing:.08em;color:var(--label);margin-top:5px;}
+.es-tl{padding:12px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px;}
+.es-tl-row{display:flex;align-items:center;gap:8px;}
+.es-tl-label{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;color:var(--label);width:120px;flex-shrink:0;}
+.es-lbl-rx{color:var(--purple2);}
+.es-tl-track{flex:1;height:5px;border-radius:3px;overflow:hidden;background:rgba(160,32,208,.06);}
+.es-tl-fill{height:100%;border-radius:3px;width:0;transition:width 1.4s cubic-bezier(.16,1,.3,1);}
+.es-fill-career{background:rgba(200,160,48,.4);}
+.es-fill-rx{background:linear-gradient(90deg,var(--purple),var(--purple2));box-shadow:0 0 6px rgba(160,32,208,.4);}
+.es-tl-val{font-family:var(--ff-m);font-size:8px;color:var(--label);flex-shrink:0;width:56px;text-align:right;}
+.es-val-rx{color:var(--purple2)!important;}
+.es-punchline{display:flex;align-items:center;justify-content:center;gap:7px;padding:9px 0;opacity:0;transition:opacity .6s ease;}
+.es-punchline.vis{opacity:1;}
+.es-punchline span{font-family:var(--ff-m);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(160,32,208,.5);}
+.es-still-dot{width:6px;height:6px;border-radius:50%;background:var(--purple2);animation:esPulse 2s ease-in-out infinite;}
+@keyframes esPulse{0%,100%{opacity:.4;}50%{opacity:1;box-shadow:0 0 8px rgba(160,32,208,.7);}}
+.es-footer{padding:10px 0 4px;font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.es-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--label);}
+
+/* ── WHILE IT RUNS ── */
+.wir-wrap{width:100%;background:rgba(8,8,14,.98);border:1px solid var(--border);overflow:hidden;margin-bottom:14px;}
+.wir-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:1px solid var(--line);}
+.wir-eyebrow{font-family:var(--ff-d);font-size:clamp(16px,2.2vw,22px);letter-spacing:.06em;color:var(--ink);}
+.wir-sub{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.1em;color:var(--label);}
+.wir-rows{display:flex;flex-direction:column;}
+.wir-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid rgba(160,32,208,.07);opacity:0;transform:translateX(-10px);transition:opacity .5s ease,transform .5s ease;}
+.wir-row.vis{opacity:1;transform:none;}
+.wir-row-gpu{background:rgba(160,32,208,.04);border-top:1px solid rgba(160,32,208,.2)!important;}
+.wir-left{display:flex;align-items:center;gap:10px;}
+.wir-icon{font-size:16px;flex-shrink:0;}
+.wir-name{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:1px;}
+.wir-name-gpu{color:var(--purple2)!important;}
+.wir-cycle{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;color:var(--label);}
+.wir-cycle-gpu{color:rgba(160,32,208,.5)!important;}
+.wir-right{text-align:right;flex-shrink:0;}
+.wir-count{font-family:var(--ff-d);font-size:clamp(22px,3.5vw,36px);letter-spacing:.02em;color:rgba(160,100,200,.3);line-height:1;}
+.wir-right-gpu .wir-count{color:var(--purple2);text-shadow:0 0 16px rgba(160,32,208,.4);}
+.wir-unit{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--label);margin-top:2px;}
+.wir-unit-gpu{color:rgba(160,32,208,.5)!important;}
+.wir-footer{padding:11px 14px;border-top:1px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.wir-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--label);}
 </style>
 </head>
 <body>
@@ -784,11 +891,72 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:340px;margin-bottom:12px;">
-        <span>[ DOMINANCE — PORT BRACKET ]<br>RX7600 rear · 3×DP · HDMI<br>Heavy-duty bracket · purple ambient ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:128px;">
-        <span>[ PCIe 4.0×8 + 8-PIN · RDNA 3 CONTACTS ]<br>Aggressive trace routing ]</span>
+      <!-- ── LOADING SCREEN REVERSAL ── -->
+      <div class="ld-wrap" id="ldWrap">
+        <div class="ld-header">
+          <span class="ld-eyebrow">Same Game · Same Settings</span>
+          <span class="ld-tag">Loading Time Comparison</span>
+        </div>
+
+        <!-- Old GPU -->
+        <div class="ld-row ld-old" id="ldOld">
+          <div class="ld-row-top">
+            <span class="ld-gpu-label">Previous Gen</span>
+            <span class="ld-spec-dim">GDDR5 · Legacy</span>
+          </div>
+          <div class="ld-progress-wrap">
+            <div class="ld-progress-track">
+              <div class="ld-progress-fill ld-fill-old" id="ldFillOld"></div>
+            </div>
+            <div class="ld-progress-label" id="ldLabelOld">Loading...</div>
+          </div>
+          <div class="ld-row-bot">
+            <div class="ld-waiting" id="ldWaiting">
+              <div class="ld-wait-dot"></div>
+              <div class="ld-wait-dot"></div>
+              <div class="ld-wait-dot"></div>
+              <span>等待中</span>
+            </div>
+            <div class="ld-timer ld-timer-slow" id="ldTimerOld">0s</div>
+          </div>
+        </div>
+
+        <!-- VS -->
+        <div class="ld-vs">
+          <div class="ld-vs-line"></div><span>vs</span><div class="ld-vs-line"></div>
+        </div>
+
+        <!-- RX7600 -->
+        <div class="ld-row ld-new" id="ldNew">
+          <div class="ld-row-top">
+            <span class="ld-gpu-label ld-label-rx">RX7600 8GD6</span>
+            <span class="ld-spec-bright">GDDR6 · RDNA 3 · 5nm</span>
+          </div>
+          <div class="ld-progress-wrap">
+            <div class="ld-progress-track ld-track-rx">
+              <div class="ld-progress-fill ld-fill-new" id="ldFillNew"></div>
+            </div>
+            <div class="ld-progress-label ld-label-done" id="ldDone">Complete ✓</div>
+          </div>
+          <div class="ld-row-bot">
+            <div class="ld-ingame" id="ldIngame">
+              <div class="ld-ingame-dot"></div>
+              <span>已進入遊戲</span>
+            </div>
+            <div class="ld-timer ld-timer-fast" id="ldTimerNew">0s</div>
+          </div>
+        </div>
+
+        <!-- Callout -->
+        <div class="ld-callout" id="ldCallout">
+          <div class="ld-callout-main">別人在等載入，你已經在佔點了。</div>
+          <div class="ld-callout-sub">While they're watching progress bars, you're already three kills in.</div>
+        </div>
+
+        <div class="ld-footer">
+          The loading screen is a problem your opponents have.<br>
+          <span>RDNA 3 · GDDR6 · 8GB — 你的對手還在讀條。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -807,28 +975,54 @@ section{position:relative;width:100%;overflow:hidden;}
         <div class="mtbf-num" id="mtbfCount">0</div>
         <div class="mtbf-lbl">Hours MTBF</div>
       </div>
-      <div class="runtime-tl fi fi-d2" id="rtWrap">
-        <div class="rt-lbl human">Modern Steel &amp; Rail — 171 Years</div>
-        <div class="rt-row">
-          <div class="rt-track" style="width:100%;">
-            <div class="rt-fill hfill" id="rtF1"></div>
-            <div class="rt-mover" id="rtLoco" style="left:0;">🚂</div>
-            <div class="rt-dot hd" style="left:0%;"><span class="rt-lbl2">1855<br>Steam</span></div>
-            <div class="rt-dot hd" style="left:52%;"><span class="rt-lbl2">1960<br>Electric</span></div>
-            <div class="rt-dot hd" style="left:100%;"><span class="rt-lbl2 ra">2026<br>Today</span></div>
+
+      <!-- ── ESPORTS SEASON COUNTER ── -->
+      <div class="es-wrap fi fi-d2" id="esWrap">
+        <div class="es-header">
+          <span class="es-eyebrow">171 Years · Esports Perspective</span>
+          <span class="es-sub">@ 1 season every 3 months</span>
+        </div>
+
+        <!-- Season badge strip -->
+        <div class="es-strip-wrap">
+          <div class="es-strip" id="esStrip"></div>
+          <div class="es-fade-l"></div>
+          <div class="es-fade-r"></div>
+        </div>
+
+        <!-- Counter -->
+        <div class="es-counter-area">
+          <div class="es-counter-label">Seasons in RX7600's theoretical lifespan</div>
+          <div class="es-counter-row">
+            <div class="es-num" id="esNum">0</div>
+            <div class="es-unit">seasons</div>
+          </div>
+          <div class="es-counter-sub" id="esSub">Counting...</div>
+        </div>
+
+        <!-- Timeline bars -->
+        <div class="es-tl">
+          <div class="es-tl-row">
+            <span class="es-tl-label">Pro player career · ~5 yrs</span>
+            <div class="es-tl-track"><div class="es-tl-fill es-fill-career" id="esFillCareer"></div></div>
+            <span class="es-tl-val">20 seasons</span>
+          </div>
+          <div class="es-tl-row">
+            <span class="es-tl-label es-lbl-rx">RX7600 · 171 yrs</span>
+            <div class="es-tl-track"><div class="es-tl-fill es-fill-rx" id="esFillRx"></div></div>
+            <span class="es-tl-val es-val-rx">684 seasons</span>
           </div>
         </div>
-        <div class="rt-divider"></div>
-        <div class="rt-lbl gpu">RX7600 8GD6 Theoretical Lifespan — 171 Years</div>
-        <div class="rt-row">
-          <div class="rt-track" style="width:100%;">
-            <div class="rt-fill gfill" id="rtF2"></div>
-            <div class="rt-dot gd install" style="left:0%;"><span class="rt-lbl2 gl il">2026<br>You install</span></div>
-            <div class="rt-dot gd" style="left:44%;"><span class="rt-lbl2 gl">2101<br>22nd Century</span></div>
-            <div class="rt-dot gd" style="left:100%;"><span class="rt-lbl2 gl ra">2197<br>Gambit (theory)</span></div>
-          </div>
+
+        <div class="es-punchline" id="esPunchline">
+          <div class="es-still-dot"></div>
+          <span>Theoretically still running</span>
         </div>
-        <div class="rt-note">171 years of industrial history. The Gambit's rated lifespan <strong>matches it exactly.</strong> Lock it in. Execute without fear.</div>
+
+        <div class="es-footer">
+          職業選手退休了，聯賽改制了，遊戲已出到第八代了。<br>
+          <span>RX7600 — 理論上還沒壞。</span>
+        </div>
       </div>
       <div class="fi fi-d3" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
         <div class="stat-badge"><div class="num" style="color:var(--purple2);">1.5M</div><div class="lbl">Hours MTBF</div></div>
@@ -836,26 +1030,47 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="end-badges fi fi-d1">
-      <div class="gambit-badge">
-        <div class="gb-icon">⬡</div>
-        <div>
-          <div class="gb-title">Composite Armor Backplate</div>
-          <div class="gb-desc">Impact-resistant tactical spine<br>Anti-torque structural shielding<br>PCB integrity under sustained load</div>
+      <!-- ── WHILE IT RUNS ── -->
+      <div class="wir-wrap" id="wirWrap">
+        <div class="wir-header">
+          <span class="wir-eyebrow">While It Runs</span>
+          <span class="wir-sub">171-year lifespan · replacements per unit</span>
         </div>
+        <div class="wir-rows">
+          <div class="wir-row" data-count="171">
+            <div class="wir-left"><span class="wir-icon">💡</span><div class="wir-info"><div class="wir-name">辦公室日光燈管</div><div class="wir-cycle">每 ~1 年換一次</div></div></div>
+            <div class="wir-right"><div class="wir-count" id="wc0">0</div><div class="wir-unit">次</div></div>
+          </div>
+          <div class="wir-row" data-count="85">
+            <div class="wir-left"><span class="wir-icon">🖱️</span><div class="wir-info"><div class="wir-name">滑鼠</div><div class="wir-cycle">每 ~2 年換一次</div></div></div>
+            <div class="wir-right"><div class="wir-count" id="wc1">0</div><div class="wir-unit">次</div></div>
+          </div>
+          <div class="wir-row" data-count="57">
+            <div class="wir-left"><span class="wir-icon">⌨️</span><div class="wir-info"><div class="wir-name">鍵盤</div><div class="wir-cycle">每 ~3 年換一次</div></div></div>
+            <div class="wir-right"><div class="wir-count" id="wc2">0</div><div class="wir-unit">次</div></div>
+          </div>
+          <div class="wir-row" data-count="34">
+            <div class="wir-left"><span class="wir-icon">🖨️</span><div class="wir-info"><div class="wir-name">印表機</div><div class="wir-cycle">每 ~5 年換一次</div></div></div>
+            <div class="wir-right"><div class="wir-count" id="wc3">0</div><div class="wir-unit">次</div></div>
+          </div>
+          <div class="wir-row wir-row-gpu">
+            <div class="wir-left"><span class="wir-icon">🟣</span><div class="wir-info"><div class="wir-name wir-name-gpu">RX7600 8GD6</div><div class="wir-cycle wir-cycle-gpu">1,500,000 hr MTBF</div></div></div>
+            <div class="wir-right wir-right-gpu"><div class="wir-count wir-zero" id="wc4">0</div><div class="wir-unit wir-unit-gpu">次</div></div>
+          </div>
+        </div>
+        <div class="wir-footer">
+          Everything else gets replaced. This doesn't.<br>
+          <span>這個房間裡的每一樣東西都會被換掉。除了它。</span>
+        </div>
+      </div>
+      <!-- Keep original badges -->
+      <div class="gambit-badge" style="margin-top:14px;">
+        <div class="gb-icon">⬡</div>
+        <div><div class="gb-title">Composite Armor Backplate</div><div class="gb-desc">Impact-resistant tactical spine<br>Anti-torque structural shielding</div></div>
       </div>
       <div class="gambit-badge fi fi-d1">
         <div class="gb-icon">◈</div>
-        <div>
-          <div class="gb-title">Overdrive Thermal Array</div>
-          <div class="gb-desc">Dual ball-bearing overdrive fans<br>Frozen core under extreme overclock<br>Destructive heat dissipation</div>
-        </div>
-      </div>
-      <div class="gambit-badge fi fi-d2">
-        <div class="gb-icon">★</div>
-        <div>
-          <div class="gb-title">Heatpipe Conductor Array</div>
-          <div class="gb-desc">Nickel-plated copper heatpipes<br>Direct vapor chamber transfer<br>Maximum thermal extraction rate</div>
-        </div>
+        <div><div class="gb-title">Overdrive Thermal Array</div><div class="gb-desc">Dual ball-bearing overdrive fans<br>Destructive heat dissipation</div></div>
       </div>
     </div>
   </div>
@@ -1275,86 +1490,205 @@ function portHighlight(){
   obs.observe(wrap);
 })();
 
-/* ══ PULSE CANVAS — electric arc neon purple ══ */
+/* ══ LIGHTSABER DUEL CANVAS ══ */
 (function(){
-  const cv=document.getElementById('pulseCanvas');if(!cv)return;
-  const ctx=cv.getContext('2d');
-  const W=cv.width,H=cv.height;
-  let t=0,rafId;
+  var cv = document.getElementById('pulseCanvas');
+  if(!cv) return;
+  var ctx = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+  var t = 0, rafId;
 
-  function draw(){
-    ctx.fillStyle='#08080e';
-    ctx.fillRect(0,0,W,H);
-
-    // deep purple nebula wash
-    const nb=ctx.createRadialGradient(W*.5,H*.5,0,W*.5,H*.5,W*.65);
-    nb.addColorStop(0,'rgba(80,16,120,.1)');
-    nb.addColorStop(1,'rgba(8,8,14,0)');
-    ctx.fillStyle=nb;ctx.fillRect(0,0,W,H);
-
-    // arc nodes
-    const nodes=[{x:W*.2,y:H*.3},{x:W*.5,y:H*.7},{x:W*.75,y:H*.25},{x:W*.35,y:H*.6}];
-
-    // electric arc lines between nodes — erratic
-    for(let i=0;i<nodes.length;i++){
-      for(let j=i+1;j<nodes.length;j++){
-        if(Math.sin(t*.7+i*j)>0.2){
-          const ax=nodes[i].x,ay=nodes[i].y,bx=nodes[j].x,by=nodes[j].y;
-          const alpha=(0.04+0.08*Math.abs(Math.sin(t*.9+i+j)))*(0.5+0.5*Math.sin(t*1.2+i));
-          ctx.beginPath();ctx.moveTo(ax,ay);
-          // jagged mid-point for arc feel
-          const mx2=(ax+bx)/2+(Math.sin(t*2.1+i*j)*18);
-          const my2=(ay+by)/2+(Math.cos(t*1.8+i+j)*14);
-          ctx.quadraticCurveTo(mx2,my2,bx,by);
-          ctx.strokeStyle=`rgba(160,32,208,${alpha})`;ctx.lineWidth=.6;ctx.stroke();
-        }
-      }
+  // Two saber fighters — left (purple) and right (red)
+  var sabers = [
+    {
+      // Purple saber — left fighter
+      hiltX: W * 0.22, hiltY: H * 0.82,
+      col: 'rgba(160,32,208,', glow: 'rgba(160,32,208,',
+      white: 'rgba(220,180,255,',
+      len: 58,
+      baseAngle: -1.1, // pointing upper-right
+      swing: 0,        // oscillation offset
+      swingSpeed: 1.4,
+      swingAmp: 0.55,
+      phase: 0
+    },
+    {
+      // Red saber — right fighter
+      hiltX: W * 0.78, hiltY: H * 0.82,
+      col: 'rgba(224,32,48,', glow: 'rgba(224,32,48,',
+      white: 'rgba(255,180,190,',
+      len: 54,
+      baseAngle: -2.05, // pointing upper-left
+      swing: Math.PI,   // opposite phase — they clash
+      swingSpeed: 1.6,
+      swingAmp: 0.48,
+      phase: Math.PI
     }
+  ];
 
-    // pulsing purple rings
-    const cx=W*.42,cy=H*.5;
-    for(let i=0;i<5;i++){
-      const phase=(t*.7+i*.88)%(Math.PI*2);
-      const r=5+i*13+Math.sin(phase)*3.5;
-      const alpha=(0.12-i*.018)*(0.5+0.5*Math.sin(phase+Math.PI));
-      if(alpha<=0)continue;
-      const isRed=i%3===0;
-      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
-      ctx.strokeStyle=isRed?`rgba(224,32,48,${alpha})`:`rgba(160,32,208,${alpha})`;
-      ctx.lineWidth=i===0?1.3:.6;
-      if(i===0){ctx.shadowColor='rgba(160,32,208,.5)';ctx.shadowBlur=8;}else ctx.shadowBlur=0;
-      ctx.stroke();
-    }
-    ctx.shadowBlur=0;
+  // Clash sparks
+  var sparks = [];
 
-    // occasional purple flash
-    if(Math.sin(t*.15)>0.92){
-      ctx.fillStyle=`rgba(160,32,208,${(Math.sin(t*.15)-0.92)*3*.06})`;
-      ctx.fillRect(0,0,W,H);
-    }
+  function getSaberTip(s) {
+    var angle = s.baseAngle + Math.sin(t * s.swingSpeed + s.phase) * s.swingAmp;
+    return {
+      x: s.hiltX + Math.cos(angle) * s.len,
+      y: s.hiltY + Math.sin(angle) * s.len,
+      angle: angle
+    };
+  }
 
-    // scan lines
-    ctx.fillStyle='rgba(0,0,0,.09)';
-    for(let y=0;y<H;y+=2)ctx.fillRect(0,y,W,1);
+  function drawSaber(s) {
+    var tip = getSaberTip(s);
+    var angle = tip.angle;
 
-    // purple/red diagonal slashes
-    ctx.save();ctx.globalAlpha=.18;
-    [[.2,.26],[.48,.52],[.74,.78]].forEach(([y1,y2],idx)=>{
-      const g=ctx.createLinearGradient(0,0,W,0);
-      g.addColorStop(0,'transparent');
-      g.addColorStop(.25,idx%2===0?'rgba(160,32,208,0.6)':'rgba(224,32,48,0.5)');
-      g.addColorStop(.7,'rgba(160,32,208,0.3)');
-      g.addColorStop(1,'transparent');
-      ctx.beginPath();ctx.moveTo(0,H*y1);ctx.lineTo(W,H*y2);
-      ctx.strokeStyle=g;ctx.lineWidth=1;ctx.stroke();
-    });
+    // Outer glow beam
+    var grd = ctx.createLinearGradient(s.hiltX, s.hiltY, tip.x, tip.y);
+    grd.addColorStop(0, s.glow + '0)');
+    grd.addColorStop(0.15, s.glow + '0.7)');
+    grd.addColorStop(0.7, s.glow + '0.5)');
+    grd.addColorStop(1, s.glow + '0)');
+    ctx.beginPath();
+    ctx.moveTo(s.hiltX, s.hiltY);
+    ctx.lineTo(tip.x, tip.y);
+    ctx.strokeStyle = grd;
+    ctx.lineWidth = 7;
+    ctx.shadowColor = s.col + '0.9)';
+    ctx.shadowBlur = 12;
+    ctx.stroke();
+
+    // Core bright beam
+    var core = ctx.createLinearGradient(s.hiltX, s.hiltY, tip.x, tip.y);
+    core.addColorStop(0, s.white + '0)');
+    core.addColorStop(0.1, s.white + '0.9)');
+    core.addColorStop(0.85, s.white + '0.6)');
+    core.addColorStop(1, s.white + '0)');
+    ctx.beginPath();
+    ctx.moveTo(s.hiltX, s.hiltY);
+    ctx.lineTo(tip.x, tip.y);
+    ctx.strokeStyle = core;
+    ctx.lineWidth = 2;
+    ctx.shadowBlur = 0;
+    ctx.stroke();
+
+    // Hilt rectangle
+    ctx.shadowColor = s.col + '0.8)';
+    ctx.shadowBlur = 6;
+    ctx.fillStyle = s.col + '0.9)';
+    ctx.save();
+    ctx.translate(s.hiltX, s.hiltY);
+    ctx.rotate(angle);
+    ctx.fillRect(-2, -4, 8, 8);
     ctx.restore();
+    ctx.shadowBlur = 0;
+  }
 
-    t+=.026;rafId=requestAnimationFrame(draw);
+  function checkClash() {
+    var t1 = getSaberTip(sabers[0]);
+    var t2 = getSaberTip(sabers[1]);
+    var dx = t1.x - t2.x, dy = t1.y - t2.y;
+    var dist = Math.sqrt(dx*dx + dy*dy);
+    if(dist < 22) {
+      // Spawn sparks at clash point
+      var cx = (t1.x + t2.x) / 2;
+      var cy = (t1.y + t2.y) / 2;
+      for(var i = 0; i < 5; i++) {
+        var spd = 1.2 + Math.random() * 2.8;
+        var ang = Math.random() * Math.PI * 2;
+        sparks.push({
+          x: cx, y: cy,
+          vx: Math.cos(ang) * spd,
+          vy: Math.sin(ang) * spd - 0.8,
+          life: 0.8 + Math.random() * 0.6,
+          col: Math.random() > 0.5 ? 'rgba(255,180,80,' : 'rgba(255,255,200,'
+        });
+      }
+      // Clash flash
+      var flash = ctx.createRadialGradient(cx, cy, 0, cx, cy, 28);
+      flash.addColorStop(0, 'rgba(255,220,255,0.22)');
+      flash.addColorStop(1, 'rgba(255,220,255,0)');
+      ctx.fillStyle = flash;
+      ctx.fillRect(0, 0, W, H);
+    }
+  }
+
+  function updateSparks() {
+    sparks = sparks.filter(function(s) { return s.life > 0; });
+    sparks.forEach(function(s) {
+      s.x += s.vx; s.y += s.vy;
+      s.vy += 0.12; // gravity
+      s.life -= 0.05;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, 1.2, 0, Math.PI * 2);
+      ctx.fillStyle = s.col + Math.max(0, s.life) + ')';
+      ctx.shadowColor = s.col + '0.8)';
+      ctx.shadowBlur = 4;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+  }
+
+  function draw() {
+    // Deep dark background
+    ctx.fillStyle = '#08080e';
+    ctx.fillRect(0, 0, W, H);
+
+    // Ambient purple nebula
+    var nb = ctx.createRadialGradient(W*0.5, H*0.4, 0, W*0.5, H*0.4, W*0.6);
+    nb.addColorStop(0, 'rgba(60,10,90,0.18)');
+    nb.addColorStop(1, 'rgba(8,8,14,0)');
+    ctx.fillStyle = nb; ctx.fillRect(0, 0, W, H);
+
+    // Ground floor glow
+    var floor = ctx.createLinearGradient(0, H*0.72, 0, H);
+    floor.addColorStop(0, 'rgba(30,10,50,0.35)');
+    floor.addColorStop(1, 'rgba(8,8,14,0)');
+    ctx.fillStyle = floor; ctx.fillRect(0, H*0.72, W, H*0.28);
+
+    // Saber reflections on floor
+    [sabers[0], sabers[1]].forEach(function(s) {
+      var tip = getSaberTip(s);
+      var rx = (s.hiltX + tip.x) / 2;
+      var floorRefl = ctx.createRadialGradient(rx, H, 0, rx, H, 30);
+      floorRefl.addColorStop(0, s.col + '0.15)');
+      floorRefl.addColorStop(1, s.col + '0)');
+      ctx.fillStyle = floorRefl;
+      ctx.fillRect(0, 0, W, H);
+    });
+
+    // Silhouette fighters
+    [[sabers[0].hiltX, 'rgba(20,8,32,0.85)'], [sabers[1].hiltX, 'rgba(32,8,12,0.85)']].forEach(function(d) {
+      ctx.fillStyle = d[1];
+      // body
+      ctx.beginPath();
+      ctx.ellipse(d[0], H*0.72, 7, 14, 0, 0, Math.PI*2);
+      ctx.fill();
+      // head
+      ctx.beginPath();
+      ctx.arc(d[0], H*0.55, 5, 0, Math.PI*2);
+      ctx.fill();
+    });
+
+    // Draw sabers
+    sabers.forEach(drawSaber);
+
+    // Check and draw clash
+    checkClash();
+
+    // Sparks
+    updateSparks();
+
+    // Scan lines
+    ctx.fillStyle = 'rgba(0,0,0,0.08)';
+    for(var y = 0; y < H; y += 2) ctx.fillRect(0, y, W, 1);
+
+    t += 0.028;
+    rafId = requestAnimationFrame(draw);
   }
   draw();
-  window.addEventListener('beforeunload',()=>cancelAnimationFrame(rafId));
+  window.addEventListener('beforeunload', function() { cancelAnimationFrame(rafId); });
 })();
+
 
 /* ══ SPEC TABLE ══ */
 (function(){
@@ -1369,6 +1703,147 @@ function portHighlight(){
     }
   },{threshold:.1});
   obs.observe(tbl);
+})();
+
+/* ── LOADING SCREEN REVERSAL ── */
+(function(){
+  var wrap = document.getElementById('ldWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var oldRow = document.getElementById('ldOld');
+    var newRow = document.getElementById('ldNew');
+    var fillOld = document.getElementById('ldFillOld');
+    var fillNew = document.getElementById('ldFillNew');
+    var timerOld = document.getElementById('ldTimerOld');
+    var timerNew = document.getElementById('ldTimerNew');
+    var doneLabel = document.getElementById('ldDone');
+    var ingame = document.getElementById('ldIngame');
+    var callout = document.getElementById('ldCallout');
+    setTimeout(function(){ if(oldRow) oldRow.classList.add('vis'); }, 100);
+    setTimeout(function(){ if(newRow) newRow.classList.add('vis'); }, 300);
+    // Old GPU: slow crawl
+    setTimeout(function(){
+      if(fillOld) fillOld.style.width = '35%';
+      var secs = 0;
+      var t = setInterval(function(){
+        secs++;
+        if(timerOld) timerOld.textContent = secs+'s';
+        if(secs >= 999) clearInterval(t);
+      }, 100);
+    }, 500);
+    // RX7600: instant
+    setTimeout(function(){
+      if(fillNew) fillNew.style.width = '100%';
+      var secs = 0, target = 38;
+      var t = setInterval(function(){
+        secs += 2;
+        if(secs >= target) secs = target;
+        if(timerNew) timerNew.textContent = secs+'s';
+        if(secs >= target){
+          clearInterval(t);
+          setTimeout(function(){
+            if(doneLabel) doneLabel.classList.add('vis');
+            if(ingame) ingame.classList.add('vis');
+          }, 200);
+        }
+      }, 15);
+    }, 600);
+    // Callout
+    setTimeout(function(){
+      if(callout) callout.classList.add('vis');
+    }, 1600);
+  }, {threshold:0.25}).observe(wrap);
+})();
+
+/* ── ESPORTS SEASON COUNTER ── */
+(function(){
+  var wrap = document.getElementById('esWrap');
+  if(!wrap) return;
+  var fired = false;
+  var TOTAL = 684;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var strip = document.getElementById('esStrip');
+    var numEl = document.getElementById('esNum');
+    var subEl = document.getElementById('esSub');
+    var punchline = document.getElementById('esPunchline');
+    var fillCareer = document.getElementById('esFillCareer');
+    var fillRx = document.getElementById('esFillRx');
+    // Build badges
+    if(strip){
+      for(var i=1;i<=TOTAL+6;i++){
+        var b = document.createElement('div');
+        b.className = 'es-badge'+(i===TOTAL?' es-badge-rx':'');
+        b.innerHTML = '<div class="es-badge-num">'+(i<100?'S':'')+(i<10?'0':'')+i+'</div><div class="es-badge-lbl">'+(i===TOTAL?'RX7600':'S'+i)+'</div>';
+        strip.appendChild(b);
+      }
+    }
+    // Timeline bars
+    setTimeout(function(){
+      if(fillCareer) fillCareer.style.width = '3%';
+      if(fillRx)     fillRx.style.width = '100%';
+    }, 200);
+    // Stagger badges
+    var badges = strip ? strip.querySelectorAll('.es-badge') : [];
+    var counter = 0;
+    function lightNext(){
+      if(counter >= badges.length) return;
+      if(badges[counter]) badges[counter].classList.add('lit');
+      if(counter === TOTAL-1 && badges[counter]) badges[counter].classList.add('lit-rx');
+      // Scroll strip
+      if(strip && counter > 3){
+        strip.style.transform = 'translateX(-'+(counter-3)*48+'px)';
+      }
+      if(numEl && counter < TOTAL) numEl.textContent = counter+1;
+      counter++;
+      if(counter < TOTAL){
+        setTimeout(lightNext, 18);
+      } else {
+        if(numEl) numEl.textContent = TOTAL;
+        if(subEl) subEl.textContent = '171 years · theoretically still counting.';
+        if(punchline) setTimeout(function(){ punchline.classList.add('vis'); }, 400);
+      }
+    }
+    setTimeout(lightNext, 400);
+  }, {threshold:0.2}).observe(wrap);
+})();
+
+/* ── WHILE IT RUNS ── */
+(function(){
+  var wrap = document.getElementById('wirWrap');
+  if(!wrap) return;
+  var fired = false;
+  var counts = [171,85,57,34,0];
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var rows = wrap.querySelectorAll('.wir-row');
+    rows.forEach(function(row,i){
+      setTimeout(function(){ if(row) row.classList.add('vis'); }, i*160);
+      if(i<4){
+        setTimeout(function(){
+          var el = document.getElementById('wc'+i);
+          if(!el) return;
+          var target=counts[i], dur=900, t0=performance.now();
+          (function tick(now){
+            var p=Math.min((now-t0)/dur,1),v=1-Math.pow(1-p,4);
+            el.textContent=Math.round(v*target);
+            if(p<1) requestAnimationFrame(tick);
+            else el.textContent=target;
+          })(performance.now());
+        }, i*160+200);
+      } else {
+        setTimeout(function(){
+          var el=document.getElementById('wc4');
+          if(el){ el.style.transition='text-shadow .6s ease'; el.style.textShadow='0 0 20px rgba(160,32,208,.7)'; }
+        }, i*160+400);
+      }
+    });
+  }, {threshold:0.2}).observe(wrap);
 })();
 </script>
 </body>
