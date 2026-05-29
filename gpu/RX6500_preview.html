@@ -455,6 +455,114 @@ section{position:relative;width:100%;overflow:hidden;}
   .why-grid{grid-template-columns:1fr;}
 }
 @media(pointer:coarse){body{cursor:auto;}#cur,#cur-ring,.trail-dot{display:none;}}
+
+/* ── FPS REACTION TIME ── */
+.fps-wrap{width:100%;background:rgba(8,12,24,.97);border:1px solid var(--border);overflow:hidden;}
+.fps-header{padding:12px 14px 10px;border-bottom:1px solid var(--line);}
+.fps-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);}
+.fps-compare{display:flex;align-items:stretch;gap:0;padding:14px 12px 10px;}
+.fps-side{flex:1;display:flex;flex-direction:column;gap:8px;padding:10px;opacity:0;transition:opacity .6s ease,transform .6s ease;}
+.fps-side-slow{transform:translateX(-8px);}
+.fps-side-fast{transform:translateX(8px);}
+.fps-side.vis{opacity:1;transform:none;}
+.fps-rate{font-family:var(--ff-d);font-size:clamp(32px,5vw,52px);letter-spacing:.04em;line-height:1;}
+.fps-rate span{font-size:.45em;font-family:var(--ff-m);letter-spacing:.1em;}
+.fps-rate-slow{color:rgba(140,120,100,.6);}
+.fps-rate-fast{color:var(--ruby2);text-shadow:0 0 16px rgba(200,36,58,.3);}
+.fps-interval{font-family:var(--ff-m);font-size:8px;letter-spacing:.06em;}
+.fps-int-slow{color:rgba(140,120,100,.5);}
+.fps-int-fast{color:rgba(200,36,58,.7);}
+.fps-timeline{display:flex;flex-direction:column;gap:4px;}
+.fps-tl-label{font-family:var(--ff-m);font-size:7px;letter-spacing:.08em;text-transform:uppercase;color:var(--label);}
+.fps-tl-fast{color:rgba(200,36,58,.5)!important;}
+.fps-tl-track{display:flex;gap:3px;align-items:center;height:14px;}
+.fps-tl-fast-track{gap:1.5px;}
+.fps-frame{height:12px;border-radius:1px;opacity:0;transition:opacity .3s ease;}
+.fps-frame-slow{width:22px;background:rgba(140,120,100,.25);border:.5px solid rgba(140,120,100,.2);}
+.fps-frame-fast{width:10px;background:rgba(200,36,58,.25);border:.5px solid rgba(200,36,58,.3);}
+.fps-frame.lit{opacity:1;}
+.fps-gap-label{margin-top:2px;}
+.fps-gap-bar{height:3px;border-radius:2px;display:flex;align-items:center;padding:0 4px;position:relative;}
+.fps-gap-slow{background:rgba(140,120,100,.15);width:80%;}
+.fps-gap-fast{background:rgba(200,36,58,.12);width:40%;}
+.fps-gap-bar span{font-family:var(--ff-m);font-size:6.5px;letter-spacing:.04em;color:var(--label);white-space:nowrap;}
+.fps-verdict{font-family:var(--ff-m);font-size:8px;letter-spacing:.04em;line-height:1.6;margin-top:4px;}
+.fps-v-slow{color:rgba(140,120,100,.5);}
+.fps-v-fast{color:rgba(200,36,58,.7);}
+.fps-div{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0 8px;flex-shrink:0;}
+.fps-div-line{flex:1;width:1px;background:var(--line);}
+.fps-div span{font-family:var(--ff-m);font-size:9px;letter-spacing:.1em;color:var(--label);}
+.fps-delta{padding:12px 14px;border-top:1px solid var(--line);text-align:center;opacity:0;transition:opacity .6s ease;}
+.fps-delta.vis{opacity:1;}
+.fps-delta-num{font-family:var(--ff-d);font-size:clamp(24px,4vw,40px);letter-spacing:.04em;color:var(--ruby2);line-height:1;text-shadow:0 0 16px rgba(200,36,58,.3);}
+.fps-delta-lbl{font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);margin-top:4px;}
+.fps-delta-sub{font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);margin-top:5px;font-style:italic;}
+.fps-footer{padding:11px 14px;border-top:1px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.fps-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--label);}
+
+/* ── GAME HOURS COUNTER ── */
+.gh-wrap{margin:0 0 18px;}
+.gh-header{display:flex;align-items:baseline;gap:8px;margin-bottom:12px;}
+.gh-eyebrow{font-family:var(--ff-m);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--label);}
+.gh-sub{font-family:var(--ff-m);font-size:7px;letter-spacing:.06em;color:rgba(200,36,58,.4);}
+.gh-card{background:rgba(8,12,24,.9);border:1px solid var(--border);overflow:hidden;opacity:0;transition:opacity .6s ease;}
+.gh-card.vis{opacity:1;}
+.gh-card-top{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);}
+.gh-game-icon{width:36px;height:36px;background:linear-gradient(135deg,rgba(200,36,58,.3),rgba(200,36,58,.1));border:1px solid rgba(200,36,58,.2);border-radius:3px;flex-shrink:0;}
+.gh-game-name{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.gh-game-genre{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.04em;color:var(--label);}
+.gh-game-info{flex:1;}
+.gh-status{display:flex;align-items:center;gap:5px;font-family:var(--ff-m);font-size:8px;letter-spacing:.1em;color:var(--ruby2);flex-shrink:0;}
+.gh-status-dot{width:6px;height:6px;border-radius:50%;background:var(--ruby2);animation:ghPulse 1.8s ease-in-out infinite;}
+@keyframes ghPulse{0%,100%{opacity:.4;}50%{opacity:1;box-shadow:0 0 6px rgba(200,36,58,.6);}}
+.gh-hours-row{display:flex;gap:0;border-bottom:1px solid var(--line);}
+.gh-hours-block{flex:1;padding:12px 14px;border-right:1px solid var(--line);text-align:center;}
+.gh-hours-block:last-child{border-right:none;}
+.gh-h-num{font-family:var(--ff-d);font-size:clamp(20px,3vw,32px);letter-spacing:.04em;color:var(--ink);line-height:1;}
+.gh-h-life{color:var(--ruby2)!important;text-shadow:0 0 12px rgba(200,36,58,.25);}
+.gh-h-lbl{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.08em;color:var(--label);margin-top:3px;text-transform:uppercase;}
+.gh-bar-row{padding:10px 14px;border-bottom:1px solid var(--line);}
+.gh-bar-label{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.06em;color:var(--label);margin-bottom:5px;}
+.gh-bar-track{position:relative;height:6px;background:rgba(200,36,58,.07);border-radius:3px;overflow:hidden;}
+.gh-bar-fill{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,rgba(200,36,58,.4),var(--ruby2));border-radius:3px;transition:width 1.2s ease;}
+.gh-bar-life{position:absolute;right:0;top:0;height:100%;width:100%;background:transparent;border-right:2px solid var(--ruby2);opacity:.3;}
+.gh-footnote{padding:10px 14px;font-family:var(--ff-m);font-size:8.5px;letter-spacing:.04em;color:var(--label);line-height:1.7;}
+.gh-footnote strong{color:var(--ruby2);}
+.gh-compare{display:flex;flex-direction:column;gap:8px;padding:12px 0;border-bottom:1px solid var(--line);}
+.gh-cmp-row{display:flex;align-items:center;gap:8px;}
+.gh-cmp-label{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;color:var(--label);width:90px;flex-shrink:0;}
+.gh-cmp-bar-wrap{flex:1;height:4px;background:rgba(200,36,58,.07);border-radius:2px;overflow:hidden;}
+.gh-cmp-bar{height:100%;border-radius:2px;width:0;transition:width 1.2s ease;}
+.gh-bar-gamer{background:rgba(140,120,100,.4);}
+.gh-bar-gpu{background:linear-gradient(90deg,rgba(200,36,58,.4),var(--ruby2));box-shadow:0 0 6px rgba(200,36,58,.3);}
+.gh-cmp-val{font-family:var(--ff-m);font-size:7.5px;color:var(--label);flex-shrink:0;width:80px;text-align:right;}
+.gh-val-ruby{color:var(--ruby2)!important;}
+.gh-footer{padding:11px 0 4px;font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.gh-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--label);}
+
+/* ── WHILE IT RUNS ── */
+.wir-wrap{width:100%;background:rgba(8,12,24,.97);border:1px solid var(--border);overflow:hidden;margin-bottom:14px;}
+.wir-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:1px solid var(--line);}
+.wir-eyebrow{font-family:var(--ff-d);font-size:clamp(16px,2.2vw,22px);letter-spacing:.06em;color:var(--ink);}
+.wir-sub{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.1em;color:var(--label);}
+.wir-rows{display:flex;flex-direction:column;}
+.wir-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid rgba(200,160,80,.06);opacity:0;transform:translateX(-10px);transition:opacity .5s ease,transform .5s ease;}
+.wir-row.vis{opacity:1;transform:none;}
+.wir-row-gpu{background:rgba(200,36,58,.03);border-top:1px solid rgba(200,36,58,.15)!important;}
+.wir-left{display:flex;align-items:center;gap:10px;}
+.wir-icon{font-size:16px;flex-shrink:0;}
+.wir-name{font-family:var(--ff-b);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:1px;}
+.wir-name-gpu{color:var(--ruby2)!important;}
+.wir-cycle{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.05em;color:var(--label);}
+.wir-cycle-gpu{color:rgba(200,36,58,.5)!important;}
+.wir-right{text-align:right;flex-shrink:0;}
+.wir-count{font-family:var(--ff-d);font-size:clamp(22px,3.5vw,36px);letter-spacing:.02em;color:rgba(200,160,80,.35);line-height:1;}
+.wir-right-gpu .wir-count{color:var(--ruby2);text-shadow:0 0 16px rgba(200,36,58,.3);}
+.wir-unit{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--label);margin-top:2px;}
+.wir-unit-gpu{color:rgba(200,36,58,.5)!important;}
+.wir-right-gpu{position:relative;}
+.wir-footer{padding:11px 14px;border-top:1px solid var(--line);font-family:var(--ff-b);font-size:13px;font-weight:400;color:var(--mute);line-height:1.75;font-style:italic;}
+.wir-footer span{font-size:11px;opacity:.6;display:block;margin-top:2px;color:var(--label);}
 </style>
 </head>
 <body>
@@ -753,11 +861,81 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="fi fi-d1">
-      <div class="img-ph" style="width:100%;height:340px;margin-bottom:12px;">
-        <span>[ DOMINANCE — PORT BRACKET ]<br>RX6500 rear · DP · HDMI · clean<br>Elegant minimal bracket · celestial ambient ]</span>
-      </div>
-      <div class="img-ph" style="width:100%;height:128px;">
-        <span>[ PCIe 4.0 · 6nm NAVI CONTACTS ]<br>Clean trace routing · gold contacts ]</span>
+      <!-- ── FPS = REACTION TIME ── -->
+      <div class="fps-wrap" id="fpsWrap">
+        <div class="fps-header">
+          <span class="fps-eyebrow">FPS is not a number. It's your reaction time.</span>
+        </div>
+
+        <div class="fps-compare">
+          <!-- 60 fps side -->
+          <div class="fps-side fps-side-slow" id="fpsSlow">
+            <div class="fps-rate fps-rate-slow">60<span>fps</span></div>
+            <div class="fps-interval fps-int-slow">16.7 ms / frame</div>
+            <div class="fps-timeline">
+              <div class="fps-tl-label">Frame updates</div>
+              <div class="fps-tl-track">
+                <div class="fps-frame fps-frame-slow" id="ff1"></div>
+                <div class="fps-frame fps-frame-slow" id="ff2"></div>
+                <div class="fps-frame fps-frame-slow" id="ff3"></div>
+                <div class="fps-frame fps-frame-slow" id="ff4"></div>
+                <div class="fps-frame fps-frame-slow" id="ff5"></div>
+              </div>
+            </div>
+            <div class="fps-gap-label">
+              <div class="fps-gap-bar fps-gap-slow" id="fpsGapSlow">
+                <span>16.7ms gap</span>
+              </div>
+            </div>
+            <div class="fps-verdict fps-v-slow">對手移動了 ─ 你的畫面還沒更新</div>
+          </div>
+
+          <!-- divider -->
+          <div class="fps-div">
+            <div class="fps-div-line"></div>
+            <span>vs</span>
+            <div class="fps-div-line"></div>
+          </div>
+
+          <!-- 144 fps side -->
+          <div class="fps-side fps-side-fast" id="fpsFast">
+            <div class="fps-rate fps-rate-fast" id="fpsCounter">0<span>fps</span></div>
+            <div class="fps-interval fps-int-fast">6.9 ms / frame</div>
+            <div class="fps-timeline">
+              <div class="fps-tl-label fps-tl-fast">Frame updates</div>
+              <div class="fps-tl-track fps-tl-fast-track">
+                <div class="fps-frame fps-frame-fast" id="fff1"></div>
+                <div class="fps-frame fps-frame-fast" id="fff2"></div>
+                <div class="fps-frame fps-frame-fast" id="fff3"></div>
+                <div class="fps-frame fps-frame-fast" id="fff4"></div>
+                <div class="fps-frame fps-frame-fast" id="fff5"></div>
+                <div class="fps-frame fps-frame-fast" id="fff6"></div>
+                <div class="fps-frame fps-frame-fast" id="fff7"></div>
+                <div class="fps-frame fps-frame-fast" id="fff8"></div>
+                <div class="fps-frame fps-frame-fast" id="fff9"></div>
+                <div class="fps-frame fps-frame-fast" id="fff10"></div>
+              </div>
+            </div>
+            <div class="fps-gap-label">
+              <div class="fps-gap-bar fps-gap-fast" id="fpsGapFast">
+                <span>6.9ms gap</span>
+              </div>
+            </div>
+            <div class="fps-verdict fps-v-fast">你先看到敵人 ─ 你先開槍</div>
+          </div>
+        </div>
+
+        <!-- Delta callout -->
+        <div class="fps-delta" id="fpsDelta">
+          <div class="fps-delta-num" id="fpsDeltaNum">—</div>
+          <div class="fps-delta-lbl">更快的畫面反應</div>
+          <div class="fps-delta-sub">The difference between seeing it and reacting to it.</div>
+        </div>
+
+        <div class="fps-footer">
+          Your opponent is still waiting for their frame.<br>
+          <span>你的對手還在 60fps。你已經 144fps。這個差距叫做「你先看到敵人」。</span>
+        </div>
       </div>
     </div>
   </div>
@@ -775,28 +953,60 @@ section{position:relative;width:100%;overflow:hidden;}
         <div class="mtbf-num" id="mtbfCount">0</div>
         <div class="mtbf-lbl">Hours MTBF</div>
       </div>
-      <div class="runtime-tl fi fi-d2" id="rtWrap">
-        <div class="rt-lbl human">Modern Steel &amp; Rail — 171 Years</div>
-        <div class="rt-row">
-          <div class="rt-track" style="width:100%;">
-            <div class="rt-fill hfill" id="rtF1"></div>
-            <div class="rt-mover" id="rtLoco" style="left:0;">🚂</div>
-            <div class="rt-dot hd" style="left:0%;"><span class="rt-lbl2">1855<br>Steam</span></div>
-            <div class="rt-dot hd" style="left:52%;"><span class="rt-lbl2">1960<br>Electric</span></div>
-            <div class="rt-dot hd" style="left:100%;"><span class="rt-lbl2 ra">2026<br>Today</span></div>
+
+      <!-- ── GAME HOURS COUNTER ── -->
+      <div class="gh-wrap fi fi-d2" id="ghWrap">
+        <div class="gh-header">
+          <span class="gh-eyebrow">RX6500 · Theoretical Lifespan</span>
+          <span class="gh-sub">@ 1,500,000 hr MTBF</span>
+        </div>
+        <!-- Steam-style library card -->
+        <div class="gh-card" id="ghCard">
+          <div class="gh-card-top">
+            <div class="gh-game-icon"></div>
+            <div class="gh-game-info">
+              <div class="gh-game-name">Your Gaming Life</div>
+              <div class="gh-game-genre">Action · FPS · RPG · All genres</div>
+            </div>
+            <div class="gh-status"><div class="gh-status-dot"></div>Still Running</div>
+          </div>
+          <div class="gh-hours-row">
+            <div class="gh-hours-block">
+              <div class="gh-h-num" id="ghHours">0</div>
+              <div class="gh-h-lbl">hrs on record</div>
+            </div>
+            <div class="gh-hours-block">
+              <div class="gh-h-num gh-h-life" id="ghLifeHours">1,500,000</div>
+              <div class="gh-h-lbl">GPU rated lifespan</div>
+            </div>
+          </div>
+          <div class="gh-bar-row">
+            <div class="gh-bar-label">Your gaming hours</div>
+            <div class="gh-bar-track">
+              <div class="gh-bar-fill" id="ghBarFill"></div>
+              <div class="gh-bar-life" id="ghBarLife"></div>
+            </div>
+          </div>
+          <div class="gh-footnote" id="ghFootnote">
+            After <strong id="ghYears">0</strong> years of gaming — the RX6500 is theoretically <strong>still running.</strong>
           </div>
         </div>
-        <div class="rt-divider"></div>
-        <div class="rt-lbl gpu">RX6500 4GD6 Theoretical Lifespan — 171 Years</div>
-        <div class="rt-row">
-          <div class="rt-track" style="width:100%;">
-            <div class="rt-fill gfill" id="rtF2"></div>
-            <div class="rt-dot gd install" style="left:0%;"><span class="rt-lbl2 gl il">2026<br>You install</span></div>
-            <div class="rt-dot gd" style="left:44%;"><span class="rt-lbl2 gl">2101<br>22nd Century</span></div>
-            <div class="rt-dot gd" style="left:100%;"><span class="rt-lbl2 gl ra">2197<br>Vision (theory)</span></div>
+        <div class="gh-compare">
+          <div class="gh-cmp-row">
+            <span class="gh-cmp-label">Avg gamer plays</span>
+            <div class="gh-cmp-bar-wrap"><div class="gh-cmp-bar gh-bar-gamer" id="ghCmpGamer"></div></div>
+            <span class="gh-cmp-val">~500 hrs / yr</span>
+          </div>
+          <div class="gh-cmp-row">
+            <span class="gh-cmp-label">RX6500 rated life</span>
+            <div class="gh-cmp-bar-wrap"><div class="gh-cmp-bar gh-bar-gpu" id="ghCmpGpu"></div></div>
+            <span class="gh-cmp-val gh-val-ruby">1,500,000 hrs</span>
           </div>
         </div>
-        <div class="rt-note">171 years of industrial history. The Vision's rated lifespan <strong>matches it exactly.</strong> Awaken it once. Let it watch for you.</div>
+        <div class="gh-footer">
+          你的遊戲生涯比這張卡先結束。<br>
+          <span>The card doesn't retire. You do.</span>
+        </div>
       </div>
       <div class="fi fi-d3" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
         <div class="stat-badge"><div class="num" style="color:var(--ruby2);">1.5M</div><div class="lbl">Hours MTBF</div></div>
@@ -804,26 +1014,47 @@ section{position:relative;width:100%;overflow:hidden;}
       </div>
     </div>
     <div class="end-badges fi fi-d1">
-      <div class="vision-badge">
-        <div class="vb-icon">✦</div>
-        <div>
-          <div class="vb-title">Aerodynamic Rigidity</div>
-          <div class="vb-desc">Streamlined compact chassis<br>Anti-flex structural integrity<br>Optimized airflow geometry</div>
+      <!-- ── WHILE IT RUNS ── -->
+      <div class="wir-wrap" id="wirWrap">
+        <div class="wir-header">
+          <span class="wir-eyebrow">While It Runs</span>
+          <span class="wir-sub">171-year lifespan · replacements per unit</span>
         </div>
+        <div class="wir-rows">
+          <div class="wir-row" data-count="171">
+            <div class="wir-left"><span class="wir-icon">💡</span><div class="wir-info"><div class="wir-name">辦公室日光燈管</div><div class="wir-cycle">每 ~1 年換一次</div></div></div>
+            <div class="wir-right"><div class="wir-count" id="wc0">0</div><div class="wir-unit">次</div></div>
+          </div>
+          <div class="wir-row" data-count="85">
+            <div class="wir-left"><span class="wir-icon">🖱️</span><div class="wir-info"><div class="wir-name">滑鼠</div><div class="wir-cycle">每 ~2 年換一次</div></div></div>
+            <div class="wir-right"><div class="wir-count" id="wc1">0</div><div class="wir-unit">次</div></div>
+          </div>
+          <div class="wir-row" data-count="57">
+            <div class="wir-left"><span class="wir-icon">⌨️</span><div class="wir-info"><div class="wir-name">鍵盤</div><div class="wir-cycle">每 ~3 年換一次</div></div></div>
+            <div class="wir-right"><div class="wir-count" id="wc2">0</div><div class="wir-unit">次</div></div>
+          </div>
+          <div class="wir-row" data-count="34">
+            <div class="wir-left"><span class="wir-icon">🖨️</span><div class="wir-info"><div class="wir-name">印表機</div><div class="wir-cycle">每 ~5 年換一次</div></div></div>
+            <div class="wir-right"><div class="wir-count" id="wc3">0</div><div class="wir-unit">次</div></div>
+          </div>
+          <div class="wir-row wir-row-gpu">
+            <div class="wir-left"><span class="wir-icon">🔴</span><div class="wir-info"><div class="wir-name wir-name-gpu">RX6500 4GD6</div><div class="wir-cycle wir-cycle-gpu">1,500,000 hr MTBF</div></div></div>
+            <div class="wir-right wir-right-gpu"><div class="wir-count wir-zero" id="wc4">0</div><div class="wir-unit wir-unit-gpu">次</div></div>
+          </div>
+        </div>
+        <div class="wir-footer">
+          Everything else gets replaced. This doesn't.<br>
+          <span>這個房間裡的每一樣東西都會被換掉。除了它。</span>
+        </div>
+      </div>
+      <!-- Keep original badges -->
+      <div class="vision-badge" style="margin-top:14px;">
+        <div class="vb-icon">✦</div>
+        <div><div class="vb-title">Aerodynamic Rigidity</div><div class="vb-desc">Streamlined compact chassis<br>Anti-flex structural integrity</div></div>
       </div>
       <div class="vision-badge fi fi-d1">
         <div class="vb-icon">◈</div>
-        <div>
-          <div class="vb-title">Silent Thermal Lifespan</div>
-          <div class="vb-desc">Whispering fan architecture<br>Extended mechanical motor lifespan<br>Near-silent duty cycles</div>
-        </div>
-      </div>
-      <div class="vision-badge fi fi-d2">
-        <div class="vb-icon">○</div>
-        <div>
-          <div class="vb-title">Precision Power Matrix</div>
-          <div class="vb-desc">Optimized 107W thermal profile<br>Even distribution across components<br>Zero heat concentration points</div>
-        </div>
+        <div><div class="vb-title">Silent Thermal Lifespan</div><div class="vb-desc">Whispering fan architecture<br>Near-silent duty cycles</div></div>
       </div>
     </div>
   </div>
@@ -1440,6 +1671,146 @@ function portHighlight(){
     }
   },{threshold:.1});
   obs.observe(tbl);
+})();
+
+/* ── FPS REACTION TIME ── */
+(function(){
+  var wrap = document.getElementById('fpsWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var slow = document.getElementById('fpsSlow');
+    var fast = document.getElementById('fpsFast');
+    var delta = document.getElementById('fpsDelta');
+    var counter = document.getElementById('fpsCounter');
+    var deltaNum = document.getElementById('fpsDeltaNum');
+
+    setTimeout(function(){ if(slow) slow.classList.add('vis'); }, 100);
+    setTimeout(function(){ if(fast) fast.classList.add('vis'); }, 300);
+
+    // Animate slow frames lighting up (5 frames, spaced 167ms apart)
+    for(var i=1;i<=5;i++){
+      (function(idx){
+        setTimeout(function(){
+          var el = document.getElementById('ff'+idx);
+          if(el) el.classList.add('lit');
+        }, 400 + idx*167);
+      })(i);
+    }
+
+    // Animate fast frames lighting up (10 frames, spaced 69ms apart)
+    for(var j=1;j<=10;j++){
+      (function(idx){
+        setTimeout(function(){
+          var el = document.getElementById('fff'+idx);
+          if(el) el.classList.add('lit');
+        }, 400 + idx*69);
+      })(j);
+    }
+
+    // FPS counter ramps up
+    setTimeout(function(){
+      if(!counter) return;
+      var dur=900, target=144, t0=performance.now();
+      (function tick(now){
+        var p=Math.min((now-t0)/dur,1), v=1-Math.pow(1-p,3);
+        counter.innerHTML = Math.round(v*target)+'<span>fps</span>';
+        if(p<1) requestAnimationFrame(tick);
+        else counter.innerHTML = '144<span>fps</span>';
+      })(performance.now());
+    }, 400);
+
+    // Delta callout
+    setTimeout(function(){
+      if(delta) delta.classList.add('vis');
+      if(deltaNum){
+        var dur=800, t0=performance.now();
+        (function tick(now){
+          var p=Math.min((now-t0)/dur,1), v=1-Math.pow(1-p,3);
+          deltaNum.textContent = (v*9.8).toFixed(1)+'ms';
+          if(p<1) requestAnimationFrame(tick);
+          else deltaNum.textContent = '9.8ms';
+        })(performance.now());
+      }
+    }, 1200);
+  }, {threshold:0.25}).observe(wrap);
+})();
+
+/* ── GAME HOURS COUNTER ── */
+(function(){
+  var wrap = document.getElementById('ghWrap');
+  if(!wrap) return;
+  var fired = false;
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var card = document.getElementById('ghCard');
+    var hoursEl = document.getElementById('ghHours');
+    var barFill = document.getElementById('ghBarFill');
+    var footnote = document.getElementById('ghFootnote');
+    var yearsEl = document.getElementById('ghYears');
+    var cmpGamer = document.getElementById('ghCmpGamer');
+    var cmpGpu = document.getElementById('ghCmpGpu');
+    // Avg gamer: 10,000 hrs over 20 yrs of gaming
+    var GAMER_HRS = 10000;
+    var GPU_HRS = 1500000;
+
+    setTimeout(function(){ if(card) card.classList.add('vis'); }, 100);
+
+    setTimeout(function(){
+      if(barFill) barFill.style.width = (GAMER_HRS/GPU_HRS*100*80)+'%'; // scaled for visual
+      // Count up hours
+      if(hoursEl){
+        var dur=1400, t0=performance.now();
+        (function tick(now){
+          var p=Math.min((now-t0)/dur,1), v=1-Math.pow(1-p,3);
+          hoursEl.textContent = Math.round(v*GAMER_HRS).toLocaleString();
+          if(p<1) requestAnimationFrame(tick);
+          else hoursEl.textContent = GAMER_HRS.toLocaleString();
+        })(performance.now());
+      }
+      if(yearsEl) yearsEl.textContent = '20';
+      // Comparison bars
+      if(cmpGamer) setTimeout(function(){ cmpGamer.style.width='8%'; }, 200);
+      if(cmpGpu)   setTimeout(function(){ cmpGpu.style.width='100%'; }, 400);
+    }, 400);
+  }, {threshold:0.2}).observe(wrap);
+})();
+
+/* ── WHILE IT RUNS ── */
+(function(){
+  var wrap = document.getElementById('wirWrap');
+  if(!wrap) return;
+  var fired = false;
+  var counts=[171,85,57,34,0];
+  new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting || fired) return;
+    fired = true;
+    var rows = wrap.querySelectorAll('.wir-row');
+    rows.forEach(function(row,i){
+      setTimeout(function(){ if(row) row.classList.add('vis'); }, i*160);
+      if(i<4){
+        setTimeout(function(){
+          var el=document.getElementById('wc'+i);
+          if(!el) return;
+          var target=counts[i], dur=900, t0=performance.now();
+          (function tick(now){
+            var p=Math.min((now-t0)/dur,1),v=1-Math.pow(1-p,4);
+            el.textContent=Math.round(v*target);
+            if(p<1) requestAnimationFrame(tick);
+            else el.textContent=target;
+          })(performance.now());
+        }, i*160+200);
+      } else {
+        setTimeout(function(){
+          var el=document.getElementById('wc4');
+          if(el){ el.style.transition='text-shadow .6s ease'; el.style.textShadow='0 0 20px rgba(200,36,58,.6)'; }
+        }, i*160+400);
+      }
+    });
+  }, {threshold:0.2}).observe(wrap);
 })();
 </script>
 </body>
