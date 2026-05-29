@@ -34,7 +34,7 @@ header{background:var(--ink);padding:0 40px;height:52px;display:flex;align-items
 .h-logo-sub{font-family:var(--fm);font-size:10px;letter-spacing:.18em;color:rgba(248,247,245,.3);}
 .h-tag{font-family:var(--fm);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(248,247,245,.2);}
 
-/* ══ SEARCH BAR (top of content) ══ */
+/* ══ SEARCH BAR ══ */
 .search-wrap{padding:14px 40px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:52px;z-index:100;}
 .search-inner{position:relative;max-width:360px;}
 .search-inner input{width:100%;padding:8px 14px 8px 32px;font-family:var(--fm);font-size:11px;letter-spacing:.04em;background:var(--bg2);border:1px solid var(--border);color:var(--ink);outline:none;transition:border-color .2s;border-radius:2px;}
@@ -48,37 +48,19 @@ header{background:var(--ink);padding:0 40px;height:52px;display:flex;align-items
 
 /* ══ CHAPTERS ══ */
 .chapter{border-bottom:1px solid var(--border);}
-.chapter-banner{
-  padding:32px 40px 22px;
-  display:flex;align-items:flex-end;justify-content:space-between;
-  border-bottom:1px solid var(--line);
-  position:relative;overflow:hidden;
-}
-.chapter-banner::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;}
-.ch-ssd   .chapter-banner::before{background:#c8200e;}
-.ch-dram  .chapter-banner::before{background:#c8922a;}
-.ch-nvidia.chapter-banner::before,
-.ch-nvidia > .chapter-banner::before{background:#76b900;}
-.ch-amd   .chapter-banner::before{background:#c0392b;}
-.ch-ext   .chapter-banner::before{background:#0d9488;}
-
+.chapter-banner{padding:32px 40px 22px;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--line);position:relative;}
+.ch-accent{position:absolute;left:0;top:0;bottom:0;width:4px;}
 .ch-label{font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--label);margin-bottom:7px;}
 .ch-title{font-family:var(--fd);font-size:34px;letter-spacing:.04em;color:var(--ink);line-height:1;}
-.ch-meta{display:flex;align-items:center;gap:12px;}
 .ch-count{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);}
 
-/* ══ HORIZONTAL SCROLL ROW ══ */
+/* ══ SUB HEADING ══ */
+.sub-heading{font-family:var(--fm);font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--label);padding:13px 40px 9px;border-bottom:1px solid var(--line);background:var(--bg2);}
+
+/* ══ HORIZONTAL SCROLL ══ */
 .scroll-outer{position:relative;}
-.scroll-outer::after{
-  content:'';position:absolute;right:0;top:0;bottom:0;width:60px;
-  background:linear-gradient(to right,transparent,var(--bg));
-  pointer-events:none;z-index:2;
-}
-.scroll-row{
-  display:flex;gap:0;
-  overflow-x:auto;scrollbar-width:none;
-  padding:0;
-}
+.scroll-outer::after{content:'';position:absolute;right:0;top:0;bottom:0;width:60px;background:linear-gradient(to right,transparent,var(--bg));pointer-events:none;z-index:2;}
+.scroll-row{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
 .scroll-row::-webkit-scrollbar{display:none;}
 
 /* ══ PRODUCT CARD ══ */
@@ -87,78 +69,70 @@ header{background:var(--ink);padding:0 40px;height:52px;display:flex;align-items
   border-right:1px solid var(--border);
   background:var(--bg);
   display:flex;flex-direction:column;
-  text-decoration:none;color:inherit;
-  transition:background .18s;
-  position:relative;
-  overflow:hidden;
+  position:relative;overflow:hidden;
 }
-.pcard:first-child{border-left:1px solid transparent;}
-.pcard:hover{background:var(--bg2);}
 .pcard.hidden{display:none;}
 
-/* Thumb */
-.pcard-thumb{
-  height:150px;
-  overflow:hidden;
-  position:relative;
-  background:#111;
-  border-bottom:1px solid var(--border);
-  flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-}
-.pcard-thumb img{
-  width:100%;height:100%;
-  object-fit:cover;
-  object-position:center;
-  transition:transform .4s ease;
-  display:block;
-}
-.pcard-thumb.contain img{
-  object-fit:contain;
-  padding:16px;
-}
-.pcard:hover .pcard-thumb img{transform:scale(1.04);}
-
-/* Top accent line */
-.pcard::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--accent,transparent);
-  z-index:3;
-  opacity:.7;
-  transition:opacity .2s;
-}
+/* top accent */
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,transparent);z-index:3;opacity:.6;transition:opacity .2s;}
 .pcard:hover::before{opacity:1;}
 
-/* Body */
-.pcard-body{padding:13px 16px;flex:1;display:flex;flex-direction:column;gap:3px;}
+/* thumb */
+.pcard-thumb{height:150px;overflow:hidden;position:relative;background:#111;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.pcard-thumb img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .4s ease;display:block;}
+.pcard-thumb.contain img{object-fit:contain;padding:16px;}
+.pcard:hover .pcard-thumb img{transform:scale(1.04);}
+
+/* body */
+.pcard-body{padding:13px 16px 10px;flex:1;display:flex;flex-direction:column;gap:3px;}
 .pcard-cat{font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);}
 .pcard-name{font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.2;margin-top:1px;}
 .pcard-tagline{font-size:11.5px;font-weight:300;color:var(--mute);line-height:1.45;margin-top:3px;flex:1;}
 
-/* Footer */
-.pcard-footer{padding:10px 16px;border-top:1px solid var(--line);display:flex;align-items:center;gap:7px;}
-.pbadge{font-family:var(--fm);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--border);border-radius:2px;color:var(--mute);}
-.pbadge.preview{border-color:rgba(200,32,14,.35);color:var(--red);}
-.pcard-arrow{margin-left:auto;font-size:12px;color:var(--label);transition:transform .2s,color .2s;}
-.pcard:hover .pcard-arrow{transform:translateX(3px);color:var(--ink);}
+/* ══ FOOTER — two rows ══ */
+.pcard-footer{
+  border-top:1px solid var(--line);
+  display:flex;flex-direction:column;
+}
+
+/* Preview row — full-width link, prominent */
+.pcard-preview-link{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;
+  text-decoration:none;color:inherit;
+  background:var(--bg);
+  transition:background .15s;
+  border-bottom:1px solid var(--line);
+}
+.pcard-preview-link:hover{background:var(--bg3);}
+.pcard-preview-link .pl-label{font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:500;}
+.pcard-preview-link .pl-arrow{font-size:12px;color:var(--red);transition:transform .2s;}
+.pcard-preview-link:hover .pl-arrow{transform:translateX(3px);}
+
+/* Text row — secondary, smaller */
+.pcard-text-link{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 16px;
+  text-decoration:none;color:inherit;
+  background:var(--bg);
+  transition:background .15s;
+}
+.pcard-text-link:hover{background:var(--bg2);}
+.pcard-text-link .tl-label{font-family:var(--fm);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);}
+.pcard-text-link .tl-arrow{font-size:11px;color:var(--label);transition:transform .2s;}
+.pcard-text-link:hover .tl-arrow{transform:translateX(3px);}
+/* shared text note (e.g. 2230+2242 combined) */
+.pcard-text-link .tl-note{font-family:var(--fm);font-size:7px;letter-spacing:.06em;color:var(--label);margin-left:6px;}
 
 /* ══ STATUS BAR ══ */
 .status-bar{background:var(--ink);padding:10px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 .status-txt{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(248,247,245,.2);}
 .status-count{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(248,247,245,.4);}
 
-/* ══ SECTION DIVIDER ══ */
-.sub-heading{
-  font-family:var(--fm);font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--label);padding:14px 40px 10px;
-  border-bottom:1px solid var(--line);
-  background:var(--bg2);
-}
-
 @media(max-width:768px){
   header,.search-wrap,.sub-heading{padding-left:20px;padding-right:20px;}
   .chapter-banner{padding:24px 20px 16px;}
-  .pcard{flex:0 0 180px;}
+  .pcard{flex:0 0 185px;}
   .pcard-thumb{height:120px;}
 }
 </style>
@@ -197,603 +171,535 @@ header{background:var(--ink);padding:0 40px;height:52px;display:flex;align-items
   </div>
 </div>
 
-<!-- ══════════════════════ SSD ══════════════════════ -->
-<div class="chapter ch-ssd" data-chapter="ssd">
+<!-- ═══════════════ SSD ═══════════════ -->
+<div class="chapter" data-chapter="ssd">
   <div class="chapter-banner">
-    <div>
-      <div class="ch-label">Storage · M.2 / SATA</div>
-      <div class="ch-title">SSD Line</div>
-    </div>
-    <div class="ch-meta">
-      <div class="ch-count">7 products</div>
-    </div>
+    <div class="ch-accent" style="background:#c8200e;"></div>
+    <div><div class="ch-label">Storage · M.2 / SATA</div><div class="ch-title">SSD Line</div></div>
+    <div class="ch-count">7 products</div>
   </div>
-  <div class="scroll-outer">
-    <div class="scroll-row">
+  <div class="scroll-outer"><div class="scroll-row">
 
-      <a class="pcard" href="ssd/SSD320PRO_preview.html" data-name="SSD 320 PRO" data-cat="ssd" style="--accent:#c8200e;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD320Pro.jpg" alt="SSD 320 PRO" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div>
-          <div class="pcard-name">SSD 320 PRO</div>
-          <div class="pcard-tagline">Faster than you expect.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="ssd/SSD330_preview.html" data-name="SSD 330" data-cat="ssd" style="--accent:#c8200e;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD330.jpg" alt="SSD 330" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div>
-          <div class="pcard-name">SSD 330</div>
-          <div class="pcard-tagline">Drop it. Trust it.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="ssd/SSD420_preview.html" data-name="SSD 420" data-cat="ssd" style="--accent:#c8960a;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD420.jpg" alt="SSD 420" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">PCIe Gen4x4 · M.2 2280 · NVMe</div>
-          <div class="pcard-name">SSD 420</div>
-          <div class="pcard-tagline">Lightning Strike. Gen4 begins here.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="ssd/SSD430_preview.html" data-name="SSD 430" data-cat="ssd" style="--accent:#c8a800;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD430.jpg" alt="SSD 430" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">PCIe Gen4x4 · M.2 2280 · Flagship</div>
-          <div class="pcard-name">SSD 430</div>
-          <div class="pcard-tagline">Thunderous Descent. 7,200 MB/s.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="ssd/M2_2230_preview.html" data-name="M.2 2230" data-cat="ssd" style="--accent:#2563eb;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/M.2%202230%20Gen4x4_2TB.jpg" alt="M.2 2230" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">PCIe Gen3x4 &amp; Gen4x4 · M.2 2230</div>
-          <div class="pcard-name">M.2 2230</div>
-          <div class="pcard-tagline">Compact Core + Swift Core.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="ssd/M2_2242_preview.html" data-name="M.2 2242" data-cat="ssd" style="--accent:#6366f1;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/M.2%202242%20Gen3x4_2TB.jpg" alt="M.2 2242" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">PCIe Gen3x4 · M.2 2242</div>
-          <div class="pcard-name">M.2 2242</div>
-          <div class="pcard-tagline">Solid Core. 3,200 MB/s all capacities.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="ssd/SSD120_preview.html" data-name="SSD 120" data-cat="ssd" style="--accent:#cc2222;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD120.jpg" alt="SSD 120" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">SATA III 6Gb/s · 2.5"</div>
-          <div class="pcard-name">SSD 120</div>
-          <div class="pcard-tagline">Void Edge. Every device deserves this.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
+    <!-- SSD 320 PRO -->
+    <div class="pcard" data-name="SSD 320 PRO" data-cat="ssd" style="--accent:#c8200e;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD320Pro.jpg" alt="SSD 320 PRO" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div>
+        <div class="pcard-name">SSD 320 PRO</div>
+        <div class="pcard-tagline">Faster than you expect.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="ssd/SSD320PRO_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="ssd/SSD320PRO_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
     </div>
-  </div>
+
+    <!-- SSD 330 -->
+    <div class="pcard" data-name="SSD 330" data-cat="ssd" style="--accent:#c8200e;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD330.jpg" alt="SSD 330" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div>
+        <div class="pcard-name">SSD 330</div>
+        <div class="pcard-tagline">Drop it. Trust it.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="ssd/SSD330_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="ssd/SSD330_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- SSD 420 -->
+    <div class="pcard" data-name="SSD 420" data-cat="ssd" style="--accent:#c8960a;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD420.jpg" alt="SSD 420" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">PCIe Gen4x4 · M.2 2280 · NVMe</div>
+        <div class="pcard-name">SSD 420</div>
+        <div class="pcard-tagline">Lightning Strike. Gen4 begins here.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="ssd/SSD420_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="ssd/SSD420_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- SSD 430 -->
+    <div class="pcard" data-name="SSD 430" data-cat="ssd" style="--accent:#c8a800;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD430.jpg" alt="SSD 430" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">PCIe Gen4x4 · M.2 2280 · Flagship</div>
+        <div class="pcard-name">SSD 430</div>
+        <div class="pcard-tagline">Thunderous Descent. 7,200 MB/s.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="ssd/SSD430_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="ssd/SSD430_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- M.2 2230 — shared text with 2242 -->
+    <div class="pcard" data-name="M.2 2230" data-cat="ssd" style="--accent:#2563eb;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/M.2%202230%20Gen4x4_2TB.jpg" alt="M.2 2230" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">PCIe Gen3x4 &amp; Gen4x4 · M.2 2230</div>
+        <div class="pcard-name">M.2 2230</div>
+        <div class="pcard-tagline">Compact Core + Swift Core.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="ssd/M2_2230_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="ssd/M2_2230_2242_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-note">共用 2230+2242</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- M.2 2242 — shared text with 2230 -->
+    <div class="pcard" data-name="M.2 2242" data-cat="ssd" style="--accent:#6366f1;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/M.2%202242%20Gen3x4_2TB.jpg" alt="M.2 2242" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">PCIe Gen3x4 · M.2 2242</div>
+        <div class="pcard-name">M.2 2242</div>
+        <div class="pcard-tagline">Solid Core. 3,200 MB/s all capacities.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="ssd/M2_2242_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="ssd/M2_2230_2242_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-note">共用 2230+2242</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- SSD 120 -->
+    <div class="pcard" data-name="SSD 120" data-cat="ssd" style="--accent:#cc2222;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD120.jpg" alt="SSD 120" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">SATA III 6Gb/s · 2.5"</div>
+        <div class="pcard-name">SSD 120</div>
+        <div class="pcard-tagline">Void Edge. Every device deserves this.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="ssd/SSD120_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="ssd/SSD120_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+  </div></div>
 </div>
 
-<!-- ══════════════════════ DRAM ══════════════════════ -->
-<div class="chapter ch-dram" data-chapter="dram">
+<!-- ═══════════════ DRAM ═══════════════ -->
+<div class="chapter" data-chapter="dram">
   <div class="chapter-banner">
-    <div>
-      <div class="ch-label">Memory · DDR3 / DDR4 / DDR5</div>
-      <div class="ch-title">DRAM Line</div>
-    </div>
-    <div class="ch-meta">
-      <div class="ch-count">7 products</div>
-    </div>
+    <div class="ch-accent" style="background:#c8922a;"></div>
+    <div><div class="ch-label">Memory · DDR3 / DDR4 / DDR5</div><div class="ch-title">DRAM Line</div></div>
+    <div class="ch-count">7 products</div>
   </div>
 
   <div class="sub-heading">Precision Series — Standard</div>
-  <div class="scroll-outer">
-    <div class="scroll-row">
+  <div class="scroll-outer"><div class="scroll-row">
 
-      <a class="pcard" href="dram/DDR3_preview.html" data-name="DDR3 Precision" data-cat="dram" style="--accent:#1e3a5f;">
-        <div class="pcard-thumb contain">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/DDR3_1600_8GB_U-DIMM.jpg" alt="DDR3" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">DDR3L · 1600 Mbps · 1.35V · 8GB</div>
-          <div class="pcard-name">DDR3 Precision</div>
-          <div class="pcard-tagline">U-DIMM + SO-DIMM · Reliable every time.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="dram/DDR4_preview.html" data-name="DDR4 Precision" data-cat="dram" style="--accent:#1a4a2a;">
-        <div class="pcard-thumb contain">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/DDR4_3200_16GB_U-DIMM_1.jpg" alt="DDR4" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">DDR4 · 3200 Mbps · 1.2V · 16/32GB</div>
-          <div class="pcard-name">DDR4 Precision</div>
-          <div class="pcard-tagline">U-DIMM + SO-DIMM · Built for endurance.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="dram/DDR5_preview.html" data-name="DDR5 Precision" data-cat="dram" style="--accent:#4a1a7a;">
-        <div class="pcard-thumb contain">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/DDR5_5600_32GB_U-DIMM_1.jpg" alt="DDR5" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">DDR5 · 5600 Mbps · 1.1V · 32GB · ECC</div>
-          <div class="pcard-name">DDR5 Precision</div>
-          <div class="pcard-tagline">On-Die ECC. U-DIMM + SO-DIMM.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
+    <!-- DDR3 — shared text DDR345 -->
+    <div class="pcard" data-name="DDR3 Precision" data-cat="dram" style="--accent:#1e3a5f;">
+      <div class="pcard-thumb contain"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/DDR3_1600_8GB_U-DIMM.jpg" alt="DDR3" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">DDR3L · 1600 Mbps · 1.35V · 8GB</div>
+        <div class="pcard-name">DDR3 Precision</div>
+        <div class="pcard-tagline">U-DIMM + SO-DIMM · Reliable every time.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="dram/DDR3_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="dram/DDR345_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-note">共用 DDR3/4/5</span><span class="tl-arrow">→</span></a>
+      </div>
     </div>
-  </div>
+
+    <!-- DDR4 — shared text DDR345 -->
+    <div class="pcard" data-name="DDR4 Precision" data-cat="dram" style="--accent:#1a4a2a;">
+      <div class="pcard-thumb contain"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/DDR4_3200_16GB_U-DIMM_1.jpg" alt="DDR4" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">DDR4 · 3200 Mbps · 1.2V · 16/32GB</div>
+        <div class="pcard-name">DDR4 Precision</div>
+        <div class="pcard-tagline">U-DIMM + SO-DIMM · Built for endurance.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="dram/DDR4_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="dram/DDR345_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-note">共用 DDR3/4/5</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- DDR5 — shared text DDR345 -->
+    <div class="pcard" data-name="DDR5 Precision" data-cat="dram" style="--accent:#4a1a7a;">
+      <div class="pcard-thumb contain"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/DDR5_5600_32GB_U-DIMM_1.jpg" alt="DDR5" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">DDR5 · 5600 Mbps · 1.1V · 32GB · ECC</div>
+        <div class="pcard-name">DDR5 Precision</div>
+        <div class="pcard-tagline">On-Die ECC. U-DIMM + SO-DIMM.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="dram/DDR5_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="dram/DDR345_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-note">共用 DDR3/4/5</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+  </div></div>
 
   <div class="sub-heading">Performance Series — Gaming / Overclocking</div>
-  <div class="scroll-outer">
-    <div class="scroll-row">
+  <div class="scroll-outer"><div class="scroll-row">
 
-      <a class="pcard" href="dram/DDR4NX1_preview.html" data-name="DDR4 NX1" data-cat="dram" style="--accent:#555;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/NX-1.jpg" alt="DDR4 NX1" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">DDR4 · Shadow Edge · No RGB</div>
-          <div class="pcard-name">DDR4 NX1</div>
-          <div class="pcard-tagline">Silent. Certain. Lifetime.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="dram/DDR4CX1_preview.html" data-name="DDR4 CX1" data-cat="dram" style="--accent:#c8922a;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/CX-1.jpg" alt="DDR4 CX1" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">DDR4 · Storm White · Full RGB</div>
-          <div class="pcard-name">DDR4 CX1</div>
-          <div class="pcard-tagline">Light is just the beginning.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="dram/DDR5EX1_preview.html" data-name="DDR5 EX1" data-cat="dram" style="--accent:#c8200e;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/EX-1.jpg" alt="DDR5 EX1" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">DDR5 · Blaze Blade · 1.35V</div>
-          <div class="pcard-name">DDR5 EX1</div>
-          <div class="pcard-tagline">This is not decoration. This is aggression.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="dram/DDR5RX1_preview.html" data-name="DDR5 RX1" data-cat="dram" style="--accent:#c8922a;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/RX-1.jpg" alt="DDR5 RX1" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">DDR5 · Precision White · 3µm Hard Gold</div>
-          <div class="pcard-name">DDR5 RX1</div>
-          <div class="pcard-tagline">You reign. Every core.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
+    <!-- DDR4 NX1 -->
+    <div class="pcard" data-name="DDR4 NX1" data-cat="dram" style="--accent:#555;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/NX-1.jpg" alt="DDR4 NX1" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">DDR4 · Shadow Edge · No RGB</div>
+        <div class="pcard-name">DDR4 NX1</div>
+        <div class="pcard-tagline">Silent. Certain. Lifetime.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="dram/DDR4NX1_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="dram/DDR4NX1_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
     </div>
-  </div>
+
+    <!-- DDR4 CX1 -->
+    <div class="pcard" data-name="DDR4 CX1" data-cat="dram" style="--accent:#c8922a;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/CX-1.jpg" alt="DDR4 CX1" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">DDR4 · Storm White · Full RGB</div>
+        <div class="pcard-name">DDR4 CX1</div>
+        <div class="pcard-tagline">Light is just the beginning.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="dram/DDR4CX1_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="dram/DDR4CX1_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- DDR5 EX1 -->
+    <div class="pcard" data-name="DDR5 EX1" data-cat="dram" style="--accent:#c8200e;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/EX-1.jpg" alt="DDR5 EX1" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">DDR5 · Blaze Blade · 1.35V</div>
+        <div class="pcard-name">DDR5 EX1</div>
+        <div class="pcard-tagline">This is not decoration. This is aggression.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="dram/DDR5EX1_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="dram/DDR5EX1_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- DDR5 RX1 -->
+    <div class="pcard" data-name="DDR5 RX1" data-cat="dram" style="--accent:#c8922a;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/RX-1.jpg" alt="DDR5 RX1" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">DDR5 · Precision White · 3µm Hard Gold</div>
+        <div class="pcard-name">DDR5 RX1</div>
+        <div class="pcard-tagline">You reign. Every core.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="dram/DDR5RX1_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="dram/DDR5RX1_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+  </div></div>
 </div>
 
-<!-- ══════════════════════ NVIDIA GPU ══════════════════════ -->
+<!-- ═══════════════ NVIDIA GPU ═══════════════ -->
 <div class="chapter" data-chapter="nvidia">
-  <div class="chapter-banner" style="border-left: none; position: relative;">
-    <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#76b900;"></div>
-    <div>
-      <div class="ch-label">GPU · NVIDIA GeForce</div>
-      <div class="ch-title">NVIDIA Line</div>
-    </div>
-    <div class="ch-meta">
-      <div class="ch-count">9 products</div>
-    </div>
+  <div class="chapter-banner">
+    <div class="ch-accent" style="background:#76b900;"></div>
+    <div><div class="ch-label">GPU · NVIDIA GeForce</div><div class="ch-title">NVIDIA Line</div></div>
+    <div class="ch-count">9 products</div>
   </div>
 
   <div class="sub-heading">Entry Series — G / GT</div>
-  <div class="scroll-outer">
-    <div class="scroll-row">
+  <div class="scroll-outer"><div class="scroll-row">
 
-      <a class="pcard" href="gpu/g210_preview.html" data-name="G210" data-cat="nvidia" style="--accent:#76b900;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/G210.jpg" alt="G210" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">1GB GDDR3 · PCIe 2.0 · 31W</div>
-          <div class="pcard-name">G210</div>
-          <div class="pcard-tagline">Dune Walker. Nonstop. Always there.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/gt730_preview.html" data-name="GT730" data-cat="nvidia" style="--accent:#76b900;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GT730.jpg" alt="GT730" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">4GB GDDR3 · PCIe 2.0 · 49W</div>
-          <div class="pcard-name">GT730</div>
-          <div class="pcard-tagline">Void Sentinel. Capable. Always there.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/gt1030_preview.html" data-name="GT1030" data-cat="nvidia" style="--accent:#76b900;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GT1030.jpg" alt="GT1030" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">4GB GDDR4 · PCIe 3.0 · 30W · Pascal</div>
-          <div class="pcard-name">GT1030</div>
-          <div class="pcard-tagline">Zero external power. Pure Pascal entry.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/gtx750ti_preview.html" data-name="GTX 750 Ti" data-cat="nvidia" style="--accent:#ff2d78;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GTX750Ti.jpg" alt="GTX 750 Ti" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">4GB GDDR5 · PCIe 3.0 · 60W · Maxwell</div>
-          <div class="pcard-name">GTX 750 Ti</div>
-          <div class="pcard-tagline">Red Talon. More. Faster. Still silent.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/gtx1050ti_preview.html" data-name="GTX 1050 Ti" data-cat="nvidia" style="--accent:#6090c0;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GTX1050TI.jpg" alt="GTX 1050 Ti" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">4GB GDDR5 · PCIe 3.0 · 75W · Pascal</div>
-          <div class="pcard-name">GTX 1050 Ti</div>
-          <div class="pcard-tagline">Pascal Edge. Two fans. No compromise.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
+    <!-- G210 -->
+    <div class="pcard" data-name="G210" data-cat="nvidia" style="--accent:#76b900;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/G210.jpg" alt="G210" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">1GB GDDR3 · PCIe 2.0 · 31W</div>
+        <div class="pcard-name">G210</div>
+        <div class="pcard-tagline">Dune Walker. Nonstop. Always there.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/g210_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/g210_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
     </div>
-  </div>
+
+    <!-- GT730 -->
+    <div class="pcard" data-name="GT730" data-cat="nvidia" style="--accent:#76b900;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GT730.jpg" alt="GT730" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">4GB GDDR3 · PCIe 2.0 · 49W</div>
+        <div class="pcard-name">GT730</div>
+        <div class="pcard-tagline">Void Sentinel. Capable. Always there.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/gt730_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/gt730_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- GT1030 -->
+    <div class="pcard" data-name="GT1030" data-cat="nvidia" style="--accent:#76b900;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GT1030.jpg" alt="GT1030" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">4GB GDDR4 · PCIe 3.0 · 30W · Pascal</div>
+        <div class="pcard-name">GT1030</div>
+        <div class="pcard-tagline">Zero external power. Pure Pascal entry.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/gt1030_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/gt1030_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- GTX 750 Ti -->
+    <div class="pcard" data-name="GTX 750 Ti" data-cat="nvidia" style="--accent:#ff2d78;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GTX750Ti.jpg" alt="GTX 750 Ti" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">4GB GDDR5 · PCIe 3.0 · 60W · Maxwell</div>
+        <div class="pcard-name">GTX 750 Ti</div>
+        <div class="pcard-tagline">Red Talon. More. Faster. Still silent.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/gtx750ti_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/gtx750ti_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- GTX 1050 Ti -->
+    <div class="pcard" data-name="GTX 1050 Ti" data-cat="nvidia" style="--accent:#6090c0;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GTX1050TI.jpg" alt="GTX 1050 Ti" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">4GB GDDR5 · PCIe 3.0 · 75W · Pascal</div>
+        <div class="pcard-name">GTX 1050 Ti</div>
+        <div class="pcard-tagline">Pascal Edge. Two fans. No compromise.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/gtx1050ti_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/gtx1050ti_text .html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+  </div></div>
 
   <div class="sub-heading">Mid &amp; High Series — GTX / RTX</div>
-  <div class="scroll-outer">
-    <div class="scroll-row">
+  <div class="scroll-outer"><div class="scroll-row">
 
-      <a class="pcard" href="gpu/gtx1660s_preview.html" data-name="GTX 1660 SUPER" data-cat="nvidia" style="--accent:#5ab4f0;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GTX1660S.jpg" alt="GTX 1660 SUPER" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">6GB GDDR6 · PCIe 3.0 · 125W · Turing</div>
-          <div class="pcard-name">GTX 1660 SUPER</div>
-          <div class="pcard-tagline">Twin Cyclone. Cold precision.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/rtx3050_preview.html" data-name="RTX 3050" data-cat="nvidia" style="--accent:#39d97a;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX3050.jpg" alt="RTX 3050" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">8GB GDDR6 · PCIe 4.0 · 115W · Ampere</div>
-          <div class="pcard-name">RTX 3050</div>
-          <div class="pcard-tagline">Trigger. Ray Tracing initialized.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/rtx3060_preview.html" data-name="RTX 3060" data-cat="nvidia" style="--accent:#8090a8;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX3060.jpg" alt="RTX 3060" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">12GB GDDR6 · PCIe 4.0 · 170W · Ampere</div>
-          <div class="pcard-name">RTX 3060</div>
-          <div class="pcard-tagline">Striker. 12GB. Break the line.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/rtx3070_preview.html" data-name="RTX 3070" data-cat="nvidia" style="--accent:#e86030;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX3070.jpg" alt="RTX 3070" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">8GB GDDR6 · PCIe 4.0 · 220W · Ampere</div>
-          <div class="pcard-name">RTX 3070</div>
-          <div class="pcard-tagline">Igniter. Erase the horizon.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/rtx5060ti_preview.html" data-name="RTX 5060 Ti" data-cat="nvidia" style="--accent:#4090d0;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX5060Ti.jpg" alt="RTX 5060 Ti" loading="lazy" onerror="this.parentElement.style.background='#0a1018';this.style.display='none'">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">8GB GDDR7 · PCIe 5.0 · 180W · Blackwell</div>
-          <div class="pcard-name">RTX 5060 Ti</div>
-          <div class="pcard-tagline">Accelerator World. Railgun velocity.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
+    <!-- GTX 1660 SUPER -->
+    <div class="pcard" data-name="GTX 1660 SUPER" data-cat="nvidia" style="--accent:#5ab4f0;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GTX1660S.jpg" alt="GTX 1660 SUPER" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">6GB GDDR6 · PCIe 3.0 · 125W · Turing</div>
+        <div class="pcard-name">GTX 1660 SUPER</div>
+        <div class="pcard-tagline">Twin Cyclone. Cold precision.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/gtx1660s_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/gtx1660s_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
     </div>
-  </div>
+
+    <!-- RTX 3050 -->
+    <div class="pcard" data-name="RTX 3050" data-cat="nvidia" style="--accent:#39d97a;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX3050.jpg" alt="RTX 3050" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">8GB GDDR6 · PCIe 4.0 · 115W · Ampere</div>
+        <div class="pcard-name">RTX 3050</div>
+        <div class="pcard-tagline">Trigger. Ray Tracing initialized.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/rtx3050_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/rtx3050_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- RTX 3060 -->
+    <div class="pcard" data-name="RTX 3060" data-cat="nvidia" style="--accent:#8090a8;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX3060.jpg" alt="RTX 3060" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">12GB GDDR6 · PCIe 4.0 · 170W · Ampere</div>
+        <div class="pcard-name">RTX 3060</div>
+        <div class="pcard-tagline">Striker. 12GB. Break the line.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/rtx3060_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/rtx3060_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- RTX 3070 -->
+    <div class="pcard" data-name="RTX 3070" data-cat="nvidia" style="--accent:#e86030;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX3070.jpg" alt="RTX 3070" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">8GB GDDR6 · PCIe 4.0 · 220W · Ampere</div>
+        <div class="pcard-name">RTX 3070</div>
+        <div class="pcard-tagline">Igniter. Erase the horizon.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/rtx3070_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/rtx3070_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- RTX 5060 Ti -->
+    <div class="pcard" data-name="RTX 5060 Ti" data-cat="nvidia" style="--accent:#4090d0;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX5060Ti.jpg" alt="RTX 5060 Ti" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">8GB GDDR7 · PCIe 5.0 · 180W · Blackwell</div>
+        <div class="pcard-name">RTX 5060 Ti</div>
+        <div class="pcard-tagline">Accelerator World. Railgun velocity.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/rtx5060ti_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/rtx5060_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+  </div></div>
 </div>
 
-<!-- ══════════════════════ AMD GPU ══════════════════════ -->
+<!-- ═══════════════ AMD GPU ═══════════════ -->
 <div class="chapter" data-chapter="amd">
-  <div class="chapter-banner" style="position:relative;">
-    <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#c0392b;"></div>
-    <div>
-      <div class="ch-label">GPU · AMD Radeon</div>
-      <div class="ch-title">AMD Line</div>
-    </div>
-    <div class="ch-meta">
-      <div class="ch-count">7 products</div>
-    </div>
+  <div class="chapter-banner">
+    <div class="ch-accent" style="background:#c0392b;"></div>
+    <div><div class="ch-label">GPU · AMD Radeon</div><div class="ch-title">AMD Line</div></div>
+    <div class="ch-count">7 products</div>
   </div>
 
   <div class="sub-heading">Display Series — R5230 / R7240 / R7350</div>
-  <div class="scroll-outer">
-    <div class="scroll-row">
+  <div class="scroll-outer"><div class="scroll-row">
 
-      <a class="pcard" href="gpu/R5230_1GB_preview.html" data-name="R5230 1GB" data-cat="amd" style="--accent:#1a9070;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R5230%201G.jpg" alt="R5230 1GB" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">1GB GDDR3 · PCIe 2.0 · 18W</div>
-          <div class="pcard-name">R5230 1GB</div>
-          <div class="pcard-tagline">Lagoon. Single fan. Zero cables.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/R5230_2GB_preview.html" data-name="R5230 2GB" data-cat="amd" style="--accent:#1a6090;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R5230.jpg" alt="R5230 2GB" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">2GB GDDR3 · PCIe 2.0 · 18W</div>
-          <div class="pcard-name">R5230 2GB</div>
-          <div class="pcard-tagline">Lake. Deeper pool. Same silence.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/R7240_preview.html" data-name="R7240" data-cat="amd" style="--accent:#b07020;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R7240.jpg" alt="R7240" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">4GB GDDR3 · PCIe 3.0 · 30W · 128-Bit</div>
-          <div class="pcard-name">R7240</div>
-          <div class="pcard-tagline">Bay. 128-Bit highway. Full authority.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/R7350_preview.html" data-name="R7350" data-cat="amd" style="--accent:#c88018;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R7350.jpg" alt="R7350" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">4GB GDDR3 · PCIe 3.0 · 30W · 925 MHz</div>
-          <div class="pcard-name">R7350</div>
-          <div class="pcard-tagline">Gulf. Peak channel. Master authority.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
+    <!-- R5230 1GB -->
+    <div class="pcard" data-name="R5230 1GB" data-cat="amd" style="--accent:#1a9070;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R5230%201G.jpg" alt="R5230 1GB" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">1GB GDDR3 · PCIe 2.0 · 18W</div>
+        <div class="pcard-name">R5230 1GB</div>
+        <div class="pcard-tagline">Lagoon. Single fan. Zero cables.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/R5230_1GB_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/R5230_1GB_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
     </div>
-  </div>
+
+    <!-- R5230 2GB -->
+    <div class="pcard" data-name="R5230 2GB" data-cat="amd" style="--accent:#1a6090;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R5230.jpg" alt="R5230 2GB" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">2GB GDDR3 · PCIe 2.0 · 18W</div>
+        <div class="pcard-name">R5230 2GB</div>
+        <div class="pcard-tagline">Lake. Deeper pool. Same silence.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/R5230_2GB_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/R5230_2GB_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- R7240 -->
+    <div class="pcard" data-name="R7240" data-cat="amd" style="--accent:#b07020;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R7240.jpg" alt="R7240" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">4GB GDDR3 · PCIe 3.0 · 30W · 128-Bit</div>
+        <div class="pcard-name">R7240</div>
+        <div class="pcard-tagline">Bay. 128-Bit highway. Full authority.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/R7240_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/R7240_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- R7350 -->
+    <div class="pcard" data-name="R7350" data-cat="amd" style="--accent:#c88018;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R7350.jpg" alt="R7350" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">4GB GDDR3 · PCIe 3.0 · 30W · 925 MHz</div>
+        <div class="pcard-name">R7350</div>
+        <div class="pcard-tagline">Gulf. Peak channel. Master authority.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/R7350_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/R7350_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+  </div></div>
 
   <div class="sub-heading">Gaming Series — RX580 / RX6500 / RX7600</div>
-  <div class="scroll-outer">
-    <div class="scroll-row">
+  <div class="scroll-outer"><div class="scroll-row">
 
-      <a class="pcard" href="gpu/RX580_preview.html" data-name="RX580" data-cat="amd" style="--accent:#c0392b;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RX580.jpg" alt="RX580" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">8GB GDDR5 · PCIe 3.0 · 150W · 256-Bit</div>
-          <div class="pcard-name">RX580</div>
-          <div class="pcard-tagline">Fortress. 256-Bit stronghold.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/RX6500_preview.html" data-name="RX6500" data-cat="amd" style="--accent:#c8243a;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RX6500.jpg" alt="RX6500" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">4GB GDDR6 · PCIe 4.0 · 107W · 6nm</div>
-          <div class="pcard-name">RX6500</div>
-          <div class="pcard-tagline">Vision. See what others miss.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
-      <a class="pcard" href="gpu/RX7600_preview.html" data-name="RX7600" data-cat="amd" style="--accent:#a020d0;">
-        <div class="pcard-thumb">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RX7600.jpg" alt="RX7600" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">8GB GDDR6 · PCIe 4.0 · 165W · RDNA 3</div>
-          <div class="pcard-name">RX7600</div>
-          <div class="pcard-tagline">Gambit. Quantum breach locked.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
+    <!-- RX580 -->
+    <div class="pcard" data-name="RX580" data-cat="amd" style="--accent:#c0392b;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RX580.jpg" alt="RX580" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">8GB GDDR5 · PCIe 3.0 · 150W · 256-Bit</div>
+        <div class="pcard-name">RX580</div>
+        <div class="pcard-tagline">Fortress. 256-Bit stronghold.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/RX580_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/RX580_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
     </div>
-  </div>
+
+    <!-- RX6500 -->
+    <div class="pcard" data-name="RX6500" data-cat="amd" style="--accent:#c8243a;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RX6500.jpg" alt="RX6500" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">4GB GDDR6 · PCIe 4.0 · 107W · 6nm</div>
+        <div class="pcard-name">RX6500</div>
+        <div class="pcard-tagline">Vision. See what others miss.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/RX6500_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/RX6500_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- RX7600 -->
+    <div class="pcard" data-name="RX7600" data-cat="amd" style="--accent:#a020d0;">
+      <div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RX7600.jpg" alt="RX7600" loading="lazy"></div>
+      <div class="pcard-body">
+        <div class="pcard-cat">8GB GDDR6 · PCIe 4.0 · 165W · RDNA 3</div>
+        <div class="pcard-name">RX7600</div>
+        <div class="pcard-tagline">Gambit. Quantum breach locked.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="gpu/RX7600_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="gpu/RX7600_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
+    </div>
+
+  </div></div>
 </div>
 
-<!-- ══════════════════════ EXTERNALS ══════════════════════ -->
-<div class="chapter ch-ext" data-chapter="ext">
+<!-- ═══════════════ EXTERNALS ═══════════════ -->
+<div class="chapter" data-chapter="ext">
   <div class="chapter-banner">
-    <div>
-      <div class="ch-label">Externals · microSD</div>
-      <div class="ch-title">External Line</div>
-    </div>
-    <div class="ch-meta">
-      <div class="ch-count">1 product</div>
-    </div>
+    <div class="ch-accent" style="background:#0d9488;"></div>
+    <div><div class="ch-label">Externals · microSD</div><div class="ch-title">External Line</div></div>
+    <div class="ch-count">1 product</div>
   </div>
-  <div class="scroll-outer">
-    <div class="scroll-row">
+  <div class="scroll-outer"><div class="scroll-row">
 
-      <a class="pcard" href="externals/T100_preview.html" data-name="T100 microSD" data-cat="ext" style="--accent:#0d9488;">
-        <div class="pcard-thumb contain" style="background:#0a1410;">
-          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/externals/microSD%20Card%201.png" alt="T100 microSD" loading="lazy">
-        </div>
-        <div class="pcard-body">
-          <div class="pcard-cat">microSD · External Storage</div>
-          <div class="pcard-name">T100</div>
-          <div class="pcard-tagline">Pocket-sized. Always ready.</div>
-        </div>
-        <div class="pcard-footer">
-          <span class="pbadge preview">Preview</span>
-          <span class="pcard-arrow">→</span>
-        </div>
-      </a>
-
+    <!-- T100 -->
+    <div class="pcard" data-name="T100 microSD" data-cat="ext" style="--accent:#0d9488;">
+      <div class="pcard-thumb contain" style="background:#0a1410;">
+        <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/externals/microSD%20Card%201.png" alt="T100 microSD" loading="lazy">
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-cat">microSD · External Storage</div>
+        <div class="pcard-name">T100</div>
+        <div class="pcard-tagline">Pocket-sized. Always ready.</div>
+      </div>
+      <div class="pcard-footer">
+        <a class="pcard-preview-link" href="externals/T100_preview.html"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
+        <a class="pcard-text-link" href="externals/T100_text.html"><span class="tl-label">Copywriting Text</span><span class="tl-arrow">→</span></a>
+      </div>
     </div>
-  </div>
+
+  </div></div>
 </div>
 
 <!-- ══ STATUS BAR ══ -->
@@ -817,28 +723,19 @@ function applyFilter(){
     const cat  = c.dataset.cat || '';
     const matchQ = !q || name.includes(q);
     const matchF = activeFilter === 'all' || cat === activeFilter;
-    if(matchQ && matchF){
-      c.classList.remove('hidden');
-      shown++;
-    } else {
-      c.classList.add('hidden');
-    }
+    if(matchQ && matchF){ c.classList.remove('hidden'); shown++; }
+    else { c.classList.add('hidden'); }
   });
-
-  // hide chapter banners/subheadings if all cards in section hidden
   document.querySelectorAll('.chapter').forEach(ch=>{
-    const chCat  = ch.dataset.chapter;
     const hasVis = Array.from(ch.querySelectorAll('.pcard')).some(c=>!c.classList.contains('hidden'));
     ch.style.display = hasVis ? '' : 'none';
   });
-
-  countEl.textContent = q || activeFilter !== 'all'
+  countEl.textContent = (q || activeFilter !== 'all')
     ? `${shown} result${shown!==1?'s':''}`
     : `${cards.length} products`;
 }
 
 searchEl.addEventListener('input', applyFilter);
-
 pills.forEach(p=>{
   p.addEventListener('click',()=>{
     pills.forEach(x=>x.classList.remove('on'));
