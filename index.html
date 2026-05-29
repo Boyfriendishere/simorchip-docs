@@ -8,171 +8,159 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f8f7f5;--bg2:#f0ede8;
+  --bg:#f8f7f5;--bg2:#f0ede8;--bg3:#e8e4de;
   --ink:#0a0908;--mute:#5a5550;--label:#9a9590;
-  --red:#c8200e;--border:rgba(10,9,8,.1);--line:rgba(10,9,8,.07);
-  --f:"Inter",-apple-system,sans-serif;--fm:"DM Mono",monospace;
-  --fd:"Bebas Neue",sans-serif;
+  --red:#c8200e;--border:rgba(10,9,8,.1);--line:rgba(10,9,8,.06);
+  --f:"Inter",-apple-system,sans-serif;--fm:"DM Mono",monospace;--fd:"Bebas Neue",sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
 body{font-family:var(--f);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;}
 
 /* ══ VIDEO BANNER ══ */
 .video-banner{position:relative;width:100%;height:100vh;overflow:hidden;background:#000;}
-.video-banner video{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;pointer-events:none;
-}
-/* bottom fade to bg */
-.video-banner::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:28%;
-  background:linear-gradient(to bottom,transparent,rgba(10,9,8,.85));
-  pointer-events:none;
-}
-/* scroll hint — animated chevron */
-.scroll-hint{
-  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  z-index:10;pointer-events:none;
-}
-.scroll-hint .chevron{
-  width:22px;height:22px;border-right:2px solid rgba(255,255,255,.55);
-  border-bottom:2px solid rgba(255,255,255,.55);
-  transform:rotate(45deg);
-  animation:chevBounce 1.6s ease-in-out infinite;
-}
-.scroll-hint .chevron:nth-child(2){
-  margin-top:-14px;opacity:.35;
-  animation-delay:.2s;
-}
-@keyframes chevBounce{
-  0%,100%{transform:rotate(45deg) translateY(0);opacity:.6;}
-  50%{transform:rotate(45deg) translateY(5px);opacity:1;}
-}
+.video-banner video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;}
+.video-banner::after{content:'';position:absolute;bottom:0;left:0;right:0;height:28%;background:linear-gradient(to bottom,transparent,rgba(10,9,8,.85));pointer-events:none;}
+.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:10;pointer-events:none;}
+.scroll-hint .chevron{width:22px;height:22px;border-right:2px solid rgba(255,255,255,.55);border-bottom:2px solid rgba(255,255,255,.55);transform:rotate(45deg);animation:chevBounce 1.6s ease-in-out infinite;}
+.scroll-hint .chevron:nth-child(2){margin-top:-14px;opacity:.35;animation-delay:.2s;}
+@keyframes chevBounce{0%,100%{transform:rotate(45deg) translateY(0);opacity:.6;}50%{transform:rotate(45deg) translateY(5px);opacity:1;}}
 
 /* ══ STICKY HEADER ══ */
-header{
-  background:var(--ink);padding:0 40px;height:52px;
-  display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:200;
-}
-.h-logo{
-  font-family:var(--fd);font-size:20px;letter-spacing:.18em;
-  color:rgba(248,247,245,.8);display:flex;align-items:center;gap:10px;
-}
+header{background:var(--ink);padding:0 40px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+.h-logo{font-family:var(--fd);font-size:20px;letter-spacing:.18em;color:rgba(248,247,245,.8);display:flex;align-items:center;gap:10px;}
 .h-logo em{color:var(--red);font-style:normal;}
 .h-logo-sep{color:rgba(248,247,245,.2);font-family:var(--fm);font-size:11px;letter-spacing:.04em;font-weight:300;}
 .h-logo-sub{font-family:var(--fm);font-size:10px;letter-spacing:.18em;color:rgba(248,247,245,.3);}
 .h-tag{font-family:var(--fm);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(248,247,245,.2);}
 
-/* ══ INTRO STRIP ══ */
-.intro-strip{padding:36px 40px 28px;border-bottom:1px solid var(--border);}
-.intro-title{font-family:var(--fd);font-size:28px;letter-spacing:.04em;margin-bottom:8px;}
-.intro-sub{font-size:13px;font-weight:300;color:var(--mute);line-height:1.7;max-width:560px;}
-.intro-meta{display:flex;gap:20px;margin-top:14px;flex-wrap:wrap;}
-.hm{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);display:flex;align-items:center;gap:6px;}
-.hm-dot{width:6px;height:6px;border-radius:50%;}
-
-/* ══ SEARCH ══ */
-.search-wrap{padding:16px 40px;border-bottom:1px solid var(--border);background:var(--bg2);}
-.search-inner{position:relative;max-width:400px;}
-.search-inner input{width:100%;padding:9px 14px 9px 34px;font-family:var(--fm);font-size:11px;letter-spacing:.04em;background:var(--bg);border:1px solid var(--border);color:var(--ink);outline:none;transition:border-color .2s;}
+/* ══ SEARCH BAR (top of content) ══ */
+.search-wrap{padding:14px 40px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:52px;z-index:100;}
+.search-inner{position:relative;max-width:360px;}
+.search-inner input{width:100%;padding:8px 14px 8px 32px;font-family:var(--fm);font-size:11px;letter-spacing:.04em;background:var(--bg2);border:1px solid var(--border);color:var(--ink);outline:none;transition:border-color .2s;border-radius:2px;}
 .search-inner input:focus{border-color:var(--ink);}
-.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--label);font-size:13px;pointer-events:none;}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--label);font-size:13px;pointer-events:none;}
 .search-inner input::placeholder{color:var(--label);}
-
-/* ══ MAIN LAYOUT ══ */
-.main{display:grid;grid-template-columns:200px 1fr;min-height:calc(100vh - 52px);}
-
-/* ══ SIDEBAR ══ */
-.sidebar{
-  border-right:1px solid var(--border);padding:20px 0;
-  position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;
-}
-.sb-section{margin-bottom:2px;}
-.sb-title{
-  font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--label);padding:10px 20px 5px;display:block;
-}
-.sb-link{
-  display:flex;align-items:center;gap:8px;padding:6px 20px;font-size:12px;
-  font-weight:400;color:var(--mute);cursor:pointer;transition:background .15s,color .15s;
-  text-decoration:none;border:none;background:none;width:100%;text-align:left;
-}
-.sb-link:hover{background:var(--bg2);color:var(--ink);}
-.sb-link.active{background:rgba(200,32,14,.06);color:var(--red);font-weight:500;}
-.sb-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
-.sb-divider{height:1px;background:var(--line);margin:8px 20px;}
-
-/* ══ CONTENT ══ */
-.content{padding:24px 36px 60px;}
-.filter-row{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;}
-.pill{font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--border);cursor:pointer;transition:all .2s;background:var(--bg);color:var(--mute);}
+.filter-row{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+.pill{font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:4px 11px;border:1px solid var(--border);cursor:pointer;transition:all .2s;background:var(--bg);color:var(--mute);border-radius:2px;}
 .pill:hover{border-color:var(--ink);color:var(--ink);}
 .pill.on{background:var(--ink);color:var(--bg);border-color:var(--ink);}
 
-.section-block{margin-bottom:40px;}
-.section-block:last-child{margin-bottom:0;}
-
-/* Section heading — heavier, color-bar left */
-.section-heading{
-  font-family:var(--fm);font-size:9.5px;font-weight:600;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--label);
-  margin-bottom:12px;padding:10px 12px 10px 16px;
+/* ══ CHAPTERS ══ */
+.chapter{border-bottom:1px solid var(--border);}
+.chapter-banner{
+  padding:32px 40px 22px;
+  display:flex;align-items:flex-end;justify-content:space-between;
   border-bottom:1px solid var(--line);
-  display:flex;align-items:center;gap:10px;
-  border-left:3px solid transparent;
-  transition:border-color .2s;
-}
-.section-heading:hover{border-left-color:var(--sh-color,var(--ink));}
-.section-heading .sh-dot{
-  display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0;
-}
-
-/* ══ CARDS ══ */
-.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:7px;}
-.card{
-  border:1px solid var(--border);background:var(--bg);
-  padding:14px 16px;text-decoration:none;color:inherit;
-  display:flex;flex-direction:column;gap:6px;
-  transition:border-color .2s,background .2s,box-shadow .2s;
-  border-top:2px solid transparent;
   position:relative;overflow:hidden;
 }
-.card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--card-color,transparent);
-  transition:opacity .2s;opacity:.5;
+.chapter-banner::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;}
+.ch-ssd   .chapter-banner::before{background:#c8200e;}
+.ch-dram  .chapter-banner::before{background:#c8922a;}
+.ch-nvidia.chapter-banner::before,
+.ch-nvidia > .chapter-banner::before{background:#76b900;}
+.ch-amd   .chapter-banner::before{background:#c0392b;}
+.ch-ext   .chapter-banner::before{background:#0d9488;}
+
+.ch-label{font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--label);margin-bottom:7px;}
+.ch-title{font-family:var(--fd);font-size:34px;letter-spacing:.04em;color:var(--ink);line-height:1;}
+.ch-meta{display:flex;align-items:center;gap:12px;}
+.ch-count{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);}
+
+/* ══ HORIZONTAL SCROLL ROW ══ */
+.scroll-outer{position:relative;}
+.scroll-outer::after{
+  content:'';position:absolute;right:0;top:0;bottom:0;width:60px;
+  background:linear-gradient(to right,transparent,var(--bg));
+  pointer-events:none;z-index:2;
 }
-.card:hover{border-color:rgba(10,9,8,.2);background:var(--bg2);box-shadow:0 2px 12px rgba(10,9,8,.06);}
-.card:hover::before{opacity:1;}
-.card-cat{font-family:var(--fm);font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);}
-.card-name{font-size:13px;font-weight:600;letter-spacing:-.01em;line-height:1.3;}
-.card-desc{font-size:11.5px;font-weight:300;color:var(--mute);line-height:1.5;}
-.card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:2px;}
-.card-type{font-family:var(--fm);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--border);}
-.card-arrow{font-size:12px;color:var(--label);transition:transform .2s,color .2s;}
-.card:hover .card-arrow{transform:translateX(4px);color:var(--ink);}
-.card.preview .card-type{border-color:rgba(200,32,14,.3);color:var(--red);}
-.card.text .card-type{border-color:rgba(10,9,8,.15);color:var(--mute);}
+.scroll-row{
+  display:flex;gap:0;
+  overflow-x:auto;scrollbar-width:none;
+  padding:0;
+}
+.scroll-row::-webkit-scrollbar{display:none;}
+
+/* ══ PRODUCT CARD ══ */
+.pcard{
+  flex:0 0 220px;
+  border-right:1px solid var(--border);
+  background:var(--bg);
+  display:flex;flex-direction:column;
+  text-decoration:none;color:inherit;
+  transition:background .18s;
+  position:relative;
+  overflow:hidden;
+}
+.pcard:first-child{border-left:1px solid transparent;}
+.pcard:hover{background:var(--bg2);}
+.pcard.hidden{display:none;}
+
+/* Thumb */
+.pcard-thumb{
+  height:150px;
+  overflow:hidden;
+  position:relative;
+  background:#111;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.pcard-thumb img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center;
+  transition:transform .4s ease;
+  display:block;
+}
+.pcard-thumb.contain img{
+  object-fit:contain;
+  padding:16px;
+}
+.pcard:hover .pcard-thumb img{transform:scale(1.04);}
+
+/* Top accent line */
+.pcard::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--accent,transparent);
+  z-index:3;
+  opacity:.7;
+  transition:opacity .2s;
+}
+.pcard:hover::before{opacity:1;}
+
+/* Body */
+.pcard-body{padding:13px 16px;flex:1;display:flex;flex-direction:column;gap:3px;}
+.pcard-cat{font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--label);}
+.pcard-name{font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.2;margin-top:1px;}
+.pcard-tagline{font-size:11.5px;font-weight:300;color:var(--mute);line-height:1.45;margin-top:3px;flex:1;}
+
+/* Footer */
+.pcard-footer{padding:10px 16px;border-top:1px solid var(--line);display:flex;align-items:center;gap:7px;}
+.pbadge{font-family:var(--fm);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--border);border-radius:2px;color:var(--mute);}
+.pbadge.preview{border-color:rgba(200,32,14,.35);color:var(--red);}
+.pcard-arrow{margin-left:auto;font-size:12px;color:var(--label);transition:transform .2s,color .2s;}
+.pcard:hover .pcard-arrow{transform:translateX(3px);color:var(--ink);}
 
 /* ══ STATUS BAR ══ */
-.status-bar{
-  background:var(--ink);padding:10px 40px;
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:8px;position:sticky;bottom:0;z-index:100;
-}
+.status-bar{background:var(--ink);padding:10px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 .status-txt{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(248,247,245,.2);}
 .status-count{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(248,247,245,.4);}
 
-/* ══ RESPONSIVE ══ */
-@media(max-width:768px){
-  .main{grid-template-columns:1fr;}
-  .sidebar{display:none;}
-  header,.intro-strip,.search-wrap,.content,.status-bar{padding-left:20px;padding-right:20px;}
-  .card-grid{grid-template-columns:1fr 1fr;}
+/* ══ SECTION DIVIDER ══ */
+.sub-heading{
+  font-family:var(--fm);font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--label);padding:14px 40px 10px;
+  border-bottom:1px solid var(--line);
+  background:var(--bg2);
 }
-@media(max-width:480px){.card-grid{grid-template-columns:1fr;}}
+
+@media(max-width:768px){
+  header,.search-wrap,.sub-heading{padding-left:20px;padding-right:20px;}
+  .chapter-banner{padding:24px 20px 16px;}
+  .pcard{flex:0 0 180px;}
+  .pcard-thumb{height:120px;}
+}
 </style>
 </head>
 <body>
@@ -190,480 +178,674 @@ header{
 
 <!-- ══ STICKY HEADER ══ -->
 <header>
-  <div class="h-logo">
-    SIMOR<em>CHIP</em>
-    <span class="h-logo-sep">·</span>
-    <span class="h-logo-sub">DOCS</span>
-  </div>
-  <div class="h-tag">Internal Review · v1.0</div>
+  <div class="h-logo">SIMOR<em>CHIP</em><span class="h-logo-sep">·</span><span class="h-logo-sub">DOCS</span></div>
+  <div class="h-tag">Internal Review · v2.0</div>
 </header>
 
-<!-- ══ INTRO ══ -->
-<div class="intro-strip">
-  <div class="intro-title">Product Copywriting Review</div>
-  <div class="intro-sub">All product preview pages and copywriting files. Click any card to open the corresponding file.</div>
-  <div class="intro-meta">
-    <div class="hm"><div class="hm-dot" style="background:var(--red);"></div>Preview — Visual preview page</div>
-    <div class="hm"><div class="hm-dot" style="background:rgba(10,9,8,.25);"></div>Text — Notion copywriting</div>
-  </div>
-</div>
-
-<!-- ══ SEARCH ══ -->
+<!-- ══ SEARCH + FILTER ══ -->
 <div class="search-wrap">
   <div class="search-inner">
     <span class="search-icon">⌕</span>
     <input type="text" id="search" placeholder="Search products...">
   </div>
-</div>
-
-<!-- ══ MAIN ══ -->
-<div class="main">
-  <nav class="sidebar">
-
-    <div class="sb-section">
-      <span class="sb-title">SSD · M.2 2280</span>
-      <button class="sb-link" onclick="jumpTo('ssd-320pro')"><span class="sb-dot" style="background:#c8200e;"></span>SSD 320 PRO</button>
-      <button class="sb-link" onclick="jumpTo('ssd-330')"><span class="sb-dot" style="background:#c8200e;"></span>SSD 330</button>
-      <button class="sb-link" onclick="jumpTo('ssd-420')"><span class="sb-dot" style="background:#c8960a;"></span>SSD 420</button>
-      <button class="sb-link" onclick="jumpTo('ssd-430')"><span class="sb-dot" style="background:#ffe44d;"></span>SSD 430</button>
-    </div>
-    <div class="sb-section">
-      <span class="sb-title">SSD · Compact</span>
-      <button class="sb-link" onclick="jumpTo('m2-2230')"><span class="sb-dot" style="background:#2563eb;"></span>M.2 2230</button>
-      <button class="sb-link" onclick="jumpTo('m2-2242')"><span class="sb-dot" style="background:#6366f1;"></span>M.2 2242</button>
-      <button class="sb-link" onclick="jumpTo('ssd-120')"><span class="sb-dot" style="background:#cc2222;"></span>SSD 120</button>
-    </div>
-
-    <div class="sb-divider"></div>
-
-    <div class="sb-section">
-      <span class="sb-title">DRAM · Precision</span>
-      <button class="sb-link" onclick="jumpTo('ddr3')"><span class="sb-dot" style="background:#1e3a5f;"></span>DDR3</button>
-      <button class="sb-link" onclick="jumpTo('ddr4-p')"><span class="sb-dot" style="background:#1a4a2a;"></span>DDR4</button>
-      <button class="sb-link" onclick="jumpTo('ddr5-p')"><span class="sb-dot" style="background:#4a1a7a;"></span>DDR5</button>
-    </div>
-    <div class="sb-section">
-      <span class="sb-title">DRAM · Performance</span>
-      <button class="sb-link" onclick="jumpTo('nx1')"><span class="sb-dot" style="background:#555;"></span>DDR4 NX1</button>
-      <button class="sb-link" onclick="jumpTo('cx1')"><span class="sb-dot" style="background:#c8922a;"></span>DDR4 CX1</button>
-      <button class="sb-link" onclick="jumpTo('ex1')"><span class="sb-dot" style="background:#c8200e;"></span>DDR5 EX1</button>
-      <button class="sb-link" onclick="jumpTo('rx1')"><span class="sb-dot" style="background:#c8922a;"></span>DDR5 RX1</button>
-    </div>
-
-    <div class="sb-divider"></div>
-
-    <div class="sb-section">
-      <span class="sb-title">GPU · NVIDIA Entry</span>
-      <button class="sb-link" onclick="jumpTo('g210')"><span class="sb-dot" style="background:#76b900;"></span>G210</button>
-      <button class="sb-link" onclick="jumpTo('gt730')"><span class="sb-dot" style="background:#76b900;"></span>GT730</button>
-      <button class="sb-link" onclick="jumpTo('gt1030')"><span class="sb-dot" style="background:#76b900;"></span>GT1030</button>
-      <button class="sb-link" onclick="jumpTo('gtx750ti')"><span class="sb-dot" style="background:#ff2d78;"></span>GTX 750 Ti</button>
-      <button class="sb-link" onclick="jumpTo('gtx1050ti')"><span class="sb-dot" style="background:#c8ddf0;"></span>GTX 1050 Ti</button>
-    </div>
-    <div class="sb-section">
-      <span class="sb-title">GPU · NVIDIA Mid</span>
-      <button class="sb-link" onclick="jumpTo('gtx1660s')"><span class="sb-dot" style="background:#5ab4f0;"></span>GTX 1660 SUPER</button>
-      <button class="sb-link" onclick="jumpTo('rtx3050')"><span class="sb-dot" style="background:#39d97a;"></span>RTX 3050</button>
-      <button class="sb-link" onclick="jumpTo('rtx3060')"><span class="sb-dot" style="background:#d0dce8;"></span>RTX 3060</button>
-    </div>
-    <div class="sb-section">
-      <span class="sb-title">GPU · NVIDIA High</span>
-      <button class="sb-link" onclick="jumpTo('rtx3070')"><span class="sb-dot" style="background:#e86030;"></span>RTX 3070</button>
-      <button class="sb-link" onclick="jumpTo('rtx5060ti')"><span class="sb-dot" style="background:#4090d0;"></span>RTX 5060 Ti</button>
-    </div>
-
-    <div class="sb-divider"></div>
-
-    <div class="sb-section">
-      <span class="sb-title">GPU · AMD Display</span>
-      <button class="sb-link" onclick="jumpTo('r5230-1gb')"><span class="sb-dot" style="background:#1a9070;"></span>R5230 1GB</button>
-      <button class="sb-link" onclick="jumpTo('r5230-2gb')"><span class="sb-dot" style="background:#1a6090;"></span>R5230 2GB</button>
-      <button class="sb-link" onclick="jumpTo('r7240')"><span class="sb-dot" style="background:#b07020;"></span>R7240</button>
-      <button class="sb-link" onclick="jumpTo('r7350')"><span class="sb-dot" style="background:#c88018;"></span>R7350</button>
-    </div>
-    <div class="sb-section">
-      <span class="sb-title">GPU · AMD Gaming</span>
-      <button class="sb-link" onclick="jumpTo('rx580')"><span class="sb-dot" style="background:#c0392b;"></span>RX580</button>
-      <button class="sb-link" onclick="jumpTo('rx6500')"><span class="sb-dot" style="background:#c8243a;"></span>RX6500</button>
-      <button class="sb-link" onclick="jumpTo('rx7600')"><span class="sb-dot" style="background:#a020d0;"></span>RX7600</button>
-    </div>
-
-    <div class="sb-divider"></div>
-
-    <div class="sb-section">
-      <span class="sb-title">Externals</span>
-      <button class="sb-link" onclick="jumpTo('t100')"><span class="sb-dot" style="background:#0d9488;"></span>T100 microSD</button>
-    </div>
-
-  </nav>
-
-  <div class="content" id="content">
-    <div class="filter-row">
-      <div class="pill on" onclick="filterAll(this)">All</div>
-      <div class="pill" onclick="filterType('preview',this)">Preview only</div>
-      <div class="pill" onclick="filterType('text',this)">Text only</div>
-    </div>
-
-    <!-- SSD 320 PRO -->
-    <div class="section-block" id="ssd-320pro">
-      <div class="section-heading" style="--sh-color:#c8200e;"><span class="sh-dot" style="background:#c8200e;"></span>SSD 320 PRO — M.2 2280 PCIe Gen3x4</div>
-      <div class="card-grid">
-        <a class="card preview" href="ssd/SSD320PRO_preview.html" data-name="SSD 320 PRO" style="--card-color:#c8200e;"><div class="card-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div><div class="card-name">SSD 320 PRO</div><div class="card-desc">Faster than you expect.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="ssd/SSD320PRO_text.html" data-name="SSD 320 PRO Text" style="--card-color:#c8200e;"><div class="card-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div><div class="card-name">SSD 320 PRO Text</div><div class="card-desc">Notion-ready copywriting</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- SSD 330 -->
-    <div class="section-block" id="ssd-330">
-      <div class="section-heading" style="--sh-color:#c8200e;"><span class="sh-dot" style="background:#c8200e;"></span>SSD 330 — M.2 2280 PCIe Gen3x4</div>
-      <div class="card-grid">
-        <a class="card preview" href="ssd/SSD330_preview.html" data-name="SSD 330" style="--card-color:#c8200e;"><div class="card-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div><div class="card-name">SSD 330</div><div class="card-desc">Drop it. Trust it.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="ssd/SSD330_text.html" data-name="SSD 330 Text" style="--card-color:#c8200e;"><div class="card-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div><div class="card-name">SSD 330 Text</div><div class="card-desc">Notion-ready copywriting</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- SSD 420 -->
-    <div class="section-block" id="ssd-420">
-      <div class="section-heading" style="--sh-color:#c8960a;"><span class="sh-dot" style="background:#c8960a;"></span>SSD 420 — M.2 2280 PCIe Gen4x4</div>
-      <div class="card-grid">
-        <a class="card preview" href="ssd/SSD420_preview.html" data-name="SSD 420" style="--card-color:#c8960a;"><div class="card-cat">PCIe Gen4x4 · M.2 2280 · NVMe</div><div class="card-name">SSD 420</div><div class="card-desc">Lightning Strike · Gen4 begins here.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="ssd/SSD420_text.html" data-name="SSD 420 Text" style="--card-color:#c8960a;"><div class="card-cat">PCIe Gen4x4 · M.2 2280 · NVMe</div><div class="card-name">SSD 420 Text</div><div class="card-desc">Notion-ready copywriting</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- SSD 430 -->
-    <div class="section-block" id="ssd-430">
-      <div class="section-heading" style="--sh-color:#c8a800;"><span class="sh-dot" style="background:#ffe44d;"></span>SSD 430 — M.2 2280 PCIe Gen4x4 Flagship</div>
-      <div class="card-grid">
-        <a class="card preview" href="ssd/SSD430_preview.html" data-name="SSD 430" style="--card-color:#c8a800;"><div class="card-cat">PCIe Gen4x4 · M.2 2280 · Flagship</div><div class="card-name">SSD 430</div><div class="card-desc">Thunderous Descent · 7,200 MB/s · 3,000 TBW</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="ssd/SSD430_text.html" data-name="SSD 430 Text" style="--card-color:#c8a800;"><div class="card-cat">PCIe Gen4x4 · M.2 2280 · Flagship</div><div class="card-name">SSD 430 Text</div><div class="card-desc">Notion-ready copywriting</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- M.2 2230 -->
-    <div class="section-block" id="m2-2230">
-      <div class="section-heading" style="--sh-color:#2563eb;"><span class="sh-dot" style="background:#2563eb;"></span>M.2 2230 — GEN3x4 &amp; GEN4x4</div>
-      <div class="card-grid">
-        <a class="card preview" href="ssd/M2_2230_preview.html" data-name="M.2 2230" style="--card-color:#2563eb;"><div class="card-cat">PCIe Gen3x4 &amp; Gen4x4 · M.2 2230</div><div class="card-name">M.2 2230</div><div class="card-desc">Compact Core + Swift Core</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="ssd/M2_2230_2242_text.html" data-name="M.2 2230 2242 Text" style="--card-color:#2563eb;"><div class="card-cat">M.2 2230 &amp; 2242 combined</div><div class="card-name">M.2 2230 &amp; 2242 Text</div><div class="card-desc">GEN3x4 / GEN4x4 / 2242 combined copy</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- M.2 2242 -->
-    <div class="section-block" id="m2-2242">
-      <div class="section-heading" style="--sh-color:#6366f1;"><span class="sh-dot" style="background:#6366f1;"></span>M.2 2242 — GEN3x4</div>
-      <div class="card-grid">
-        <a class="card preview" href="ssd/M2_2242_preview.html" data-name="M.2 2242" style="--card-color:#6366f1;"><div class="card-cat">PCIe Gen3x4 · M.2 2242</div><div class="card-name">M.2 2242 GEN3x4</div><div class="card-desc">Solid Core · 3,200 MB/s all capacities</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- SSD 120 -->
-    <div class="section-block" id="ssd-120">
-      <div class="section-heading" style="--sh-color:#cc2222;"><span class="sh-dot" style="background:#cc2222;"></span>SSD 120 — 2.5" SATA III</div>
-      <div class="card-grid">
-        <a class="card preview" href="ssd/SSD120_preview.html" data-name="SSD 120" style="--card-color:#cc2222;"><div class="card-cat">SATA III 6Gb/s · 2.5"</div><div class="card-name">SSD 120</div><div class="card-desc">Void Edge · Every device deserves this.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="ssd/SSD120_text.html" data-name="SSD 120 Text" style="--card-color:#cc2222;"><div class="card-cat">SATA III 6Gb/s · 2.5"</div><div class="card-name">SSD 120 Text</div><div class="card-desc">Void Edge copywriting</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- DDR3 -->
-    <div class="section-block" id="ddr3">
-      <div class="section-heading" style="--sh-color:#1e3a5f;"><span class="sh-dot" style="background:#1e3a5f;"></span>DDR3 — Precision Series</div>
-      <div class="card-grid">
-        <a class="card preview" href="dram/DDR3_preview.html" data-name="DDR3 Precision" style="--card-color:#1e3a5f;"><div class="card-cat">DDR3L · 1600 Mbps · 1.35V · 8GB</div><div class="card-name">DDR3 Precision</div><div class="card-desc">U-DIMM + SO-DIMM combined</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="dram/DDR345_text.html" data-name="DDR345 Text" style="--card-color:#1e3a5f;"><div class="card-cat">DDR3 &amp; DDR4 &amp; DDR5 combined</div><div class="card-name">DDR3 / DDR4 / DDR5 Text</div><div class="card-desc">Precision Series combined copy</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- DDR4 Precision -->
-    <div class="section-block" id="ddr4-p">
-      <div class="section-heading" style="--sh-color:#1a4a2a;"><span class="sh-dot" style="background:#1a4a2a;"></span>DDR4 — Precision Series</div>
-      <div class="card-grid">
-        <a class="card preview" href="dram/DDR4_preview.html" data-name="DDR4 Precision" style="--card-color:#1a4a2a;"><div class="card-cat">DDR4 · 3200 Mbps · 1.2V · 16 / 32GB</div><div class="card-name">DDR4 Precision</div><div class="card-desc">U-DIMM + SO-DIMM combined</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- DDR5 Precision -->
-    <div class="section-block" id="ddr5-p">
-      <div class="section-heading" style="--sh-color:#4a1a7a;"><span class="sh-dot" style="background:#4a1a7a;"></span>DDR5 — Precision Series</div>
-      <div class="card-grid">
-        <a class="card preview" href="dram/DDR5_preview.html" data-name="DDR5 Precision" style="--card-color:#4a1a7a;"><div class="card-cat">DDR5 · 5600 Mbps · 1.1V · 32GB · On-Die ECC</div><div class="card-name">DDR5 Precision</div><div class="card-desc">U-DIMM + SO-DIMM combined</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- DDR4 NX1 -->
-    <div class="section-block" id="nx1">
-      <div class="section-heading" style="--sh-color:#555;"><span class="sh-dot" style="background:#555;"></span>DDR4 NX1 — Performance Series</div>
-      <div class="card-grid">
-        <a class="card preview" href="dram/DDR4NX1_preview.html" data-name="DDR4 NX1" style="--card-color:#555;"><div class="card-cat">DDR4 · Shadow Edge · No RGB</div><div class="card-name">DDR4 NX1</div><div class="card-desc">Silent. Certain. Lifetime.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="dram/DDR4NX1_text.html" data-name="DDR4 NX1 Text" style="--card-color:#555;"><div class="card-cat">DDR4 · Shadow Edge · No RGB</div><div class="card-name">DDR4 NX1 Text</div><div class="card-desc">Shadow Edge design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- DDR4 CX1 -->
-    <div class="section-block" id="cx1">
-      <div class="section-heading" style="--sh-color:#c8922a;"><span class="sh-dot" style="background:#c8922a;"></span>DDR4 CX1 — Performance Series</div>
-      <div class="card-grid">
-        <a class="card preview" href="dram/DDR4CX1_preview.html" data-name="DDR4 CX1" style="--card-color:#c8922a;"><div class="card-cat">DDR4 · Storm White · Full RGB</div><div class="card-name">DDR4 CX1</div><div class="card-desc">Light is just the beginning.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="dram/DDR4CX1_text.html" data-name="DDR4 CX1 Text" style="--card-color:#c8922a;"><div class="card-cat">DDR4 · Storm White · Full RGB</div><div class="card-name">DDR4 CX1 Text</div><div class="card-desc">Storm White design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- DDR5 EX1 -->
-    <div class="section-block" id="ex1">
-      <div class="section-heading" style="--sh-color:#c8200e;"><span class="sh-dot" style="background:#c8200e;"></span>DDR5 EX1 — Performance Series</div>
-      <div class="card-grid">
-        <a class="card preview" href="dram/DDR5EX1_preview.html" data-name="DDR5 EX1" style="--card-color:#c8200e;"><div class="card-cat">DDR5 · Blaze Blade · War Red · 1.35V</div><div class="card-name">DDR5 EX1</div><div class="card-desc">54°C Graphene cooled · It dominates.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="dram/DDR5EX1_text.html" data-name="DDR5 EX1 Text" style="--card-color:#c8200e;"><div class="card-cat">DDR5 · Blaze Blade · War Red</div><div class="card-name">DDR5 EX1 Text</div><div class="card-desc">Blaze Blade design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- DDR5 RX1 -->
-    <div class="section-block" id="rx1">
-      <div class="section-heading" style="--sh-color:#c8922a;"><span class="sh-dot" style="background:#c8922a;"></span>DDR5 RX1 — Performance Series</div>
-      <div class="card-grid">
-        <a class="card preview" href="dram/DDR5RX1_preview.html" data-name="DDR5 RX1" style="--card-color:#c8922a;"><div class="card-cat">DDR5 · Precision White · 3µm Hard Gold</div><div class="card-name">DDR5 RX1</div><div class="card-desc">On-Die ECC · You reign. Every core.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="dram/DDR5RX1_text.html" data-name="DDR5 RX1 Text" style="--card-color:#c8922a;"><div class="card-cat">DDR5 · Precision White · 3µm Hard Gold</div><div class="card-name">DDR5 RX1 Text</div><div class="card-desc">Precision White design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- G210 -->
-    <div class="section-block" id="g210">
-      <div class="section-heading" style="--sh-color:#76b900;"><span class="sh-dot" style="background:#76b900;"></span>G210 — Entry Series · GeForce</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/g210_preview.html" data-name="G210 GPU" style="--card-color:#76b900;"><div class="card-cat">GeForce · 1GB GDDR3 · PCIe 2.0 · 31W</div><div class="card-name">G210</div><div class="card-desc">Dune Walker · Nonstop. Reliability. Always there.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/g210_text.html" data-name="G210 GPU Text" style="--card-color:#76b900;"><div class="card-cat">GeForce · Entry Series</div><div class="card-name">G210 Text</div><div class="card-desc">Dune Walker design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- GT730 -->
-    <div class="section-block" id="gt730">
-      <div class="section-heading" style="--sh-color:#76b900;"><span class="sh-dot" style="background:#76b900;"></span>GT730 — Entry Series · GeForce</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/gt730_preview.html" data-name="GT730 GPU" style="--card-color:#76b900;"><div class="card-cat">GeForce · 4GB GDDR3 · PCIe 2.0 · 49W</div><div class="card-name">GT730</div><div class="card-desc">Void Sentinel · Nonstop. Capable. Always there.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/gt730_text.html" data-name="GT730 GPU Text" style="--card-color:#76b900;"><div class="card-cat">GeForce · Entry Series</div><div class="card-name">GT730 Text</div><div class="card-desc">Void Sentinel design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- GT1030 -->
-    <div class="section-block" id="gt1030">
-      <div class="section-heading" style="--sh-color:#76b900;"><span class="sh-dot" style="background:#76b900;"></span>GT1030 — Entry Series · GeForce Pascal</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/gt1030_preview.html" data-name="GT1030 GPU" style="--card-color:#76b900;"><div class="card-cat">GeForce · 4GB GDDR4 · PCIe 3.0 · 30W</div><div class="card-name">GT1030</div><div class="card-desc">Pascal Entry · Single fan · Zero external power.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/gt1030_text.html" data-name="GT1030 GPU Text" style="--card-color:#76b900;"><div class="card-cat">GeForce · Pascal Entry Series</div><div class="card-name">GT1030 Text</div><div class="card-desc">Pascal Entry design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- GTX 750 Ti -->
-    <div class="section-block" id="gtx750ti">
-      <div class="section-heading" style="--sh-color:#ff2d78;"><span class="sh-dot" style="background:#ff2d78;"></span>GTX 750 Ti — Red Talon · GeForce Maxwell</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/gtx750ti_preview.html" data-name="GTX 750 Ti GPU" style="--card-color:#ff2d78;"><div class="card-cat">GeForce · 4GB GDDR5 · PCIe 3.0 · 60W</div><div class="card-name">GTX 750 Ti</div><div class="card-desc">Red Talon · More. Faster. Still silent.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/gtx750ti_text.html" data-name="GTX 750 Ti Text" style="--card-color:#ff2d78;"><div class="card-cat">GeForce · Red Talon Series</div><div class="card-name">GTX 750 Ti Text</div><div class="card-desc">Red Talon design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- GTX 1050 Ti -->
-    <div class="section-block" id="gtx1050ti">
-      <div class="section-heading" style="--sh-color:#6090c0;"><span class="sh-dot" style="background:#c8ddf0;"></span>GTX 1050 Ti — Pascal Edge · GeForce</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/gtx1050ti_preview.html" data-name="GTX 1050 Ti GPU" style="--card-color:#6090c0;"><div class="card-cat">GeForce · 4GB GDDR5 · PCIe 3.0 · 75W · Dual Fan</div><div class="card-name">GTX 1050 Ti</div><div class="card-desc">Pascal Edge · Two fans. No compromise.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/gtx1050ti_text .html" data-name="GTX 1050 Ti Text" style="--card-color:#6090c0;"><div class="card-cat">GeForce · Pascal Edge Series</div><div class="card-name">GTX 1050 Ti Text</div><div class="card-desc">Pascal Edge design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- GTX 1660 SUPER -->
-    <div class="section-block" id="gtx1660s">
-      <div class="section-heading" style="--sh-color:#5ab4f0;"><span class="sh-dot" style="background:#5ab4f0;"></span>GTX 1660 SUPER — Twin Cyclone · GeForce Turing</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/gtx1660s_preview.html" data-name="GTX 1660 SUPER GPU" style="--card-color:#5ab4f0;"><div class="card-cat">GeForce · 6GB GDDR6 · PCIe 3.0 · 125W · Dual Fan</div><div class="card-name">GTX 1660 SUPER</div><div class="card-desc">Twin Cyclone · Cold precision. Raw performance.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/gtx1660s_text.html" data-name="GTX 1660 SUPER Text" style="--card-color:#5ab4f0;"><div class="card-cat">GeForce · Twin Cyclone Series</div><div class="card-name">GTX 1660 SUPER Text</div><div class="card-desc">Twin Cyclone design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- RTX 3050 -->
-    <div class="section-block" id="rtx3050">
-      <div class="section-heading" style="--sh-color:#39d97a;"><span class="sh-dot" style="background:#39d97a;"></span>RTX 3050 — Trigger · GeForce Ampere</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/rtx3050_preview.html" data-name="RTX 3050 GPU" style="--card-color:#39d97a;"><div class="card-cat">GeForce · 8GB GDDR6 · PCIe 4.0 · 115W · RTX On</div><div class="card-name">RTX 3050</div><div class="card-desc">Trigger · Ray Tracing initialized. No entry fees.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/rtx3050_text.html" data-name="RTX 3050 Text" style="--card-color:#39d97a;"><div class="card-cat">GeForce Ampere · Trigger Series</div><div class="card-name">RTX 3050 Text</div><div class="card-desc">Trigger design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- RTX 3060 -->
-    <div class="section-block" id="rtx3060">
-      <div class="section-heading" style="--sh-color:#8090a8;"><span class="sh-dot" style="background:#d0dce8;"></span>RTX 3060 — Striker · GeForce Ampere</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/rtx3060_preview.html" data-name="RTX 3060 GPU" style="--card-color:#8090a8;"><div class="card-cat">GeForce · 12GB GDDR6 · PCIe 4.0 · 170W · RTX On</div><div class="card-name">RTX 3060</div><div class="card-desc">Striker · 12GB Vector Initialized. Break the line.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/rtx3060_text.html" data-name="RTX 3060 Text" style="--card-color:#8090a8;"><div class="card-cat">GeForce Ampere · Striker Series</div><div class="card-name">RTX 3060 Text</div><div class="card-desc">Striker design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- RTX 3070 -->
-    <div class="section-block" id="rtx3070">
-      <div class="section-heading" style="--sh-color:#e86030;"><span class="sh-dot" style="background:#e86030;"></span>RTX 3070 — Igniter · GeForce Ampere</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/rtx3070_preview.html" data-name="RTX 3070 GPU" style="--card-color:#e86030;"><div class="card-cat">GeForce · 8GB GDDR6 · PCIe 4.0 · 220W · RTX On</div><div class="card-name">RTX 3070</div><div class="card-desc">Igniter · 5888 Vectors Online. Erase the horizon.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/rtx3070_text.html" data-name="RTX 3070 Text" style="--card-color:#e86030;"><div class="card-cat">GeForce Ampere · Igniter Series</div><div class="card-name">RTX 3070 Text</div><div class="card-desc">Igniter design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- RTX 5060 Ti -->
-    <div class="section-block" id="rtx5060ti">
-      <div class="section-heading" style="--sh-color:#4090d0;"><span class="sh-dot" style="background:#4090d0;"></span>RTX 5060 Ti — Accelerator World · GeForce Blackwell</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/rtx5060ti_preview.html" data-name="RTX 5060 Ti GPU" style="--card-color:#4090d0;"><div class="card-cat">GeForce · 8GB GDDR7 · PCIe 5.0 · 180W · 5nm</div><div class="card-name">RTX 5060 Ti</div><div class="card-desc">Accelerator World · GDDR7 Array Engaged. Railgun velocity.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/rtx5060_text.html" data-name="RTX 5060 Ti Text" style="--card-color:#4090d0;"><div class="card-cat">GeForce Blackwell · Accelerator World</div><div class="card-name">RTX 5060 Ti Text</div><div class="card-desc">Accelerator World design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- R5230 1GB -->
-    <div class="section-block" id="r5230-1gb">
-      <div class="section-heading" style="--sh-color:#1a9070;"><span class="sh-dot" style="background:#1a9070;"></span>R5230 1GB — Lagoon · AMD Radeon</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/R5230_1GB_preview.html" data-name="R5230 1GB" style="--card-color:#1a9070;"><div class="card-cat">Radeon · 1GB GDDR3 · PCIe 2.0 · 18W</div><div class="card-name">R5230 1GB</div><div class="card-desc">Lagoon · Single fan. Zero cables. Always on.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/R5230_1GB_text.html" data-name="R5230 1GB Text" style="--card-color:#1a9070;"><div class="card-cat">Radeon · Lagoon · AMD Display</div><div class="card-name">R5230 1GB Text</div><div class="card-desc">Lagoon design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- R5230 2GB -->
-    <div class="section-block" id="r5230-2gb">
-      <div class="section-heading" style="--sh-color:#1a6090;"><span class="sh-dot" style="background:#1a6090;"></span>R5230 2GB — Lake · AMD Radeon</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/R5230_2GB_preview.html" data-name="R5230 2GB" style="--card-color:#1a6090;"><div class="card-cat">Radeon · 2GB GDDR3 · PCIe 2.0 · 18W</div><div class="card-name">R5230 2GB</div><div class="card-desc">Lake · Deeper pool. Same silence. More headroom.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/R5230_2GB_text.html" data-name="R5230 2GB Text" style="--card-color:#1a6090;"><div class="card-cat">Radeon · Lake · AMD Display</div><div class="card-name">R5230 2GB Text</div><div class="card-desc">Lake design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- R7240 -->
-    <div class="section-block" id="r7240">
-      <div class="section-heading" style="--sh-color:#b07020;"><span class="sh-dot" style="background:#b07020;"></span>R7240 4GB — Bay · AMD Radeon</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/R7240_preview.html" data-name="R7240" style="--card-color:#b07020;"><div class="card-cat">Radeon · 4GB GDDR3 · PCIe 3.0 · 30W · 128-Bit</div><div class="card-name">R7240</div><div class="card-desc">Bay · 128-Bit highway. Zero cables. Full authority.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/R7240_text.html" data-name="R7240 Text" style="--card-color:#b07020;"><div class="card-cat">Radeon · Bay · AMD Display</div><div class="card-name">R7240 Text</div><div class="card-desc">Bay design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- R7350 -->
-    <div class="section-block" id="r7350">
-      <div class="section-heading" style="--sh-color:#c88018;"><span class="sh-dot" style="background:#c88018;"></span>R7350 4GB — Gulf · AMD Radeon</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/R7350_preview.html" data-name="R7350" style="--card-color:#c88018;"><div class="card-cat">Radeon · 4GB GDDR3 · PCIe 3.0 · 30W · 925 MHz</div><div class="card-name">R7350</div><div class="card-desc">Gulf · Peak channel. Zero cables. Master authority.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/R7350_text.html" data-name="R7350 Text" style="--card-color:#c88018;"><div class="card-cat">Radeon · Gulf · AMD Display</div><div class="card-name">R7350 Text</div><div class="card-desc">Gulf design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- RX580 -->
-    <div class="section-block" id="rx580">
-      <div class="section-heading" style="--sh-color:#c0392b;"><span class="sh-dot" style="background:#c0392b;"></span>RX580 — Fortress · AMD Radeon</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/RX580_preview.html" data-name="RX580" style="--card-color:#c0392b;"><div class="card-cat">Radeon · 8GB GDDR5 · PCIe 3.0 · 150W · 256-Bit</div><div class="card-name">RX580</div><div class="card-desc">Fortress · 256-Bit highway. Dual fan. Structural stronghold.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/RX580_text.html" data-name="RX580 Text" style="--card-color:#c0392b;"><div class="card-cat">Radeon · Fortress · AMD Gaming</div><div class="card-name">RX580 Text</div><div class="card-desc">Fortress design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- RX6500 -->
-    <div class="section-block" id="rx6500">
-      <div class="section-heading" style="--sh-color:#c8243a;"><span class="sh-dot" style="background:#c8243a;"></span>RX6500 — Vision · AMD Radeon</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/RX6500_preview.html" data-name="RX6500" style="--card-color:#c8243a;"><div class="card-cat">Radeon · 4GB GDDR6 · PCIe 4.0 · 107W · 6nm</div><div class="card-name">RX6500</div><div class="card-desc">Vision · Celestial alignment locked. See what others miss.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/RX6500_text.html" data-name="RX6500 Text" style="--card-color:#c8243a;"><div class="card-cat">Radeon · Vision · AMD Gaming</div><div class="card-name">RX6500 Text</div><div class="card-desc">Vision design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- RX7600 -->
-    <div class="section-block" id="rx7600">
-      <div class="section-heading" style="--sh-color:#a020d0;"><span class="sh-dot" style="background:#a020d0;"></span>RX7600 — Gambit · AMD Radeon</div>
-      <div class="card-grid">
-        <a class="card preview" href="gpu/RX7600_preview.html" data-name="RX7600" style="--card-color:#a020d0;"><div class="card-cat">Radeon · 8GB GDDR6 · PCIe 4.0 · 165W · 5nm · RDNA 3</div><div class="card-name">RX7600</div><div class="card-desc">Gambit · Protocol overridden. Quantum breach locked.</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="gpu/RX7600_text.html" data-name="RX7600 Text" style="--card-color:#a020d0;"><div class="card-cat">Radeon · Gambit · AMD Gaming</div><div class="card-name">RX7600 Text</div><div class="card-desc">Gambit design language</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
-    <!-- T100 -->
-    <div class="section-block" id="t100">
-      <div class="section-heading" style="--sh-color:#0d9488;"><span class="sh-dot" style="background:#0d9488;"></span>T100 — microSD</div>
-      <div class="card-grid">
-        <a class="card preview" href="externals/T100_preview.html" data-name="T100 microSD" style="--card-color:#0d9488;"><div class="card-cat">microSD · External Storage</div><div class="card-name">T100</div><div class="card-desc">microSD · Preview page</div><div class="card-footer"><span class="card-type">Preview</span><span class="card-arrow">→</span></div></a>
-        <a class="card text" href="externals/T100_text.html" data-name="T100 microSD Text" style="--card-color:#0d9488;"><div class="card-cat">microSD · External Storage</div><div class="card-name">T100 Text</div><div class="card-desc">Notion-ready copywriting</div><div class="card-footer"><span class="card-type">Text</span><span class="card-arrow">→</span></div></a>
-      </div>
-    </div>
-
+  <div class="filter-row">
+    <div class="pill on" data-filter="all">All</div>
+    <div class="pill" data-filter="ssd">SSD</div>
+    <div class="pill" data-filter="dram">DRAM</div>
+    <div class="pill" data-filter="nvidia">NVIDIA GPU</div>
+    <div class="pill" data-filter="amd">AMD GPU</div>
   </div>
 </div>
 
+<!-- ══════════════════════ SSD ══════════════════════ -->
+<div class="chapter ch-ssd" data-chapter="ssd">
+  <div class="chapter-banner">
+    <div>
+      <div class="ch-label">Storage · M.2 / SATA</div>
+      <div class="ch-title">SSD Line</div>
+    </div>
+    <div class="ch-meta">
+      <div class="ch-count">7 products</div>
+    </div>
+  </div>
+  <div class="scroll-outer">
+    <div class="scroll-row">
+
+      <a class="pcard" href="ssd/SSD320PRO_preview.html" data-name="SSD 320 PRO" data-cat="ssd" style="--accent:#c8200e;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD320Pro.jpg" alt="SSD 320 PRO" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div>
+          <div class="pcard-name">SSD 320 PRO</div>
+          <div class="pcard-tagline">Faster than you expect.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="ssd/SSD330_preview.html" data-name="SSD 330" data-cat="ssd" style="--accent:#c8200e;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD330.jpg" alt="SSD 330" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div>
+          <div class="pcard-name">SSD 330</div>
+          <div class="pcard-tagline">Drop it. Trust it.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="ssd/SSD420_preview.html" data-name="SSD 420" data-cat="ssd" style="--accent:#c8960a;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD420.jpg" alt="SSD 420" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">PCIe Gen4x4 · M.2 2280 · NVMe</div>
+          <div class="pcard-name">SSD 420</div>
+          <div class="pcard-tagline">Lightning Strike. Gen4 begins here.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="ssd/SSD430_preview.html" data-name="SSD 430" data-cat="ssd" style="--accent:#c8a800;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD430.jpg" alt="SSD 430" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">PCIe Gen4x4 · M.2 2280 · Flagship</div>
+          <div class="pcard-name">SSD 430</div>
+          <div class="pcard-tagline">Thunderous Descent. 7,200 MB/s.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="ssd/M2_2230_preview.html" data-name="M.2 2230" data-cat="ssd" style="--accent:#2563eb;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/M.2%202230%20Gen4x4_2TB.jpg" alt="M.2 2230" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">PCIe Gen3x4 &amp; Gen4x4 · M.2 2230</div>
+          <div class="pcard-name">M.2 2230</div>
+          <div class="pcard-tagline">Compact Core + Swift Core.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="ssd/M2_2242_preview.html" data-name="M.2 2242" data-cat="ssd" style="--accent:#6366f1;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/M.2%202242%20Gen3x4_2TB.jpg" alt="M.2 2242" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">PCIe Gen3x4 · M.2 2242</div>
+          <div class="pcard-name">M.2 2242</div>
+          <div class="pcard-tagline">Solid Core. 3,200 MB/s all capacities.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="ssd/SSD120_preview.html" data-name="SSD 120" data-cat="ssd" style="--accent:#cc2222;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD120.jpg" alt="SSD 120" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">SATA III 6Gb/s · 2.5"</div>
+          <div class="pcard-name">SSD 120</div>
+          <div class="pcard-tagline">Void Edge. Every device deserves this.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ DRAM ══════════════════════ -->
+<div class="chapter ch-dram" data-chapter="dram">
+  <div class="chapter-banner">
+    <div>
+      <div class="ch-label">Memory · DDR3 / DDR4 / DDR5</div>
+      <div class="ch-title">DRAM Line</div>
+    </div>
+    <div class="ch-meta">
+      <div class="ch-count">7 products</div>
+    </div>
+  </div>
+
+  <div class="sub-heading">Precision Series — Standard</div>
+  <div class="scroll-outer">
+    <div class="scroll-row">
+
+      <a class="pcard" href="dram/DDR3_preview.html" data-name="DDR3 Precision" data-cat="dram" style="--accent:#1e3a5f;">
+        <div class="pcard-thumb contain">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/DDR3_1600_8GB_U-DIMM.jpg" alt="DDR3" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">DDR3L · 1600 Mbps · 1.35V · 8GB</div>
+          <div class="pcard-name">DDR3 Precision</div>
+          <div class="pcard-tagline">U-DIMM + SO-DIMM · Reliable every time.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="dram/DDR4_preview.html" data-name="DDR4 Precision" data-cat="dram" style="--accent:#1a4a2a;">
+        <div class="pcard-thumb contain">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/DDR4_3200_16GB_U-DIMM_1.jpg" alt="DDR4" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">DDR4 · 3200 Mbps · 1.2V · 16/32GB</div>
+          <div class="pcard-name">DDR4 Precision</div>
+          <div class="pcard-tagline">U-DIMM + SO-DIMM · Built for endurance.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="dram/DDR5_preview.html" data-name="DDR5 Precision" data-cat="dram" style="--accent:#4a1a7a;">
+        <div class="pcard-thumb contain">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/DDR5_5600_32GB_U-DIMM_1.jpg" alt="DDR5" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">DDR5 · 5600 Mbps · 1.1V · 32GB · ECC</div>
+          <div class="pcard-name">DDR5 Precision</div>
+          <div class="pcard-tagline">On-Die ECC. U-DIMM + SO-DIMM.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="sub-heading">Performance Series — Gaming / Overclocking</div>
+  <div class="scroll-outer">
+    <div class="scroll-row">
+
+      <a class="pcard" href="dram/DDR4NX1_preview.html" data-name="DDR4 NX1" data-cat="dram" style="--accent:#555;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/NX-1.jpg" alt="DDR4 NX1" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">DDR4 · Shadow Edge · No RGB</div>
+          <div class="pcard-name">DDR4 NX1</div>
+          <div class="pcard-tagline">Silent. Certain. Lifetime.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="dram/DDR4CX1_preview.html" data-name="DDR4 CX1" data-cat="dram" style="--accent:#c8922a;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/CX-1.jpg" alt="DDR4 CX1" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">DDR4 · Storm White · Full RGB</div>
+          <div class="pcard-name">DDR4 CX1</div>
+          <div class="pcard-tagline">Light is just the beginning.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="dram/DDR5EX1_preview.html" data-name="DDR5 EX1" data-cat="dram" style="--accent:#c8200e;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/EX-1.jpg" alt="DDR5 EX1" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">DDR5 · Blaze Blade · 1.35V</div>
+          <div class="pcard-name">DDR5 EX1</div>
+          <div class="pcard-tagline">This is not decoration. This is aggression.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="dram/DDR5RX1_preview.html" data-name="DDR5 RX1" data-cat="dram" style="--accent:#c8922a;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/RX-1.jpg" alt="DDR5 RX1" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">DDR5 · Precision White · 3µm Hard Gold</div>
+          <div class="pcard-name">DDR5 RX1</div>
+          <div class="pcard-tagline">You reign. Every core.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ NVIDIA GPU ══════════════════════ -->
+<div class="chapter" data-chapter="nvidia">
+  <div class="chapter-banner" style="border-left: none; position: relative;">
+    <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#76b900;"></div>
+    <div>
+      <div class="ch-label">GPU · NVIDIA GeForce</div>
+      <div class="ch-title">NVIDIA Line</div>
+    </div>
+    <div class="ch-meta">
+      <div class="ch-count">9 products</div>
+    </div>
+  </div>
+
+  <div class="sub-heading">Entry Series — G / GT</div>
+  <div class="scroll-outer">
+    <div class="scroll-row">
+
+      <a class="pcard" href="gpu/g210_preview.html" data-name="G210" data-cat="nvidia" style="--accent:#76b900;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/G210.jpg" alt="G210" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">1GB GDDR3 · PCIe 2.0 · 31W</div>
+          <div class="pcard-name">G210</div>
+          <div class="pcard-tagline">Dune Walker. Nonstop. Always there.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/gt730_preview.html" data-name="GT730" data-cat="nvidia" style="--accent:#76b900;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GT730.jpg" alt="GT730" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">4GB GDDR3 · PCIe 2.0 · 49W</div>
+          <div class="pcard-name">GT730</div>
+          <div class="pcard-tagline">Void Sentinel. Capable. Always there.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/gt1030_preview.html" data-name="GT1030" data-cat="nvidia" style="--accent:#76b900;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GT1030.jpg" alt="GT1030" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">4GB GDDR4 · PCIe 3.0 · 30W · Pascal</div>
+          <div class="pcard-name">GT1030</div>
+          <div class="pcard-tagline">Zero external power. Pure Pascal entry.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/gtx750ti_preview.html" data-name="GTX 750 Ti" data-cat="nvidia" style="--accent:#ff2d78;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GTX750Ti.jpg" alt="GTX 750 Ti" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">4GB GDDR5 · PCIe 3.0 · 60W · Maxwell</div>
+          <div class="pcard-name">GTX 750 Ti</div>
+          <div class="pcard-tagline">Red Talon. More. Faster. Still silent.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/gtx1050ti_preview.html" data-name="GTX 1050 Ti" data-cat="nvidia" style="--accent:#6090c0;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GTX1050TI.jpg" alt="GTX 1050 Ti" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">4GB GDDR5 · PCIe 3.0 · 75W · Pascal</div>
+          <div class="pcard-name">GTX 1050 Ti</div>
+          <div class="pcard-tagline">Pascal Edge. Two fans. No compromise.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="sub-heading">Mid &amp; High Series — GTX / RTX</div>
+  <div class="scroll-outer">
+    <div class="scroll-row">
+
+      <a class="pcard" href="gpu/gtx1660s_preview.html" data-name="GTX 1660 SUPER" data-cat="nvidia" style="--accent:#5ab4f0;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GTX1660S.jpg" alt="GTX 1660 SUPER" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">6GB GDDR6 · PCIe 3.0 · 125W · Turing</div>
+          <div class="pcard-name">GTX 1660 SUPER</div>
+          <div class="pcard-tagline">Twin Cyclone. Cold precision.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/rtx3050_preview.html" data-name="RTX 3050" data-cat="nvidia" style="--accent:#39d97a;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX3050.jpg" alt="RTX 3050" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">8GB GDDR6 · PCIe 4.0 · 115W · Ampere</div>
+          <div class="pcard-name">RTX 3050</div>
+          <div class="pcard-tagline">Trigger. Ray Tracing initialized.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/rtx3060_preview.html" data-name="RTX 3060" data-cat="nvidia" style="--accent:#8090a8;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX3060.jpg" alt="RTX 3060" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">12GB GDDR6 · PCIe 4.0 · 170W · Ampere</div>
+          <div class="pcard-name">RTX 3060</div>
+          <div class="pcard-tagline">Striker. 12GB. Break the line.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/rtx3070_preview.html" data-name="RTX 3070" data-cat="nvidia" style="--accent:#e86030;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX3070.jpg" alt="RTX 3070" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">8GB GDDR6 · PCIe 4.0 · 220W · Ampere</div>
+          <div class="pcard-name">RTX 3070</div>
+          <div class="pcard-tagline">Igniter. Erase the horizon.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/rtx5060ti_preview.html" data-name="RTX 5060 Ti" data-cat="nvidia" style="--accent:#4090d0;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX5060Ti.jpg" alt="RTX 5060 Ti" loading="lazy" onerror="this.parentElement.style.background='#0a1018';this.style.display='none'">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">8GB GDDR7 · PCIe 5.0 · 180W · Blackwell</div>
+          <div class="pcard-name">RTX 5060 Ti</div>
+          <div class="pcard-tagline">Accelerator World. Railgun velocity.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ AMD GPU ══════════════════════ -->
+<div class="chapter" data-chapter="amd">
+  <div class="chapter-banner" style="position:relative;">
+    <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#c0392b;"></div>
+    <div>
+      <div class="ch-label">GPU · AMD Radeon</div>
+      <div class="ch-title">AMD Line</div>
+    </div>
+    <div class="ch-meta">
+      <div class="ch-count">7 products</div>
+    </div>
+  </div>
+
+  <div class="sub-heading">Display Series — R5230 / R7240 / R7350</div>
+  <div class="scroll-outer">
+    <div class="scroll-row">
+
+      <a class="pcard" href="gpu/R5230_1GB_preview.html" data-name="R5230 1GB" data-cat="amd" style="--accent:#1a9070;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R5230%201G.jpg" alt="R5230 1GB" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">1GB GDDR3 · PCIe 2.0 · 18W</div>
+          <div class="pcard-name">R5230 1GB</div>
+          <div class="pcard-tagline">Lagoon. Single fan. Zero cables.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/R5230_2GB_preview.html" data-name="R5230 2GB" data-cat="amd" style="--accent:#1a6090;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R5230.jpg" alt="R5230 2GB" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">2GB GDDR3 · PCIe 2.0 · 18W</div>
+          <div class="pcard-name">R5230 2GB</div>
+          <div class="pcard-tagline">Lake. Deeper pool. Same silence.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/R7240_preview.html" data-name="R7240" data-cat="amd" style="--accent:#b07020;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R7240.jpg" alt="R7240" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">4GB GDDR3 · PCIe 3.0 · 30W · 128-Bit</div>
+          <div class="pcard-name">R7240</div>
+          <div class="pcard-tagline">Bay. 128-Bit highway. Full authority.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/R7350_preview.html" data-name="R7350" data-cat="amd" style="--accent:#c88018;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R7350.jpg" alt="R7350" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">4GB GDDR3 · PCIe 3.0 · 30W · 925 MHz</div>
+          <div class="pcard-name">R7350</div>
+          <div class="pcard-tagline">Gulf. Peak channel. Master authority.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="sub-heading">Gaming Series — RX580 / RX6500 / RX7600</div>
+  <div class="scroll-outer">
+    <div class="scroll-row">
+
+      <a class="pcard" href="gpu/RX580_preview.html" data-name="RX580" data-cat="amd" style="--accent:#c0392b;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RX580.jpg" alt="RX580" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">8GB GDDR5 · PCIe 3.0 · 150W · 256-Bit</div>
+          <div class="pcard-name">RX580</div>
+          <div class="pcard-tagline">Fortress. 256-Bit stronghold.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/RX6500_preview.html" data-name="RX6500" data-cat="amd" style="--accent:#c8243a;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RX6500.jpg" alt="RX6500" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">4GB GDDR6 · PCIe 4.0 · 107W · 6nm</div>
+          <div class="pcard-name">RX6500</div>
+          <div class="pcard-tagline">Vision. See what others miss.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="pcard" href="gpu/RX7600_preview.html" data-name="RX7600" data-cat="amd" style="--accent:#a020d0;">
+        <div class="pcard-thumb">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RX7600.jpg" alt="RX7600" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">8GB GDDR6 · PCIe 4.0 · 165W · RDNA 3</div>
+          <div class="pcard-name">RX7600</div>
+          <div class="pcard-tagline">Gambit. Quantum breach locked.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ EXTERNALS ══════════════════════ -->
+<div class="chapter ch-ext" data-chapter="ext">
+  <div class="chapter-banner">
+    <div>
+      <div class="ch-label">Externals · microSD</div>
+      <div class="ch-title">External Line</div>
+    </div>
+    <div class="ch-meta">
+      <div class="ch-count">1 product</div>
+    </div>
+  </div>
+  <div class="scroll-outer">
+    <div class="scroll-row">
+
+      <a class="pcard" href="externals/T100_preview.html" data-name="T100 microSD" data-cat="ext" style="--accent:#0d9488;">
+        <div class="pcard-thumb contain" style="background:#0a1410;">
+          <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/externals/microSD%20Card%201.png" alt="T100 microSD" loading="lazy">
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">microSD · External Storage</div>
+          <div class="pcard-name">T100</div>
+          <div class="pcard-tagline">Pocket-sized. Always ready.</div>
+        </div>
+        <div class="pcard-footer">
+          <span class="pbadge preview">Preview</span>
+          <span class="pcard-arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ STATUS BAR ══ -->
 <div class="status-bar">
   <div class="status-txt">Simorchip Product Docs · Internal Review · © 2026</div>
-  <div class="status-count" id="count">Showing all files</div>
+  <div class="status-count" id="count">31 products</div>
 </div>
 
 <script>
-function jumpTo(id){
-  const el=document.getElementById(id);
-  if(el){
-    // offset for sticky header
-    const y=el.getBoundingClientRect().top+window.scrollY-64;
-    window.scrollTo({top:y,behavior:'smooth'});
-  }
-  document.querySelectorAll('.sb-link').forEach(l=>l.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-}
+const searchEl = document.getElementById('search');
+const pills    = document.querySelectorAll('.pill[data-filter]');
+const cards    = document.querySelectorAll('.pcard');
+const countEl  = document.getElementById('count');
+let activeFilter = 'all';
 
-document.getElementById('search').addEventListener('input',function(){
-  const q=this.value.toLowerCase();
-  let shown=0;
-  document.querySelectorAll('.card').forEach(c=>{
-    const name=(c.dataset.name||'').toLowerCase();
-    const show=!q||name.includes(q);
-    c.style.display=show?'':'none';
-    if(show)shown++;
-  });
-  document.getElementById('count').textContent=
-    q?`${shown} result${shown!==1?'s':''} for "${this.value}"`:'Showing all files';
-});
-
-function filterAll(el){
-  document.querySelectorAll('.card').forEach(c=>c.style.display='');
-  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('on'));
-  el.classList.add('on');
-  document.getElementById('count').textContent='Showing all files';
-}
-
-function filterType(type,el){
-  let shown=0;
-  document.querySelectorAll('.card').forEach(c=>{
-    const show=c.classList.contains(type);
-    c.style.display=show?'':'none';
-    if(show)shown++;
-  });
-  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('on'));
-  el.classList.add('on');
-  document.getElementById('count').textContent=`${shown} ${type} files`;
-}
-
-// Sidebar active state on scroll
-const secIds=[
-  'ssd-320pro','ssd-330','ssd-420','ssd-430','m2-2230','m2-2242','ssd-120',
-  'ddr3','ddr4-p','ddr5-p','nx1','cx1','ex1','rx1',
-  'g210','gt730','gt1030','gtx750ti','gtx1050ti','gtx1660s',
-  'rtx3050','rtx3060','rtx3070','rtx5060ti',
-  'r5230-1gb','r5230-2gb','r7240','r7350','rx580','rx6500','rx7600',
-  't100'
-];
-
-const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const id=e.target.id;
-      document.querySelectorAll('.sb-link').forEach(l=>l.classList.remove('active'));
-      const btn=document.querySelector(`.sb-link[onclick*="'${id}'"]`);
-      if(btn)btn.classList.add('active');
+function applyFilter(){
+  const q = searchEl.value.toLowerCase().trim();
+  let shown = 0;
+  cards.forEach(c=>{
+    const name = (c.dataset.name||'').toLowerCase();
+    const cat  = c.dataset.cat || '';
+    const matchQ = !q || name.includes(q);
+    const matchF = activeFilter === 'all' || cat === activeFilter;
+    if(matchQ && matchF){
+      c.classList.remove('hidden');
+      shown++;
+    } else {
+      c.classList.add('hidden');
     }
   });
-},{threshold:0.3,rootMargin:'-60px 0px -60% 0px'});
 
-secIds.forEach(id=>{
-  const el=document.getElementById(id);if(el)io.observe(el);
+  // hide chapter banners/subheadings if all cards in section hidden
+  document.querySelectorAll('.chapter').forEach(ch=>{
+    const chCat  = ch.dataset.chapter;
+    const hasVis = Array.from(ch.querySelectorAll('.pcard')).some(c=>!c.classList.contains('hidden'));
+    ch.style.display = hasVis ? '' : 'none';
+  });
+
+  countEl.textContent = q || activeFilter !== 'all'
+    ? `${shown} result${shown!==1?'s':''}`
+    : `${cards.length} products`;
+}
+
+searchEl.addEventListener('input', applyFilter);
+
+pills.forEach(p=>{
+  p.addEventListener('click',()=>{
+    pills.forEach(x=>x.classList.remove('on'));
+    p.classList.add('on');
+    activeFilter = p.dataset.filter;
+    applyFilter();
+  });
 });
 </script>
 </body>
