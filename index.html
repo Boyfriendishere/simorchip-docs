@@ -223,6 +223,147 @@ header{background:var(--ink);padding:0 40px;height:52px;display:flex;align-items
   .pcard-thumb{height:130px;}
 }
 
+
+/* ══ ENHANCED INTERACTIONS ══ */
+
+/* Card lift on hover */
+.pcard{
+  transition:box-shadow .25s ease, transform .25s ease;
+}
+.pcard-main-link:hover ~ .pcard-footer,
+.pcard:has(.pcard-main-link:hover){
+  box-shadow:0 8px 32px rgba(10,9,8,.10);
+}
+.pcard:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(10,9,8,.10);
+  z-index:1;
+}
+
+/* Accent line slides in from left on hover */
+.pcard::before{
+  transform-origin:left;
+  transform:scaleX(0);
+  transition:transform .3s ease, opacity .2s;
+}
+.pcard:hover::before{
+  transform:scaleX(1);
+  opacity:1;
+}
+
+/* Product name subtle colour shift */
+.pcard-name{
+  transition:color .2s;
+}
+.pcard-main-link:hover .pcard-name{
+  color:var(--red);
+}
+
+/* Tagline slides up slightly */
+.pcard-tagline{
+  transition:transform .25s ease, opacity .25s;
+}
+.pcard-main-link:hover .pcard-tagline{
+  transform:translateY(-1px);
+  opacity:.85;
+}
+
+/* Chapter banner accent bar grows on hover */
+.chapter-banner .ch-accent{
+  transition:width .3s ease;
+}
+.chapter-banner:hover .ch-accent{
+  width:8px;
+}
+
+/* Chapter title underline sweep */
+.ch-title{
+  position:relative;
+  display:inline-block;
+}
+.ch-title::after{
+  content:'';
+  position:absolute;
+  bottom:-3px;left:0;
+  width:0;height:2px;
+  background:var(--ink);
+  transition:width .35s ease;
+  opacity:.15;
+}
+.chapter-banner:hover .ch-title::after{
+  width:100%;
+}
+
+/* Filter pill pop */
+.pill{
+  transition:all .18s ease;
+}
+.pill:hover{
+  transform:translateY(-1px);
+  box-shadow:0 2px 8px rgba(10,9,8,.08);
+}
+.pill.on{
+  box-shadow:0 2px 8px rgba(10,9,8,.15);
+}
+
+/* Preview button: red fill on hover */
+.pcard-preview-link{
+  transition:background .18s, color .18s;
+  position:relative;
+  overflow:hidden;
+}
+.pcard-preview-link::after{
+  content:'';
+  position:absolute;inset:0;
+  background:var(--red);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .22s ease;
+  z-index:0;
+}
+.pcard-preview-link:hover::after{
+  transform:scaleX(1);
+}
+.pcard-preview-link .pl-label,
+.pcard-preview-link .pl-arrow{
+  position:relative;z-index:1;
+  transition:color .18s;
+}
+.pcard-preview-link:hover .pl-label,
+.pcard-preview-link:hover .pl-arrow{
+  color:#fff;
+}
+
+/* Text link arrow bounce */
+.pcard-text-link .tl-arrow{
+  transition:transform .2s ease;
+}
+.pcard-text-link:hover .tl-arrow{
+  transform:translateX(5px);
+}
+
+/* Scroll row: subtle drag cursor */
+.scroll-row{
+  cursor:grab;
+}
+.scroll-row:active{
+  cursor:grabbing;
+}
+
+/* Image overlay shimmer on hover */
+.pcard-thumb::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,transparent 60%);
+  opacity:0;
+  transition:opacity .3s;
+  pointer-events:none;
+  z-index:1;
+}
+.pcard-main-link:hover .pcard-thumb::after{
+  opacity:1;
+}
+
 </style>
 </head>
 <body>
@@ -832,6 +973,26 @@ pills.forEach(p=>{
     applyFilter();
   });
 });
+
+// Drag-to-scroll for horizontal rows
+document.querySelectorAll('.scroll-row').forEach(row => {
+  let isDown = false, startX, scrollLeft;
+  row.addEventListener('mousedown', e => {
+    isDown = true;
+    row.classList.add('active');
+    startX = e.pageX - row.offsetLeft;
+    scrollLeft = row.scrollLeft;
+  });
+  row.addEventListener('mouseleave', () => { isDown = false; row.classList.remove('active'); });
+  row.addEventListener('mouseup', () => { isDown = false; row.classList.remove('active'); });
+  row.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - row.offsetLeft;
+    row.scrollLeft = scrollLeft - (x - startX) * 1.2;
+  });
+});
+
 </script>
 </body>
 </html>
