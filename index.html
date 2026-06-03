@@ -364,6 +364,171 @@ header{background:var(--ink);padding:0 40px;height:52px;display:flex;align-items
   opacity:1;
 }
 
+
+/* ══ HEADER REDESIGN ══ */
+header{
+  background:var(--ink);padding:0 40px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:200;
+}
+.h-left{display:flex;align-items:center;}
+.h-logo-img img{height:32px;display:block;object-fit:contain;}
+.h-nav{display:flex;align-items:center;gap:28px;}
+.h-navlink{
+  font-family:var(--fm);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(248,247,245,.5);text-decoration:none;
+  transition:color .2s;
+  position:relative;padding-bottom:2px;
+}
+.h-navlink::after{
+  content:'';position:absolute;bottom:0;left:0;width:0;height:1px;
+  background:var(--red);transition:width .25s ease;
+}
+.h-navlink:hover{color:rgba(248,247,245,.9);}
+.h-navlink:hover::after{width:100%;}
+.h-lang-sep{color:rgba(248,247,245,.15);font-size:12px;}
+.h-lang{
+  font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(248,247,245,.35);background:none;border:none;cursor:pointer;
+  padding:3px 6px;transition:color .2s;
+}
+.h-lang:hover{color:rgba(248,247,245,.8);}
+.h-lang.active{color:rgba(248,247,245,.9);border-bottom:1px solid var(--red);}
+.h-burger{
+  display:none;flex-direction:column;gap:5px;
+  background:none;border:none;cursor:pointer;padding:4px;
+}
+.h-burger span{display:block;width:22px;height:1.5px;background:rgba(248,247,245,.6);transition:all .25s;}
+
+/* Mobile nav drawer */
+.h-mobile-nav{
+  display:none;flex-direction:column;
+  background:var(--ink);
+  position:sticky;top:60px;z-index:190;
+  border-bottom:1px solid rgba(248,247,245,.08);
+}
+.h-mobile-nav.open{display:flex;}
+.h-mobile-link{
+  font-family:var(--fm);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(248,247,245,.5);text-decoration:none;
+  padding:14px 24px;border-bottom:1px solid rgba(248,247,245,.05);
+  transition:color .2s,background .2s;
+}
+.h-mobile-link:hover{color:rgba(248,247,245,.9);background:rgba(248,247,245,.04);}
+.h-mobile-lang{display:flex;gap:12px;padding:12px 24px;}
+
+/* search-wrap top adjust for new header height */
+.search-wrap{top:60px;}
+
+/* ══ ABOUT SECTION ══ */
+.about-section{
+  background:var(--bg);
+  padding:80px 40px;
+  border-top:1px solid var(--border);
+}
+.about-inner{max-width:1100px;margin:0 auto;}
+.about-label{
+  font-family:var(--fm);font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--red);margin-bottom:10px;
+}
+.about-title{
+  font-family:var(--fd);font-size:48px;letter-spacing:.04em;color:var(--ink);
+  line-height:1;margin-bottom:32px;
+}
+.about-body{
+  display:grid;grid-template-columns:1fr 1fr;gap:28px;
+  margin-bottom:52px;
+  padding-bottom:48px;
+  border-bottom:1px solid var(--line);
+}
+.about-lead{font-size:15px;font-weight:300;color:var(--mute);line-height:1.75;}
+.about-body-p{font-size:13.5px;font-weight:300;color:var(--label);line-height:1.8;}
+.about-pillars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;}
+.about-pillar{padding-top:20px;border-top:2px solid var(--border);}
+.about-pillar-title{
+  font-family:var(--fm);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink);font-weight:600;margin-bottom:12px;
+}
+.about-pillar p{font-size:12.5px;font-weight:300;color:var(--mute);line-height:1.75;}
+
+/* ══ CONTACT SECTION ══ */
+.contact-section{
+  background:var(--bg2);
+  padding:72px 40px;
+  border-top:1px solid var(--border);
+}
+.contact-inner{max-width:1100px;margin:0 auto;}
+.contact-head{margin-bottom:40px;}
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.contact-item{
+  background:var(--bg2);
+  padding:28px 28px;
+  display:flex;align-items:flex-start;gap:16px;
+}
+.contact-icon{
+  font-family:var(--fd);font-size:28px;color:var(--red);
+  line-height:1;flex-shrink:0;width:32px;text-align:center;
+}
+.contact-key{
+  font-family:var(--fm);font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--label);margin-bottom:6px;
+}
+.contact-val{font-size:13.5px;font-weight:400;color:var(--ink);line-height:1.6;}
+.contact-val a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .2s,color .2s;}
+.contact-val a:hover{color:var(--red);border-color:var(--red);}
+
+/* ══ FOOTER ══ */
+.site-footer{
+  background:var(--ink);
+  padding:48px 40px 28px;
+}
+.footer-inner{max-width:1100px;margin:0 auto;}
+.footer-top{
+  display:flex;align-items:flex-start;gap:60px;
+  padding-bottom:32px;
+  border-bottom:1px solid rgba(248,247,245,.08);
+  margin-bottom:20px;
+}
+.footer-logo img{height:36px;display:block;object-fit:contain;filter:brightness(0) invert(1);opacity:.7;}
+.footer-info{display:flex;flex-direction:column;gap:10px;}
+.footer-info-row{display:flex;gap:16px;align-items:baseline;}
+.fi-key{
+  font-family:var(--fm);font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(248,247,245,.25);flex-shrink:0;width:44px;
+}
+.fi-val{font-size:12px;font-weight:300;color:rgba(248,247,245,.45);line-height:1.5;}
+.fi-val a{color:rgba(248,247,245,.45);text-decoration:none;transition:color .2s;}
+.fi-val a:hover{color:rgba(248,247,245,.8);}
+.footer-bottom{
+  font-family:var(--fm);font-size:9px;letter-spacing:.06em;
+  color:rgba(248,247,245,.18);
+}
+
+/* ══ RWD additions for new sections ══ */
+@media(max-width:768px){
+  header{height:52px;padding:0 20px;}
+  .search-wrap{top:52px;}
+  .h-logo-img img{height:26px;}
+  .h-nav{gap:18px;}
+  .h-navlink{font-size:9px;}
+  .about-section,.contact-section{padding:52px 24px;}
+  .about-title{font-size:36px;}
+  .about-body{grid-template-columns:1fr;gap:18px;}
+  .about-pillars{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .footer-top{flex-direction:column;gap:28px;}
+  .site-footer{padding:36px 24px 20px;}
+}
+@media(max-width:480px){
+  header{height:46px;}
+  .search-wrap{top:46px;}
+  .h-nav{display:none;}
+  .h-burger{display:flex;}
+  .about-section,.contact-section{padding:40px 16px;}
+  .about-title{font-size:28px;}
+  .site-footer{padding:28px 16px 16px;}
+}
+
 </style>
 </head>
 <body>
@@ -381,9 +546,41 @@ header{background:var(--ink);padding:0 40px;height:52px;display:flex;align-items
 
 <!-- ══ STICKY HEADER ══ -->
 <header>
-  <div class="h-logo">SIMOR<em>CHIP</em><span class="h-logo-sep">·</span><span class="h-logo-sub">DOCS</span></div>
-  <div class="h-tag">Internal Review · v2.0</div>
+  <div class="h-left">
+    <a class="h-logo-img" href="index.html">
+      <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/other/Logo-03.png" alt="Simorchip Logo">
+    </a>
+  </div>
+  <nav class="h-nav">
+    <a class="h-navlink" href="#products">Products</a>
+    <a class="h-navlink" href="about.html">About</a>
+    <a class="h-navlink" href="contact.html">Contact</a>
+    <span class="h-lang-sep">|</span>
+    <button class="h-lang active" data-lang="en">EN</button>
+    <button class="h-lang" data-lang="zh">中文</button>
+  </nav>
+  <button class="h-burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+<div class="h-mobile-nav" id="mobileNav">
+  <a class="h-mobile-link" href="#products">Products</a>
+  <a class="h-mobile-link" href="about.html">About</a>
+  <a class="h-mobile-link" href="contact.html">Contact</a>
+  <div class="h-mobile-lang">
+    <button class="h-lang active" data-lang="en">EN</button>
+    <button class="h-lang" data-lang="zh">中文</button>
+  </div>
+</div>
+<div class="h-mobile-nav" id="mobileNav">
+  <a class="h-mobile-link" href="#products">Products</a>
+  <a class="h-mobile-link" href="about.html">About</a>
+  <a class="h-mobile-link" href="contact.html">Contact</a>
+  <div class="h-mobile-lang">
+    <button class="h-lang active" data-lang="en">EN</button>
+    <button class="h-lang" data-lang="zh">中文</button>
+  </div>
+</div>
 
 <!-- ══ SEARCH + FILTER ══ -->
 <div class="search-wrap">
@@ -400,7 +597,9 @@ header{background:var(--ink);padding:0 40px;height:52px;display:flex;align-items
   </div>
 </div>
 
+<div id="products"></div>
 <!-- ═══════════════ SSD ═══════════════ -->
+<div id="products"></div>
 <div class="chapter" data-chapter="ssd">
   <div class="chapter-banner">
     <div class="ch-accent" style="background:#c8200e;"></div>
@@ -900,67 +1099,24 @@ header{background:var(--ink);padding:0 40px;height:52px;display:flex;align-items
 </div>
 
 <!-- ══ STATUS BAR ══ -->
-<div class="status-bar">
-  <div class="status-txt">Simorchip Product Docs · Internal Review · © 2026</div>
-  <div class="status-count" id="count">31 products</div>
-</div>
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">
+        <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/other/Logo-04.png" alt="Simorchip">
+      </div>
+      <div class="footer-info">
+        <div class="footer-info-row"><span class="fi-key">TEL</span><span class="fi-val">+886-2-2657-6680</span></div>
+        <div class="footer-info-row"><span class="fi-key">EMAIL</span><span class="fi-val"><a href="mailto:sales@simorchip.com">sales@simorchip.com</a></span></div>
+        <div class="footer-info-row"><span class="fi-key">ADD</span><span class="fi-val">8F.-1, No. 300, Sec. 1, Neihu Rd., Neihu Dist., Taipei City 114066, Taiwan</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Copyright © 2023 – Simorchip. All rights reserved. Design by Simorchip</span>
+    </div>
+  </div>
+</footer>
 
-<script>
-const searchEl = document.getElementById('search');
-const pills    = document.querySelectorAll('.pill[data-filter]');
-const cards    = document.querySelectorAll('.pcard');
-const countEl  = document.getElementById('count');
-let activeFilter = 'all';
-
-function applyFilter(){
-  const q = searchEl.value.toLowerCase().trim();
-  let shown = 0;
-  cards.forEach(c=>{
-    const name = (c.dataset.name||'').toLowerCase();
-    const cat  = c.dataset.cat || '';
-    const matchQ = !q || name.includes(q);
-    const matchF = activeFilter === 'all' || cat === activeFilter;
-    if(matchQ && matchF){ c.classList.remove('hidden'); shown++; }
-    else { c.classList.add('hidden'); }
-  });
-  document.querySelectorAll('.chapter').forEach(ch=>{
-    const hasVis = Array.from(ch.querySelectorAll('.pcard')).some(c=>!c.classList.contains('hidden'));
-    ch.style.display = hasVis ? '' : 'none';
-  });
-  countEl.textContent = (q || activeFilter !== 'all')
-    ? `${shown} result${shown!==1?'s':''}`
-    : `${cards.length} products`;
-}
-
-searchEl.addEventListener('input', applyFilter);
-pills.forEach(p=>{
-  p.addEventListener('click',()=>{
-    pills.forEach(x=>x.classList.remove('on'));
-    p.classList.add('on');
-    activeFilter = p.dataset.filter;
-    applyFilter();
-  });
-});
-
-// Drag-to-scroll for horizontal rows
-document.querySelectorAll('.scroll-row').forEach(row => {
-  let isDown = false, startX, scrollLeft;
-  row.addEventListener('mousedown', e => {
-    isDown = true;
-    row.classList.add('active');
-    startX = e.pageX - row.offsetLeft;
-    scrollLeft = row.scrollLeft;
-  });
-  row.addEventListener('mouseleave', () => { isDown = false; row.classList.remove('active'); });
-  row.addEventListener('mouseup', () => { isDown = false; row.classList.remove('active'); });
-  row.addEventListener('mousemove', e => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - row.offsetLeft;
-    row.scrollLeft = scrollLeft - (x - startX) * 1.2;
-  });
-});
-
-</script>
 </body>
 </html>
