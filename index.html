@@ -347,6 +347,59 @@ footer{
   .mfg-list{grid-template-columns:1fr;}
   footer{padding:var(--sp-xxl) 22px;}
 }
+
+/* ══ SPLIT TILE (photo + text side-by-side) ══ */
+.tile-split{padding:0;text-align:left;}
+.tile-split-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:600px;
+  max-width:100%;
+}
+.tile-split-reverse{direction:rtl;}
+.tile-split-reverse > *{direction:ltr;}
+.tile-split-photo{
+  overflow:hidden;
+  position:relative;
+}
+.tile-split-photo img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  display:block;
+  transition:transform .6s ease;
+}
+.tile-split:hover .tile-split-photo img{transform:scale(1.03);}
+.tile-split-text{
+  padding:80px 64px;
+  display:flex;flex-direction:column;
+  justify-content:center;
+}
+.tile-split-text .tile-eyebrow{text-align:left;}
+.tile-split-text .tile-h2{text-align:left;margin-bottom:16px;}
+.tile-split-text .tile-lead{
+  text-align:left;margin-left:0;margin-right:0;
+  font-size:24px;margin-bottom:24px;
+}
+.tile-split-text .tile-body{
+  text-align:left;margin-left:0;margin-right:0;
+  margin-bottom:32px;
+}
+
+/* RWD for split tiles */
+@media(max-width:1024px){
+  .tile-split-text{padding:64px 48px;}
+}
+@media(max-width:768px){
+  .tile-split-inner{grid-template-columns:1fr;min-height:auto;}
+  .tile-split-reverse{direction:ltr;}
+  .tile-split-photo{height:300px;order:-1;}
+  .tile-split-text{padding:48px 32px;}
+  .tile-split-text .tile-lead{font-size:21px;}
+}
+@media(max-width:480px){
+  .tile-split-photo{height:240px;}
+  .tile-split-text{padding:36px 20px;}
+}
+
 </style>
 </head>
 <body>
@@ -387,8 +440,8 @@ footer{
   <div class="hero-tile-floor"></div>
   <div class="hero-tile-content">
     <div class="hero-kicker">Simorchip · Storage &amp; Memory</div>
-    <h1 class="hero-h1">Redefining Storage.</h1>
-    <p class="hero-sub">Visual Design. High-Performance. Versatility.</p>
+    <h1 class="hero-h1">Built for<br>what's next.</h1>
+    <p class="hero-sub">Storage and memory engineered for the demands of tomorrow.</p>
     <div class="hero-cta">
       <a class="btn-pill btn-blue" href="product.html">Explore Products</a>
       <a class="btn-pill btn-ghost-dark" href="about.html">About Us</a>
@@ -400,30 +453,40 @@ footer{
   </div>
 </div>
 
-<!-- ══ SSD TILE — light ══ -->
-<div class="tile tile-light">
-  <div class="tile-inner">
-    <div class="tile-eyebrow">Storage Solutions</div>
-    <h2 class="tile-h2">SSD.</h2>
-    <p class="tile-lead">Faster than you expect. Built for everything.</p>
-    <p class="tile-body">SimorChip SSDs bring together high-speed storage, durable design, and intelligent engineering. Featuring premium 3D NAND flash and advanced wear-leveling, our solid-state drives ensure fast load times, extended lifespan, and seamless computing. With no moving parts, they run cooler, quieter, and more efficiently — ideal for everyday users and business deployments.</p>
-    <div class="tile-cta">
-      <a class="btn-pill btn-blue" href="product.html">Learn more</a>
-      <a class="btn-ghost-light" href="product.html">View all SSDs</a>
+<!-- ══ SSD TILE — photo left, text right ══ -->
+<div class="tile tile-light tile-split">
+  <div class="tile-split-inner">
+    <div class="tile-split-photo">
+      <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/tileM2SSD.jpg" alt="Simorchip SSD" loading="lazy">
+    </div>
+    <div class="tile-split-text">
+      <div class="tile-eyebrow">Storage Solutions</div>
+      <h2 class="tile-h2">SSD.</h2>
+      <p class="tile-lead">Faster than you expect.<br>Built for everything.</p>
+      <p class="tile-body">SimorChip SSDs bring together high-speed storage, durable design, and intelligent engineering. Featuring premium 3D NAND flash and advanced wear-leveling, our solid-state drives ensure fast load times, extended lifespan, and seamless computing. With no moving parts, they run cooler, quieter, and more efficiently — ideal for everyday users and business deployments.</p>
+      <div class="tile-cta" style="justify-content:flex-start;">
+        <a class="btn-pill btn-blue" href="product.html">Learn more</a>
+        <a class="btn-ghost-light" href="product.html">View all SSDs</a>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ══ DRAM TILE — dark ══ -->
-<div class="tile tile-dark">
-  <div class="tile-inner">
-    <div class="tile-eyebrow">Memory Solutions</div>
-    <h2 class="tile-h2">DRAM.</h2>
-    <p class="tile-lead">Speed, reliability, and quality — in every module.</p>
-    <p class="tile-body">SimorChip DRAM modules are crafted to deliver the perfect blend of speed, reliability, and quality. Backed by over 20 years of industry expertise, from DDR3 to the latest DDR5, every module is tested to meet rigorous JEDEC standards. SimorChip DRAM is a promise of dependable performance and trusted innovation.</p>
-    <div class="tile-cta">
-      <a class="btn-pill btn-blue" href="product.html">Learn more</a>
-      <a class="btn-pill btn-ghost-dark" href="product.html">View all DRAM</a>
+<!-- ══ DRAM TILE — text left, photo right, dark ══ -->
+<div class="tile tile-dark tile-split">
+  <div class="tile-split-inner tile-split-reverse">
+    <div class="tile-split-text">
+      <div class="tile-eyebrow">Memory Solutions</div>
+      <h2 class="tile-h2">DRAM.</h2>
+      <p class="tile-lead">Speed, reliability, and quality —<br>in every module.</p>
+      <p class="tile-body">SimorChip DRAM modules are crafted to deliver the perfect blend of speed, reliability, and quality. Backed by over 20 years of industry expertise, from DDR3 to the latest DDR5, every module is tested to meet rigorous JEDEC standards. SimorChip DRAM is a promise of dependable performance and trusted innovation.</p>
+      <div class="tile-cta" style="justify-content:flex-start;">
+        <a class="btn-pill btn-blue" href="product.html">Learn more</a>
+        <a class="btn-pill btn-ghost-dark" href="product.html">View all DRAM</a>
+      </div>
+    </div>
+    <div class="tile-split-photo">
+      <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/tileDRAM.jpg" alt="Simorchip DRAM" loading="lazy">
     </div>
   </div>
 </div>
@@ -479,40 +542,6 @@ footer{
       <div class="feature-card">
         <div class="feature-card-title">Versatile Applications</div>
         <div class="feature-card-body">Ideal for gaming, content creation, professional tasks, and commercial system upgrades.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ MANUFACTURING TILE — dark-2 ══ -->
-<div class="tile tile-dark-2">
-  <div class="tile-inner" style="text-align:left;">
-    <div class="tile-eyebrow" style="text-align:center;color:#7a7a7a;">Storage Wisdom</div>
-    <h2 class="tile-h2" style="text-align:center;">Manufacturing at a Glance.</h2>
-    <div class="mfg-list">
-      <div class="mfg-item">
-        <div class="mfg-item-num">01</div>
-        <div class="mfg-item-title">Products &amp; Quality</div>
-      </div>
-      <div class="mfg-item">
-        <div class="mfg-item-num">02</div>
-        <div class="mfg-item-title">Worldwide Service</div>
-      </div>
-      <div class="mfg-item">
-        <div class="mfg-item-num">03</div>
-        <div class="mfg-item-title">Product Road Map Management</div>
-      </div>
-      <div class="mfg-item">
-        <div class="mfg-item-num">04</div>
-        <div class="mfg-item-title">Reliable Supply Chain</div>
-      </div>
-      <div class="mfg-item">
-        <div class="mfg-item-num">05</div>
-        <div class="mfg-item-title">Immediate Service</div>
-      </div>
-      <div class="mfg-item">
-        <div class="mfg-item-num">06</div>
-        <div class="mfg-item-title">Self-Developed ERP</div>
       </div>
     </div>
   </div>
