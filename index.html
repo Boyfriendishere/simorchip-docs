@@ -40,7 +40,7 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font-smoothing:antialiased;}
+body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font-smoothing:antialiased;padding-top:44px;}
 
 /* ══ GLOBAL NAV ══ */
 .global-nav{
@@ -92,6 +92,7 @@ body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font
 .hero-tile{
   position:relative;width:100%;height:100vh;min-height:600px;
   background:var(--black);overflow:hidden;
+  margin-top:-44px;
 }
 .hero-tile video{
   position:absolute;inset:0;width:100%;height:100%;
@@ -247,9 +248,12 @@ body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font
 .feature-card{
   background:var(--canvas);
   border:1px solid var(--hairline);
+  border-top:2px solid var(--blue);
   border-radius:var(--r-lg);
   padding:var(--sp-lg);
+  transition:box-shadow .2s;
 }
+.feature-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);}
 .feature-card-title{
   font-size:17px;font-weight:600;line-height:1.24;letter-spacing:-.374px;
   color:var(--ink);margin-bottom:8px;
@@ -295,7 +299,6 @@ footer{
 }
 .footer-logo img{
   height:24px;display:block;object-fit:contain;
-  filter:none;opacity:.7;
 }
 .footer-info{display:flex;flex-direction:column;gap:8px;}
 .footer-row{display:flex;align-items:baseline;gap:12px;}
@@ -401,6 +404,44 @@ footer{
   .tile-split-text{padding:36px 20px;}
 }
 
+
+/* ══ PRE-FOOTER CTA BAND ══ */
+.cta-band{
+  background:var(--tile-1);
+  padding:var(--sp-section) var(--sp-section);
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.cta-band-inner{max-width:640px;margin:0 auto;}
+.cta-band-label{
+  font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.231px;
+  color:var(--blue-ondark);margin-bottom:16px;
+}
+.cta-band-h2{
+  font-size:40px;font-weight:600;line-height:1.1;letter-spacing:0;
+  color:var(--white);margin-bottom:var(--sp-xl);
+}
+.cta-band-actions{display:flex;gap:var(--sp-sm);justify-content:center;flex-wrap:wrap;}
+@media(max-width:640px){
+  .cta-band{padding:64px 22px;}
+  .cta-band-h2{font-size:28px;}
+}
+
+
+/* ══ SCROLL FADE-IN ══ */
+.fade-in{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.fade-in.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.fade-in-delay-1{transition-delay:.1s;}
+.fade-in-delay-2{transition-delay:.2s;}
+.fade-in-delay-3{transition-delay:.3s;}
+
 </style>
 </head>
 <body>
@@ -461,11 +502,11 @@ footer{
       <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/tileM2SSD.jpg" alt="Simorchip SSD" loading="lazy">
     </div>
     <div class="tile-split-text">
-      <div class="tile-eyebrow">Storage Solutions</div>
-      <h2 class="tile-h2">SSD.</h2>
-      <p class="tile-lead">Faster than you expect.<br>Built for everything.</p>
-      <p class="tile-body">SimorChip SSDs bring together high-speed storage, durable design, and intelligent engineering. Featuring premium 3D NAND flash and advanced wear-leveling, our solid-state drives ensure fast load times, extended lifespan, and seamless computing. With no moving parts, they run cooler, quieter, and more efficiently — ideal for everyday users and business deployments.</p>
-      <div class="tile-cta" style="justify-content:flex-start;">
+      <div class="tile-eyebrow fade-in">Storage Solutions</div>
+      <h2 class="tile-h2 fade-in fade-in-delay-1">SSD.</h2>
+      <p class="tile-lead fade-in fade-in-delay-2">Faster than you expect.<br>Built for everything.</p>
+      <p class="tile-body fade-in fade-in-delay-2">SimorChip SSDs bring together high-speed storage, durable design, and intelligent engineering. Featuring premium 3D NAND flash and advanced wear-leveling, our solid-state drives ensure fast load times, extended lifespan, and seamless computing. With no moving parts, they run cooler, quieter, and more efficiently — ideal for everyday users and business deployments.</p>
+      <div class="tile-cta fade-in fade-in-delay-3" style="justify-content:flex-start;">
         <a class="btn-pill btn-blue" href="product.html">Learn more</a>
         <a class="btn-ghost-light" href="product.html">View all SSDs</a>
       </div>
@@ -477,11 +518,11 @@ footer{
 <div class="tile tile-dark tile-split">
   <div class="tile-split-inner tile-split-reverse">
     <div class="tile-split-text">
-      <div class="tile-eyebrow">Memory Solutions</div>
-      <h2 class="tile-h2">DRAM.</h2>
-      <p class="tile-lead">Speed, reliability, and quality —<br>in every module.</p>
-      <p class="tile-body">SimorChip DRAM modules are crafted to deliver the perfect blend of speed, reliability, and quality. Backed by over 20 years of industry expertise, from DDR3 to the latest DDR5, every module is tested to meet rigorous JEDEC standards. SimorChip DRAM is a promise of dependable performance and trusted innovation.</p>
-      <div class="tile-cta" style="justify-content:flex-start;">
+      <div class="tile-eyebrow fade-in">Memory Solutions</div>
+      <h2 class="tile-h2 fade-in fade-in-delay-1">DRAM.</h2>
+      <p class="tile-lead fade-in fade-in-delay-2">Speed, reliability, and quality —<br>in every module.</p>
+      <p class="tile-body fade-in fade-in-delay-2">SimorChip DRAM modules are crafted to deliver the perfect blend of speed, reliability, and quality. Backed by over 20 years of industry expertise, from DDR3 to the latest DDR5, every module is tested to meet rigorous JEDEC standards. SimorChip DRAM is a promise of dependable performance and trusted innovation.</p>
+      <div class="tile-cta fade-in fade-in-delay-3" style="justify-content:flex-start;">
         <a class="btn-pill btn-blue" href="product.html">Learn more</a>
         <a class="btn-pill btn-ghost-dark" href="product.html">View all DRAM</a>
       </div>
@@ -495,26 +536,26 @@ footer{
 <!-- ══ STATS TILE — parchment ══ -->
 <div class="tile tile-parchment">
   <div class="tile-inner">
-    <div class="tile-eyebrow">Company Overview</div>
-    <h2 class="tile-h2">By the numbers.</h2>
+    <div class="tile-eyebrow fade-in">Company Overview</div>
+    <h2 class="tile-h2 fade-in fade-in-delay-1">By the numbers.</h2>
     <div class="stats-grid">
-      <div class="stat-cell">
-        <div class="stat-num">TW</div>
-        <div class="stat-desc">Headquarters · Taiwan</div>
+      <div class="stat-cell fade-in">
+        <div class="stat-num">2022</div>
+        <div class="stat-desc">Founded · Taiwan</div>
       </div>
-      <div class="stat-cell">
+      <div class="stat-cell fade-in">
         <div class="stat-num">1000<sup>+</sup></div>
         <div class="stat-desc">Total Products</div>
       </div>
-      <div class="stat-cell">
+      <div class="stat-cell fade-in">
         <div class="stat-num">7</div>
         <div class="stat-desc">Offices Worldwide</div>
       </div>
-      <div class="stat-cell">
+      <div class="stat-cell fade-in">
         <div class="stat-num">200<sup>+</sup></div>
         <div class="stat-desc">Team Members</div>
       </div>
-      <div class="stat-cell">
+      <div class="stat-cell fade-in">
         <div class="stat-num">30<sup>+</sup></div>
         <div class="stat-desc">R&amp;D Engineers</div>
       </div>
@@ -525,22 +566,22 @@ footer{
 <!-- ══ FEATURES TILE — light ══ -->
 <div class="tile tile-light">
   <div class="tile-inner" style="text-align:left;">
-    <div class="tile-eyebrow" style="text-align:center;">Why Simorchip</div>
-    <h2 class="tile-h2" style="text-align:center;">Core Strengths.</h2>
+    <div class="tile-eyebrow fade-in" style="text-align:center;">Why Simorchip</div>
+    <h2 class="tile-h2 fade-in fade-in-delay-1" style="text-align:center;">Core Strengths.</h2>
     <div class="feature-grid">
-      <div class="feature-card">
+      <div class="feature-card fade-in">
         <div class="feature-card-title">High Performance</div>
         <div class="feature-card-body">DRAM supports high-speed data rates from DDR3 to DDR5; SSDs utilize 3D NAND for fast access and superior performance.</div>
       </div>
-      <div class="feature-card">
+      <div class="feature-card fade-in">
         <div class="feature-card-title">Broad Compatibility</div>
         <div class="feature-card-body">Both DRAM and SSDs are thoroughly tested to ensure compatibility across a wide range of systems.</div>
       </div>
-      <div class="feature-card">
+      <div class="feature-card fade-in">
         <div class="feature-card-title">Stable &amp; Reliable</div>
         <div class="feature-card-body">JEDEC-compliant DRAM and over 20 years of industry experience. SSDs feature no moving parts and wear-leveling for extended lifespan.</div>
       </div>
-      <div class="feature-card">
+      <div class="feature-card fade-in">
         <div class="feature-card-title">Versatile Applications</div>
         <div class="feature-card-body">Ideal for gaming, content creation, professional tasks, and commercial system upgrades.</div>
       </div>
@@ -555,14 +596,26 @@ footer{
       <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/tileGPU.jpg" alt="Simorchip GPU" loading="lazy">
     </div>
     <div class="tile-split-text">
-      <div class="tile-eyebrow">Graphics Solutions</div>
-      <h2 class="tile-h2">GPU.</h2>
-      <p class="tile-lead">From entry-level to high performance.</p>
-      <p class="tile-body">Simorchip GPUs span NVIDIA GeForce and AMD Radeon architectures — from silent display cards to RTX-enabled workhorses. Whether you're upgrading an office machine or building a capable gaming rig, every card is rigorously tested for compatibility and long-term stability.</p>
-      <div class="tile-cta" style="justify-content:flex-start;">
+      <div class="tile-eyebrow fade-in">Graphics Solutions</div>
+      <h2 class="tile-h2 fade-in fade-in-delay-1">GPU.</h2>
+      <p class="tile-lead fade-in fade-in-delay-2">From entry-level to high performance.</p>
+      <p class="tile-body fade-in fade-in-delay-2">Simorchip GPUs span NVIDIA GeForce and AMD Radeon architectures — from silent display cards to RTX-enabled workhorses. Whether you're upgrading an office machine or building a capable gaming rig, every card is rigorously tested for compatibility and long-term stability.</p>
+      <div class="tile-cta fade-in fade-in-delay-3" style="justify-content:flex-start;">
         <a class="btn-pill btn-blue" href="product.html">Explore GPUs</a>
-        <a class="btn-pill btn-ghost-dark" href="product.html">View all products</a>
+        <a class="btn-pill btn-ghost-dark" href="contact.html">Contact Us</a>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRE-FOOTER CTA BAND ══ -->
+<div class="cta-band">
+  <div class="cta-band-inner fade-in">
+    <div class="cta-band-label">Ready to upgrade?</div>
+    <h2 class="cta-band-h2">Find the right product<br>for your system.</h2>
+    <div class="cta-band-actions">
+      <a class="btn-pill btn-blue" href="product.html">Explore all products</a>
+      <a class="btn-pill btn-ghost-dark" href="contact.html">Talk to us</a>
     </div>
   </div>
 </div>
@@ -616,5 +669,19 @@ navMobile.querySelectorAll('.nav-mobile-link').forEach(l=>{
   });
 });
 </script>
+
+<script>
+// Scroll fade-in
+const fadeEls = document.querySelectorAll('.fade-in');
+if(fadeEls.length){
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  },{threshold:0.12});
+  fadeEls.forEach(el=>io.observe(el));
+}
+</script>
+
 </body>
 </html>
