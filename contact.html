@@ -41,7 +41,7 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font-smoothing:antialiased;}
+body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font-smoothing:antialiased;padding-top:44px;}
 
 /* ══ GLOBAL NAV ══ */
 .global-nav{
@@ -248,9 +248,12 @@ body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font
 .feature-card{
   background:var(--canvas);
   border:1px solid var(--hairline);
+  border-top:2px solid var(--blue);
   border-radius:var(--r-lg);
   padding:var(--sp-lg);
+  transition:box-shadow .2s;
 }
+.feature-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);}
 .feature-card-title{
   font-size:17px;font-weight:600;line-height:1.24;letter-spacing:-.374px;
   color:var(--ink);margin-bottom:8px;
@@ -296,7 +299,6 @@ footer{
 }
 .footer-logo img{
   height:24px;display:block;object-fit:contain;
-  filter:none;opacity:.7;
 }
 .footer-info{display:flex;flex-direction:column;gap:8px;}
 .footer-row{display:flex;align-items:baseline;gap:12px;}
@@ -577,6 +579,21 @@ footer{
   .sub-band{padding:8px 16px 6px;}
 }
 
+
+/* ══ SCROLL FADE-IN ══ */
+.fade-in{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.fade-in.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.fade-in-delay-1{transition-delay:.1s;}
+.fade-in-delay-2{transition-delay:.2s;}
+.fade-in-delay-3{transition-delay:.3s;}
+
 </style>
 </head>
 <body>
@@ -614,15 +631,15 @@ footer{
 
 <div class="tile tile-light">
   <div class="tile-inner">
-    <div class="tile-eyebrow">Reach Out</div>
-    <h2 class="tile-h2">We'd love to hear from you.</h2>
+    <div class="tile-eyebrow fade-in">Reach Out</div>
+    <h2 class="tile-h2 fade-in fade-in-delay-1">We'd love to hear from you.</h2>
     <div class="contact-grid">
-      <div class="contact-card">
+      <div class="contact-card fade-in">
         <div class="contact-card-icon">📍</div>
         <div class="contact-card-label">Address</div>
         <div class="contact-card-value">8F.-1, No. 300, Sec. 1, Neihu Rd.,<br>Neihu Dist., Taipei City 114066, Taiwan.</div>
       </div>
-      <div class="contact-card">
+      <div class="contact-card fade-in">
         <div class="contact-card-icon">✉️</div>
         <div class="contact-card-label">Contact</div>
         <div class="contact-card-value">
@@ -633,7 +650,7 @@ footer{
           <a href="mailto:sales@simorchip.com">sales@simorchip.com</a>
         </div>
       </div>
-      <div class="contact-card">
+      <div class="contact-card fade-in">
         <div class="contact-card-icon">🕘</div>
         <div class="contact-card-label">Opening Hours</div>
         <div class="contact-card-value">Mon – Fri</div>
@@ -688,6 +705,20 @@ if(burger && navMobile){
       burger.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='';});
     });
   });
+}
+</script>
+
+
+<script>
+// Scroll fade-in
+const fadeEls = document.querySelectorAll('.fade-in');
+if(fadeEls.length){
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  },{threshold:0.12});
+  fadeEls.forEach(el=>io.observe(el));
 }
 </script>
 
