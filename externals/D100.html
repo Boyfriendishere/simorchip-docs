@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>USB 3.2 Gen 1 — Dyo D100 — Simorchip</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --black: #0a0b0c;
+  --dark: #101316;
+  --dark2: #181c20;
+  --steel: #62b0d8;
+  --steel-bright: #9bd9f2;
+  --steel-dim: rgba(98,176,216,0.18);
+  --white: #ffffff;
+  --white-dim: rgba(255,255,255,0.85);
+  --white-faint: rgba(255,255,255,0.35);
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+  --display: 'Bebas Neue', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 16px; font-weight: 500; line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 20px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(10,11,12,0.95), transparent);
+}
+.nav-logo {
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--white);
+  text-decoration: none;
+}
+.nav-tag {
+  font-family: var(--mono); font-size: 11px; color: var(--steel);
+  letter-spacing: .1em; text-transform: uppercase;
+}
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+  padding: 120px 48px 80px;
+  position: relative; overflow: hidden;
+}
+#hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 70% at 70% 50%, rgba(98,176,216,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-left { position: relative; z-index: 2; }
+.hero-eyebrow {
+  font-family: var(--mono); font-size: 11px; color: var(--steel);
+  letter-spacing: .2em; text-transform: uppercase; margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--steel); }
+.hero-tagline {
+  font-family: var(--display); font-size: clamp(72px, 9vw, 124px);
+  line-height: .9; letter-spacing: .01em; color: var(--white); margin-bottom: 8px;
+}
+.hero-tagline-zh {
+  font-size: 18px; font-weight: 500; color: var(--white-dim);
+  letter-spacing: .08em; margin-bottom: 40px; font-style: italic;
+}
+.hero-desc { font-size: 16px; line-height: 1.85; color: var(--white); font-weight: 500; max-width: 460px; margin-bottom: 12px; }
+.hero-desc-zh { font-size: 14px; line-height: 1.85; color: var(--white-dim); font-weight: 500; max-width: 460px; margin-bottom: 32px; }
+.hero-drama { font-family: var(--mono); font-size: 13px; color: var(--steel); letter-spacing: .06em; margin-bottom: 40px; line-height: 1.7; }
+.hero-specs-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.spec-pill {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--white);
+  border: 1px solid rgba(255,255,255,0.3); padding: 6px 12px; border-radius: 2px; font-weight: 500;
+}
+.spec-pill.steel { color: var(--steel); border-color: rgba(98,176,216,0.5); }
+
+.hero-right { display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
+.hero-product-wrap { position: relative; width: 400px; height: 400px; }
+.hero-product-bg { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, rgba(98,176,216,0.12) 0%, transparent 70%); }
+
+/* ── HERO PRODUCT (real render · float · dual-connector callouts) ── */
+.drive-stage {
+  position: relative; z-index: 2; width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.prod-float {
+  position: relative; width: 100%; max-width: 400px;
+  animation: prodFloat 6s ease-in-out infinite;
+}
+@keyframes prodFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+.hero-prod-img {
+  display: block; width: 100%; height: auto;
+  filter: drop-shadow(0 24px 38px rgba(0,0,0,0.6)) drop-shadow(0 0 46px rgba(98,176,216,0.12));
+}
+/* connector callouts — the dual-interface feature, made explicit */
+.callout { position: absolute; opacity: 0; animation: calloutIn .7s ease forwards; z-index: 5; }
+@keyframes calloutIn { to { opacity: 1; } }
+.co-dot {
+  position: absolute; width: 11px; height: 11px; margin: -5.5px; border-radius: 50%;
+  background: var(--steel); box-shadow: 0 0 12px rgba(98,176,216,0.9);
+  animation: coPulse 2.2s ease-out infinite;
+}
+@keyframes coPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(98,176,216,0.5), 0 0 12px rgba(98,176,216,0.9); }
+  70%  { box-shadow: 0 0 0 13px rgba(98,176,216,0), 0 0 12px rgba(98,176,216,0.9); }
+  100% { box-shadow: 0 0 0 0 rgba(98,176,216,0), 0 0 12px rgba(98,176,216,0.9); }
+}
+.co-line { position: absolute; top: 0; height: 1px; }
+.co-label { position: absolute; font-family: var(--mono); white-space: nowrap; line-height: 1.5; }
+.co-label b { display: block; color: var(--white); font-size: 12px; font-weight: 500; letter-spacing: .1em; }
+.co-label small { color: var(--white-faint); font-size: 10px; letter-spacing: .06em; }
+/* USB-A end (upper right of product) */
+.callout-a { left: 78%; top: 17%; animation-delay: .9s; }
+.callout-a .co-line { left: 0; width: 56px; background: linear-gradient(90deg, var(--steel), rgba(98,176,216,0)); }
+.callout-a .co-label { left: 62px; top: -16px; }
+/* Type-C end (lower left of product) */
+.callout-c { left: 16%; top: 62%; animation-delay: 1.25s; }
+.callout-c .co-line { left: -56px; width: 56px; background: linear-gradient(270deg, var(--steel), rgba(98,176,216,0)); }
+.callout-c .co-label { left: -190px; top: -16px; width: 176px; text-align: right; }
+
+/* ── CROSSING SECTION BASE ── */
+.cross {
+  min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+  padding: 100px 48px; position: relative; overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.cross.reverse { direction: rtl; }
+.cross.reverse > * { direction: ltr; }
+.cross-content { position: relative; z-index: 2; max-width: 520px; }
+.cross.reverse .cross-content { margin-left: auto; }
+.cross-num {
+  font-family: var(--mono); font-size: 10px; color: var(--steel);
+  letter-spacing: .2em; text-transform: uppercase; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.cross-num::after { content: ''; flex: 1; height: 1px; background: var(--steel-dim); }
+.cross-title {
+  font-family: var(--display); font-size: clamp(42px, 5vw, 64px);
+  line-height: .95; letter-spacing: .01em; color: var(--white); margin-bottom: 8px;
+}
+.cross-title-zh { font-size: 17px; font-weight: 500; color: var(--white-dim); margin-bottom: 28px; font-style: italic; }
+.cross-body { font-size: 15px; line-height: 1.95; color: var(--white); font-weight: 500; margin-bottom: 14px; }
+.cross-body-zh { font-size: 13px; line-height: 1.95; color: var(--white-dim); font-weight: 500; }
+.cross-spec {
+  margin-top: 22px; font-family: var(--mono); font-size: 11px; color: var(--steel);
+  letter-spacing: .06em; line-height: 1.9; border-left: 2px solid var(--steel-dim); padding-left: 16px;
+}
+.cross-visual { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; padding: 40px; }
+.cross::before { content: ''; position: absolute; inset: 0; pointer-events: none; }
+.c1::before { background: radial-gradient(ellipse 50% 60% at 80% 50%, rgba(98,176,216,0.06) 0%, transparent 70%); }
+.c2::before { background: radial-gradient(ellipse 50% 60% at 20% 50%, rgba(98,176,216,0.05) 0%, transparent 70%); }
+.c3::before { background: radial-gradient(ellipse 50% 60% at 80% 50%, rgba(98,176,216,0.05) 0%, transparent 70%); }
+.c4::before { background: radial-gradient(ellipse 50% 60% at 20% 50%, rgba(98,176,216,0.05) 0%, transparent 70%); }
+.c5::before { background: radial-gradient(ellipse 50% 60% at 80% 50%, rgba(98,176,216,0.05) 0%, transparent 70%); }
+.c6::before { background: radial-gradient(ellipse 50% 60% at 20% 50%, rgba(98,176,216,0.05) 0%, transparent 70%); }
+
+/* ── C1 visual: two ports meeting ── */
+.ports-vis { display: flex; flex-direction: column; align-items: center; gap: 0; width: 100%; max-width: 320px; }
+.port-card {
+  width: 100%; background: var(--dark2); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px; padding: 24px 28px; text-align: center;
+}
+.port-card .pc-icon { font-family: var(--display); font-size: 40px; color: var(--steel); line-height: 1; letter-spacing: .04em; }
+.port-card .pc-name { font-family: var(--mono); font-size: 11px; color: var(--white); letter-spacing: .12em; text-transform: uppercase; margin-top: 6px; }
+.port-card .pc-world { font-size: 12px; color: var(--white-faint); margin-top: 6px; }
+.port-join {
+  font-family: var(--mono); font-size: 10px; color: var(--steel); letter-spacing: .2em;
+  text-transform: uppercase; padding: 14px 0; position: relative;
+}
+.port-join::before, .port-join::after {
+  content: ''; position: absolute; left: 50%; width: 1px; background: var(--steel-dim); height: 14px;
+}
+.port-join::before { top: 0; } .port-join::after { bottom: 0; }
+
+/* ── C2 visual: speed counter ── */
+.speed-display { text-align: center; }
+.speed-main { font-family: var(--display); font-size: 180px; color: var(--white); line-height: .85; letter-spacing: -.02em; display: inline-block; min-width: 220px; text-shadow: 0 0 50px rgba(98,176,216,0.2); }
+.speed-unit { font-family: var(--mono); font-size: 15px; color: var(--steel); letter-spacing: .1em; margin-top: 12px; font-weight: 500; }
+.speed-write-row { display: flex; align-items: baseline; justify-content: center; gap: 8px; margin-top: 22px; }
+.speed-write-num { font-family: var(--display); font-size: 56px; color: rgba(255,255,255,0.4); line-height: 1; }
+.speed-write-label { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: .1em; }
+.speed-sub { font-family: var(--mono); font-size: 12px; color: var(--white-faint); margin-top: 18px; letter-spacing: .08em; font-weight: 500; }
+
+/* ── C3 visual: capacities ── */
+.cap-vis { width: 100%; max-width: 360px; }
+.cap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.cap {
+  background: var(--dark2); border: 1px solid rgba(255,255,255,0.08); border-radius: 5px;
+  padding: 22px 10px; text-align: center; transition: border-color .2s, background .2s;
+}
+.cap:hover { border-color: var(--steel); background: rgba(98,176,216,0.08); }
+.cap-num { font-family: var(--display); font-size: 40px; color: var(--white); line-height: 1; }
+.cap-unit { font-family: var(--mono); font-size: 10px; color: var(--white-faint); letter-spacing: .1em; margin-top: 2px; }
+.cap.highlight { border-color: rgba(98,176,216,0.5); }
+.cap.highlight .cap-num { color: var(--steel); }
+.cap-note { font-family: var(--mono); font-size: 10px; color: var(--white-faint); letter-spacing: .08em; text-align: center; margin-top: 14px; }
+
+/* ── C4 visual: build panel ── */
+.build-vis { width: 100%; max-width: 340px; }
+.build-swatch {
+  height: 120px; border-radius: 6px; margin-bottom: 14px; position: relative; overflow: hidden;
+  background: linear-gradient(120deg, #3a444d 0%, #20262b 50%, #2f383f 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.14);
+}
+.build-swatch::after {
+  content: 'Gunmetal Zinc Alloy'; position: absolute; left: 16px; bottom: 12px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--white-dim);
+}
+.build-rows { background: var(--dark2); border: 1px solid rgba(255,255,255,0.08); border-radius: 5px; }
+.build-row { display: flex; justify-content: space-between; padding: 11px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.build-row:last-child { border-bottom: none; }
+.build-k { font-family: var(--mono); font-size: 10px; color: var(--white-faint); letter-spacing: .08em; text-transform: uppercase; }
+.build-v { font-family: var(--mono); font-size: 11px; color: var(--white); font-weight: 600; }
+
+/* ── C5 visual: reliability stack ── */
+.stack-vis { width: 100%; max-width: 340px; }
+.stack-item {
+  background: var(--dark2); border: 1px solid rgba(255,255,255,0.07); border-left: 3px solid var(--steel);
+  border-radius: 4px; padding: 14px 18px; margin-bottom: 8px;
+}
+.stack-name { font-family: var(--mono); font-size: 11px; color: var(--white); letter-spacing: .1em; text-transform: uppercase; font-weight: 600; }
+.stack-desc { font-size: 12px; color: var(--white-faint); margin-top: 3px; }
+
+/* ── C6 visual: warranty card ── */
+.warr-vis { width: 100%; max-width: 320px; text-align: center; }
+.warr-big { font-family: var(--display); font-size: 130px; color: var(--steel); line-height: .85; text-shadow: 0 0 40px rgba(98,176,216,0.25); }
+.warr-unit { font-family: var(--mono); font-size: 13px; color: var(--white); letter-spacing: .14em; text-transform: uppercase; margin-top: 4px; }
+.warr-sub { font-size: 12px; color: var(--white-faint); margin-top: 12px; line-height: 1.7; }
+.warr-certs { display: flex; gap: 8px; justify-content: center; margin-top: 22px; flex-wrap: wrap; }
+.warr-cert { font-family: var(--mono); font-size: 10px; color: var(--white-dim); letter-spacing: .1em; border: 1px solid rgba(255,255,255,0.16); border-radius: 2px; padding: 6px 10px; }
+
+/* ── HIGHLIGHT BAR ── */
+#highlight-bar { background: var(--dark); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 48px; overflow: hidden; }
+.hb-inner { display: flex; flex-wrap: wrap; gap: 0; }
+.hb-item { flex: 1; min-width: 150px; padding: 24px 28px; border-right: 1px solid rgba(255,255,255,0.06); text-align: center; }
+.hb-item:last-child { border-right: none; }
+.hb-num { font-family: var(--display); font-size: 50px; color: var(--white); line-height: .9; letter-spacing: .01em; }
+.hb-num.steel { color: var(--steel); }
+.hb-label { font-family: var(--mono); font-size: 10px; color: var(--white); letter-spacing: .14em; text-transform: uppercase; margin-top: 8px; font-weight: 500; }
+
+/* ── FINALE ── */
+#finale { padding: 100px 48px 60px; background: var(--black); border-top: 1px solid rgba(255,255,255,0.05); }
+.finale-eyebrow { font-family: var(--mono); font-size: 11px; color: var(--white-faint); letter-spacing: .22em; text-transform: uppercase; margin-bottom: 48px; text-align: center; font-weight: 500; }
+.recap { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 72px; }
+.recap-item { background: var(--black); padding: 26px 30px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; }
+.ri-num { font-family: var(--mono); font-size: 10px; color: var(--steel); letter-spacing: .16em; margin-bottom: 6px; }
+.ri-claim { font-family: var(--display); font-size: 26px; color: var(--white); line-height: 1; margin-bottom: 3px; }
+.ri-claim-zh { font-size: 12px; color: var(--white-dim); font-weight: 500; }
+.ri-right { font-family: var(--mono); font-size: 10px; color: var(--white-faint); text-align: right; line-height: 1.7; letter-spacing: .06em; }
+
+/* name payoff curtain */
+#name-zone { position: relative; }
+.name-curtain { background: var(--dark); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 80px 48px; text-align: center; transition: opacity .5s ease, transform .5s ease; }
+.nc-pre { font-family: var(--mono); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--white-faint); margin-bottom: 24px; }
+.nc-main { font-family: var(--display); font-size: clamp(80px, 11vw, 150px); color: var(--white); line-height: .9; letter-spacing: .02em; margin-bottom: 12px; }
+.nc-zh { font-size: 18px; color: var(--white-faint); font-style: italic; }
+.name-reveal { display: none; border-radius: 8px; overflow: hidden; border: 1px solid rgba(98,176,216,0.25); }
+.name-caption { background: var(--dark); padding: 56px 56px; text-align: center; }
+.nr-word { font-family: var(--display); font-size: 96px; color: var(--steel-bright); line-height: .9; letter-spacing: .04em; text-shadow: 0 0 40px rgba(98,176,216,0.3); }
+.nr-lines { max-width: 620px; margin: 28px auto 0; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; text-align: left; }
+.nr-row { display: grid; grid-template-columns: 90px 1fr; gap: 20px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.nr-row:last-child { border-bottom: none; }
+.nr-key { font-family: var(--mono); font-size: 11px; color: var(--steel); letter-spacing: .12em; text-transform: uppercase; }
+.nr-val { font-size: 14px; color: var(--white); font-weight: 500; }
+.nr-tagline { font-family: var(--display); font-size: 34px; color: var(--white); margin-top: 32px; letter-spacing: .02em; }
+.nr-tagline-zh { font-size: 15px; color: var(--white-dim); font-style: italic; margin-top: 4px; }
+
+/* ── SPECS ── */
+#specs { padding: 100px 48px; border-top: 1px solid rgba(255,255,255,0.05); }
+.specs-header { margin-bottom: 48px; }
+.specs-eyebrow { font-family: var(--mono); font-size: 10px; color: var(--steel); letter-spacing: .2em; text-transform: uppercase; margin-bottom: 12px; }
+.specs-title { font-family: var(--display); font-size: 56px; color: var(--white); line-height: .9; margin-bottom: 12px; }
+.specs-note { font-family: var(--sans); font-size: 14px; color: var(--white-faint); font-style: italic; font-weight: 500; }
+.spec-table { width: 100%; border-collapse: collapse; max-width: 720px; }
+.spec-table tr { border-bottom: 1px solid rgba(255,255,255,0.05); }
+.spec-table tr:hover td { background: rgba(255,255,255,0.02); }
+.spec-table td { padding: 14px 16px; vertical-align: top; }
+.spec-table td:first-child { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--white-faint); width: 42%; }
+.spec-table td:last-child { font-size: 15px; font-weight: 600; color: var(--white); }
+.spec-footnote { font-family: var(--mono); font-size: 11px; color: var(--white-faint); margin-top: 24px; line-height: 1.7; }
+
+/* ── FOOTER TAGLINE ── */
+#footer-tagline { padding: 100px 48px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden; }
+#footer-tagline::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(98,176,216,0.07) 0%, transparent 70%); pointer-events: none; }
+.ft-main { font-family: var(--display); font-size: clamp(80px, 12vw, 160px); color: var(--white); line-height: .88; letter-spacing: .01em; margin-bottom: 12px; position: relative; z-index: 2; }
+.ft-zh { font-size: 20px; color: var(--white-dim); font-style: italic; position: relative; z-index: 2; }
+.ft-sub { font-size: 14px; color: var(--white-faint); margin-top: 28px; font-style: italic; line-height: 2; position: relative; z-index: 2; font-weight: 500; }
+footer { padding: 24px 48px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+.footer-brand { font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--white-faint); }
+.footer-meta { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.18); letter-spacing: .08em; }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  nav { padding: 16px 24px; }
+  #hero { grid-template-columns: 1fr; padding: 110px 24px 60px; gap: 40px; }
+  .hero-right { order: -1; }
+  .hero-product-wrap { width: 300px; height: auto; }
+  .prod-float { max-width: 280px; }
+  .callout { display: none; }
+  .cross { grid-template-columns: 1fr; padding: 72px 24px; gap: 40px; }
+  .cross.reverse { direction: ltr; }
+  .cross-visual { padding: 0; }
+  .speed-main { font-size: 130px; min-width: 0; }
+  .recap { grid-template-columns: 1fr; }
+  #highlight-bar { padding: 32px 16px; }
+  .hb-item { min-width: 120px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  #specs, #finale, #footer-tagline { padding-left: 24px; padding-right: 24px; }
+  .name-caption { padding: 40px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Simorchip</a>
+  <span class="nav-tag">USB · Dyo D100</span>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Dyo D100 · USB 3.2 Gen 1</div>
+    <div class="hero-tagline">Both<br/>Ends.</div>
+    <div class="hero-tagline-zh">兩頭，都對。</div>
+    <p class="hero-desc">One body, two connectors. Type-C for the phone in your hand, Type-A for the laptop on the desk. No adapter. No cable. No cloud that won't sync at the worst possible moment.</p>
+    <p class="hero-desc-zh">一個身體，兩個接頭。Type-C 給你手上的手機，Type-A 給桌上的筆電。不用轉接、不用線、不用在最糟的時刻還在等雲端同步。</p>
+    <div class="hero-drama">Whichever end the moment needs —<br/>it's already there. 插哪台都對。</div>
+    <div class="hero-specs-row">
+      <span class="spec-pill steel">Type-C + Type-A</span>
+      <span class="spec-pill">100MB/s</span>
+      <span class="spec-pill">USB 3.2 Gen 1</span>
+      <span class="spec-pill">32GB – 256GB</span>
+      <span class="spec-pill">Gunmetal Alloy</span>
+      <span class="spec-pill steel">5-Year Warranty</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-product-wrap">
+      <div class="hero-product-bg"></div>
+      <div class="drive-stage">
+        <div class="prod-float">
+          <img class="hero-prod-img" alt="Simorchip Dyo D100 dual-interface USB drive" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/externals/coverD100.png"/>
+          <div class="callout callout-a">
+            <span class="co-dot"></span><span class="co-line"></span>
+            <span class="co-label"><b>USB Type-A</b><small>laptops · desktops · PC</small></span>
+          </div>
+          <div class="callout callout-c">
+            <span class="co-dot"></span><span class="co-line"></span>
+            <span class="co-label"><b>USB Type-C</b><small>phones · tablets · Mac</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CROSSING 01 ═══════ -->
+<section class="cross c1 reveal">
+  <div class="cross-content">
+    <div class="cross-num">Crossing 01 — Both ends, no adapter</div>
+    <div class="cross-title">It Speaks<br/>Both Sides.</div>
+    <div class="cross-title-zh">它兩邊都通。</div>
+    <p class="cross-body">You shot it on your phone. The client only has a Windows laptop. Between those two facts there's usually a missing dongle, a wrong cable, or a cloud upload you're watching spin. Not here. One end is Type-C, the other is Type-A. You don't pick the right one — both are the right one.</p>
+    <p class="cross-body-zh">你用手機拍的。客戶只有一台 Windows 筆電。這兩件事中間，平常卡著一個你沒帶的轉接頭、一條插反的線、一個你盯著轉圈圈的雲端上傳。這裡沒這回事。一頭 Type-C、一頭 Type-A，你不用選對的那個——兩個都是對的那個。</p>
+    <div class="cross-spec">Swivel dual connector · USB Type-C + Type-A<br/>No adapter · No cable · No cloud</div>
+  </div>
+  <div class="cross-visual">
+    <div class="ports-vis">
+      <div class="port-card">
+        <div class="pc-icon">USB-C</div>
+        <div class="pc-name">Type-C</div>
+        <div class="pc-world">Phone · Tablet · Mac</div>
+      </div>
+      <div class="port-join">One drive · 一支</div>
+      <div class="port-card">
+        <div class="pc-icon">USB-A</div>
+        <div class="pc-name">Type-A</div>
+        <div class="pc-world">Laptop · Desktop · PC</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CROSSING 02 ═══════ -->
+<section class="cross c2 reverse reveal">
+  <div class="cross-content">
+    <div class="cross-num">Crossing 02 — The 6 a.m. transfer</div>
+    <div class="cross-title">Fast Enough<br/>To Stop Waiting.</div>
+    <div class="cross-title-zh">快到你不用再等。</div>
+    <p class="cross-body">It's 6 a.m. The meeting is at 8. The deck is heavy and the only window you have is right now. USB 3.2 Gen 1, up to 100MB/s read, 30MB/s write — the transfer finishes before the coffee does. You're not waiting on the drive. The drive is waiting on you.</p>
+    <p class="cross-body-zh">早上六點，會議八點，檔案很重，而你唯一的空檔就是現在。USB 3.2 Gen 1，讀取最高 100MB/s、寫入 30MB/s——還沒喝完咖啡，東西就傳完了。不是你在等它，是它在等你。</p>
+    <div class="cross-spec">USB 3.2 Gen 1<br/>Read up to 100MB/s · Write up to 30MB/s</div>
+  </div>
+  <div class="cross-visual">
+    <div class="speed-display">
+      <div class="speed-main" id="speed-counter">0</div>
+      <div class="speed-unit">MB/s Read Speed</div>
+      <div class="speed-write-row">
+        <div class="speed-write-num">30</div>
+        <div class="speed-write-label">MB/s<br/>Write</div>
+      </div>
+      <div class="speed-sub">USB 3.2 Gen 1 · Plug-and-play</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CROSSING 03 ═══════ -->
+<section class="cross c3 reveal">
+  <div class="cross-content">
+    <div class="cross-num">Crossing 03 — The one in your pocket</div>
+    <div class="cross-title">Not The Biggest.<br/>The One You Have.</div>
+    <div class="cross-title-zh">不是最大的，是你帶著的那個。</div>
+    <p class="cross-body">The biggest drive in the world is useless if it's at home in a drawer. This one is on your keychain. 32, 64, 128 or 256 gigabytes — enough for the deck, the shoot, the backup, and the thing you forgot you'd need until you needed it. Capacity you'll actually have on you beats capacity you left behind.</p>
+    <p class="cross-body-zh">世界上最大的隨身碟，放在家裡抽屜裡也是零。這一支在你鑰匙圈上。32、64、128、256GB——夠裝那份簡報、那支片、那次備份，還有那個你需要時才想起來要帶的東西。真的在身上的容量，贏過留在家裡的容量。</p>
+    <div class="cross-spec">32GB · 64GB · 128GB · 256GB<br/>Four sizes · All pocket-sized</div>
+  </div>
+  <div class="cross-visual">
+    <div class="cap-vis">
+      <div class="cap-grid">
+        <div class="cap"><div class="cap-num">32</div><div class="cap-unit">GB</div></div>
+        <div class="cap"><div class="cap-num">64</div><div class="cap-unit">GB</div></div>
+        <div class="cap"><div class="cap-num">128</div><div class="cap-unit">GB</div></div>
+        <div class="cap highlight"><div class="cap-num">256</div><div class="cap-unit">GB</div></div>
+      </div>
+      <div class="cap-note">16 × 60 × 9 mm · fits the keychain, not the drawer</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CROSSING 04 ═══════ -->
+<section class="cross c4 reverse reveal">
+  <div class="cross-content">
+    <div class="cross-num">Crossing 04 — Two years on the same keychain</div>
+    <div class="cross-title">Built To Be<br/>Forgotten About.</div>
+    <div class="cross-title-zh">耐到你會忘了它在。</div>
+    <p class="cross-body">It's been clipped to your bag for two years. Dropped in gravel, sat on, knocked around the bottom of a drawer with the loose change. The gunmetal zinc alloy shell doesn't look brand new — because it's been used. But it works exactly the same as the day you got it. The lanyard hole means it's always on you, not lost in a pocket somewhere.</p>
+    <p class="cross-body-zh">它在你包上掛了兩年。摔過碎石地、被坐過、跟零錢一起在抽屜底下被撞來撞去。槍灰鋅合金外殼看起來不像全新的——因為它真的被用過。但它跟你拿到那天一模一樣地運作。掛繩孔讓它永遠在你身上，不是丟在某個口袋裡。</p>
+    <div class="cross-spec">Premium gunmetal zinc alloy housing<br/>Integrated lanyard hole · Operating 0°C ~ 45°C</div>
+  </div>
+  <div class="cross-visual">
+    <div class="build-vis">
+      <div class="build-swatch"></div>
+      <div class="build-rows">
+        <div class="build-row"><span class="build-k">Housing</span><span class="build-v">Gunmetal Zinc Alloy</span></div>
+        <div class="build-row"><span class="build-k">Dimensions</span><span class="build-v">16 × 60 × 9 mm</span></div>
+        <div class="build-row"><span class="build-k">Carry</span><span class="build-v">Integrated Lanyard Hole</span></div>
+        <div class="build-row"><span class="build-k">Operating</span><span class="build-v">0°C ~ 45°C</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CROSSING 05 ═══════ -->
+<section class="cross c5 reveal">
+  <div class="cross-content">
+    <div class="cross-num">Crossing 05 — The part you never think about</div>
+    <div class="cross-title">It Just Works.<br/>That's The Whole Trick.</div>
+    <div class="cross-title-zh">它就是會動，這就是全部的把戲。</div>
+    <p class="cross-body">You'll never see the Yixin 3379 controller doing its job. You'll never watch ECC catch a flipped bit, or wear-leveling spread the writes so no single cell wears out early, or S.M.A.R.T. quietly checking the drive's own health. That's the point. The best storage is the storage you forget is even working.</p>
+    <p class="cross-body-zh">你永遠不會看到 Yixin 3379 控制器在工作。你不會看到 ECC 抓住一個跳掉的位元、不會看到 wear-leveling 把寫入分散開來讓某個區塊不會先壞、不會看到 S.M.A.R.T. 默默檢查自己的健康。這就是重點。最好的儲存，是你忘了它在運作的那種。</p>
+    <div class="cross-spec">Yixin 3379 controller · ECC error correction<br/>Global wear-leveling & block management · S.M.A.R.T.</div>
+  </div>
+  <div class="cross-visual">
+    <div class="stack-vis">
+      <div class="stack-item"><div class="stack-name">Yixin 3379</div><div class="stack-desc">Stable controller, built for the long run</div></div>
+      <div class="stack-item"><div class="stack-name">ECC</div><div class="stack-desc">Catches errors before they reach you</div></div>
+      <div class="stack-item"><div class="stack-name">Wear-Leveling</div><div class="stack-desc">Spreads writes so nothing wears out early</div></div>
+      <div class="stack-item"><div class="stack-name">S.M.A.R.T.</div><div class="stack-desc">Quietly monitors its own health</div></div>
+      <div class="stack-item"><div class="stack-name">NAND Flash</div><div class="stack-desc">High-quality, long-term data retention</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CROSSING 06 ═══════ -->
+<section class="cross c6 reverse reveal">
+  <div class="cross-content">
+    <div class="cross-num">Crossing 06 — Five years is a long time to be sure</div>
+    <div class="cross-title">Five Years.<br/>We Mean It.</div>
+    <div class="cross-title-zh">五年。我們說真的。</div>
+    <p class="cross-body">Anyone can say "reliable." We put a number on it: five years. Not "up to," not "under lab conditions at 3 a.m." Five years — in your pocket, on your keychain, in the real world. RoHS 2.0 compliant. Fully USB 3.2 Gen 1 compliant. What's on the box is what you get.</p>
+    <p class="cross-body-zh">誰都能說「可靠」。我們給它一個數字：五年。不是「最高可達」，不是「凌晨三點實驗室條件下」。五年——在你口袋裡、鑰匙圈上、真實世界裡。符合 RoHS 2.0，完全符合 USB 3.2 Gen 1 規範。包裝上寫的，就是你拿到的。</p>
+    <div class="cross-spec">5-Year Limited Warranty<br/>RoHS 2.0 · USB 3.2 Gen 1 compliant</div>
+  </div>
+  <div class="cross-visual">
+    <div class="warr-vis">
+      <div class="warr-big">5</div>
+      <div class="warr-unit">Year Limited Warranty</div>
+      <div class="warr-sub">No asterisks. No fine print.<br/>沒有星號，沒有小字。</div>
+      <div class="warr-certs">
+        <span class="warr-cert">RoHS 2.0</span>
+        <span class="warr-cert">USB 3.2 Gen 1</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ HIGHLIGHT BAR ═══════ -->
+<div id="highlight-bar" class="reveal">
+  <div class="hb-inner">
+    <div class="hb-item"><div class="hb-num steel">2</div><div class="hb-label">Connectors<br/>Type-C + Type-A</div></div>
+    <div class="hb-item"><div class="hb-num">100</div><div class="hb-label">MB/s<br/>Read Speed</div></div>
+    <div class="hb-item"><div class="hb-num">256</div><div class="hb-label">GB Max<br/>32GB – 256GB</div></div>
+    <div class="hb-item"><div class="hb-num steel">3.2</div><div class="hb-label">USB Gen 1<br/>Plug-and-play</div></div>
+    <div class="hb-item"><div class="hb-num">Alloy</div><div class="hb-label">Gunmetal<br/>Zinc Housing</div></div>
+    <div class="hb-item"><div class="hb-num steel">5yr</div><div class="hb-label">Warranty<br/>Limited</div></div>
+  </div>
+</div>
+
+<!-- ═══════ FINALE ═══════ -->
+<section id="finale" class="reveal">
+  <div class="finale-eyebrow">Six Crossings — One More Time</div>
+
+  <div class="recap">
+    <div class="recap-item">
+      <div><div class="ri-num">Crossing 01</div><div class="ri-claim">Speaks Both Sides.</div><div class="ri-claim-zh">它兩邊都通。</div></div>
+      <div class="ri-right">Type-C + Type-A<br/>Swivel dual<br/>No adapter</div>
+    </div>
+    <div class="recap-item">
+      <div><div class="ri-num">Crossing 02</div><div class="ri-claim">Fast Enough.</div><div class="ri-claim-zh">快到你不用再等。</div></div>
+      <div class="ri-right">USB 3.2 Gen 1<br/>100MB/s read<br/>30MB/s write</div>
+    </div>
+    <div class="recap-item">
+      <div><div class="ri-num">Crossing 03</div><div class="ri-claim">The One You Have.</div><div class="ri-claim-zh">你帶著的那個。</div></div>
+      <div class="ri-right">32 – 256GB<br/>16×60×9 mm<br/>On the keychain</div>
+    </div>
+    <div class="recap-item">
+      <div><div class="ri-num">Crossing 04</div><div class="ri-claim">Forgotten About.</div><div class="ri-claim-zh">耐到你會忘了它在。</div></div>
+      <div class="ri-right">Gunmetal alloy<br/>Lanyard hole<br/>0°C ~ 45°C</div>
+    </div>
+    <div class="recap-item">
+      <div><div class="ri-num">Crossing 05</div><div class="ri-claim">It Just Works.</div><div class="ri-claim-zh">它就是會動。</div></div>
+      <div class="ri-right">Yixin 3379<br/>ECC · S.M.A.R.T.<br/>Wear-leveling</div>
+    </div>
+    <div class="recap-item">
+      <div><div class="ri-num">Crossing 06</div><div class="ri-claim">We Mean It.</div><div class="ri-claim-zh">我們說真的。</div></div>
+      <div class="ri-right">5-year warranty<br/>RoHS 2.0<br/>USB 3.2 Gen 1</div>
+    </div>
+  </div>
+
+  <!-- NAME PAYOFF -->
+  <div id="name-zone">
+    <div class="name-curtain" id="name-curtain">
+      <div class="nc-pre">About the name</div>
+      <div class="nc-main">Dyo.</div>
+      <div class="nc-zh">兩個世界，一支就對。</div>
+    </div>
+    <div class="name-reveal" id="name-reveal">
+      <div class="name-caption">
+        <div class="nr-word">Dyo</div>
+        <div class="nr-lines">
+          <div class="nr-row"><div class="nr-key">δύο</div><div class="nr-val">Greek for <strong>two</strong> — two connectors, two worlds, one drive.</div></div>
+          <div class="nr-row"><div class="nr-key">台語</div><div class="nr-val">唸起來像「<strong>對</strong>」—— 對、沒錯、就是它。</div></div>
+          <div class="nr-row"><div class="nr-key">D100</div><div class="nr-val">The model. <strong>100</strong> = read speed, in MB/s.</div></div>
+        </div>
+        <div class="nr-tagline">Plug it in. It's right.</div>
+        <div class="nr-tagline-zh">插上去，就對。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SPECS ═══════ -->
+<section id="specs" class="reveal">
+  <div class="specs-header">
+    <div class="specs-eyebrow">Specifications</div>
+    <div class="specs-title">The Whole Truth.<br/>Here Are The Numbers.</div>
+    <div class="specs-note">全部的真相，數字都在這。</div>
+  </div>
+  <table class="spec-table">
+    <tr><td>Model</td><td>Dyo D100</td></tr>
+    <tr><td>Interface</td><td>USB 3.2 Gen 1 · Dual connector (Type-C + Type-A)</td></tr>
+    <tr><td>Dimensions</td><td>16 × 60 × 9 mm</td></tr>
+    <tr><td>Capacity</td><td>32GB / 64GB / 128GB / 256GB</td></tr>
+    <tr><td>Controller</td><td>Yixin 3379</td></tr>
+    <tr><td>Performance (MB/s)</td><td>Read up to 100 / Write up to 30</td></tr>
+    <tr><td>Operating Temperature</td><td>0°C ~ 45°C</td></tr>
+    <tr><td>Storage Temperature</td><td>-10°C ~ 70°C</td></tr>
+    <tr><td>Housing</td><td>Premium gunmetal zinc alloy · integrated lanyard hole</td></tr>
+    <tr><td>Data Integrity</td><td>ECC · Global wear-leveling & block management · S.M.A.R.T.</td></tr>
+    <tr><td>Flash</td><td>High-quality NAND Flash</td></tr>
+    <tr><td>Compatibility</td><td>Smartphones, Tablets, Laptops</td></tr>
+    <tr><td>Certificate</td><td>RoHS 2.0 · USB 3.2 Gen 1 compliant</td></tr>
+    <tr><td>Product Warranty</td><td>5-Year Limited Warranty</td></tr>
+  </table>
+  <div class="spec-footnote">* All data secured from Simorchip's internal labs under specific testing conditions.<br/>Accurate data may vary depending on the operating environment.</div>
+</section>
+
+<!-- ═══════ FOOTER TAGLINE ═══════ -->
+<section id="footer-tagline">
+  <div class="ft-main">Both<br/>Ends.</div>
+  <div class="ft-zh">兩頭都對。</div>
+  <div class="ft-sub">
+    One drive for the phone in your hand and the laptop on the desk.<br/>
+    手上的手機，桌上的筆電，一支就對。
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Simorchip</div>
+  <div class="footer-meta">USB 3.2 Gen 1 · Dyo D100 · Preview Page</div>
+</footer>
+
+<script>
+// Scroll reveal
+(function(){
+  var reveals = document.querySelectorAll('.reveal');
+  if(!reveals.length) return;
+  var revealObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(function(el){ revealObs.observe(el); });
+})();
+
+// Speed counter animation
+(function(){
+  var el = document.getElementById('speed-counter');
+  if(!el) return;
+  var started = false;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && !started){
+        started = true;
+        var end = 100, duration = 1400, startTime = null;
+        function step(ts){
+          if(!startTime) startTime = ts;
+          var progress = Math.min((ts - startTime) / duration, 1);
+          var ease = 1 - Math.pow(1 - progress, 3);
+          if(el){ el.textContent = Math.round(ease * end); }
+          if(progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+    });
+  }, { threshold: 0.5 });
+  obs.observe(el);
+})();
+
+// Name payoff reveal
+(function(){
+  var triggered = false;
+  var zone = document.getElementById('name-zone');
+  var curtain = document.getElementById('name-curtain');
+  var reveal = document.getElementById('name-reveal');
+  if(!zone || !curtain || !reveal) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && !triggered){
+        triggered = true;
+        setTimeout(function(){
+          if(!curtain) return;
+          curtain.style.opacity = '0';
+          curtain.style.transform = 'scale(0.97)';
+          curtain.style.transition = 'all 0.5s ease';
+          setTimeout(function(){
+            if(curtain){ curtain.style.display = 'none'; }
+            if(reveal){
+              reveal.style.display = 'block';
+              reveal.style.opacity = '0';
+              reveal.style.transition = 'opacity 0.6s ease';
+              setTimeout(function(){ if(reveal){ reveal.style.opacity = '1'; } }, 60);
+            }
+          }, 520);
+        }, 700);
+      }
+    });
+  }, { threshold: 0.5 });
+  obs.observe(zone);
+})();
+</script>
+
+</body>
+</html>
