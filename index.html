@@ -355,8 +355,9 @@ footer{
   min-height:600px;
   max-width:100%;
 }
-.tile-split-reverse{direction:rtl;}
-.tile-split-reverse > *{direction:ltr;}
+.tile-split-reverse{direction:ltr;}
+.tile-split-reverse .tile-split-text{order:1;}
+.tile-split-reverse .tile-split-photo{order:2;}
 .tile-split-photo{
   overflow:hidden;
   position:relative;
@@ -542,6 +543,25 @@ footer{
       <div class="feature-card">
         <div class="feature-card-title">Versatile Applications</div>
         <div class="feature-card-body">Ideal for gaming, content creation, professional tasks, and commercial system upgrades.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GPU TILE — photo left, text right, dark-2 ══ -->
+<div class="tile tile-dark-2 tile-split">
+  <div class="tile-split-inner">
+    <div class="tile-split-photo">
+      <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/tileGPU.jpg" alt="Simorchip GPU" loading="lazy">
+    </div>
+    <div class="tile-split-text">
+      <div class="tile-eyebrow">Graphics Solutions</div>
+      <h2 class="tile-h2">GPU.</h2>
+      <p class="tile-lead">From entry-level to high performance.</p>
+      <p class="tile-body">Simorchip GPUs span NVIDIA GeForce and AMD Radeon architectures — from silent display cards to RTX-enabled workhorses. Whether you're upgrading an office machine or building a capable gaming rig, every card is rigorously tested for compatibility and long-term stability.</p>
+      <div class="tile-cta" style="justify-content:flex-start;">
+        <a class="btn-pill btn-blue" href="product.html">Explore GPUs</a>
+        <a class="btn-pill btn-ghost-dark" href="product.html">View all products</a>
       </div>
     </div>
   </div>
