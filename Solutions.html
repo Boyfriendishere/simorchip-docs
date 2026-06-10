@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simorchip — Solutions for Every System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ══ DESIGN TOKENS — Apple-design-analysis adapted for Simorchip ══ */
+:root{
+  --blue:#0066cc;
+  --blue-dark:#0071e3;
+  --blue-ondark:#2997ff;
+  --ink:#1d1d1f;
+  --ink-80:#333333;
+  --ink-48:#7a7a7a;
+  --muted-dark:#cccccc;
+  --white:#ffffff;
+  --canvas:#ffffff;
+  --parchment:#f5f5f7;
+  --pearl:#fafafc;
+  --tile-1:#272729;
+  --tile-2:#2a2a2c;
+  --tile-3:#252527;
+  --black:#000000;
+  --hairline:#e0e0e0;
+  --divider-soft:#f0f0f0;
+  --sp-xs:8px; --sp-sm:12px; --sp-md:17px; --sp-lg:24px;
+  --sp-xl:32px; --sp-xxl:48px; --sp-section:80px;
+  --f:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --r-sm:8px; --r-lg:18px; --r-pill:9999px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font-smoothing:antialiased;padding-top:44px;}
+
+/* ══ GLOBAL NAV ══ */
+.global-nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  background:var(--black);height:44px;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:0 22px;
+}
+.nav-logo{grid-column:1;justify-self:start;}
+.nav-logo img{height:20px;display:block;filter:brightness(0) invert(1);opacity:.85;}
+.nav-links{display:flex;align-items:center;gap:20px;grid-column:2;justify-self:center;}
+.nav-link{
+  font-size:12px;font-weight:400;letter-spacing:-.12px;line-height:1;
+  color:rgba(255,255,255,.8);text-decoration:none;
+  transition:color .15s;white-space:nowrap;
+}
+.nav-link:hover{color:var(--white);}
+.nav-right{display:flex;align-items:center;gap:8px;grid-column:3;justify-self:end;}
+.nav-lang-btn{
+  font-size:12px;font-weight:400;letter-spacing:-.12px;
+  color:rgba(255,255,255,.5);background:none;border:none;cursor:pointer;
+  padding:4px 8px;border-radius:var(--r-sm);transition:color .15s;
+}
+.nav-lang-btn:hover{color:var(--white);}
+.nav-lang-btn.active{color:var(--white);}
+.nav-burger{
+  display:none;flex-direction:column;gap:4px;
+  background:none;border:none;cursor:pointer;padding:6px 4px;
+}
+.nav-burger span{display:block;width:18px;height:1.5px;background:rgba(255,255,255,.8);transition:all .22s;}
+.nav-mobile{
+  display:none;flex-direction:column;
+  background:var(--black);
+  position:fixed;top:44px;left:0;right:0;z-index:290;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.nav-mobile.open{display:flex;}
+.nav-mobile-link{
+  font-size:17px;font-weight:400;letter-spacing:-.374px;line-height:1.47;
+  color:rgba(255,255,255,.8);text-decoration:none;
+  padding:14px 22px;border-bottom:1px solid rgba(255,255,255,.08);
+  transition:color .15s;
+}
+.nav-mobile-link:hover{color:var(--white);}
+.nav-mobile-lang{display:flex;gap:8px;padding:12px 22px;}
+
+/* ══ HERO TILE (full-bleed video, dark) ══ */
+.hero-tile{
+  position:relative;width:100%;height:100vh;min-height:600px;
+  background:var(--black);overflow:hidden;
+  margin-top:-44px;
+}
+.hero-tile video{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;pointer-events:none;opacity:.7;
+}
+.hero-tile-floor{
+  position:absolute;bottom:0;left:0;right:0;height:60%;
+  background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 100%);
+  pointer-events:none;
+}
+.hero-tile-content{
+  position:absolute;bottom:var(--sp-section);left:0;right:0;
+  text-align:center;padding:0 var(--sp-section);
+}
+.hero-kicker{
+  font-size:12px;font-weight:400;letter-spacing:-.12px;
+  color:var(--muted-dark);margin-bottom:var(--sp-sm);
+}
+.hero-h1{
+  font-size:56px;font-weight:600;line-height:1.07;letter-spacing:-.28px;
+  color:var(--white);margin-bottom:var(--sp-md);
+}
+.hero-sub{
+  font-size:28px;font-weight:400;line-height:1.14;letter-spacing:.196px;
+  color:var(--muted-dark);margin-bottom:var(--sp-xl);
+}
+.hero-cta{display:flex;gap:var(--sp-sm);justify-content:center;flex-wrap:wrap;}
+.btn-pill{
+  font-size:17px;font-weight:400;letter-spacing:-.374px;line-height:1;
+  padding:11px 22px;border-radius:var(--r-pill);
+  text-decoration:none;display:inline-block;
+  transition:transform .15s;cursor:pointer;border:none;
+}
+.btn-pill:active{transform:scale(.95);}
+.btn-blue{background:var(--blue);color:var(--white);}
+.btn-blue:hover{background:var(--blue-dark);}
+.btn-ghost-dark{
+  background:transparent;color:var(--blue-ondark);
+  border:1px solid var(--blue-ondark);
+}
+.btn-ghost-dark:hover{background:rgba(41,151,255,.1);}
+.scroll-hint{
+  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:5px;pointer-events:none;
+}
+.scroll-hint .chev{
+  width:16px;height:16px;
+  border-right:1.5px solid rgba(255,255,255,.3);
+  border-bottom:1.5px solid rgba(255,255,255,.3);
+  transform:rotate(45deg);
+  animation:chevAnim 1.7s ease-in-out infinite;
+}
+.scroll-hint .chev:nth-child(2){margin-top:-11px;opacity:.2;animation-delay:.22s;}
+@keyframes chevAnim{
+  0%,100%{transform:rotate(45deg) translateY(0);opacity:.3;}
+  50%{transform:rotate(45deg) translateY(5px);opacity:.9;}
+}
+
+/* ══ PRODUCT TILES ══ */
+.tile{width:100%;padding:var(--sp-section) var(--sp-section);text-align:center;}
+.tile-light{background:var(--canvas);color:var(--ink);}
+.tile-parchment{background:var(--parchment);color:var(--ink);}
+.tile-dark{background:var(--tile-1);color:var(--white);}
+.tile-dark-2{background:var(--tile-2);color:var(--white);}
+.tile-inner{max-width:980px;margin:0 auto;}
+.tile-eyebrow{
+  font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.231px;
+  margin-bottom:8px;
+}
+.tile-light .tile-eyebrow{color:var(--ink-48);}
+.tile-dark .tile-eyebrow,.tile-dark-2 .tile-eyebrow{color:var(--muted-dark);}
+.tile-parchment .tile-eyebrow{color:var(--ink-48);}
+.tile-h2{
+  font-size:40px;font-weight:600;line-height:1.1;letter-spacing:0;
+  margin-bottom:var(--sp-md);
+}
+.tile-light .tile-h2,.tile-parchment .tile-h2{color:var(--ink);}
+.tile-dark .tile-h2,.tile-dark-2 .tile-h2{color:var(--white);}
+.tile-lead{
+  font-size:28px;font-weight:400;line-height:1.14;letter-spacing:.196px;
+  margin-bottom:var(--sp-xl);max-width:640px;margin-left:auto;margin-right:auto;
+}
+.tile-light .tile-lead,.tile-parchment .tile-lead{color:var(--ink);}
+.tile-dark .tile-lead,.tile-dark-2 .tile-lead{color:var(--muted-dark);}
+.tile-body{
+  font-size:17px;font-weight:400;line-height:1.47;letter-spacing:-.374px;
+  max-width:640px;margin:0 auto var(--sp-xl);
+}
+.tile-light .tile-body,.tile-parchment .tile-body{color:var(--ink);}
+.tile-dark .tile-body,.tile-dark-2 .tile-body{color:var(--muted-dark);}
+.tile-cta{display:flex;gap:var(--sp-sm);justify-content:center;flex-wrap:wrap;}
+.btn-ghost-light{
+  background:transparent;color:var(--blue);
+  border:1px solid var(--blue);
+  font-size:17px;font-weight:400;letter-spacing:-.374px;line-height:1;
+  padding:11px 22px;border-radius:var(--r-pill);
+  text-decoration:none;display:inline-block;
+  transition:transform .15s;
+}
+.btn-ghost-light:hover{background:rgba(0,102,204,.06);}
+.btn-ghost-light:active{transform:scale(.95);}
+.text-link{
+  font-size:17px;font-weight:400;letter-spacing:-.374px;line-height:1.47;
+  color:var(--blue);text-decoration:none;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.text-link::after{content:'›';font-size:20px;line-height:1;}
+.text-link:hover{text-decoration:underline;}
+.text-link-dark{color:var(--blue-ondark);}
+
+/* ══ STATS TILE ══ */
+.stats-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:1px;background:var(--hairline);
+  margin-top:var(--sp-xxl);text-align:center;
+}
+.stat-cell{background:var(--parchment);padding:var(--sp-xl) var(--sp-lg);}
+.stat-num{
+  font-size:40px;font-weight:600;line-height:1.1;
+  color:var(--ink);letter-spacing:0;margin-bottom:8px;
+}
+.stat-num sup{font-size:20px;color:var(--blue);vertical-align:super;}
+.stat-desc{
+  font-size:14px;font-weight:400;line-height:1.43;letter-spacing:-.224px;
+  color:var(--ink-48);
+}
+
+/* ══ FEATURE GRID ══ */
+.feature-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:var(--sp-lg);margin-top:var(--sp-xxl);text-align:left;
+}
+.feature-card{
+  background:var(--canvas);
+  border:1px solid var(--hairline);
+  border-top:2px solid var(--blue);
+  border-radius:var(--r-lg);
+  padding:var(--sp-lg);transition:box-shadow .2s;
+}
+.feature-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);}
+.feature-card-title{
+  font-size:17px;font-weight:600;line-height:1.24;letter-spacing:-.374px;
+  color:var(--ink);margin-bottom:8px;
+}
+.feature-card-body{
+  font-size:14px;font-weight:400;line-height:1.43;letter-spacing:-.224px;
+  color:var(--ink-48);
+}
+
+/* ══ MFG LIST ══ */
+.mfg-list{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:rgba(255,255,255,.10);
+  margin-top:var(--sp-xxl);text-align:left;
+  border-radius:var(--r-lg);overflow:hidden;
+}
+.mfg-item{background:var(--tile-1);padding:var(--sp-xl) var(--sp-lg);transition:background .2s;}
+.mfg-item:hover{background:var(--tile-2);}
+.mfg-item-num{
+  font-size:12px;font-weight:400;letter-spacing:-.12px;
+  color:var(--blue-ondark);margin-bottom:var(--sp-sm);
+}
+.mfg-item-title{
+  font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.231px;
+  color:var(--white);
+}
+.mfg-item-body{
+  font-size:14px;font-weight:400;line-height:1.43;letter-spacing:-.224px;
+  color:var(--muted-dark);margin-top:8px;
+}
+
+/* ══ FOOTER ══ */
+footer{
+  background:var(--parchment);
+  padding:var(--sp-xxl) var(--sp-section);
+  border-top:1px solid var(--hairline);
+}
+.footer-inner{max-width:980px;margin:0 auto;}
+.footer-top{
+  display:flex;align-items:flex-start;gap:80px;
+  padding-bottom:var(--sp-xxl);
+  border-bottom:1px solid var(--hairline);
+  margin-bottom:var(--sp-lg);
+}
+.footer-logo img{height:24px;display:block;object-fit:contain;}
+.footer-info{display:flex;flex-direction:column;gap:8px;}
+.footer-col-title{
+  font-size:14px;font-weight:600;letter-spacing:-.224px;line-height:1.29;
+  color:var(--ink-48);margin-bottom:12px;
+}
+.footer-nav{display:flex;flex-direction:column;gap:10px;}
+.footer-nav a{
+  font-size:14px;font-weight:400;line-height:1.43;letter-spacing:-.224px;
+  color:var(--ink-80);text-decoration:none;transition:color .15s;
+}
+.footer-nav a:hover{color:var(--blue);}
+.footer-row{display:flex;align-items:baseline;gap:12px;}
+.footer-key{
+  font-size:14px;font-weight:600;letter-spacing:-.224px;line-height:1.29;
+  color:var(--ink-48);width:44px;flex-shrink:0;
+}
+.footer-val{
+  font-size:17px;font-weight:400;line-height:2.41;letter-spacing:0;
+  color:var(--ink-80);
+}
+.footer-val a{color:var(--blue);text-decoration:none;}
+.footer-val a:hover{text-decoration:underline;}
+.footer-bottom{
+  font-size:12px;font-weight:400;line-height:1;letter-spacing:-.12px;
+  color:var(--ink-48);
+}
+
+/* ══ RWD ══ */
+@media(max-width:1068px){
+  .hero-h1{font-size:40px;}
+  .tile{padding:var(--sp-section) 40px;}
+  .stats-grid{grid-template-columns:repeat(3,1fr);}
+  .feature-grid{grid-template-columns:1fr 1fr;}
+  .mfg-list{grid-template-columns:1fr 1fr;}
+  footer{padding:var(--sp-xxl) 40px;}
+}
+@media(max-width:834px){
+  .nav-links{display:none;}
+  .nav-burger{display:flex;}
+  .hero-tile-content{padding:0 32px;bottom:56px;}
+  .hero-h1{font-size:34px;}
+  .hero-sub{font-size:21px;}
+  .tile{padding:var(--sp-section) 32px;}
+  .tile-h2{font-size:32px;}
+  .tile-lead{font-size:21px;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .mfg-list{grid-template-columns:1fr;}
+  .footer-top{flex-direction:column;gap:32px;}
+  footer{padding:var(--sp-xxl) 32px;}
+}
+@media(max-width:640px){
+  .hero-h1{font-size:28px;}
+  .hero-sub{font-size:17px;}
+  .tile{padding:64px 22px;}
+  .tile-h2{font-size:28px;}
+  .feature-grid{grid-template-columns:1fr;}
+  .stats-grid{grid-template-columns:1fr;}
+  .mfg-list{grid-template-columns:1fr;}
+  footer{padding:var(--sp-xxl) 22px;}
+}
+
+/* ══ SPLIT TILE ══ */
+.tile-split{padding:0;text-align:left;}
+.tile-split-inner{display:grid;grid-template-columns:1fr 1fr;min-height:600px;max-width:100%;}
+.tile-split-reverse{direction:ltr;}
+.tile-split-reverse .tile-split-text{order:1;}
+.tile-split-reverse .tile-split-photo{order:2;}
+.tile-split-photo{overflow:hidden;position:relative;}
+.tile-split-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:center;display:block;
+  transition:transform .6s ease;
+}
+.tile-split:hover .tile-split-photo img{transform:scale(1.03);}
+.tile-split-text{padding:80px 64px;display:flex;flex-direction:column;justify-content:center;}
+.tile-split-text .tile-eyebrow{text-align:left;}
+.tile-split-text .tile-h2{text-align:left;margin-bottom:16px;}
+.tile-split-text .tile-lead{text-align:left;margin-left:0;margin-right:0;font-size:24px;margin-bottom:24px;}
+.tile-split-text .tile-body{text-align:left;margin-left:0;margin-right:0;margin-bottom:32px;}
+@media(max-width:1024px){.tile-split-text{padding:64px 48px;}}
+@media(max-width:768px){
+  .tile-split-inner{grid-template-columns:1fr;min-height:auto;}
+  .tile-split-reverse{direction:ltr;}
+  .tile-split-photo{height:300px;order:-1;}
+  .tile-split-text{padding:48px 32px;}
+  .tile-split-text .tile-lead{font-size:21px;}
+}
+@media(max-width:480px){
+  .tile-split-photo{height:240px;}
+  .tile-split-text{padding:36px 20px;}
+}
+
+/* ══ PRE-FOOTER CTA BAND ══ */
+.cta-band{
+  background:var(--tile-1);
+  padding:var(--sp-section) var(--sp-section);
+  text-align:center;border-top:1px solid rgba(255,255,255,.06);
+}
+.cta-band-inner{max-width:640px;margin:0 auto;}
+.cta-band-label{
+  font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.231px;
+  color:var(--blue-ondark);margin-bottom:16px;
+}
+.cta-band-h2{
+  font-size:40px;font-weight:600;line-height:1.1;letter-spacing:0;
+  color:var(--white);margin-bottom:var(--sp-xl);
+}
+.cta-band-actions{display:flex;gap:var(--sp-sm);justify-content:center;flex-wrap:wrap;}
+@media(max-width:640px){.cta-band{padding:64px 22px;}.cta-band-h2{font-size:28px;}}
+
+/* ══ SCROLL FADE-IN ══ */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease, transform .6s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+.fade-in-delay-1{transition-delay:.1s;}
+.fade-in-delay-2{transition-delay:.2s;}
+.fade-in-delay-3{transition-delay:.3s;}
+
+/* ══ SOLUTIONS — HERO ══ */
+.sol-hero{background:linear-gradient(180deg,#ffffff 0%,var(--parchment) 100%);padding:var(--sp-section) 40px 0;text-align:center;}
+.sol-hero-inner{max-width:840px;margin:0 auto;}
+.sol-hero-eyebrow{font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.231px;color:var(--ink-48);margin-bottom:8px;}
+.sol-hero-h1{font-size:56px;font-weight:600;line-height:1.07;letter-spacing:-.28px;color:var(--ink);margin-bottom:var(--sp-md);}
+.sol-hero-sub{font-size:24px;font-weight:400;line-height:1.25;letter-spacing:.196px;color:var(--ink-80);max-width:680px;margin:0 auto var(--sp-xl);}
+.sol-hero-cta{display:flex;gap:var(--sp-sm);justify-content:center;flex-wrap:wrap;margin-bottom:var(--sp-section);}
+.sol-hero-media{max-width:1100px;margin:0 auto;padding-bottom:var(--sp-section);}
+.sol-hero-media img{width:100%;height:auto;display:block;border-radius:var(--r-lg);box-shadow:0 20px 60px rgba(0,0,0,.10);}
+
+/* ══ SOLUTIONS — OVERVIEW GRID ══ */
+.sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-lg);margin-top:var(--sp-xxl);text-align:left;}
+.sol-card{display:flex;flex-direction:column;gap:8px;background:var(--canvas);border:1px solid var(--hairline);border-top:2px solid var(--blue);border-radius:var(--r-lg);padding:var(--sp-lg);text-decoration:none;transition:box-shadow .2s, transform .2s;}
+.sol-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);transform:translateY(-2px);}
+.sol-card-title{font-size:19px;font-weight:600;line-height:1.2;letter-spacing:-.3px;color:var(--ink);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.sol-card-title::after{content:'\203A';color:var(--blue);font-size:22px;line-height:1;}
+.sol-card-desc{font-size:14px;font-weight:400;line-height:1.43;letter-spacing:-.224px;color:var(--ink-48);}
+
+/* ══ SOLUTIONS — DETAIL SECTIONS ══ */
+.tile.sol-detail{padding-top:72px;padding-bottom:72px;scroll-margin-top:60px;}
+.sol-row{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;text-align:left;}
+.sol-row-reverse .sol-row-main{order:2;}
+.sol-row-reverse .sol-benefits-panel{order:1;}
+.sol-index{font-size:13px;font-weight:600;letter-spacing:.4px;color:var(--blue);margin-bottom:12px;}
+.sol-detail-title{font-size:32px;font-weight:600;line-height:1.1;letter-spacing:-.5px;color:var(--ink);margin-bottom:10px;}
+.sol-tone{font-size:21px;font-weight:400;line-height:1.3;letter-spacing:-.3px;color:var(--ink-80);margin-bottom:14px;}
+.sol-detail-desc{font-size:16px;font-weight:400;line-height:1.5;letter-spacing:-.2px;color:var(--ink-48);margin-bottom:22px;max-width:460px;}
+.sol-label{font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--ink-48);margin-bottom:12px;}
+.sol-chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+.sol-chip{font-size:13px;font-weight:400;letter-spacing:-.13px;color:var(--ink-80);background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.10);border-radius:var(--r-pill);padding:6px 14px;}
+.sol-row-main .text-link{margin-top:24px;}
+.sol-benefits-panel{padding-top:2px;}
+.sol-benefits{list-style:none;display:flex;flex-direction:column;gap:14px;}
+.sol-benefits li{position:relative;padding-left:30px;font-size:17px;font-weight:400;line-height:1.4;letter-spacing:-.374px;color:var(--ink-80);}
+.sol-benefits li::before{content:'';position:absolute;left:2px;top:4px;width:13px;height:7px;border-left:2px solid var(--blue);border-bottom:2px solid var(--blue);transform:rotate(-45deg);}
+
+@media(max-width:1068px){
+  .sol-hero-h1{font-size:40px;}
+  .sol-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:834px){
+  .sol-hero{padding:var(--sp-section) 32px 0;}
+  .sol-hero-h1{font-size:34px;}
+  .sol-hero-sub{font-size:19px;}
+  .sol-row{grid-template-columns:1fr;gap:32px;}
+  .sol-row-reverse .sol-row-main{order:0;}
+  .sol-row-reverse .sol-benefits-panel{order:0;}
+}
+@media(max-width:640px){
+  .sol-hero-h1{font-size:28px;}
+  .sol-hero-sub{font-size:17px;}
+  .sol-grid{grid-template-columns:1fr;}
+  .sol-detail-title{font-size:26px;}
+  .sol-tone{font-size:19px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ GLOBAL NAV ══ -->
+<nav class="global-nav" id="globalNav">
+  <a class="nav-logo" href="index.html">
+    <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/other/Logo-03.png" alt="Simorchip">
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="product.html">Products</a>
+    <a class="nav-link" href="solutions.html">Solutions</a>
+    <a class="nav-link" href="manufacturing.html">Manufacturing</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="contact.html">Contact</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-lang-btn active">EN</button>
+    <button class="nav-lang-btn">中文</button>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a class="nav-mobile-link" href="product.html">Products</a>
+  <a class="nav-mobile-link" href="solutions.html">Solutions</a>
+  <a class="nav-mobile-link" href="manufacturing.html">Manufacturing</a>
+  <a class="nav-mobile-link" href="about.html">About</a>
+  <a class="nav-mobile-link" href="contact.html">Contact</a>
+  <div class="nav-mobile-lang">
+    <button class="nav-lang-btn active">EN</button>
+    <button class="nav-lang-btn">中文</button>
+  </div>
+</div>
+
+
+<!-- ══ SOLUTIONS HERO ══ -->
+<section class="sol-hero">
+  <div class="sol-hero-inner">
+    <div class="sol-hero-eyebrow fade-in">Solutions</div>
+    <h1 class="sol-hero-h1 fade-in fade-in-delay-1">Solutions for Every System.</h1>
+    <p class="sol-hero-sub fade-in fade-in-delay-2">Storage, memory, graphics, and external solutions built for consumer, business, and industrial applications.</p>
+    <div class="sol-hero-cta fade-in fade-in-delay-3">
+      <a class="btn-pill btn-blue" href="product.html">Explore Products</a>
+      <a class="btn-ghost-light" href="contact.html">Contact Us</a>
+    </div>
+  </div>
+  <div class="sol-hero-media fade-in fade-in-delay-3">
+    <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/ppt_03.png" alt="Simorchip full product lineup — GPU, SSD, DRAM, USB flash, microSD, and external storage">
+  </div>
+</section>
+
+<!-- ══ SOLUTIONS OVERVIEW GRID ══ -->
+<div class="tile tile-light">
+  <div class="tile-inner">
+    <div class="tile-eyebrow fade-in">Browse by need</div>
+    <h2 class="tile-h2 fade-in fade-in-delay-1">Solutions by application.</h2>
+    <p class="tile-body fade-in fade-in-delay-2">Start from the scenario closest to your build. Each path maps real usage to the right mix of storage, memory, and graphics.</p>
+    <div class="sol-grid">
+      <a class="sol-card fade-in" href="#consumer">
+        <div class="sol-card-title">Consumer Upgrade</div>
+        <div class="sol-card-desc">Faster everyday desktops and laptops.</div>
+      </a>
+      <a class="sol-card fade-in fade-in-delay-1" href="#gaming">
+        <div class="sol-card-title">Gaming &amp; Performance</div>
+        <div class="sol-card-desc">Speed, responsiveness, and visual power.</div>
+      </a>
+      <a class="sol-card fade-in fade-in-delay-2" href="#business">
+        <div class="sol-card-title">Business &amp; Office</div>
+        <div class="sol-card-desc">Stable upgrades for productivity.</div>
+      </a>
+      <a class="sol-card fade-in" href="#industrial">
+        <div class="sol-card-title">Industrial &amp; Embedded</div>
+        <div class="sol-card-desc">Reliable parts for long-running systems.</div>
+      </a>
+      <a class="sol-card fade-in fade-in-delay-1" href="#creation">
+        <div class="sol-card-title">Content Creation</div>
+        <div class="sol-card-desc">Throughput for heavy creative work.</div>
+      </a>
+      <a class="sol-card fade-in fade-in-delay-2" href="#portable">
+        <div class="sol-card-title">Portable &amp; External Storage</div>
+        <div class="sol-card-desc">Storage that travels with you.</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SOLUTION 01 — Consumer Upgrade ══ -->
+<div class="tile tile-parchment sol-detail" id="consumer">
+  <div class="tile-inner">
+    <div class="sol-row">
+      <div class="sol-row-main fade-in">
+        <div class="sol-index">01 / 06</div>
+        <h3 class="sol-detail-title">Consumer Upgrade</h3>
+        <p class="sol-tone">Simple upgrades. Noticeable speed.</p>
+        <p class="sol-detail-desc">Breathe new life into an existing desktop or laptop. A drop-in SSD or memory upgrade delivers faster boot, quicker loads, and smoother multitasking — no new system required.</p>
+        <div class="sol-label">Recommended</div>
+        <div class="sol-chip-row"><span class="sol-chip">SATA SSD</span><span class="sol-chip">M.2 SSD</span><span class="sol-chip">DDR4</span><span class="sol-chip">DDR5</span></div>
+        <a class="text-link" href="product.html">View products</a>
+      </div>
+      <div class="sol-benefits-panel fade-in fade-in-delay-1">
+        <div class="sol-label">Benefits</div>
+        <ul class="sol-benefits"><li>Faster boot and application load</li><li>Smoother everyday multitasking</li><li>Easy drop-in installation</li><li>Wide compatibility with existing systems</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ══ SOLUTION 02 — Gaming &amp; Performance ══ -->
+<div class="tile tile-light sol-detail" id="gaming">
+  <div class="tile-inner">
+    <div class="sol-row sol-row-reverse">
+      <div class="sol-row-main fade-in fade-in-delay-1">
+        <div class="sol-index">02 / 06</div>
+        <h3 class="sol-detail-title">Gaming &amp; Performance</h3>
+        <p class="sol-tone">Built for speed, responsiveness, and visual power.</p>
+        <p class="sol-detail-desc">Engineered for builds that can&rsquo;t wait. High-bandwidth storage, fast memory, and capable graphics keep frame rates high and load times short.</p>
+        <div class="sol-label">Recommended</div>
+        <div class="sol-chip-row"><span class="sol-chip">PCIe Gen4 SSD</span><span class="sol-chip">DDR4 RGB</span><span class="sol-chip">DDR5</span><span class="sol-chip">GPU</span></div>
+        <a class="text-link" href="product.html">View products</a>
+      </div>
+      <div class="sol-benefits-panel fade-in">
+        <div class="sol-label">Benefits</div>
+        <ul class="sol-benefits"><li>High-bandwidth PCIe Gen4 storage</li><li>Fast, responsive memory</li><li>Graphics power for smooth visuals</li><li>Headroom for demanding titles</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ══ SOLUTION 03 — Business &amp; Office ══ -->
+<div class="tile tile-parchment sol-detail" id="business">
+  <div class="tile-inner">
+    <div class="sol-row">
+      <div class="sol-row-main fade-in">
+        <div class="sol-index">03 / 06</div>
+        <h3 class="sol-detail-title">Business &amp; Office</h3>
+        <p class="sol-tone">Stable upgrades for productivity-focused systems.</p>
+        <p class="sol-detail-desc">Dependable performance for fleets and classrooms. Standardized components simplify refresh cycles and keep productivity systems running smoothly.</p>
+        <div class="sol-label">Recommended</div>
+        <div class="sol-chip-row"><span class="sol-chip">SATA SSD</span><span class="sol-chip">Mainstream M.2 SSD</span><span class="sol-chip">DDR4</span><span class="sol-chip">Entry display GPU</span></div>
+        <a class="text-link" href="product.html">View products</a>
+      </div>
+      <div class="sol-benefits-panel fade-in fade-in-delay-1">
+        <div class="sol-label">Benefits</div>
+        <ul class="sol-benefits"><li>Stable, consistent performance</li><li>Simplified fleet standardization</li><li>Cost-effective refresh path</li><li>Reliable everyday productivity</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ══ SOLUTION 04 — Industrial &amp; Embedded ══ -->
+<div class="tile tile-light sol-detail" id="industrial">
+  <div class="tile-inner">
+    <div class="sol-row sol-row-reverse">
+      <div class="sol-row-main fade-in fade-in-delay-1">
+        <div class="sol-index">04 / 06</div>
+        <h3 class="sol-detail-title">Industrial &amp; Embedded</h3>
+        <p class="sol-tone">Reliable components for integrated and long-running systems.</p>
+        <p class="sol-detail-desc">Components selected for integration and longevity. Compact form factors and low-power options suit IPC, POS, kiosk, signage, and embedded systems that run continuously.</p>
+        <div class="sol-label">Recommended</div>
+        <div class="sol-chip-row"><span class="sol-chip">SATA SSD</span><span class="sol-chip">M.2 2230/2242/2280</span><span class="sol-chip">DRAM</span><span class="sol-chip">Low-power GPU</span></div>
+        <a class="text-link" href="product.html">View products</a>
+      </div>
+      <div class="sol-benefits-panel fade-in">
+        <div class="sol-label">Benefits</div>
+        <ul class="sol-benefits"><li>Multiple M.2 form factors (2230 / 2242 / 2280)</li><li>Low-power graphics options</li><li>Built for long-running operation</li><li>Suited to integrated deployments</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ══ SOLUTION 05 — Content Creation ══ -->
+<div class="tile tile-parchment sol-detail" id="creation">
+  <div class="tile-inner">
+    <div class="sol-row">
+      <div class="sol-row-main fade-in">
+        <div class="sol-index">05 / 06</div>
+        <h3 class="sol-detail-title">Content Creation</h3>
+        <p class="sol-tone">Performance that supports creation, editing, and heavy workflows.</p>
+        <p class="sol-detail-desc">Throughput for demanding workflows. Fast storage, ample memory, and capable graphics keep editing, rendering, and large-file work moving.</p>
+        <div class="sol-label">Recommended</div>
+        <div class="sol-chip-row"><span class="sol-chip">High-speed SSD</span><span class="sol-chip">DDR5</span><span class="sol-chip">GPU</span><span class="sol-chip">External storage</span></div>
+        <a class="text-link" href="product.html">View products</a>
+      </div>
+      <div class="sol-benefits-panel fade-in fade-in-delay-1">
+        <div class="sol-label">Benefits</div>
+        <ul class="sol-benefits"><li>High-speed storage for large files</li><li>Ample memory for heavy projects</li><li>Graphics for rendering and preview</li><li>External capacity for media libraries</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ══ SOLUTION 06 — Portable &amp; External Storage ══ -->
+<div class="tile tile-light sol-detail" id="portable">
+  <div class="tile-inner">
+    <div class="sol-row sol-row-reverse">
+      <div class="sol-row-main fade-in fade-in-delay-1">
+        <div class="sol-index">06 / 06</div>
+        <h3 class="sol-detail-title">Portable &amp; External Storage</h3>
+        <p class="sol-tone">Take your data wherever work takes you.</p>
+        <p class="sol-detail-desc">Storage that moves with you. Cards, drives, and flash built for backup, field capture, and fast file transfer on the go.</p>
+        <div class="sol-label">Recommended</div>
+        <div class="sol-chip-row"><span class="sol-chip">microSD</span><span class="sol-chip">USB flash drives</span><span class="sol-chip">Portable storage</span></div>
+        <a class="text-link" href="product.html">View products</a>
+      </div>
+      <div class="sol-benefits-panel fade-in">
+        <div class="sol-label">Benefits</div>
+        <ul class="sol-benefits"><li>Pocketable capacity for the field</li><li>Reliable backup and transfer</li><li>Broad device compatibility</li><li>Plug-and-go convenience</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ WHY SIMORCHIP SOLUTIONS ══ -->
+<div class="tile tile-parchment">
+  <div class="tile-inner">
+    <div class="tile-eyebrow fade-in">Why Simorchip</div>
+    <h2 class="tile-h2 fade-in fade-in-delay-1">Solutions you can build on.</h2>
+    <div class="feature-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-card-title">Broad Product Coverage</div>
+        <div class="feature-card-body">From storage and memory to graphics and external — one source for the full stack.</div>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-1">
+        <div class="feature-card-title">Reliable Quality</div>
+        <div class="feature-card-body">Structured validation and inspection before every shipment.</div>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-2">
+        <div class="feature-card-title">Compatibility Focus</div>
+        <div class="feature-card-body">Components selected and tested to fit real-world systems.</div>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-3">
+        <div class="feature-card-title">Flexible Deployment</div>
+        <div class="feature-card-body">Options across form factors, capacities, and performance tiers.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRE-FOOTER CTA BAND ══ -->
+<div class="cta-band">
+  <div class="cta-band-inner fade-in">
+    <div class="cta-band-label">Tailored to your application.</div>
+    <h2 class="cta-band-h2">Need the right solution<br>for your market or system?</h2>
+    <div class="cta-band-actions">
+      <a class="btn-pill btn-blue" href="contact.html">Contact Sales</a>
+      <a class="btn-pill btn-ghost-dark" href="product.html">Explore All Products</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">
+        <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/other/Logo-04.png" alt="Simorchip">
+      </div>
+      <nav class="footer-nav">
+        <div class="footer-col-title">Sitemap</div>
+        <a href="product.html">Products</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="manufacturing.html">Manufacturing</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="footer-info">
+        <div class="footer-row">
+          <span class="footer-key">TEL</span>
+          <span class="footer-val">+886-2-2657-6680</span>
+        </div>
+        <div class="footer-row">
+          <span class="footer-key">EMAIL</span>
+          <span class="footer-val"><a href="mailto:sales@simorchip.com">sales@simorchip.com</a></span>
+        </div>
+        <div class="footer-row">
+          <span class="footer-key">ADD</span>
+          <span class="footer-val">8F.-1, No. 300, Sec. 1, Neihu Rd., Neihu Dist., Taipei City 114066, Taiwan</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      Copyright © 2026 – Simorchip. All rights reserved. Design by Simorchip
+    </div>
+  </div>
+</footer>
+
+<script>
+const burger = document.getElementById('burger');
+const navMobile = document.getElementById('navMobile');
+burger.addEventListener('click',()=>{
+  navMobile.classList.toggle('open');
+  const sp = burger.querySelectorAll('span');
+  if(navMobile.classList.contains('open')){
+    sp[0].style.transform='rotate(45deg) translate(4px,4px)';
+    sp[1].style.opacity='0';
+    sp[2].style.transform='rotate(-45deg) translate(4px,-4px)';
+  } else {
+    sp.forEach(s=>{s.style.transform='';s.style.opacity='';});
+  }
+});
+navMobile.querySelectorAll('.nav-mobile-link').forEach(l=>{
+  l.addEventListener('click',()=>{
+    navMobile.classList.remove('open');
+    burger.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='';});
+  });
+});
+</script>
+
+<script>
+// Scroll fade-in
+const fadeEls = document.querySelectorAll('.fade-in');
+if(fadeEls.length){
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  },{threshold:0.12});
+  fadeEls.forEach(el=>io.observe(el));
+}
+</script>
+
+</body>
+</html>
