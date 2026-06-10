@@ -237,8 +237,9 @@ body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font
 /* ══ MFG LIST ══ */
 .mfg-list{
   display:grid;grid-template-columns:repeat(3,1fr);
-  gap:1px;background:var(--hairline);
+  gap:1px;background:rgba(255,255,255,.10);
   margin-top:var(--sp-xxl);text-align:left;
+  border-radius:var(--r-lg);overflow:hidden;
 }
 .mfg-item{background:var(--tile-1);padding:var(--sp-xl) var(--sp-lg);transition:background .2s;}
 .mfg-item:hover{background:var(--tile-2);}
@@ -249,6 +250,10 @@ body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font
 .mfg-item-title{
   font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.231px;
   color:var(--white);
+}
+.mfg-item-body{
+  font-size:14px;font-weight:400;line-height:1.43;letter-spacing:-.224px;
+  color:var(--muted-dark);margin-top:8px;
 }
 
 /* ══ FOOTER ══ */
@@ -412,8 +417,7 @@ footer{
   <div class="hero-tile-floor"></div>
   <div class="hero-tile-content">
     <div class="hero-kicker">Simorchip · Storage &amp; Memory</div>
-    <h1 class="hero-h1">Built for<br>what's next.</h1>
-    <p class="hero-sub">Storage and memory engineered for the demands of tomorrow.</p>
+    <h1 class="hero-h1">Engineered for storage.<br>Built for memory.<br>Ready for graphics.</h1>
     <div class="hero-cta">
       <a class="btn-pill btn-blue" href="product.html">Explore Products</a>
       <a class="btn-pill btn-ghost-dark" href="about.html">About Us</a>
@@ -422,6 +426,15 @@ footer{
   <div class="scroll-hint">
     <div class="chev"></div>
     <div class="chev"></div>
+  </div>
+</div>
+
+<!-- ══ BRAND INTRO TILE — parchment ══ -->
+<div class="tile tile-parchment">
+  <div class="tile-inner">
+    <h2 class="tile-h2 fade-in">One Brand. Multiple Product Lines.</h2>
+    <p class="tile-lead fade-in fade-in-delay-1">From SSD and DRAM to GPU and external storage, Simorchip provides scalable solutions for consumer, commercial, and channel markets.</p>
+    <p class="tile-body fade-in fade-in-delay-2">With structured product planning, quality validation, and manufacturing control, Simorchip supports partners with stable supply, reliable performance, and a complete product portfolio.</p>
   </div>
 </div>
 
@@ -468,6 +481,7 @@ footer{
   <div class="tile-inner">
     <div class="tile-eyebrow fade-in">Company Overview</div>
     <h2 class="tile-h2 fade-in fade-in-delay-1">By the numbers.</h2>
+    <p class="tile-lead fade-in fade-in-delay-2">A growing technology brand with integrated product planning, manufacturing support, and global channel development.</p>
     <div class="stats-grid">
       <div class="stat-cell fade-in">
         <div class="stat-num">2022</div>
@@ -500,20 +514,46 @@ footer{
     <h2 class="tile-h2 fade-in fade-in-delay-1" style="text-align:center;">Core Strengths.</h2>
     <div class="feature-grid">
       <div class="feature-card fade-in">
-        <div class="feature-card-title">High Performance</div>
+        <div class="feature-card-title">Product Performance</div>
         <div class="feature-card-body">DRAM supports high-speed data rates from DDR3 to DDR5; SSDs utilize 3D NAND for fast access and superior performance.</div>
       </div>
       <div class="feature-card fade-in">
-        <div class="feature-card-title">Broad Compatibility</div>
+        <div class="feature-card-title">System Compatibility</div>
         <div class="feature-card-body">Both DRAM and SSDs are thoroughly tested to ensure compatibility across a wide range of systems.</div>
       </div>
       <div class="feature-card fade-in">
-        <div class="feature-card-title">Stable &amp; Reliable</div>
+        <div class="feature-card-title">Validated Reliability</div>
         <div class="feature-card-body">JEDEC-compliant DRAM and over 20 years of industry experience. SSDs feature no moving parts and wear-leveling for extended lifespan.</div>
       </div>
       <div class="feature-card fade-in">
-        <div class="feature-card-title">Versatile Applications</div>
+        <div class="feature-card-title">Channel-Ready Portfolio</div>
         <div class="feature-card-body">Ideal for gaming, content creation, professional tasks, and commercial system upgrades.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MANUFACTURING & QC TILE — dark ══ -->
+<div class="tile tile-dark">
+  <div class="tile-inner">
+    <div class="tile-eyebrow fade-in">Manufacturing &amp; Quality Control</div>
+    <h2 class="tile-h2 fade-in fade-in-delay-1">One more check<br>before delivery.</h2>
+    <p class="tile-body fade-in fade-in-delay-2">Every Simorchip product follows a structured path of manufacturing, validation, inspection, and outgoing re-test before shipment.</p>
+    <div class="mfg-list">
+      <div class="mfg-item fade-in">
+        <div class="mfg-item-num">01</div>
+        <div class="mfg-item-title">Material Control</div>
+        <div class="mfg-item-body">Components are verified before production.</div>
+      </div>
+      <div class="mfg-item fade-in fade-in-delay-1">
+        <div class="mfg-item-num">02</div>
+        <div class="mfg-item-title">Testing &amp; Validation</div>
+        <div class="mfg-item-body">Capacity, compatibility, and stability are checked across product lines.</div>
+      </div>
+      <div class="mfg-item fade-in fade-in-delay-2">
+        <div class="mfg-item-num">03</div>
+        <div class="mfg-item-title">Outgoing Re-test</div>
+        <div class="mfg-item-body">An additional checkpoint helps reduce outgoing quality risk.</div>
       </div>
     </div>
   </div>
@@ -560,11 +600,11 @@ footer{
 <!-- ══ PRE-FOOTER CTA BAND ══ -->
 <div class="cta-band">
   <div class="cta-band-inner fade-in">
-    <div class="cta-band-label">Ready to upgrade?</div>
-    <h2 class="cta-band-h2">Find the right product<br>for your system.</h2>
+    <div class="cta-band-label">Ready to build your product lineup?</div>
+    <h2 class="cta-band-h2">Explore Simorchip solutions<br>for your market.</h2>
     <div class="cta-band-actions">
-      <a class="btn-pill btn-blue" href="product.html">Explore all products</a>
-      <a class="btn-pill btn-ghost-dark" href="contact.html">Talk to us</a>
+      <a class="btn-pill btn-blue" href="product.html">View Products</a>
+      <a class="btn-pill btn-ghost-dark" href="contact.html">Contact Sales</a>
     </div>
   </div>
 </div>
