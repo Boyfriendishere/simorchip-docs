@@ -37,7 +37,7 @@ body{font-family:var(--ff-b);background:var(--bg);color:var(--ink);overflow-x:hi
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:50px;transition:background .3s,border-bottom .3s,box-shadow .3s;}
 nav.sc{background:rgba(250,247,242,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);box-shadow:0 1px 12px var(--shadow);}
-.nb{display:flex;flex-direction:column;gap:1px;}
+.nb{display:flex;flex-direction:column;gap:1px;text-decoration:none;color:inherit;}
 .nb-s{font-family:var(--ff-m);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);opacity:.9;}
 .nb-b{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);opacity:.22;}
 .np{display:flex;gap:4px;}
@@ -517,7 +517,7 @@ section{position:relative;width:100%;overflow:hidden;}
 <div id="cur"></div><div id="cur-ring"></div>
 
 <nav id="nav">
-  <div class="nb"><span class="nb-s">Radeon · Bay</span><span class="nb-b">Simorchip</span></div>
+  <a href="../product.html" class="nb"><span class="nb-s">Radeon · Bay</span><span class="nb-b">Simorchip</span></a>
   <div class="np">
     <a class="on" onclick="goTo('s00')">Hero</a>
     <a onclick="goTo('s01')">Bay</a>

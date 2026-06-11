@@ -49,7 +49,7 @@ body{font-family:var(--ff-b);background:var(--bg);color:var(--ink);overflow-x:hi
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:18px 5%;transition:background .3s,border-bottom .3s;}
 nav.sc{background:rgba(8,12,24,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(200,160,80,.12);}
-.nav-logo{font-family:var(--ff-d);font-size:17px;letter-spacing:.22em;color:var(--gold);}
+.nav-logo{font-family:var(--ff-d);font-size:17px;letter-spacing:.22em;color:var(--gold);text-decoration:none;}
 .nav-logo em{color:var(--ruby);font-style:normal;}
 .np{display:flex;gap:4px;}
 .np a{font-family:var(--ff-m);font-size:9px;letter-spacing:.08em;color:var(--label);border:1px solid rgba(200,160,80,.14);padding:4px 9px;cursor:pointer;text-decoration:none;transition:all .2s;background:transparent;text-transform:uppercase;}
@@ -572,7 +572,7 @@ section{position:relative;width:100%;overflow:hidden;}
 <div id="cur"></div><div id="cur-ring"></div>
 
 <nav id="nav">
-  <div class="nav-logo">SIMOR<em>CHIP</em></div>
+  <a href="../product.html" class="nav-logo">SIMOR<em>CHIP</em></a>
   <div class="np">
     <a class="on" onclick="goTo('s00')">Hero</a>
     <a onclick="goTo('s01')">Vision</a>

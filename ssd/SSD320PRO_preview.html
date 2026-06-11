@@ -29,7 +29,7 @@ body{font-family:var(--ff-b);background:var(--void);color:var(--white);overflow-
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:24px 5%;border-bottom:.5px solid transparent;transition:border-color .4s,background .4s;}
 nav.scrolled{border-bottom-color:rgba(255,255,255,.06);background:rgba(0,0,0,.8);backdrop-filter:blur(12px);}
-.nav-brand{font-family:var(--ff-d);font-size:11px;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.nav-brand{font-family:var(--ff-d);font-size:11px;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;}
 .nav-links{display:flex;gap:32px;}
 .nav-link{font-family:var(--ff-b);font-size:10px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.55);cursor:pointer;transition:color .2s;padding:4px 0;}
 .nav-link:hover,.nav-link.on{color:var(--orange);}
@@ -329,7 +329,7 @@ section{position:relative;width:100%;overflow:hidden;}
 <div class="grain"></div>
 
 <nav id="nav">
-  <div class="nav-brand">Simorchip</div>
+  <a href="../product.html" class="nav-brand">Simorchip</a>
   <div class="nav-links">
     <div class="nav-link on" onclick="goTo('s00')">SSD 320PRO</div>
     <div class="nav-link" onclick="goTo('s02')">Reliable</div>

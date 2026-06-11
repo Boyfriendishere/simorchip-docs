@@ -37,7 +37,7 @@ body{font-family:var(--ff-b);background:var(--bg);color:var(--white);overflow-x:
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:20px 5%;transition:background .3s,border-bottom .3s;}
 nav.scrolled{background:rgba(10,12,18,.94);backdrop-filter:blur(12px);border-bottom:.5px solid var(--border);}
-.nav-brand{font-family:var(--ff-m);font-size:10px;font-weight:300;letter-spacing:.26em;text-transform:uppercase;color:var(--white);opacity:.28;}
+.nav-brand{font-family:var(--ff-m);font-size:10px;font-weight:300;letter-spacing:.26em;text-transform:uppercase;color:var(--white);opacity:.28;text-decoration:none;}
 .nav-pills{display:flex;gap:6px;}
 @keyframes pillRgb{0%,100%{border-color:rgba(255,68,85,.5);background:rgba(255,68,85,.1);}33%{border-color:rgba(68,255,136,.5);background:rgba(68,255,136,.1);}66%{border-color:rgba(68,170,255,.5);background:rgba(68,170,255,.1);}}
 .nav-pill{font-family:var(--ff-m);font-size:9px;font-weight:300;letter-spacing:.1em;color:var(--label);border:.5px solid var(--border);padding:4px 9px;cursor:pointer;transition:color .2s;}
@@ -316,7 +316,7 @@ section{position:relative;width:100%;overflow:hidden;}
 <div id="cur"></div><div id="cur-ring"></div><div id="spot"></div>
 
 <nav id="nav">
-  <div class="nav-brand">Simorchip</div>
+  <a href="../product.html" class="nav-brand">Simorchip</a>
   <div class="nav-pills" id="navPills">
     <div class="nav-pill on" onclick="goTo('s00')">Hero</div>
     <div class="nav-pill" onclick="goTo('s02')">Harder</div>

@@ -21,7 +21,7 @@ body{font-family:var(--ff-b);background:var(--bg);color:var(--ink);overflow-x:hi
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:16px 5%;transition:background .3s,border-bottom .3s;}
 nav.sc{background:#f5f3f0f2;backdrop-filter:blur(14px);border-bottom:.5px solid var(--border);}
-.nb{display:flex;flex-direction:column;gap:1px;}
+.nb{display:flex;flex-direction:column;gap:1px;text-decoration:none;color:inherit;}
 .nb-s{font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#2d5a8e;}
 .nb-b{font-family:var(--ff-m);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);opacity:.38;}
 .np{display:flex;gap:5px;}
@@ -147,7 +147,7 @@ section{position:relative;width:100%;overflow:hidden;}
 <body>
 
 <nav id="nav">
-  <div class="nb"><span class="nb-s">Precision Series</span><span class="nb-b">Simorchip</span></div>
+  <a href="../product.html" class="nb"><span class="nb-s">Precision Series</span><span class="nb-b">Simorchip</span></a>
   <div class="np">
     <a class="on" onclick="goTo('s00')">Hero</a>
     <a onclick="goTo('s01')">Why DDR3</a>

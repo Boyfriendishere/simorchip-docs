@@ -59,7 +59,6 @@ body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font
 }
 .nav-lang-btn:hover{color:var(--white);}
 .nav-lang-btn.active{color:var(--white);}
-a.nav-lang-btn{text-decoration:none;display:inline-block;}
 .nav-burger{
   display:none;flex-direction:column;gap:4px;
   background:none;border:none;cursor:pointer;padding:6px 4px;
@@ -462,8 +461,8 @@ footer{
     <a class="nav-link" href="contact.html">Contact</a>
   </div>
   <div class="nav-right">
-    <a class="nav-lang-btn active" href="solutions.html">EN</a>
-    <a class="nav-lang-btn" href="solutions-zh.html">中文</a>
+    <button class="nav-lang-btn active">EN</button>
+    <button class="nav-lang-btn">中文</button>
     <button class="nav-burger" id="burger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -476,8 +475,8 @@ footer{
   <a class="nav-mobile-link" href="about.html">About</a>
   <a class="nav-mobile-link" href="contact.html">Contact</a>
   <div class="nav-mobile-lang">
-    <a class="nav-lang-btn active" href="solutions.html">EN</a>
-    <a class="nav-lang-btn" href="solutions-zh.html">中文</a>
+    <button class="nav-lang-btn active">EN</button>
+    <button class="nav-lang-btn">中文</button>
   </div>
 </div>
 
