@@ -81,6 +81,22 @@ section{padding:84px 0}
 .sec-dark .sec-head p{color:var(--muted-dark)}
 .sec-dark .sec-lead{color:#fff}
 
+/* ══ MEDIA (factory photos) ══ */
+.media-banner{position:relative;margin-top:50px;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:16/9;box-shadow:var(--shadow)}
+.media-banner img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.media-banner:hover img{transform:scale(1.03)}
+.media-banner .cap{position:absolute;left:0;right:0;bottom:0;padding:28px 32px;background:linear-gradient(0deg,rgba(0,0,0,.6),rgba(0,0,0,0));color:#fff}
+.media-banner .cap .t{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.media-banner .cap .z{font-size:13px;color:rgba(255,255,255,.78);margin-top:4px;max-width:48ch}
+@media(max-width:640px){.media-banner .cap{padding:18px 20px}}
+.media-split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:56px}
+@media(max-width:900px){.media-split{grid-template-columns:1fr;gap:24px}.media-split .mphoto{order:-1}}
+.media-split .mphoto{border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);aspect-ratio:4/3}
+.media-split .mphoto img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.media-split .mphoto:hover img{transform:scale(1.04)}
+.media-split .mtext h3{font-size:clamp(22px,3vw,30px);margin:10px 0 12px}
+.media-split .mtext p{color:var(--ink-48);font-size:15px;line-height:1.65}
+
 /* pill buttons */
 .btn-pill{font-size:17px;font-weight:400;letter-spacing:-.02em;line-height:1;padding:11px 22px;border-radius:var(--r-pill);text-decoration:none;display:inline-block;transition:transform .15s,background .15s;cursor:pointer;border:none}
 .btn-pill:active{transform:scale(.96)}
@@ -299,6 +315,13 @@ section{padding:84px 0}
         <g id="heroNodes"></g>
       </svg>
     </div>
+    <div class="media-banner reveal">
+      <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/manufacturing02.png" alt="Simorchip production line — SMT placement and assembly" loading="lazy">
+      <div class="cap">
+        <div class="t">Inside the Production Line</div>
+        <div class="z">SMT placement, assembly, and burn-in lines running side by side for SSD, DRAM &amp; USB Flash Drive.</div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -384,6 +407,16 @@ section{padding:84px 0}
       <p>Beyond manufacturing flow, Simorchip products go through dedicated validation procedures to confirm capacity, performance, compatibility, stability, and product information before delivery.</p>
     </div>
     <div class="vgrid" id="vgrid"></div>
+    <div class="media-split reveal">
+      <div class="mphoto">
+        <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/manufacturing01.png" alt="Automated test fixture validating DRAM modules" loading="lazy">
+      </div>
+      <div class="mtext">
+        <div class="eyebrow">On the Line</div>
+        <h3>Automated Functional Testing</h3>
+        <p>Memory modules run through automated test fixtures that check capacity, timing, and electrical parameters — every unit, every batch, before moving to the next stage. Removing manual variance keeps results consistent and repeatable.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -396,6 +429,16 @@ section{padding:84px 0}
       <p>Inspection doesn't wait until the end. It runs through every stage — to catch, correct, and confirm before anything ships.</p>
     </div>
     <div class="badges reveal" id="badges"></div>
+    <div class="media-split reveal">
+      <div class="mtext">
+        <div class="eyebrow">On the Floor</div>
+        <h3>Verified by Trained Inspectors</h3>
+        <p>Dedicated QC stations confirm product information, appearance, and final test results for every batch — the last check before goods are approved for packing and shipment.</p>
+      </div>
+      <div class="mphoto">
+        <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/manufacturing03.png" alt="Quality control inspector verifying product data on a test station" loading="lazy">
+      </div>
+    </div>
   </div>
 </section>
 
