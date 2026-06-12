@@ -169,6 +169,10 @@ footer{
   font-size:56px;font-weight:600;line-height:1.07;letter-spacing:-.28px;
   color:var(--white);
 }
+.page-hero-sub{
+  font-size:19px;font-weight:400;line-height:1.42;letter-spacing:-.304px;
+  color:rgba(255,255,255,.56);max-width:560px;margin:14px auto 0;
+}
 
 /* product page overrides */
 .product-search-band{
@@ -200,6 +204,10 @@ footer{
 }
 .product-filter-pill:hover{border-color:var(--blue);color:var(--blue);}
 .product-filter-pill.on{background:var(--blue);color:var(--white);border-color:var(--blue);}
+.product-result-count{
+  font-size:13px;font-weight:400;letter-spacing:-.08px;
+  color:var(--ink-48);margin-left:auto;white-space:nowrap;
+}
 
 /* chapter heading */
 .chapter{scroll-margin-top:120px;}
@@ -305,15 +313,27 @@ footer{
 .pcard-main-link *{text-decoration:none;color:inherit;}
 .pcard-main-link:visited,.pcard-main-link:visited *{color:inherit;}
 
+/* empty state */
+.empty-state{
+  display:none;text-align:center;
+  padding:var(--sp-section) var(--sp-section);
+  font-size:17px;font-weight:400;letter-spacing:-.224px;
+  color:var(--ink-48);
+}
+.empty-state.show{display:block;}
+
 /* RWD subpage */
 @media(max-width:768px){
   .page-hero-tile{padding:100px 24px var(--sp-xxl);}
   .page-hero-h1{font-size:40px;}
+  .page-hero-sub{font-size:17px;}
   .product-search-band{padding:12px 24px;}
   .product-search-inner{flex:1;}
+  .product-result-count{flex-basis:100%;margin-left:0;text-align:right;}
   .chapter-band{padding:var(--sp-xl) 24px var(--sp-lg);}
   .sub-band{padding:10px 24px 8px;}
   .prow-outer{padding:0 24px var(--sp-xxl);}
+  .empty-state{padding:var(--sp-xxl) 24px;}
 }
 @media(max-width:480px){
   .page-hero-h1{font-size:32px;}
@@ -322,6 +342,7 @@ footer{
   .chapter-band{padding:var(--sp-lg) 16px var(--sp-sm);}
   .sub-band{padding:8px 16px 6px;}
   .prow-outer{padding:0 16px var(--sp-xl);}
+  .empty-state{padding:var(--sp-xl) 16px;}
 }
 
 </style>
@@ -361,6 +382,7 @@ footer{
 <div class="page-hero-tile">
   <div class="page-hero-eyebrow">Products</div>
   <h1 class="page-hero-h1">All Products.</h1>
+  <p class="page-hero-sub">SSDs, memory modules, graphics cards, and storage accessories — each with full specs, preview pages, and ready-to-use copywriting.</p>
 </div>
 
 <!-- Search + filter -->
@@ -376,6 +398,7 @@ footer{
     <div class="product-filter-pill" data-filter="gpu">GPU</div>
     <div class="product-filter-pill" data-filter="ext">External</div>
   </div>
+  <span class="product-result-count" id="count"></span>
 </div>
 
 <div class="chapter" id="ssd" data-chapter="ssd">
@@ -881,7 +904,8 @@ footer{
   </div></div>
 </div>
 
-<!-- ══ STATUS BAR ══ -->
+<div class="empty-state" id="emptyState">No products match your search. Try a different keyword or filter.</div>
+
 <!-- ══ FOOTER ══ -->
 
 
@@ -941,10 +965,11 @@ if(burger && navMobile){
 }
 </script>
 <script>
-const searchEl = document.getElementById('search');
-const pills    = document.querySelectorAll('.product-filter-pill');
-const cards    = document.querySelectorAll('.pcard');
-const countEl  = document.getElementById('count') || {textContent:''};
+const searchEl   = document.getElementById('search');
+const pills      = document.querySelectorAll('.product-filter-pill');
+const cards      = document.querySelectorAll('.pcard');
+const countEl    = document.getElementById('count');
+const emptyState = document.getElementById('emptyState');
 let activeFilter = 'all';
 
 function applyFilter(){
@@ -962,6 +987,7 @@ function applyFilter(){
     ch.style.display=vis?'':'none';
   });
   countEl.textContent=(q||activeFilter!=='all')?`${shown} result${shown!==1?'s':''}`:`${cards.length} products`;
+  emptyState.classList.toggle('show',shown===0);
 }
 searchEl.addEventListener('input',applyFilter);
 pills.forEach(p=>{
