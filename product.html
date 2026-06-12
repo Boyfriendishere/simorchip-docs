@@ -97,214 +97,6 @@ body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font
 .nav-mobile-link:hover{color:var(--white);}
 .nav-mobile-lang{display:flex;gap:8px;padding:12px 22px;}
 
-/* ══ HERO TILE (full-bleed video, dark) ══ */
-.hero-tile{
-  position:relative;width:100%;height:100vh;min-height:600px;
-  background:var(--black);overflow:hidden;
-}
-.hero-tile video{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;pointer-events:none;opacity:.7;
-}
-/* dark floor — per spec: no gradient backdrop on type, color comes from photography */
-.hero-tile-floor{
-  position:absolute;bottom:0;left:0;right:0;height:60%;
-  background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 100%);
-  pointer-events:none;
-}
-.hero-tile-content{
-  position:absolute;bottom:var(--sp-section);left:0;right:0;
-  text-align:center;padding:0 var(--sp-section);
-}
-.hero-kicker{
-  font-size:12px;font-weight:400;letter-spacing:-.12px;
-  color:var(--muted-dark);margin-bottom:var(--sp-sm);
-}
-.hero-h1{
-  font-size:56px;font-weight:600;line-height:1.07;letter-spacing:-.28px;
-  color:var(--white);margin-bottom:var(--sp-md);
-}
-.hero-sub{
-  font-size:28px;font-weight:400;line-height:1.14;letter-spacing:.196px;
-  color:var(--muted-dark);margin-bottom:var(--sp-xl);
-}
-.hero-cta{display:flex;gap:var(--sp-sm);justify-content:center;flex-wrap:wrap;}
-/* pill buttons */
-.btn-pill{
-  font-size:17px;font-weight:400;letter-spacing:-.374px;line-height:1;
-  padding:11px 22px;border-radius:var(--r-pill);
-  text-decoration:none;display:inline-block;
-  transition:transform .25s cubic-bezier(.16,1,.3,1),background-color .25s ease,box-shadow .25s ease,border-color .25s ease;
-  cursor:pointer;border:1px solid transparent;
-}
-.btn-pill:active{transform:scale(.96);}
-.btn-blue{background:var(--blue);color:var(--white);}
-.btn-blue:hover{background:var(--blue-dark);box-shadow:0 8px 20px rgba(0,102,204,.28);transform:translateY(-2px);}
-/* ghost pill on dark */
-.btn-ghost-dark{
-  background:transparent;color:var(--blue-ondark);
-  border:1px solid var(--blue-ondark);
-}
-.btn-ghost-dark:hover{background:rgba(41,151,255,.1);border-color:var(--white);color:var(--white);transform:translateY(-2px);}
-/* scroll hint */
-.scroll-hint{
-  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:5px;pointer-events:none;
-}
-.scroll-hint .chev{
-  width:16px;height:16px;
-  border-right:1.5px solid rgba(255,255,255,.3);
-  border-bottom:1.5px solid rgba(255,255,255,.3);
-  transform:rotate(45deg);
-  animation:chevAnim 1.7s ease-in-out infinite;
-}
-.scroll-hint .chev:nth-child(2){margin-top:-11px;opacity:.2;animation-delay:.22s;}
-@keyframes chevAnim{
-  0%,100%{transform:rotate(45deg) translateY(0);opacity:.3;}
-  50%{transform:rotate(45deg) translateY(5px);opacity:.9;}
-}
-
-/* ══ PRODUCT TILES — full-bleed, 0px radius, color-change = divider ══ */
-.tile{width:100%;padding:var(--sp-section) var(--sp-section);text-align:center;}
-.tile-light{background:var(--canvas);color:var(--ink);}
-.tile-parchment{background:var(--parchment);color:var(--ink);}
-.tile-dark{background:var(--tile-1);color:var(--white);}
-.tile-dark-2{background:var(--tile-2);color:var(--white);}
-.tile-inner{max-width:980px;margin:0 auto;}
-
-/* tile headline hierarchy */
-.tile-eyebrow{
-  font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.231px;
-  margin-bottom:8px;
-}
-.tile-light .tile-eyebrow{color:var(--ink-48);}
-.tile-dark .tile-eyebrow,.tile-dark-2 .tile-eyebrow{color:var(--muted-dark);}
-.tile-parchment .tile-eyebrow{color:var(--ink-48);}
-
-.tile-h2{
-  font-size:40px;font-weight:600;line-height:1.1;letter-spacing:0;
-  margin-bottom:var(--sp-md);
-}
-.tile-light .tile-h2,.tile-parchment .tile-h2{color:var(--ink);}
-.tile-dark .tile-h2,.tile-dark-2 .tile-h2{color:var(--white);}
-
-.tile-lead{
-  font-size:28px;font-weight:400;line-height:1.14;letter-spacing:.196px;
-  margin-bottom:var(--sp-xl);max-width:640px;margin-left:auto;margin-right:auto;
-}
-.tile-light .tile-lead,.tile-parchment .tile-lead{color:var(--ink);}
-.tile-dark .tile-lead,.tile-dark-2 .tile-lead{color:var(--muted-dark);}
-
-.tile-body{
-  font-size:17px;font-weight:400;line-height:1.47;letter-spacing:-.374px;
-  max-width:640px;margin:0 auto var(--sp-xl);
-}
-.tile-light .tile-body,.tile-parchment .tile-body{color:var(--ink);}
-.tile-dark .tile-body,.tile-dark-2 .tile-body{color:var(--muted-dark);}
-
-.tile-cta{display:flex;gap:var(--sp-sm);justify-content:center;flex-wrap:wrap;}
-
-/* ghost pill on light */
-.btn-ghost-light{
-  background:transparent;color:var(--blue);
-  border:1px solid var(--blue);
-  font-size:17px;font-weight:400;letter-spacing:-.374px;line-height:1;
-  padding:11px 22px;border-radius:var(--r-pill);
-  text-decoration:none;display:inline-block;
-  transition:transform .25s cubic-bezier(.16,1,.3,1),background-color .25s ease,box-shadow .25s ease,border-color .25s ease;
-}
-.btn-ghost-light:hover{background:rgba(0,102,204,.06);border-color:var(--blue-dark);box-shadow:0 8px 20px rgba(0,102,204,.12);transform:translateY(-2px);}
-.btn-ghost-light:active{transform:scale(.96);}
-
-/* text-link on light */
-.text-link{
-  position:relative;
-  font-size:17px;font-weight:400;letter-spacing:-.374px;line-height:1.47;
-  color:var(--blue);text-decoration:none;
-  display:inline-flex;align-items:center;gap:4px;
-}
-.text-link::after{content:'›';font-size:20px;line-height:1;transition:transform .25s cubic-bezier(.16,1,.3,1);}
-.text-link::before{
-  content:'';position:absolute;left:0;right:100%;bottom:-1px;height:1px;
-  background:currentColor;transition:right .3s cubic-bezier(.16,1,.3,1);
-}
-.text-link:hover::before{right:0;}
-.text-link:hover::after{transform:translateX(3px);}
-/* on dark */
-.text-link-dark{color:var(--blue-ondark);}
-
-/* ══ STATS TILE ══ */
-.stats-grid{
-  display:grid;grid-template-columns:repeat(5,1fr);
-  gap:1px;background:var(--hairline);
-  margin-top:var(--sp-xxl);text-align:center;
-}
-.stat-cell{
-  background:var(--parchment);
-  padding:var(--sp-xl) var(--sp-lg);
-}
-.stat-num{
-  font-size:40px;font-weight:600;line-height:1.1;
-  color:var(--ink);letter-spacing:0;
-  margin-bottom:8px;
-}
-.stat-num sup{font-size:20px;color:var(--blue);vertical-align:super;}
-.stat-desc{
-  font-size:14px;font-weight:400;line-height:1.43;letter-spacing:-.224px;
-  color:var(--ink-48);
-}
-
-/* ══ FEATURE GRID (store-utility-card style) ══ */
-.feature-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:var(--sp-lg);margin-top:var(--sp-xxl);
-  text-align:left;
-}
-.feature-card{
-  position:relative;
-  background:var(--canvas);
-  border:1px solid var(--hairline);
-  border-radius:var(--r-lg);
-  padding:var(--sp-lg);overflow:hidden;
-  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1),border-color .35s ease;
-}
-.feature-card::before{
-  content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
-  background:var(--blue);transform:scaleY(0);transform-origin:bottom;
-  transition:transform .35s cubic-bezier(.16,1,.3,1);
-}
-.feature-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.08);border-color:rgba(0,102,204,.2);}
-.feature-card:hover::before{transform:scaleY(1);}
-.feature-card-title{
-  font-size:17px;font-weight:600;line-height:1.24;letter-spacing:-.374px;
-  color:var(--ink);margin-bottom:8px;
-}
-.feature-card-body{
-  font-size:14px;font-weight:400;line-height:1.43;letter-spacing:-.224px;
-  color:var(--ink-48);
-}
-
-/* ══ MFG LIST ══ */
-.mfg-list{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:1px;background:var(--hairline);
-  margin-top:var(--sp-xxl);text-align:left;
-}
-.mfg-item{
-  background:var(--tile-1);
-  padding:var(--sp-xl) var(--sp-lg);
-  transition:background .2s;
-}
-.mfg-item:hover{background:var(--tile-2);}
-.mfg-item-num{
-  font-size:12px;font-weight:400;letter-spacing:-.12px;
-  color:var(--blue-ondark);margin-bottom:var(--sp-sm);
-}
-.mfg-item-title{
-  font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.231px;
-  color:var(--white);
-}
-
 /* ══ FOOTER ══ */
 footer{
   background:var(--parchment);
@@ -344,36 +136,22 @@ footer{
 
 /* ══ RWD ══ */
 @media(max-width:1068px){
-  .hero-h1{font-size:40px;}
-  .tile{padding:var(--sp-section) 40px;}
-  .stats-grid{grid-template-columns:repeat(3,1fr);}
-  .feature-grid{grid-template-columns:1fr 1fr;}
-  .mfg-list{grid-template-columns:1fr 1fr;}
+  .prow{grid-template-columns:repeat(3,1fr);}
   footer{padding:var(--sp-xxl) 40px;}
 }
 @media(max-width:834px){
   .nav-links{display:none;}
   .nav-burger{display:flex;}
-  .hero-tile-content{padding:0 32px;bottom:56px;}
-  .hero-h1{font-size:34px;}
-  .hero-sub{font-size:21px;}
-  .tile{padding:var(--sp-section) 32px;}
-  .tile-h2{font-size:32px;}
-  .tile-lead{font-size:21px;}
-  .stats-grid{grid-template-columns:1fr 1fr;}
-  .mfg-list{grid-template-columns:1fr;}
+  .prow{grid-template-columns:repeat(2,1fr);}
   .footer-top{flex-direction:column;gap:32px;}
   footer{padding:var(--sp-xxl) 32px;}
 }
 @media(max-width:640px){
-  .hero-h1{font-size:28px;}
-  .hero-sub{font-size:17px;}
-  .tile{padding:64px 22px;}
-  .tile-h2{font-size:28px;}
-  .feature-grid{grid-template-columns:1fr;}
-  .stats-grid{grid-template-columns:1fr;}
-  .mfg-list{grid-template-columns:1fr;}
+  .prow{grid-template-columns:1fr 1fr;gap:var(--sp-sm);}
   footer{padding:var(--sp-xxl) 22px;}
+}
+@media(max-width:480px){
+  .prow{grid-template-columns:1fr;}
 }
 
 
@@ -390,52 +168,6 @@ footer{
 .page-hero-h1{
   font-size:56px;font-weight:600;line-height:1.07;letter-spacing:-.28px;
   color:var(--white);
-}
-
-/* about pillars */
-.pillar-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:var(--sp-lg);margin-top:var(--sp-xxl);text-align:left;
-}
-.pillar-card{
-  background:var(--canvas);border:1px solid var(--hairline);
-  border-radius:var(--r-lg);padding:var(--sp-xl);
-  border-top:2px solid var(--blue);
-}
-.pillar-title{
-  font-size:17px;font-weight:600;line-height:1.24;letter-spacing:-.374px;
-  color:var(--ink);margin-bottom:10px;
-}
-.pillar-body{
-  font-size:17px;font-weight:400;line-height:1.47;letter-spacing:-.374px;
-  color:var(--ink-48);
-}
-
-/* contact grid */
-.contact-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:var(--sp-lg);margin-top:var(--sp-xxl);
-}
-.contact-card{
-  background:var(--canvas);border:1px solid var(--hairline);
-  border-radius:var(--r-lg);padding:var(--sp-xl);
-}
-.contact-card-icon{
-  font-size:28px;line-height:1;margin-bottom:var(--sp-md);
-}
-.contact-card-label{
-  font-size:14px;font-weight:600;letter-spacing:-.224px;line-height:1.29;
-  color:var(--ink-48);margin-bottom:6px;
-}
-.contact-card-value{
-  font-size:17px;font-weight:400;line-height:1.47;letter-spacing:-.374px;
-  color:var(--ink);
-}
-.contact-card-value a{color:var(--blue);text-decoration:none;}
-.contact-card-value a:hover{text-decoration:underline;}
-.contact-hours{
-  font-size:24px;font-weight:300;line-height:1.5;
-  color:var(--ink);margin-top:4px;
 }
 
 /* product page overrides */
@@ -466,8 +198,8 @@ footer{
   border:1px solid var(--hairline);background:var(--canvas);
   color:var(--ink-48);cursor:pointer;transition:all .15s;
 }
-.product-filter-pill:hover{border-color:var(--ink-80);color:var(--ink);}
-.product-filter-pill.on{background:var(--ink);color:var(--white);border-color:var(--ink);}
+.product-filter-pill:hover{border-color:var(--blue);color:var(--blue);}
+.product-filter-pill.on{background:var(--blue);color:var(--white);border-color:var(--blue);}
 
 /* chapter heading */
 .chapter{scroll-margin-top:120px;}
@@ -498,49 +230,30 @@ footer{
   color:var(--ink-48);
 }
 
-/* product card scroll row */
-.prow-outer{position:relative;}
-.prow-outer::after{
-  content:'';position:absolute;right:0;top:0;bottom:0;width:64px;
-  background:linear-gradient(to right,transparent,var(--canvas));
-  pointer-events:none;z-index:2;
-}
+/* product grid */
+.prow-outer{padding:0 var(--sp-section) var(--sp-xxl);}
 .prow{
-  display:flex;overflow-x:auto;scrollbar-width:none;cursor:grab;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-lg);
+  margin-top:var(--sp-lg);
 }
-.prow::-webkit-scrollbar{display:none;}
-.prow:active{cursor:grabbing;}
-
-/* prow scroll arrows */
-.prow-arrow{
-  position:absolute;top:50%;transform:translateY(-50%);
-  width:36px;height:36px;border-radius:50%;
-  background:var(--canvas);border:1px solid var(--hairline);
-  display:flex;align-items:center;justify-content:center;
-  font-size:14px;color:var(--ink-80);cursor:pointer;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-  z-index:3;transition:opacity .15s,box-shadow .25s cubic-bezier(.16,1,.3,1),border-color .25s ease,transform .25s cubic-bezier(.16,1,.3,1),color .25s ease;
-}
-.prow-arrow:hover{box-shadow:0 6px 18px rgba(0,0,0,.14);color:var(--blue);border-color:var(--blue);transform:translateY(-50%) scale(1.06);}
-.prow-arrow.left{left:12px;}
-.prow-arrow.right{right:12px;}
-.prow-arrow.disabled{opacity:0;pointer-events:none;}
-@media(max-width:834px){.prow-arrow{display:none;}}
 
 /* product card */
 .pcard{
-  flex:0 0 200px;
-  border-right:1px solid var(--hairline);
-  border-top:3px solid var(--accent,var(--hairline));
-  background:var(--canvas);
-  display:flex;flex-direction:column;
   position:relative;overflow:hidden;
-  transition:background .15s;
+  background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-lg);
+  display:flex;flex-direction:column;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1),border-color .35s ease;
 }
+.pcard::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
+  background:var(--blue);transform:scaleY(0);transform-origin:bottom;
+  transition:transform .35s cubic-bezier(.16,1,.3,1);
+}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.08);border-color:rgba(0,102,204,.2);}
+.pcard:hover::before{transform:scaleY(1);}
 .pcard.hidden{display:none;}
-.pcard:hover{background:var(--parchment);}
 .pcard-thumb{
-  height:140px;overflow:hidden;
+  aspect-ratio:4/3;overflow:hidden;
   background:var(--parchment);
   border-bottom:1px solid var(--hairline);
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
@@ -592,29 +305,15 @@ footer{
 .pcard-main-link *{text-decoration:none;color:inherit;}
 .pcard-main-link:visited,.pcard-main-link:visited *{color:inherit;}
 
-/* chapter status bar */
-.status-bar-product{
-  background:var(--black);padding:10px var(--sp-section);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.status-txt{font-size:12px;font-weight:400;letter-spacing:-.12px;color:rgba(255,255,255,.2);}
-.status-count{font-size:12px;font-weight:400;letter-spacing:-.12px;color:rgba(255,255,255,.4);}
-
 /* RWD subpage */
-@media(max-width:1024px){
-  .pillar-grid{grid-template-columns:1fr 1fr;}
-  .contact-grid{grid-template-columns:1fr 1fr;}
-}
 @media(max-width:768px){
   .page-hero-tile{padding:100px 24px var(--sp-xxl);}
   .page-hero-h1{font-size:40px;}
-  .pillar-grid{grid-template-columns:1fr;}
-  .contact-grid{grid-template-columns:1fr;}
-  .tile{padding:64px 24px;}
   .product-search-band{padding:12px 24px;}
   .product-search-inner{flex:1;}
   .chapter-band{padding:var(--sp-xl) 24px var(--sp-lg);}
   .sub-band{padding:10px 24px 8px;}
+  .prow-outer{padding:0 24px var(--sp-xxl);}
 }
 @media(max-width:480px){
   .page-hero-h1{font-size:32px;}
@@ -622,6 +321,7 @@ footer{
   .product-search-band{padding:10px 16px;}
   .chapter-band{padding:var(--sp-lg) 16px var(--sp-sm);}
   .sub-band{padding:8px 16px 6px;}
+  .prow-outer{padding:0 16px var(--sp-xl);}
 }
 
 </style>
@@ -687,7 +387,7 @@ footer{
   <div class="prow-outer"><div class="prow">
 
     <!-- SSD 320 PRO -->
-    <div class="pcard" data-name="SSD 320 PRO" data-cat="ssd" style="--accent:#c8200e;">
+    <div class="pcard" data-name="SSD 320 PRO" data-cat="ssd">
       <a class="pcard-main-link" href="ssd/SSD320PRO_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD320Pro.jpg" alt="SSD 320 PRO" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div>
@@ -700,7 +400,7 @@ footer{
     </div>
 
     <!-- SSD 330 -->
-    <div class="pcard" data-name="SSD 330" data-cat="ssd" style="--accent:#c8200e;">
+    <div class="pcard" data-name="SSD 330" data-cat="ssd">
       <a class="pcard-main-link" href="ssd/SSD330_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD330.jpg" alt="SSD 330" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">PCIe Gen3x4 · M.2 2280 · NVMe</div>
@@ -713,7 +413,7 @@ footer{
     </div>
 
     <!-- SSD 420 -->
-    <div class="pcard" data-name="SSD 420" data-cat="ssd" style="--accent:#c8960a;">
+    <div class="pcard" data-name="SSD 420" data-cat="ssd">
       <a class="pcard-main-link" href="ssd/SSD420_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD420.jpg" alt="SSD 420" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">PCIe Gen4x4 · M.2 2280 · NVMe</div>
@@ -726,7 +426,7 @@ footer{
     </div>
 
     <!-- SSD 430 -->
-    <div class="pcard" data-name="SSD 430" data-cat="ssd" style="--accent:#c8a800;">
+    <div class="pcard" data-name="SSD 430" data-cat="ssd">
       <a class="pcard-main-link" href="ssd/SSD430_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD430.jpg" alt="SSD 430" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">PCIe Gen4x4 · M.2 2280 · Flagship</div>
@@ -739,7 +439,7 @@ footer{
     </div>
 
     <!-- M.2 2230 — shared text with 2242 -->
-    <div class="pcard" data-name="M.2 2230" data-cat="ssd" style="--accent:#2563eb;">
+    <div class="pcard" data-name="M.2 2230" data-cat="ssd">
       <a class="pcard-main-link" href="ssd/M2_2230_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/M.2%202230%20Gen4x4_2TB.jpg" alt="M.2 2230" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">PCIe Gen3x4 &amp; Gen4x4 · M.2 2230</div>
@@ -752,7 +452,7 @@ footer{
     </div>
 
     <!-- M.2 2242 — shared text with 2230 -->
-    <div class="pcard" data-name="M.2 2242" data-cat="ssd" style="--accent:#6366f1;">
+    <div class="pcard" data-name="M.2 2242" data-cat="ssd">
       <a class="pcard-main-link" href="ssd/M2_2242_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/M.2%202242%20Gen3x4_2TB.jpg" alt="M.2 2242" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">PCIe Gen3x4 · M.2 2242</div>
@@ -765,7 +465,7 @@ footer{
     </div>
 
     <!-- SSD 120 -->
-    <div class="pcard" data-name="SSD 120" data-cat="ssd" style="--accent:#cc2222;">
+    <div class="pcard" data-name="SSD 120" data-cat="ssd">
       <a class="pcard-main-link" href="ssd/SSD120_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/ssd/SSD120.jpg" alt="SSD 120" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">SATA III 6Gb/s · 2.5"</div>
@@ -792,7 +492,7 @@ footer{
   <div class="prow-outer"><div class="prow">
 
     <!-- DDR3 — shared text DDR345 -->
-    <div class="pcard" data-name="DDR3 Precision" data-cat="dram" style="--accent:#1e3a5f;">
+    <div class="pcard" data-name="DDR3 Precision" data-cat="dram">
       <a class="pcard-main-link" href="dram/DDR3_preview.html"><div class="pcard-thumb contain"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/DDR3_1600_8GB_U-DIMM.jpg" alt="DDR3" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">DDR3L · 1600 Mbps · 1.35V · 8GB</div>
@@ -805,7 +505,7 @@ footer{
     </div>
 
     <!-- DDR4 — shared text DDR345 -->
-    <div class="pcard" data-name="DDR4 Precision" data-cat="dram" style="--accent:#1a4a2a;">
+    <div class="pcard" data-name="DDR4 Precision" data-cat="dram">
       <a class="pcard-main-link" href="dram/DDR4_preview.html"><div class="pcard-thumb contain"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/DDR4_3200_16GB_U-DIMM_1.jpg" alt="DDR4" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">DDR4 · 3200 Mbps · 1.2V · 16/32GB</div>
@@ -818,7 +518,7 @@ footer{
     </div>
 
     <!-- DDR5 — shared text DDR345 -->
-    <div class="pcard" data-name="DDR5 Precision" data-cat="dram" style="--accent:#4a1a7a;">
+    <div class="pcard" data-name="DDR5 Precision" data-cat="dram">
       <a class="pcard-main-link" href="dram/DDR5_preview.html"><div class="pcard-thumb contain"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/DDR5_5600_32GB_U-DIMM_1.jpg" alt="DDR5" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">DDR5 · 5600 Mbps · 1.1V · 32GB · ECC</div>
@@ -836,7 +536,7 @@ footer{
   <div class="prow-outer"><div class="prow">
 
     <!-- DDR4 NX1 -->
-    <div class="pcard" data-name="DDR4 NX1" data-cat="dram" style="--accent:#555;">
+    <div class="pcard" data-name="DDR4 NX1" data-cat="dram">
       <a class="pcard-main-link" href="dram/DDR4NX1_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/NX-1.jpg" alt="DDR4 NX1" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">DDR4 · Shadow Edge · No RGB</div>
@@ -849,7 +549,7 @@ footer{
     </div>
 
     <!-- DDR4 CX1 -->
-    <div class="pcard" data-name="DDR4 CX1" data-cat="dram" style="--accent:#c8922a;">
+    <div class="pcard" data-name="DDR4 CX1" data-cat="dram">
       <a class="pcard-main-link" href="dram/DDR4CX1_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/CX-1.jpg" alt="DDR4 CX1" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">DDR4 · Storm White · Full RGB</div>
@@ -862,7 +562,7 @@ footer{
     </div>
 
     <!-- DDR5 EX1 -->
-    <div class="pcard" data-name="DDR5 EX1" data-cat="dram" style="--accent:#c8200e;">
+    <div class="pcard" data-name="DDR5 EX1" data-cat="dram">
       <a class="pcard-main-link" href="dram/DDR5EX1_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/EX-1.jpg" alt="DDR5 EX1" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">DDR5 · Blaze Blade · 1.35V</div>
@@ -875,7 +575,7 @@ footer{
     </div>
 
     <!-- DDR5 RX1 -->
-    <div class="pcard" data-name="DDR5 RX1" data-cat="dram" style="--accent:#c8922a;">
+    <div class="pcard" data-name="DDR5 RX1" data-cat="dram">
       <a class="pcard-main-link" href="dram/DDR5RX1_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/dram/RX-1.jpg" alt="DDR5 RX1" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">DDR5 · Precision White · 3µm Hard Gold</div>
@@ -901,7 +601,7 @@ footer{
   <div class="prow-outer"><div class="prow">
 
     <!-- G210 -->
-    <div class="pcard" data-name="G210" data-cat="gpu" style="--accent:#76b900;">
+    <div class="pcard" data-name="G210" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/g210_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/G210.jpg" alt="G210" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">1GB GDDR3 · PCIe 2.0 · 31W</div>
@@ -914,7 +614,7 @@ footer{
     </div>
 
     <!-- GT730 -->
-    <div class="pcard" data-name="GT730" data-cat="gpu" style="--accent:#76b900;">
+    <div class="pcard" data-name="GT730" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/gt730_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GT730.jpg" alt="GT730" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">4GB GDDR3 · PCIe 2.0 · 49W</div>
@@ -927,7 +627,7 @@ footer{
     </div>
 
     <!-- GT1030 -->
-    <div class="pcard" data-name="GT1030" data-cat="gpu" style="--accent:#76b900;">
+    <div class="pcard" data-name="GT1030" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/gt1030_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GT1030.jpg" alt="GT1030" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">4GB GDDR4 · PCIe 3.0 · 30W · Pascal</div>
@@ -940,7 +640,7 @@ footer{
     </div>
 
     <!-- GTX 750 Ti -->
-    <div class="pcard" data-name="GTX 750 Ti" data-cat="gpu" style="--accent:#ff2d78;">
+    <div class="pcard" data-name="GTX 750 Ti" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/gtx750ti_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GTX750Ti.jpg" alt="GTX 750 Ti" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">4GB GDDR5 · PCIe 3.0 · 60W · Maxwell</div>
@@ -953,7 +653,7 @@ footer{
     </div>
 
     <!-- GTX 1050 Ti -->
-    <div class="pcard" data-name="GTX 1050 Ti" data-cat="gpu" style="--accent:#6090c0;">
+    <div class="pcard" data-name="GTX 1050 Ti" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/gtx1050ti_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GTX1050TI.jpg" alt="GTX 1050 Ti" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">4GB GDDR5 · PCIe 3.0 · 75W · Pascal</div>
@@ -971,7 +671,7 @@ footer{
   <div class="prow-outer"><div class="prow">
 
     <!-- GTX 1660 SUPER -->
-    <div class="pcard" data-name="GTX 1660 SUPER" data-cat="gpu" style="--accent:#5ab4f0;">
+    <div class="pcard" data-name="GTX 1660 SUPER" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/gtx1660s_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/GTX1660S.jpg" alt="GTX 1660 SUPER" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">6GB GDDR6 · PCIe 3.0 · 125W · Turing</div>
@@ -984,7 +684,7 @@ footer{
     </div>
 
     <!-- RTX 3050 -->
-    <div class="pcard" data-name="RTX 3050" data-cat="gpu" style="--accent:#39d97a;">
+    <div class="pcard" data-name="RTX 3050" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/rtx3050_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX3050.jpg" alt="RTX 3050" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">8GB GDDR6 · PCIe 4.0 · 115W · Ampere</div>
@@ -997,7 +697,7 @@ footer{
     </div>
 
     <!-- RTX 3060 -->
-    <div class="pcard" data-name="RTX 3060" data-cat="gpu" style="--accent:#8090a8;">
+    <div class="pcard" data-name="RTX 3060" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/rtx3060_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX3060.jpg" alt="RTX 3060" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">12GB GDDR6 · PCIe 4.0 · 170W · Ampere</div>
@@ -1010,7 +710,7 @@ footer{
     </div>
 
     <!-- RTX 3070 -->
-    <div class="pcard" data-name="RTX 3070" data-cat="gpu" style="--accent:#e86030;">
+    <div class="pcard" data-name="RTX 3070" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/rtx3070_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX3070.jpg" alt="RTX 3070" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">8GB GDDR6 · PCIe 4.0 · 220W · Ampere</div>
@@ -1023,7 +723,7 @@ footer{
     </div>
 
     <!-- RTX 5060 Ti -->
-    <div class="pcard" data-name="RTX 5060 Ti" data-cat="gpu" style="--accent:#4090d0;">
+    <div class="pcard" data-name="RTX 5060 Ti" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/rtx5060ti_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RTX5060Ti.jpg" alt="RTX 5060 Ti" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">8GB GDDR7 · PCIe 5.0 · 180W · Blackwell</div>
@@ -1041,7 +741,7 @@ footer{
   <div class="prow-outer"><div class="prow">
 
     <!-- R5230 1GB -->
-    <div class="pcard" data-name="R5230 1GB" data-cat="gpu" style="--accent:#1a9070;">
+    <div class="pcard" data-name="R5230 1GB" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/R5230_1GB_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R5230%201G.jpg" alt="R5230 1GB" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">1GB GDDR3 · PCIe 2.0 · 18W</div>
@@ -1054,7 +754,7 @@ footer{
     </div>
 
     <!-- R5230 2GB -->
-    <div class="pcard" data-name="R5230 2GB" data-cat="gpu" style="--accent:#1a6090;">
+    <div class="pcard" data-name="R5230 2GB" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/R5230_2GB_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R5230.jpg" alt="R5230 2GB" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">2GB GDDR3 · PCIe 2.0 · 18W</div>
@@ -1067,7 +767,7 @@ footer{
     </div>
 
     <!-- R7240 -->
-    <div class="pcard" data-name="R7240" data-cat="gpu" style="--accent:#b07020;">
+    <div class="pcard" data-name="R7240" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/R7240_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R7240.jpg" alt="R7240" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">4GB GDDR3 · PCIe 3.0 · 30W · 128-Bit</div>
@@ -1080,7 +780,7 @@ footer{
     </div>
 
     <!-- R7350 -->
-    <div class="pcard" data-name="R7350" data-cat="gpu" style="--accent:#c88018;">
+    <div class="pcard" data-name="R7350" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/R7350_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/R7350.jpg" alt="R7350" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">4GB GDDR3 · PCIe 3.0 · 30W · 925 MHz</div>
@@ -1098,7 +798,7 @@ footer{
   <div class="prow-outer"><div class="prow">
 
     <!-- RX580 -->
-    <div class="pcard" data-name="RX580" data-cat="gpu" style="--accent:#c0392b;">
+    <div class="pcard" data-name="RX580" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/RX580_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RX580.jpg" alt="RX580" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">8GB GDDR5 · PCIe 3.0 · 150W · 256-Bit</div>
@@ -1111,7 +811,7 @@ footer{
     </div>
 
     <!-- RX6500 -->
-    <div class="pcard" data-name="RX6500" data-cat="gpu" style="--accent:#c8243a;">
+    <div class="pcard" data-name="RX6500" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/RX6500_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RX6500.jpg" alt="RX6500" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">4GB GDDR6 · PCIe 4.0 · 107W · 6nm</div>
@@ -1124,7 +824,7 @@ footer{
     </div>
 
     <!-- RX7600 -->
-    <div class="pcard" data-name="RX7600" data-cat="gpu" style="--accent:#a020d0;">
+    <div class="pcard" data-name="RX7600" data-cat="gpu">
       <a class="pcard-main-link" href="gpu/RX7600_preview.html"><div class="pcard-thumb"><img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/gpu/RX7600.jpg" alt="RX7600" loading="lazy"></div>
       <div class="pcard-body">
         <div class="pcard-cat">8GB GDDR6 · PCIe 4.0 · 165W · RDNA 3</div>
@@ -1149,8 +849,8 @@ footer{
   <div class="prow-outer"><div class="prow">
 
     <!-- T100 -->
-    <div class="pcard" data-name="T100 microSD" data-cat="ext" style="--accent:#0d9488;">
-      <a class="pcard-main-link" href="externals/T100_preview.html"><div class="pcard-thumb contain" style="background:#0a1410;">
+    <div class="pcard" data-name="T100 microSD" data-cat="ext">
+      <a class="pcard-main-link" href="externals/T100_preview.html"><div class="pcard-thumb contain">
         <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/externals/microSD%20Card%201.png" alt="T100 microSD" loading="lazy">
       </div>
       <div class="pcard-body">
@@ -1164,8 +864,8 @@ footer{
     </div>
 
     <!-- DX100 USB -->
-    <div class="pcard" data-name="X100 USB" data-cat="ext" style="--accent:#2f7da6;">
-      <a class="pcard-main-link" href="externals/X100_preview.html"><div class="pcard-thumb contain" style="background:#0b1016;">
+    <div class="pcard" data-name="X100 USB" data-cat="ext">
+      <a class="pcard-main-link" href="externals/X100_preview.html"><div class="pcard-thumb contain">
         <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/externals/ProductD100.png" alt="D100 USB" loading="lazy">
       </div>
       <div class="pcard-body">
@@ -1270,17 +970,6 @@ pills.forEach(p=>{
     p.classList.add('on');
     activeFilter=p.dataset.filter;
     applyFilter();
-  });
-});
-// drag scroll
-document.querySelectorAll('.prow').forEach(row=>{
-  let down=false,sx,sl;
-  row.addEventListener('mousedown',e=>{down=true;sx=e.pageX-row.offsetLeft;sl=row.scrollLeft;});
-  row.addEventListener('mouseleave',()=>down=false);
-  row.addEventListener('mouseup',()=>down=false);
-  row.addEventListener('mousemove',e=>{
-    if(!down)return;e.preventDefault();
-    row.scrollLeft=sl-(e.pageX-row.offsetLeft-sx)*1.2;
   });
 });
 </script>
