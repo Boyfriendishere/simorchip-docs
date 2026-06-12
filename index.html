@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simorchip — Storage &amp; Memory Solutions</title>
+<meta name="description" content="Simorchip delivers SSD, DRAM, GPU, and external storage solutions for consumer, commercial, and channel markets — engineered for performance, validated for reliability.">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="Simorchip — Storage &amp; Memory Solutions">
+<meta property="og:description" content="SSD, DRAM, GPU, and external storage solutions — engineered for performance, validated for reliability.">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
@@ -38,7 +43,10 @@ body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font
 /* ══ GLOBAL NAV ══ */
 .global-nav{
   position:fixed;top:0;left:0;right:0;z-index:300;
-  background:var(--black);height:44px;
+  background:rgba(0,0,0,.8);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  backdrop-filter:saturate(180%) blur(20px);
+  height:44px;
   display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
   padding:0 22px;
 }
@@ -96,7 +104,9 @@ body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font
 .hero-tile video{
   position:absolute;inset:0;width:100%;height:100%;
   object-fit:cover;pointer-events:none;opacity:.7;
+  animation:heroZoom 24s ease-in-out infinite alternate;
 }
+@keyframes heroZoom{from{transform:scale(1);}to{transform:scale(1.07);}}
 .hero-tile-floor{
   position:absolute;bottom:0;left:0;right:0;height:60%;
   background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 100%);
@@ -111,7 +121,7 @@ body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font
   color:var(--muted-dark);margin-bottom:var(--sp-sm);
 }
 .hero-h1{
-  font-size:56px;font-weight:600;line-height:1.07;letter-spacing:-.28px;
+  font-size:68px;font-weight:600;line-height:1.07;letter-spacing:-.8px;
   color:var(--white);margin-bottom:var(--sp-md);
 }
 .hero-sub{
@@ -120,12 +130,19 @@ body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font
 }
 .hero-cta{display:flex;gap:var(--sp-sm);justify-content:center;flex-wrap:wrap;}
 .btn-pill{
+  position:relative;overflow:hidden;
   font-size:17px;font-weight:400;letter-spacing:-.374px;line-height:1;
   padding:11px 22px;border-radius:var(--r-pill);
   text-decoration:none;display:inline-block;
   transition:transform .25s cubic-bezier(.16,1,.3,1),background-color .25s ease,box-shadow .25s ease,border-color .25s ease;
   cursor:pointer;border:1px solid transparent;
 }
+.btn-blue::after{
+  content:'';position:absolute;top:0;left:-90%;width:55%;height:100%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:skewX(-20deg);pointer-events:none;
+}
+.btn-blue:hover::after{left:140%;transition:left .65s ease;}
 .btn-pill:active{transform:scale(.96);}
 .btn-blue{background:var(--blue);color:var(--white);}
 .btn-blue:hover{background:var(--blue-dark);box-shadow:0 8px 20px rgba(0,102,204,.28);transform:translateY(-2px);}
@@ -320,7 +337,7 @@ footer{
 
 /* ══ RWD ══ */
 @media(max-width:1068px){
-  .hero-h1{font-size:40px;}
+  .hero-h1{font-size:48px;}
   .tile{padding:var(--sp-section) 40px;}
   .stats-grid{grid-template-columns:repeat(3,1fr);}
   .feature-grid{grid-template-columns:1fr 1fr;}
@@ -406,9 +423,216 @@ footer{
 .fade-in-delay-1{transition-delay:.1s;}
 .fade-in-delay-2{transition-delay:.2s;}
 .fade-in-delay-3{transition-delay:.3s;}
+
+/* ══ SCROLL PROGRESS BAR ══ */
+.scroll-progress{
+  position:fixed;top:44px;left:0;z-index:299;
+  height:2px;width:0;
+  background:linear-gradient(90deg,var(--blue),var(--blue-ondark));
+  pointer-events:none;
+}
+
+/* ══ HERO ENTRANCE REVEAL ══ */
+.hero-h1 .line{display:block;overflow:hidden;}
+.hero-h1 .line span{
+  display:block;transform:translateY(110%);
+  animation:lineUp 1s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero-h1 .line:nth-child(1) span{animation-delay:.15s;}
+.hero-h1 .line:nth-child(2) span{animation-delay:.3s;}
+.hero-h1 .line:nth-child(3) span{animation-delay:.45s;}
+@keyframes lineUp{to{transform:translateY(0);}}
+.hero-h1 .grad{
+  background:linear-gradient(90deg,var(--blue-ondark) 0%,#7bc4ff 35%,#b5dcff 50%,#7bc4ff 65%,var(--blue-ondark) 100%);
+  background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shimmer 7s ease-in-out infinite;
+}
+@keyframes shimmer{0%,100%{background-position:0% 0;}50%{background-position:100% 0;}}
+
+/* ══ HERO ANNOUNCEMENT PILL ══ */
+.hero-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:400;letter-spacing:-.1px;line-height:1;
+  color:rgba(255,255,255,.85);text-decoration:none;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  padding:8px 16px;border-radius:var(--r-pill);
+  margin-bottom:var(--sp-lg);
+  opacity:0;transform:translateY(16px);
+  animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .08s forwards;
+  transition:background-color .3s ease,border-color .3s ease;
+}
+.hero-pill:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.35);}
+.hero-pill .pill-tag{color:var(--blue-ondark);font-weight:600;letter-spacing:.08em;}
+.hero-pill .pill-arrow{transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.hero-pill:hover .pill-arrow{transform:translateX(3px);}
+.hero-kicker,.hero-cta{
+  opacity:0;transform:translateY(16px);
+  animation:fadeUp .9s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero-kicker{animation-delay:.05s;}
+.hero-cta{animation-delay:.55s;}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+
+/* ══ MARQUEE BAND ══ */
+.marquee-band{
+  background:var(--black);overflow:hidden;
+  padding:20px 0;
+  border-top:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+}
+.marquee-track{
+  display:flex;align-items:center;width:max-content;
+  animation:marquee 36s linear infinite;
+}
+.marquee-band:hover .marquee-track{animation-play-state:paused;}
+.marquee-item{
+  font-size:13px;font-weight:400;letter-spacing:.25em;text-transform:uppercase;
+  color:rgba(255,255,255,.38);white-space:nowrap;margin-right:56px;
+}
+.marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--blue-ondark);opacity:.6;flex-shrink:0;margin-right:56px;}
+@keyframes marquee{to{transform:translateX(-50%);}}
+
+/* ══ FEATURE CARD SPOTLIGHT ══ */
+.feature-card::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(0,102,204,.09),transparent 65%);
+  opacity:0;transition:opacity .35s ease;pointer-events:none;
+}
+.feature-card:hover::after{opacity:1;}
+
+/* ══ DARK TILE AMBIENT GLOW ══ */
+.cta-band{position:relative;overflow:hidden;}
+.cta-band::before{
+  content:'';position:absolute;top:-220px;left:50%;transform:translateX(-50%);
+  width:680px;height:440px;
+  background:radial-gradient(ellipse at center,rgba(0,113,227,.22),transparent 70%);
+  pointer-events:none;
+}
+.cta-band-inner{position:relative;}
+
+/* ══ BACK TO TOP ══ */
+.to-top{
+  position:fixed;right:22px;bottom:22px;z-index:280;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(0,0,0,.6);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.16);
+  color:var(--white);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .3s ease,visibility .3s ease,transform .3s ease,background-color .3s ease;
+}
+.to-top.show{opacity:1;visibility:visible;transform:translateY(0);}
+.to-top:hover{background:var(--blue);border-color:var(--blue);}
+.to-top svg{display:block;}
+
+/* ══ IMAGE CURTAIN REVEAL ══ */
+.img-reveal{clip-path:inset(0 100% 0 0);transition:clip-path 1.1s cubic-bezier(.16,1,.3,1);}
+.img-reveal-right{clip-path:inset(0 0 0 100%);}
+.img-reveal.visible{clip-path:inset(0 0 0 0);}
+
+/* ══ HEADING BLUR-IN ══ */
+.tile-h2.fade-in{
+  filter:blur(8px);
+  transition:opacity .6s ease,transform .6s ease,filter .8s ease;
+}
+.tile-h2.fade-in.visible{filter:blur(0);}
+
+/* ══ STAT CELL INTERACTION ══ */
+.stat-cell{transition:background-color .3s ease,transform .3s cubic-bezier(.16,1,.3,1);}
+.stat-cell:hover{background:var(--white);transform:translateY(-3px);}
+.stat-num{transition:color .3s ease;}
+.stat-cell:hover .stat-num{color:var(--blue);}
+
+/* ══ MFG ITEM MICRO-INTERACTION ══ */
+.mfg-item-num{transition:letter-spacing .35s cubic-bezier(.16,1,.3,1),color .35s ease;}
+.mfg-item:hover .mfg-item-num{letter-spacing:.25em;color:#7bc4ff;}
+
+/* ══ CTA GLOW PULSE + TRUST CHIPS ══ */
+.cta-band::before{animation:glowPulse 7s ease-in-out infinite;}
+@keyframes glowPulse{
+  0%,100%{opacity:.8;transform:translateX(-50%) scale(1);}
+  50%{opacity:1;transform:translateX(-50%) scale(1.18);}
+}
+.cta-chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:var(--sp-xl);}
+.cta-chip{
+  font-size:12px;font-weight:400;letter-spacing:-.12px;line-height:1;
+  color:var(--muted-dark);
+  border:1px solid rgba(255,255,255,.16);
+  padding:8px 14px;border-radius:var(--r-pill);
+  transition:border-color .3s ease,color .3s ease;
+}
+.cta-chip:hover{border-color:var(--blue-ondark);color:var(--white);}
+
+/* ══ GLOBAL PRESENCE DOT MAP ══ */
+.map-wrap{position:relative;max-width:880px;margin:var(--sp-xxl) auto 0;}
+#dotMap{display:block;width:100%;height:auto;}
+.map-dot{fill:rgba(255,255,255,.22);opacity:0;transition:opacity .5s ease;}
+.map-wrap.lit .map-dot{opacity:1;}
+.map-marker{position:absolute;width:0;height:0;opacity:0;transition:opacity .8s ease 1.1s;}
+.map-wrap.lit .map-marker{opacity:1;}
+.marker-dot{
+  position:absolute;left:0;top:0;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;
+  border-radius:50%;background:var(--blue-ondark);
+  box-shadow:0 0 12px rgba(41,151,255,.9);
+}
+.marker-dot::after{
+  content:'';position:absolute;inset:-4px;border-radius:50%;
+  border:1px solid rgba(41,151,255,.6);
+  animation:markerPulse 2.4s ease-out infinite;
+}
+.marker-hq .marker-dot{
+  width:11px;height:11px;margin:-5.5px 0 0 -5.5px;
+  background:var(--white);box-shadow:0 0 14px rgba(255,255,255,.9);
+}
+.marker-hq .marker-dot::after{border-color:rgba(255,255,255,.7);}
+@keyframes markerPulse{0%{transform:scale(.6);opacity:1;}100%{transform:scale(2.6);opacity:0;}}
+.marker-label{
+  position:absolute;left:14px;top:0;transform:translateY(-50%);
+  font-size:12px;font-weight:400;letter-spacing:-.12px;line-height:1;
+  color:var(--white);white-space:nowrap;
+  background:rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.2);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  padding:6px 11px;border-radius:var(--r-pill);
+}
+.marker-up .marker-label{left:50%;top:auto;bottom:14px;transform:translateX(-50%);}
+.marker-left .marker-label{left:auto;right:14px;}
+.marker-down .marker-label{left:50%;top:14px;transform:translateX(-50%);}
+@media(max-width:640px){.marker-label{font-size:10px;padding:4px 8px;}}
+
+/* ══ SMALL POLISH ══ */
+.nav-logo img{transition:opacity .3s ease,transform .3s cubic-bezier(.16,1,.3,1);}
+.nav-logo:hover img{opacity:1;transform:scale(1.04);}
+.marquee-item{transition:color .3s ease;}
+.marquee-item:hover{color:rgba(255,255,255,.75);}
+.scroll-hint{transition:opacity .4s ease;}
+
+/* ══ REDUCED MOTION ══ */
+@media(prefers-reduced-motion:reduce){
+  .hero-h1 .line span,.hero-kicker,.hero-cta,.hero-pill{animation:none;transform:none;opacity:1;}
+  .hero-tile video{animation:none;}
+  .hero-h1 .grad{animation:none;}
+  .cta-band::before{animation:none;}
+  .marquee-track{animation:none;}
+  .fade-in{opacity:1;transform:none;transition:none;filter:none;}
+  .img-reveal{clip-path:inset(0 0 0 0);transition:none;}
+  .map-dot{opacity:1;transition:none;}
+  .map-marker{opacity:1;transition:none;}
+  .marker-dot::after{animation:none;}
+  html{scroll-behavior:auto;}
+}
 </style>
 </head>
 <body>
+
+<!-- ══ SCROLL PROGRESS ══ -->
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- ══ GLOBAL NAV ══ -->
 <nav class="global-nav" id="globalNav">
@@ -449,8 +673,15 @@ footer{
   </video>
   <div class="hero-tile-floor"></div>
   <div class="hero-tile-content">
-    <div class="hero-kicker">Simorchip · Storage &amp; Memory</div>
-    <h1 class="hero-h1">Engineered for storage.<br>Built for memory.<br>Ready for graphics.</h1>
+    <div class="hero-kicker">Simorchip</div>
+    <a class="hero-pill" href="product.html">
+      <span class="pill-tag">NEW</span>
+      <span>DDR5 RX1 Series</span>
+      <span class="pill-arrow">→</span>
+    </a>
+    <h1 class="hero-h1">
+      <span class="line"><span>Memory. Storage. <span class="grad">Mastered.</span></span></span>
+    </h1>
     <div class="hero-cta">
       <a class="btn-pill btn-blue" href="product.html">Explore Products</a>
       <a class="btn-pill btn-ghost-dark" href="about.html">About Us</a>
@@ -462,26 +693,40 @@ footer{
   </div>
 </div>
 
+<!-- ══ MARQUEE BAND ══ -->
+<div class="marquee-band" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-item">SSD</span><span class="marquee-dot"></span>
+    <span class="marquee-item">DDR5 DRAM</span><span class="marquee-dot"></span>
+    <span class="marquee-item">GPU</span><span class="marquee-dot"></span>
+    <span class="marquee-item">microSD</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Portable SSD</span><span class="marquee-dot"></span>
+    <span class="marquee-item">USB Flash</span><span class="marquee-dot"></span>
+    <span class="marquee-item">3D NAND</span><span class="marquee-dot"></span>
+    <span class="marquee-item">JEDEC Validated</span><span class="marquee-dot"></span>
+  </div>
+</div>
+
 <!-- ══ BRAND INTRO TILE — parchment ══ -->
 <div class="tile tile-parchment">
   <div class="tile-inner">
-    <h2 class="tile-h2 fade-in">One Brand. Multiple Product Lines.</h2>
-    <p class="tile-lead fade-in fade-in-delay-1">From SSD and DRAM to GPU and external storage, Simorchip provides scalable solutions for consumer, commercial, and channel markets.</p>
-    <p class="tile-body fade-in fade-in-delay-2">With structured product planning, quality validation, and manufacturing control, Simorchip supports partners with stable supply, reliable performance, and a complete product portfolio.</p>
+    <h2 class="tile-h2 fade-in">One brand. A complete portfolio.</h2>
+    <p class="tile-lead fade-in fade-in-delay-1">SSD, DRAM, GPU, and external storage — one partner covering consumer, commercial, and channel markets.</p>
+    <p class="tile-body fade-in fade-in-delay-2">Structured product planning. Rigorous quality validation. End-to-end manufacturing control. Simorchip gives partners stable supply, dependable performance, and a portfolio that's ready to sell.</p>
   </div>
 </div>
 
 <!-- ══ SSD TILE — photo left, text right ══ -->
 <div class="tile tile-light tile-split">
   <div class="tile-split-inner">
-    <div class="tile-split-photo">
+    <div class="tile-split-photo img-reveal">
       <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/tileM2SSD.jpg" alt="Simorchip SSD" loading="lazy">
     </div>
     <div class="tile-split-text">
       <div class="tile-eyebrow fade-in">Storage Solutions</div>
       <h2 class="tile-h2 fade-in fade-in-delay-1">SSD.</h2>
       <p class="tile-lead fade-in fade-in-delay-2">Faster than you expect.<br>Built for everything.</p>
-      <p class="tile-body fade-in fade-in-delay-2">SimorChip SSDs bring together high-speed storage, durable design, and intelligent engineering. Featuring premium 3D NAND flash and advanced wear-leveling, our solid-state drives ensure fast load times, extended lifespan, and seamless computing. With no moving parts, they run cooler, quieter, and more efficiently — ideal for everyday users and business deployments.</p>
+      <p class="tile-body fade-in fade-in-delay-2">Premium 3D NAND. Advanced wear-leveling. Zero moving parts. Simorchip SSDs load faster, last longer, and run cooler and quieter — built for everyday users and business deployments alike.</p>
       <div class="tile-cta fade-in fade-in-delay-3" style="justify-content:flex-start;">
         <a class="btn-pill btn-blue" href="product.html">Learn More</a>
         <a class="btn-ghost-light" href="contact.html">Contact Us</a>
@@ -496,14 +741,14 @@ footer{
     <div class="tile-split-text">
       <div class="tile-eyebrow fade-in">Memory Solutions</div>
       <h2 class="tile-h2 fade-in fade-in-delay-1">DRAM.</h2>
-      <p class="tile-lead fade-in fade-in-delay-2">Speed, reliability, and quality —<br>in every module.</p>
-      <p class="tile-body fade-in fade-in-delay-2">SimorChip DRAM modules are crafted to deliver the perfect blend of speed, reliability, and quality. Backed by over 20 years of industry expertise, from DDR3 to the latest DDR5, every module is tested to meet rigorous JEDEC standards. SimorChip DRAM is a promise of dependable performance and trusted innovation.</p>
+      <p class="tile-lead fade-in fade-in-delay-2">Twenty years of memory.<br>In every module.</p>
+      <p class="tile-body fade-in fade-in-delay-2">From DDR3 to the latest DDR5, every Simorchip module is engineered and tested to rigorous JEDEC standards. The result is memory that simply does its job — every boot, every load, every day.</p>
       <div class="tile-cta fade-in fade-in-delay-3" style="justify-content:flex-start;">
         <a class="btn-pill btn-blue" href="product.html">Learn More</a>
         <a class="btn-pill btn-ghost-dark" href="contact.html">Contact Us</a>
       </div>
     </div>
-    <div class="tile-split-photo">
+    <div class="tile-split-photo img-reveal img-reveal-right">
       <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/tileDRAM.jpg" alt="Simorchip DRAM" loading="lazy">
     </div>
   </div>
@@ -514,27 +759,59 @@ footer{
   <div class="tile-inner">
     <div class="tile-eyebrow fade-in">Company Overview</div>
     <h2 class="tile-h2 fade-in fade-in-delay-1">By the numbers.</h2>
-    <p class="tile-lead fade-in fade-in-delay-2">A growing technology brand with integrated product planning, manufacturing support, and global channel development.</p>
+    <p class="tile-lead fade-in fade-in-delay-2">Founded in Taiwan. Built for the world.</p>
     <div class="stats-grid">
       <div class="stat-cell fade-in">
         <div class="stat-num">2022</div>
         <div class="stat-desc">Founded · Taiwan</div>
       </div>
       <div class="stat-cell fade-in">
-        <div class="stat-num">1000<sup>+</sup></div>
+        <div class="stat-num"><span class="count-up" data-count="1000">0</span><sup>+</sup></div>
         <div class="stat-desc">Total Products</div>
       </div>
       <div class="stat-cell fade-in">
-        <div class="stat-num">7</div>
+        <div class="stat-num"><span class="count-up" data-count="7">0</span></div>
         <div class="stat-desc">Offices Worldwide</div>
       </div>
       <div class="stat-cell fade-in">
-        <div class="stat-num">200<sup>+</sup></div>
+        <div class="stat-num"><span class="count-up" data-count="200">0</span><sup>+</sup></div>
         <div class="stat-desc">Team Members</div>
       </div>
       <div class="stat-cell fade-in">
-        <div class="stat-num">30<sup>+</sup></div>
+        <div class="stat-num"><span class="count-up" data-count="30">0</span><sup>+</sup></div>
         <div class="stat-desc">R&amp;D Engineers</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GLOBAL PRESENCE TILE — dark ══ -->
+<div class="tile tile-dark">
+  <div class="tile-inner">
+    <div class="tile-eyebrow fade-in">Global Presence</div>
+    <h2 class="tile-h2 fade-in fade-in-delay-1">Wherever you are,<br>we're nearby.</h2>
+    <p class="tile-lead fade-in fade-in-delay-2">Headquartered in Taipei, with teams across Shanghai, Shandong, Shenzhen, and Vietnam — and growing.</p>
+    <div class="map-wrap" id="mapWrap">
+      <svg id="dotMap" viewBox="0 0 640 260" aria-hidden="true"></svg>
+      <div class="map-marker marker-up" style="left:83.6%;top:38.5%;">
+        <span class="marker-dot"></span>
+        <span class="marker-label">Shandong</span>
+      </div>
+      <div class="map-marker" style="left:84.4%;top:42%;">
+        <span class="marker-dot"></span>
+        <span class="marker-label" style="margin-top:-6px;">Shanghai</span>
+      </div>
+      <div class="map-marker marker-hq" style="left:84.6%;top:46.4%;">
+        <span class="marker-dot"></span>
+        <span class="marker-label" style="margin-top:6px;">Taipei · HQ</span>
+      </div>
+      <div class="map-marker marker-left" style="left:82.5%;top:48%;">
+        <span class="marker-dot"></span>
+        <span class="marker-label">Shenzhen</span>
+      </div>
+      <div class="map-marker marker-down" style="left:80.2%;top:52.5%;">
+        <span class="marker-dot"></span>
+        <span class="marker-label">Vietnam</span>
       </div>
     </div>
   </div>
@@ -550,15 +827,15 @@ footer{
         <div class="feature-card-title">Product Performance</div>
         <div class="feature-card-body">DRAM supports high-speed data rates from DDR3 to DDR5; SSDs utilize 3D NAND for fast access and superior performance.</div>
       </div>
-      <div class="feature-card fade-in">
+      <div class="feature-card fade-in fade-in-delay-1">
         <div class="feature-card-title">System Compatibility</div>
         <div class="feature-card-body">Both DRAM and SSDs are thoroughly tested to ensure compatibility across a wide range of systems.</div>
       </div>
-      <div class="feature-card fade-in">
+      <div class="feature-card fade-in fade-in-delay-2">
         <div class="feature-card-title">Validated Reliability</div>
         <div class="feature-card-body">JEDEC-compliant DRAM and over 20 years of industry experience. SSDs feature no moving parts and wear-leveling for extended lifespan.</div>
       </div>
-      <div class="feature-card fade-in">
+      <div class="feature-card fade-in fade-in-delay-3">
         <div class="feature-card-title">Channel-Ready Portfolio</div>
         <div class="feature-card-body">Ideal for gaming, content creation, professional tasks, and commercial system upgrades.</div>
       </div>
@@ -595,14 +872,14 @@ footer{
 <!-- ══ GPU TILE — photo left, text right, dark-2 ══ -->
 <div class="tile tile-dark-2 tile-split">
   <div class="tile-split-inner">
-    <div class="tile-split-photo">
+    <div class="tile-split-photo img-reveal">
       <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/tileGPU.jpg" alt="Simorchip GPU" loading="lazy">
     </div>
     <div class="tile-split-text">
       <div class="tile-eyebrow fade-in">Graphics Solutions</div>
       <h2 class="tile-h2 fade-in fade-in-delay-1">GPU.</h2>
-      <p class="tile-lead fade-in fade-in-delay-2">From entry-level to high performance.</p>
-      <p class="tile-body fade-in fade-in-delay-2">Simorchip GPUs span NVIDIA GeForce and AMD Radeon architectures — from silent display cards to RTX-enabled workhorses. Whether you're upgrading an office machine or building a capable gaming rig, every card is rigorously tested for compatibility and long-term stability.</p>
+      <p class="tile-lead fade-in fade-in-delay-2">From silent desktops<br>to serious rigs.</p>
+      <p class="tile-body fade-in fade-in-delay-2">Spanning NVIDIA GeForce and AMD Radeon architectures, Simorchip GPUs cover everything from silent display cards to RTX-enabled workhorses — each one rigorously tested for compatibility and long-term stability.</p>
       <div class="tile-cta fade-in fade-in-delay-3" style="justify-content:flex-start;">
         <a class="btn-pill btn-blue" href="product.html">Learn More</a>
         <a class="btn-pill btn-ghost-dark" href="contact.html">Contact Us</a>
@@ -617,14 +894,14 @@ footer{
     <div class="tile-split-text">
       <div class="tile-eyebrow fade-in">External Storage</div>
       <h2 class="tile-h2 fade-in fade-in-delay-1">External.</h2>
-      <p class="tile-lead fade-in fade-in-delay-2">Take your storage anywhere.</p>
-      <p class="tile-body fade-in fade-in-delay-2">Simorchip's external lineup covers the full range of portable storage — microSD cards, portable HDDs, portable SSDs, and USB flash drives. Whether you're shooting in the field, transferring files on the go, or building a backup workflow, there's a Simorchip external built for the job.</p>
+      <p class="tile-lead fade-in fade-in-delay-2">Your data,<br>wherever you go.</p>
+      <p class="tile-body fade-in fade-in-delay-2">microSD cards, portable SSDs and HDDs, USB flash drives — shooting in the field, moving files between sites, or building a backup workflow, there's a Simorchip external built for the job.</p>
       <div class="tile-cta fade-in fade-in-delay-3" style="justify-content:flex-start;">
         <a class="btn-pill btn-blue" href="product.html">View Products</a>
         <a class="btn-pill btn-ghost-dark" href="contact.html">Contact Us</a>
       </div>
     </div>
-    <div class="tile-split-photo">
+    <div class="tile-split-photo img-reveal img-reveal-right">
       <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/tileSD.png" alt="Simorchip T100 microSD" loading="lazy">
     </div>
   </div>
@@ -633,11 +910,17 @@ footer{
 <!-- ══ PRE-FOOTER CTA BAND ══ -->
 <div class="cta-band">
   <div class="cta-band-inner fade-in">
-    <div class="cta-band-label">Ready to build your product lineup?</div>
-    <h2 class="cta-band-h2">Explore Simorchip solutions<br>for your market.</h2>
+    <div class="cta-band-label">Ready when you are.</div>
+    <h2 class="cta-band-h2">Let's build<br>your product lineup.</h2>
     <div class="cta-band-actions">
       <a class="btn-pill btn-blue" href="product.html">View Products</a>
       <a class="btn-pill btn-ghost-dark" href="contact.html">Contact Sales</a>
+    </div>
+    <div class="cta-chips">
+      <span class="cta-chip">Global Warranty Support</span>
+      <span class="cta-chip">OEM / ODM Ready</span>
+      <span class="cta-chip">B2B Channel Program</span>
+      <span class="cta-chip">Taiwan-Based QA</span>
     </div>
   </div>
 </div>
@@ -700,6 +983,12 @@ navMobile.querySelectorAll('.nav-mobile-link').forEach(l=>{
 });
 </script>
 
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <path d="M7 12V2M7 2L2.5 6.5M7 2l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
 <script>
 // Scroll fade-in
 const fadeEls = document.querySelectorAll('.fade-in');
@@ -710,6 +999,149 @@ if(fadeEls.length){
     });
   },{threshold:0.12});
   fadeEls.forEach(el=>io.observe(el));
+}
+</script>
+
+<script>
+// Marquee — duplicate track content for seamless loop
+const marqueeTrack = document.getElementById('marqueeTrack');
+if(marqueeTrack){ marqueeTrack.innerHTML += marqueeTrack.innerHTML; }
+
+// Scroll progress bar
+const progressBar = document.getElementById('scrollProgress');
+const toTop = document.getElementById('toTop');
+let ticking = false;
+window.addEventListener('scroll',()=>{
+  if(ticking) return;
+  ticking = true;
+  requestAnimationFrame(()=>{
+    const max = document.documentElement.scrollHeight - innerHeight;
+    if(progressBar) progressBar.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + '%';
+    if(toTop) toTop.classList.toggle('show', scrollY > innerHeight * 0.8);
+    // Hero parallax — content drifts up and fades as you scroll past
+    const heroContent = document.querySelector('.hero-tile-content');
+    if(heroContent && scrollY < innerHeight){
+      heroContent.style.transform = 'translateY(' + scrollY * 0.18 + 'px)';
+      heroContent.style.opacity = 1 - (scrollY / innerHeight) * 1.2;
+    }
+    ticking = false;
+  });
+},{passive:true});
+if(toTop) toTop.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+// Stats count-up
+const counters = document.querySelectorAll('.count-up');
+if(counters.length){
+  const fmt = n => n >= 1000 ? n.toLocaleString('en-US') : String(n);
+  const cio = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      cio.unobserve(e.target);
+      const target = parseInt(e.target.dataset.count,10);
+      const dur = 1400, t0 = performance.now();
+      const step = now=>{
+        const p = Math.min((now - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        e.target.textContent = fmt(Math.round(target * eased));
+        if(p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  },{threshold:0.5});
+  counters.forEach(el=>cio.observe(el));
+}
+
+// Feature card spotlight — radial glow follows the cursor
+document.querySelectorAll('.feature-card').forEach(card=>{
+  card.addEventListener('pointermove',ev=>{
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx',(ev.clientX - r.left) + 'px');
+    card.style.setProperty('--my',(ev.clientY - r.top) + 'px');
+  });
+});
+
+// Image curtain reveal
+const revealEls = document.querySelectorAll('.img-reveal');
+if(revealEls.length){
+  const rio = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); rio.unobserve(e.target); }
+    });
+  },{threshold:0.25});
+  revealEls.forEach(el=>rio.observe(el));
+}
+
+// Magnetic hero CTA buttons
+document.querySelectorAll('.hero-cta .btn-pill').forEach(btn=>{
+  btn.addEventListener('pointermove',ev=>{
+    const r = btn.getBoundingClientRect();
+    const dx = (ev.clientX - r.left - r.width / 2) * 0.18;
+    const dy = (ev.clientY - r.top - r.height / 2) * 0.3;
+    btn.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+  });
+  btn.addEventListener('pointerleave',()=>{ btn.style.transform = ''; });
+});
+
+// Dot-matrix world map — lights up radiating outward from Taipei HQ
+const mapGrid = [
+"................................................................",
+"..............#####.....####....................................",
+"............########....#####........#..################........",
+"...####...##########.....####......##.#######################...",
+"..###################....###.#....############################..",
+".####################.........#...#############################.",
+"........##############.......##.###############################.",
+".........#############........##############################....",
+"..........###########........#########.################.##......",
+"..........##########.........#######.#######..#########.##......",
+"...........#######..........##############.############.........",
+"............####............############...############.........",
+".............####...........########.##....####..####.##........",
+"...............###..........#######...##....##...####.##........",
+"................######........#########......#...##.###.........",
+".................#######.......########.........###.##.#.###....",
+"..................########......#######..........##.##..####....",
+"..................########......#######..........###.....##.....",
+"...................#######......#######.............######......",
+"...................######.......######.#...........########.....",
+"...................#####........#####..#...........########.....",
+"...................####.........####...............#######....#.",
+"...................####..........##.................####.....##.",
+"...................###..................................#...##..",
+"...................###..........................................",
+"...................##..........................................."
+];
+const dotMapSvg = document.getElementById('dotMap');
+const mapWrap = document.getElementById('mapWrap');
+if(dotMapSvg && mapWrap){
+  const HQ = {c:53.6,r:11.6};
+  const ns = 'http://www.w3.org/2000/svg';
+  mapGrid.forEach((rowStr,r)=>{
+    for(let c=0;c<rowStr.length;c++){
+      if(rowStr[c] !== '#') continue;
+      const dot = document.createElementNS(ns,'circle');
+      dot.setAttribute('cx',c*10+5);
+      dot.setAttribute('cy',r*10+5);
+      dot.setAttribute('r',3);
+      dot.setAttribute('class','map-dot');
+      dot.style.transitionDelay = Math.round(Math.hypot(c-HQ.c,r-HQ.r)*22) + 'ms';
+      dotMapSvg.appendChild(dot);
+    }
+  });
+  const mio = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ mapWrap.classList.add('lit'); mio.unobserve(e.target); }
+    });
+  },{threshold:0.3});
+  mio.observe(mapWrap);
+}
+
+// Scroll hint fades once the user starts scrolling
+const scrollHint = document.querySelector('.scroll-hint');
+if(scrollHint){
+  window.addEventListener('scroll',()=>{
+    scrollHint.style.opacity = scrollY > 60 ? '0' : '';
+  },{passive:true});
 }
 </script>
 
