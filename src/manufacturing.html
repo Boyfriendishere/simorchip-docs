@@ -173,12 +173,22 @@ section{padding:var(--sp-section) 0}
 .vk{flex:none;color:var(--blue);font-weight:700;line-height:1.5}
 
 /* ══ ROUTES ══ */
-.tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--hairline);margin-bottom:40px}
-.tab{appearance:none;border:none;background:none;cursor:pointer;font-family:var(--f);font-size:15px;font-weight:600;color:var(--ink-48);padding:14px 4px;margin-right:22px;position:relative;letter-spacing:-.01em;transition:color .25s ease}
-.tab .tnum{font-size:11px;color:var(--blue);margin-right:8px;font-weight:600;letter-spacing:.06em}
-.tab:hover{color:var(--ink)}.tab.active{color:var(--ink)}
-.tab.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2.5px;background:var(--blue);border-radius:2px}
-.tab:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+.route-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px}
+@media(max-width:900px){.route-tabs{grid-template-columns:1fr}}
+.route-tab{position:relative;overflow:hidden;text-align:left;display:flex;gap:16px;align-items:flex-start;width:100%;background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-lg);padding:22px;cursor:pointer;font-family:var(--f);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1),border-color .35s ease}
+.route-tab::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--blue);transform:scaleY(0);transform-origin:bottom;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.route-tab:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.08);border-color:rgba(0,102,204,.2)}
+.route-tab:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.route-tab .rt-ico{flex:none;width:46px;height:46px;border-radius:12px;background:rgba(0,102,204,.08);color:var(--blue);display:flex;align-items:center;justify-content:center;transition:background .35s ease,color .35s ease}
+.route-tab .rt-ico svg{width:24px;height:24px}
+.route-tab .rt-num{font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.06em}
+.route-tab .rt-name{font-size:19px;font-weight:600;margin:2px 0 6px;letter-spacing:-.01em;color:var(--ink)}
+.route-tab .rt-desc{font-size:13px;color:var(--ink-48);line-height:1.5;margin-bottom:10px}
+.route-tab .rt-stats{font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--ink-48);text-transform:uppercase}
+.route-tab.active{border-color:var(--blue);box-shadow:0 0 0 1px rgba(0,102,204,.15),0 12px 32px rgba(0,0,0,.06)}
+.route-tab.active::before{transform:scaleY(1)}
+.route-tab.active .rt-ico{background:var(--blue);color:#fff}
+.route-tab.active .rt-stats{color:var(--blue)}
 .route-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-bottom:10px}
 .route-head h2{font-size:clamp(28px,4.5vw,42px)}
 .route-head .zh{font-size:14px;color:var(--ink-48);margin-top:6px}
@@ -400,12 +410,9 @@ section{padding:var(--sp-section) 0}
     <div class="sec-head reveal" style="margin-bottom:24px">
       <div class="eyebrow">Process Routes</div>
       <h2>Select a Product Line</h2>
+      <p>Every line shares the same six-point quality logic, applied to a build process suited to that product.</p>
     </div>
-    <div class="tabs reveal" role="tablist" aria-label="Product manufacturing routes">
-      <button class="tab active" role="tab" data-route="ssd"><span class="tnum">01</span>SSD</button>
-      <button class="tab" role="tab" data-route="dram"><span class="tnum">02</span>DRAM</button>
-      <button class="tab" role="tab" data-route="usb"><span class="tnum">03</span>USB Flash Drive</button>
-    </div>
+    <div class="route-tabs reveal" id="routeTabs" role="tablist" aria-label="Product manufacturing routes"></div>
     <div id="routePanel"></div>
   </div>
 </section>
@@ -523,7 +530,8 @@ var ICON={
   package:'<path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>',
   loop:'<path d="M4 9a8 8 0 0 1 14-3l2 2"/><path d="M20 4v4h-4"/><path d="M20 15a8 8 0 0 1-14 3l-2-2"/><path d="M4 20v-4h4"/>',
   search:'<circle cx="10.5" cy="10.5" r="6"/><path d="M20 20l-5-5"/><path d="M8 10.5l2 2 3-3.5"/>',
-  shield:'<path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/>'
+  shield:'<path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/>',
+  usb:'<path d="M9 2h6v6l2 2v8a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2v-8l2-2V2z"/><path d="M9 5h6"/>'
 };
 function svg(n){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+ICON[n]+'</svg>';}
 
@@ -647,6 +655,23 @@ var edgeSec=document.getElementById('edge');if(edgeSec)edgeIO.observe(edgeSec);
 function countGates(r){var c=0;r.stages.forEach(function(st){st.steps.forEach(function(s){if(s.gate)c++;});});return c;}
 function countSteps(r){var c=0;r.stages.forEach(function(st){c+=st.steps.length;});return c;}
 
+var ROUTE_ORDER=['ssd','dram','usb'];
+var ROUTE_META={
+  ssd:{label:"SSD",ic:'chip'},
+  dram:{label:"DRAM",ic:'memory'},
+  usb:{label:"USB Flash Drive",ic:'usb'}
+};
+
+(function(){var g=document.getElementById('routeTabs');
+  ROUTE_ORDER.forEach(function(key,i){var r=ROUTES[key],m=ROUTE_META[key];
+    var b=el('button','route-tab'+(i===0?' active':''));
+    b.setAttribute('role','tab');
+    b.setAttribute('aria-selected',i===0?'true':'false');
+    b.setAttribute('data-route',key);
+    b.innerHTML='<div class="rt-ico">'+svg(m.ic)+'</div><div class="rt-body"><div class="rt-num">0'+(i+1)+'</div><div class="rt-name">'+m.label+'</div><div class="rt-desc">'+r.desc+'</div><div class="rt-stats">'+countSteps(r)+' Steps &middot; '+countGates(r)+' Quality Gates</div></div>';
+    g.appendChild(b);});
+})();
+
 function renderRoute(key){
   var r=ROUTES[key];var p=document.getElementById('routePanel');var h='';
   h+='<div class="route-head reveal"><div><h2>'+r.title+'</h2><div class="zh">'+r.zh+'</div></div>';
@@ -677,8 +702,12 @@ function renderRoute(key){
   observeReveals(p);
 }
 
-var tabs=document.querySelectorAll('.tab');
-tabs.forEach(function(t){t.addEventListener('click',function(){tabs.forEach(function(x){x.classList.remove('active');});t.classList.add('active');renderRoute(t.getAttribute('data-route'));});});
+var tabs=document.querySelectorAll('.route-tab');
+tabs.forEach(function(t){t.addEventListener('click',function(){
+  tabs.forEach(function(x){x.classList.remove('active');x.setAttribute('aria-selected','false');});
+  t.classList.add('active');t.setAttribute('aria-selected','true');
+  renderRoute(t.getAttribute('data-route'));
+});});
 
 var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:"0px 0px -8% 0px"});
 function observeReveals(scope){(scope||document).querySelectorAll('.reveal:not(.in)').forEach(function(n){io.observe(n);});}
