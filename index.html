@@ -1080,6 +1080,8 @@ if(revealEls.length){
     });
   },{threshold:0.2});
   revealEls.forEach(el=>rio.observe(el));
+  // Fallback — if the observer never fires (e.g. blocked in some browsers), reveal anyway
+  window.addEventListener('load',()=>setTimeout(()=>revealEls.forEach(reveal),1500));
 }
 
 // Magnetic hero CTA buttons
