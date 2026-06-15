@@ -1,0 +1,42 @@
+backend:
+  name: github
+  repo: Boyfriendishere/simorchip-docs
+  branch: main
+  base_url: https://REPLACE-WITH-OAUTH-WORKER-URL.workers.dev
+
+media_folder: "src/news/images"
+public_folder: "/news/images"
+
+collections:
+  - name: "home"
+    label: "首頁 Banner"
+    files:
+      - name: "hero"
+        label: "首頁 Hero 區塊"
+        file: "src/_data/home.json"
+        fields:
+          - { label: "Hero 影片網址", name: "heroVideo", widget: "string" }
+          - { label: "Hero 標籤文字", name: "heroKicker", widget: "string" }
+          - { label: "公告標籤 (Tag)", name: "pillTag", widget: "string" }
+          - { label: "公告文字", name: "pillText", widget: "string" }
+          - { label: "主標題", name: "headline", widget: "string" }
+          - { label: "主標題漸層字", name: "headlineGradWord", widget: "string" }
+          - { label: "按鈕 1 文字", name: "cta1Text", widget: "string" }
+          - { label: "按鈕 1 連結", name: "cta1Url", widget: "string" }
+          - { label: "按鈕 2 文字", name: "cta2Text", widget: "string" }
+          - { label: "按鈕 2 連結", name: "cta2Url", widget: "string" }
+
+  - name: "news"
+    label: "News 文章"
+    folder: "src/news"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "標題", name: "title", widget: "string" }
+      - { label: "發布日期", name: "date", widget: "datetime" }
+      - { label: "封面圖", name: "cover", widget: "image", required: false }
+      - { label: "摘要", name: "excerpt", widget: "text" }
+      - { label: "內文", name: "body", widget: "markdown" }
+      - { label: "Layout", name: "layout", widget: "hidden", default: "news-article.njk" }
