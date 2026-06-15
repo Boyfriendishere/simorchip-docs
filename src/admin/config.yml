@@ -2,7 +2,7 @@ backend:
   name: github
   repo: Boyfriendishere/simorchip-docs
   branch: main
-  base_url: https://REPLACE-WITH-OAUTH-WORKER-URL.workers.dev
+  base_url: https://simorchip-cms-auth.nake-design.workers.dev
 
 media_folder: "src/news/images"
 public_folder: "/news/images"
