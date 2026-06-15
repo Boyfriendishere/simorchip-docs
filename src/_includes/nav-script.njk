@@ -1,0 +1,33 @@
+<script>
+document.documentElement.classList.add('js');
+const burger = document.getElementById('burger');
+const navMobile = document.getElementById('navMobile');
+burger.addEventListener('click',()=>{
+  navMobile.classList.toggle('open');
+  const sp = burger.querySelectorAll('span');
+  if(navMobile.classList.contains('open')){
+    sp[0].style.transform='rotate(45deg) translate(4px,4px)';
+    sp[1].style.opacity='0';
+    sp[2].style.transform='rotate(-45deg) translate(4px,-4px)';
+  } else {
+    sp.forEach(s=>{s.style.transform='';s.style.opacity='';});
+  }
+});
+navMobile.querySelectorAll('.nav-mobile-link').forEach(l=>{
+  l.addEventListener('click',()=>{
+    navMobile.classList.remove('open');
+    burger.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='';});
+  });
+});
+
+// Scroll fade-in
+const fadeEls = document.querySelectorAll('.fade-in');
+if(fadeEls.length){
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  },{threshold:0.12});
+  fadeEls.forEach(el=>io.observe(el));
+}
+</script>

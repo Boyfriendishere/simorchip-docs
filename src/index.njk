@@ -634,57 +634,27 @@ footer{
 <!-- ══ SCROLL PROGRESS ══ -->
 <div class="scroll-progress" id="scrollProgress"></div>
 
-<!-- ══ GLOBAL NAV ══ -->
-<nav class="global-nav" id="globalNav">
-  <a class="nav-logo" href="index.html">
-    <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/other/Logo-03.png" alt="Simorchip">
-  </a>
-  <div class="nav-links">
-    <a class="nav-link" href="product.html">Products</a>
-    <a class="nav-link" href="solutions.html">Solutions</a>
-    <a class="nav-link" href="manufacturing.html">Manufacturing</a>
-    <a class="nav-link" href="about.html">About</a>
-    <a class="nav-link" href="contact.html">Contact</a>
-  </div>
-  <div class="nav-right">
-    <button class="nav-lang-btn active">EN</button>
-    <button class="nav-lang-btn">中文</button>
-    <button class="nav-burger" id="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-<div class="nav-mobile" id="navMobile">
-  <a class="nav-mobile-link" href="product.html">Products</a>
-  <a class="nav-mobile-link" href="solutions.html">Solutions</a>
-  <a class="nav-mobile-link" href="manufacturing.html">Manufacturing</a>
-  <a class="nav-mobile-link" href="about.html">About</a>
-  <a class="nav-mobile-link" href="contact.html">Contact</a>
-  <div class="nav-mobile-lang">
-    <button class="nav-lang-btn active">EN</button>
-    <button class="nav-lang-btn">中文</button>
-  </div>
-</div>
+{% include "nav.njk" %}
 
 <!-- ══ HERO TILE — dark video ══ -->
 <div class="hero-tile">
   <video autoplay loop muted playsinline>
-    <source src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/other/SimorchipCase.mp4" type="video/mp4">
+    <source src="{{ home.heroVideo }}" type="video/mp4">
   </video>
   <div class="hero-tile-floor"></div>
   <div class="hero-tile-content">
-    <div class="hero-kicker">Simorchip</div>
+    <div class="hero-kicker">{{ home.heroKicker }}</div>
     <a class="hero-pill" href="product.html">
-      <span class="pill-tag">NEW</span>
-      <span>DDR5 RX1 Series</span>
+      <span class="pill-tag">{{ home.pillTag }}</span>
+      <span>{{ home.pillText }}</span>
       <span class="pill-arrow">→</span>
     </a>
     <h1 class="hero-h1">
-      <span class="line"><span>Memory. Storage. <span class="grad">Mastered.</span></span></span>
+      <span class="line"><span>{{ home.headline }} <span class="grad">{{ home.headlineGradWord }}</span></span></span>
     </h1>
     <div class="hero-cta">
-      <a class="btn-pill btn-blue" href="product.html">Explore Products</a>
-      <a class="btn-pill btn-ghost-dark" href="about.html">About Us</a>
+      <a class="btn-pill btn-blue" href="{{ home.cta1Url }}">{{ home.cta1Text }}</a>
+      <a class="btn-pill btn-ghost-dark" href="{{ home.cta2Url }}">{{ home.cta2Text }}</a>
     </div>
   </div>
   <div class="scroll-hint">
@@ -925,41 +895,7 @@ footer{
   </div>
 </div>
 
-<!-- ══ FOOTER ══ -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-logo">
-        <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/other/Logo-04.png" alt="Simorchip">
-      </div>
-      <nav class="footer-nav">
-        <div class="footer-col-title">Sitemap</div>
-        <a href="product.html">Products</a>
-        <a href="solutions.html">Solutions</a>
-        <a href="manufacturing.html">Manufacturing</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <div class="footer-info">
-        <div class="footer-row">
-          <span class="footer-key">TEL</span>
-          <span class="footer-val">+886-2-2657-6680</span>
-        </div>
-        <div class="footer-row">
-          <span class="footer-key">EMAIL</span>
-          <span class="footer-val"><a href="mailto:sales@simorchip.com">sales@simorchip.com</a></span>
-        </div>
-        <div class="footer-row">
-          <span class="footer-key">ADD</span>
-          <span class="footer-val">8F.-1, No. 300, Sec. 1, Neihu Rd., Neihu Dist., Taipei City 114066, Taiwan</span>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      Copyright © 2026 – Simorchip. All rights reserved. Design by Simorchip
-    </div>
-  </div>
-</footer>
+{% include "footer.njk" %}
 
 <script>
 document.documentElement.classList.add('js');
