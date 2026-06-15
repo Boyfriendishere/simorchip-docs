@@ -33,7 +33,7 @@ export default {
         .map((d) => d.trim())
         .filter(Boolean);
 
-      if (allowed.length && !allowed.some((domain) => referer.includes(domain))) {
+      if (referer && allowed.length && !allowed.some((domain) => referer.includes(domain))) {
         return new Response("Forbidden: origin not allowed", { status: 403 });
       }
 
