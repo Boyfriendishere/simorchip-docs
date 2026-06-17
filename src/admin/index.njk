@@ -16,7 +16,14 @@ layout: false
 document.getElementById('swDbg').onclick = async () => {
   const r = await fetch('/admin/_sw-log');
   const txt = await r.text();
-  alert(txt || '(empty)');
+  const existing = document.getElementById('_swOverlay');
+  if (existing) existing.remove();
+  const ov = document.createElement('div');
+  ov.id = '_swOverlay';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:99999;overflow:auto;padding:16px;box-sizing:border-box';
+  ov.innerHTML = '<button onclick="document.getElementById(\'_swOverlay\').remove()" style="position:sticky;top:0;float:right;background:#fff;border:none;padding:4px 12px;cursor:pointer;font-size:14px;border-radius:4px">✕ 關閉</button>'
+    + '<pre id="_swPre" style="color:#0f0;font-size:11px;white-space:pre-wrap;margin-top:8px;clear:both">' + (txt || '(empty)') + '</pre>';
+  document.body.appendChild(ov);
 };
 </script>
 
