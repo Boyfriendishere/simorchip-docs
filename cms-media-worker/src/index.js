@@ -75,6 +75,29 @@ export default {
       return json({ files }, 200, origin, env);
     }
 
+    // GET /folders?prefix=
+    if (request.method === 'GET' && path === '/folders') {
+      const prefix = url.searchParams.get('prefix') || '';
+      const list = await env.BUCKET.list({ prefix, delimiter: '/', limit: 200 });
+      const folders = (list.delimitedPrefixes || []).map(p => p.replace(/\/$/, ''));
+      return json({ folders }, 200, origin, env);
+    }
+
+    // POST /mkdir — create a folder by writing a .keep placeholder
+    if (request.method === 'POST' && path === '/mkdir') {
+      let body;
+      try { body = await request.json(); }
+      catch { return json({ error: 'Invalid JSON' }, 400, origin, env); }
+
+      const folder = (body.folder || '').replace(/[^a-zA-Z0-9/_-]/g, '').replace(/\/+$/, '');
+      if (!folder) return json({ error: 'No folder name' }, 400, origin, env);
+
+      await env.BUCKET.put(`${folder}/.keep`, new Uint8Array(0), {
+        httpMetadata: { contentType: 'text/plain' },
+      });
+      return json({ folder }, 200, origin, env);
+    }
+
     // DELETE /delete
     if (request.method === 'DELETE' && path === '/delete') {
       let body;

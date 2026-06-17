@@ -135,15 +135,9 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0f0f10;color:#f5
   <div class="header">
     <h1>Media Manager</h1>
     <div class="header-folder">
-      <select id="folderSelect">
-        <option value="products">products/</option>
-        <option value="products/ssd">products/ssd/</option>
-        <option value="products/ram">products/ram/</option>
-        <option value="products/gpu">products/gpu/</option>
-        <option value="products/usb">products/usb/</option>
-        <option value="products/microsd">products/microsd/</option>
-      </select>
+      <select id="folderSelect"><option value="products">products/</option></select>
     </div>
+    <button class="upload-btn" id="newFolderBtn" style="background:#2c2c2e;border:1px solid rgba(255,255,255,.15);">+ Folder</button>
     <label class="upload-btn" for="fileInput">Upload Images</label>
     <input type="file" id="fileInput" multiple accept="image/*" style="display:none">
   </div>
@@ -179,23 +173,46 @@ let selectedUrl = '';
 let currentFolder = 'products';
 
 async function init() {
-  {
-}
-
-document.getElementById('authBtn').addEventListener('click', async () => {
-  const s = document.getElementById('secretInput').value.trim();
-  if (!s) return;
-  document.getElementById('authBtn').textContent = 'Checking…';
-  const ok = await tryAuth(s);
-  if (ok) {
-    secret = s;
-    sessionStorage.setItem('mediaSecret', s);
-    showApp();
-  } else {
-function showApp() {
+  await loadFolders();
   if (IS_POPUP) document.getElementById('selectBar').classList.add('visible');
   loadFiles();
 }
+
+async function loadFolders() {
+  const r = await fetch(`${WORKER}/folders`, {
+    headers: { Authorization: `Bearer ${secret}` }
+  });
+  const { folders } = await r.json();
+  const select = document.getElementById('folderSelect');
+  select.innerHTML = '';
+  (folders || []).forEach(f => {
+    const opt = document.createElement('option');
+    opt.value = f;
+    opt.textContent = f + '/';
+    select.appendChild(opt);
+  });
+  if (folders && folders.length > 0) {
+    currentFolder = folders[0];
+    select.value = currentFolder;
+  }
+}
+
+document.getElementById('newFolderBtn').addEventListener('click', async () => {
+  const name = prompt('New folder name:');
+  if (!name) return;
+  const safe = name.replace(/[^a-zA-Z0-9/_-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+  if (!safe) { showToast('Invalid folder name.'); return; }
+  await fetch(`${WORKER}/mkdir`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${secret}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ folder: safe })
+  });
+  await loadFolders();
+  document.getElementById('folderSelect').value = safe;
+  currentFolder = safe;
+  loadFiles();
+  showToast(`Folder "${safe}" created.`);
+});
 
 // ── Files ─────────────────────────────────────────────────────────
 async function loadFiles() {
