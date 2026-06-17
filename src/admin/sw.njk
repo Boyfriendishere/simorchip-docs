@@ -36,6 +36,12 @@ self.addEventListener('fetch', e => {
     return;
   }
 
+  // Log ALL api.github.com requests (so we can see exactly what passes through)
+  if (url.includes('api.github.com')) {
+    ghLog.push({ m: e.request.method, u: url.replace('https://api.github.com', '').slice(0, 80), t: Date.now() });
+    if (ghLog.length > 60) ghLog.shift();
+  }
+
   // Intercept GraphQL (Sveltia CMS uses POST /graphql for asset listing)
   if (e.request.method === 'POST' && url.includes('api.github.com/graphql')) {
     e.respondWith(handleGraphQL(e.request));

@@ -11,30 +11,39 @@ layout: false
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<button id="swDbg" style="position:fixed;bottom:8px;left:8px;z-index:9999;opacity:.3;font-size:10px;padding:4px 8px;border-radius:6px;background:#333;color:#fff;border:none;cursor:pointer;" title="SW Debug">SW</button>
+<button id="swDbg" style="position:fixed;bottom:8px;left:8px;z-index:9999;opacity:.3;font-size:10px;padding:4px 8px;border-radius:6px;background:#333;color:#fff;border:none;cursor:pointer;">SW</button>
 <script>
 document.getElementById('swDbg').onclick = async () => {
   const r = await fetch('/admin/_sw-log');
   const txt = await r.text();
-  alert(txt || '(empty — SW may not be intercepting yet)');
+  alert(txt || '(empty)');
 };
 </script>
+
 <script>
 (async () => {
-  if ('serviceWorker' in navigator) {
-    await navigator.serviceWorker.register('/admin/sw.js', { scope: '/admin/' });
-    // Wait until a SW is active and controlling this page
-    await navigator.serviceWorker.ready;
-    if (!navigator.serviceWorker.controller) {
-      await new Promise(r => navigator.serviceWorker.addEventListener('controllerchange', r, { once: true }));
-    }
+  if (!('serviceWorker' in navigator)) { loadCMS(); return; }
+
+  const reg = await navigator.serviceWorker.register('/admin/sw.js', { scope: '/admin/' });
+
+  if (reg.installing || reg.waiting) {
+    // New SW pending (installing/waiting to skipWaiting) — wait for it to claim the page
+    await new Promise(r => navigator.serviceWorker.addEventListener('controllerchange', r, { once: true }));
+  } else if (!navigator.serviceWorker.controller) {
+    // SW registered but not yet controlling (very first install)
+    await new Promise(r => navigator.serviceWorker.addEventListener('controllerchange', r, { once: true }));
   }
-  // Load Sveltia CMS only after SW is in control
+  // else: latest SW already in control — proceed immediately
+
+  loadCMS();
+})();
+
+function loadCMS() {
   const s = document.createElement('script');
   s.type = 'module';
   s.src = 'https://unpkg.com/@sveltia/cms@^0.x/dist/sveltia-cms.js';
   document.head.appendChild(s);
-})();
+}
 </script>
 </body>
 </html>
