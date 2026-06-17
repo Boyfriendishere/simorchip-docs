@@ -166,6 +166,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0f0f10;color:#f5
 <script>
 const WORKER = 'https://simorchip-cms-media.nake-design.workers.dev';
 const IS_POPUP = window.opener !== null;
+const IS_IFRAME = window.parent !== window;
 
 const secret = '{{ env.uploadSecret }}';
 let selectedCard = null;
@@ -174,7 +175,7 @@ let currentFolder = 'products';
 
 async function init() {
   await loadFolders();
-  if (IS_POPUP) document.getElementById('selectBar').classList.add('visible');
+  if (IS_POPUP || IS_IFRAME) document.getElementById('selectBar').classList.add('visible');
   loadFiles();
 }
 
@@ -267,7 +268,7 @@ function renderGrid(files) {
       loadFiles();
     });
 
-    if (IS_POPUP) {
+    if (IS_POPUP || IS_IFRAME) {
       card.addEventListener('click', () => {
         document.querySelectorAll('.file-card').forEach(c => c.classList.remove('selected'));
         card.classList.add('selected');
@@ -340,9 +341,12 @@ document.getElementById('folderSelect').addEventListener('change', e => {
 // Select confirm (popup mode)
 document.getElementById('selectConfirm').addEventListener('click', () => {
   if (!selectedUrl) { showToast('Please select an image first.'); return; }
+  const msg = { type: 'media-selected', url: selectedUrl };
   if (window.opener) {
-    window.opener.postMessage({ type: 'media-selected', url: selectedUrl }, '*');
+    window.opener.postMessage(msg, '*');
     window.close();
+  } else if (IS_IFRAME) {
+    window.parent.postMessage(msg, '*');
   }
 });
 
