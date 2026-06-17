@@ -9,6 +9,8 @@ const MEDIA = 'src/_uploads';
 const API_BASE = `https://api.github.com/repos/${REPO}/contents/${MEDIA}`;
 const SECRET = '{{ env.uploadSecret }}';
 
+const ghLog = [];
+
 self.addEventListener('activate', e => {
   e.waitUntil(self.clients.claim());
 });
@@ -20,6 +22,20 @@ function fakesha(s) {
 }
 
 self.addEventListener('fetch', e => {
+  // Debug log endpoint — returns list of all GitHub API URLs seen
+  if (e.request.url.endsWith('/admin/_sw-log')) {
+    e.respondWith(new Response(JSON.stringify(ghLog, null, 2), {
+      headers: { 'Content-Type': 'application/json' }
+    }));
+    return;
+  }
+
+  // Log every api.github.com request
+  if (e.request.url.includes('api.github.com')) {
+    ghLog.push({ method: e.request.method, url: e.request.url, t: Date.now() });
+    if (ghLog.length > 50) ghLog.shift();
+  }
+
   if (!e.request.url.startsWith(API_BASE)) return;
   e.respondWith(handle(e.request));
 });
