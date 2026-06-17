@@ -1,0 +1,43 @@
+---
+permalink: /admin/index.html
+eleventyExcludeFromCollections: true
+layout: false
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Simorchip — Content Manager</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<script>
+(async () => {
+  if (!('serviceWorker' in navigator)) return;
+  const secret = '{{ env.uploadSecret }}';
+
+  function send(sw) {
+    if (sw) sw.postMessage({ type: 'secret', value: secret });
+  }
+
+  const reg = await navigator.serviceWorker.register('/admin/sw.js', { scope: '/admin/' });
+
+  if (reg.active) send(reg.active);
+  if (reg.installing) {
+    reg.installing.addEventListener('statechange', e => {
+      if (e.target.state === 'activated') send(e.target);
+    });
+  }
+  if (reg.waiting) send(reg.waiting);
+
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    send(navigator.serviceWorker.controller);
+  });
+})();
+</script>
+
+<script src="https://unpkg.com/@sveltia/cms@^0.x/dist/sveltia-cms.js" type="module"></script>
+
+</body>
+</html>
