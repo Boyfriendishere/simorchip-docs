@@ -11,33 +11,22 @@ layout: false
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-
 <script>
 (async () => {
-  if (!('serviceWorker' in navigator)) return;
-  const secret = '{{ env.uploadSecret }}';
-
-  function send(sw) {
-    if (sw) sw.postMessage({ type: 'secret', value: secret });
+  if ('serviceWorker' in navigator) {
+    await navigator.serviceWorker.register('/admin/sw.js', { scope: '/admin/' });
+    // Wait until a SW is active and controlling this page
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) {
+      await new Promise(r => navigator.serviceWorker.addEventListener('controllerchange', r, { once: true }));
+    }
   }
-
-  const reg = await navigator.serviceWorker.register('/admin/sw.js', { scope: '/admin/' });
-
-  if (reg.active) send(reg.active);
-  if (reg.installing) {
-    reg.installing.addEventListener('statechange', e => {
-      if (e.target.state === 'activated') send(e.target);
-    });
-  }
-  if (reg.waiting) send(reg.waiting);
-
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    send(navigator.serviceWorker.controller);
-  });
+  // Load Sveltia CMS only after SW is in control
+  const s = document.createElement('script');
+  s.type = 'module';
+  s.src = 'https://unpkg.com/@sveltia/cms@^0.x/dist/sveltia-cms.js';
+  document.head.appendChild(s);
 })();
 </script>
-
-<script src="https://unpkg.com/@sveltia/cms@^0.x/dist/sveltia-cms.js" type="module"></script>
-
 </body>
 </html>

@@ -5,7 +5,6 @@ module.exports = function (eleventyConfig) {
   // about/index.html).
   eleventyConfig.setTemplateFormats(["njk", "md"]);
   eleventyConfig.addPassthroughCopy({ "src/admin/config.yml": "admin/config.yml" });
-  eleventyConfig.addPassthroughCopy({ "src/admin/sw.js": "admin/sw.js" });
   eleventyConfig.addPassthroughCopy("src/news/images");
   eleventyConfig.addPassthroughCopy({ "src/_redirects": "_redirects" });
   eleventyConfig.addPassthroughCopy("src/*.html");
