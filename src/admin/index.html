@@ -4,8 +4,50 @@
 <meta charset="UTF-8">
 <title>Simorchip — Content Manager</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+.media-mgr-btn{
+  position:fixed;bottom:24px;right:24px;z-index:9999;
+  background:#0a84ff;color:#fff;border:none;cursor:pointer;
+  padding:12px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:0 4px 16px rgba(10,132,255,.4);transition:transform .2s,box-shadow .2s;
+}
+.media-mgr-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,132,255,.5);}
+</style>
 </head>
 <body>
 <script src="https://unpkg.com/@sveltia/cms@^0.x/dist/sveltia-cms.js" type="module"></script>
+
+<!-- Media Manager shortcut button -->
+<button class="media-mgr-btn" id="mediaMgrBtn">📁 Media Manager</button>
+
+<script>
+// Open Media Manager
+document.getElementById('mediaMgrBtn').addEventListener('click', () => {
+  window.open('/admin/media.html', 'MediaManager',
+    'width=1100,height=750,resizable=yes,scrollbars=yes');
+});
+
+// Listen for image selection from popup
+window.addEventListener('message', e => {
+  if (e.data?.type !== 'media-selected') return;
+  const url = e.data.url;
+
+  // Try to fill the currently focused string input
+  const active = document.activeElement;
+  if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+      window.HTMLInputElement.prototype, 'value'
+    ).set;
+    nativeInputValueSetter.call(active, url);
+    active.dispatchEvent(new Event('input', { bubbles: true }));
+    return;
+  }
+
+  // Fallback: copy to clipboard
+  navigator.clipboard.writeText(url).then(() => {
+    alert(`Image URL copied to clipboard:\n${url}`);
+  });
+});
+</script>
 </body>
 </html>
