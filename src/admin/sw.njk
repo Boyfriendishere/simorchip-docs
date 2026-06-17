@@ -11,6 +11,10 @@ const SECRET = '{{ env.uploadSecret }}';
 
 const ghLog = [];
 
+self.addEventListener('install', e => {
+  e.waitUntil(self.skipWaiting());
+});
+
 self.addEventListener('activate', e => {
   e.waitUntil(self.clients.claim());
 });
@@ -117,18 +121,27 @@ async function handleGraphQL(req) {
 
 // ── Git Trees intercept ───────────────────────────────────────────────
 async function handleGitTrees(req) {
+  const log = { type: 'git-trees', url: req.url.slice(-60), t: Date.now() };
+  ghLog.push(log);
+  if (ghLog.length > 50) ghLog.shift();
+
   // Forward to GitHub to get the real tree
   const ghRes = await fetch(req.url, { headers: req.headers });
-  if (!ghRes.ok) return ghRes;
+  log.ghStatus = ghRes.status;
+  if (!ghRes.ok) { log.err = 'gh-fail'; return ghRes; }
+
   const data = await ghRes.json();
+  log.origTreeLen = data.tree?.length;
 
   // Get R2 files and inject under src/_uploads/
   try {
     const r2 = await fetch(`${WORKER}/list?prefix=`, {
       headers: { Authorization: `Bearer ${SECRET}` }
     });
+    log.r2Status = r2.status;
     if (r2.ok) {
       const { files } = await r2.json();
+      log.r2Count = (files || []).length;
       const r2nodes = (files || [])
         .filter(f => !f.key.endsWith('.keep'))
         .map(f => ({
@@ -139,15 +152,15 @@ async function handleGitTrees(req) {
           size: f.size || 0,
           url: ''
         }));
+      log.injected = r2nodes.length;
 
-      // Remove stale _uploads entries, then inject fresh R2 nodes
       data.tree = [
         ...(data.tree || []).filter(e => !e.path.startsWith(`${MEDIA}/`)),
         ...r2nodes
       ];
       data.truncated = false;
     }
-  } catch (_) {}
+  } catch (err) { log.err = String(err); }
 
   return new Response(JSON.stringify(data), {
     headers: { 'Content-Type': 'application/json; charset=utf-8' }
