@@ -5,7 +5,7 @@ backend:
   base_url: https://simorchip-cms-auth.nake-design.workers.dev
 
 media_folder: "src/_uploads"
-public_folder: "https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev"
+public_folder: "/_uploads"
 
 collections:
   - name: "home"
