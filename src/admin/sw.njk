@@ -38,6 +38,13 @@ self.addEventListener('fetch', e => {
     return;
   }
 
+  // Intercept Git Trees API — Sveltia fetches full repo tree to find media files
+  if (e.request.method === 'GET' &&
+      url.includes(`api.github.com/repos/${REPO}/git/trees/`)) {
+    e.respondWith(handleGitTrees(e.request));
+    return;
+  }
+
   // Also keep REST interception for any individual file operations
   if (url.startsWith(API_BASE)) {
     e.respondWith(handleREST(e.request));
@@ -104,6 +111,45 @@ async function handleGraphQL(req) {
 
   return new Response(modified, {
     status: ghRes.status,
+    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+  });
+}
+
+// ── Git Trees intercept ───────────────────────────────────────────────
+async function handleGitTrees(req) {
+  // Forward to GitHub to get the real tree
+  const ghRes = await fetch(req.url, { headers: req.headers });
+  if (!ghRes.ok) return ghRes;
+  const data = await ghRes.json();
+
+  // Get R2 files and inject under src/_uploads/
+  try {
+    const r2 = await fetch(`${WORKER}/list?prefix=`, {
+      headers: { Authorization: `Bearer ${SECRET}` }
+    });
+    if (r2.ok) {
+      const { files } = await r2.json();
+      const r2nodes = (files || [])
+        .filter(f => !f.key.endsWith('.keep'))
+        .map(f => ({
+          path: `${MEDIA}/${f.key}`,
+          mode: '100644',
+          type: 'blob',
+          sha: fakesha(f.key),
+          size: f.size || 0,
+          url: ''
+        }));
+
+      // Remove stale _uploads entries, then inject fresh R2 nodes
+      data.tree = [
+        ...(data.tree || []).filter(e => !e.path.startsWith(`${MEDIA}/`)),
+        ...r2nodes
+      ];
+      data.truncated = false;
+    }
+  } catch (_) {}
+
+  return new Response(JSON.stringify(data), {
     headers: { 'Content-Type': 'application/json; charset=utf-8' }
   });
 }
