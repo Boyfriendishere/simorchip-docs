@@ -1,0 +1,11 @@
+name = "simorchip-cms-media"
+main = "src/index.js"
+compatibility_date = "2026-06-01"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "simorchip-docs"
+
+[vars]
+PUBLIC_URL = "https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev"
+ALLOWED_ORIGINS = "https://simorchip-docs.pages.dev"
