@@ -64,7 +64,7 @@ export default {
 
     // GET /list?prefix=products/
     if (request.method === 'GET' && path === '/list') {
-      const prefix = url.searchParams.get('prefix') || 'products/';
+      const prefix = url.searchParams.get('prefix') ?? 'products/';
       const list = await env.BUCKET.list({ prefix, limit: 200 });
       const files = list.objects.map(obj => ({
         key: obj.key,
