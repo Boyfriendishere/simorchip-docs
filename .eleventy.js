@@ -4,7 +4,8 @@ module.exports = function (eleventyConfig) {
   // output paths/extensions stay exactly as before (e.g. about.html, not
   // about/index.html).
   eleventyConfig.setTemplateFormats(["njk", "md"]);
-  eleventyConfig.addPassthroughCopy("src/admin");
+  eleventyConfig.addPassthroughCopy({ "src/admin/index.html": "admin/index.html" });
+  eleventyConfig.addPassthroughCopy({ "src/admin/config.yml": "admin/config.yml" });
   eleventyConfig.addPassthroughCopy("src/news/images");
   eleventyConfig.addPassthroughCopy("src/*.html");
   eleventyConfig.addPassthroughCopy("src/ssd");
