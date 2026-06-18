@@ -56,10 +56,7 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
 
 /* ─── Hero ─── */
 .page-hero{background:#000;padding:72px var(--sp-section) 64px;text-align:center;position:relative;overflow:hidden;}
-.page-hero::before{content:'';position:absolute;inset:-60%;background:radial-gradient(ellipse at 25% 55%,#c8200e 0%,transparent 50%),radial-gradient(ellipse at 75% 45%,#76b900 0%,transparent 50%);opacity:.07;animation:hglow1 10s ease-in-out infinite alternate;pointer-events:none;}
-.page-hero::after{content:'';position:absolute;inset:-60%;background:radial-gradient(ellipse at 65% 35%,#c8922a 0%,transparent 50%),radial-gradient(ellipse at 35% 65%,#0d9488 0%,transparent 50%);opacity:.07;animation:hglow2 13s ease-in-out infinite alternate;pointer-events:none;}
-@keyframes hglow1{0%{opacity:.04;transform:scale(1) translate(-4%,-4%);}100%{opacity:.11;transform:scale(1.2) translate(4%,4%);}}
-@keyframes hglow2{0%{opacity:.11;transform:scale(1.15) translate(4%,-4%);}100%{opacity:.04;transform:scale(1) translate(-4%,4%);}}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
 .page-hero-eyebrow,.page-hero-h1,.page-hero-sub{position:relative;z-index:1;}
 .page-hero-eyebrow{font-size:14px;font-weight:500;letter-spacing:.5px;color:var(--blue-ondark);text-transform:uppercase;margin-bottom:16px;}
 .page-hero-h1{font-size:56px;font-weight:600;line-height:1.07;letter-spacing:-.56px;color:var(--white);}
@@ -169,6 +166,7 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
 </div>
 
 <div class="page-hero">
+  <canvas id="hero-canvas"></canvas>
   <div class="page-hero-eyebrow">Simorchip</div>
   <h1 class="page-hero-h1">Products.</h1>
   <p class="page-hero-sub">Memory, storage, and graphics solutions built for reliability and performance.</p>
@@ -282,6 +280,72 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
   </div>
 </footer>
 
+<script>
+(function(){
+  const canvas=document.getElementById('hero-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const hero=canvas.parentElement;
+  const COLORS=['#c8200e','#c8922a','#76b900','#0d9488'];
+  let W,H;
+  function resize(){W=canvas.width=hero.offsetWidth;H=canvas.height=hero.offsetHeight;}
+  resize();
+  window.addEventListener('resize',resize);
+
+  const N=60;
+  const pts=Array.from({length:N},()=>({
+    x:Math.random(),y:Math.random(),
+    vx:(Math.random()-.5)*.00035,vy:(Math.random()-.5)*.00035,
+    r:Math.random()*1.8+.6,
+    col:COLORS[Math.floor(Math.random()*4)],
+    pulse:Math.random()*Math.PI*2,
+  }));
+
+  const MAX=.22;
+
+  function tick(){
+    ctx.clearRect(0,0,W,H);
+    const t=performance.now()/1000;
+
+    for(let i=0;i<N;i++){
+      for(let j=i+1;j<N;j++){
+        const dx=(pts[i].x-pts[j].x)*W,dy=(pts[i].y-pts[j].y)*H;
+        const d=Math.sqrt(dx*dx+dy*dy)/(W*MAX);
+        if(d<1){
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x*W,pts[i].y*H);
+          ctx.lineTo(pts[j].x*W,pts[j].y*H);
+          ctx.strokeStyle=pts[i].col;
+          ctx.globalAlpha=(1-d)*.4;
+          ctx.lineWidth=.7;
+          ctx.stroke();
+        }
+      }
+    }
+
+    pts.forEach(p=>{
+      const glow=Math.sin(t*1.2+p.pulse)*.4+.7;
+      ctx.save();
+      ctx.globalAlpha=glow*.95;
+      ctx.shadowColor=p.col;
+      ctx.shadowBlur=12*glow;
+      ctx.beginPath();
+      ctx.arc(p.x*W,p.y*H,p.r*(glow*.3+.8),0,Math.PI*2);
+      ctx.fillStyle=p.col;
+      ctx.fill();
+      ctx.restore();
+
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=1; if(p.x>1)p.x=0;
+      if(p.y<0)p.y=1; if(p.y>1)p.y=0;
+    });
+
+    ctx.globalAlpha=1;
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>
 <script>
 const burger=document.getElementById('burger');
 const navMobile=document.getElementById('navMobile');
