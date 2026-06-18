@@ -56,9 +56,34 @@ collections:
       - { label: "內文", name: "body", widget: "markdown" }
       - { label: "Layout", name: "layout", widget: "hidden", default: "news-article.njk" }
 
+  - name: "categories"
+    label: "分類管理"
+    sidebar:
+      group: "產品 Product"
+    files:
+      - name: "categories"
+        label: "產品分類設定"
+        file: "src/_data/categories.json"
+        fields:
+          - label: "分類列表"
+            name: "list"
+            widget: "list"
+            summary: "{{fields.label}} ({{fields.id}})"
+            fields:
+              - { label: "分類 ID", name: "id", widget: "string", hint: "小寫英文，對應產品的隱藏分類欄位。例：ssd、dram、gpu、ext" }
+              - { label: "顯示名稱", name: "label", widget: "string", hint: "例：SSD、DRAM、GPU、外接裝置" }
+              - { label: "排列順序", name: "order", widget: "number", default: 99 }
+              - label: "子分類"
+                name: "sub_bands"
+                widget: "list"
+                required: false
+                field: { label: "子分類名稱", name: "sub_band", widget: "string", hint: "例：Entry Series、Pro Series" }
+
   - name: "products_ssd"
     label: "SSD"
     label_singular: "SSD 產品"
+    sidebar:
+      group: "產品 Product"
     folder: "src/products"
     create: true
     extension: "md"
@@ -90,6 +115,8 @@ collections:
   - name: "products_dram"
     label: "DRAM"
     label_singular: "DRAM 產品"
+    sidebar:
+      group: "產品 Product"
     folder: "src/products"
     create: true
     extension: "md"
@@ -121,6 +148,8 @@ collections:
   - name: "products_gpu"
     label: "GPU"
     label_singular: "GPU 產品"
+    sidebar:
+      group: "產品 Product"
     folder: "src/products"
     create: true
     extension: "md"
@@ -152,6 +181,8 @@ collections:
   - name: "products_ext"
     label: "外接裝置"
     label_singular: "外接裝置產品"
+    sidebar:
+      group: "產品 Product"
     folder: "src/products"
     create: true
     extension: "md"
@@ -180,23 +211,3 @@ collections:
       - { label: "Datasheet PDF", name: "datasheet", widget: "file", required: false, hint: "上傳 PDF 規格表" }
       - { label: "排列順序", name: "sort_order", widget: "number", default: 99 }
 
-  - name: "categories"
-    label: "分類管理"
-    files:
-      - name: "categories"
-        label: "產品分類設定"
-        file: "src/_data/categories.json"
-        fields:
-          - label: "分類列表"
-            name: "list"
-            widget: "list"
-            summary: "{{fields.label}} ({{fields.id}})"
-            fields:
-              - { label: "分類 ID", name: "id", widget: "string", hint: "小寫英文，對應產品的隱藏分類欄位。例：ssd、dram、gpu、ext" }
-              - { label: "顯示名稱", name: "label", widget: "string", hint: "例：SSD、DRAM、GPU、外接裝置" }
-              - { label: "排列順序", name: "order", widget: "number", default: 99 }
-              - label: "子分類"
-                name: "sub_bands"
-                widget: "list"
-                required: false
-                field: { label: "子分類名稱", name: "sub_band", widget: "string", hint: "例：Entry Series、Pro Series" }
