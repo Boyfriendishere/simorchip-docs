@@ -18,6 +18,15 @@ module.exports = function (eleventyConfig) {
     return new Date(value).toISOString().slice(0, 10);
   });
 
+  eleventyConfig.addFilter("where", function (arr, key, val) {
+    return (arr || []).filter(item => {
+      const parts = key.split('.');
+      let obj = item;
+      for (const p of parts) obj = obj?.[p];
+      return obj === val;
+    });
+  });
+
   eleventyConfig.addCollection("news", function (collectionApi) {
     return collectionApi.getFilteredByGlob("src/news/*.md").sort((a, b) => b.date - a.date);
   });

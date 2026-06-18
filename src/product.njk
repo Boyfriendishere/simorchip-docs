@@ -164,7 +164,7 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
 </div>
 
 {% for cat in productCategories %}
-  {% set catProducts = collections.products | selectattr("data.category", "equalto", cat.id) %}
+  {% set catProducts = collections.products | where("data.category", cat.id) %}
   <div class="chapter" id="{{ cat.id }}" data-chapter="{{ cat.id }}">
     <div class="chapter-band">
       <div class="ch-accent" style="background:{{ cat.accent }};"></div>
@@ -177,7 +177,7 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
 
     {% if cat.sub_bands | length > 0 %}
       {% for band in cat.sub_bands %}
-        {% set bandProducts = catProducts | selectattr("data.sub_band", "equalto", band) %}
+        {% set bandProducts = catProducts | where("data.sub_band", band) %}
         {% if bandProducts | length > 0 %}
         <div class="sub-band">{{ band }}</div>
         <div class="prow-outer"><div class="prow">
