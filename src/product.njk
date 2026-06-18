@@ -242,12 +242,9 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
               <div class="pcard-name">{{ p.data.name }}</div>
               <div class="pcard-cat">{{ p.data.subtitle }}</div>
               {% if p.data.tags and p.data.tags | length %}
-              <div class="pcard-tags">{% for tag in p.data.tags %}<span class="pcard-tag">#{{ tag }}</span>{% endfor %}</div>
+              <div class="pcard-tags">{% for tag in p.data.tags %}<span class="pcard-tag">{{ tag }}</span>{% endfor %}</div>
               {% endif %}
               {% if p.data.description %}<div class="pcard-desc">{{ p.data.description }}</div>{% endif %}
-              {% if p.data.capacities and p.data.capacities | length %}
-              <div class="pcard-caps">{% for cap in p.data.capacities %}<span class="pcard-cap">{{ cap }}</span>{% endfor %}</div>
-              {% endif %}
             </div>
           </a>
           {% if p.data.text_file or p.data.datasheet %}

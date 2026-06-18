@@ -1,0 +1,36 @@
+{
+  "list": [
+    {
+      "id": "ssd",
+      "label": "SSD",
+      "order": 1,
+      "sub_bands": [
+        "Precision Series — Standard",
+        "Performance Series — Gaming / Overclocking"
+      ]
+    },
+    {
+      "id": "dram",
+      "label": "DRAM",
+      "order": 2,
+      "sub_bands": []
+    },
+    {
+      "id": "gpu",
+      "label": "GPU",
+      "order": 3,
+      "sub_bands": [
+        "NVIDIA — Entry Series · G / GT",
+        "NVIDIA — Mid & High Series · GTX / RTX",
+        "AMD — Display Series · R5230 / R7240 / R7350",
+        "AMD — Gaming Series · RX580 / RX6500 / RX7600"
+      ]
+    },
+    {
+      "id": "ext",
+      "label": "外接裝置",
+      "order": 4,
+      "sub_bands": []
+    }
+  ]
+}
