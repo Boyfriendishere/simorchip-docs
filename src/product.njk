@@ -12,104 +12,120 @@ layout: false
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-:root{--blue:#0066cc;--blue-dark:#0071e3;--blue-ondark:#2997ff;--ink:#1d1d1f;--ink-80:#333333;--ink-48:#7a7a7a;--muted-dark:#cccccc;--white:#ffffff;--canvas:#ffffff;--parchment:#f5f5f7;--pearl:#fafafc;--tile-1:#272729;--tile-2:#2a2a2c;--tile-3:#252527;--black:#000000;--hairline:#e0e0e0;--divider-soft:#f0f0f0;--sp-xs:8px;--sp-sm:12px;--sp-md:17px;--sp-lg:24px;--sp-xl:32px;--sp-xxl:48px;--sp-section:80px;--f:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--r-sm:8px;--r-lg:18px;--r-pill:9999px;}
+:root{--blue:#0066cc;--blue-dark:#0071e3;--blue-ondark:#2997ff;--ink:#1d1d1f;--ink-80:#333333;--ink-48:#7a7a7a;--white:#ffffff;--canvas:#ffffff;--parchment:#f5f5f7;--black:#000000;--hairline:#e0e0e0;--sp-sm:12px;--sp-md:17px;--sp-lg:24px;--sp-xl:32px;--sp-xxl:48px;--sp-section:80px;--f:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--r-pill:9999px;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font-smoothing:antialiased;padding-top:44px;}
+
+/* ─── Nav ─── */
 .global-nav{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--black);height:44px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 22px;}
 .nav-logo{grid-column:1;justify-self:start;}
 .nav-logo img{height:20px;display:block;filter:brightness(0) invert(1);opacity:.85;}
 .nav-links{display:flex;align-items:center;gap:20px;grid-column:2;justify-self:center;}
-.nav-link{position:relative;font-size:12px;font-weight:400;letter-spacing:-.12px;line-height:1;color:rgba(255,255,255,.8);text-decoration:none;padding-bottom:4px;transition:color .25s ease;white-space:nowrap;}
+.nav-link{position:relative;font-size:12px;font-weight:400;letter-spacing:-.12px;line-height:1;color:rgba(255,255,255,.8);text-decoration:none;padding-bottom:4px;transition:color .25s;white-space:nowrap;}
 .nav-link::after{content:'';position:absolute;left:0;right:100%;bottom:-2px;height:1px;background:var(--blue-ondark);transition:right .3s cubic-bezier(.16,1,.3,1);}
 .nav-link:hover{color:var(--white);}
 .nav-link:hover::after{right:0;}
 .nav-right{display:flex;align-items:center;gap:8px;grid-column:3;justify-self:end;}
-.nav-lang-btn{font-size:12px;font-weight:400;letter-spacing:-.12px;color:rgba(255,255,255,.5);background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:var(--r-sm);transition:color .15s;}
-.nav-lang-btn:hover{color:var(--white);}
-.nav-lang-btn.active{color:var(--white);}
+.nav-lang-btn{font-size:12px;font-weight:400;letter-spacing:-.12px;color:rgba(255,255,255,.5);background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:8px;transition:color .15s;}
+.nav-lang-btn:hover,.nav-lang-btn.active{color:var(--white);}
 .nav-burger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:6px 4px;}
 .nav-burger span{display:block;width:18px;height:1.5px;background:rgba(255,255,255,.8);transition:all .22s;}
 .nav-mobile{display:none;flex-direction:column;background:var(--black);position:fixed;top:44px;left:0;right:0;z-index:290;border-bottom:1px solid rgba(255,255,255,.1);}
 .nav-mobile.open{display:flex;}
-.nav-mobile-link{font-size:17px;font-weight:400;letter-spacing:-.374px;line-height:1.47;color:rgba(255,255,255,.8);text-decoration:none;padding:14px 22px;border-bottom:1px solid rgba(255,255,255,.08);transition:color .15s;}
+.nav-mobile-link{font-size:17px;font-weight:400;letter-spacing:-.374px;color:rgba(255,255,255,.8);text-decoration:none;padding:14px 22px;border-bottom:1px solid rgba(255,255,255,.08);transition:color .15s;}
 .nav-mobile-link:hover{color:var(--white);}
 .nav-mobile-lang{display:flex;gap:8px;padding:12px 22px;}
+
+/* ─── Footer ─── */
 footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);border-top:1px solid var(--hairline);}
 .footer-inner{max-width:980px;margin:0 auto;}
 .footer-top{display:flex;align-items:flex-start;gap:80px;padding-bottom:var(--sp-xxl);border-bottom:1px solid var(--hairline);margin-bottom:var(--sp-lg);}
 .footer-logo img{height:24px;display:block;object-fit:contain;}
 .footer-info{display:flex;flex-direction:column;gap:8px;}
-.footer-col-title{font-size:14px;font-weight:600;letter-spacing:-.224px;line-height:1.29;color:var(--ink-48);margin-bottom:12px;}
+.footer-col-title{font-size:14px;font-weight:600;letter-spacing:-.224px;color:var(--ink-48);margin-bottom:12px;}
 .footer-nav{display:flex;flex-direction:column;gap:10px;}
-.footer-nav a{font-size:14px;font-weight:400;line-height:1.43;letter-spacing:-.224px;color:var(--ink-80);text-decoration:none;transition:color .15s;}
+.footer-nav a{font-size:14px;font-weight:400;letter-spacing:-.224px;color:var(--ink-80);text-decoration:none;transition:color .15s;}
 .footer-nav a:hover{color:var(--blue);}
 .footer-row{display:flex;align-items:baseline;gap:12px;}
-.footer-key{font-size:14px;font-weight:600;letter-spacing:-.224px;line-height:1.29;color:var(--ink-48);width:44px;flex-shrink:0;}
-.footer-val{font-size:17px;font-weight:400;line-height:2.41;letter-spacing:0;color:var(--ink-80);}
+.footer-key{font-size:14px;font-weight:600;letter-spacing:-.224px;color:var(--ink-48);width:44px;flex-shrink:0;}
+.footer-val{font-size:17px;font-weight:400;line-height:2.41;color:var(--ink-80);}
 .footer-val a{color:var(--blue);text-decoration:none;}
 .footer-val a:hover{text-decoration:underline;}
-.footer-bottom{font-size:12px;font-weight:400;line-height:1;letter-spacing:-.12px;color:var(--ink-48);}
-@media(max-width:1068px){.prow{grid-template-columns:repeat(3,1fr);}footer{padding:var(--sp-xxl) 40px;}}
-@media(max-width:834px){.nav-links{display:none;}.nav-burger{display:flex;}.prow{grid-template-columns:repeat(2,1fr);}.footer-top{flex-direction:column;gap:32px;}footer{padding:var(--sp-xxl) 32px;}}
-@media(max-width:640px){.prow{grid-template-columns:1fr 1fr;gap:var(--sp-sm);}footer{padding:var(--sp-xxl) 22px;}}
-@media(max-width:480px){.prow{grid-template-columns:1fr;}}
-.page-hero-tile{background:var(--black);padding:80px var(--sp-section) var(--sp-section);text-align:center;}
-.page-hero-eyebrow{font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.231px;color:var(--blue-ondark);margin-bottom:12px;}
-.page-hero-h1{font-size:56px;font-weight:600;line-height:1.07;letter-spacing:-.28px;color:var(--white);}
-.page-hero-sub{font-size:19px;font-weight:400;line-height:1.42;letter-spacing:-.304px;color:rgba(255,255,255,.56);max-width:560px;margin:14px auto 0;}
-.product-search-band{background:var(--parchment);position:sticky;top:44px;z-index:100;padding:14px var(--sp-section);border-bottom:1px solid var(--hairline);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.product-search-inner{position:relative;flex:0 0 320px;}
-.product-search-inner input{width:100%;height:36px;padding:0 14px 0 36px;font-size:14px;font-weight:400;letter-spacing:-.224px;background:var(--canvas);color:var(--ink);border:1px solid rgba(0,0,0,.08);border-radius:var(--r-pill);outline:none;transition:border-color .15s;}
-.product-search-inner input:focus{border-color:var(--blue);}
-.product-search-inner input::placeholder{color:var(--ink-48);}
-.product-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--ink-48);pointer-events:none;}
-.product-filter-pill{font-size:14px;font-weight:400;letter-spacing:-.224px;padding:6px 16px;border-radius:var(--r-pill);border:1px solid var(--hairline);background:var(--canvas);color:var(--ink-48);cursor:pointer;transition:all .15s;}
-.product-filter-pill:hover{border-color:var(--blue);color:var(--blue);}
-.product-filter-pill.on{background:var(--blue);color:var(--white);border-color:var(--blue);}
-.product-result-count{font-size:13px;font-weight:400;letter-spacing:-.08px;color:var(--ink-48);margin-left:auto;white-space:nowrap;}
-.chapter{scroll-margin-top:120px;}
-.chapter-band{padding:56px var(--sp-section) 28px;border-bottom:1px solid var(--hairline);display:flex;align-items:flex-end;gap:20px;justify-content:space-between;}
-.chapter-band > div:nth-child(2){flex:1;}
-.ch-accent{display:none;}
-.chapter-h2{font-size:48px;font-weight:600;line-height:1.05;letter-spacing:-.6px;color:var(--ink);}
-.chapter-label{font-size:14px;font-weight:400;letter-spacing:-.16px;color:var(--ink-48);margin-top:6px;}
-.chapter-count{font-size:14px;font-weight:400;letter-spacing:-.16px;color:var(--ink-48);padding-bottom:6px;}
-.sub-band{padding:28px var(--sp-section) 0;font-size:21px;font-weight:600;letter-spacing:-.35px;color:var(--ink);}
+.footer-bottom{font-size:12px;font-weight:400;color:var(--ink-48);}
+
+/* ─── Hero ─── */
+.page-hero{background:var(--black);padding:72px var(--sp-section) 64px;text-align:center;}
+.page-hero-eyebrow{font-size:14px;font-weight:500;letter-spacing:.5px;color:var(--blue-ondark);text-transform:uppercase;margin-bottom:16px;}
+.page-hero-h1{font-size:56px;font-weight:600;line-height:1.07;letter-spacing:-.56px;color:var(--white);}
+.page-hero-sub{font-size:19px;font-weight:400;line-height:1.42;letter-spacing:-.304px;color:rgba(255,255,255,.56);max-width:520px;margin:14px auto 0;}
+
+/* ─── Hub ─── */
+.hub-view{max-width:1240px;margin:0 auto;padding:var(--sp-xxl) var(--sp-section) 100px;}
+.hub-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.hub-tile{background:#f5f5f7;border-radius:24px;text-decoration:none;color:inherit;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.16,1,.3,1),background .2s;cursor:pointer;}
+.hub-tile:hover{transform:scale(1.015);background:#e8e8ed;}
+.hub-tile-imgs{display:flex;align-items:center;justify-content:center;gap:8px;padding:40px 32px 28px;background:#fff;}
+.hub-tile-imgs img{width:28%;max-height:130px;object-fit:contain;transition:transform .4s cubic-bezier(.16,1,.3,1);}
+.hub-tile:hover .hub-tile-imgs img{transform:scale(1.06);}
+.hub-tile-body{padding:22px 32px 32px;border-top:1px solid #e0e0e0;}
+.hub-eyebrow{font-size:12px;font-weight:500;color:#6e6e73;letter-spacing:.2px;text-transform:uppercase;}
+.hub-title{font-size:40px;font-weight:600;letter-spacing:-.5px;color:#1d1d1f;margin-top:4px;}
+.hub-cta{font-size:16px;color:#0066cc;margin-top:14px;}
+
+/* ─── Category view ─── */
+.cat-view{display:none;}
+.cat-topbar{padding:0 var(--sp-section);height:52px;display:flex;align-items:center;gap:16px;border-bottom:1px solid #e0e0e0;position:sticky;top:44px;background:rgba(255,255,255,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:99;}
+.cat-back{font-size:15px;color:#0066cc;text-decoration:none;display:flex;align-items:center;gap:2px;white-space:nowrap;flex-shrink:0;}
+.cat-topbar-name{font-size:15px;font-weight:600;color:#1d1d1f;}
+.cat-search-wrap{position:relative;margin-left:auto;width:220px;}
+.cat-search-wrap input{width:100%;height:32px;padding:0 14px 0 32px;font-size:13px;background:#f5f5f7;color:#1d1d1f;border:none;border-radius:var(--r-pill);outline:none;transition:background .15s;}
+.cat-search-wrap input:focus{background:#ebebef;}
+.cat-search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:12px;color:#6e6e73;pointer-events:none;}
+.cat-hero{padding:56px var(--sp-section) 32px;}
+.cat-h1{font-size:56px;font-weight:600;letter-spacing:-.6px;color:#1d1d1f;}
+.cat-sub{font-size:17px;font-weight:400;letter-spacing:-.16px;color:#6e6e73;margin-top:8px;}
+
+/* ─── Product grid ─── */
+.sub-band{padding:32px var(--sp-section) 0;font-size:21px;font-weight:600;letter-spacing:-.35px;color:#1d1d1f;}
 .prow-outer{padding:var(--sp-lg) var(--sp-section) var(--sp-xxl);}
 .prow{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
-.pcard{background:#f5f5f7;border:none;border-radius:20px;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.16,1,.3,1),background .2s ease;cursor:pointer;}
-.pcard:hover{transform:scale(1.02);background:#e8e8ed;}
+
+/* ─── Product cards ─── */
+.pcard{display:flex;flex-direction:column;text-align:center;}
 .pcard.hidden{display:none;}
-.pcard-thumb{aspect-ratio:1/1;overflow:hidden;background:#fff;border-radius:16px;margin:10px 10px 0;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.pcard-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s cubic-bezier(.16,1,.3,1);}
-.pcard-thumb.contain img{object-fit:contain;padding:20px;}
-.pcard:hover .pcard-thumb img{transform:scale(1.04);}
-.pcard-body{padding:16px 16px 6px;flex:1;display:flex;flex-direction:column;gap:3px;}
-.pcard-cat{font-size:11px;font-weight:500;letter-spacing:.1px;line-height:1;color:#6e6e73;}
-.pcard-name{font-size:17px;font-weight:600;line-height:1.24;letter-spacing:-.374px;color:var(--ink);margin-top:3px;}
-.pcard-desc{font-size:13px;font-weight:400;line-height:1.5;letter-spacing:-.08px;color:#6e6e73;margin-top:4px;}
-.pcard-caps{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
-.pcard-cap{font-size:11px;font-weight:500;letter-spacing:.1px;padding:3px 8px;border-radius:var(--r-pill);background:rgba(0,0,0,.06);color:#6e6e73;}
-.pcard-footer{display:flex;align-items:center;padding:8px 6px 10px;gap:2px;}
-.pcard-text-link{display:flex;align-items:center;gap:3px;padding:6px 10px;border-radius:var(--r-pill);text-decoration:none;color:inherit;transition:background .15s;}
-.pcard-text-link:hover{background:rgba(0,0,0,.06);}
-.pcard-text-link .tl-label{font-size:12px;font-weight:400;letter-spacing:-.08px;color:var(--blue);}
-.pcard-text-link .tl-arrow{font-size:11px;color:var(--blue);}
-.pcard-dl-link{display:flex;align-items:center;gap:3px;padding:6px 10px;border-radius:var(--r-pill);text-decoration:none;transition:background .15s;}
-.pcard-dl-link:hover{background:rgba(0,0,0,.06);}
-.pcard-dl-link .dl-label{font-size:12px;font-weight:400;letter-spacing:-.08px;color:var(--blue);}
-.pcard-dl-link .dl-icon{font-size:11px;color:var(--blue);}
 .pcard-main-link{display:flex;flex-direction:column;text-decoration:none;color:inherit;flex:1;}
 .pcard-main-link *{text-decoration:none;color:inherit;}
 .pcard-main-link:visited,.pcard-main-link:visited *{color:inherit;}
-.empty-state{display:none;text-align:center;padding:var(--sp-section) var(--sp-section);font-size:17px;font-weight:400;letter-spacing:-.224px;color:var(--ink-48);}
-.empty-state.show{display:block;}
-@media(max-width:768px){.page-hero-tile{padding:100px 24px var(--sp-xxl);}.page-hero-h1{font-size:40px;}.page-hero-sub{font-size:17px;}.product-search-band{padding:12px 24px;}.product-search-inner{flex:1;}.product-result-count{flex-basis:100%;margin-left:0;text-align:right;}.chapter-band{padding:40px 24px 20px;}.chapter-h2{font-size:34px;}.sub-band{padding:20px 24px 0;font-size:17px;}.prow{grid-template-columns:repeat(2,1fr);}.prow-outer{padding:var(--sp-md) 24px var(--sp-xxl);}.empty-state{padding:var(--sp-xxl) 24px;}}
-@media(max-width:480px){.page-hero-h1{font-size:32px;}.page-hero-tile{padding:88px 16px var(--sp-xl);}.product-search-band{padding:10px 16px;}.chapter-band{padding:28px 16px 16px;}.chapter-h2{font-size:26px;}.sub-band{padding:14px 16px 0;font-size:15px;}.prow-outer{padding:var(--sp-sm) 16px var(--sp-xl);}.prow{gap:12px;}.empty-state{padding:var(--sp-xl) 16px;}}
+.pcard-thumb{aspect-ratio:1;background:#f5f5f7;border-radius:20px;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.pcard-thumb img{width:72%;height:72%;object-fit:contain;transition:transform .4s cubic-bezier(.16,1,.3,1);}
+.pcard-thumb.contain img{width:78%;height:78%;}
+.pcard:hover .pcard-thumb{transform:scale(1.02);}
+.pcard:hover .pcard-thumb img{transform:scale(1.04);}
+.pcard-body{padding:14px 4px 4px;}
+.pcard-name{font-size:19px;font-weight:600;letter-spacing:-.374px;color:#1d1d1f;}
+.pcard-cat{font-size:12px;color:#6e6e73;margin-top:4px;letter-spacing:-.08px;}
+.pcard-desc{font-size:13px;color:#6e6e73;line-height:1.5;margin-top:6px;}
+.pcard-caps{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-top:8px;}
+.pcard-cap{font-size:11px;font-weight:500;padding:3px 8px;border-radius:var(--r-pill);background:rgba(0,0,0,.06);color:#6e6e73;}
+.pcard-footer{display:flex;justify-content:center;gap:12px;padding:6px 4px 10px;flex-wrap:wrap;}
+.pcard-text-link{display:flex;align-items:center;gap:3px;text-decoration:none;}
+.pcard-text-link .tl-label{font-size:14px;color:#0066cc;}
+.pcard-text-link .tl-arrow{font-size:12px;color:#0066cc;}
+.pcard-dl-link{display:flex;align-items:center;gap:3px;text-decoration:none;}
+.pcard-dl-link .dl-label{font-size:14px;color:#0066cc;}
+.pcard-dl-link .dl-icon{font-size:12px;color:#0066cc;}
+.cat-empty{display:none;text-align:center;padding:80px;font-size:17px;color:#6e6e73;}
+.cat-empty.show{display:block;}
+
+/* ─── Responsive ─── */
+@media(max-width:1068px){.prow{grid-template-columns:repeat(3,1fr);}footer{padding:var(--sp-xxl) 40px;}}
+@media(max-width:834px){.nav-links{display:none;}.nav-burger{display:flex;}.hub-grid{grid-template-columns:1fr;}.hub-view{padding:var(--sp-xxl) 24px 80px;}.hub-tile-imgs{padding:32px 24px 20px;}.hub-tile-body{padding:18px 24px 28px;}.hub-title{font-size:32px;}.prow{grid-template-columns:repeat(2,1fr);}.cat-hero{padding:40px 24px 24px;}.cat-h1{font-size:40px;}.cat-topbar{padding:0 24px;}.sub-band{padding:24px 24px 0;}.prow-outer{padding:var(--sp-md) 24px var(--sp-xxl);}.footer-top{flex-direction:column;gap:32px;}footer{padding:var(--sp-xxl) 32px;}}
+@media(max-width:480px){.page-hero{padding:56px 20px 48px;}.page-hero-h1{font-size:38px;}.hub-title{font-size:26px;}.hub-cta{font-size:14px;}.prow{grid-template-columns:1fr 1fr;gap:12px;}.cat-h1{font-size:30px;}.cat-hero{padding:28px 16px 20px;}.cat-topbar{padding:0 16px;}.cat-search-wrap{display:none;}.sub-band{padding:16px 16px 0;font-size:17px;}.prow-outer{padding:12px 16px var(--sp-xl);}footer{padding:var(--sp-xxl) 22px;}}
 </style>
 </head>
 <body>
+
 <nav class="global-nav" id="globalNav">
   <a class="nav-logo" href="index.html">
     <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/other/Logo-03.png" alt="Simorchip">
@@ -143,38 +159,55 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
   </div>
 </div>
 
-<div class="page-hero-tile">
-  <div class="page-hero-eyebrow">Products</div>
-  <h1 class="page-hero-h1">All Products.</h1>
-  <p class="page-hero-sub">SSDs, memory modules, graphics cards, and storage accessories — each with full specs, preview pages, and ready-to-use copywriting.</p>
-</div>
-
-<div class="product-search-band">
-  <div class="product-search-inner">
-    <span class="product-search-icon">⌕</span>
-    <input type="text" id="search" placeholder="Search products...">
-  </div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap;">
-    <div class="product-filter-pill on" data-filter="all">All</div>
-    {% for cat in productCategories %}
-    <div class="product-filter-pill" data-filter="{{ cat.id }}">{{ cat.title }}</div>
-    {% endfor %}
-  </div>
-  <span class="product-result-count" id="count"></span>
+<div class="page-hero">
+  <div class="page-hero-eyebrow">Simorchip</div>
+  <h1 class="page-hero-h1">Products.</h1>
+  <p class="page-hero-sub">Memory, storage, and graphics solutions built for reliability and performance.</p>
 </div>
 
 {% set catGroups = collections.products | groupBy("data.category") %}
+
+<!-- ══ HUB VIEW ══ -->
+<div id="hub-view">
+  <div class="hub-view">
+    <div class="hub-grid">
+      {% for catGroup in catGroups %}
+        {% set catMeta = productCategories | findWhere("id", catGroup.key) %}
+        <a class="hub-tile" href="#{{ catGroup.key }}" style="--accent:{{ catMeta.accent if catMeta else '#888' }}">
+          <div class="hub-tile-imgs">
+            {% for p in catGroup.items | limit(3) %}
+            <img src="{{ p.data.thumbnail }}" alt="{{ p.data.name }}" loading="lazy">
+            {% endfor %}
+          </div>
+          <div class="hub-tile-body">
+            <div class="hub-eyebrow">{{ catMeta.label if catMeta else catGroup.key }}</div>
+            <div class="hub-title">{{ catMeta.title if catMeta else catGroup.key }}</div>
+            <div class="hub-cta">See {{ catGroup.items | length }} products ›</div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- ══ CATEGORY VIEWS ══ -->
 {% for catGroup in catGroups %}
   {% set catMeta = productCategories | findWhere("id", catGroup.key) %}
   {% set bandGroups = catGroup.items | groupBy("data.sub_band") %}
-  <div class="chapter" id="{{ catGroup.key }}" data-chapter="{{ catGroup.key }}">
-    <div class="chapter-band">
-      <div class="ch-accent" style="background:{{ catMeta.accent if catMeta else '#888' }};"></div>
-      <div>
-        <div class="chapter-h2">{{ catMeta.title if catMeta else catGroup.key }}</div>
-        <div class="chapter-label">{{ catMeta.label if catMeta else catGroup.key }}</div>
+  <div id="cat-{{ catGroup.key }}" class="cat-view">
+
+    <div class="cat-topbar">
+      <a class="cat-back" href="#">‹ Products</a>
+      <span class="cat-topbar-name">{{ catMeta.title if catMeta else catGroup.key }}</span>
+      <div class="cat-search-wrap">
+        <span class="cat-search-icon">⌕</span>
+        <input type="text" class="cat-search" placeholder="Search…">
       </div>
-      <div class="chapter-count">{{ catGroup.items | length }} product{% if (catGroup.items | length) != 1 %}s{% endif %}</div>
+    </div>
+
+    <div class="cat-hero">
+      <h1 class="cat-h1">{{ catMeta.title if catMeta else catGroup.key }}</h1>
+      <p class="cat-sub">{{ catMeta.label if catMeta else '' }}</p>
     </div>
 
     {% for bandGroup in bandGroups %}
@@ -183,44 +216,34 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
       {% endif %}
       <div class="prow-outer"><div class="prow">
         {% for p in bandGroup.items %}
-        <div class="pcard" data-name="{{ p.data.name }}" data-cat="{{ p.data.category }}">
+        <div class="pcard" data-name="{{ p.data.name }}">
           <a class="pcard-main-link" href="{{ p.data.preview_file }}">
             <div class="pcard-thumb{% if p.data.thumb_contain %} contain{% endif %}">
               <img src="{{ p.data.thumbnail }}" alt="{{ p.data.name }}" loading="lazy">
             </div>
             <div class="pcard-body">
-              <div class="pcard-cat">{{ p.data.subtitle }}</div>
               <div class="pcard-name">{{ p.data.name }}</div>
-              {% if p.data.description %}
-              <div class="pcard-desc">{{ p.data.description }}</div>
-              {% endif %}
+              <div class="pcard-cat">{{ p.data.subtitle }}</div>
+              {% if p.data.description %}<div class="pcard-desc">{{ p.data.description }}</div>{% endif %}
               {% if p.data.capacities and p.data.capacities | length %}
-              <div class="pcard-caps">
-                {% for cap in p.data.capacities %}
-                <span class="pcard-cap">{{ cap }}</span>
-                {% endfor %}
-              </div>
+              <div class="pcard-caps">{% for cap in p.data.capacities %}<span class="pcard-cap">{{ cap }}</span>{% endfor %}</div>
               {% endif %}
             </div>
           </a>
           {% if p.data.text_file or p.data.datasheet %}
           <div class="pcard-footer">
-            {% if p.data.text_file %}
-            <a class="pcard-text-link" href="{{ p.data.text_file }}"><span class="tl-label">Copywriting</span><span class="tl-arrow">↗</span></a>
-            {% endif %}
-            {% if p.data.datasheet %}
-            <a class="pcard-dl-link" href="{{ p.data.datasheet }}" download><span class="dl-label">Datasheet</span><span class="dl-icon">↓</span></a>
-            {% endif %}
+            {% if p.data.text_file %}<a class="pcard-text-link" href="{{ p.data.text_file }}"><span class="tl-label">Copywriting</span><span class="tl-arrow">↗</span></a>{% endif %}
+            {% if p.data.datasheet %}<a class="pcard-dl-link" href="{{ p.data.datasheet }}" download><span class="dl-label">Datasheet</span><span class="dl-icon">↓</span></a>{% endif %}
           </div>
           {% endif %}
         </div>
         {% endfor %}
       </div></div>
     {% endfor %}
+
+    <div class="cat-empty">No products match your search.</div>
   </div>
 {% endfor %}
-
-<div class="empty-state" id="emptyState">No products match your search. Try a different keyword or filter.</div>
 
 <footer>
   <div class="footer-inner">
@@ -260,32 +283,70 @@ if(burger&&navMobile){
   navMobile.querySelectorAll('.nav-mobile-link').forEach(l=>{l.addEventListener('click',()=>{navMobile.classList.remove('open');burger.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='';});});});
 }
 </script>
+
 <script>
-const searchEl=document.getElementById('search');
-const pills=document.querySelectorAll('.product-filter-pill');
-const cards=document.querySelectorAll('.pcard');
-const countEl=document.getElementById('count');
-const emptyState=document.getElementById('emptyState');
-let activeFilter='all';
-function applyFilter(){
-  const q=searchEl.value.toLowerCase().trim();
-  let shown=0;
-  cards.forEach(c=>{
-    const name=(c.dataset.name||'').toLowerCase();
-    const cat=c.dataset.cat||'';
-    const ok=(!q||name.includes(q))&&(activeFilter==='all'||cat===activeFilter);
-    c.classList.toggle('hidden',!ok);
-    if(ok)shown++;
-  });
-  document.querySelectorAll('.chapter').forEach(ch=>{
-    const vis=Array.from(ch.querySelectorAll('.pcard')).some(c=>!c.classList.contains('hidden'));
-    ch.style.display=vis?'':'none';
-  });
-  countEl.textContent=(q||activeFilter!=='all')?`${shown} result${shown!==1?'s':''}`:`${cards.length} products`;
-  emptyState.classList.toggle('show',shown===0);
+const hubEl = document.getElementById('hub-view');
+const catViews = document.querySelectorAll('.cat-view');
+
+function showView(hash) {
+  const cat = (hash || '').replace('#', '');
+  if (cat) {
+    const target = document.getElementById('cat-' + cat);
+    if (target) {
+      hubEl.style.display = 'none';
+      catViews.forEach(v => v.style.display = 'none');
+      target.style.display = '';
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+  }
+  hubEl.style.display = '';
+  catViews.forEach(v => v.style.display = 'none');
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
-searchEl.addEventListener('input',applyFilter);
-pills.forEach(p=>{p.addEventListener('click',()=>{pills.forEach(x=>x.classList.remove('on'));p.classList.add('on');activeFilter=p.dataset.filter;applyFilter();});});
+
+showView(location.hash);
+window.addEventListener('popstate', () => showView(location.hash));
+
+document.querySelectorAll('.hub-tile').forEach(tile => {
+  tile.addEventListener('click', e => {
+    e.preventDefault();
+    const hash = tile.getAttribute('href');
+    history.pushState(null, '', hash);
+    showView(hash);
+  });
+});
+
+document.querySelectorAll('.cat-back').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    history.pushState(null, '', location.pathname);
+    showView('');
+  });
+});
+
+document.querySelectorAll('.cat-search').forEach(input => {
+  input.addEventListener('input', () => {
+    const catView = input.closest('.cat-view');
+    const q = input.value.toLowerCase().trim();
+    const cards = catView.querySelectorAll('.pcard');
+    let shown = 0;
+    cards.forEach(c => {
+      const name = (c.dataset.name || '').toLowerCase();
+      const ok = !q || name.includes(q);
+      c.classList.toggle('hidden', !ok);
+      if (ok) shown++;
+    });
+    catView.querySelectorAll('.prow-outer').forEach(row => {
+      const vis = Array.from(row.querySelectorAll('.pcard')).some(c => !c.classList.contains('hidden'));
+      row.style.display = vis ? '' : 'none';
+      const prev = row.previousElementSibling;
+      if (prev && prev.classList.contains('sub-band')) prev.style.display = vis ? '' : 'none';
+    });
+    const emptyEl = catView.querySelector('.cat-empty');
+    if (emptyEl) emptyEl.classList.toggle('show', shown === 0);
+  });
+});
 </script>
 </body>
 </html>

@@ -35,6 +35,10 @@ module.exports = function (eleventyConfig) {
     return (arr || []).find(item => item[key] === val) || null;
   });
 
+  eleventyConfig.addFilter("limit", function (arr, n) {
+    return (arr || []).slice(0, n);
+  });
+
   eleventyConfig.addFilter("where", function (arr, key, val) {
     return (arr || []).filter(item => {
       const parts = key.split('.');
