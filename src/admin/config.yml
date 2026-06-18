@@ -36,7 +36,7 @@ collections:
     fields:
       - { label: "標題", name: "title", widget: "string" }
       - { label: "發布日期", name: "date", widget: "datetime" }
-      - { label: "封面圖 (R2 URL)", name: "cover", widget: "string", required: false, hint: "Use Media Manager to get the R2 image URL" }
+      - { label: "封面圖", name: "cover", widget: "image", required: false }
       - { label: "摘要", name: "excerpt", widget: "text" }
       - { label: "內文", name: "body", widget: "markdown" }
       - { label: "Layout", name: "layout", widget: "hidden", default: "news-article.njk" }
