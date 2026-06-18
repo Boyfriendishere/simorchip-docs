@@ -87,19 +87,21 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
 .pcard-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease;}
 .pcard-thumb.contain img{object-fit:contain;padding:16px;}
 .pcard:hover .pcard-thumb img{transform:scale(1.04);}
-.pcard-body{padding:14px 16px 10px;flex:1;display:flex;flex-direction:column;gap:3px;}
-.pcard-cat{font-size:12px;font-weight:400;letter-spacing:-.12px;line-height:1;color:var(--ink-48);}
+.pcard-body{padding:14px 16px 12px;flex:1;display:flex;flex-direction:column;gap:4px;}
+.pcard-cat{font-size:11px;font-weight:400;letter-spacing:.2px;line-height:1;color:var(--ink-48);text-transform:uppercase;}
 .pcard-name{font-size:17px;font-weight:600;line-height:1.24;letter-spacing:-.374px;color:var(--ink);margin-top:2px;}
-.pcard-footer{border-top:1px solid var(--divider-soft);display:flex;flex-direction:column;}
-.pcard-preview-link{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;text-decoration:none;color:inherit;border-bottom:1px solid var(--divider-soft);transition:background .15s;}
-.pcard-preview-link:hover{background:var(--parchment);}
-.pcard-preview-link .pl-label{font-size:14px;font-weight:600;letter-spacing:-.224px;color:var(--blue);}
-.pcard-preview-link .pl-arrow{font-size:16px;color:var(--blue);}
-.pcard-text-link{display:flex;align-items:center;justify-content:space-between;padding:7px 16px;text-decoration:none;color:inherit;transition:background .15s;}
+.pcard-desc{font-size:13px;font-weight:400;line-height:1.5;letter-spacing:-.08px;color:var(--ink-48);margin-top:4px;}
+.pcard-caps{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
+.pcard-cap{font-size:11px;font-weight:500;letter-spacing:.1px;padding:3px 8px;border-radius:var(--r-pill);background:var(--parchment);color:var(--ink-48);border:1px solid var(--hairline);}
+.pcard-footer{border-top:1px solid var(--divider-soft);display:flex;align-items:center;}
+.pcard-text-link{display:flex;align-items:center;gap:4px;flex:1;padding:8px 12px;text-decoration:none;color:inherit;transition:background .15s;border-right:1px solid var(--divider-soft);}
 .pcard-text-link:hover{background:var(--parchment);}
-.pcard-text-link .tl-label{font-size:12px;font-weight:400;letter-spacing:-.12px;color:var(--ink-48);}
-.pcard-text-link .tl-arrow{font-size:13px;color:var(--ink-48);}
-.pcard-text-link .tl-note{font-size:10px;color:var(--ink-48);margin-left:5px;}
+.pcard-text-link .tl-label{font-size:11px;font-weight:400;letter-spacing:-.08px;color:var(--ink-48);}
+.pcard-text-link .tl-arrow{font-size:11px;color:var(--ink-48);}
+.pcard-dl-link{display:flex;align-items:center;gap:4px;padding:8px 12px;text-decoration:none;transition:background .15s;}
+.pcard-dl-link:hover{background:var(--parchment);}
+.pcard-dl-link .dl-label{font-size:11px;font-weight:400;letter-spacing:-.08px;color:var(--ink-48);}
+.pcard-dl-link .dl-icon{font-size:11px;color:var(--ink-48);}
 .pcard-main-link{display:flex;flex-direction:column;text-decoration:none;color:inherit;}
 .pcard-main-link *{text-decoration:none;color:inherit;}
 .pcard-main-link:visited,.pcard-main-link:visited *{color:inherit;}
@@ -163,47 +165,26 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
   <span class="product-result-count" id="count"></span>
 </div>
 
-{% for cat in productCategories %}
-  {% set catProducts = collections.products | where("data.category", cat.id) %}
-  <div class="chapter" id="{{ cat.id }}" data-chapter="{{ cat.id }}">
+{% set catGroups = collections.products | groupBy("data.category") %}
+{% for catGroup in catGroups %}
+  {% set catMeta = productCategories | findWhere("id", catGroup.key) %}
+  {% set bandGroups = catGroup.items | groupBy("data.sub_band") %}
+  <div class="chapter" id="{{ catGroup.key }}" data-chapter="{{ catGroup.key }}">
     <div class="chapter-band">
-      <div class="ch-accent" style="background:{{ cat.accent }};"></div>
+      <div class="ch-accent" style="background:{{ catMeta.accent if catMeta else '#888' }};"></div>
       <div>
-        <div class="chapter-label">{{ cat.label }}</div>
-        <div class="chapter-h2">{{ cat.title }}</div>
+        <div class="chapter-label">{{ catMeta.label if catMeta else catGroup.key }}</div>
+        <div class="chapter-h2">{{ catMeta.title if catMeta else catGroup.key }}</div>
       </div>
-      <div class="chapter-count">{{ catProducts | length }} product{% if (catProducts | length) != 1 %}s{% endif %}</div>
+      <div class="chapter-count">{{ catGroup.items | length }} product{% if (catGroup.items | length) != 1 %}s{% endif %}</div>
     </div>
 
-    {% if cat.sub_bands | length > 0 %}
-      {% for band in cat.sub_bands %}
-        {% set bandProducts = catProducts | where("data.sub_band", band) %}
-        {% if bandProducts | length > 0 %}
-        <div class="sub-band">{{ band }}</div>
-        <div class="prow-outer"><div class="prow">
-          {% for p in bandProducts %}
-          <div class="pcard" data-name="{{ p.data.name }}" data-cat="{{ p.data.category }}">
-            <a class="pcard-main-link" href="{{ p.data.preview_file }}">
-              <div class="pcard-thumb{% if p.data.thumb_contain %} contain{% endif %}">
-                <img src="{{ p.data.thumbnail }}" alt="{{ p.data.name }}" loading="lazy">
-              </div>
-              <div class="pcard-body">
-                <div class="pcard-cat">{{ p.data.subtitle }}</div>
-                <div class="pcard-name">{{ p.data.name }}</div>
-              </div>
-            </a>
-            <div class="pcard-footer">
-              <a class="pcard-preview-link" href="{{ p.data.preview_file }}"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
-              <a class="pcard-text-link" href="{{ p.data.text_file }}"><span class="tl-label">Copywriting Text</span>{% if p.data.text_note %}<span class="tl-note">{{ p.data.text_note }}</span>{% endif %}<span class="tl-arrow">→</span></a>
-            </div>
-          </div>
-          {% endfor %}
-        </div></div>
-        {% endif %}
-      {% endfor %}
-    {% else %}
+    {% for bandGroup in bandGroups %}
+      {% if bandGroup.key %}
+      <div class="sub-band">{{ bandGroup.key }}</div>
+      {% endif %}
       <div class="prow-outer"><div class="prow">
-        {% for p in catProducts %}
+        {% for p in bandGroup.items %}
         <div class="pcard" data-name="{{ p.data.name }}" data-cat="{{ p.data.category }}">
           <a class="pcard-main-link" href="{{ p.data.preview_file }}">
             <div class="pcard-thumb{% if p.data.thumb_contain %} contain{% endif %}">
@@ -212,16 +193,32 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
             <div class="pcard-body">
               <div class="pcard-cat">{{ p.data.subtitle }}</div>
               <div class="pcard-name">{{ p.data.name }}</div>
+              {% if p.data.description %}
+              <div class="pcard-desc">{{ p.data.description }}</div>
+              {% endif %}
+              {% if p.data.capacities and p.data.capacities | length %}
+              <div class="pcard-caps">
+                {% for cap in p.data.capacities %}
+                <span class="pcard-cap">{{ cap }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
             </div>
           </a>
+          {% if p.data.text_file or p.data.datasheet %}
           <div class="pcard-footer">
-            <a class="pcard-preview-link" href="{{ p.data.preview_file }}"><span class="pl-label">Preview</span><span class="pl-arrow">→</span></a>
-            <a class="pcard-text-link" href="{{ p.data.text_file }}"><span class="tl-label">Copywriting Text</span>{% if p.data.text_note %}<span class="tl-note">{{ p.data.text_note }}</span>{% endif %}<span class="tl-arrow">→</span></a>
+            {% if p.data.text_file %}
+            <a class="pcard-text-link" href="{{ p.data.text_file }}"><span class="tl-label">Copywriting</span><span class="tl-arrow">↗</span></a>
+            {% endif %}
+            {% if p.data.datasheet %}
+            <a class="pcard-dl-link" href="{{ p.data.datasheet }}" download><span class="dl-label">Datasheet</span><span class="dl-icon">↓</span></a>
+            {% endif %}
           </div>
+          {% endif %}
         </div>
         {% endfor %}
       </div></div>
-    {% endif %}
+    {% endfor %}
   </div>
 {% endfor %}
 
