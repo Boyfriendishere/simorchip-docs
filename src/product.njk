@@ -295,7 +295,7 @@ function showView(hash) {
     if (target) {
       hubEl.style.display = 'none';
       catViews.forEach(v => v.style.display = 'none');
-      target.style.display = '';
+      target.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'instant' });
       return;
     }
