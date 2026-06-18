@@ -4,9 +4,7 @@ category: dram
 sub_band: Precision Series — Standard
 subtitle: DDR3L · 1600 Mbps · 1.35V · 8GB
 description: ''
-capacities:
-  - 2kb
-  - 4KB
+capacities: []
 tags:
   - 8GB
   - 16GB
