@@ -259,6 +259,38 @@ section{padding:var(--sp-section) 0}
 @media(max-width:1068px){.site-foot{padding:var(--sp-xxl) 40px}}
 @media(max-width:834px){.footer-top{flex-direction:column;gap:32px}.site-foot{padding:var(--sp-xxl) 32px}}
 @media(max-width:640px){.site-foot{padding:var(--sp-xxl) 22px}}
+
+/* ══ PROCESS ROUTES — ANIMATIONS ══ */
+.route-panel{position:relative;}
+
+/* top-of-panel scanning light — plays once each time route renders */
+@keyframes panelScan{0%{opacity:0;transform:translateX(-120%);}15%{opacity:1;}85%{opacity:1;}100%{opacity:0;transform:translateX(550%);}}
+.route-panel::before{content:'';position:absolute;top:0;left:0;width:22%;height:1.5px;pointer-events:none;z-index:1;
+  background:linear-gradient(90deg,transparent 0%,rgba(41,151,255,.8) 50%,transparent 100%);
+  animation:panelScan 4s cubic-bezier(.4,0,.6,1) infinite;border-radius:28px;}
+
+/* gate step dots — pulsing blue glow */
+@keyframes gateDotPulse{0%,100%{box-shadow:0 0 0 2px rgba(41,151,255,.18);}50%{box-shadow:0 0 0 5px rgba(41,151,255,0),0 0 10px rgba(41,151,255,.65);}}
+.rstep.gate .rmk{animation:gateDotPulse 2.4s ease-in-out infinite;}
+
+/* stage cards — staggered entrance */
+@keyframes rstageIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.rstage{animation:rstageIn .55s cubic-bezier(.16,1,.3,1) both;}
+
+/* Full Route — traveling light beam */
+.flow-wrap{position:relative;overflow:hidden;padding:4px 8px;margin:-4px -8px;border-radius:8px;}
+@keyframes routeBeam{0%{transform:translateX(-120px);}100%{transform:translateX(2400px);}}
+.flow-wrap::after{content:'';position:absolute;top:0;bottom:0;left:0;width:80px;pointer-events:none;will-change:transform;
+  background:linear-gradient(90deg,transparent 0%,rgba(41,151,255,.3) 50%,transparent 100%);
+  animation:routeBeam 4.5s linear infinite;}
+
+/* gate nodes in summary — staggered glimmer */
+@keyframes nodeGlimmer{0%,100%{opacity:.75;}60%{opacity:1;text-shadow:0 0 8px rgba(41,151,255,.8),0 0 22px rgba(41,151,255,.35);}}
+.route-summary .node.g{animation:nodeGlimmer 3.2s ease-in-out infinite;}
+
+/* stat number pop-in */
+@keyframes statPop{0%{opacity:0;transform:scale(.5);}70%{transform:scale(1.1);}100%{opacity:1;transform:scale(1);}}
+.route-panel-stats b{display:inline-block;animation:statPop .4s cubic-bezier(.16,1,.3,1) both;}
 </style>
 </head>
 <body>
@@ -577,6 +609,14 @@ function countUp(node){
     node.textContent=(target*e).toFixed(1);if(p<1)requestAnimationFrame(step);else node.textContent=target.toFixed(1);}
   requestAnimationFrame(step);
 }
+
+function countUpInt(el,target,dur,delay){
+  var t0=null;
+  function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1);var e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(target*e);if(p<1)requestAnimationFrame(step);else el.textContent=target;}
+  el.textContent='0';
+  setTimeout(function(){requestAnimationFrame(step);},delay||0);
+}
 var edgeIO=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){document.querySelectorAll('.stat-num').forEach(countUp);edgeIO.disconnect();}});},{threshold:.3});
 var edgeSec=document.getElementById('edge');if(edgeSec)edgeIO.observe(edgeSec);
 
@@ -623,16 +663,17 @@ var ROUTE_META={
 
 function renderRoute(key){
   var r=ROUTES[key];var p=document.getElementById('routePanel');var h='';
+  var steps=countSteps(r),gates=countGates(r);
   h+='<div class="route-panel-head reveal">';
   h+='<div><h2>'+r.title+'</h2><div class="zh">'+r.zh+'</div></div>';
   h+='<div class="route-panel-stats">';
-  h+='<div><b>'+countSteps(r)+'</b><span>Steps</span></div>';
-  h+='<div><b>'+countGates(r)+'</b><span>Gates</span></div>';
-  h+='<div><b>5</b><span>Stages</span></div>';
+  h+='<div><b data-tgt="'+steps+'" style="animation-delay:.1s">0</b><span>Steps</span></div>';
+  h+='<div><b data-tgt="'+gates+'" style="animation-delay:.22s">0</b><span>Gates</span></div>';
+  h+='<div><b data-tgt="5" style="animation-delay:.34s">0</b><span>Stages</span></div>';
   h+='</div></div>';
   h+='<div class="route-stages reveal">';
   r.stages.forEach(function(st,i){
-    h+='<div class="rstage"><div class="rstage-top"><span class="rstage-badge">'+(i+1)+'</span><h4>'+st.n+'</h4></div>';
+    h+='<div class="rstage" style="animation-delay:'+(i*85)+'ms"><div class="rstage-top"><span class="rstage-badge">'+(i+1)+'</span><h4>'+st.n+'</h4></div>';
     h+='<div class="rstage-zh">'+st.zh+'</div>';
     h+='<ul class="rsteps">';
     st.steps.forEach(function(step){h+='<li class="rstep'+(step.gate?' gate':'')+'"><span class="rmk"></span>'+step.name+'</li>';});
@@ -641,11 +682,20 @@ function renderRoute(key){
     h+='</div>';
   });
   h+='</div>';
-  h+='<div class="route-summary reveal"><div class="lbl">Full Route</div><div class="flow">';
-  r.summary.forEach(function(node,i){var g=r.summaryGates.indexOf(node)>=0;h+='<span class="node'+(g?' g':'')+'">'+node+'</span>';if(i<r.summary.length-1)h+='<span class="arr">&#8594;</span>';});
-  h+='</div></div>';
+  h+='<div class="route-summary reveal"><div class="lbl">Full Route</div><div class="flow-wrap"><div class="flow">';
+  var gIdx=0;
+  r.summary.forEach(function(node,i){
+    var isGate=r.summaryGates.indexOf(node)>=0;
+    if(isGate){h+='<span class="node g" style="animation-delay:'+(gIdx*0.75)+'s">'+node+'</span>';gIdx++;}
+    else{h+='<span class="node">'+node+'</span>';}
+    if(i<r.summary.length-1)h+='<span class="arr">&#8594;</span>';
+  });
+  h+='</div></div></div>';
   p.innerHTML=h;
   observeReveals(p);
+  p.querySelectorAll('.route-panel-stats b[data-tgt]').forEach(function(b,i){
+    countUpInt(b,parseInt(b.getAttribute('data-tgt'),10),800,220+i*130);
+  });
 }
 
 var tabs=document.querySelectorAll('.route-tab');
