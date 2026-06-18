@@ -18,6 +18,23 @@ module.exports = function (eleventyConfig) {
     return new Date(value).toISOString().slice(0, 10);
   });
 
+  eleventyConfig.addFilter("groupBy", function (arr, key) {
+    const result = {};
+    (arr || []).forEach(item => {
+      const parts = key.split('.');
+      let val = item;
+      for (const p of parts) val = val?.[p];
+      const k = (val === undefined || val === null) ? '' : String(val);
+      if (!result[k]) result[k] = [];
+      result[k].push(item);
+    });
+    return Object.entries(result).map(([k, items]) => ({ key: k, items }));
+  });
+
+  eleventyConfig.addFilter("findWhere", function (arr, key, val) {
+    return (arr || []).find(item => item[key] === val) || null;
+  });
+
   eleventyConfig.addFilter("where", function (arr, key, val) {
     return (arr || []).filter(item => {
       const parts = key.split('.');
