@@ -55,7 +55,12 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
 .footer-bottom{font-size:12px;font-weight:400;color:var(--ink-48);}
 
 /* ─── Hero ─── */
-.page-hero{background:var(--black);padding:72px var(--sp-section) 64px;text-align:center;}
+.page-hero{background:#000;padding:72px var(--sp-section) 64px;text-align:center;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:-60%;background:radial-gradient(ellipse at 25% 55%,#c8200e 0%,transparent 50%),radial-gradient(ellipse at 75% 45%,#76b900 0%,transparent 50%);opacity:.07;animation:hglow1 10s ease-in-out infinite alternate;pointer-events:none;}
+.page-hero::after{content:'';position:absolute;inset:-60%;background:radial-gradient(ellipse at 65% 35%,#c8922a 0%,transparent 50%),radial-gradient(ellipse at 35% 65%,#0d9488 0%,transparent 50%);opacity:.07;animation:hglow2 13s ease-in-out infinite alternate;pointer-events:none;}
+@keyframes hglow1{0%{opacity:.04;transform:scale(1) translate(-4%,-4%);}100%{opacity:.11;transform:scale(1.2) translate(4%,4%);}}
+@keyframes hglow2{0%{opacity:.11;transform:scale(1.15) translate(4%,-4%);}100%{opacity:.04;transform:scale(1) translate(-4%,4%);}}
+.page-hero-eyebrow,.page-hero-h1,.page-hero-sub{position:relative;z-index:1;}
 .page-hero-eyebrow{font-size:14px;font-weight:500;letter-spacing:.5px;color:var(--blue-ondark);text-transform:uppercase;margin-bottom:16px;}
 .page-hero-h1{font-size:56px;font-weight:600;line-height:1.07;letter-spacing:-.56px;color:var(--white);}
 .page-hero-sub{font-size:19px;font-weight:400;line-height:1.42;letter-spacing:-.304px;color:rgba(255,255,255,.56);max-width:520px;margin:14px auto 0;}
