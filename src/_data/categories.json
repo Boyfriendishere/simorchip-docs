@@ -28,7 +28,7 @@
     },
     {
       "id": "ext",
-      "label": "外接裝置",
+      "label": "External",
       "order": 4,
       "sub_bands": []
     }
