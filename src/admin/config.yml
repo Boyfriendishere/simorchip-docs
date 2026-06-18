@@ -47,10 +47,7 @@ collections:
     create: true
     extension: "md"
     format: "frontmatter"
-    slug: "{{name}}"
-    filter:
-      field: permalink
-      value: false
+    slug: "{{slug}}"
     fields:
       - { label: "產品名稱", name: "name", widget: "string" }
       - label: "分類"
