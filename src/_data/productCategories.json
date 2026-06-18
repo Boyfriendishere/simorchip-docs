@@ -13,7 +13,7 @@
     "title": "DRAM",
     "label": "Memory · DDR3 / DDR4 / DDR5",
     "accent": "#c8922a",
-    "hub_image": "",
+    "hub_image": "https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/categories/dram-hero.png",
     "data_chapter": "dram",
     "sub_bands": [
       "Precision Series — Standard",
