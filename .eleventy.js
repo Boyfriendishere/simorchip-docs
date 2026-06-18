@@ -1,14 +1,11 @@
 module.exports = function (eleventyConfig) {
-  // Only .njk/.md go through the template engine. Existing static .html
-  // pages (and the product sub-sites) are copied through untouched so their
-  // output paths/extensions stay exactly as before (e.g. about.html, not
-  // about/index.html).
+  // .njk and .md go through the template engine.
+  // about/contact/solutions/manufacturing are now .njk templates with explicit permalinks.
   eleventyConfig.setTemplateFormats(["njk", "md"]);
   eleventyConfig.addPassthroughCopy({ "src/admin/config.yml": "admin/config.yml" });
   eleventyConfig.addPassthroughCopy("src/news/images");
   eleventyConfig.addPassthroughCopy({ "src/_redirects": "_redirects" });
   eleventyConfig.addPassthroughCopy("src/_uploads");
-  eleventyConfig.addPassthroughCopy("src/*.html");
   eleventyConfig.addPassthroughCopy("src/ssd");
   eleventyConfig.addPassthroughCopy("src/dram");
   eleventyConfig.addPassthroughCopy("src/gpu");

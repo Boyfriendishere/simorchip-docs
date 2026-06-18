@@ -1,0 +1,10 @@
+{
+  "items": [
+    { "label": "Products", "url": "/product.html" },
+    { "label": "Solutions", "url": "/solutions.html" },
+    { "label": "Manufacturing", "url": "/manufacturing.html" },
+    { "label": "About", "url": "/about.html" },
+    { "label": "News", "url": "/news/" },
+    { "label": "Contact", "url": "/contact.html" }
+  ]
+}

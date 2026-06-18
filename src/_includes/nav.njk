@@ -4,12 +4,9 @@
     <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/other/Logo-03.png" alt="Simorchip">
   </a>
   <div class="nav-links">
-    <a class="nav-link" href="/product.html">Products</a>
-    <a class="nav-link" href="/solutions.html">Solutions</a>
-    <a class="nav-link" href="/manufacturing.html">Manufacturing</a>
-    <a class="nav-link" href="/about.html">About</a>
-    <a class="nav-link" href="/news/">News</a>
-    <a class="nav-link" href="/contact.html">Contact</a>
+    {% for item in nav.items %}
+    <a class="nav-link" href="{{ item.url }}">{{ item.label }}</a>
+    {% endfor %}
   </div>
   <div class="nav-right">
     <button class="nav-lang-btn active">EN</button>
@@ -20,12 +17,9 @@
   </div>
 </nav>
 <div class="nav-mobile" id="navMobile">
-  <a class="nav-mobile-link" href="/product.html">Products</a>
-  <a class="nav-mobile-link" href="/solutions.html">Solutions</a>
-  <a class="nav-mobile-link" href="/manufacturing.html">Manufacturing</a>
-  <a class="nav-mobile-link" href="/about.html">About</a>
-  <a class="nav-mobile-link" href="/news/">News</a>
-  <a class="nav-mobile-link" href="/contact.html">Contact</a>
+  {% for item in nav.items %}
+  <a class="nav-mobile-link" href="{{ item.url }}">{{ item.label }}</a>
+  {% endfor %}
   <div class="nav-mobile-lang">
     <button class="nav-lang-btn active">EN</button>
     <button class="nav-lang-btn">中文</button>

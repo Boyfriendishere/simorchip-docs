@@ -1,9 +1,14 @@
+---
+permalink: /contact.html
+eleventyExcludeFromCollections: true
+layout: false
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Us — Simorchip</title>
+<title>Contact — Simorchip</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
@@ -11,7 +16,7 @@
   --blue:#0066cc;--blue-dark:#0071e3;--blue-ondark:#2997ff;
   --ink:#1d1d1f;--ink-80:#333333;--ink-48:#7a7a7a;--muted-dark:#cccccc;--white:#ffffff;
   --canvas:#ffffff;--parchment:#f5f5f7;--tile-1:#272729;--tile-2:#2a2a2c;--black:#000000;
-  --hairline:#e0e0e0;
+  --hairline:#e0e0e0;--divider-soft:#f0f0f0;
   --sp-sm:12px;--sp-md:17px;--sp-lg:24px;--sp-xl:32px;--sp-xxl:48px;--sp-section:80px;
   --f:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --r-sm:8px;--r-lg:18px;--r-pill:9999px;
@@ -50,34 +55,26 @@ body{font-family:var(--f);background:var(--canvas);color:var(--ink);-webkit-font
 .tile{width:100%;padding:var(--sp-section) var(--sp-section);text-align:center;}
 .tile-light{background:var(--canvas);color:var(--ink);}
 .tile-parchment{background:var(--parchment);color:var(--ink);}
-.tile-dark-2{background:var(--tile-2);color:var(--white);}
 .tile-inner{max-width:980px;margin:0 auto;}
 .tile-eyebrow{font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.231px;margin-bottom:8px;}
 .tile-light .tile-eyebrow,.tile-parchment .tile-eyebrow{color:var(--ink-48);}
-.tile-dark-2 .tile-eyebrow{color:var(--muted-dark);}
 .tile-h2{font-size:40px;font-weight:600;line-height:1.1;letter-spacing:0;margin-bottom:var(--sp-md);}
 .tile-light .tile-h2,.tile-parchment .tile-h2{color:var(--ink);}
-.tile-dark-2 .tile-h2{color:var(--white);}
-.tile-body{font-size:17px;font-weight:400;line-height:1.47;letter-spacing:-.374px;max-width:640px;margin:0 auto;}
-.tile-light .tile-body,.tile-parchment .tile-body{color:var(--ink);}
-.tile-dark-2 .tile-body{color:var(--muted-dark);}
 
-/* PILLAR CARDS */
-.pillar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-lg);margin-top:var(--sp-xxl);text-align:left;counter-reset:pillar;}
-.pillar-card{counter-increment:pillar;position:relative;background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-lg);padding:var(--sp-xl);overflow:hidden;transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .35s ease;}
-.pillar-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--blue);transform:scaleY(0);transform-origin:bottom;transition:transform .35s cubic-bezier(.16,1,.3,1);}
-.pillar-card::after{content:'0' counter(pillar);position:absolute;top:var(--sp-xl);right:var(--sp-xl);font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--ink-48);font-variant-numeric:tabular-nums;}
-.pillar-card:hover{transform:translateY(-4px);border-color:rgba(0,102,204,.2);}
-.pillar-card:hover::before{transform:scaleY(1);}
-.pillar-title{font-size:17px;font-weight:600;line-height:1.24;letter-spacing:-.374px;color:var(--ink);margin-bottom:10px;padding-right:28px;}
-.pillar-body{font-size:17px;font-weight:400;line-height:1.47;letter-spacing:-.374px;color:var(--ink-48);}
+/* CONTACT CARDS */
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-lg);margin-top:var(--sp-xxl);}
+.contact-card{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-lg);padding:var(--sp-xl);transition:border-color .35s ease;}
+.contact-card:hover{border-color:rgba(0,102,204,.25);}
+.contact-card-icon{font-size:28px;line-height:1;margin-bottom:var(--sp-md);}
+.contact-card-label{font-size:14px;font-weight:600;letter-spacing:-.224px;line-height:1.29;color:var(--ink-48);margin-bottom:6px;}
+.contact-card-value{font-size:17px;font-weight:400;line-height:1.47;letter-spacing:-.374px;color:var(--ink);}
+.contact-card-value a{color:var(--blue);text-decoration:none;}
+.contact-card-value a:hover{text-decoration:underline;}
+.contact-hours{font-size:24px;font-weight:300;line-height:1.5;color:var(--ink);margin-top:4px;}
 
-/* MFG LIST */
-.mfg-list{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);margin-top:var(--sp-xxl);text-align:left;}
-.mfg-item{background:var(--tile-1);padding:var(--sp-xl) var(--sp-lg);transition:background .25s;}
-.mfg-item:hover{background:var(--tile-2);}
-.mfg-item-num{font-size:12px;font-weight:400;letter-spacing:-.12px;color:var(--blue-ondark);margin-bottom:var(--sp-sm);}
-.mfg-item-title{font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.231px;color:var(--white);}
+/* MAP */
+.map-wrap{margin-top:var(--sp-xxl);border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--hairline);}
+.map-wrap iframe{display:block;}
 
 /* FOOTER */
 footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);border-top:1px solid var(--hairline);}
@@ -103,90 +100,60 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
 .fade-in-delay-2{transition-delay:.2s;}
 
 /* RWD */
-@media(max-width:1068px){.tile{padding:var(--sp-section) 40px;}footer{padding:var(--sp-xxl) 40px;}.mfg-list{grid-template-columns:1fr 1fr;}}
-@media(max-width:834px){.nav-links{display:none;}.nav-burger{display:flex;}.page-hero-tile{padding:100px 32px var(--sp-xxl);}.page-hero-h1{font-size:40px;}.tile{padding:var(--sp-section) 32px;}.tile-h2{font-size:32px;}.pillar-grid{grid-template-columns:1fr;}.footer-top{flex-direction:column;gap:32px;}footer{padding:var(--sp-xxl) 32px;}}
-@media(max-width:640px){.tile{padding:64px 22px;}.tile-h2{font-size:28px;}.mfg-list{grid-template-columns:1fr;}.page-hero-tile{padding:88px 22px var(--sp-xxl);}.page-hero-h1{font-size:32px;}footer{padding:var(--sp-xxl) 22px;}}
+@media(max-width:1068px){.tile{padding:var(--sp-section) 40px;}footer{padding:var(--sp-xxl) 40px;}.contact-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:834px){.nav-links{display:none;}.nav-burger{display:flex;}.page-hero-tile{padding:100px 32px var(--sp-xxl);}.page-hero-h1{font-size:40px;}.tile{padding:var(--sp-section) 32px;}.tile-h2{font-size:32px;}.footer-top{flex-direction:column;gap:32px;}footer{padding:var(--sp-xxl) 32px;}}
+@media(max-width:640px){.tile{padding:64px 22px;}.tile-h2{font-size:28px;}.contact-grid{grid-template-columns:1fr;}.page-hero-tile{padding:88px 22px var(--sp-xxl);}.page-hero-h1{font-size:32px;}footer{padding:var(--sp-xxl) 22px;}}
 </style>
 </head>
 <body>
-<nav class="global-nav" id="globalNav">
-  <a class="nav-logo" href="index.html">
-    <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/other/Logo-03.png" alt="Simorchip">
-  </a>
-  <div class="nav-links">
-    <a class="nav-link" href="product.html">Products</a>
-    <a class="nav-link" href="solutions.html">Solutions</a>
-    <a class="nav-link" href="manufacturing.html">Manufacturing</a>
-    <a class="nav-link" href="about.html">About</a>
-    <a class="nav-link" href="news/index.html">News</a>
-    <a class="nav-link" href="contact.html">Contact</a>
-  </div>
-  <div class="nav-right">
-    <button class="nav-lang-btn active">EN</button>
-    <button class="nav-lang-btn">中文</button>
-    <button class="nav-burger" id="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-<div class="nav-mobile" id="navMobile">
-  <a class="nav-mobile-link" href="product.html">Products</a>
-  <a class="nav-mobile-link" href="solutions.html">Solutions</a>
-  <a class="nav-mobile-link" href="manufacturing.html">Manufacturing</a>
-  <a class="nav-mobile-link" href="about.html">About</a>
-  <a class="nav-mobile-link" href="news/index.html">News</a>
-  <a class="nav-mobile-link" href="contact.html">Contact</a>
-  <div class="nav-mobile-lang">
-    <button class="nav-lang-btn active">EN</button>
-    <button class="nav-lang-btn">中文</button>
-  </div>
-</div>
+{% include "nav.njk" %}
 
 <div class="page-hero-tile">
-  <div class="page-hero-eyebrow">About Simorchip</div>
-  <h1 class="page-hero-h1">Who We Are.</h1>
+  <div class="page-hero-eyebrow">Get In Touch</div>
+  <h1 class="page-hero-h1">Contact Us.</h1>
 </div>
 
 <div class="tile tile-light">
   <div class="tile-inner">
-    <div class="tile-eyebrow fade-in">Our Story</div>
-    <h2 class="tile-h2 fade-in fade-in-delay-1">Built in Taiwan.<br>Built for the World.</h2>
-    <p class="tile-body fade-in fade-in-delay-2">Established in 2022 with its headquarters in Taiwan, Simorchip boasts a dedicated team spanning R&amp;D, manufacturing, sales, and marketing, with a global presence in 10 locations. At Simorchip, we prioritize product excellence and customer-centricity, offering top-notch customer support. Adapting swiftly to the ever-evolving market needs, we cater to a diverse range of consumer preferences.<br><br>We specialize in Internal SSD &amp; DRAM, ensuring a comprehensive solution for our clients. In this fast-paced tech era, Simorchip stands at the forefront with continuous technological advancements, fulfilling every customer's aspiration.</p>
-  </div>
-</div>
-
-<div class="tile tile-parchment">
-  <div class="tile-inner">
-    <div class="tile-eyebrow fade-in">Our Principles</div>
-    <h2 class="tile-h2 fade-in fade-in-delay-1">What drives us.</h2>
-    <div class="pillar-grid">
-      <div class="pillar-card fade-in">
-        <div class="pillar-title">Commitment to Excellence</div>
-        <div class="pillar-body">Quality is our unwavering promise. We embed a holistic quality management approach in every phase, ensuring each product undergoes stringent testing. Our production team is professionally trained, guaranteeing all products meet our rigorous quality criteria.</div>
+    <div class="tile-eyebrow fade-in">Reach Out</div>
+    <h2 class="tile-h2 fade-in fade-in-delay-1">We'd love to hear from you.</h2>
+    <div class="contact-grid">
+      <div class="contact-card fade-in">
+        <div class="contact-card-icon">📍</div>
+        <div class="contact-card-label">Address</div>
+        <div class="contact-card-value">8F.-1, No. 300, Sec. 1, Neihu Rd.,<br>Neihu Dist., Taipei City 114066, Taiwan.</div>
       </div>
-      <div class="pillar-card fade-in">
-        <div class="pillar-title">Global Vision, Local Presence</div>
-        <div class="pillar-body">Beyond our Taipei headquarters, we have offices in Shanghai and Shenzhen. Our industry-leading technology combined with real-time global logistics ensures the highest caliber of products and services for Simorchip's clientele and staff.</div>
+      <div class="contact-card fade-in">
+        <div class="contact-card-icon">✉️</div>
+        <div class="contact-card-label">Contact</div>
+        <div class="contact-card-value"><a href="tel:+886226576680">+886-2-2657-6680</a></div>
+        <div class="contact-card-label" style="margin-top:16px;">Email</div>
+        <div class="contact-card-value"><a href="mailto:sales@simorchip.com">sales@simorchip.com</a></div>
       </div>
-      <div class="pillar-card fade-in">
-        <div class="pillar-title">Move Beyond</div>
-        <div class="pillar-body">Simorchip is future-focused, consistently pushing boundaries. Through efficient planning and innovation, we not only meet but often exceed industry standards. As the demand in consumer electronics and industrial applications grows, we envision endless possibilities.</div>
+      <div class="contact-card fade-in">
+        <div class="contact-card-icon">🕘</div>
+        <div class="contact-card-label">Opening Hours</div>
+        <div class="contact-card-value">Mon – Fri</div>
+        <div class="contact-hours">9:00 am – 5:00 pm</div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="tile tile-dark-2">
-  <div class="tile-inner" style="text-align:left;">
-    <div class="tile-eyebrow fade-in" style="text-align:center;color:var(--muted-dark);">Storage Wisdom</div>
-    <h2 class="tile-h2 fade-in fade-in-delay-1" style="text-align:center;">Manufacturing at a Glance.</h2>
-    <div class="mfg-list">
-      <div class="mfg-item fade-in"><div class="mfg-item-num">01</div><div class="mfg-item-title">Products &amp; Quality</div></div>
-      <div class="mfg-item fade-in fade-in-delay-1"><div class="mfg-item-num">02</div><div class="mfg-item-title">Worldwide Service</div></div>
-      <div class="mfg-item fade-in fade-in-delay-2"><div class="mfg-item-num">03</div><div class="mfg-item-title">Product Road Map Management</div></div>
-      <div class="mfg-item fade-in"><div class="mfg-item-num">04</div><div class="mfg-item-title">Reliable Supply Chain</div></div>
-      <div class="mfg-item fade-in fade-in-delay-1"><div class="mfg-item-num">05</div><div class="mfg-item-title">Immediate Service</div></div>
-      <div class="mfg-item fade-in fade-in-delay-2"><div class="mfg-item-num">06</div><div class="mfg-item-title">Self-Developed ERP</div></div>
+<div class="tile tile-parchment">
+  <div class="tile-inner">
+    <div class="tile-eyebrow fade-in">Find Us</div>
+    <h2 class="tile-h2 fade-in fade-in-delay-1">Our Location.</h2>
+    <div class="map-wrap fade-in fade-in-delay-2">
+      <iframe
+        src="https://maps.google.com/maps?q=3HJ9%2BPF+Neihu+District,+Taipei+City,+Taiwan&hl=en&z=17&iwloc=B&output=embed"
+        width="100%"
+        height="440"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
     </div>
   </div>
 </div>

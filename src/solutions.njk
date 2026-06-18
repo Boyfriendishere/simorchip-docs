@@ -1,3 +1,8 @@
+---
+permalink: /solutions.html
+eleventyExcludeFromCollections: true
+layout: false
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -514,38 +519,7 @@ footer{
 <body>
 
 <!-- ══ GLOBAL NAV ══ -->
-<nav class="global-nav" id="globalNav">
-  <a class="nav-logo" href="index.html">
-    <img src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/other/Logo-03.png" alt="Simorchip">
-  </a>
-  <div class="nav-links">
-    <a class="nav-link" href="product.html">Products</a>
-    <a class="nav-link" href="solutions.html">Solutions</a>
-    <a class="nav-link" href="manufacturing.html">Manufacturing</a>
-    <a class="nav-link" href="about.html">About</a>
-    <a class="nav-link" href="news/index.html">News</a>
-    <a class="nav-link" href="contact.html">Contact</a>
-  </div>
-  <div class="nav-right">
-    <button class="nav-lang-btn active">EN</button>
-    <button class="nav-lang-btn">中文</button>
-    <button class="nav-burger" id="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-<div class="nav-mobile" id="navMobile">
-  <a class="nav-mobile-link" href="product.html">Products</a>
-  <a class="nav-mobile-link" href="solutions.html">Solutions</a>
-  <a class="nav-mobile-link" href="manufacturing.html">Manufacturing</a>
-  <a class="nav-mobile-link" href="about.html">About</a>
-  <a class="nav-mobile-link" href="news/index.html">News</a>
-  <a class="nav-mobile-link" href="contact.html">Contact</a>
-  <div class="nav-mobile-lang">
-    <button class="nav-lang-btn active">EN</button>
-    <button class="nav-lang-btn">中文</button>
-  </div>
-</div>
+{% include "nav.njk" %}
 
 
 <!-- ══ SOLUTIONS HERO ══ -->

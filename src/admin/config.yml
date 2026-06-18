@@ -26,6 +26,21 @@ collections:
           - { label: "按鈕 2 文字", name: "cta2Text", widget: "string" }
           - { label: "按鈕 2 連結", name: "cta2Url", widget: "string" }
 
+  - name: "nav"
+    label: "導覽列管理"
+    files:
+      - name: "nav"
+        label: "導覽列設定"
+        file: "src/_data/nav.json"
+        fields:
+          - label: "導覽列連結"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.label}} → {{fields.url}}"
+            fields:
+              - { label: "顯示名稱", name: "label", widget: "string", hint: "例：Products、Solutions、About" }
+              - { label: "連結網址", name: "url", widget: "string", hint: "例：/product.html、/news/、/contact.html" }
+
   - name: "news"
     label: "新聞 News"
     folder: "src/news"
