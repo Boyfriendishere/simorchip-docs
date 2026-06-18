@@ -4,6 +4,7 @@
     "title": "SSD",
     "label": "Storage · M.2 / SATA",
     "accent": "#c8200e",
+    "hub_image": "",
     "data_chapter": "ssd",
     "sub_bands": []
   },
@@ -12,6 +13,7 @@
     "title": "DRAM",
     "label": "Memory · DDR3 / DDR4 / DDR5",
     "accent": "#c8922a",
+    "hub_image": "",
     "data_chapter": "dram",
     "sub_bands": [
       "Precision Series — Standard",
@@ -23,6 +25,7 @@
     "title": "GPU",
     "label": "GPU · NVIDIA GeForce & AMD Radeon",
     "accent": "#76b900",
+    "hub_image": "",
     "data_chapter": "gpu",
     "sub_bands": [
       "NVIDIA — Entry Series · G / GT",
@@ -36,6 +39,7 @@
     "title": "External",
     "label": "Externals · microSD / USB",
     "accent": "#0d9488",
+    "hub_image": "",
     "data_chapter": "ext",
     "sub_bands": []
   }

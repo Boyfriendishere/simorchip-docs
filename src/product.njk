@@ -63,15 +63,19 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
 /* ─── Hub ─── */
 .hub-view{max-width:1240px;margin:0 auto;padding:var(--sp-xxl) var(--sp-section) 100px;}
 .hub-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-.hub-tile{background:#f5f5f7;border-radius:24px;text-decoration:none;color:inherit;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.16,1,.3,1),background .2s;cursor:pointer;}
-.hub-tile:hover{transform:scale(1.015);background:#e8e8ed;}
-.hub-tile-imgs{display:flex;align-items:center;justify-content:center;gap:8px;padding:40px 32px 28px;background:#fff;}
-.hub-tile-imgs img{width:28%;max-height:130px;object-fit:contain;transition:transform .4s cubic-bezier(.16,1,.3,1);}
-.hub-tile:hover .hub-tile-imgs img{transform:scale(1.06);}
-.hub-tile-body{padding:22px 32px 32px;border-top:1px solid #e0e0e0;}
-.hub-eyebrow{font-size:12px;font-weight:500;color:#6e6e73;letter-spacing:.2px;text-transform:uppercase;}
-.hub-title{font-size:40px;font-weight:600;letter-spacing:-.5px;color:#1d1d1f;margin-top:4px;}
-.hub-cta{font-size:16px;color:#0066cc;margin-top:14px;}
+.hub-tile{border-radius:24px;text-decoration:none;color:inherit;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.16,1,.3,1);cursor:pointer;background:#111;}
+.hub-tile:hover{transform:scale(1.015);}
+.hub-tile-visual{aspect-ratio:16/9;position:relative;overflow:hidden;display:flex;align-items:flex-end;}
+.hub-tile-visual-bg{position:absolute;inset:0;background:linear-gradient(135deg,#111 0%,#1e1e1e 100%);}
+.hub-tile-visual-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 80% 40%,var(--accent) 0%,transparent 60%);opacity:.35;transition:opacity .4s;}
+.hub-tile:hover .hub-tile-visual-glow{opacity:.55;}
+.hub-tile-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1),opacity .3s;}
+.hub-tile:hover .hub-tile-visual img{transform:scale(1.04);}
+.hub-tile-visual-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,transparent 50%);}
+.hub-tile-body{padding:24px 32px 32px;background:#111;}
+.hub-eyebrow{font-size:12px;font-weight:500;color:rgba(255,255,255,.5);letter-spacing:.3px;text-transform:uppercase;}
+.hub-title{font-size:40px;font-weight:600;letter-spacing:-.5px;color:#fff;margin-top:4px;}
+.hub-cta{font-size:16px;color:var(--accent);margin-top:14px;}
 
 /* ─── Category view ─── */
 .cat-view{display:none;}
@@ -120,7 +124,7 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
 
 /* ─── Responsive ─── */
 @media(max-width:1068px){.prow{grid-template-columns:repeat(3,1fr);}footer{padding:var(--sp-xxl) 40px;}}
-@media(max-width:834px){.nav-links{display:none;}.nav-burger{display:flex;}.hub-grid{grid-template-columns:1fr;}.hub-view{padding:var(--sp-xxl) 24px 80px;}.hub-tile-imgs{padding:32px 24px 20px;}.hub-tile-body{padding:18px 24px 28px;}.hub-title{font-size:32px;}.prow{grid-template-columns:repeat(2,1fr);}.cat-hero{padding:40px 24px 24px;}.cat-h1{font-size:40px;}.cat-topbar{padding:0 24px;}.sub-band{padding:24px 24px 0;}.prow-outer{padding:var(--sp-md) 24px var(--sp-xxl);}.footer-top{flex-direction:column;gap:32px;}footer{padding:var(--sp-xxl) 32px;}}
+@media(max-width:834px){.nav-links{display:none;}.nav-burger{display:flex;}.hub-grid{grid-template-columns:1fr;}.hub-view{padding:var(--sp-xxl) 24px 80px;}.hub-tile-body{padding:18px 24px 28px;}.hub-title{font-size:32px;}.prow{grid-template-columns:repeat(2,1fr);}.cat-hero{padding:40px 24px 24px;}.cat-h1{font-size:40px;}.cat-topbar{padding:0 24px;}.sub-band{padding:24px 24px 0;}.prow-outer{padding:var(--sp-md) 24px var(--sp-xxl);}.footer-top{flex-direction:column;gap:32px;}footer{padding:var(--sp-xxl) 32px;}}
 @media(max-width:480px){.page-hero{padding:56px 20px 48px;}.page-hero-h1{font-size:38px;}.hub-title{font-size:26px;}.hub-cta{font-size:14px;}.prow{grid-template-columns:1fr 1fr;gap:12px;}.cat-h1{font-size:30px;}.cat-hero{padding:28px 16px 20px;}.cat-topbar{padding:0 16px;}.cat-search-wrap{display:none;}.sub-band{padding:16px 16px 0;font-size:17px;}.prow-outer{padding:12px 16px var(--sp-xl);}footer{padding:var(--sp-xxl) 22px;}}
 </style>
 </head>
@@ -174,10 +178,13 @@ footer{background:var(--parchment);padding:var(--sp-xxl) var(--sp-section);borde
       {% for catGroup in catGroups %}
         {% set catMeta = productCategories | findWhere("id", catGroup.key) %}
         <a class="hub-tile" href="#{{ catGroup.key }}" style="--accent:{{ catMeta.accent if catMeta else '#888' }}">
-          <div class="hub-tile-imgs">
-            {% for p in catGroup.items | limit(3) %}
-            <img src="{{ p.data.thumbnail }}" alt="{{ p.data.name }}" loading="lazy">
-            {% endfor %}
+          <div class="hub-tile-visual">
+            <div class="hub-tile-visual-bg"></div>
+            <div class="hub-tile-visual-glow"></div>
+            {% if catMeta and catMeta.hub_image %}
+            <img src="{{ catMeta.hub_image }}" alt="{{ catMeta.title }}" loading="lazy">
+            <div class="hub-tile-visual-overlay"></div>
+            {% endif %}
           </div>
           <div class="hub-tile-body">
             <div class="hub-eyebrow">{{ catMeta.label if catMeta else catGroup.key }}</div>
