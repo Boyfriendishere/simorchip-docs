@@ -1,0 +1,42 @@
+[
+  {
+    "id": "ssd",
+    "title": "SSD",
+    "label": "Storage · M.2 / SATA",
+    "accent": "#c8200e",
+    "data_chapter": "ssd",
+    "sub_bands": []
+  },
+  {
+    "id": "dram",
+    "title": "DRAM",
+    "label": "Memory · DDR3 / DDR4 / DDR5",
+    "accent": "#c8922a",
+    "data_chapter": "dram",
+    "sub_bands": [
+      "Precision Series — Standard",
+      "Performance Series — Gaming / Overclocking"
+    ]
+  },
+  {
+    "id": "gpu",
+    "title": "GPU",
+    "label": "GPU · NVIDIA GeForce & AMD Radeon",
+    "accent": "#76b900",
+    "data_chapter": "gpu",
+    "sub_bands": [
+      "NVIDIA — Entry Series · G / GT",
+      "NVIDIA — Mid & High Series · GTX / RTX",
+      "AMD — Display Series · R5230 / R7240 / R7350",
+      "AMD — Gaming Series · RX580 / RX6500 / RX7600"
+    ]
+  },
+  {
+    "id": "ext",
+    "title": "External",
+    "label": "Externals · microSD / USB",
+    "accent": "#0d9488",
+    "data_chapter": "ext",
+    "sub_bands": []
+  }
+]

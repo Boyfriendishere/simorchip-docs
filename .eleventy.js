@@ -22,6 +22,11 @@ module.exports = function (eleventyConfig) {
     return collectionApi.getFilteredByGlob("src/news/*.md").sort((a, b) => b.date - a.date);
   });
 
+  eleventyConfig.addCollection("products", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("src/products/**/*.md")
+      .sort((a, b) => (a.data.sort_order || 0) - (b.data.sort_order || 0));
+  });
+
   return {
     dir: {
       input: "src",
