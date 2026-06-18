@@ -4,7 +4,7 @@
     "title": "SSD",
     "label": "Storage · M.2 / SATA",
     "accent": "#c8200e",
-    "hub_image": "",
+    "hub_image": "https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/categories/ssd-hero.png",
     "data_chapter": "ssd",
     "sub_bands": []
   },
@@ -25,7 +25,7 @@
     "title": "GPU",
     "label": "GPU · NVIDIA GeForce & AMD Radeon",
     "accent": "#76b900",
-    "hub_image": "",
+    "hub_image": "https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/categories/gpu-hero.png",
     "data_chapter": "gpu",
     "sub_bands": [
       "NVIDIA — Entry Series · G / GT",
@@ -39,7 +39,7 @@
     "title": "External",
     "label": "Externals · microSD / USB",
     "accent": "#0d9488",
-    "hub_image": "",
+    "hub_image": "https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/categories/ext-hero.png",
     "data_chapter": "ext",
     "sub_bands": []
   }
