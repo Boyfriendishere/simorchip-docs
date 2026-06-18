@@ -484,6 +484,31 @@ footer{
   .sol-detail-title{font-size:26px;}
   .sol-tone{font-size:19px;}
 }
+
+/* ══ SOLUTION COVER IMAGES ══ */
+.sol-cover-img{width:100%;aspect-ratio:21/8;border-radius:var(--r-lg);overflow:hidden;margin-bottom:48px;background:var(--parchment);}
+.sol-cover-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;}
+.sol-cover-img:hover img{transform:scale(1.03);}
+@media(max-width:640px){.sol-cover-img{aspect-ratio:4/3;margin-bottom:32px;}}
+
+/* ══ SOLUTIONS FINALE ══ */
+.sol-finale{text-align:left;padding:var(--sp-section) var(--sp-section);}
+.sol-finale-inner{max-width:1120px;margin:0 auto;}
+.sol-finale-head{margin-bottom:60px;}
+.sol-finale .tile-h2{color:var(--white);max-width:16ch;margin-bottom:14px;}
+.sol-finale-sub{font-size:19px;color:var(--muted-dark);max-width:52ch;line-height:1.5;margin-top:14px;}
+.sol-pillars{border-top:1px solid rgba(255,255,255,.1);}
+.sol-pillar{display:grid;grid-template-columns:64px 1fr;gap:24px;align-items:start;padding:28px 0;border-bottom:1px solid rgba(255,255,255,.08);transition:border-bottom-color .3s ease;}
+.sol-pillar:hover{border-bottom-color:rgba(255,255,255,.2);}
+.sol-pillar-num{font-size:12px;font-weight:600;color:var(--blue-ondark);letter-spacing:.06em;padding-top:5px;}
+.sol-pillar-title{font-size:21px;font-weight:600;color:var(--white);margin-bottom:7px;letter-spacing:-.02em;}
+.sol-pillar-body{font-size:16px;color:var(--muted-dark);max-width:60ch;line-height:1.55;}
+.sol-finale-foot{display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-top:52px;padding-top:36px;border-top:1px solid rgba(255,255,255,.1);}
+.sol-finale-foot-label{font-size:16px;font-weight:400;color:var(--muted-dark);max-width:44ch;line-height:1.55;}
+.sol-finale-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+@media(max-width:1068px){.sol-finale{padding:var(--sp-section) 40px;}}
+@media(max-width:834px){.sol-finale{padding:var(--sp-section) 32px;}.sol-pillar{grid-template-columns:1fr;gap:4px;}.sol-pillar-num{padding-top:0;}.sol-finale-foot{flex-direction:column;gap:24px;}}
+@media(max-width:640px){.sol-finale{padding:var(--sp-section) 22px;}.sol-pillar-title{font-size:18px;}}
 </style>
 </head>
 <body>
@@ -577,6 +602,7 @@ footer{
 <!-- ══ SOLUTION 01 — Consumer Upgrade ══ -->
 <div class="tile tile-parchment sol-detail" id="consumer">
   <div class="tile-inner">
+    <div class="sol-cover-img fade-in"><img src="" alt="Consumer Upgrade — everyday desktop and laptop upgrade"></div>
     <div class="sol-row">
       <div class="sol-row-main fade-in">
         <div class="sol-index">01 / 06</div>
@@ -597,6 +623,7 @@ footer{
 <!-- ══ SOLUTION 02 — Gaming &amp; Performance ══ -->
 <div class="tile tile-light sol-detail" id="gaming">
   <div class="tile-inner">
+    <div class="sol-cover-img fade-in"><img src="" alt="Gaming and Performance — high-speed gaming PC build"></div>
     <div class="sol-row sol-row-reverse">
       <div class="sol-row-main fade-in fade-in-delay-1">
         <div class="sol-index">02 / 06</div>
@@ -617,6 +644,7 @@ footer{
 <!-- ══ SOLUTION 03 — Business &amp; Office ══ -->
 <div class="tile tile-parchment sol-detail" id="business">
   <div class="tile-inner">
+    <div class="sol-cover-img fade-in"><img src="" alt="Business and Office — clean professional office workspace"></div>
     <div class="sol-row">
       <div class="sol-row-main fade-in">
         <div class="sol-index">03 / 06</div>
@@ -637,6 +665,7 @@ footer{
 <!-- ══ SOLUTION 04 — Industrial &amp; Embedded ══ -->
 <div class="tile tile-light sol-detail" id="industrial">
   <div class="tile-inner">
+    <div class="sol-cover-img fade-in"><img src="" alt="Industrial and Embedded — IPC kiosk signage systems"></div>
     <div class="sol-row sol-row-reverse">
       <div class="sol-row-main fade-in fade-in-delay-1">
         <div class="sol-index">04 / 06</div>
@@ -657,6 +686,7 @@ footer{
 <!-- ══ SOLUTION 05 — Content Creation ══ -->
 <div class="tile tile-parchment sol-detail" id="creation">
   <div class="tile-inner">
+    <div class="sol-cover-img fade-in"><img src="" alt="Content Creation — video editing workstation with multiple monitors"></div>
     <div class="sol-row">
       <div class="sol-row-main fade-in">
         <div class="sol-index">05 / 06</div>
@@ -677,6 +707,7 @@ footer{
 <!-- ══ SOLUTION 06 — Portable &amp; External Storage ══ -->
 <div class="tile tile-light sol-detail" id="portable">
   <div class="tile-inner">
+    <div class="sol-cover-img fade-in"><img src="" alt="Portable and External Storage — working on the go with laptop and storage"></div>
     <div class="sol-row sol-row-reverse">
       <div class="sol-row-main fade-in fade-in-delay-1">
         <div class="sol-index">06 / 06</div>
@@ -695,40 +726,50 @@ footer{
   </div>
 </div>
 
-<!-- ══ WHY SIMORCHIP SOLUTIONS ══ -->
-<div class="tile tile-parchment">
-  <div class="tile-inner">
-    <div class="tile-eyebrow fade-in">Why Simorchip</div>
-    <h2 class="tile-h2 fade-in fade-in-delay-1">Solutions you can build on.</h2>
-    <div class="feature-grid">
-      <div class="feature-card fade-in">
-        <div class="feature-card-title">Broad Product Coverage</div>
-        <div class="feature-card-body">From storage and memory to graphics and external — one source for the full stack.</div>
+<!-- ══ SOLUTIONS FINALE ══ -->
+<div class="tile tile-dark sol-finale">
+  <div class="sol-finale-inner">
+    <div class="sol-finale-head fade-in">
+      <div class="tile-eyebrow">Why Simorchip</div>
+      <h2 class="tile-h2">Solutions you<br>can build on.</h2>
+      <p class="sol-finale-sub">One qualified source. Consistent quality. Ready for the full deployment cycle.</p>
+    </div>
+    <div class="sol-pillars fade-in">
+      <div class="sol-pillar">
+        <div class="sol-pillar-num">01</div>
+        <div>
+          <div class="sol-pillar-title">Broad Product Coverage</div>
+          <div class="sol-pillar-body">From storage and memory to graphics and external — one qualified source for the full product stack.</div>
+        </div>
       </div>
-      <div class="feature-card fade-in fade-in-delay-1">
-        <div class="feature-card-title">Reliable Quality</div>
-        <div class="feature-card-body">Structured validation and inspection before every shipment.</div>
+      <div class="sol-pillar">
+        <div class="sol-pillar-num">02</div>
+        <div>
+          <div class="sol-pillar-title">Reliable Quality</div>
+          <div class="sol-pillar-body">Structured manufacturing control, multi-stage inspection, and outgoing re-test before every shipment.</div>
+        </div>
       </div>
-      <div class="feature-card fade-in fade-in-delay-2">
-        <div class="feature-card-title">Compatibility Focus</div>
-        <div class="feature-card-body">Components selected and tested to fit real-world systems.</div>
+      <div class="sol-pillar">
+        <div class="sol-pillar-num">03</div>
+        <div>
+          <div class="sol-pillar-title">Compatibility Focus</div>
+          <div class="sol-pillar-body">Components selected and validated to fit real-world platforms — desktop, laptop, embedded, and OEM systems.</div>
+        </div>
       </div>
-      <div class="feature-card fade-in fade-in-delay-3">
-        <div class="feature-card-title">Flexible Deployment</div>
-        <div class="feature-card-body">Options across form factors, capacities, and performance tiers.</div>
+      <div class="sol-pillar">
+        <div class="sol-pillar-num">04</div>
+        <div>
+          <div class="sol-pillar-title">Flexible Deployment</div>
+          <div class="sol-pillar-body">Options across form factors, capacities, and performance tiers — built for channel, system integrator, and fleet deployment.</div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- ══ PRE-FOOTER CTA BAND ══ -->
-<div class="cta-band">
-  <div class="cta-band-inner fade-in">
-    <div class="cta-band-label">Tailored to your application.</div>
-    <h2 class="cta-band-h2">Need the right solution<br>for your market or system?</h2>
-    <div class="cta-band-actions">
-      <a class="btn-pill btn-blue" href="contact.html">Contact Sales</a>
-      <a class="btn-pill btn-ghost-dark" href="product.html">Explore All Products</a>
+    <div class="sol-finale-foot fade-in">
+      <p class="sol-finale-foot-label">Ready to specify the right mix of storage, memory, and graphics for your application?</p>
+      <div class="sol-finale-cta">
+        <a class="btn-pill btn-blue" href="contact.html">Contact Sales</a>
+        <a class="btn-pill btn-ghost-dark" href="product.html">Explore All Products</a>
+      </div>
     </div>
   </div>
 </div>

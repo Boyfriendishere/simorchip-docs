@@ -41,36 +41,22 @@ collections:
       - { label: "內文", name: "body", widget: "markdown" }
       - { label: "Layout", name: "layout", widget: "hidden", default: "news-article.njk" }
 
-  - name: "products"
-    label: "產品 Product"
+  - name: "products_ssd"
+    label: "SSD"
+    label_singular: "SSD 產品"
     folder: "src/products"
     create: true
     extension: "md"
     format: "frontmatter"
     slug: "{{slug}}"
-    sortable_fields: ["sort_order", "name", "category"]
-    view_groups:
-      - label: "依分類"
-        field: category
-      - label: "依子分類"
-        field: sub_band
-    view_filters:
-      - label: "SSD"
-        field: category
-        pattern: "ssd"
-      - label: "DRAM"
-        field: category
-        pattern: "dram"
-      - label: "GPU"
-        field: category
-        pattern: "gpu"
-      - label: "外接"
-        field: category
-        pattern: "ext"
+    filter:
+      field: category
+      value: ssd
+    sortable_fields: ["sort_order", "name"]
     fields:
       - { label: "產品名稱", name: "name", widget: "string" }
-      - { label: "分類", name: "category", widget: "string", hint: "小寫英文，需與分類管理中的 ID 一致。例：ssd、dram、gpu、ext" }
-      - { label: "子分類 / Sub-band", name: "sub_band", widget: "string", required: false, hint: "例：NVIDIA — Entry Series · G / GT（留空則不顯示）" }
+      - { label: "分類", name: "category", widget: "hidden", default: "ssd" }
+      - { label: "子分類 / Sub-band", name: "sub_band", widget: "string", required: false, hint: "例：Precision Series — Standard、Performance Series — Gaming / Overclocking（留空則不顯示）" }
       - { label: "副標題", name: "subtitle", widget: "string", hint: "例：PCIe Gen4x4 · M.2 2280 · NVMe" }
       - { label: "產品描述", name: "description", widget: "text", required: false }
       - label: "標籤"
@@ -78,10 +64,103 @@ collections:
         widget: "list"
         required: false
         field: { label: "標籤", name: "tag", widget: "string" }
-        hint: "產品特色規格標籤。例：8GB、16GB、512GB、DDR5、PCIe Gen4、ECC"
+        hint: "產品特色規格標籤。例：120GB、512GB、1TB、PCIe Gen4、NVMe"
       - { label: "縮圖", name: "thumbnail", widget: "image" }
-      - { label: "縮圖 contain 模式", name: "thumb_contain", widget: "boolean", default: false, hint: "透明背景圖片（DRAM/外接）請勾選" }
+      - { label: "縮圖 contain 模式", name: "thumb_contain", widget: "boolean", default: false, hint: "透明背景圖片請勾選" }
       - { label: "Preview HTML 路徑", name: "preview_file", widget: "string", hint: "例：ssd/SSD120_preview.html" }
+      - { label: "Copywriting HTML 路徑", name: "text_file", widget: "string", required: false }
+      - { label: "Datasheet PDF", name: "datasheet", widget: "file", required: false, hint: "上傳 PDF 規格表" }
+      - { label: "排列順序", name: "sort_order", widget: "number", default: 99 }
+
+  - name: "products_dram"
+    label: "DRAM"
+    label_singular: "DRAM 產品"
+    folder: "src/products"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    filter:
+      field: category
+      value: dram
+    sortable_fields: ["sort_order", "name"]
+    fields:
+      - { label: "產品名稱", name: "name", widget: "string" }
+      - { label: "分類", name: "category", widget: "hidden", default: "dram" }
+      - { label: "子分類 / Sub-band", name: "sub_band", widget: "string", required: false, hint: "例：DDR3 / DDR4 / DDR5（留空則不顯示）" }
+      - { label: "副標題", name: "subtitle", widget: "string", hint: "例：DDR4 · 3200MHz · U-DIMM" }
+      - { label: "產品描述", name: "description", widget: "text", required: false }
+      - label: "標籤"
+        name: "tags"
+        widget: "list"
+        required: false
+        field: { label: "標籤", name: "tag", widget: "string" }
+        hint: "產品特色規格標籤。例：8GB、16GB、32GB、DDR5、ECC"
+      - { label: "縮圖", name: "thumbnail", widget: "image" }
+      - { label: "縮圖 contain 模式", name: "thumb_contain", widget: "boolean", default: true, hint: "透明背景圖片請勾選（DRAM 通常需要）" }
+      - { label: "Preview HTML 路徑", name: "preview_file", widget: "string", hint: "例：dram/DDR4_preview.html" }
+      - { label: "Copywriting HTML 路徑", name: "text_file", widget: "string", required: false }
+      - { label: "Datasheet PDF", name: "datasheet", widget: "file", required: false, hint: "上傳 PDF 規格表" }
+      - { label: "排列順序", name: "sort_order", widget: "number", default: 99 }
+
+  - name: "products_gpu"
+    label: "GPU"
+    label_singular: "GPU 產品"
+    folder: "src/products"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    filter:
+      field: category
+      value: gpu
+    sortable_fields: ["sort_order", "name"]
+    fields:
+      - { label: "產品名稱", name: "name", widget: "string" }
+      - { label: "分類", name: "category", widget: "hidden", default: "gpu" }
+      - { label: "子分類 / Sub-band", name: "sub_band", widget: "string", required: false, hint: "例：NVIDIA — Entry Series · G / GT、AMD — Gaming Series · RX（留空則不顯示）" }
+      - { label: "副標題", name: "subtitle", widget: "string", hint: "例：GDDR6 · PCIe 4.0 · 8GB" }
+      - { label: "產品描述", name: "description", widget: "text", required: false }
+      - label: "標籤"
+        name: "tags"
+        widget: "list"
+        required: false
+        field: { label: "標籤", name: "tag", widget: "string" }
+        hint: "產品特色規格標籤。例：4GB、8GB、GDDR6、HDMI、DisplayPort"
+      - { label: "縮圖", name: "thumbnail", widget: "image" }
+      - { label: "縮圖 contain 模式", name: "thumb_contain", widget: "boolean", default: false, hint: "透明背景圖片請勾選" }
+      - { label: "Preview HTML 路徑", name: "preview_file", widget: "string", hint: "例：gpu/RTX3060_preview.html" }
+      - { label: "Copywriting HTML 路徑", name: "text_file", widget: "string", required: false }
+      - { label: "Datasheet PDF", name: "datasheet", widget: "file", required: false, hint: "上傳 PDF 規格表" }
+      - { label: "排列順序", name: "sort_order", widget: "number", default: 99 }
+
+  - name: "products_ext"
+    label: "外接裝置"
+    label_singular: "外接裝置產品"
+    folder: "src/products"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    filter:
+      field: category
+      value: ext
+    sortable_fields: ["sort_order", "name"]
+    fields:
+      - { label: "產品名稱", name: "name", widget: "string" }
+      - { label: "分類", name: "category", widget: "hidden", default: "ext" }
+      - { label: "子分類 / Sub-band", name: "sub_band", widget: "string", required: false, hint: "例：USB Flash Drive / Portable SSD（留空則不顯示）" }
+      - { label: "副標題", name: "subtitle", widget: "string", hint: "例：USB 3.2 Gen1 · USB-A" }
+      - { label: "產品描述", name: "description", widget: "text", required: false }
+      - label: "標籤"
+        name: "tags"
+        widget: "list"
+        required: false
+        field: { label: "標籤", name: "tag", widget: "string" }
+        hint: "產品特色規格標籤。例：64GB、128GB、USB 3.2、Type-C"
+      - { label: "縮圖", name: "thumbnail", widget: "image" }
+      - { label: "縮圖 contain 模式", name: "thumb_contain", widget: "boolean", default: true, hint: "透明背景圖片請勾選（外接裝置通常需要）" }
+      - { label: "Preview HTML 路徑", name: "preview_file", widget: "string", hint: "例：ext/X100_preview.html" }
       - { label: "Copywriting HTML 路徑", name: "text_file", widget: "string", required: false }
       - { label: "Datasheet PDF", name: "datasheet", widget: "file", required: false, hint: "上傳 PDF 規格表" }
       - { label: "排列順序", name: "sort_order", widget: "number", default: 99 }
@@ -98,7 +177,7 @@ collections:
             widget: "list"
             summary: "{{fields.label}} ({{fields.id}})"
             fields:
-              - { label: "分類 ID", name: "id", widget: "string", hint: "小寫英文，對應產品的「分類」欄位。例：ssd、dram、gpu、ext" }
+              - { label: "分類 ID", name: "id", widget: "string", hint: "小寫英文，對應產品的隱藏分類欄位。例：ssd、dram、gpu、ext" }
               - { label: "顯示名稱", name: "label", widget: "string", hint: "例：SSD、DRAM、GPU、外接裝置" }
               - { label: "排列順序", name: "order", widget: "number", default: 99 }
               - label: "子分類"
