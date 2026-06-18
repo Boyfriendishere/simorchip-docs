@@ -50,26 +50,25 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "產品名稱", name: "name", widget: "string" }
-      - label: "分類"
-        name: "category"
-        widget: "select"
-        options:
-          - { label: "SSD", value: "ssd" }
-          - { label: "DRAM", value: "dram" }
-          - { label: "GPU", value: "gpu" }
-          - { label: "External", value: "ext" }
+      - { label: "分類", name: "category", widget: "string", hint: "例：ssd / dram / gpu / ext，可自訂新分類名稱" }
       - { label: "子分類 / Sub-band", name: "sub_band", widget: "string", required: false, hint: "例：NVIDIA — Entry Series · G / GT（留空則不顯示）" }
-      - { label: "副標題 (卡片顯示)", name: "subtitle", widget: "string", hint: "例：PCIe Gen4x4 · M.2 2280 · NVMe" }
-      - { label: "縮圖 URL", name: "thumbnail", widget: "image" }
-      - { label: "縮圖 contain 模式", name: "thumb_contain", widget: "boolean", default: false, hint: "透明背景圖片（DRAM/外接）請勾選" }
-      - { label: "Preview 頁面路徑", name: "preview_file", widget: "string", hint: "例：ssd/SSD120_preview.html" }
-      - { label: "Copywriting 頁面路徑", name: "text_file", widget: "string", hint: "例：ssd/SSD120_text.html" }
-      - { label: "Copywriting 備註", name: "text_note", widget: "string", required: false, hint: "例：共用 DDR3/4/5（留空則不顯示）" }
-      - { label: "排列順序", name: "sort_order", widget: "number", default: 99 }
-      - label: "規格表"
-        name: "specs"
+      - { label: "副標題", name: "subtitle", widget: "string", hint: "例：PCIe Gen4x4 · M.2 2280 · NVMe" }
+      - { label: "產品描述", name: "description", widget: "text", required: false }
+      - label: "容量選項"
+        name: "capacities"
         widget: "list"
         required: false
-        fields:
-          - { label: "規格名稱", name: "label", widget: "string" }
-          - { label: "規格值", name: "value", widget: "string" }
+        field: { label: "容量", name: "capacity", widget: "string" }
+        hint: "例：128GB、256GB、1TB"
+      - label: "標籤 Hashtag"
+        name: "tags"
+        widget: "list"
+        required: false
+        field: { label: "標籤", name: "tag", widget: "string" }
+        hint: "重點規格標籤，自動加 # 前綴。例：8GB、DDR5、PCIe Gen4、ECC"
+      - { label: "縮圖", name: "thumbnail", widget: "image" }
+      - { label: "縮圖 contain 模式", name: "thumb_contain", widget: "boolean", default: false, hint: "透明背景圖片（DRAM/外接）請勾選" }
+      - { label: "Preview HTML 路徑", name: "preview_file", widget: "string", hint: "例：ssd/SSD120_preview.html" }
+      - { label: "Copywriting HTML 路徑", name: "text_file", widget: "string", required: false }
+      - { label: "Datasheet PDF", name: "datasheet", widget: "file", required: false, hint: "上傳 PDF 規格表" }
+      - { label: "排列順序", name: "sort_order", widget: "number", default: 99 }

@@ -9,6 +9,9 @@ preview_file: "dram/DDR3_preview.html"
 text_file: "dram/DDR345_text.html"
 text_note: "共用 DDR3/4/5"
 sort_order: 10
+tags:
+  - "8GB"
+  - "16GB"
 specs:
   - label: "Type"
     value: "DDR3L"
