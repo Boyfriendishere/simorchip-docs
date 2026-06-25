@@ -118,6 +118,21 @@ main, nav { position: relative; z-index: 2; }
 .scroll-cue span { width: 1px; height: 34px; background: linear-gradient(var(--red), transparent); animation: cue 2s ease-in-out infinite; }
 @keyframes cue { 0%,100%{ opacity:.3; transform: scaleY(.6);} 50%{ opacity:1; transform: scaleY(1);} }
 
+/* hero cinematic upgrade: beam · floor · speed streaks */
+.hero-beam { position:absolute; inset:-32% -30%; z-index:0; pointer-events:none;
+  background: radial-gradient(ellipse 56% 46% at 50% 52%, rgba(225,38,45,0.40), rgba(225,38,45,0.10) 45%, transparent 70%); filter: blur(6px); }
+.hero-floor { position:absolute; left:50%; bottom:2%; width:82%; height:70px; transform:translateX(-50%); z-index:0; pointer-events:none;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(225,38,45,0.46), transparent 70%); filter: blur(11px); }
+.speed-streaks { position:absolute; inset:0 -34%; z-index:0; pointer-events:none; }
+.streak { position:absolute; left:0; right:0; height:2px; border-radius:2px; filter: blur(.3px); opacity:0; animation: streakRun 2.4s linear infinite;
+  background:linear-gradient(90deg, transparent 0%, rgba(255,59,65,0) 10%, var(--red-bright) 50%, rgba(255,59,65,0) 90%, transparent 100%);
+  box-shadow: 0 0 8px rgba(255,59,65,0.7); }
+@keyframes streakRun { 0%{ transform:translateX(-58%) scaleX(.3); opacity:0; } 12%{ opacity:1; } 55%{ opacity:.65; } 100%{ transform:translateX(58%) scaleX(1.15); opacity:0; } }
+.streak.s1{ top:16%; animation-delay:0s; } .streak.s2{ top:26%; height:1px; animation-delay:.35s; animation-duration:3s; }
+.streak.s3{ top:36%; height:3px; animation-delay:.9s; animation-duration:2.1s; } .streak.s4{ top:46%; animation-delay:1.5s; animation-duration:2.7s; }
+.streak.s5{ top:56%; height:1px; animation-delay:.5s; animation-duration:3.2s; } .streak.s6{ top:66%; height:3px; animation-delay:1.1s; animation-duration:2.2s; }
+.streak.s7{ top:76%; animation-delay:1.9s; animation-duration:2.9s; } .streak.s8{ top:85%; height:1px; animation-delay:.2s; animation-duration:3.4s; }
+
 /* ════ MANIFESTO ════ */
 #manifesto { padding: 140px 48px; text-align: center; position: relative; }
 .mf-eyebrow { font-family: var(--mono); font-size: 11px; color: var(--red); letter-spacing: .24em; text-transform: uppercase; margin-bottom: 30px; }
@@ -329,6 +344,11 @@ footer { padding: 24px 48px; border-top: 1px solid rgba(255,255,255,0.05); displ
   </div>
   <div class="hero-right">
     <div class="hero-stage">
+      <div class="hero-beam"></div>
+      <div class="hero-floor"></div>
+      <div class="speed-streaks">
+        <span class="streak s1"></span><span class="streak s2"></span><span class="streak s3"></span><span class="streak s4"></span><span class="streak s5"></span><span class="streak s6"></span><span class="streak s7"></span><span class="streak s8"></span>
+      </div>
       <div class="hero-ring"></div>
       <div class="hero-ring r2"></div>
       <div class="tilt" id="tilt">
