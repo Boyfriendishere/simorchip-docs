@@ -3,7 +3,6 @@ module.exports = function (eleventyConfig) {
   // about/contact/solutions/manufacturing are now .njk templates with explicit permalinks.
   eleventyConfig.setTemplateFormats(["njk", "md"]);
   eleventyConfig.addPassthroughCopy({ "src/_redirects": "_redirects" });
-  eleventyConfig.addPassthroughCopy("src/_uploads");
   eleventyConfig.addPassthroughCopy("src/ssd");
   eleventyConfig.addPassthroughCopy("src/dram");
   eleventyConfig.addPassthroughCopy("src/gpu");
