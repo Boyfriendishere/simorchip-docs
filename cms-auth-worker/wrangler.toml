@@ -1,7 +1,0 @@
-name = "simorchip-cms-auth"
-main = "src/index.js"
-compatibility_date = "2026-06-01"
-
-[vars]
-OAUTH_SCOPE = "repo,user"
-ALLOWED_DOMAINS = "simorchip-docs.pages.dev"

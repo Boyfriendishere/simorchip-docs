@@ -2,8 +2,6 @@ module.exports = function (eleventyConfig) {
   // .njk and .md go through the template engine.
   // about/contact/solutions/manufacturing are now .njk templates with explicit permalinks.
   eleventyConfig.setTemplateFormats(["njk", "md"]);
-  eleventyConfig.addPassthroughCopy({ "src/admin/config.yml": "admin/config.yml" });
-  eleventyConfig.addPassthroughCopy("src/news/images");
   eleventyConfig.addPassthroughCopy({ "src/_redirects": "_redirects" });
   eleventyConfig.addPassthroughCopy("src/_uploads");
   eleventyConfig.addPassthroughCopy("src/ssd");
@@ -43,10 +41,6 @@ module.exports = function (eleventyConfig) {
       for (const p of parts) obj = obj?.[p];
       return obj === val;
     });
-  });
-
-  eleventyConfig.addCollection("news", function (collectionApi) {
-    return collectionApi.getFilteredByGlob("src/news/*.md").sort((a, b) => b.date - a.date);
   });
 
   eleventyConfig.addCollection("products", function (collectionApi) {
