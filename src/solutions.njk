@@ -10,253 +10,256 @@ layout: false
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simorchip — Solutions for Every System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,300;1,14..32,400&display=swap" rel="stylesheet">
 <style>
-:root {
-  --blue: #0066cc;
-  --blue-dark: #0071e3;
-  --blue-ondark: #2997ff;
-  --ink: #1d1d1f;
-  --ink-80: #333333;
-  --ink-48: #7a7a7a;
-  --muted-dark: #cccccc;
-  --white: #ffffff;
-  --canvas: #ffffff;
-  --parchment: #f5f5f7;
-  --tile-dark: #141414;
-  --black: #000000;
-  --hairline: #e0e0e0;
-  --f: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --r-sm: 8px;
-  --r-lg: 18px;
-  --r-xl: 24px;
-  --r-pill: 9999px;
+:root{
+  --ink:#1d1d1f;--ink-60:#555558;--ink-40:#86868b;
+  --canvas:#fff;--parch:#f5f5f7;
+  --dark:#060608;--panel:#0d0d10;
+  --f:Inter,system-ui,-apple-system,sans-serif;--pill:9999px;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: var(--f); background: var(--canvas); color: var(--ink); -webkit-font-smoothing: antialiased; overflow-x: hidden; padding-top: 44px; }
+#s01{--acc:#2997ff;--acc-dim:rgba(41,151,255,.07);--acc-glow:rgba(41,151,255,.22)}
+#s02{--acc:#b06ef0;--acc-dim:rgba(176,110,240,.08);--acc-glow:rgba(176,110,240,.22)}
+#s03{--acc:#2ec4a9;--acc-dim:rgba(46,196,169,.07);--acc-glow:rgba(46,196,169,.20)}
+#s04{--acc:#f5a623;--acc-dim:rgba(245,166,35,.07);--acc-glow:rgba(245,166,35,.22)}
+#s05{--acc:#f0609e;--acc-dim:rgba(240,96,158,.08);--acc-glow:rgba(240,96,158,.22)}
+#s06{--acc:#30d158;--acc-dim:rgba(48,209,88,.07);--acc-glow:rgba(48,209,88,.20)}
 
-/* ══ NAV ══ */
-.global-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
-  height: 44px;
-  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
-  padding: 0 22px;
-  background: var(--black);
-  transition: background .4s ease, backdrop-filter .4s ease, border-color .4s ease;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--f);background:var(--canvas);-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:44px}
+
+/* ── GLOBAL NAV ── */
+.global-nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;height:44px;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 22px;
+  transition:background .4s,border-color .4s;
 }
-.global-nav.nav-scrolled-light {
-  background: rgba(255,255,255,.88);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(0,0,0,.08);
+.global-nav.transparent{background:transparent}
+.global-nav.frosted-dark{background:rgba(6,6,8,.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.06)}
+.global-nav.frosted-light{background:rgba(255,255,255,.84);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid rgba(0,0,0,.08)}
+.nav-logo img{height:20px;display:block;transition:filter .4s}
+.global-nav.transparent .nav-logo img,.global-nav.frosted-dark .nav-logo img{filter:brightness(0) invert(1) opacity(.82)}
+.global-nav.frosted-light .nav-logo img{filter:brightness(0)}
+.nav-links{grid-column:2;display:flex;gap:20px}
+.nav-link{font-size:12px;text-decoration:none;letter-spacing:-.01em;transition:color .2s}
+.global-nav.transparent .nav-link,.global-nav.frosted-dark .nav-link{color:rgba(255,255,255,.68)}
+.global-nav.transparent .nav-link:hover,.global-nav.frosted-dark .nav-link:hover{color:#fff}
+.global-nav.frosted-light .nav-link{color:var(--ink-60)}
+.global-nav.frosted-light .nav-link:hover{color:#0066cc}
+.nav-right{grid-column:3;justify-self:end;display:flex;align-items:center;gap:6px}
+.nav-lang-btn{font-size:12px;background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:6px;transition:color .2s}
+.global-nav.transparent .nav-lang-btn,.global-nav.frosted-dark .nav-lang-btn{color:rgba(255,255,255,.3)}
+.global-nav.transparent .nav-lang-btn.active,.global-nav.transparent .nav-lang-btn:hover,
+.global-nav.frosted-dark .nav-lang-btn.active,.global-nav.frosted-dark .nav-lang-btn:hover{color:#fff}
+.global-nav.frosted-light .nav-lang-btn{color:var(--ink-40)}
+.global-nav.frosted-light .nav-lang-btn.active,.global-nav.frosted-light .nav-lang-btn:hover{color:var(--ink)}
+.nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+.nav-burger span{display:block;width:20px;height:1.5px;background:currentColor;transition:transform .3s,opacity .3s}
+.global-nav.transparent .nav-burger,.global-nav.frosted-dark .nav-burger{color:#fff}
+.global-nav.frosted-light .nav-burger{color:var(--ink)}
+.nav-mobile{display:none;position:fixed;top:44px;left:0;right:0;bottom:0;background:rgba(6,6,8,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);flex-direction:column;padding:32px 24px;gap:4px;z-index:490;transform:translateY(-8px);opacity:0;pointer-events:none;transition:transform .3s,opacity .3s}
+.nav-mobile.open{transform:none;opacity:1;pointer-events:auto}
+.nav-mobile-link{font-size:22px;font-weight:600;color:#fff;text-decoration:none;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.07);letter-spacing:-.03em}
+.nav-mobile-lang{display:flex;gap:12px;margin-top:24px}
+
+@media(max-width:834px){
+  .nav-links{display:none}
+  .nav-burger{display:flex}
+  .nav-mobile{display:flex}
 }
-.nav-logo { grid-column: 1; justify-self: start; }
-.nav-logo img { height: 20px; display: block; filter: brightness(0) invert(1); opacity: .85; transition: filter .3s, opacity .3s; }
-.nav-scrolled-light .nav-logo img { filter: brightness(0); opacity: 1; }
-.nav-links { display: flex; align-items: center; gap: 20px; grid-column: 2; justify-self: center; }
-.nav-link {
-  position: relative; font-size: 12px; font-weight: 400; letter-spacing: -.12px; line-height: 1;
-  color: rgba(255,255,255,.8); text-decoration: none; padding-bottom: 4px; transition: color .25s ease; white-space: nowrap;
+
+/* ── HERO ── */
+.hero{position:relative;height:100vh;min-height:680px;overflow:hidden;background:var(--dark);margin-top:-44px;display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:-20%;will-change:transform;background:url('https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/ppt_03.jpg') center/cover no-repeat;opacity:.42}
+.hero-grad{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(6,6,8,.96) 0%,rgba(6,6,8,.32) 52%,transparent 100%)}
+.hero-body{position:relative;z-index:2;padding:0 80px 100px}
+.hero-kicker{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#2997ff;margin-bottom:20px;opacity:0;animation:up .9s .3s forwards}
+.hero-h1{font-size:88px;font-weight:800;line-height:1.0;letter-spacing:-.06em;color:#fff;margin-bottom:22px;opacity:0;animation:up .9s .5s forwards}
+.hero-h1 em{font-style:italic;font-weight:300;color:rgba(255,255,255,.35)}
+.hero-sub{font-size:20px;font-weight:400;line-height:1.55;color:rgba(255,255,255,.44);max-width:520px;margin-bottom:44px;opacity:0;animation:up .9s .7s forwards}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:up .9s .9s forwards}
+.scroll-hint{position:absolute;bottom:38px;right:80px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:up .9s 1.2s forwards}
+.scroll-hint-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.2);writing-mode:vertical-rl}
+.scroll-hint-line{width:1px;height:56px;background:linear-gradient(to bottom,rgba(255,255,255,.42),transparent);animation:pulse 2.2s ease-in-out infinite}
+
+/* ── BUTTONS ── */
+.btn{font-size:15px;font-weight:500;padding:13px 28px;border-radius:var(--pill);text-decoration:none;display:inline-block;border:1.5px solid transparent;transition:transform .3s cubic-bezier(.16,1,.3,1),background .25s,border-color .25s;cursor:pointer}
+.btn:active{transform:scale(.96)!important}
+.btn-solid{background:#0066cc;color:#fff;border-color:#0066cc}
+.btn-solid:hover{background:#0071e3;transform:translateY(-2px)}
+.btn-ghost-w{background:transparent;color:#fff;border-color:rgba(255,255,255,.28)}
+.btn-ghost-w:hover{border-color:#fff;transform:translateY(-2px)}
+
+/* ── OVERVIEW GRID ── */
+.grid-strip{background:var(--dark);padding:100px 80px;position:relative}
+.grid-strip::before{content:'';position:absolute;top:0;left:0;right:0;height:90px;background:linear-gradient(to bottom,var(--canvas),transparent);pointer-events:none}
+.gs-inner{max-width:1200px;margin:0 auto}
+.gs-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#2997ff;margin-bottom:14px}
+.gs-h2{font-size:52px;font-weight:800;letter-spacing:-.05em;line-height:1.04;color:#fff;margin-bottom:12px}
+.gs-sub{font-size:17px;color:rgba(255,255,255,.3);line-height:1.62;max-width:52ch;margin-bottom:60px}
+.gs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);border-radius:16px;overflow:hidden}
+.gs-card{background:rgba(255,255,255,.03);padding:30px 26px;text-decoration:none;display:flex;flex-direction:column;gap:9px;transition:background .28s}
+.gs-card:hover{background:rgba(255,255,255,.08)}
+.gs-num{font-size:11px;font-weight:700;letter-spacing:.12em;color:#2997ff}
+.gs-title{font-size:17px;font-weight:600;color:#fff;letter-spacing:-.02em;display:flex;justify-content:space-between;align-items:center}
+.gs-title::after{content:'›';font-size:22px;color:rgba(255,255,255,.3);transition:transform .25s cubic-bezier(.16,1,.3,1),color .25s}
+.gs-card:hover .gs-title::after{transform:translateX(5px);color:#2997ff}
+.gs-desc{font-size:13px;color:rgba(255,255,255,.26);line-height:1.55}
+
+/* ── SOL-NAV ── */
+.sol-nav{position:sticky;top:44px;z-index:400;background:rgba(255,255,255,.88);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid rgba(0,0,0,.08);overflow-x:auto;scrollbar-width:none}
+.sol-nav::-webkit-scrollbar{display:none}
+.sol-nav-inner{display:flex;max-width:1200px;margin:0 auto;padding:0 40px}
+.sn-item{font-size:12px;font-weight:500;color:var(--ink-40);text-decoration:none;padding:14px 18px;white-space:nowrap;border-bottom:2px solid transparent;transition:color .18s,border-color .18s}
+.sn-item:hover{color:var(--ink)}
+.sn-item.active{color:#0066cc;border-bottom-color:#0066cc}
+
+/* ── SPLIT SECTIONS ── */
+.sp-section{
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:90vh;background:var(--dark);
+  scroll-margin-top:88px;overflow:hidden;position:relative;
 }
-.nav-link::after { content: ''; position: absolute; left: 0; right: 100%; bottom: -2px; height: 1px; background: var(--blue-ondark); transition: right .3s cubic-bezier(.16,1,.3,1); }
-.nav-link:hover { color: var(--white); }
-.nav-link:hover::after { right: 0; }
-.nav-scrolled-light .nav-link { color: var(--ink-80); }
-.nav-scrolled-light .nav-link::after { background: var(--blue); }
-.nav-scrolled-light .nav-link:hover { color: var(--blue); }
-.nav-right { display: flex; align-items: center; gap: 8px; grid-column: 3; justify-self: end; }
-.nav-lang-btn { font-size: 12px; font-weight: 400; color: rgba(255,255,255,.5); background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: var(--r-sm); transition: color .15s; }
-.nav-lang-btn:hover { color: var(--white); }
-.nav-lang-btn.active { color: var(--white); }
-.nav-scrolled-light .nav-lang-btn { color: var(--ink-48); }
-.nav-scrolled-light .nav-lang-btn:hover, .nav-scrolled-light .nav-lang-btn.active { color: var(--ink); }
-.nav-burger { display: none; flex-direction: column; gap: 4px; background: none; border: none; cursor: pointer; padding: 6px 4px; }
-.nav-burger span { display: block; width: 18px; height: 1.5px; background: rgba(255,255,255,.8); transition: all .22s; }
-.nav-mobile { display: none; flex-direction: column; background: var(--black); position: fixed; top: 44px; left: 0; right: 0; z-index: 290; border-bottom: 1px solid rgba(255,255,255,.1); }
-.nav-mobile.open { display: flex; }
-.nav-mobile-link { font-size: 17px; font-weight: 400; letter-spacing: -.374px; line-height: 1.47; color: rgba(255,255,255,.8); text-decoration: none; padding: 14px 22px; border-bottom: 1px solid rgba(255,255,255,.08); transition: color .15s; }
-.nav-mobile-link:hover { color: var(--white); }
-.nav-mobile-lang { display: flex; gap: 8px; padding: 12px 22px; }
-
-/* ══ BUTTONS ══ */
-.btn-pill { font-size: 15px; font-weight: 500; padding: 12px 26px; border-radius: var(--r-pill); text-decoration: none; border: 1.5px solid transparent; transition: transform .25s cubic-bezier(.16,1,.3,1), background .25s, border-color .25s, color .25s; cursor: pointer; display: inline-block; }
-.btn-pill:active { transform: scale(.96); }
-.btn-blue { background: var(--blue); color: #fff; border-color: var(--blue); }
-.btn-blue:hover { background: var(--blue-dark); transform: translateY(-2px); }
-.btn-ghost-dark { background: transparent; color: #fff; border-color: rgba(255,255,255,.4); }
-.btn-ghost-dark:hover { border-color: #fff; transform: translateY(-2px); }
-.btn-ghost-light { background: transparent; color: var(--blue); border-color: var(--blue); }
-.btn-ghost-light:hover { background: rgba(0,102,204,.06); transform: translateY(-2px); }
-
-/* ══ PARALLAX HERO ══ */
-.par-hero {
-  position: relative; height: 100vh; min-height: 640px;
-  display: flex; align-items: flex-end; overflow: hidden;
-  background: var(--black); margin-top: -44px;
+.sp-section+.sp-section::before{
+  content:'';position:absolute;top:0;left:5%;right:5%;height:1px;
+  background:linear-gradient(to right,transparent,rgba(255,255,255,.06) 30%,rgba(255,255,255,.06) 70%,transparent);
+  pointer-events:none;z-index:10;
 }
-.par-hero-bg {
-  position: absolute; inset: -20%;
-  background: url('https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/ppt_03.jpg') center/cover no-repeat;
-  opacity: .55; will-change: transform;
+.sp-section.text-left  .sp-text{order:1}
+.sp-section.text-left  .sp-img-wrap{order:2}
+.sp-section.text-right .sp-img-wrap{order:1}
+.sp-section.text-right .sp-text{order:2}
+
+.sp-text{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 60px;background:var(--panel);
+  position:relative;overflow:hidden;
 }
-.par-hero-floor { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.1) 60%, transparent 100%); pointer-events: none; }
-.par-hero-content { position: relative; z-index: 2; width: 100%; padding: 0 80px 80px; }
-.hero-label { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-ondark); margin-bottom: 16px; opacity: 0; animation: fadeUp .8s .3s forwards; }
-.hero-h1 { font-size: 72px; font-weight: 700; line-height: 1.04; letter-spacing: -.04em; color: var(--white); margin-bottom: 20px; opacity: 0; animation: fadeUp .8s .5s forwards; }
-.hero-h1 em { font-style: italic; font-weight: 300; color: rgba(255,255,255,.6); }
-.hero-sub { font-size: 21px; font-weight: 400; line-height: 1.4; color: rgba(255,255,255,.65); max-width: 560px; margin-bottom: 36px; opacity: 0; animation: fadeUp .8s .7s forwards; }
-.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; opacity: 0; animation: fadeUp .8s .9s forwards; }
-.scroll-cue { position: absolute; bottom: 28px; right: 80px; z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0; animation: fadeUp .8s 1.2s forwards; }
-.scroll-cue span { font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.35); writing-mode: vertical-rl; }
-.scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, rgba(255,255,255,.4), transparent); animation: scrollPulse 2s ease-in-out infinite; }
-
-/* ══ SOLUTION NAV STRIP ══ */
-.sol-nav { position: sticky; top: 44px; z-index: 200; background: rgba(255,255,255,.9); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--hairline); overflow-x: auto; scrollbar-width: none; }
-.sol-nav::-webkit-scrollbar { display: none; }
-.sol-nav-inner { display: flex; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 40px; }
-.sol-nav-item { font-size: 13px; font-weight: 500; color: var(--ink-48); text-decoration: none; padding: 14px 18px; white-space: nowrap; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
-.sol-nav-item:hover { color: var(--ink); }
-.sol-nav-item.active { color: var(--blue); border-bottom-color: var(--blue); }
-
-/* ══ OVERVIEW STRIP ══ */
-.overview-strip { background: var(--black); padding: 100px 80px; position: relative; overflow: hidden; }
-.overview-strip::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 80px; background: linear-gradient(to bottom, var(--canvas), transparent); }
-.overview-inner { max-width: 1200px; margin: 0 auto; }
-.overview-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue-ondark); margin-bottom: 12px; }
-.overview-h2 { font-size: 48px; font-weight: 700; line-height: 1.08; letter-spacing: -.04em; color: var(--white); margin-bottom: 8px; max-width: 16ch; }
-.overview-sub { font-size: 17px; color: rgba(255,255,255,.45); max-width: 52ch; line-height: 1.55; margin-bottom: 60px; }
-.card-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-.sol-card { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: var(--r-lg); padding: 28px; text-decoration: none; transition: background .35s, border-color .35s, transform .35s cubic-bezier(.16,1,.3,1); display: flex; flex-direction: column; gap: 8px; }
-.sol-card:hover { background: rgba(255,255,255,.09); border-color: rgba(41,151,255,.4); transform: translateY(-4px); }
-.sol-card-num { font-size: 11px; font-weight: 700; letter-spacing: .1em; color: var(--blue-ondark); margin-bottom: 4px; }
-.sol-card-title { font-size: 17px; font-weight: 600; color: var(--white); display: flex; align-items: center; justify-content: space-between; }
-.sol-card-title::after { content: '›'; font-size: 20px; color: var(--blue-ondark); transition: transform .25s cubic-bezier(.16,1,.3,1); }
-.sol-card:hover .sol-card-title::after { transform: translateX(4px); }
-.sol-card-desc { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.5; }
-
-/* ══ SOLUTION DETAIL SECTIONS ══ */
-.sol-section { padding: 100px 80px; scroll-margin-top: 88px; }
-.sol-section-light { background: var(--canvas); }
-.sol-section-parchment { background: var(--parchment); }
-
-.sol-layout { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
-.sol-layout.reverse .sol-img-col { order: -1; }
-
-/* Image column with parallax */
-.sol-img-col { position: relative; overflow: hidden; border-radius: var(--r-xl); }
-.sol-img-wrapper {
-  position: relative; overflow: hidden; border-radius: var(--r-xl);
-  aspect-ratio: 4/3;
+.sp-text::before{
+  content:attr(data-n);position:absolute;
+  font-size:320px;font-weight:800;letter-spacing:-.06em;line-height:1;
+  color:var(--acc);opacity:.04;
+  bottom:-60px;right:-24px;pointer-events:none;user-select:none;
 }
-.sol-img-wrapper img {
-  width: 100%; height: 130%; object-fit: cover; object-position: center;
-  display: block; will-change: transform;
-  transition: transform .6s ease;
+.sp-section.text-left  .sp-text::after{content:'';position:absolute;top:12%;right:0;bottom:12%;width:1px;background:linear-gradient(to bottom,transparent,var(--acc) 40%,var(--acc) 60%,transparent);opacity:.18}
+.sp-section.text-right .sp-text::after{content:'';position:absolute;top:12%;left:0;bottom:12%;width:1px;background:linear-gradient(to bottom,transparent,var(--acc) 40%,var(--acc) 60%,transparent);opacity:.18}
+
+.sp-img-wrap{
+  display:flex;align-items:center;justify-content:center;
+  background:var(--acc-dim);position:relative;overflow:hidden;
+  padding:48px 40px;transition:background .4s;
 }
-.sol-img-col:hover .sol-img-wrapper img { transform: scale(1.04) !important; }
-
-/* Text column */
-.sol-text-col {}
-.sol-index { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; }
-.sol-h3 { font-size: 40px; font-weight: 700; line-height: 1.06; letter-spacing: -.04em; color: var(--ink); margin-bottom: 10px; }
-.sol-tone { font-size: 19px; font-weight: 400; line-height: 1.4; color: var(--ink-80); margin-bottom: 16px; }
-.sol-desc { font-size: 15px; font-weight: 400; line-height: 1.6; color: var(--ink-48); margin-bottom: 28px; }
-.sol-label { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-48); margin-bottom: 12px; }
-.sol-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
-.sol-chip { font-size: 13px; padding: 6px 14px; border-radius: var(--r-pill); color: var(--ink-80); background: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.1); }
-.text-link { font-size: 15px; font-weight: 500; color: var(--blue); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: gap .25s cubic-bezier(.16,1,.3,1); margin-bottom: 32px; display: inline-flex; }
-.text-link:hover { gap: 10px; }
-.text-link::after { content: '→'; font-size: 16px; }
-
-/* Benefits */
-.sol-benefits-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--hairline); }
-.sol-benefits-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.5; color: var(--ink-80); }
-.benefit-icon { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: rgba(0,102,204,.1); display: flex; align-items: center; justify-content: center; margin-top: 1px; }
-.benefit-icon svg { width: 10px; height: 10px; stroke: var(--blue); }
-
-/* ══ FINALE ══ */
-.finale { background: var(--tile-dark); padding: 120px 80px; }
-.finale-inner { max-width: 1200px; margin: 0 auto; }
-.finale-top { margin-bottom: 80px; }
-.finale-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue-ondark); margin-bottom: 14px; }
-.finale-h2 { font-size: 56px; font-weight: 700; letter-spacing: -.04em; line-height: 1.06; color: #fff; max-width: 14ch; margin-bottom: 18px; }
-.finale-sub { font-size: 19px; color: rgba(255,255,255,.45); max-width: 48ch; line-height: 1.55; }
-.pillars { border-top: 1px solid rgba(255,255,255,.08); }
-.pillar { display: grid; grid-template-columns: 72px 1fr; gap: 24px; align-items: start; padding: 32px 0; border-bottom: 1px solid rgba(255,255,255,.06); transition: border-bottom-color .3s; }
-.pillar:hover { border-bottom-color: rgba(255,255,255,.18); }
-.pillar-num { font-size: 11px; font-weight: 700; letter-spacing: .1em; color: var(--blue-ondark); padding-top: 5px; }
-.pillar-title { font-size: 21px; font-weight: 600; color: #fff; margin-bottom: 8px; }
-.pillar-body { font-size: 15px; color: rgba(255,255,255,.45); max-width: 60ch; line-height: 1.6; }
-.finale-foot { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,.08); }
-.finale-foot-label { font-size: 17px; color: rgba(255,255,255,.45); max-width: 44ch; line-height: 1.55; }
-.finale-cta { display: flex; gap: 12px; flex-wrap: wrap; }
-
-/* ══ FOOTER ══ */
-footer { background: var(--parchment); padding: 64px 80px; border-top: 1px solid var(--hairline); }
-.footer-inner { max-width: 1200px; margin: 0 auto; }
-.footer-top { display: flex; align-items: flex-start; gap: 80px; padding-bottom: 48px; border-bottom: 1px solid var(--hairline); margin-bottom: 20px; }
-.footer-logo img { height: 24px; display: block; object-fit: contain; }
-.footer-col-title { font-size: 14px; font-weight: 600; color: var(--ink-48); margin-bottom: 12px; }
-.footer-nav { display: flex; flex-direction: column; gap: 10px; }
-.footer-nav a { font-size: 14px; color: var(--ink-80); text-decoration: none; transition: color .15s; }
-.footer-nav a:hover { color: var(--blue); }
-.footer-row { display: flex; align-items: baseline; gap: 12px; }
-.footer-key { font-size: 14px; font-weight: 600; color: var(--ink-48); width: 44px; flex-shrink: 0; }
-.footer-val { font-size: 17px; color: var(--ink-80); line-height: 2.41; }
-.footer-val a { color: var(--blue); text-decoration: none; }
-.footer-val a:hover { text-decoration: underline; }
-.footer-bottom { font-size: 12px; color: var(--ink-48); }
-
-/* ══ SCROLL ANIMATIONS ══ */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-delay-1 { transition-delay: .1s; }
-.reveal-delay-2 { transition-delay: .2s; }
-.reveal-delay-3 { transition-delay: .3s; }
-.reveal-left { opacity: 0; transform: translateX(-28px); transition: opacity .7s ease, transform .7s ease; }
-.reveal-left.visible { opacity: 1; transform: translateX(0); }
-.reveal-right { opacity: 0; transform: translateX(28px); transition: opacity .7s ease, transform .7s ease; }
-.reveal-right.visible { opacity: 1; transform: translateX(0); }
-
-@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes scrollPulse { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
-
-/* ══ RWD ══ */
-@media (max-width: 1068px) {
-  .hero-h1 { font-size: 52px; }
-  .sol-section { padding: 80px 48px; }
-  .sol-layout { gap: 48px; }
-  .overview-strip, .finale { padding: 80px 48px; }
-  .card-grid { grid-template-columns: 1fr 1fr; }
+.sp-img-wrap::before{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(to bottom,rgba(6,6,8,.48) 0%,transparent 16%),
+    linear-gradient(to top,   rgba(6,6,8,.48) 0%,transparent 16%),
+    linear-gradient(to right, rgba(6,6,8,.38) 0%,transparent 14%),
+    linear-gradient(to left,  rgba(6,6,8,.38) 0%,transparent 14%);
 }
-@media (max-width: 834px) {
-  .nav-links { display: none; }
-  .nav-burger { display: flex; }
-  .hero-h1 { font-size: 40px; }
-  .hero-sub { font-size: 17px; }
-  .par-hero-content { padding: 0 32px 64px; }
-  .scroll-cue { right: 32px; }
-  .sol-section { padding: 72px 32px; }
-  .sol-layout { grid-template-columns: 1fr; gap: 36px; }
-  .sol-layout.reverse .sol-img-col { order: 0; }
-  .sol-h3 { font-size: 32px; }
-  .card-grid { grid-template-columns: 1fr; }
-  .overview-strip, .finale { padding: 80px 32px; }
-  .overview-h2, .finale-h2 { font-size: 38px; }
-  .pillar { grid-template-columns: 1fr; gap: 4px; }
-  .pillar-num { padding-top: 0; }
-  .finale-foot { flex-direction: column; }
-  footer { padding: 48px 32px; }
-  .footer-top { flex-direction: column; gap: 32px; }
-  .sol-nav-inner { padding: 0 16px; }
+.sp-img-wrap::after{
+  content:'';position:absolute;width:60%;padding-bottom:60%;border-radius:50%;
+  background:radial-gradient(circle,var(--acc-glow) 0%,transparent 70%);
+  opacity:.5;pointer-events:none;z-index:0;
 }
-@media (max-width: 640px) {
-  .hero-h1 { font-size: 32px; }
-  .sol-h3 { font-size: 28px; }
-  .finale-h2 { font-size: 32px; }
-  footer { padding: 40px 22px; }
-  .sol-section { padding: 64px 22px; }
+.sp-img{
+  display:block;width:100%;max-height:68vh;object-fit:contain;
+  will-change:transform;position:relative;z-index:2;
+  border-radius:8px;box-shadow:0 24px 64px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.05);
+}
+
+.sp-num{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sp-num::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--acc),transparent);opacity:.3;max-width:64px}
+.sp-h2{font-size:46px;font-weight:800;line-height:1.04;letter-spacing:-.05em;color:#fff;margin-bottom:10px}
+.sp-tone{font-size:17px;font-weight:400;line-height:1.48;color:rgba(255,255,255,.5);margin-bottom:16px;font-style:italic}
+.sp-desc{font-size:15px;line-height:1.72;color:rgba(255,255,255,.38);margin-bottom:26px;max-width:40ch}
+.sp-chips-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.24);margin-bottom:10px}
+.sp-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:26px}
+.sp-chip{font-size:12px;padding:5px 13px;border-radius:var(--pill);color:var(--acc);background:var(--acc-dim);border:1px solid rgba(255,255,255,.1);letter-spacing:-.01em}
+.sp-link{font-size:14px;font-weight:500;color:var(--acc);text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:gap .25s cubic-bezier(.16,1,.3,1);margin-bottom:28px}
+.sp-link:hover{gap:12px}
+.sp-link::after{content:'→';font-size:15px}
+.sp-benefits{list-style:none;display:flex;flex-direction:column;gap:10px;padding-top:22px;border-top:1px solid rgba(255,255,255,.07)}
+.sp-benefits li{display:flex;align-items:flex-start;gap:11px;font-size:14px;line-height:1.55;color:rgba(255,255,255,.46)}
+.sp-bicon{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--acc-dim);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;margin-top:2px}
+.sp-bicon svg{width:9px;height:9px;stroke:var(--acc)}
+
+/* ── FINALE ── */
+.finale{background:var(--dark);padding:130px 80px;border-top:1px solid rgba(255,255,255,.05)}
+.finale-inner{max-width:1200px;margin:0 auto}
+.f-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#2997ff;margin-bottom:16px}
+.f-h2{font-size:60px;font-weight:800;letter-spacing:-.055em;line-height:1.04;color:#fff;max-width:14ch;margin-bottom:18px}
+.f-sub{font-size:18px;color:rgba(255,255,255,.3);max-width:46ch;line-height:1.62;margin-bottom:72px}
+.pillars{border-top:1px solid rgba(255,255,255,.07)}
+.pillar{display:grid;grid-template-columns:80px 1fr;gap:24px;align-items:start;padding:32px 0;border-bottom:1px solid rgba(255,255,255,.05);transition:border-color .3s}
+.pillar:hover{border-color:rgba(255,255,255,.16)}
+.p-num{font-size:11px;font-weight:700;letter-spacing:.1em;color:#2997ff;padding-top:5px}
+.p-title{font-size:22px;font-weight:600;color:#fff;margin-bottom:7px;letter-spacing:-.02em}
+.p-body{font-size:15px;color:rgba(255,255,255,.3);max-width:58ch;line-height:1.65}
+.finale-foot{display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-top:64px;padding-top:44px;border-top:1px solid rgba(255,255,255,.07)}
+.f-foot-txt{font-size:18px;color:rgba(255,255,255,.3);max-width:44ch;line-height:1.55}
+.f-cta{display:flex;gap:14px;flex-wrap:wrap}
+
+/* ── FOOTER ── */
+footer{background:var(--parch);padding:64px 80px;border-top:1px solid rgba(0,0,0,.08)}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:flex;gap:80px;padding-bottom:44px;border-bottom:1px solid rgba(0,0,0,.08);margin-bottom:20px;flex-wrap:wrap}
+.footer-logo img{height:24px;display:block}
+.footer-col-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-40);margin-bottom:14px}
+.footer-nav{display:flex;flex-direction:column;gap:4px}
+.footer-nav a{font-size:14px;color:var(--ink-60);text-decoration:none;padding:4px 0;transition:color .15s}
+.footer-nav a:hover{color:#0066cc}
+.footer-info{display:flex;flex-direction:column}
+.footer-row{display:flex;gap:14px}
+.footer-key{font-size:13px;font-weight:600;color:var(--ink-40);width:52px;flex-shrink:0;line-height:2}
+.footer-val{font-size:14px;color:var(--ink-60);line-height:2}
+.footer-val a{color:#0066cc;text-decoration:none}
+.footer-val a:hover{text-decoration:underline}
+.footer-bottom{font-size:12px;color:var(--ink-40)}
+
+/* ── ANIMATIONS ── */
+.fu{opacity:0;transform:translateY(26px);transition:opacity .75s ease,transform .75s ease}
+.fu.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{opacity:.28}50%{opacity:.8}}
+
+/* ── RWD ── */
+@media(max-width:1068px){
+  .hero-h1{font-size:64px}
+  .sp-h2{font-size:36px}
+  .gs-h2{font-size:44px}
+  .f-h2{font-size:46px}
+  .grid-strip,.finale{padding:80px 48px}
+  .sp-text{padding:60px 44px}
+  footer{padding:52px 48px}
+  .sp-text::before{font-size:240px}
+}
+@media(max-width:834px){
+  .sp-section{grid-template-columns:1fr;min-height:unset}
+  .sp-section.text-left .sp-text,.sp-section.text-right .sp-text{order:2;padding:48px 32px}
+  .sp-section.text-left .sp-img-wrap,.sp-section.text-right .sp-img-wrap{order:1;min-height:48vw;padding:32px}
+  .sp-img{max-height:46vw}
+  .sp-text::before{display:none}
+  .sp-h2{font-size:30px}
+  .hero-h1{font-size:44px}.hero-body{padding:0 32px 72px}
+  .scroll-hint{right:32px}
+  .gs-grid{grid-template-columns:1fr 1fr}
+  .grid-strip,.finale{padding:72px 32px}
+  .gs-h2,.f-h2{font-size:34px}
+  .pillar{grid-template-columns:1fr;gap:6px}.p-num{padding-top:0}
+  .finale-foot{flex-direction:column}
+  footer{padding:48px 32px}.footer-top{gap:36px}
+  .sol-nav-inner{padding:0 16px}
+}
+@media(max-width:600px){
+  .hero-h1{font-size:36px}
+  .sp-h2{font-size:26px}
+  .gs-grid{grid-template-columns:1fr}
+  .f-h2{font-size:30px}
+  .grid-strip,.finale{padding:60px 22px}
+  footer{padding:40px 22px}
 }
 </style>
 </head>
@@ -264,354 +267,247 @@ footer { background: var(--parchment); padding: 64px 80px; border-top: 1px solid
 
 {% include "nav.njk" %}
 
-<!-- ══ PARALLAX HERO ══ -->
-<section class="par-hero" id="hero">
-  <div class="par-hero-bg" id="heroBg"></div>
-  <div class="par-hero-floor"></div>
-  <div class="par-hero-content">
-    <div class="hero-label">Solutions</div>
+<!-- HERO -->
+<section class="hero" id="heroSec">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-body">
+    <div class="hero-kicker">Solutions</div>
     <h1 class="hero-h1">Solutions for<br><em>Every System.</em></h1>
     <p class="hero-sub">Storage, memory, graphics, and external solutions designed for real-world systems — from personal upgrades to commercial deployment.</p>
     <div class="hero-cta">
-      <a class="btn-pill btn-blue" href="product.html">Explore Products</a>
-      <a class="btn-pill btn-ghost-dark" href="contact.html">Contact Us</a>
+      <a class="btn btn-solid" href="/product.html">Explore Products</a>
+      <a class="btn btn-ghost-w" href="/contact.html">Contact Us</a>
     </div>
   </div>
-  <div class="scroll-cue">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
+  <div class="scroll-hint"><span class="scroll-hint-label">Scroll</span><div class="scroll-hint-line"></div></div>
 </section>
 
-<!-- ══ OVERVIEW STRIP ══ -->
-<section class="overview-strip">
-  <div class="overview-inner">
-    <div class="overview-eyebrow reveal">Browse by need</div>
-    <h2 class="overview-h2 reveal reveal-delay-1">Solutions by application.</h2>
-    <p class="overview-sub reveal reveal-delay-2">Start from the scenario closest to your build. Each path maps real usage to the right mix of storage, memory, and graphics.</p>
-    <div class="card-grid">
-      <a class="sol-card reveal" href="#consumer">
-        <div class="sol-card-num">01</div>
-        <div class="sol-card-title">Consumer Upgrade</div>
-        <div class="sol-card-desc">Faster everyday desktops and laptops.</div>
-      </a>
-      <a class="sol-card reveal reveal-delay-1" href="#gaming">
-        <div class="sol-card-num">02</div>
-        <div class="sol-card-title">Gaming &amp; Performance</div>
-        <div class="sol-card-desc">Speed, responsiveness, and visual power.</div>
-      </a>
-      <a class="sol-card reveal reveal-delay-2" href="#business">
-        <div class="sol-card-num">03</div>
-        <div class="sol-card-title">Business &amp; Office</div>
-        <div class="sol-card-desc">Stable upgrades for productivity.</div>
-      </a>
-      <a class="sol-card reveal" href="#industrial">
-        <div class="sol-card-num">04</div>
-        <div class="sol-card-title">Industrial &amp; Embedded</div>
-        <div class="sol-card-desc">Reliable parts for long-running systems.</div>
-      </a>
-      <a class="sol-card reveal reveal-delay-1" href="#creation">
-        <div class="sol-card-num">05</div>
-        <div class="sol-card-title">Content Creation</div>
-        <div class="sol-card-desc">Throughput for heavy creative work.</div>
-      </a>
-      <a class="sol-card reveal reveal-delay-2" href="#portable">
-        <div class="sol-card-num">06</div>
-        <div class="sol-card-title">Portable &amp; External</div>
-        <div class="sol-card-desc">Storage that travels with you.</div>
-      </a>
+<!-- OVERVIEW GRID -->
+<section class="grid-strip">
+  <div class="gs-inner">
+    <div class="gs-label fu">Browse by need</div>
+    <h2 class="gs-h2 fu d1">Solutions by application.</h2>
+    <p class="gs-sub fu d2">Start from the scenario closest to your build. Each path maps real usage to the right mix of storage, memory, and graphics.</p>
+    <div class="gs-grid">
+      <a class="gs-card fu"    href="#s01"><div class="gs-num">01</div><div class="gs-title">Consumer Upgrade</div><div class="gs-desc">Faster everyday desktops and laptops.</div></a>
+      <a class="gs-card fu d1" href="#s02"><div class="gs-num">02</div><div class="gs-title">Gaming &amp; Performance</div><div class="gs-desc">Speed, responsiveness, and visual power.</div></a>
+      <a class="gs-card fu d2" href="#s03"><div class="gs-num">03</div><div class="gs-title">Business &amp; Office</div><div class="gs-desc">Stable upgrades for productivity.</div></a>
+      <a class="gs-card fu"    href="#s04"><div class="gs-num">04</div><div class="gs-title">Industrial &amp; Embedded</div><div class="gs-desc">Reliable parts for long-running systems.</div></a>
+      <a class="gs-card fu d1" href="#s05"><div class="gs-num">05</div><div class="gs-title">Content Creation</div><div class="gs-desc">Throughput for heavy creative work.</div></a>
+      <a class="gs-card fu d2" href="#s06"><div class="gs-num">06</div><div class="gs-title">Portable &amp; External</div><div class="gs-desc">Storage that travels with you.</div></a>
     </div>
   </div>
 </section>
 
-<!-- ══ SOLUTION NAV STRIP ══ -->
+<!-- SOL-NAV -->
 <div class="sol-nav" id="solNav">
   <div class="sol-nav-inner">
-    <a class="sol-nav-item" href="#consumer">Consumer</a>
-    <a class="sol-nav-item" href="#gaming">Gaming</a>
-    <a class="sol-nav-item" href="#business">Business</a>
-    <a class="sol-nav-item" href="#industrial">Industrial</a>
-    <a class="sol-nav-item" href="#creation">Creation</a>
-    <a class="sol-nav-item" href="#portable">Portable</a>
+    <a class="sn-item" href="#s01">Consumer</a>
+    <a class="sn-item" href="#s02">Gaming</a>
+    <a class="sn-item" href="#s03">Business</a>
+    <a class="sn-item" href="#s04">Industrial</a>
+    <a class="sn-item" href="#s05">Creation</a>
+    <a class="sn-item" href="#s06">Portable</a>
   </div>
 </div>
 
-<!-- ══ 01 CONSUMER ══ -->
-<section class="sol-section sol-section-parchment" id="consumer">
-  <div class="sol-layout">
-    <div class="sol-text-col">
-      <div class="sol-index reveal">01 / 06</div>
-      <h2 class="sol-h3 reveal reveal-delay-1">Consumer Upgrade</h2>
-      <p class="sol-tone reveal reveal-delay-1">Simple upgrades. Noticeable speed.</p>
-      <p class="sol-desc reveal reveal-delay-2">Breathe new life into an existing desktop or laptop. A drop-in SSD or memory upgrade delivers faster boot, quicker loads, and smoother multitasking — no new system required.</p>
-      <div class="sol-label reveal reveal-delay-2">Recommended</div>
-      <div class="sol-chips reveal reveal-delay-2">
-        <span class="sol-chip">SSD 120</span>
-        <span class="sol-chip">SSD 320 / SSD 330</span>
-        <span class="sol-chip">DDR4 Precision</span>
-        <span class="sol-chip">DDR5 Precision</span>
-      </div>
-      <a class="text-link reveal reveal-delay-3" href="product.html#ssd">View products</a>
-      <ul class="sol-benefits-list reveal reveal-delay-3">
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Faster boot and application load</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Smoother everyday multitasking</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Easy drop-in installation</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Wide compatibility with existing systems</li>
-      </ul>
-    </div>
-    <div class="sol-img-col reveal-right">
-      <div class="sol-img-wrapper">
-        <img class="par-img" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/sol01.webp" alt="Consumer Upgrade — everyday desktop and laptop upgrade">
-      </div>
-    </div>
+<!-- 01 CONSUMER — text left / blue -->
+<section class="sp-section text-left" id="s01">
+  <div class="sp-text" data-n="01">
+    <div class="sp-num fu">01 / 06</div>
+    <h2 class="sp-h2 fu d1">Consumer Upgrade</h2>
+    <p class="sp-tone fu d1">Simple upgrades. Noticeable speed.</p>
+    <p class="sp-desc fu d2">Breathe new life into an existing desktop or laptop. A drop-in SSD or memory upgrade delivers faster boot, quicker loads, and smoother multitasking — no new system required.</p>
+    <div class="sp-chips-label fu d2">Recommended</div>
+    <div class="sp-chips fu d2"><span class="sp-chip">SSD 120</span><span class="sp-chip">SSD 320 / 330</span><span class="sp-chip">DDR4 Precision</span><span class="sp-chip">DDR5 Precision</span></div>
+    <a class="sp-link fu d3" href="/product.html">View products</a>
+    <ul class="sp-benefits fu d3">
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Faster boot and application load</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Smoother everyday multitasking</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Easy drop-in installation</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Wide compatibility with existing systems</li>
+    </ul>
+  </div>
+  <div class="sp-img-wrap">
+    <img class="sp-img" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/sol01.webp" alt="Consumer Upgrade">
   </div>
 </section>
 
-<!-- ══ 02 GAMING ══ -->
-<section class="sol-section sol-section-light" id="gaming">
-  <div class="sol-layout reverse">
-    <div class="sol-text-col">
-      <div class="sol-index reveal">02 / 06</div>
-      <h2 class="sol-h3 reveal reveal-delay-1">Gaming &amp; Performance</h2>
-      <p class="sol-tone reveal reveal-delay-1">Built for speed, responsiveness, and visual power.</p>
-      <p class="sol-desc reveal reveal-delay-2">Engineered for builds that can't wait. High-bandwidth storage, fast memory, and capable graphics keep frame rates high and load times short.</p>
-      <div class="sol-label reveal reveal-delay-2">Recommended</div>
-      <div class="sol-chips reveal reveal-delay-2">
-        <span class="sol-chip">SSD 430</span>
-        <span class="sol-chip">DDR4 CX1</span>
-        <span class="sol-chip">DDR5 EX1 / RX1</span>
-        <span class="sol-chip">RTX / GTX Series</span>
-      </div>
-      <a class="text-link reveal reveal-delay-3" href="product.html#gpu">View products</a>
-      <ul class="sol-benefits-list reveal reveal-delay-3">
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>High-bandwidth PCIe Gen4 storage</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Fast, responsive memory</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Graphics power for smooth visuals</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Headroom for demanding titles</li>
-      </ul>
-    </div>
-    <div class="sol-img-col reveal-left">
-      <div class="sol-img-wrapper">
-        <img class="par-img" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/sol02.webp" alt="Gaming and Performance — high-speed gaming PC build">
-      </div>
-    </div>
+<!-- 02 GAMING — text right / violet -->
+<section class="sp-section text-right" id="s02">
+  <div class="sp-img-wrap">
+    <img class="sp-img" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/sol02.webp" alt="Gaming & Performance">
+  </div>
+  <div class="sp-text" data-n="02">
+    <div class="sp-num fu">02 / 06</div>
+    <h2 class="sp-h2 fu d1">Gaming &amp; Performance</h2>
+    <p class="sp-tone fu d1">Built for speed, responsiveness, and visual power.</p>
+    <p class="sp-desc fu d2">Engineered for builds that can't wait. High-bandwidth storage, fast memory, and capable graphics keep frame rates high and load times short.</p>
+    <div class="sp-chips-label fu d2">Recommended</div>
+    <div class="sp-chips fu d2"><span class="sp-chip">SSD 430</span><span class="sp-chip">DDR4 CX1</span><span class="sp-chip">DDR5 EX1 / RX1</span><span class="sp-chip">RTX / GTX Series</span></div>
+    <a class="sp-link fu d3" href="/product.html">View products</a>
+    <ul class="sp-benefits fu d3">
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>High-bandwidth PCIe Gen4 storage</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Fast, responsive memory</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Graphics power for smooth visuals</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Headroom for demanding titles</li>
+    </ul>
   </div>
 </section>
 
-<!-- ══ 03 BUSINESS ══ -->
-<section class="sol-section sol-section-parchment" id="business">
-  <div class="sol-layout">
-    <div class="sol-text-col">
-      <div class="sol-index reveal">03 / 06</div>
-      <h2 class="sol-h3 reveal reveal-delay-1">Business &amp; Office</h2>
-      <p class="sol-tone reveal reveal-delay-1">Stable upgrades for productivity-focused systems.</p>
-      <p class="sol-desc reveal reveal-delay-2">Dependable performance for office fleet refresh and education. Standardized upgrades simplify channel deployment and help system integrators keep large rollouts consistent.</p>
-      <div class="sol-label reveal reveal-delay-2">Recommended</div>
-      <div class="sol-chips reveal reveal-delay-2">
-        <span class="sol-chip">SSD 120</span>
-        <span class="sol-chip">SSD 320 / SSD 330</span>
-        <span class="sol-chip">DDR4 Precision</span>
-        <span class="sol-chip">GT730 / R5230</span>
-      </div>
-      <a class="text-link reveal reveal-delay-3" href="product.html#ssd">View products</a>
-      <ul class="sol-benefits-list reveal reveal-delay-3">
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Standardized upgrades across office fleets</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Channel-ready for volume deployment</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Suited to system integrators</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Cost-effective, repeatable refresh cycles</li>
-      </ul>
-    </div>
-    <div class="sol-img-col reveal-right">
-      <div class="sol-img-wrapper">
-        <img class="par-img" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/sol03.webp" alt="Business and Office — clean professional office workspace">
-      </div>
-    </div>
+<!-- 03 BUSINESS — text left / teal -->
+<section class="sp-section text-left" id="s03">
+  <div class="sp-text" data-n="03">
+    <div class="sp-num fu">03 / 06</div>
+    <h2 class="sp-h2 fu d1">Business &amp; Office</h2>
+    <p class="sp-tone fu d1">Stable upgrades for productivity-focused systems.</p>
+    <p class="sp-desc fu d2">Dependable performance for office fleet refresh and education. Standardized upgrades simplify channel deployment and help system integrators keep large rollouts consistent.</p>
+    <div class="sp-chips-label fu d2">Recommended</div>
+    <div class="sp-chips fu d2"><span class="sp-chip">SSD 120</span><span class="sp-chip">SSD 320 / 330</span><span class="sp-chip">DDR4 Precision</span><span class="sp-chip">GT730 / R5230</span></div>
+    <a class="sp-link fu d3" href="/product.html">View products</a>
+    <ul class="sp-benefits fu d3">
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Standardized upgrades across office fleets</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Channel-ready for volume deployment</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Suited to system integrators</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Cost-effective, repeatable refresh cycles</li>
+    </ul>
+  </div>
+  <div class="sp-img-wrap">
+    <img class="sp-img" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/sol03.webp" alt="Business & Office">
   </div>
 </section>
 
-<!-- ══ 04 INDUSTRIAL ══ -->
-<section class="sol-section sol-section-light" id="industrial">
-  <div class="sol-layout reverse">
-    <div class="sol-text-col">
-      <div class="sol-index reveal">04 / 06</div>
-      <h2 class="sol-h3 reveal reveal-delay-1">Industrial &amp; Embedded</h2>
-      <p class="sol-tone reveal reveal-delay-1">Reliable components for integrated and long-running systems.</p>
-      <p class="sol-desc reveal reveal-delay-2">Components selected for OEM / ODM integration and longevity. Compact form factors and low-power options suit IPC, POS, kiosk, signage, and embedded builds engineered for long-hour operation.</p>
-      <div class="sol-label reveal reveal-delay-2">Recommended</div>
-      <div class="sol-chips reveal reveal-delay-2">
-        <span class="sol-chip">SATA SSD</span>
-        <span class="sol-chip">M.2 2230 / 2242</span>
-        <span class="sol-chip">DDR4 / DDR5</span>
-        <span class="sol-chip">Low-power GPU</span>
-      </div>
-      <a class="text-link reveal reveal-delay-3" href="product.html#ssd">View products</a>
-      <ul class="sol-benefits-list reveal reveal-delay-3">
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Compact M.2 form factors (2230 / 2242 / 2280)</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Reliable component selection for OEM / ODM</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Built for long-hour, continuous operation</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Low-power options for integrated deployments</li>
-      </ul>
-    </div>
-    <div class="sol-img-col reveal-left">
-      <div class="sol-img-wrapper">
-        <img class="par-img" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/sol04.webp" alt="Industrial and Embedded — IPC kiosk signage systems">
-      </div>
-    </div>
+<!-- 04 INDUSTRIAL — text right / amber -->
+<section class="sp-section text-right" id="s04">
+  <div class="sp-img-wrap">
+    <img class="sp-img" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/sol04.webp" alt="Industrial & Embedded">
+  </div>
+  <div class="sp-text" data-n="04">
+    <div class="sp-num fu">04 / 06</div>
+    <h2 class="sp-h2 fu d1">Industrial &amp; Embedded</h2>
+    <p class="sp-tone fu d1">Reliable components for integrated and long-running systems.</p>
+    <p class="sp-desc fu d2">Components selected for OEM / ODM integration and longevity. Compact form factors and low-power options suit IPC, POS, kiosk, signage, and embedded builds.</p>
+    <div class="sp-chips-label fu d2">Recommended</div>
+    <div class="sp-chips fu d2"><span class="sp-chip">SATA SSD</span><span class="sp-chip">M.2 2230 / 2242</span><span class="sp-chip">DDR4 / DDR5</span><span class="sp-chip">Low-power GPU</span></div>
+    <a class="sp-link fu d3" href="/product.html">View products</a>
+    <ul class="sp-benefits fu d3">
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Compact M.2 form factors (2230 / 2242 / 2280)</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Reliable component selection for OEM / ODM</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Built for long-hour, continuous operation</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Low-power options for integrated deployments</li>
+    </ul>
   </div>
 </section>
 
-<!-- ══ 05 CREATION ══ -->
-<section class="sol-section sol-section-parchment" id="creation">
-  <div class="sol-layout">
-    <div class="sol-text-col">
-      <div class="sol-index reveal">05 / 06</div>
-      <h2 class="sol-h3 reveal reveal-delay-1">Content Creation</h2>
-      <p class="sol-tone reveal reveal-delay-1">Performance that supports creation, editing, and heavy workflows.</p>
-      <p class="sol-desc reveal reveal-delay-2">Throughput for demanding workflows. Fast storage, ample memory, and capable graphics keep editing, rendering, and large-file work moving.</p>
-      <div class="sol-label reveal reveal-delay-2">Recommended</div>
-      <div class="sol-chips reveal reveal-delay-2">
-        <span class="sol-chip">SSD 430</span>
-        <span class="sol-chip">DDR5</span>
-        <span class="sol-chip">RTX / GTX Series</span>
-        <span class="sol-chip">External Storage</span>
-      </div>
-      <a class="text-link reveal reveal-delay-3" href="product.html#gpu">View products</a>
-      <ul class="sol-benefits-list reveal reveal-delay-3">
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>High-speed storage for large files</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Ample memory for heavy projects</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Graphics for rendering and preview</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>External capacity for media libraries</li>
-      </ul>
-    </div>
-    <div class="sol-img-col reveal-right">
-      <div class="sol-img-wrapper">
-        <img class="par-img" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/sol05.webp" alt="Content Creation — video editing workstation with multiple monitors">
-      </div>
-    </div>
+<!-- 05 CREATION — text left / pink -->
+<section class="sp-section text-left" id="s05">
+  <div class="sp-text" data-n="05">
+    <div class="sp-num fu">05 / 06</div>
+    <h2 class="sp-h2 fu d1">Content Creation</h2>
+    <p class="sp-tone fu d1">Performance that supports creation, editing, and heavy workflows.</p>
+    <p class="sp-desc fu d2">Throughput for demanding workflows. Fast storage, ample memory, and capable graphics keep editing, rendering, and large-file work moving.</p>
+    <div class="sp-chips-label fu d2">Recommended</div>
+    <div class="sp-chips fu d2"><span class="sp-chip">SSD 430</span><span class="sp-chip">DDR5</span><span class="sp-chip">RTX / GTX Series</span><span class="sp-chip">External Storage</span></div>
+    <a class="sp-link fu d3" href="/product.html">View products</a>
+    <ul class="sp-benefits fu d3">
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>High-speed storage for large files</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Ample memory for heavy projects</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Graphics for rendering and preview</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>External capacity for media libraries</li>
+    </ul>
+  </div>
+  <div class="sp-img-wrap">
+    <img class="sp-img" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/sol05.webp" alt="Content Creation">
   </div>
 </section>
 
-<!-- ══ 06 PORTABLE ══ -->
-<section class="sol-section sol-section-light" id="portable">
-  <div class="sol-layout reverse">
-    <div class="sol-text-col">
-      <div class="sol-index reveal">06 / 06</div>
-      <h2 class="sol-h3 reveal reveal-delay-1">Portable &amp; External Storage</h2>
-      <p class="sol-tone reveal reveal-delay-1">Take your data wherever work takes you.</p>
-      <p class="sol-desc reveal reveal-delay-2">Storage that moves with you. Cards, drives, and flash built for backup, field capture, and fast file transfer on the go.</p>
-      <div class="sol-label reveal reveal-delay-2">Recommended</div>
-      <div class="sol-chips reveal reveal-delay-2">
-        <span class="sol-chip">microSD</span>
-        <span class="sol-chip">USB Flash Drive</span>
-        <span class="sol-chip">Portable SSD</span>
-        <span class="sol-chip">External Storage</span>
-      </div>
-      <a class="text-link reveal reveal-delay-3" href="product.html#external">View products</a>
-      <ul class="sol-benefits-list reveal reveal-delay-3">
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Pocketable capacity for the field</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Reliable backup and transfer</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Broad device compatibility</li>
-        <li><div class="benefit-icon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Plug-and-go convenience</li>
-      </ul>
-    </div>
-    <div class="sol-img-col reveal-left">
-      <div class="sol-img-wrapper">
-        <img class="par-img" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/sol06.webp" alt="Portable and External Storage — working on the go with laptop and storage">
-      </div>
-    </div>
+<!-- 06 PORTABLE — text right / green -->
+<section class="sp-section text-right" id="s06">
+  <div class="sp-img-wrap">
+    <img class="sp-img" src="https://pub-03642ec28edd4da6bcaf414c061b4ad6.r2.dev/tile/sol06.webp" alt="Portable & External Storage">
+  </div>
+  <div class="sp-text" data-n="06">
+    <div class="sp-num fu">06 / 06</div>
+    <h2 class="sp-h2 fu d1">Portable &amp; External Storage</h2>
+    <p class="sp-tone fu d1">Take your data wherever work takes you.</p>
+    <p class="sp-desc fu d2">Storage that moves with you. Cards, drives, and flash built for backup, field capture, and fast file transfer on the go.</p>
+    <div class="sp-chips-label fu d2">Recommended</div>
+    <div class="sp-chips fu d2"><span class="sp-chip">microSD</span><span class="sp-chip">USB Flash Drive</span><span class="sp-chip">Portable SSD</span><span class="sp-chip">External Storage</span></div>
+    <a class="sp-link fu d3" href="/product.html">View products</a>
+    <ul class="sp-benefits fu d3">
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Pocketable capacity for the field</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Reliable backup and transfer</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Broad device compatibility</li>
+      <li><div class="sp-bicon"><svg viewBox="0 0 10 8" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,4 4,7 9,1"/></svg></div>Plug-and-go convenience</li>
+    </ul>
   </div>
 </section>
 
-<!-- ══ FINALE ══ -->
+<!-- FINALE -->
 <section class="finale">
   <div class="finale-inner">
-    <div class="finale-top">
-      <div class="finale-eyebrow reveal">Why Simorchip</div>
-      <h2 class="finale-h2 reveal reveal-delay-1">Solutions you<br>can build on.</h2>
-      <p class="finale-sub reveal reveal-delay-2">One qualified source. Consistent quality. Ready for the full deployment cycle.</p>
-    </div>
+    <div class="f-eyebrow fu">Why Simorchip</div>
+    <h2 class="f-h2 fu d1">Solutions you<br>can build on.</h2>
+    <p class="f-sub fu d2">One qualified source. Consistent quality. Ready for the full deployment cycle.</p>
     <div class="pillars">
-      <div class="pillar reveal">
-        <div class="pillar-num">01</div>
-        <div><div class="pillar-title">Broad Product Coverage</div><div class="pillar-body">From storage and memory to graphics and external — one qualified source for the full product stack.</div></div>
-      </div>
-      <div class="pillar reveal reveal-delay-1">
-        <div class="pillar-num">02</div>
-        <div><div class="pillar-title">Reliable Quality</div><div class="pillar-body">Structured manufacturing control, multi-stage inspection, and outgoing re-test before every shipment.</div></div>
-      </div>
-      <div class="pillar reveal reveal-delay-2">
-        <div class="pillar-num">03</div>
-        <div><div class="pillar-title">Compatibility Focus</div><div class="pillar-body">Components selected and validated to fit real-world platforms — desktop, laptop, embedded, and OEM systems.</div></div>
-      </div>
-      <div class="pillar reveal reveal-delay-3">
-        <div class="pillar-num">04</div>
-        <div><div class="pillar-title">Flexible Deployment</div><div class="pillar-body">Options across form factors, capacities, and performance tiers — built for channel, system integrator, and fleet deployment.</div></div>
-      </div>
+      <div class="pillar fu"   ><div class="p-num">01</div><div><div class="p-title">Broad Product Coverage</div><div class="p-body">From storage and memory to graphics and external — one qualified source for the full product stack.</div></div></div>
+      <div class="pillar fu d1"><div class="p-num">02</div><div><div class="p-title">Reliable Quality</div><div class="p-body">Structured manufacturing control, multi-stage inspection, and outgoing re-test before every shipment.</div></div></div>
+      <div class="pillar fu d2"><div class="p-num">03</div><div><div class="p-title">Compatibility Focus</div><div class="p-body">Components selected and validated to fit real-world platforms — desktop, laptop, embedded, and OEM systems.</div></div></div>
+      <div class="pillar fu d3"><div class="p-num">04</div><div><div class="p-title">Flexible Deployment</div><div class="p-body">Options across form factors, capacities, and performance tiers — built for channel, system integrator, and fleet deployment.</div></div></div>
     </div>
-    <div class="finale-foot reveal">
-      <p class="finale-foot-label">Ready to specify the right mix of storage, memory, and graphics for your application?</p>
-      <div class="finale-cta">
-        <a class="btn-pill btn-blue" href="contact.html">Contact Sales</a>
-        <a class="btn-pill btn-ghost-dark" href="product.html">Explore All Products</a>
-      </div>
+    <div class="finale-foot fu">
+      <p class="f-foot-txt">Ready to specify the right mix of storage, memory, and graphics for your application?</p>
+      <div class="f-cta"><a class="btn btn-solid" href="/contact.html">Contact Sales</a><a class="btn btn-ghost-w" href="/product.html">Explore All Products</a></div>
     </div>
   </div>
 </section>
 
 {% include "footer.njk" %}
-
 {% include "nav-script.njk" %}
 
 <script>
-(function () {
-  var nav = document.getElementById('globalNav');
-  var heroBg = document.getElementById('heroBg');
-  var sectionIds = ['consumer','gaming','business','industrial','creation','portable'];
-  var sectionEls = sectionIds.map(function(id){ return document.getElementById(id); });
-  var solNavItems = document.querySelectorAll('.sol-nav-item');
-  var parImgs = document.querySelectorAll('.par-img');
+(function(){
+  var nav     = document.getElementById('globalNav');
+  var heroBg  = document.getElementById('heroBg');
+  var heroSec = document.getElementById('heroSec');
+  var imgs    = document.querySelectorAll('.sp-img');
+  var snItems = document.querySelectorAll('.sn-item');
+  var secIds  = ['s01','s02','s03','s04','s05','s06'];
+  var secEls  = secIds.map(function(id){ return document.getElementById(id); });
+  var raf = null;
 
-  function onScroll() {
-    var sy = window.scrollY;
-    var wh = window.innerHeight;
+  function tick(){
+    var sy = window.scrollY, wh = window.innerHeight;
 
-    /* Hero parallax */
-    heroBg.style.transform = 'translateY(' + (sy * 0.35) + 'px)';
+    heroBg.style.transform = 'translateY('+Math.round(sy * 0.38)+'px)';
 
-    /* Nav colour on scroll past hero */
-    var heroBottom = document.getElementById('hero').getBoundingClientRect().bottom;
-    if (heroBottom <= 0) {
-      nav.classList.add('nav-scrolled-light');
-    } else {
-      nav.classList.remove('nav-scrolled-light');
-    }
-
-    /* Parallax on each scenario image */
-    parImgs.forEach(function(img) {
-      var rect = img.closest('.sol-img-wrapper').getBoundingClientRect();
-      var progress = (wh - rect.top) / (wh + rect.height);
-      var offset = (progress - 0.5) * -60;
-      img.style.transform = 'translateY(' + offset + 'px)';
+    imgs.forEach(function(img){
+      var rect = img.parentElement.getBoundingClientRect();
+      var prog = (wh - rect.top) / (wh + rect.height);
+      img.style.transform = 'translateY('+Math.round((prog - 0.5) * -32)+'px)';
     });
 
-    /* Active sol-nav highlight */
-    var current = '';
-    sectionIds.forEach(function(id) {
-      var el = document.getElementById(id);
-      if (el && el.getBoundingClientRect().top <= wh * 0.4) current = id;
+    var heroBot = heroSec.getBoundingClientRect().bottom;
+    nav.className = 'global-nav ' + (heroBot > 44 ? 'transparent' : 'frosted-dark');
+
+    var active = '';
+    secEls.forEach(function(el,i){
+      if(el && el.getBoundingClientRect().top <= wh * 0.45) active = secIds[i];
     });
-    solNavItems.forEach(function(item) {
-      item.classList.toggle('active', item.getAttribute('href') === '#' + current);
+    snItems.forEach(function(item){
+      item.classList.toggle('active', item.getAttribute('href') === '#'+active);
     });
 
-    /* Reveal on scroll */
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el) {
-      if (el.getBoundingClientRect().top < wh * 0.88) el.classList.add('visible');
+    document.querySelectorAll('.fu').forEach(function(el){
+      if(el.getBoundingClientRect().top < wh * 0.88) el.classList.add('in');
     });
+
+    raf = null;
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  window.addEventListener('scroll', function(){ if(!raf) raf = requestAnimationFrame(tick); },{passive:true});
+  tick();
 })();
 </script>
 </body>
